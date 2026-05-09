@@ -36,7 +36,13 @@ Redirect 301 /ambisecure-biokey /products/biokey/
 Redirect 301 /ambisecure-tappable /products/tappable/
 Redirect 301 /ambisecure-digital-signature-token /products/digital-signature-token/
 Redirect 301 /ambisecure-javacard-applet-enterprise-solution /products/javacard-applets/
-Redirect 301 /ambisecure-esim-solution https://esim.ambimat.com/
+Redirect 301 /ambisecure-esim-solution /products/esim-solution/
+Redirect 301 /products/javacard-applet-enterprise-solution /products/javacard-applets/
+Redirect 301 /products/iot-solution /products/iot-solution/
+Redirect 301 /applets /products/javacard-applets/
+Redirect 301 /authenticators/ /products/
+Redirect 301 /mobile-solution /products/tappable/
+Redirect 301 /iot /products/iot-solution/
 
 # Services
 Redirect 301 /ambisecure-services /services/
@@ -47,6 +53,9 @@ Redirect 301 /ambisecure-bio-enrollment-app /services/tool-chain-development/bio
 Redirect 301 /ambisecure-security-key-manager /services/tool-chain-development/security-key-manager/
 Redirect 301 /ambisecure-multi-card-applet-loading-tool /services/tool-chain-development/multi-card-applet-loader/
 Redirect 301 /ambisecure-ndef-personalisation-tool /services/tool-chain-development/ndef-personalisation/
+Redirect 301 /services/tool-chain-development/multi-card-applet-loading-tool /services/tool-chain-development/multi-card-applet-loader/
+Redirect 301 /java-card-applet-development /services/javacard-development/
+Redirect 301 /fido-validation-server-demo /services/fido-validation-server/
 
 # Editorial / learn / certifications / FAQ
 Redirect 301 /cyber-security-threats /blog/cyber-security-threats-overview/
