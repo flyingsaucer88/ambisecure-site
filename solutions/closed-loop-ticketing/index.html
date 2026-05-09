@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Closed-loop ticketing — transit-grade architecture | AmbiSecure</title>
+<meta name="description" content="Reference for closed-loop fare-collection deployments: DESFire credentials, SAM-protected validators, offline transactions, anti-fraud surface, settlement." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/solutions/closed-loop-ticketing/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Closed-loop ticketing — transit-grade architecture" />
+<meta property="og:description" content="End-to-end reference for closed-loop fare-collection deployments." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/solutions/closed-loop-ticketing/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Solutions",
+"item": "/solutions/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "Closed-loop ticketing",
+"item": "https://ambisecure.ambimat.com/solutions/closed-loop-ticketing/"
+}
+]
+},
+{
+"@type": "Service",
+"name": "Closed-loop ticketing solution",
+"provider": {
+"@type": "Organization",
+"name": "AmbiSecure"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/" class="active">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/solutions/">Solutions</a><span class="sep">/</span><span class="current">Closed-loop ticketing</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Solution · Transit</span>
+    <h1>Closed-loop ticketing &mdash; transit-grade architecture, end to end.</h1>
+    <p class="dek">A reference for everyone designing, procuring, or operating a closed-loop fare-collection deployment. This page is a knowledge center: card platform, validator architecture, SAM custody, fare logic, anti-fraud, settlement, and the operational realities that decide whether a deployment ships or stalls.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">What &ldquo;closed-loop&rdquo; means here</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>A <strong>closed-loop</strong> fare system is one where the issuer, the cards, the validators, and the back office are all under the same operator&rsquo;s control. The card is not a Visa or Mastercard; it is the operator&rsquo;s own credential. Fare logic, security policy, and settlement happen entirely inside the operator&rsquo;s systems.</p>
+      <p>Open-loop systems &mdash; where you tap a contactless bank card &mdash; are a different problem domain (PCI scope, EMV terminal certification, online authorisation). Most metros, light rail, BRT, and city-pass deployments worldwide are still closed-loop, with open-loop as a parallel acceptance lane. This page is about the closed-loop side.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Reference architecture &mdash; layered view</h2><span class="section-line"></span></div>
+    <div class="diagram">
+      <svg viewBox="0 0 940 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="clt-arch-title">
+        <title id="clt-arch-title">Closed-loop ticketing reference architecture (layered)</title>
+        <defs>
+  <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-dark)"/>
+  </marker>
+  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-red)"/>
+  </marker>
+  <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--secure-cyan)"/>
+  </marker>
+</defs>
+        <!-- L1 cards -->
+        <rect x="20" y="20" width="900" height="50" class="layer l1"/>
+        <text x="40" y="50" class="lbl-tag">CREDENTIALS</text>
+        <text x="200" y="50" font-size="12">DESFire EV2 / EV3 cards · NFC phones · paper QR · contactless tokens</text>
+        <!-- L2 validators -->
+        <rect x="20" y="80" width="900" height="50" class="layer l2"/>
+        <text x="40" y="110" class="lbl-tag">VALIDATORS</text>
+        <text x="200" y="110" font-size="12">gate · turnstile · bus · tram · handheld · mobile-app validator · QR validator</text>
+        <!-- L3 SAM/secure -->
+        <rect x="20" y="140" width="900" height="50" class="layer l3"/>
+        <text x="40" y="170" class="lbl-tag">SECURE TRUST</text>
+        <text x="200" y="170" font-size="12">SAM AV2 / AV3 inside every validator · diversified keys · per-tap session crypto</text>
+        <!-- L4 depot/edge -->
+        <rect x="20" y="200" width="900" height="50" class="layer l1"/>
+        <text x="40" y="230" class="lbl-tag">DEPOT EDGE</text>
+        <text x="200" y="230" font-size="12">station server · garage server · sync over cellular / wired backhaul</text>
+        <!-- L5 backend -->
+        <rect x="20" y="260" width="900" height="50" class="layer l2"/>
+        <text x="40" y="290" class="lbl-tag">BACKEND</text>
+        <text x="200" y="290" font-size="12">issuer KMS · clearing house · settlement · audit trail · blacklist authority</text>
+        <!-- root -->
+        <rect x="20" y="320" width="900" height="30" class="layer root"/>
+        <text x="40" y="340" class="lbl-tag" fill="#fff">ISSUER · KEY CUSTODY (HSM)</text>
+      </svg>
+      <div class="diagram-caption">Six layers; each layer&rsquo;s trust comes from the layer below, never from the layer above.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Card platforms in production today</h2><span class="section-line"></span></div>
+    <table class="prose" style="max-width:100%;">
+      <thead><tr><th>Platform</th><th>Where it fits</th><th>Notes</th></tr></thead>
+      <tbody>
+      <tr><td>DESFire EV2 / EV3</td><td>The default for closed-loop transit since the late 2010s.</td><td>Diversified keys, EV2 secure messaging, transaction MAC. Mature SAM ecosystem.</td></tr>
+      <tr><td>MIFARE Plus EV1 / EV2</td><td>Step up from MIFARE Classic for legacy estates that need AES.</td><td>Useful for upgrading installed-base; not first-choice for greenfield.</td></tr>
+      <tr><td>JavaCard applet</td><td>When the issuer needs custom card-side logic beyond DESFire&rsquo;s file model.</td><td>Higher cost per card; full control. Ambimat ships JavaCard applet platforms.</td></tr>
+      <tr><td>NFC phone (HCE)</td><td>Mobile credentials, especially in megacities with smartphone-first riders.</td><td>Combine with secure-element-backed credential or attestation. Online-leaning.</td></tr>
+      <tr><td>QR / aztec on paper</td><td>One-shot tickets, tourist day-passes.</td><td>Signed by issuer. Validator verifies signature; no card crypto.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Tap-to-decision &mdash; what fits in 300 ms</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>The hardest non-negotiable in transit fare collection is latency. Riders queue up; the gate opens or it doesn&rsquo;t. Industry practice puts <strong>tap-to-decision</strong> under <strong>300 ms</strong> end-to-end &mdash; sometimes 250 ms for high-throughput metros. That budget has to cover RF activation, anti-collision, application select, mutual authentication, fare logic, audit write, and gate actuation. Every layer steals from the budget. The architecture below is what we routinely fit inside it.</p>
+    </div>
+    <div class="diagram alt">
+      <svg viewBox="0 0 920 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="clt-budget-title">
+        <title id="clt-budget-title">300 ms tap-to-decision time budget</title>
+        <defs>
+  <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-dark)"/>
+  </marker>
+  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-red)"/>
+  </marker>
+  <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--secure-cyan)"/>
+  </marker>
+</defs>
+        <!-- ms scale -->
+        <line x1="40" y1="170" x2="900" y2="170" stroke="var(--brand-dark)" stroke-width="1.5"/>
+        <text x="40" y="190" font-size="11" fill="var(--brand-grey)">0 ms</text>
+        <text x="900" y="190" font-size="11" fill="var(--brand-grey)" text-anchor="end">300 ms</text>
+        <!-- segments -->
+        <rect x="40"  y="60" width="80" height="100" fill="var(--secure-cyan-soft)" stroke="var(--secure-cyan)"/>
+        <text x="80" y="40" text-anchor="middle" class="lbl-tag">RF</text>
+        <text x="80" y="120" text-anchor="middle" font-size="11">~25 ms</text>
+        <text x="80" y="138" text-anchor="middle" font-size="10" fill="var(--brand-grey)">activation, AC</text>
+        <rect x="120" y="60" width="120" height="100" fill="var(--secure-cyan-soft)" stroke="var(--secure-cyan)"/>
+        <text x="180" y="40" text-anchor="middle" class="lbl-tag">SELECT</text>
+        <text x="180" y="120" text-anchor="middle" font-size="11">~30 ms</text>
+        <text x="180" y="138" text-anchor="middle" font-size="10" fill="var(--brand-grey)">app + first APDU</text>
+        <rect x="240" y="60" width="200" height="100" fill="rgba(227,34,42,0.10)" stroke="var(--brand-red)"/>
+        <text x="340" y="40" text-anchor="middle" class="lbl-tag">MUTUAL AUTH</text>
+        <text x="340" y="120" text-anchor="middle" font-size="11">~80 ms</text>
+        <text x="340" y="138" text-anchor="middle" font-size="10" fill="var(--brand-grey)">EV2 first + SAM round-trips</text>
+        <rect x="440" y="60" width="180" height="100" fill="rgba(227,34,42,0.06)" stroke="var(--brand-red)"/>
+        <text x="530" y="40" text-anchor="middle" class="lbl-tag">FARE LOGIC</text>
+        <text x="530" y="120" text-anchor="middle" font-size="11">~80 ms</text>
+        <text x="530" y="138" text-anchor="middle" font-size="10" fill="var(--brand-grey)">read · evaluate · debit</text>
+        <rect x="620" y="60" width="120" height="100" fill="var(--brand-soft)" stroke="var(--brand-dark)"/>
+        <text x="680" y="40" text-anchor="middle" class="lbl-tag">COMMIT</text>
+        <text x="680" y="120" text-anchor="middle" font-size="11">~50 ms</text>
+        <text x="680" y="138" text-anchor="middle" font-size="10" fill="var(--brand-grey)">TMAC · audit · receipt</text>
+        <rect x="740" y="60" width="160" height="100" fill="var(--secure-green-soft)" stroke="var(--secure-green)"/>
+        <text x="820" y="40" text-anchor="middle" class="lbl-tag">GATE</text>
+        <text x="820" y="120" text-anchor="middle" font-size="11">~35 ms</text>
+        <text x="820" y="138" text-anchor="middle" font-size="10" fill="var(--brand-grey)">actuate · UI</text>
+      </svg>
+      <div class="diagram-caption">Approximate budget. Real numbers move with chip generation, RF tuning, and validator firmware quality.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Anti-fraud surface, in one view</h2><span class="section-line"></span></div>
+    <div class="arch-row">
+      <div class="arch-cell accent"><span class="arch-tag">A1</span><h4>Diversified keys per card</h4><p>Cloning one card teaches the attacker about that one card. The rest of the system is unaffected.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">A2</span><h4>Transaction MAC (TMAC)</h4><p>Every commit produces a SAM-signed receipt the issuer verifies after the fact, even hours later.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">A3</span><h4>Anti-passback windows</h4><p>The validator (and the back office) reject obvious double-uses inside a configurable window.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">A4</span><h4>Blacklist propagation</h4><p>Lost / refunded / refunded-and-blocked cards reach validators within the depot-sync cadence.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">A5</span><h4>Stored-value bounds</h4><p>Per-card and per-day debit limits cap the loss from a single compromise.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">A6</span><h4>Audit reconciliation</h4><p>Back office reconciles SAM-signed receipts against debited values; gaps flagged within 24 h.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Stored value &mdash; protections</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>If the card carries stored value (a balance, a trip count, a season-ticket window), the protections layered on top are:</p>
+      <ul>
+        <li><strong>EV2 secure messaging</strong> on every read and write.</li>
+        <li><strong>Backup files</strong> for atomic update &mdash; a half-completed debit is rolled back at the next clean read.</li>
+        <li><strong>Transaction MAC</strong> on every commit so the issuer can reconstruct what the card believed at the time.</li>
+        <li><strong>Anti-tearing counters</strong> &mdash; if the card is lifted off the field mid-transaction, the next validator detects the inconsistency.</li>
+        <li><strong>Per-card &amp; per-day debit caps</strong> so a single compromise has a bounded loss profile.</li>
+        <li><strong>Recharge happens only at attended kiosks or via signed back-office flows</strong> &mdash; a validator never increases stored value in the field on its own authority.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Connectivity &mdash; what works offline</h2><span class="section-line"></span></div>
+    <table class="prose" style="max-width:100%;">
+      <thead><tr><th>Operation</th><th>Online?</th><th>Notes</th></tr></thead>
+      <tbody>
+      <tr><td>Mutual authentication &amp; tap</td><td>OFFLINE</td><td>Card and SAM hold all the keys needed.</td></tr>
+      <tr><td>Stored-value debit</td><td>OFFLINE</td><td>Atomicity via DESFire backup files; receipt buffered locally.</td></tr>
+      <tr><td>Blacklist enforcement</td><td>OFFLINE (cached)</td><td>Validators carry the blacklist; depot sync refreshes it.</td></tr>
+      <tr><td>Stored-value top-up</td><td>ONLINE preferred</td><td>Or attended kiosk with its own SAM authority.</td></tr>
+      <tr><td>Card issuance / replacement</td><td>ONLINE</td><td>Issuer KMS in the loop.</td></tr>
+      <tr><td>Settlement &amp; audit</td><td>ASYNC</td><td>Batched at end of shift; back office reconciles.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Fail-safe vs fail-secure</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>When something goes wrong &mdash; SAM not responding, blacklist out of date, fare-config corrupt &mdash; the validator must decide: <em>fail-safe</em> (let the rider through) or <em>fail-secure</em> (refuse all taps). The right answer is operator policy, not a technical default. Most metros choose fail-safe with degraded-mode logging during peak and fail-secure during off-peak when manual intervention is available. Buses tend to fail-safe with audit trails. Inspectors&rsquo; handhelds tend to fail-secure (refuse to validate without a working SAM).</p>
+      <p>Whatever you choose, make it explicit in the firmware, log every fall-through, and reconcile in the back office. Silent failure is not an option in transit security.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Connected reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/technologies/desfire/" class="card"><h3>DESFire EV1/EV2/EV3</h3><p>The card platform underneath everything on this page.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/technologies/sam/" class="card"><h3>SAM architecture</h3><p>Why the issuer key lives in the SAM, not in validator firmware.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/technologies/card-reader-sam-flow/" class="card"><h3>Card &harr; Reader &harr; SAM flow</h3><p>Six diagrams of the closed-loop trust chain.</p><div class="card-meta">View deep-dive &rarr;</div></a>
+    </div>
+    <div class="grid-3" style="margin-top:18px;">
+      <a href="/blog/desfire-ev1-vs-ev2-vs-ev3/" class="card"><h3>Pillar: EV1 vs EV2 vs EV3</h3><p>What changed across DESFire generations.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/blog/why-sams-matter-in-closed-loop-transit/" class="card"><h3>Pillar: Why SAMs matter</h3><p>Why every transit deployment over a few thousand cards needs a SAM.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/blog/designing-low-latency-secure-transit-validators/" class="card"><h3>Pillar: Low-latency validators</h3><p>How to keep tap-to-decision under 300 ms and stay secure.</p><div class="card-meta">Read &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div><h2>Procuring or designing closed-loop?</h2><p>From SAM personalisation to validator firmware to back-office reconciliation, we ship the chain. Most engagements start as &ldquo;we need something like X but with Y&rdquo; &mdash; tell us about Y.</p></div>
+      <div><a href="/contact/" class="btn btn-primary">Talk to engineers</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/technologies/desfire/">DESFire</a></li><li><a href="/technologies/sam/">SAM architecture</a></li><li><a href="/technologies/card-reader-sam-flow/">Card &harr; Reader &harr; SAM</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/transit-ticketing/">Transit ticketing</a></li><li><a href="/solutions/passwordless-mfa/">Passwordless &amp; MFA</a></li><li><a href="/solutions/iot-root-of-trust/">IoT root of trust</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+
+</body>
+</html>

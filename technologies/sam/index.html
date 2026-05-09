@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Secure Access Modules — SAM AV2 / AV3 architecture | AmbiSecure</title>
+<meta name="description" content="Why closed-loop transit and access systems put issuer keys in a Secure Access Module, not in reader firmware. SAM AV2/AV3 capabilities, trust zones, host channel." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/sam/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Secure Access Modules — SAM AV2 / AV3" />
+<meta property="og:description" content="Why issuer keys belong in a SAM, not in validator firmware." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/sam/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Technologies",
+"item": "/technologies/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "SAM",
+"item": "https://ambisecure.ambimat.com/technologies/sam/"
+}
+]
+},
+{
+"@type": "TechArticle",
+"headline": "Secure Access Modules \u2014 SAM AV2 / AV3",
+"author": {
+"@type": "Organization",
+"name": "AmbiSecure Engineering"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">SAM</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology · Secure modules</span>
+    <h1>Secure Access Modules &mdash; the issuer&rsquo;s key custodian.</h1>
+    <p class="dek">A SAM is a tamper-resistant smart-card-class module mounted inside a reader. It holds the issuer&rsquo;s long-term keys, performs cryptographic operations on behalf of the reader, and never exposes the keys to the host. In well-architected closed-loop deployments, the validator firmware can be reflashed by a thief without leaking a single transit key.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Why a SAM at all?</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>The threat model behind transit ticketing is unusual. There are millions of cards in the field, tens of thousands of validators, and tens of thousands of <em>devices that can be physically removed from buses, gates, and gentry stations</em>. If a single validator&rsquo;s firmware leaks the issuer key, every card on the system is compromised &mdash; instantly.</p>
+      <p>The fix is to move issuer keys out of validator firmware entirely. The reader becomes a routing layer: it sees APDUs flow between the card and the SAM, but it does not learn the keys. A SAM is the secure element that lives inside the reader; it can be NXP MIFARE SAM AV2 / AV3 family, a HID iCLASS SAM-class component, or an internally-developed SAM-class secure element. They all share the same architectural commitment: <strong>keys never appear on the reader CPU</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Trust zones</h2><span class="section-line"></span></div>
+    <div class="diagram">
+      <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="sam-trust-title">
+        <title id="sam-trust-title">Trust zones — card, reader CPU, SAM, backend</title>
+        <defs>
+  <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-dark)"/>
+  </marker>
+  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-red)"/>
+  </marker>
+  <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--secure-cyan)"/>
+  </marker>
+</defs>
+        <!-- card -->
+        <rect x="20" y="120" width="160" height="100" class="actor-box accent"/>
+        <text x="100" y="145" text-anchor="middle" class="lbl-tag">CARD</text>
+        <text x="100" y="170" text-anchor="middle" font-size="11">DESFire</text>
+        <text x="100" y="188" text-anchor="middle" font-size="11">EV2 / EV3</text>
+        <text x="100" y="210" text-anchor="middle" class="lbl-mono">K_card</text>
+
+        <!-- reader CPU -->
+        <rect x="240" y="60" width="220" height="220" class="actor-box"/>
+        <text x="350" y="85" text-anchor="middle" class="lbl-tag">READER · UNTRUSTED CPU</text>
+        <text x="350" y="115" text-anchor="middle" font-size="11">routes APDUs · UI · I/O</text>
+        <text x="350" y="135" text-anchor="middle" font-size="11">no keys, no plaintext crypto</text>
+
+        <!-- trust zone box around SAM -->
+        <rect x="500" y="100" width="220" height="140" class="trust-zone"/>
+        <text x="610" y="92" text-anchor="middle" class="trust-label">TRUST BOUNDARY · ISSUER ZONE</text>
+
+        <!-- SAM -->
+        <rect x="520" y="120" width="180" height="100" class="actor-box cyan"/>
+        <text x="610" y="145" text-anchor="middle" class="lbl-tag">SAM · AV2 / AV3</text>
+        <text x="610" y="170" text-anchor="middle" font-size="11">tamper-resistant SE</text>
+        <text x="610" y="190" text-anchor="middle" class="lbl-mono">K_master, K_app, K_div</text>
+        <text x="610" y="210" text-anchor="middle" class="lbl-mono">never exits the SAM</text>
+
+        <!-- backend -->
+        <rect x="760" y="120" width="120" height="100" class="actor-box"/>
+        <text x="820" y="145" text-anchor="middle" class="lbl-tag">BACKEND</text>
+        <text x="820" y="170" text-anchor="middle" font-size="11">issuer KMS</text>
+        <text x="820" y="190" text-anchor="middle" font-size="11">audit, settle</text>
+
+        <!-- arrows -->
+        <line x1="180" y1="170" x2="240" y2="170" class="arrow"/>
+        <line x1="460" y1="170" x2="520" y2="170" class="arrow"/>
+        <line x1="700" y1="170" x2="760" y2="170" class="arrow-dashed arrow"/>
+        <text x="730" y="155" text-anchor="middle" class="lbl-note">deferred</text>
+      </svg>
+      <div class="diagram-caption">The reader CPU is the cheapest tier of trust. Issuer keys live inside the SAM and do not cross the boundary.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Capabilities</h2><span class="section-line"></span></div>
+    <table class="prose" style="max-width:100%;">
+      <thead><tr><th></th><th>SAM AV2</th><th>SAM AV3</th></tr></thead>
+      <tbody>
+      <tr><th>Crypto suites</th><td>3DES &middot; 3K3DES &middot; AES-128</td><td>+ AES-192 / 256 (in some profiles), hardened side-channel</td></tr>
+      <tr><th>Key diversification</th><td>Built-in: KDF over UID for per-card keys</td><td>Same; faster derivation; SP800-108-style options</td></tr>
+      <tr><th>Secure host channel</th><td>Encrypted/authenticated channel from reader CPU to SAM (X-mode / Y-mode)</td><td>Same shape, refined session profile</td></tr>
+      <tr><th>Offline counters</th><td>Internal monotonic counters (anti-replay, anti-rollback)</td><td>+ broader counter pool</td></tr>
+      <tr><th>Audit / unlock</th><td>Issuer-signed unlock, master-key rotation, log readout</td><td>+ richer audit trail</td></tr>
+      </tbody>
+    </table>
+    <p style="font-family:'Source Sans 3',sans-serif; color:var(--brand-grey); margin-top:14px; max-width:880px;">In practice the choice between AV2 and AV3 is driven by your validator estate and your back-office tooling. New validators &mdash; AV3. Existing fleets &mdash; AV2 with planned cycle to AV3 as estates refresh.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Core principles</h2><span class="section-line"></span></div>
+    <div class="arch-row">
+      <div class="arch-cell accent"><span class="arch-tag">P1</span><h4>Keys never leave the SAM</h4><p>The reader CPU sees ciphertext, never plaintext keys. A compromised reader leaks transactions, not the system.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">P2</span><h4>Diversification per card</h4><p>K_card[i] = KDF(K_app, UID_i). Cracking one card does not give you any other card.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">P3</span><h4>Bounded validity</h4><p>Session keys are per-tap; offline counters bound how long a captured cryptogram remains useful.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">P4</span><h4>Mutual authentication</h4><p>Reader and SAM authenticate to each other before any application crypto. Same for SAM and card.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">P5</span><h4>Auditable provisioning</h4><p>Every SAM is personalised on a controlled line; key injection is logged; unlock requires issuer signature.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">P6</span><h4>Replaceable</h4><p>SAM modules are field-replaceable units (FRUs). Compromise of one validator means swapping the SAM, not pulling a fleet.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">What the reader actually does</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <ol>
+        <li>Boot, initialise itself; <em>does not</em> trust its own configuration without a SAM-attested boot record.</li>
+        <li>Open a secure host channel to the SAM (mutual auth, session keys derived from a per-boot challenge).</li>
+        <li>Wait for a card. On tap, run the card-side authentication via the SAM &mdash; the reader forwards APDUs, the SAM does crypto.</li>
+        <li>Receive the authorisation result from the SAM. Open the gate / debit the value file / log the trip.</li>
+        <li>Periodically pull blacklist updates and push transaction batches to the back office, both signed by the SAM.</li>
+      </ol>
+      <p>Every step where keys would otherwise touch the reader CPU is delegated to the SAM. The reader becomes a high-throughput router with a state machine. This is what makes the architecture <em>safe to deploy on cheap, unattended hardware</em>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Reading list</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/technologies/desfire/" class="card"><h3>DESFire — EV1/EV2/EV3</h3><p>The card side of a SAM-protected deployment.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/technologies/card-reader-sam-flow/" class="card"><h3>Card &harr; Reader &harr; SAM flow</h3><p>The full mutual-authentication architecture, with sequence diagrams.</p><div class="card-meta">View deep-dive &rarr;</div></a>
+      <a href="/blog/why-sams-matter-in-closed-loop-transit/" class="card"><h3>Pillar: Why SAMs matter</h3><p>Why every closed-loop transit deployment over a few thousand cards needs a SAM-class module.</p><div class="card-meta">Read &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div><h2>Designing a SAM-protected reader?</h2><p>From SAM personalisation lines to validator firmware to back-office settlement &mdash; we have shipped the full chain.</p></div>
+      <div><a href="/contact/" class="btn btn-primary">Talk to engineers</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/technologies/desfire/">DESFire</a></li><li><a href="/technologies/sam/">SAM architecture</a></li><li><a href="/technologies/card-reader-sam-flow/">Card &harr; Reader &harr; SAM</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/transit-ticketing/">Transit ticketing</a></li><li><a href="/solutions/passwordless-mfa/">Passwordless &amp; MFA</a></li><li><a href="/solutions/iot-root-of-trust/">IoT root of trust</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+
+</body>
+</html>

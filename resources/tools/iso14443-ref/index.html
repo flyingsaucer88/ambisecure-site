@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ISO/IEC 14443 Quick Reference — AmbiSecure</title>
+<meta name="description" content="ISO/IEC 14443 contactless smart cards: parts, Type A vs B, anti-collision, framing, I/R/S blocks. One-page reference." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/iso14443-ref/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="ISO 14443 Quick Reference" />
+<meta property="og:description" content="Contactless smart-card protocol reference card." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/iso14443-ref/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Resources",
+"item": "/resources/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "ISO 14443 Reference",
+"item": "https://ambisecure.ambimat.com/resources/tools/iso14443-ref/"
+}
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "ISO 14443 Reference",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/iso14443-ref/",
+"offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">ISO 14443 Reference</span></nav>
+
+<main id="main">
+<header class="tool-header">
+  <span class="eyebrow">NFC reference</span>
+  <h1>ISO/IEC 14443 Quick Reference</h1>
+  <p>One-page reference for ISO/IEC 14443 contactless smart cards: parts, layers, Type A vs Type B, anti-collision, framing.</p>
+  <div class="tool-meta"><span>Reference</span><span>ISO/IEC 14443-1..-4</span></div>
+</header>
+<div class="tool-shell stacked">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Parts of the standard</h2></div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;font-family:'JetBrains Mono',monospace;">
+      <thead><tr style="background:var(--brand-soft);font-family:'Montserrat',sans-serif;font-size:11.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--brand-dark);">
+        <th style="padding:10px;text-align:left;width:80px;">Part</th><th style="padding:10px;text-align:left;width:200px;">Topic</th><th style="padding:10px;text-align:left;">Notes</th></tr></thead>
+      <tbody>
+      <tr style="border-bottom:1px solid var(--line);"><td style="padding:10px;">-1</td><td style="padding:10px;">Physical characteristics</td><td style="padding:10px;font-family:'Source Sans 3',sans-serif;">Card dimensions; environmental tolerances.</td></tr>
+      <tr style="border-bottom:1px solid var(--line);"><td style="padding:10px;">-2</td><td style="padding:10px;">RF interface</td><td style="padding:10px;font-family:'Source Sans 3',sans-serif;">13.56 MHz, modulation, coding, signalling. Type A = ASK 100% / Miller; Type B = ASK 10% / NRZ.</td></tr>
+      <tr style="border-bottom:1px solid var(--line);"><td style="padding:10px;">-3</td><td style="padding:10px;">Initialisation &amp; anti-collision</td><td style="padding:10px;font-family:'Source Sans 3',sans-serif;">REQA / WUPA, anti-collision loops, SELECT, UID handling. Cascade for 7- and 10-byte UIDs.</td></tr>
+      <tr><td style="padding:10px;">-4</td><td style="padding:10px;">Transmission protocol</td><td style="padding:10px;font-family:'Source Sans 3',sans-serif;">Block-oriented half-duplex protocol. RATS / ATS, I-blocks / R-blocks / S-blocks, framing.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Anti-collision in five lines</h2></div>
+    <ul style="font-family:'Source Sans 3',sans-serif;font-size:14.5px;color:var(--brand-dark);line-height:1.75;padding-left:22px;">
+      <li><strong>REQA</strong> / <strong>WUPA</strong> &mdash; reader probes the field for Type A cards.</li>
+      <li><strong>ATQA</strong> &mdash; cards in field reply with their Answer To reQuest A.</li>
+      <li><strong>Anti-collision loop</strong> &mdash; reader narrows in on each card by UID prefix until a single PICC is selected.</li>
+      <li><strong>SELECT</strong> &mdash; reader issues SELECT for a specific UID. PICC responds with SAK (Select Acknowledge) telling the reader what protocol it speaks (e.g. ISO 14443-4 compliant).</li>
+      <li><strong>RATS</strong> / <strong>ATS</strong> &mdash; reader requests the protocol parameters; PICC answers; reader caches.</li>
+    </ul>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>I / R / S blocks (Part 4)</h2></div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;font-family:'JetBrains Mono',monospace;">
+      <thead><tr style="background:var(--brand-soft);font-family:'Montserrat',sans-serif;font-size:11.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--brand-dark);">
+        <th style="padding:10px;text-align:left;width:90px;">Block</th><th style="padding:10px;text-align:left;">Use</th></tr></thead>
+      <tbody>
+      <tr style="border-bottom:1px solid var(--line);"><td style="padding:10px;">I-block</td><td style="padding:10px;font-family:'Source Sans 3',sans-serif;">Information block — carries application APDUs. Chained for long messages.</td></tr>
+      <tr style="border-bottom:1px solid var(--line);"><td style="padding:10px;">R-block</td><td style="padding:10px;font-family:'Source Sans 3',sans-serif;">Receive-ready / negative-acknowledge — for chaining and error recovery.</td></tr>
+      <tr><td style="padding:10px;">S-block</td><td style="padding:10px;font-family:'Source Sans 3',sans-serif;">Supervisory — wait-time extension (WTX) and deselect.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="tool-privacy">Static reference. No input leaves your browser.</div>
+<section class="tool-reference">
+  <h2>Where this fits</h2>
+  <p>ISO/IEC 14443 is the contactless companion to ISO/IEC 7816. The application-layer APDUs that ride on top are the same on both sides &mdash; once the contactless link is established, you are talking 7816-4 over a 14443-4 transport. DESFire layers its proprietary command set on top of the same APDU envelope.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/iso7816-ref/">ISO 7816 quick reference</a></p></div>
+    <div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/ats-parser/">ATS parser</a></p></div>
+    <div class="ref-card"><h3>Architecture</h3><p><a href="/technologies/desfire/">DESFire</a></p></div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/technologies/desfire/">DESFire</a></li><li><a href="/technologies/sam/">SAM architecture</a></li><li><a href="/technologies/card-reader-sam-flow/">Card &harr; Reader &harr; SAM</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/transit-ticketing/">Transit ticketing</a></li><li><a href="/solutions/passwordless-mfa/">Passwordless &amp; MFA</a></li><li><a href="/solutions/iot-root-of-trust/">IoT root of trust</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+
+</body>
+</html>

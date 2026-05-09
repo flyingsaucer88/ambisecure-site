@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NDEF Decoder — AmbiSecure</title>
+<meta name="description" content="Decode NFC Data Exchange Format (NDEF) messages — URI, Text, Smart Poster, MIME, External records." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/ndef-decoder/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="NDEF Decoder" />
+<meta property="og:description" content="Decode NDEF records in your browser." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/ndef-decoder/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Resources",
+"item": "/resources/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "NDEF Decoder",
+"item": "https://ambisecure.ambimat.com/resources/tools/ndef-decoder/"
+}
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "NDEF Decoder",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/ndef-decoder/",
+"offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">NDEF Decoder</span></nav>
+
+<main id="main">
+<header class="tool-header">
+  <span class="eyebrow">NFC utility</span>
+  <h1>NDEF Decoder</h1>
+  <p>Walk an NDEF (NFC Data Exchange Format) message into individual records and decode the well-known types: URI, Text, Smart Poster, MIME, External (including Android AAR). Client-side only.</p>
+  <div class="tool-meta"><span>Client-side</span><span>NFC Forum NDEF 1.0</span></div>
+</header>
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="nd-sample">Sample</button><button class="tool-action" id="nd-clear">Clear</button></div></div>
+    <label for="nd-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">NDEF message bytes in hex.</label>
+    <textarea id="nd-input" class="hex-input" rows="6" spellcheck="false" autocomplete="off"></textarea>
+    
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Decoded</h2></div>
+    <div class="tool-output" id="nd-output"><div class="placeholder">Paste hex to decode.</div></div>
+  </div>
+</div>
+<div class="tool-privacy">All decoding runs locally.</div>
+<section class="tool-reference">
+  <h2>About NDEF</h2>
+  <p>NDEF is the NFC Forum&rsquo;s record-based message format used by NFC tags, smart posters, and Android beam handovers. A message is a sequence of records; each record has a type, an optional ID, and a payload. Well-known type <code>U</code> carries URIs (with a 1-byte prefix code that expands to <code>http://www.</code>, <code>tel:</code>, etc.); type <code>T</code> carries text with a language code; type <code>Sp</code> is a Smart Poster (a nested NDEF message).</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Spec</h3><p>NFC Forum &mdash; NDEF Technical Specification.</p></div>
+    <div class="ref-card"><h3>Companion tool</h3><p><a href="/resources/tools/uid-analyzer/">UID analyzer</a></p></div>
+    <div class="ref-card"><h3>Architecture</h3><p><a href="/technologies/desfire/">DESFire</a></p></div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/technologies/desfire/">DESFire</a></li><li><a href="/technologies/sam/">SAM architecture</a></li><li><a href="/technologies/card-reader-sam-flow/">Card &harr; Reader &harr; SAM</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/transit-ticketing/">Transit ticketing</a></li><li><a href="/solutions/passwordless-mfa/">Passwordless &amp; MFA</a></li><li><a href="/solutions/iot-root-of-trust/">IoT root of trust</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/ndef-decoder.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MIFARE DESFire — EV1, EV2, EV3 architecture | AmbiSecure</title>
+<meta name="description" content="What changed across DESFire EV1, EV2, EV3 — application/file model, authentication, secure messaging, transaction MAC. Engineering reference, no exploit content." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/desfire/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="MIFARE DESFire — EV1 / EV2 / EV3 architecture" />
+<meta property="og:description" content="Architectural reference for DESFire EV1/EV2/EV3 — concept-level, deployment-aware." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/desfire/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Technologies",
+"item": "/technologies/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "DESFire",
+"item": "https://ambisecure.ambimat.com/technologies/desfire/"
+}
+]
+},
+{
+"@type": "TechArticle",
+"headline": "MIFARE DESFire \u2014 EV1 / EV2 / EV3 architecture",
+"author": {
+"@type": "Organization",
+"name": "AmbiSecure Engineering"
+},
+"publisher": {
+"@type": "Organization",
+"name": "AmbiSecure"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">DESFire</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology · Smart cards</span>
+    <h1>MIFARE DESFire — EV1, EV2, EV3.</h1>
+    <p class="dek">DESFire is the contactless smart-card platform that powers most of the world&rsquo;s closed-loop transit, building access, and stored-value applications. It is also one of the most misunderstood platforms in the field. Here is what each generation actually changed, where the architectural lines are drawn, and how authentication is meant to be designed &mdash; not how to break it.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Where DESFire fits</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>DESFire is an ISO/IEC 14443 Type A smart card with a proprietary application-layer command set. Where ISO 7816-4 gives you SELECT / READ BINARY / GET DATA, DESFire gives you a richer model: <strong>applications</strong> identified by AID, each containing <strong>files</strong> (Standard Data, Backup Data, Value, Linear Record, Cyclic Record), with <strong>per-file access rights</strong> referencing keys held inside the card. It is designed for transactional workloads &mdash; tap, debit, commit &mdash; under hard latency budgets at gates and validators.</p>
+      <p>For openness with telecom-grade ticketing, DESFire is paired with a <a href="/technologies/sam/">Secure Access Module (SAM)</a> in the reader so that issuer-level keys never sit in the validator firmware. The combined trust chain is documented at <a href="/technologies/card-reader-sam-flow/">Card &harr; Reader &harr; SAM</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">The three generations, side by side</h2><span class="section-line"></span></div>
+    <table class="prose" style="max-width:100%;">
+      <thead><tr><th></th><th>EV1</th><th>EV2</th><th>EV3</th></tr></thead>
+      <tbody>
+      <tr><th>Released</th><td>~2008</td><td>~2016</td><td>~2020</td></tr>
+      <tr><th>Crypto suites</th><td>3DES &middot; 3K3DES &middot; AES-128</td><td>AES-128 (default), legacy 3DES carried for back-compat</td><td>AES-128, with hardened side-channel countermeasures</td></tr>
+      <tr><th>Authentication</th><td>Native, ISO, AES variants. Two-pass challenge / response with random A and random B.</td><td>EV2 Secure Messaging (CMAC + AES-CBC). Transaction MAC (TMAC). Multi-key authentication for read &amp; write separately.</td><td>Same EV2-class secure messaging; refined countermeasures, broader command-level integrity.</td></tr>
+      <tr><th>Secure messaging</th><td>Optional plain / MACed / fully enciphered modes per command.</td><td>EV2-SM: per-session keys, command counter, integrated CMAC. Default for new deployments.</td><td>EV2-SM &middot; latency optimisations.</td></tr>
+      <tr><th>Transaction integrity</th><td>Per-file commit / abort. Backup files for atomic update.</td><td>+ Transaction MAC (TMAC) per commit. Issuer can verify transaction authenticity offline.</td><td>+ Transaction Timer for replay-window control.</td></tr>
+      <tr><th>Key diversification</th><td>Application-level key (one per slot).</td><td>+ recommended diversified keys per UID.</td><td>+ recommended diversified per UID with hardware-backed derivation in the SAM.</td></tr>
+      <tr><th>Capacity</th><td>2 / 4 / 8 KB EEPROM</td><td>2 / 4 / 8 KB</td><td>2 / 4 / 8 KB; some variants higher.</td></tr>
+      </tbody>
+    </table>
+    <p style="font-family:'Source Sans 3',sans-serif; color:var(--brand-grey); margin-top:14px; max-width:880px;">All three generations remain in deployed production fleets. Practical migrations involve <strong>EV3 cards</strong> personalised in <strong>EV2 mode</strong> for back-compat with installed validator estates, with EV3-only features unlocked as the validator firmware and SAM stack catches up.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Application &amp; file model</h2><span class="section-line"></span></div>
+    <div class="diagram">
+      <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="desfire-app-title">
+        <title id="desfire-app-title">DESFire application and file model</title>
+        <defs>
+  <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-dark)"/>
+  </marker>
+  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-red)"/>
+  </marker>
+  <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--secure-cyan)"/>
+  </marker>
+</defs>
+        <!-- card outline -->
+        <rect x="20" y="30" width="860" height="240" rx="10" fill="#fff" stroke="var(--brand-dark)" stroke-width="1.5"/>
+        <text x="40" y="55" class="lbl-tag">DESFIRE CARD</text>
+        <text x="40" y="72" class="lbl-mono">PICC master key (slot 0)</text>
+        <!-- app A -->
+        <rect x="40" y="100" width="240" height="150" class="actor-box accent"/>
+        <text x="60" y="125" class="lbl-tag">APPLICATION · AID 0x000001</text>
+        <text x="60" y="146" class="lbl-mono">App-master key</text>
+        <rect x="60" y="160" width="200" height="22" rx="3" fill="#fff" stroke="var(--line)"/>
+        <text x="70" y="176" font-size="11">Standard Data File 0 — keys 0/1</text>
+        <rect x="60" y="188" width="200" height="22" rx="3" fill="#fff" stroke="var(--line)"/>
+        <text x="70" y="204" font-size="11">Value File 1 — debit/credit</text>
+        <rect x="60" y="216" width="200" height="22" rx="3" fill="#fff" stroke="var(--line)"/>
+        <text x="70" y="232" font-size="11">Cyclic Record File 2 — last 10 trips</text>
+
+        <!-- app B -->
+        <rect x="320" y="100" width="240" height="150" class="actor-box cyan"/>
+        <text x="340" y="125" class="lbl-tag">APPLICATION · AID 0x000002</text>
+        <text x="340" y="146" class="lbl-mono">App-master key</text>
+        <rect x="340" y="160" width="200" height="22" rx="3" fill="#fff" stroke="var(--line)"/>
+        <text x="350" y="176" font-size="11">Standard Data File 0 — profile</text>
+        <rect x="340" y="188" width="200" height="22" rx="3" fill="#fff" stroke="var(--line)"/>
+        <text x="350" y="204" font-size="11">Linear Record File 1 — audit log</text>
+
+        <!-- app C -->
+        <rect x="600" y="100" width="240" height="150" class="actor-box"/>
+        <text x="620" y="125" class="lbl-tag">APPLICATION · AID 0x00000B</text>
+        <text x="620" y="146" class="lbl-mono">App-master key</text>
+        <rect x="620" y="160" width="200" height="22" rx="3" fill="#fff" stroke="var(--line)"/>
+        <text x="630" y="176" font-size="11">Backup Data File 0 — atomic state</text>
+      </svg>
+      <div class="diagram-caption">A DESFire card holds many independent applications; each application has its own file set and key set.</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Authentication, in concept</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>Authentication on DESFire is a <strong>three-pass mutual challenge / response</strong>. The card and the reader (or SAM, in a closed-loop deployment) prove to each other that they share the application key, without ever transmitting the key itself. The session that follows is protected by per-session keys derived from random nonces both sides contributed.</p>
+      <p>The flow is shown at the conceptual level below. Real APDU values, byte-level encryption details, and exploitable nuances are deliberately not reproduced here &mdash; we educate engineers on the architecture, not on attack tooling.</p>
+    </div>
+    <div class="diagram">
+      <svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="desfire-auth-title">
+        <title id="desfire-auth-title">DESFire EV2 mutual authentication — conceptual flow</title>
+        <defs>
+  <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-dark)"/>
+  </marker>
+  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-red)"/>
+  </marker>
+  <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--secure-cyan)"/>
+  </marker>
+</defs>
+        <!-- actors -->
+        <rect x="60"  y="20" width="180" height="40" class="actor-box accent"/>
+        <text x="150" y="45" text-anchor="middle" class="lbl-tag">CARD</text>
+        <rect x="660" y="20" width="180" height="40" class="actor-box cyan"/>
+        <text x="750" y="45" text-anchor="middle" class="lbl-tag">READER · SAM</text>
+        <line x1="150" y1="65"  x2="150" y2="340" class="actor-line"/>
+        <line x1="750" y1="65"  x2="750" y2="340" class="actor-line"/>
+
+        <!-- 1. SELECT APP -->
+        <line x1="750" y1="90"  x2="156" y2="90" class="arrow-cyan"/>
+        <text x="450" y="83" text-anchor="middle">1. SELECT APPLICATION (AID)</text>
+        <text x="450" y="102" text-anchor="middle" class="lbl-note">scopes the key set used for the rest of the session</text>
+
+        <!-- 2. AUTH start -->
+        <line x1="750" y1="140" x2="156" y2="140" class="arrow-cyan"/>
+        <text x="450" y="133" text-anchor="middle">2. AUTHENTICATE_EV2_FIRST(keyNo)</text>
+        <text x="450" y="152" text-anchor="middle" class="lbl-note">reader picks which application key to authenticate against</text>
+
+        <!-- 3. challenge from card -->
+        <line x1="156" y1="190" x2="744" y2="190" class="arrow-red"/>
+        <text x="450" y="183" text-anchor="middle">3. card -> rndB (encrypted with K)</text>
+        <text x="450" y="202" text-anchor="middle" class="lbl-note">card emits its random nonce, encrypted under the key</text>
+
+        <!-- 4. response -->
+        <line x1="750" y1="240" x2="156" y2="240" class="arrow-cyan"/>
+        <text x="450" y="233" text-anchor="middle">4. reader -> Enc(K, rndA || rndB&apos;)</text>
+        <text x="450" y="252" text-anchor="middle" class="lbl-note">reader proves it has K by returning rndB&apos; correctly + its own rndA</text>
+
+        <!-- 5. confirm -->
+        <line x1="156" y1="290" x2="744" y2="290" class="arrow-red"/>
+        <text x="450" y="283" text-anchor="middle">5. card -> Enc(K, rndA&apos;)</text>
+        <text x="450" y="302" text-anchor="middle" class="lbl-note">card proves it has K by returning rndA&apos; correctly</text>
+
+        <!-- session key -->
+        <rect x="270" y="320" width="360" height="30" rx="4" fill="var(--secure-cyan-soft)" stroke="var(--secure-cyan)"/>
+        <text x="450" y="340" text-anchor="middle" class="trust-label">SESSION KEYS DERIVED FROM (rndA, rndB) + COUNTER</text>
+      </svg>
+      <div class="diagram-caption">EV2 mutual authentication, concept-level. EV1 is similar; EV3 hardens the same shape.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Secure messaging modes</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>After authentication, every command and response is wrapped in a Secure Messaging mode chosen per file:</p>
+      <ul>
+        <li><strong>Plain.</strong> No protection. Used only for non-sensitive data on isolated systems.</li>
+        <li><strong>MACed.</strong> Integrity-protected with a CMAC. Useful when the data is not secret but must not be tampered with on the wire.</li>
+        <li><strong>Fully enciphered.</strong> AES-CBC of the payload, with a CMAC for integrity, under per-session keys derived from the authentication. The default for closed-loop production.</li>
+      </ul>
+      <p>EV2 and EV3 add a <strong>command counter</strong> that increments per APDU and is bound into the CMAC. A replay of a captured APDU is detected because its counter no longer matches the current session position.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Where DESFire shows up in our stack</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/products/tappable/" class="card"><h3>AmbiSecure Tappable</h3><p>NFC-only authenticator with a DESFire-compatible profile for transit / access deployments.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/solutions/closed-loop-ticketing/" class="card"><h3>Closed-loop ticketing</h3><p>The transit-grade reference architecture that uses DESFire + SAM to keep keys out of validator firmware.</p><div class="card-meta">View solution &rarr;</div></a>
+      <a href="/services/javacard-development/" class="card"><h3>JavaCard development</h3><p>For deployments that need DESFire-style behaviour on a JavaCard applet for issuer customisation.</p><div class="card-meta">View service &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Tools &amp; reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/resources/tools/desfire-status/" class="card"><h3>DESFire Status Decoder</h3><p>Look up DESFire response status bytes &mdash; OPERATION_OK, AUTHENTICATION_ERROR, etc.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/desfire-access-rights/" class="card"><h3>DESFire Access-Rights Decoder</h3><p>Decode the 16-bit access-rights word into Read / Write / Read+Write / Change keys.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/blog/desfire-ev1-vs-ev2-vs-ev3/" class="card"><h3>Pillar: EV1 vs EV2 vs EV3</h3><p>The deep technical evolution &mdash; what changed and what to deploy on greenfield.</p><div class="card-meta">Read &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div><h2>Designing a DESFire deployment?</h2><p>We have shipped DESFire-based access and ticketing systems for transit, enterprise access, and stored-value. Talk to engineers, not BDRs.</p></div>
+      <div><a href="/contact/" class="btn btn-primary">Talk to engineers</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/technologies/desfire/">DESFire</a></li><li><a href="/technologies/sam/">SAM architecture</a></li><li><a href="/technologies/card-reader-sam-flow/">Card &harr; Reader &harr; SAM</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/transit-ticketing/">Transit ticketing</a></li><li><a href="/solutions/passwordless-mfa/">Passwordless &amp; MFA</a></li><li><a href="/solutions/iot-root-of-trust/">IoT root of trust</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+
+</body>
+</html>

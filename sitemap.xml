@@ -86,4 +86,35 @@
   <url><loc>https://ambisecure.ambimat.com/blog/why-use-multi-factor-authentication/</loc><priority>0.7</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/top-3-benefits-of-mfa/</loc><priority>0.7</priority></url>
 
+  <!-- Phase 3: technologies (DESFire / SAM / Card<->Reader<->SAM) -->
+  <url><loc>https://ambisecure.ambimat.com/technologies/desfire/</loc><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/sam/</loc><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/card-reader-sam-flow/</loc><priority>0.9</priority></url>
+
+  <!-- Phase 3: solutions -->
+  <url><loc>https://ambisecure.ambimat.com/solutions/closed-loop-ticketing/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/transit-ticketing/</loc><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/secure-validator-platforms/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/offline-authentication/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/smart-access-control/</loc><priority>0.8</priority></url>
+
+  <!-- Phase 3: industries -->
+  <url><loc>https://ambisecure.ambimat.com/industries/transportation/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/industries/smart-cities/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/industries/government-and-defence/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/industries/enterprise-access/</loc><priority>0.75</priority></url>
+
+  <!-- Phase 3: Batch D tools (DESFire / NFC) -->
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/desfire-status/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/desfire-access-rights/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/ndef-decoder/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/uid-analyzer/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/ats-parser/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/iso14443-ref/</loc><priority>0.65</priority></url>
+
+  <!-- Phase 3: pillar blogs -->
+  <url><loc>https://ambisecure.ambimat.com/blog/desfire-ev1-vs-ev2-vs-ev3/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/why-sams-matter-in-closed-loop-transit/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/designing-low-latency-secure-transit-validators/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+
 </urlset>

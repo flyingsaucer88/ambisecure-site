@@ -1182,3 +1182,139 @@ footer.site-footer a:hover { color: var(--brand-red); }
   }
   html { scroll-behavior: auto; }
 }
+
+/* =========================================================
+   PHASE 3: SVG DIAGRAM PRIMITIVES
+   Reusable diagram components for DESFire / SAM / transit pages.
+   All inline SVG; brand palette via CSS vars.
+   ========================================================= */
+
+.diagram {
+  margin: 30px auto;
+  max-width: 1100px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 28px 24px;
+  position: relative;
+}
+.diagram.alt { background: var(--brand-soft); }
+.diagram-caption {
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  color: var(--muted-2);
+  margin-top: 16px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.diagram svg { width: 100%; height: auto; display: block; }
+.diagram svg text { font-family: 'Source Sans 3', sans-serif; font-size: 12px; fill: var(--ink); }
+.diagram svg .lbl-mono { font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: var(--brand-dark); }
+.diagram svg .lbl-tag {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  fill: var(--brand-dark);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.diagram svg .lbl-note {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 11px;
+  fill: var(--brand-grey);
+  font-style: italic;
+}
+.diagram svg .arrow { stroke: var(--brand-dark); stroke-width: 1.5; fill: none; marker-end: url(#arrow-head); }
+.diagram svg .arrow-red { stroke: var(--brand-red); stroke-width: 1.8; fill: none; marker-end: url(#arrow-head-red); }
+.diagram svg .arrow-cyan { stroke: var(--secure-cyan); stroke-width: 1.8; fill: none; marker-end: url(#arrow-head-cyan); }
+.diagram svg .arrow-dashed { stroke-dasharray: 4 3; }
+.diagram svg .actor-box { fill: #fff; stroke: var(--brand-dark); stroke-width: 1.5; rx: 4; }
+.diagram svg .actor-box.accent { fill: rgba(227,34,42,0.06); stroke: var(--brand-red); }
+.diagram svg .actor-box.cyan { fill: var(--secure-cyan-soft); stroke: var(--secure-cyan); }
+.diagram svg .actor-line { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 4; }
+.diagram svg .layer { stroke: var(--brand-dark); stroke-width: 1.5; rx: 4; }
+.diagram svg .layer.l1 { fill: #fff; }
+.diagram svg .layer.l2 { fill: var(--brand-soft); }
+.diagram svg .layer.l3 { fill: var(--secure-cyan-soft); stroke: var(--secure-cyan); }
+.diagram svg .layer.root { fill: var(--brand-dark); }
+.diagram svg .layer.root text { fill: #fff; }
+.diagram svg .key { fill: var(--brand-red); }
+.diagram svg .key-soft { fill: rgba(227,34,42,0.10); stroke: var(--brand-red); rx: 3; }
+.diagram svg .trust-zone {
+  fill: rgba(14,140,156,0.05);
+  stroke: var(--secure-cyan);
+  stroke-width: 1.2;
+  stroke-dasharray: 6 4;
+  rx: 6;
+}
+.diagram svg .trust-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+  fill: var(--secure-cyan-dark);
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+@media (max-width: 880px) {
+  .diagram { padding: 18px 12px; margin: 24px 0; }
+}
+
+/* Inline architecture-cards row used inside detail pages */
+.arch-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 24px 0;
+}
+.arch-row .arch-cell {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 16px 18px;
+  position: relative;
+}
+.arch-row .arch-cell.accent { border-left: 3px solid var(--brand-red); }
+.arch-row .arch-cell.cyan   { border-left: 3px solid var(--secure-cyan); }
+.arch-row .arch-cell .arch-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  color: var(--muted-2);
+  display: block;
+  margin-bottom: 4px;
+}
+.arch-row .arch-cell h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13.5px;
+  color: var(--ink);
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+.arch-row .arch-cell p {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  color: var(--brand-grey);
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* APDU step list — used in flow blog posts */
+.apdu-flow {
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: 6px;
+  padding: 18px 22px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 18px 0 22px;
+  overflow-x: auto;
+}
+.apdu-flow .step { color: #b0b3b8; display: block; margin-top: 8px; }
+.apdu-flow .step:first-child { margin-top: 0; }
+.apdu-flow .arrow-out { color: var(--brand-red); }
+.apdu-flow .arrow-in { color: var(--secure-cyan); }
+.apdu-flow .cmt { color: #6c7179; font-style: italic; }

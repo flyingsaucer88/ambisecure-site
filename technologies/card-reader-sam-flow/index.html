@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Card ↔ Reader ↔ SAM — mutual-authentication architecture | AmbiSecure</title>
+<meta name="description" content="Reference walkthrough of the trust chain that powers closed-loop DESFire deployments — trust zones, key hierarchy, mutual auth flow, offline lifecycle, validator form factors." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/card-reader-sam-flow/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Card ↔ Reader ↔ SAM — mutual-authentication architecture" />
+<meta property="og:description" content="Trust zones, key hierarchy, mutual auth, offline lifecycle." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/card-reader-sam-flow/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Technologies",
+"item": "/technologies/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "Card \u2194 Reader \u2194 SAM",
+"item": "https://ambisecure.ambimat.com/technologies/card-reader-sam-flow/"
+}
+]
+},
+{
+"@type": "TechArticle",
+"headline": "Card \u2194 Reader \u2194 SAM mutual-authentication architecture",
+"author": {
+"@type": "Organization",
+"name": "AmbiSecure Engineering"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">Card ↔ Reader ↔ SAM</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Architecture · Closed-loop</span>
+    <h1>Card &harr; Reader &harr; SAM &mdash; the mutual-authentication architecture.</h1>
+    <p class="dek">A reference walkthrough of the trust chain that powers every well-architected closed-loop deployment we have shipped: the card holds the credential, the SAM holds the issuer key, the reader is a router. Everything below is conceptual &mdash; we educate engineers on architecture, not on attack tooling.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">1. The four trust zones</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;"><p>Every reasoning step in the rest of this page comes back to one diagram: the four trust zones, what each holds, and what crosses each boundary.</p></div>
+    <div class="diagram">
+      <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cf-zones-title">
+        <title id="cf-zones-title">The four trust zones in a closed-loop deployment</title>
+        <defs>
+  <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-dark)"/>
+  </marker>
+  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-red)"/>
+  </marker>
+  <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--secure-cyan)"/>
+  </marker>
+</defs>
+        <!-- card -->
+        <rect x="20" y="100" width="160" height="120" class="actor-box accent"/>
+        <text x="100" y="125" text-anchor="middle" class="lbl-tag">CARD</text>
+        <text x="100" y="148" text-anchor="middle" font-size="11">DESFire EV2 / EV3</text>
+        <text x="100" y="170" text-anchor="middle" class="lbl-mono">K_card[i] = KDF(K_app, UID_i)</text>
+        <text x="100" y="200" text-anchor="middle" font-size="11" fill="var(--brand-grey)">issued + personalised</text>
+
+        <!-- reader -->
+        <rect x="220" y="100" width="180" height="120" class="actor-box"/>
+        <text x="310" y="125" text-anchor="middle" class="lbl-tag">READER · UNTRUSTED</text>
+        <text x="310" y="148" text-anchor="middle" font-size="11">routes APDUs</text>
+        <text x="310" y="170" text-anchor="middle" font-size="11">UI &middot; gate I/O</text>
+        <text x="310" y="200" text-anchor="middle" font-size="11" fill="var(--brand-grey)">cheap; replaceable</text>
+
+        <!-- SAM -->
+        <rect x="430" y="60" width="220" height="200" class="trust-zone"/>
+        <text x="540" y="52" text-anchor="middle" class="trust-label">ISSUER TRUST · SECURE BOUNDARY</text>
+        <rect x="450" y="100" width="180" height="120" class="actor-box cyan"/>
+        <text x="540" y="125" text-anchor="middle" class="lbl-tag">SAM · AV2 / AV3</text>
+        <text x="540" y="148" text-anchor="middle" font-size="11">tamper-resistant SE</text>
+        <text x="540" y="170" text-anchor="middle" class="lbl-mono">K_master · K_app</text>
+        <text x="540" y="200" text-anchor="middle" font-size="11" fill="var(--brand-grey)">field-replaceable unit</text>
+
+        <!-- backend -->
+        <rect x="690" y="100" width="190" height="120" class="actor-box"/>
+        <text x="785" y="125" text-anchor="middle" class="lbl-tag">BACKEND</text>
+        <text x="785" y="148" text-anchor="middle" font-size="11">issuer KMS</text>
+        <text x="785" y="170" text-anchor="middle" font-size="11">audit &middot; settle</text>
+        <text x="785" y="200" text-anchor="middle" font-size="11" fill="var(--brand-grey)">offline majority</text>
+
+        <!-- arrows -->
+        <line x1="180" y1="160" x2="220" y2="160" class="arrow-red"/>
+        <text x="200" y="148" text-anchor="middle" class="lbl-note">RF</text>
+        <line x1="400" y1="160" x2="450" y2="160" class="arrow-cyan"/>
+        <text x="425" y="148" text-anchor="middle" class="lbl-note">host SC</text>
+        <line x1="630" y1="160" x2="690" y2="160" class="arrow arrow-dashed"/>
+        <text x="660" y="148" text-anchor="middle" class="lbl-note">deferred</text>
+      </svg>
+      <div class="diagram-caption">Card, untrusted reader CPU, SAM (the issuer&rsquo;s trust boundary inside the reader), backend.</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">2. Key hierarchy</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>Everything below the master key is derived. No two cards share a working key; no two SAMs share a session key. Compromise is contained.</p>
+    </div>
+    <div class="diagram alt">
+      <svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cf-keys-title">
+        <title id="cf-keys-title">Key hierarchy from issuer master to per-tap session key</title>
+        <defs>
+  <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-dark)"/>
+  </marker>
+  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-red)"/>
+  </marker>
+  <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--secure-cyan)"/>
+  </marker>
+</defs>
+        <!-- master -->
+        <rect x="350" y="20" width="200" height="56" class="layer root"/>
+        <text x="450" y="44" text-anchor="middle" class="lbl-tag" fill="#fff">K_master · ISSUER</text>
+        <text x="450" y="62" text-anchor="middle" font-size="11" fill="#fff">stored in issuer HSM</text>
+
+        <!-- app keys -->
+        <line x1="450" y1="76" x2="200" y2="120" class="arrow"/>
+        <line x1="450" y1="76" x2="450" y2="120" class="arrow"/>
+        <line x1="450" y1="76" x2="700" y2="120" class="arrow"/>
+        <rect x="100" y="120" width="200" height="56" class="layer l2"/>
+        <text x="200" y="144" text-anchor="middle" class="lbl-tag">K_app[transit]</text>
+        <text x="200" y="164" text-anchor="middle" font-size="11">in every SAM</text>
+        <rect x="350" y="120" width="200" height="56" class="layer l2"/>
+        <text x="450" y="144" text-anchor="middle" class="lbl-tag">K_app[loyalty]</text>
+        <text x="450" y="164" text-anchor="middle" font-size="11">in every SAM</text>
+        <rect x="600" y="120" width="200" height="56" class="layer l2"/>
+        <text x="700" y="144" text-anchor="middle" class="lbl-tag">K_app[access]</text>
+        <text x="700" y="164" text-anchor="middle" font-size="11">in every SAM</text>
+
+        <!-- per-card keys -->
+        <line x1="200" y1="176" x2="200" y2="220" class="arrow"/>
+        <rect x="80" y="220" width="240" height="56" class="layer l3"/>
+        <text x="200" y="244" text-anchor="middle" class="lbl-tag">K_card[i] = KDF(K_app, UID_i)</text>
+        <text x="200" y="262" text-anchor="middle" font-size="11">on the card &amp; derived in SAM</text>
+
+        <!-- session keys -->
+        <line x1="200" y1="276" x2="200" y2="320" class="arrow-red"/>
+        <rect x="40" y="320" width="320" height="56" class="key-soft"/>
+        <text x="200" y="343" text-anchor="middle" class="lbl-tag" fill="var(--brand-red-dark)">K_session = f(K_card, rndA, rndB, counter)</text>
+        <text x="200" y="362" text-anchor="middle" font-size="11" fill="var(--brand-red-dark)">per-tap; bound to a single transaction</text>
+
+        <!-- legend boxes for the other apps -->
+        <rect x="400" y="220" width="450" height="100" rx="6" fill="#fff" stroke="var(--line)"/>
+        <text x="420" y="245" class="lbl-tag">EVERY APP FOLLOWS THE SAME PATTERN</text>
+        <text x="420" y="270" font-size="12" fill="var(--brand-grey)">K_app   →   K_card[i]   →   K_session per tap</text>
+        <text x="420" y="290" font-size="12" fill="var(--brand-grey)">No working key ever sits at the reader CPU.</text>
+        <text x="420" y="310" font-size="12" fill="var(--brand-grey)">Compromise of one card affects only that card.</text>
+      </svg>
+      <div class="diagram-caption">From issuer master, through application key, to diversified per-card key, to per-tap session key.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">3. Mutual authentication &mdash; with a SAM</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>The reader is a state machine that pumps APDUs between two parties that know the same key (the SAM and the card). The reader never sees the key. Crypto operations happen inside the card on one side and inside the SAM on the other; the reader stitches the two halves together.</p>
+    </div>
+    <div class="diagram">
+      <svg viewBox="0 0 920 540" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cf-with-sam-title">
+        <title id="cf-with-sam-title">Card ↔ Reader ↔ SAM mutual authentication sequence (concept-level)</title>
+        <defs>
+  <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-dark)"/>
+  </marker>
+  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-red)"/>
+  </marker>
+  <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--secure-cyan)"/>
+  </marker>
+</defs>
+        <!-- actors -->
+        <rect x="40"  y="20" width="160" height="40" class="actor-box accent"/>
+        <text x="120" y="45" text-anchor="middle" class="lbl-tag">CARD</text>
+        <rect x="380" y="20" width="160" height="40" class="actor-box"/>
+        <text x="460" y="45" text-anchor="middle" class="lbl-tag">READER</text>
+        <rect x="720" y="20" width="160" height="40" class="actor-box cyan"/>
+        <text x="800" y="45" text-anchor="middle" class="lbl-tag">SAM</text>
+        <line x1="120" y1="65"  x2="120" y2="520" class="actor-line"/>
+        <line x1="460" y1="65"  x2="460" y2="520" class="actor-line"/>
+        <line x1="800" y1="65"  x2="800" y2="520" class="actor-line"/>
+
+        <!-- 1: reader opens host SC with SAM -->
+        <line x1="466" y1="100" x2="794" y2="100" class="arrow-cyan"/>
+        <text x="630" y="93" text-anchor="middle">1. Open host secure channel (reader ↔ SAM)</text>
+        <text x="630" y="113" text-anchor="middle" class="lbl-note">mutual auth between reader CPU and the SAM, per-boot session keys</text>
+
+        <!-- 2: card tap, reader sends SELECT/AID -->
+        <line x1="466" y1="150" x2="126" y2="150" class="arrow"/>
+        <text x="295" y="143" text-anchor="middle">2. SELECT APPLICATION (AID)</text>
+        <text x="295" y="163" text-anchor="middle" class="lbl-note">card scopes its key set</text>
+
+        <!-- 3: AUTH_FIRST -->
+        <line x1="466" y1="200" x2="126" y2="200" class="arrow"/>
+        <text x="295" y="193" text-anchor="middle">3. AUTHENTICATE_EV2_FIRST(keyNo)</text>
+
+        <!-- 4: card -> reader -> SAM (rndB encrypted) -->
+        <line x1="126" y1="240" x2="794" y2="240" class="arrow-red"/>
+        <text x="460" y="233" text-anchor="middle">4. card → reader → SAM:  Enc(K_card, rndB)</text>
+        <text x="460" y="253" text-anchor="middle" class="lbl-note">SAM derives K_card from UID; decrypts rndB; picks rndA</text>
+
+        <!-- 5: SAM -> reader -> card response -->
+        <line x1="794" y1="290" x2="126" y2="290" class="arrow-cyan"/>
+        <text x="460" y="283" text-anchor="middle">5. SAM → reader → card:  Enc(K_card, rndA || rndB&apos;)</text>
+
+        <!-- 6: card confirm -->
+        <line x1="126" y1="330" x2="794" y2="330" class="arrow-red"/>
+        <text x="460" y="323" text-anchor="middle">6. card → SAM:  Enc(K_card, rndA&apos;)</text>
+        <text x="460" y="343" text-anchor="middle" class="lbl-note">both sides have proven possession of K_card</text>
+
+        <!-- session keys derived box -->
+        <rect x="240" y="360" width="440" height="30" rx="4" fill="var(--secure-cyan-soft)" stroke="var(--secure-cyan)"/>
+        <text x="460" y="380" text-anchor="middle" class="trust-label">SESSION KEYS DERIVED ON CARD AND ON SAM (rndA, rndB, counter)</text>
+
+        <!-- 7: secure messaging APDUs -->
+        <line x1="126" y1="420" x2="794" y2="420" class="arrow-dashed arrow"/>
+        <line x1="794" y1="450" x2="126" y2="450" class="arrow-dashed arrow"/>
+        <text x="460" y="413" text-anchor="middle">7. Subsequent APDUs wrapped in EV2 secure messaging (CMAC + AES-CBC)</text>
+        <text x="460" y="475" text-anchor="middle" class="lbl-note">each command carries the session counter; replays detected; reader still sees only ciphertext</text>
+
+        <!-- 8: settle -->
+        <rect x="240" y="495" width="440" height="22" rx="3" fill="rgba(227,34,42,0.08)" stroke="var(--brand-red)"/>
+        <text x="460" y="510" text-anchor="middle" class="trust-label" fill="var(--brand-red-dark)">8. SAM-SIGNED RECEIPT BUFFERED FOR DEFERRED SETTLEMENT</text>
+      </svg>
+      <div class="diagram-caption">Eight steps; reader CPU never holds K_card. Concept-level only.</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">4. Same flow &mdash; without a SAM</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>For comparison, the no-SAM variant. K_card has to live somewhere; if there is no SAM, it lives in reader firmware. One field-stolen reader becomes a system-wide leak. Acceptable for development benches and small-scale closed-system pilots; <strong>not</strong> acceptable for transit, payments, or any deployment with more than a handful of readers.</p>
+    </div>
+    <div class="diagram alt">
+      <svg viewBox="0 0 900 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cf-no-sam-title">
+        <title id="cf-no-sam-title">Mutual authentication without a SAM — keys live in reader firmware</title>
+        <defs>
+  <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-dark)"/>
+  </marker>
+  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-red)"/>
+  </marker>
+  <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--secure-cyan)"/>
+  </marker>
+</defs>
+        <rect x="40"  y="20" width="180" height="40" class="actor-box accent"/>
+        <text x="130" y="45" text-anchor="middle" class="lbl-tag">CARD</text>
+        <rect x="660" y="20" width="180" height="40" class="actor-box"/>
+        <text x="750" y="45" text-anchor="middle" class="lbl-tag">READER · K_card[*] in firmware</text>
+        <line x1="130" y1="65"  x2="130" y2="300" class="actor-line"/>
+        <line x1="750" y1="65"  x2="750" y2="300" class="actor-line"/>
+
+        <line x1="750" y1="100" x2="136" y2="100" class="arrow"/>
+        <text x="440" y="93" text-anchor="middle">1. SELECT APP / AUTHENTICATE_FIRST</text>
+        <line x1="136" y1="140" x2="744" y2="140" class="arrow-red"/>
+        <text x="440" y="133" text-anchor="middle">2. card → Enc(K, rndB)</text>
+        <line x1="750" y1="180" x2="136" y2="180" class="arrow"/>
+        <text x="440" y="173" text-anchor="middle">3. reader → Enc(K, rndA || rndB&apos;)</text>
+        <line x1="136" y1="220" x2="744" y2="220" class="arrow-red"/>
+        <text x="440" y="213" text-anchor="middle">4. card → Enc(K, rndA&apos;)</text>
+
+        <rect x="240" y="250" width="440" height="36" rx="4" fill="rgba(227,34,42,0.10)" stroke="var(--brand-red)"/>
+        <text x="460" y="272" text-anchor="middle" class="trust-label" fill="var(--brand-red-dark)">RISK: K_card lives on the reader CPU. One stolen reader = system-wide compromise.</text>
+      </svg>
+      <div class="diagram-caption">No-SAM. Functionally simpler, operationally fragile.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">5. The offline transaction lifecycle</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>Most of the world&rsquo;s transit gates are not online when you tap. They authorise locally against information cached at the validator and reconcile in batches when network is available. The lifecycle below is the reference shape we ship.</p>
+    </div>
+    <div class="diagram">
+      <svg viewBox="0 0 920 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cf-offline-title">
+        <title id="cf-offline-title">Offline transaction lifecycle — depot sync, field operation, deferred settlement</title>
+        <defs>
+  <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-dark)"/>
+  </marker>
+  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--brand-red)"/>
+  </marker>
+  <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--secure-cyan)"/>
+  </marker>
+</defs>
+        <rect x="20"  y="60" width="170" height="80" class="layer l1"/>
+        <text x="105" y="85" text-anchor="middle" class="lbl-tag">DEPOT SYNC</text>
+        <text x="105" y="110" text-anchor="middle" font-size="11">blacklist</text>
+        <text x="105" y="124" text-anchor="middle" font-size="11">fare config</text>
+
+        <line x1="190" y1="100" x2="220" y2="100" class="arrow-cyan"/>
+
+        <rect x="220" y="60" width="170" height="80" class="layer l3"/>
+        <text x="305" y="85" text-anchor="middle" class="lbl-tag">VALIDATOR · FIELD</text>
+        <text x="305" y="110" text-anchor="middle" font-size="11">offline auth</text>
+        <text x="305" y="124" text-anchor="middle" font-size="11">SAM-signed receipts</text>
+
+        <line x1="390" y1="100" x2="420" y2="100" class="arrow-cyan"/>
+
+        <rect x="420" y="60" width="170" height="80" class="layer l1"/>
+        <text x="505" y="85" text-anchor="middle" class="lbl-tag">BATCH BUFFER</text>
+        <text x="505" y="110" text-anchor="middle" font-size="11">SD / eMMC</text>
+        <text x="505" y="124" text-anchor="middle" font-size="11">tamper-evident</text>
+
+        <line x1="590" y1="100" x2="620" y2="100" class="arrow-cyan arrow-dashed"/>
+
+        <rect x="620" y="60" width="170" height="80" class="layer l2"/>
+        <text x="705" y="85" text-anchor="middle" class="lbl-tag">UPLOAD</text>
+        <text x="705" y="110" text-anchor="middle" font-size="11">cellular / Wi-Fi</text>
+        <text x="705" y="124" text-anchor="middle" font-size="11">end-of-shift</text>
+
+        <line x1="790" y1="100" x2="820" y2="100" class="arrow-cyan"/>
+
+        <rect x="820" y="60" width="80"  height="80" class="layer root"/>
+        <text x="860" y="85"  text-anchor="middle" class="lbl-tag" fill="#fff">SETTLE</text>
+        <text x="860" y="110" text-anchor="middle" font-size="11" fill="#fff">issuer</text>
+        <text x="860" y="124" text-anchor="middle" font-size="11" fill="#fff">audit</text>
+
+        <text x="450" y="180" text-anchor="middle" class="lbl-note">Receipts are SAM-signed; the issuer can verify each one against K_app even after a delay of hours.</text>
+        <text x="450" y="200" text-anchor="middle" class="lbl-note">Anti-rollback counter on the SAM bounds replay window for any captured cryptogram.</text>
+      </svg>
+      <div class="diagram-caption">Depot → validator → batch buffer → upload → settle. Most taps clear without ever being online.</div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">6. Three validator form factors</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;"><p>The same trust chain runs on three very different physical platforms. Each adds operational constraints; the architecture survives them all.</p></div>
+
+    <div class="arch-row">
+      <div class="arch-cell accent"><span class="arch-tag">Form factor 1</span><h4>Gate / turnstile validator</h4>
+      <p>Mains-powered, wired or Wi-Fi backhaul, ~300 ms tap-to-decision budget. Highest throughput. Often dual-redundant SAMs for 24×7 operation.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">Form factor 2</span><h4>Bus / on-vehicle validator</h4>
+      <p>Battery-buffered, intermittent cellular backhaul, vibration / temperature stress. Depot sync at start of shift; uploads at end of shift.</p></div>
+      <div class="arch-cell"><span class="arch-tag">Form factor 3</span><h4>Handheld inspector</h4>
+      <p>Battery-only, field inspection. Read-only relative to the card; signed inspection records buffered locally, uploaded on shift return.</p></div>
+    </div>
+
+    <div class="prose" style="max-width:880px;margin:0;margin-top:30px;">
+      <p>All three carry a SAM. All three implement the same Card↔Reader↔SAM flow. The only thing that differs is the cadence of <em>depot sync</em> and <em>upload</em>; the field operation is identical.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">7. Threats this architecture neutralises</h2><span class="section-line"></span></div>
+    <table class="prose" style="max-width:100%;">
+      <thead><tr><th>Threat</th><th>What stops it</th></tr></thead>
+      <tbody>
+      <tr><td>Stolen / tampered validator</td><td>No working key on the reader CPU. Replacing the SAM resets exposure to a single device.</td></tr>
+      <tr><td>Cloned card</td><td>Diversified per-card key. Cloning one card does not reveal any other. Card-side counters detect duplication on collision in the depot reconciliation.</td></tr>
+      <tr><td>Replayed transaction</td><td>Per-tap session keys + transaction MAC + monotonic counter. Captured cryptograms expire.</td></tr>
+      <tr><td>Reader firmware downgrade</td><td>SAM enforces firmware-version attestation on host secure-channel open.</td></tr>
+      <tr><td>Backend compromise</td><td>Issuer master key lives in HSM, not in backend application memory. Settlement is signature-verified, not trusted-by-source.</td></tr>
+      </tbody>
+    </table>
+    <p style="font-family:'Source Sans 3',sans-serif; color:var(--brand-grey); margin-top:14px; max-width:880px;">No architecture neutralises every threat. This one neutralises the threats with the worst consequences for an issuer at scale &mdash; the ones where one bad day puts the entire deployment in jeopardy.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Cross-references</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/technologies/desfire/" class="card"><h3>DESFire</h3><p>The card side &mdash; EV1, EV2, EV3 architecture and authentication.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/technologies/sam/" class="card"><h3>SAM architecture</h3><p>The reader-side trust anchor &mdash; AV2, AV3, key custody.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/solutions/closed-loop-ticketing/" class="card"><h3>Closed-loop ticketing</h3><p>The transit-grade reference architecture this flow is the heart of.</p><div class="card-meta">View solution &rarr;</div></a>
+    </div>
+    <div class="grid-3" style="margin-top: 18px;">
+      <a href="/blog/why-sams-matter-in-closed-loop-transit/" class="card"><h3>Pillar: Why SAMs matter</h3><p>Why every closed-loop transit deployment over a few thousand cards needs a SAM.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/blog/designing-low-latency-secure-transit-validators/" class="card"><h3>Pillar: Low-latency validators</h3><p>How to keep tap-to-decision under 300 ms while still doing all this crypto.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/blog/desfire-ev1-vs-ev2-vs-ev3/" class="card"><h3>Pillar: EV1 / EV2 / EV3</h3><p>The architectural evolution this flow is built on.</p><div class="card-meta">Read &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div><h2>Designing a closed-loop deployment?</h2><p>From SAM personalisation through validator firmware to back-office settlement, we ship the chain.</p></div>
+      <div><a href="/contact/" class="btn btn-primary">Talk to engineers</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/technologies/desfire/">DESFire</a></li><li><a href="/technologies/sam/">SAM architecture</a></li><li><a href="/technologies/card-reader-sam-flow/">Card &harr; Reader &harr; SAM</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/transit-ticketing/">Transit ticketing</a></li><li><a href="/solutions/passwordless-mfa/">Passwordless &amp; MFA</a></li><li><a href="/solutions/iot-root-of-trust/">IoT root of trust</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+
+</body>
+</html>
