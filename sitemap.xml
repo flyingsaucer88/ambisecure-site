@@ -195,6 +195,11 @@
   <url><loc>https://ambisecure.ambimat.com/solutions/javacard-deployment/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://ambisecure.ambimat.com/solutions/esim-security/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
 
+  <!-- Phase 6: Trust center, certifications, partners -->
+  <url><loc>https://ambisecure.ambimat.com/about/certifications/</loc><changefreq>monthly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/trust/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/partners/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+
   <!-- Phase 6: Legacy product/service menu coverage -->
   <url><loc>https://ambisecure.ambimat.com/products/onepass-bio-card/</loc><changefreq>monthly</changefreq><priority>0.95</priority></url>
   <url><loc>https://ambisecure.ambimat.com/products/iot-security-chipset/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
