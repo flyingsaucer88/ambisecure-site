@@ -1,0 +1,104 @@
+# =============================================================
+# AmbiSecure — LiteSpeed / Apache rewrite + redirect rules
+# =============================================================
+# Hosting: Hostinger (LiteSpeed). LiteSpeed honours .htaccess.
+# Strategy: 301 every legacy URL to its new home.
+# Source-of-truth list lives in docs/01-audit-and-content-inventory.md
+# and docs/04-seo-and-redirect-strategy.md.
+# =============================================================
+
+Options -MultiViews +FollowSymLinks
+DirectoryIndex index.html
+
+# Force HTTPS (Hostinger SSL is on; HSTS is set at the host level).
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Strip trailing index.html from URLs (canonicalise to directory form).
+RewriteCond %{THE_REQUEST} \s/+(.*?)index\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Redirect map — legacy WordPress URLs to new structure.
+# About
+Redirect 301 /about/company-overview /about/
+
+# Products
+Redirect 301 /product /products/
+Redirect 301 /authenticators /products/
+Redirect 301 /ambisecure-one-pass-a-multiple-application-card /products/onepass-card/
+Redirect 301 /ambisecure-one-pass-bio-card /products/onepass-bio-card/
+Redirect 301 /ambisecure-usb-key /products/onepass-usb-key/
+Redirect 301 /products/ambisecure-security-key /products/onepass-usb-key/
+Redirect 301 /products/ambisecure-card /products/onepass-card/
+Redirect 301 /ambisecure-iot-solution /products/iot-security-chipset/
+Redirect 301 /ambisecure-biokey /products/biokey/
+Redirect 301 /ambisecure-tappable /products/tappable/
+Redirect 301 /ambisecure-digital-signature-token /products/digital-signature-token/
+Redirect 301 /ambisecure-javacard-applet-enterprise-solution /products/javacard-applets/
+Redirect 301 /ambisecure-esim-solution https://esim.ambimat.com/
+
+# Services
+Redirect 301 /ambisecure-services /services/
+Redirect 301 /services/java-card-development /services/javacard-development/
+Redirect 301 /services/ambisecure-fido-validation-server /services/fido-validation-server/
+Redirect 301 /tool-chain-development /services/tool-chain-development/
+Redirect 301 /ambisecure-bio-enrollment-app /services/tool-chain-development/bio-enrollment-app/
+Redirect 301 /ambisecure-security-key-manager /services/tool-chain-development/security-key-manager/
+Redirect 301 /ambisecure-multi-card-applet-loading-tool /services/tool-chain-development/multi-card-applet-loader/
+Redirect 301 /ambisecure-ndef-personalisation-tool /services/tool-chain-development/ndef-personalisation/
+
+# Editorial / learn / certifications / FAQ
+Redirect 301 /cyber-security-threats /blog/cyber-security-threats-overview/
+Redirect 301 /certification /about/certifications/
+Redirect 301 /faqs /support/faqs/
+Redirect 301 /learn/ambisecure-fido-supported-services /blog/fido-supported-services/
+Redirect 301 /learn/how-it-work /blog/how-fido-authentication-works/
+Redirect 301 /how-to-use-the-ambisecure-fido-card /support/guides/use-fido-card/
+
+# Blog
+Redirect 301 /blogs /blog/
+Redirect 301 /implementing-fido2-authentication-a-complete-developer-guide-by-ambisecure /blog/implementing-fido2-developer-guide/
+Redirect 301 /why-use-multi-factor-authentication-mfa /blog/why-use-multi-factor-authentication/
+Redirect 301 /top-3-benefits-of-multi-factor-authentication /blog/top-3-benefits-of-mfa/
+
+# Brochure PDFs (preserve external backlinks pointing at /wp-content/uploads/)
+Redirect 301 /wp-content/uploads/2023/09/Brochure-3.pdf /assets/downloads/onepass-usb-key.pdf
+Redirect 301 /wp-content/uploads/2023/09/Brochure-4.pdf /assets/downloads/onepass-card.pdf
+Redirect 301 /wp-content/uploads/2023/09/Brochure-5.pdf /assets/downloads/onepass-bio-card.pdf
+
+# WordPress -> static cleanup: nuke any wp- crawl path with 410 (gone)
+RedirectMatch 410 ^/wp-login\.php
+RedirectMatch 410 ^/wp-admin(/.*)?$
+RedirectMatch 410 ^/xmlrpc\.php$
+
+# Custom 404
+ErrorDocument 404 /404.html
+
+# Cache headers (LiteSpeed honours these; Apache via mod_expires)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                 "access plus 7 days"
+  ExpiresByType application/javascript   "access plus 7 days"
+  ExpiresByType image/svg+xml            "access plus 30 days"
+  ExpiresByType image/webp               "access plus 30 days"
+  ExpiresByType image/png                "access plus 30 days"
+  ExpiresByType image/jpeg               "access plus 30 days"
+  ExpiresByType application/pdf          "access plus 30 days"
+  ExpiresByType text/html                "access plus 1 hour"
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  # CSP — same as eSIM site, keeps fonts working.
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:; object-src 'none'; upgrade-insecure-requests"
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml application/xml
+</IfModule>

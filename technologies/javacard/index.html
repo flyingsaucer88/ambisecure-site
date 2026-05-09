@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JavaCard — AmbiSecure | Bytecode applets on Secure Elements</title>
+<meta name="description" content="What JavaCard actually is — bytecode, lifecycle, CAP files, SCP03 loading, persistent vs transient memory — and where it fits in our products and services." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/javacard/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="JavaCard — AmbiSecure" />
+<meta property="og:description" content="Bytecode applets on Secure Elements: a practical overview." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/javacard/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Technologies",
+"item": "/technologies/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "JavaCard",
+"item": "https://ambisecure.ambimat.com/technologies/javacard/"
+}
+]
+},
+{
+"@type": "TechArticle",
+"headline": "JavaCard \u2014 bytecode applets on Secure Elements",
+"author": {
+"@type": "Organization",
+"name": "AmbiSecure Engineering"
+},
+"publisher": {
+"@type": "Organization",
+"name": "AmbiSecure"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">JavaCard</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology</span>
+    <h1>JavaCard, in plain language.</h1>
+    <p class="dek">JavaCard is the bytecode-based applet platform that runs on most modern secure elements. If you have ever held a smart card with FIDO, PIV, OpenPGP, or a banking applet on it, you have probably touched JavaCard. Here is what it actually is, and where it fits in the AmbiSecure stack.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">What runs on the chip</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>A JavaCard is not running standard Java. It runs <strong>JavaCard bytecode</strong> &mdash; a strict subset compiled into a CAP file. The Java Card Runtime Environment (JCRE) on the chip provides applet lifecycle, transient and persistent memory, transactions, and a small standard library. <a href="https://docs.oracle.com/en/java/javacard/3.2/index.html">JavaCard 3.x</a> APIs cover most of what an applet needs: ISO/IEC 7816 APDU dispatch, ECDSA / ECDH / RSA / AES, hashes, secure messaging.</p>
+      <p>The chip itself is a Common-Criteria-certified secure element. The JCRE isolates applets from each other (firewall) and from the host. Keys live in tamper-resistant memory and are usable but not exportable.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Lifecycle of an applet</h2><span class="section-line"></span></div>
+    <div class="arch">
+      <div class="arch-node"><span class="arch-tag">01</span><h4>Compile</h4><p>Java sources &rarr; class files &rarr; CAP file via the Java Card converter.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">02</span><h4>Load</h4><p>CAP loaded onto the card over <strong>SCP03</strong> via GlobalPlatform <code>INSTALL [for load]</code> + <code>LOAD</code>.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">03</span><h4>Install</h4><p><code>INSTALL [for install]</code> &mdash; instance created with install parameters; <code>install()</code> runs.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node accent"><span class="arch-tag">04</span><h4>Selectable</h4><p><code>INSTALL [for make selectable]</code>. Applet now responds to SELECT-by-AID.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">05</span><h4>Personalised</h4><p>Issuer keys / certs / configuration written under secure messaging.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Memory model: persistent vs transient</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>EEPROM and Flash on a smart-card chip have <strong>limited write cycles</strong> &mdash; treating them like RAM destroys the card. JavaCard exposes two transient-memory APIs (<code>JCSystem.makeTransientByteArray</code>, <code>makeTransientShortArray</code>, <code>makeTransientObjectArray</code>) that allocate from RAM and zero on reset / on deselect. Use them for session state. Use persistent fields only for things that must survive a power cut.</p>
+      <p>Get this wrong and the card will work fine in QA and silently die in the field after six months.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Where JavaCard appears in our work</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/products/onepass-card/" class="card"><h3>OnePass Card</h3><p>FIDO2 + PIV applets on a JavaCard 3.x chip. Resident credentials, NFC + USB, brandable.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/javacard-applets/" class="card"><h3>JavaCard Applet Platform</h3><p>FIDO, PIV, OpenPGP and custom applets, plus the personalisation tooling that makes them shippable.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/services/javacard-development/" class="card"><h3>JavaCard Development service</h3><p>Custom applets designed, written, loaded over SCP03, and personalised. Both the standards-driven applets and the bespoke ones.</p><div class="card-meta">View service &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Tools and reference</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/resources/tools/apdu-parser/" class="card"><h3>APDU Parser</h3><p>Inspect any APDU your applet emits.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/sw-lookup/" class="card"><h3>SW1/SW2 Lookup</h3><p>Decode the status word your applet returned.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/gp-status/" class="card"><h3>GP Status Reference</h3><p>Card and applet lifecycle states &mdash; what each transition allows.</p><div class="card-meta">Open tool &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div><h2>JavaCard work for your team?</h2><p>Tell us your target chip family, target applet (FIDO / PIV / custom), and the personalisation flow. We will tell you what is realistic.</p></div>
+      <div><a href="/contact/" class="btn btn-primary">Talk to engineers</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>APDU Parser — AmbiSecure | Decode ISO/IEC 7816-4 command &amp; response APDUs</title>
+<meta name="description" content="Free, client-side APDU parser. Decode CLA / INS / P1 / P2 / Lc / Le for Case 1-4 (short and extended length), or response APDUs with status word lookup." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/apdu-parser/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="APDU Parser — AmbiSecure" />
+<meta property="og:description" content="Decode smart-card command and response APDUs in your browser." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/apdu-parser/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"BreadcrumbList","itemListElement":[
+   {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
+   {"@type":"ListItem","position":2,"name":"Resources","item":"https://ambisecure.ambimat.com/resources/"},
+   {"@type":"ListItem","position":3,"name":"APDU Parser","item":"https://ambisecure.ambimat.com/resources/tools/apdu-parser/"}
+ ]},
+ {"@type":"SoftwareApplication","name":"APDU Parser","applicationCategory":"DeveloperApplication","operatingSystem":"Web","url":"https://ambisecure.ambimat.com/resources/tools/apdu-parser/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+]}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">APDU Parser</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Smart-card utility</span>
+  <h1>APDU Parser</h1>
+  <p>Decode ISO/IEC 7816-4 command APDUs (Case 1&ndash;4, short and extended length) and response APDUs (with SW1/SW2 status-word lookup against the ISO + GlobalPlatform + EMV common dictionary). Auto-detect or force command vs response.</p>
+  <div class="tool-meta">
+    <span>Client-side</span><span>No login</span><span>ISO/IEC 7816-4</span><span>Updated 2026-05</span>
+  </div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head">
+      <h2>Input</h2>
+      <div class="tool-panel-actions">
+        <button class="tool-action" id="apdu-sample">Cmd sample</button>
+        <button class="tool-action" id="apdu-sample-resp">Resp sample</button>
+        <button class="tool-action" id="apdu-clear">Clear</button>
+      </div>
+    </div>
+    <label for="apdu-input" style="font-size:13px; color:var(--brand-grey); margin-bottom:6px;">Hex bytes</label>
+    <textarea id="apdu-input" class="hex-input" rows="6" spellcheck="false" autocomplete="off" placeholder="00 A4 04 00 07 A0 00 00 00 03 10 10 00"></textarea>
+    <div class="tool-options">
+      <label>Mode:
+        <select id="apdu-mode">
+          <option value="auto">auto-detect</option>
+          <option value="command">command</option>
+          <option value="response">response</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head">
+      <h2>Decoded</h2>
+    </div>
+    <div class="tool-output" id="apdu-output">
+      <div class="placeholder">Paste a command or response APDU.</div>
+    </div>
+  </div>
+</div>
+
+<div class="tool-privacy">All parsing happens in your browser. No bytes are sent to a server.</div>
+
+<section class="tool-reference">
+  <h2>APDU in one line</h2>
+  <p>An <strong>APDU</strong> (Application Protocol Data Unit) is the message format used between a smart-card terminal and the card. <a href="https://www.iso.org/standard/77180.html">ISO/IEC 7816-4</a> defines four cases &mdash; combinations of command-data (Lc) and expected-response (Le) presence &mdash; and two length forms (short, where each length field is 1 byte; and extended, where they are 3 bytes). This parser handles all eight combinations and, on the response side, decodes the SW1/SW2 status word against the common dictionary (ISO 7816-4, GlobalPlatform, EMV).</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Spec</h3><p>ISO/IEC 7816-4 (and Annex G for extended length).</p></div>
+    <div class="ref-card"><h3>Pillar post</h3><p><a href="/blog/apdu-from-first-principles/">APDU from first principles &mdash; CLA, INS, P1/P2, Le, Lc, and SW1/SW2.</a></p></div>
+    <div class="ref-card"><h3>Related tools</h3><p><a href="/resources/tools/atr-parser/">ATR parser</a> &middot; <a href="/resources/tools/tlv-parser/">TLV parser</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/atr-parser/">ATR parser</a></li><li><a href="/resources/tools/apdu-parser/">APDU parser</a></li><li><a href="/resources/tools/tlv-parser/">TLV parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/tools/apdu-parser.js" defer></script>
+</body>
+</html>

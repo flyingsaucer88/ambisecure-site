@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url><loc>https://ambisecure.ambimat.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/about/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/contact/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/support/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <!-- Products -->
+  <url><loc>https://ambisecure.ambimat.com/products/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/onepass-card/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/onepass-bio-card/</loc><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/onepass-usb-key/</loc><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/biokey/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/tappable/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/digital-signature-token/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/iot-security-chipset/</loc><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/javacard-applets/</loc><priority>0.85</priority></url>
+
+  <!-- Solutions -->
+  <url><loc>https://ambisecure.ambimat.com/solutions/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/passwordless-mfa/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/iot-root-of-trust/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/secure-provisioning/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/digital-identity/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/payment-security/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/secure-firmware-update/</loc><priority>0.75</priority></url>
+
+  <!-- Technologies -->
+  <url><loc>https://ambisecure.ambimat.com/technologies/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/javacard/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/secure-elements/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/fido/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/pki/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/nfc-desfire/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/esim/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/apdu/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/cryptography/</loc><priority>0.75</priority></url>
+
+  <!-- Industries -->
+  <url><loc>https://ambisecure.ambimat.com/industries/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/industries/banking-and-payments/</loc><priority>0.65</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/industries/government-and-defence/</loc><priority>0.65</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/industries/telecom/</loc><priority>0.65</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/industries/healthcare/</loc><priority>0.65</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/industries/iot-and-industrial/</loc><priority>0.65</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/industries/retail-and-hospitality/</loc><priority>0.65</priority></url>
+
+  <!-- Resources / Tools -->
+  <url><loc>https://ambisecure.ambimat.com/resources/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/atr-parser/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/apdu-parser/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/tlv-parser/</loc><priority>0.7</priority></url>
+  <!-- Phase 2: certificates &amp; PKI -->
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/x509-viewer/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/pem-der/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/csr-decoder/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/cert-fingerprint/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/cert-chain/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/base64-cert/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/pfx-inspector/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/asn1-parser/</loc><priority>0.75</priority></url>
+  <!-- Phase 2: encoding -->
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/ascii-hex/</loc><priority>0.65</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/hex-bytes/</loc><priority>0.65</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/base64/</loc><priority>0.65</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/utf8/</loc><priority>0.65</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/endian/</loc><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/length-field/</loc><priority>0.6</priority></url>
+  <!-- Phase 2: smart-card reference -->
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/sw-lookup/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/apdu-status-dict/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/iso7816-ref/</loc><priority>0.65</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/gp-status/</loc><priority>0.65</priority></url>
+  <!-- Phase 2: detail pages -->
+  <url><loc>https://ambisecure.ambimat.com/technologies/javacard/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/fido/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/passwordless-mfa/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/onepass-usb-key/</loc><priority>0.85</priority></url>
+  <!-- Phase 2: pillar blog -->
+  <url><loc>https://ambisecure.ambimat.com/blog/apdu-from-first-principles/</loc><priority>0.85</priority></url>
+
+  <!-- Blog -->
+  <url><loc>https://ambisecure.ambimat.com/blog/</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/implementing-fido2-developer-guide/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/why-use-multi-factor-authentication/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/top-3-benefits-of-mfa/</loc><priority>0.7</priority></url>
+
+</urlset>

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Passwordless & MFA — AmbiSecure | Hardware-bound enterprise authentication</title>
+<meta name="description" content="Replace passwords + OTP with hardware-bound FIDO2 credentials — phishing-resistant by construction. Reference architecture, migration path, deployment options." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/solutions/passwordless-mfa/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Passwordless & MFA — AmbiSecure" />
+<meta property="og:description" content="Hardware-bound FIDO2 for enterprise — phishing-resistant." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/solutions/passwordless-mfa/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Solutions",
+"item": "/solutions/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "Passwordless & MFA",
+"item": "https://ambisecure.ambimat.com/solutions/passwordless-mfa/"
+}
+]
+},
+{
+"@type": "Service",
+"name": "Passwordless & MFA solution",
+"provider": {
+"@type": "Organization",
+"name": "AmbiSecure"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/" class="active">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/solutions/">Solutions</a><span class="sep">/</span><span class="current">Passwordless & MFA</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Solution</span>
+    <h1>Passwordless &amp; MFA &mdash; without the OTP fatigue.</h1>
+    <p class="dek">Replace shared-secret passwords with hardware-bound FIDO2 credentials. Phishing-resistant by construction. Cards, USB keys, and biometric tokens &mdash; enterprise-deployable, audit-friendly, no battery to die in someone&rsquo;s drawer.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">What this actually solves</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <ul>
+        <li><strong>Credential stuffing.</strong> The attacker has 12+ billion leaked passwords. With FIDO2 there is no password to steal &mdash; the per-origin keypair is generated and stored in the authenticator and never leaves it.</li>
+        <li><strong>Phishing.</strong> A FIDO2 credential is bound to the relying-party origin in the browser. A look-alike phishing site cannot harvest a usable credential because the browser will not authorise the wrong origin.</li>
+        <li><strong>OTP interception / SIM swap.</strong> SMS and TOTP both have a real-time-interception window. Hardware-bound MFA does not.</li>
+        <li><strong>UX fatigue.</strong> Tap a card, touch a key. No 30-second OTP entry. Resident credentials drop the username field too.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Reference architecture</h2><span class="section-line"></span></div>
+    <div class="trust-chain">
+      <div class="layer root"><span class="layer-name">Authenticator &mdash; OnePass Card / OnePass USB Key / OnePass Bio Card</span><span class="layer-tag">CREDENTIAL</span></div>
+      <div class="layer"><span class="layer-name">Browser &mdash; WebAuthn / CTAP2 over USB / NFC</span><span class="layer-tag">TRANSPORT</span></div>
+      <div class="layer"><span class="layer-name">Application &mdash; calls the relying-party API</span><span class="layer-tag">CLIENT</span></div>
+      <div class="layer"><span class="layer-name">AmbiSecure FIDO Validation Server</span><span class="layer-tag">RP / VERIFY</span></div>
+      <div class="layer"><span class="layer-name">Identity Provider &mdash; SAML / OIDC / IdP federation</span><span class="layer-tag">IDENTITY</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Three deployment paths</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/products/onepass-card/" class="card"><h3>Path 1 &mdash; Card-as-badge</h3><p>One card replaces both the corporate badge and the security key. Best for office-based workforces.</p><div class="card-meta">View OnePass Card &rarr;</div></a>
+      <a href="/products/onepass-usb-key/" class="card"><h3>Path 2 &mdash; USB key</h3><p>Pure security key, USB-A or USB-C, for distributed / remote workforces.</p><div class="card-meta">View OnePass USB Key &rarr;</div></a>
+      <a href="/products/onepass-bio-card/" class="card"><h3>Path 3 &mdash; Biometric card</h3><p>Match-on-card fingerprint adds the third factor without a phone or PIN entry. Highest assurance.</p><div class="card-meta">View Bio Card &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Migration path from password+OTP</h2><span class="section-line"></span></div>
+    <div class="arch">
+      <div class="arch-node"><span class="arch-tag">01</span><h4>Pilot 100</h4><p>Issue a pilot batch to one team. Validate IdP integration and user UX.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">02</span><h4>Allow alongside</h4><p>FIDO2 added as a permitted MFA method alongside existing OTP / push.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node accent"><span class="arch-tag">03</span><h4>Require for privileged</h4><p>Privileged accounts require FIDO2. OTP retained as fallback only.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">04</span><h4>Workforce-wide</h4><p>FIDO2 the default; password retained only as a fallback during enrollment.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">05</span><h4>Passwordless</h4><p>Resident credentials &mdash; users don&rsquo;t even type their username.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Pillar reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/blog/implementing-fido2-developer-guide/" class="blog-card"><span class="chip">FIDO2 · Pillar</span><h3>Implementing FIDO2: A Complete Developer Guide</h3><p>End-to-end registration / authentication / attestation walkthrough.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/technologies/fido/" class="blog-card"><span class="chip">Technology</span><h3>FIDO &amp; WebAuthn explained</h3><p>How the spec breaks down, in plain language.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/why-use-multi-factor-authentication/" class="blog-card"><span class="chip">MFA</span><h3>Why use MFA?</h3><p>The economic argument, not the lecture.</p><span class="read-more">Read &rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div><h2>Pilot a passwordless rollout.</h2><p>Tell us your IdP (Okta, Azure AD, Ping, ForgeRock, custom), target user count, and certification target. Pilot batches in 6&ndash;8 weeks.</p></div>
+      <div><a href="/contact/" class="btn btn-primary">Start a pilot</a></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

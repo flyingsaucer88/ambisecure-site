@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CSR Decoder — AmbiSecure | Decode PKCS#10 CSRs client-side</title>
+<meta name="description" content="Decode a PKCS#10 Certificate Signing Request — subject, public key, requested extensions, signature algorithm. Client-side only, no upload." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/csr-decoder/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="CSR Decoder — AmbiSecure" />
+<meta property="og:description" content="Decode PKCS#10 CSRs in your browser." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/csr-decoder/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "https://ambisecure.ambimat.com/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Resources",
+"item": "https://ambisecure.ambimat.com/resources/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "PKCS#10 CSR Decoder",
+"item": "https://ambisecure.ambimat.com/resources/tools/csr-decoder/"
+}
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "PKCS#10 CSR Decoder",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/csr-decoder/",
+"offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">CSR Decoder</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">PKI utility</span>
+  <h1>PKCS#10 CSR Decoder</h1>
+  <p>Decode a Certificate Signing Request (CSR) — subject DN, public key, signature algorithm, and any requested extensions (SAN, basic constraints, key usage). Useful for sanity-checking what your tooling is about to send to a CA. Drop a .csr file or paste the PEM block.</p>
+  <div class="tool-meta"><span>Client-side</span><span>No upload</span><span>RFC 2986</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel" id="csr-drop">
+    <div class="tool-panel-head">
+      <h2>Input</h2>
+      <div class="tool-panel-actions">
+        <label class="tool-action file-pick">Choose file<input type="file" id="csr-file" accept=".pem,.crt,.cer,.der,.csr,.key,.txt,.p7b"></label>
+        <button class="tool-action" id="csr-sample">Sample</button>
+        <button class="tool-action" id="csr-clear">Clear</button>
+      </div>
+    </div>
+    <label for="csr-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">PEM-armoured CSR (or hex / base64 of the DER).</label>
+    <textarea id="csr-input" class="hex-input" rows="10" spellcheck="false"></textarea>
+    
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2></div>
+    <div class="tool-output" id="csr-output"><div class="placeholder">Paste, drop, or pick a file.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All parsing runs locally.</div>
+
+<section class="tool-reference">
+  <h2>CSRs in one line</h2>
+  <p>A CSR is a self-signed PKCS#10 structure: a CertificationRequestInfo (version, subject, public key, optional attributes incl. requestedExtensions) plus the algorithm and signature over it. Defined by <a href="https://datatracker.ietf.org/doc/html/rfc2986">RFC 2986</a>. The CA discards everything except the bits it wants and re-signs.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Spec</h3><p>RFC 2986 (PKCS#10) and RFC 5280 (extensions).</p></div><div class="ref-card"><h3>Companion tool</h3><p>Convert PEM ↔ DER if your CSR arrives in raw form.</p><p><a href="/resources/tools/pem-der/">PEM ↔ DER →</a></p></div><div class="ref-card"><h3>Related blog</h3><p>Coming soon: PKI for the embedded world.</p><p><a href="/blog/">Engineering blog →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/lib/asn1.js" defer></script>
+<script src="/assets/js/lib/x509.js" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/csr-decoder.js" defer></script>
+</body>
+</html>

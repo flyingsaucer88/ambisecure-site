@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>APDU from First Principles: CLA, INS, P1/P2, Le, Lc, and SW1/SW2 | AmbiSecure</title>
+<meta name="description" content="A practical, deployment-focused walkthrough of ISO/IEC 7816-4 APDUs — Case 1-4, short and extended length, CLA bits, status words, and the gotchas. With code that compiles." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/apdu-from-first-principles/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="APDU from First Principles" />
+<meta property="og:description" content="Practical, deployment-focused APDU walkthrough — CLA, INS, P1/P2, Lc, Le, SW1/SW2 — with examples." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/apdu-from-first-principles/" />
+<meta property="article:published_time" content="2026-05-09" />
+<meta property="article:author" content="AmbiSecure Engineering" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"BreadcrumbList","itemListElement":[
+   {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
+   {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
+   {"@type":"ListItem","position":3,"name":"APDU from First Principles","item":"https://ambisecure.ambimat.com/blog/apdu-from-first-principles/"}
+ ]},
+ {"@type":"Article","headline":"APDU from First Principles","datePublished":"2026-05-09","dateModified":"2026-05-09","author":{"@type":"Organization","name":"AmbiSecure Engineering"},"publisher":{"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},"mainEntityOfPage":"https://ambisecure.ambimat.com/blog/apdu-from-first-principles/","keywords":"APDU, ISO 7816-4, smart card, CLA, INS, P1, P2, Lc, Le, SW1, SW2, status word"}
+]}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">APDU from First Principles</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>APDU</span>
+      <span>Cornerstone</span>
+      <span>Published 2026-05-09</span>
+      <span>Updated 2026-05-09</span>
+      <span>22 min read</span>
+    </div>
+
+    <h1>APDU from First Principles: CLA, INS, P1/P2, Le, Lc, and SW1/SW2</h1>
+    <p class="dek">If you have ever poked at a smart card with PC/SC, gpshell, or OpenSC, you have seen a stream of hex bytes labelled APDUs. This is what those bytes actually mean, when each form is used, and which mistakes keep biting people in production.</p>
+
+    <p>This post is the cornerstone of our APDU cluster. The companion utility tools are linked throughout: paste your hex into the <a href="/resources/tools/apdu-parser/">APDU parser</a> as you read.</p>
+
+    <h2 id="what-is-an-apdu">What an APDU actually is</h2>
+    <p>APDU stands for <strong>Application Protocol Data Unit</strong>. It is the wire format for messages between a smart-card terminal (the <em>reader</em>) and the application running on the chip (the <em>card</em>). It is defined in <a href="https://www.iso.org/standard/77180.html">ISO/IEC 7816-4</a>, and used by every contact and contactless smart-card application in production: EMV banking cards, FIDO authenticators, eSIM applets, transit cards, SIMs, government eIDs.</p>
+    <p>Two kinds of APDU exist:</p>
+    <ul>
+      <li><strong>Command APDU</strong> &mdash; what the reader sends to the card.</li>
+      <li><strong>Response APDU</strong> &mdash; what the card sends back, ending always with two status bytes (<strong>SW1</strong> and <strong>SW2</strong>).</li>
+    </ul>
+
+    <h2 id="command-shape">Command APDU shape</h2>
+    <p>A command APDU is at minimum a 4-byte header:</p>
+<pre><code><span class="c">// Header: 4 bytes</span>
+CLA  INS  P1  P2</code></pre>
+    <p>Followed by zero, one, or both of:</p>
+    <ul>
+      <li><strong>Lc + Data</strong> &mdash; outbound data the reader is sending to the card. <code>Lc</code> is the length.</li>
+      <li><strong>Le</strong> &mdash; the maximum length of response data the reader expects.</li>
+    </ul>
+
+    <p>Combinations give the four <strong>cases</strong>:</p>
+    <table>
+      <thead><tr><th>Case</th><th>Layout</th><th>What it means</th></tr></thead>
+      <tbody>
+        <tr><td>Case 1</td><td><code>CLA INS P1 P2</code></td><td>No data going either direction. Almost a "ping".</td></tr>
+        <tr><td>Case 2</td><td><code>CLA INS P1 P2 Le</code></td><td>No data sent. Reader is asking for up to <code>Le</code> bytes back.</td></tr>
+        <tr><td>Case 3</td><td><code>CLA INS P1 P2 Lc Data</code></td><td>Reader sends <code>Lc</code> bytes; expects only SW1/SW2 back.</td></tr>
+        <tr><td>Case 4</td><td><code>CLA INS P1 P2 Lc Data Le</code></td><td>Both directions.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="cla">CLA — the class byte</h2>
+    <p>CLA tells the card how to interpret the command and what context it is in (channel, secure messaging, proprietary or inter-industry).</p>
+<pre><code><span class="c">// CLA bit layout for inter-industry commands (b8..b1)</span>
+<span class="k">b8 b7 b6 b5</span>  command class
+            0000 = inter-industry, ISO/IEC 7816-4
+            10xx = proprietary (GP often uses 0x80)
+<span class="k">b4 b3</span>        secure messaging
+            00 = none
+            10 = header authenticated
+            11 = full secure messaging (cmd + body)
+<span class="k">b2 b1</span>        logical channel (0..3)</code></pre>
+
+    <p>So <code>0x00</code> = inter-industry, no secure messaging, channel 0. <code>0x80</code> = proprietary (GlobalPlatform style), channel 0. <code>0x84</code> = proprietary, header-authenticated SM, channel 0. <code>0x0C</code> = inter-industry with full SM, channel 0.</p>
+
+    <h2 id="ins">INS — the instruction byte</h2>
+    <p>INS is the actual operation code. ISO 7816-4 defines a "global" set; individual specs (PIV, OpenPGP, EMV, FIDO/CTAP1) define their own. Common ones:</p>
+    <table>
+      <thead><tr><th>INS</th><th>Operation</th></tr></thead>
+      <tbody>
+        <tr><td><code>0x20</code></td><td>VERIFY (PIN / CHV)</td></tr>
+        <tr><td><code>0x22</code></td><td>MANAGE SECURITY ENVIRONMENT</td></tr>
+        <tr><td><code>0x84</code></td><td>GET CHALLENGE</td></tr>
+        <tr><td><code>0x88</code></td><td>INTERNAL AUTHENTICATE</td></tr>
+        <tr><td><code>0xA4</code></td><td>SELECT (file / AID)</td></tr>
+        <tr><td><code>0xB0</code></td><td>READ BINARY</td></tr>
+        <tr><td><code>0xB2</code></td><td>READ RECORD</td></tr>
+        <tr><td><code>0xC0</code></td><td>GET RESPONSE</td></tr>
+        <tr><td><code>0xCA</code></td><td>GET DATA</td></tr>
+        <tr><td><code>0xD6</code></td><td>UPDATE BINARY</td></tr>
+      </tbody>
+    </table>
+    <p>Convention: even INS values are most common; odd INS often indicates a variant of the same operation (extended addressing, alternative encoding).</p>
+
+    <h2 id="p1p2">P1 and P2 — instruction parameters</h2>
+    <p>P1 and P2 are two opaque bytes whose meaning is defined per-INS. For SELECT (<code>INS=0xA4</code>), P1 selects the addressing mode and P2 controls the response format:</p>
+<pre><code><span class="c">// SELECT P1 = 04 (Select by DF name / AID)</span>
+<span class="c">// SELECT P2 = 00 (return FCI; first or only occurrence)</span>
+00 A4 04 00 07 A0 00 00 00 03 10 10 00
+^^ ^^ ^^ ^^ ^^ ^^^^^^^^^^^^^^^^^^^^^ ^^
+CLA INS P1 P2 Lc          AID         Le</code></pre>
+
+    <p>This is a real EMV Visa "select PSE" command. Lc=7 because the AID is 7 bytes; Le=00 means "give me up to 256 bytes back". The card will respond with an FCI template (BER-TLV with tag <code>6F</code>) — paste a real one into our <a href="/resources/tools/tlv-parser/">TLV parser</a> if you want to see it decoded.</p>
+
+    <h2 id="lengths">Lengths: Lc, Le, and the difference between 0 and 256</h2>
+    <p>Three things to internalise about lengths:</p>
+
+    <h3>1. Lc is mandatory iff data is present</h3>
+    <p>If you are sending data, you need exactly one Lc byte (short form) or three Lc bytes (extended form, see below). If not, you don&rsquo;t.</p>
+
+    <h3>2. Le has a special "all of it" encoding</h3>
+    <p>In short form, <code>Le = 0x00</code> does <strong>not</strong> mean "zero bytes". It means "as many as the card will return, up to 256". This trips people up. <code>Le = 0x01</code> means exactly one byte. There is no way to ask for "exactly zero" with Le present — drop Le entirely (Case 1 or Case 3) for that.</p>
+<pre><code><span class="c">// Le = 0x00 -> ask for up to 256 bytes.</span>
+00 A4 04 00 07 A0 00 00 00 03 10 10 <span class="k">00</span></code></pre>
+
+    <h3>3. <code>61XX</code> means "I have data for you, come get it"</h3>
+    <p>If the card has more data than fits, it returns <code>61XX</code> where <code>XX</code> is the number of bytes still available. The reader then issues <code>GET RESPONSE</code> (<code>00 C0 00 00 XX</code>) to retrieve them. Many older drivers wrap this transparently; many newer ones do not. If you see <code>6100</code> ignored in your logs, that is a bug.</p>
+
+    <h2 id="extended">Extended-length APDUs: when 256 bytes is not enough</h2>
+    <p>Short-form Lc and Le max out at 255 and 256 respectively. Extended-length APDUs prefix Lc and Le with a <code>0x00</code> byte and use 2-byte big-endian values.</p>
+
+    <table>
+      <thead><tr><th>Form</th><th>Lc encoding</th><th>Le encoding</th><th>Max data per direction</th></tr></thead>
+      <tbody>
+        <tr><td>Short</td><td>1 byte (1..255)</td><td>1 byte (1..256, 0=256)</td><td>255 / 256</td></tr>
+        <tr><td>Extended Case 2</td><td>—</td><td><code>00 LeHi LeLo</code> (1..65536)</td><td>65536</td></tr>
+        <tr><td>Extended Case 3</td><td><code>00 LcHi LcLo</code> (1..65535)</td><td>—</td><td>65535</td></tr>
+        <tr><td>Extended Case 4</td><td><code>00 LcHi LcLo</code></td><td><code>LeHi LeLo</code></td><td>65535 / 65536</td></tr>
+      </tbody>
+    </table>
+
+    <p>Extended-length is negotiated per-application. Many cards advertise support in their ATR historical bytes (the <code>SELECT</code> response FCI sometimes includes extended-length info too). Send extended-length to a card that only supports short-form and you will get back <code>6700</code> ("wrong length") at best, or a confused timeout at worst.</p>
+
+    <h2 id="response">Response APDU shape</h2>
+    <p>A response APDU is <em>at minimum</em> two bytes — <code>SW1 SW2</code>. Optional response data precedes them.</p>
+<pre><code><span class="c">// Successful response with data:</span>
+[Data ... ] SW1 SW2
+
+<span class="c">// Just status:</span>
+SW1 SW2</code></pre>
+
+    <h2 id="sw">SW1 SW2 — status words</h2>
+    <p>The two status bytes tell you what happened. The full table is in our <a href="/resources/tools/apdu-status-dict/">APDU Status Dictionary</a>. The 12 you must memorise:</p>
+    <table>
+      <thead><tr><th>SW1 SW2</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><code>9000</code></td><td>OK. Universal success.</td></tr>
+        <tr><td><code>61XX</code></td><td>OK; <code>XX</code> bytes are still available — issue <code>GET RESPONSE</code>.</td></tr>
+        <tr><td><code>6CXX</code></td><td>Wrong Le. The card tells you the right length is <code>XX</code>. Re-send with corrected Le.</td></tr>
+        <tr><td><code>6700</code></td><td>Wrong length. (Generic; not as helpful as 6CXX.)</td></tr>
+        <tr><td><code>63CX</code></td><td>Verify failed; <code>X</code> retries remaining (PIN).</td></tr>
+        <tr><td><code>6982</code></td><td>Security status not satisfied. (Translation: log in first.)</td></tr>
+        <tr><td><code>6985</code></td><td>Conditions of use not satisfied. (FIDO often: user-presence absent.)</td></tr>
+        <tr><td><code>6A82</code></td><td>File not found. (Wrong AID, or app uninstalled.)</td></tr>
+        <tr><td><code>6A86</code></td><td>Wrong P1/P2.</td></tr>
+        <tr><td><code>6A87</code></td><td>Lc inconsistent with P1/P2.</td></tr>
+        <tr><td><code>6D00</code></td><td>INS not supported. (Wrong applet for this command.)</td></tr>
+        <tr><td><code>6E00</code></td><td>CLA not supported. (Wrong applet, or wrong channel mode.)</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="real-flow">A real APDU flow</h2>
+    <p>Here is the start of a Visa cardholder verification flow. Every byte matters.</p>
+
+<pre><code><span class="c">// 1. Select the Payment System Environment (PSE):</span>
+&gt;&gt; 00 A4 04 00 0E 32 50 41 59 2E 53 59 53 2E 44 44 46 30 31 00
+&lt;&lt; 6F 1E 84 0E 32 50 41 59 2E 53 59 53 2E 44 44 46 30 31 A5 0C 88 01 01 5F 2D 02 65 6E 90 00
+
+<span class="c">// FCI in the response (tag 6F) lists EMV applications.</span>
+<span class="c">// Decode that with the TLV parser.</span>
+
+<span class="c">// 2. Select the AID we found inside the FCI:</span>
+&gt;&gt; 00 A4 04 00 07 A0 00 00 00 03 10 10 00
+&lt;&lt; 6F 1E 84 07 A0 00 00 00 03 10 10 A5 13 50 0A 56 49 53 41 20 44 45 42 49 54 87 01 02 9F 38 03 9F 1A 02 90 00
+
+<span class="c">// 3. GET PROCESSING OPTIONS — tell the card the terminal capabilities:</span>
+&gt;&gt; 80 A8 00 00 02 83 00 00
+&lt;&lt; ...
+
+<span class="c">// 4. READ RECORD ...</span></code></pre>
+
+    <p>A real EMV transaction is hundreds of APDUs. The pattern is the same: SELECT to land on the right applet, then a sequence of operation-specific commands gated by status words.</p>
+
+    <h2 id="pitfalls">Six pitfalls we have walked into</h2>
+    <ol>
+      <li><strong>Mixing CLA conventions.</strong> A GlobalPlatform tool sends <code>0x80</code> CLA; an EMV terminal sends <code>0x00</code>. Send <code>0x80</code> to an inter-industry applet and you get <code>6E00</code>.</li>
+      <li><strong>Forgetting <code>61XX</code> chaining.</strong> Modern PC/SC stacks usually handle this. Embedded Linux drivers and Android NFC stacks often do not. If you have a 600-byte response and you only see 256 bytes, look for the missing <code>GET RESPONSE</code>.</li>
+      <li><strong>Treating <code>Le=0x00</code> as zero.</strong> It means "give me up to 256 bytes". Many libraries get this wrong; the more careful ones expose a sentinel.</li>
+      <li><strong>Mixing short and extended length.</strong> Within a single APDU it is one or the other. Across APDUs in the same session you can mix only if the card declared support for both.</li>
+      <li><strong>Sending extended-length to a card that doesn&rsquo;t support it.</strong> You don&rsquo;t get a clean reject — sometimes you get <code>6700</code>, sometimes a timeout, sometimes a confused state. Always check the ATR / SELECT FCI for extended-length capability.</li>
+      <li><strong>Ignoring secure messaging on a personalised card.</strong> Many issuer-personalised cards reject plain APDUs after personalisation. The applet is fine; you forgot to wrap the APDU in SCP02/SCP03 secure messaging.</li>
+    </ol>
+
+    <h2 id="tools">Companion tools</h2>
+    <ul>
+      <li><a href="/resources/tools/apdu-parser/">APDU Parser</a> &mdash; paste any command or response APDU, see it decoded.</li>
+      <li><a href="/resources/tools/sw-lookup/">SW1/SW2 Lookup</a> &mdash; search status words by hex or by phrase.</li>
+      <li><a href="/resources/tools/apdu-status-dict/">APDU Status Dictionary</a> &mdash; the full filterable reference table.</li>
+      <li><a href="/resources/tools/iso7816-ref/">ISO/IEC 7816 Quick Reference</a> &mdash; APDU shape, CLA bits, common INS bytes on one page.</li>
+      <li><a href="/resources/tools/atr-parser/">ATR Parser</a> &mdash; for the answer-to-reset bytes that come before any APDU.</li>
+      <li><a href="/resources/tools/tlv-parser/">TLV Parser</a> &mdash; for the BER-TLV inside SELECT responses.</li>
+    </ul>
+
+    <h2 id="related">Related reading</h2>
+    <ul>
+      <li><a href="/technologies/javacard/">Technology: JavaCard</a> &mdash; what runs on the chip on the other side of the APDU.</li>
+      <li><a href="/blog/implementing-fido2-developer-guide/">Implementing FIDO2: A Complete Developer Guide</a> &mdash; a different protocol, the same APDU plumbing underneath.</li>
+      <li><a href="/services/javacard-development/">JavaCard Development service</a> &mdash; if you are building the applet that responds to these.</li>
+    </ul>
+
+    <h2 id="closing">What this means for your deployment</h2>
+    <p>If you are integrating with a smart card or a JavaCard applet, treat APDUs as the truth and your higher-level library wrappers as conveniences. When something fails, the diagnostic is always: capture the wire APDU, decode it, decode the response, and look up the status word. The wrapper&rsquo;s exception class is downstream of all of that.</p>
+
+    <p>The good news: APDU is a 30-year-old format, the spec is short, and the rules are stable. Once you have internalised CLA / INS / P1 / P2 / Lc / Le / SW1 / SW2 you can read any smart-card protocol on the wire — EMV, FIDO over CTAP1, PIV, OpenPGP, GP, eSIM, transit. They all use the same envelope.</p>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Working on a smart-card or applet integration?</h2>
+        <p>Talk to engineers, not BDRs. We have shipped FIDO, PIV, payment, and custom applets and personalisation tooling for a decade.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Start a conversation</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

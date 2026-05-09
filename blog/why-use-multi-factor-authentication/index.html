@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Why use Multi-factor Authentication? | AmbiSecure</title>
+<meta name="description" content="Cybercriminals have billions of leaked credentials. A second factor — especially a hardware-bound one — cuts off the long tail of credential-stuffing and phishing." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/why-use-multi-factor-authentication/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Why use Multi-factor Authentication?" />
+<meta property="og:description" content="A second factor cuts off the long tail of credential-stuffing and phishing." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/why-use-multi-factor-authentication/" />
+<meta property="article:published_time" content="2021-08-23" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"BreadcrumbList","itemListElement":[
+   {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
+   {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
+   {"@type":"ListItem","position":3,"name":"Why MFA","item":"https://ambisecure.ambimat.com/blog/why-use-multi-factor-authentication/"}
+ ]},
+ {"@type":"Article","headline":"Why use Multi-factor Authentication?","datePublished":"2021-08-23","dateModified":"2026-05-09","author":{"@type":"Organization","name":"AmbiSecure Engineering"},"publisher":{"@type":"Organization","name":"AmbiSecure"},"mainEntityOfPage":"https://ambisecure.ambimat.com/blog/why-use-multi-factor-authentication/"}
+]}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Why MFA</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>MFA</span>
+      <span>Published 2021-08-23</span>
+      <span>Updated 2026-05-09</span>
+      <span>6 min read</span>
+    </div>
+
+    <h1>Why use Multi-factor Authentication?</h1>
+    <p class="dek">Cybercriminals have billions of leaked records to play with. A second factor &mdash; especially a hardware-bound one &mdash; is what cuts off the long tail.</p>
+
+    <h2>The problem with passwords</h2>
+    <p>Every leaked password lives forever. The Have-I-Been-Pwned project alone tracks roughly twelve billion exposed credentials. Attackers don&rsquo;t need to break your password &mdash; they just try a list of thirty thousand of yours and someone else&rsquo;s, and one of them works. This is <strong>credential stuffing</strong>, and at scale it works often enough to be worth running 24/7 against most consumer services.</p>
+
+    <h2>What a second factor adds</h2>
+    <p>Multi-factor authentication asks for proof from at least two of these categories:</p>
+    <ul>
+      <li><strong>Knowledge factor</strong> &mdash; something you know (password, PIN, secret answer).</li>
+      <li><strong>Possession factor</strong> &mdash; something you have (token, security key, phone).</li>
+      <li><strong>Inherence factor</strong> &mdash; something you are (fingerprint, face, voice).</li>
+    </ul>
+    <p>Even an SMS OTP raises the cost of credential-stuffing dramatically: the attacker now needs to also intercept (or social-engineer) a code in real time, per account. Most stop trying.</p>
+
+    <h2>Not all second factors are equal</h2>
+    <p>OTPs delivered by SMS or app are vulnerable to phishing pages: the attacker shows a fake login, harvests password + OTP, and replays them within the OTP&rsquo;s 30-second window. <strong>Hardware-bound</strong> factors &mdash; FIDO2 security keys, smart cards, biometric tokens &mdash; are not vulnerable, because the cryptographic challenge is bound to the real origin. The phishing page can&rsquo;t replay it.</p>
+
+    <h2>What this means for you</h2>
+    <p>If you are protecting an enterprise: your password-based auth has already been bypassed. The question is whether you know it yet. Layer on hardware-bound MFA &mdash; FIDO2 cards or USB keys &mdash; for any account that touches money, identity, or production access.</p>
+
+    <p>Related reading: <a href="/blog/top-3-benefits-of-mfa/">Top 3 Benefits of MFA</a> &middot; <a href="/blog/implementing-fido2-developer-guide/">Implementing FIDO2 (full developer guide)</a> &middot; <a href="/products/onepass-card/">OnePass Card</a> (hardware authenticator).</p>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Ready to deploy hardware MFA?</h2>
+        <p>The OnePass Card replaces both the corporate badge and the security key. Pilot batches in 6&ndash;8 weeks.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Talk to us</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/atr-parser/">ATR parser</a></li><li><a href="/resources/tools/apdu-parser/">APDU parser</a></li><li><a href="/resources/tools/tlv-parser/">TLV parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /assets/raw/
+
+Sitemap: https://ambisecure.ambimat.com/sitemap.xml

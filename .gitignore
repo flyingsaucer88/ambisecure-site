@@ -1,0 +1,21 @@
+# Claude Code per-user settings (not portable)
+.claude/settings.local.json
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editor noise
+.vscode/
+.idea/
+*.swp
+*~
+
+# Logs / runtime
+*.log
+.cache/
+
+# Node (in case anyone adds tooling later)
+node_modules/
+dist/
+build/

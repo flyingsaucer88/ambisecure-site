@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+
+<title>AmbiSecure — Secure Element, FIDO &amp; JavaCard engineering for connected systems</title>
+<meta name="description" content="AmbiSecure builds hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems. Engineering-led, deployment-focused, ecosystem-aware." />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://ambisecure.ambimat.com/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="AmbiSecure — Hardware-rooted security for connected systems" />
+<meta property="og:description" content="FIDO authenticators, JavaCard applets, Secure Element engineering, and IoT trust — by an embedded team that has shipped for forty years." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/" />
+<meta property="og:site_name" content="AmbiSecure" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/og/default.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AmbiSecure — Hardware-rooted security for connected systems" />
+<meta name="twitter:description" content="FIDO, JavaCard, Secure Element, IoT identity. Engineering-led security." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ambisecure.ambimat.com/#org",
+      "name": "AmbiSecure",
+      "url": "https://ambisecure.ambimat.com/",
+      "logo": "https://ambisecure.ambimat.com/assets/img/logo.svg",
+      "parentOrganization": { "@type": "Organization", "name": "Ambimat Electronics", "url": "https://ambimat.com/" },
+      "sameAs": [
+        "https://www.linkedin.com/company/ambimat-electronics",
+        "https://twitter.com/ambimat",
+        "https://www.facebook.com/Ambimat-Electronics-213415895353632/"
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+        "addressLocality": "Ahmedabad",
+        "addressRegion": "Gujarat",
+        "postalCode": "380015",
+        "addressCountry": "IN"
+      },
+      "contactPoint": [
+        { "@type": "ContactPoint", "telephone": "+91-79255-01989", "contactType": "sales", "areaServed": "IN" },
+        { "@type": "ContactPoint", "telephone": "+1-215-397-3819", "contactType": "sales", "areaServed": "US" }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ambisecure.ambimat.com/#site",
+      "url": "https://ambisecure.ambimat.com/",
+      "name": "AmbiSecure",
+      "publisher": { "@id": "https://ambisecure.ambimat.com/#org" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<!-- ============== ECOSYSTEM BAR ============== -->
+<div class="ecosystem-bar" role="navigation" aria-label="Ambimat ecosystem">
+  <div class="ecosystem-bar-inner">
+    <span class="ecosystem-label">Ambimat Group</span>
+    <a href="https://ambimat.com/" class="ext">Ambimat</a>
+    <a href="/" class="current">AmbiSecure</a>
+    <a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a>
+    <a href="/blog/">Engineering Blog</a>
+    <span class="spacer"></span>
+    <span class="meta">Ahmedabad · India · Est. 1981</span>
+  </div>
+</div>
+
+<!-- ============== NAVBAR ============== -->
+<header class="navbar" role="banner">
+  <a href="/" class="brand" aria-label="AmbiSecure home">
+    <span class="brand-mark">AS</span>
+    <span class="brand-text">
+      <span class="brand-line">Ambi<span class="accent">Secure</span></span>
+      <span class="brand-tag">Hardware-rooted security</span>
+    </span>
+  </a>
+  <nav aria-label="Primary">
+    <ul class="nav-links">
+      <li><a href="/products/">Products</a></li>
+      <li><a href="/solutions/">Solutions</a></li>
+      <li><a href="/technologies/">Technologies</a></li>
+      <li><a href="/industries/">Industries</a></li>
+      <li><a href="/resources/">Resources</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li><a href="/about/">About</a></li>
+    </ul>
+  </nav>
+  <div class="nav-actions">
+    <a href="/contact/" class="nav-btn">Contact</a>
+    <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============== HERO ============== -->
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-container">
+    <div class="hero-left">
+      <span class="hero-tag">Authentication without compromise</span>
+      <h1 class="hero-title" id="hero-heading">
+        Hardware-rooted security for the <span class="accent">connected world</span>.
+      </h1>
+      <p class="hero-desc">
+        AmbiSecure designs FIDO authenticators, JavaCard applets, Secure Element
+        integration, and IoT trust systems. Engineering-led, deployment-focused,
+        backed by four decades of embedded systems experience.
+      </p>
+      <div class="hero-cta-row">
+        <a href="/products/" class="btn btn-primary">Explore Products</a>
+        <a href="/technologies/" class="btn btn-outline">Browse Technologies</a>
+      </div>
+      <div class="hero-creds">
+        <span>FIDO2 / U2F</span>
+        <span>JavaCard 3.x</span>
+        <span>GlobalPlatform 2.3.1</span>
+        <span>ISO/IEC 7816 &amp; 14443</span>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-visual" aria-hidden="true">
+        <span class="label">SECURE / ELEMENT</span>
+        <span class="pin" style="top: 35%; left: 18%;"></span>
+        <span class="pin" style="top: 45%; left: 18%;"></span>
+        <span class="pin" style="top: 55%; left: 18%;"></span>
+        <span class="pin" style="top: 65%; left: 18%;"></span>
+        <span class="pin" style="top: 35%; right: 18%;"></span>
+        <span class="pin" style="top: 45%; right: 18%;"></span>
+        <span class="pin" style="top: 55%; right: 18%;"></span>
+        <span class="pin" style="top: 65%; right: 18%;"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WHAT WE BUILD ============== -->
+<section aria-labelledby="capabilities-heading">
+  <div class="section-container">
+    <div class="section-head">
+      <span class="eyebrow">What we build</span>
+      <h2 class="section-title" id="capabilities-heading">Six surfaces, one trust chain.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc">
+        Every AmbiSecure product or service plugs into the same architecture:
+        identity that begins in silicon and travels intact to the application layer.
+      </p>
+    </div>
+    <div class="grid-3">
+      <a href="/products/onepass-card/" class="card">
+        <div class="card-icon">01</div>
+        <h3>FIDO Authenticators</h3>
+        <p>OnePass Card, OnePass Bio Card, OnePass USB Key, BioKey, Tappable. FIDO2 / U2F, hardware-bound credentials, no shared secrets.</p>
+        <div class="card-meta">View authenticators &rarr;</div>
+      </a>
+      <a href="/products/javacard-applets/" class="card">
+        <div class="card-icon">02</div>
+        <h3>JavaCard Applets</h3>
+        <p>FIDO, PIV, OpenPGP and custom applets &mdash; designed, written, loaded, and personalised on chips that ship at scale.</p>
+        <div class="card-meta">JavaCard work &rarr;</div>
+      </a>
+      <a href="/products/iot-security-chipset/" class="card">
+        <div class="card-icon">03</div>
+        <h3>IoT Root of Trust</h3>
+        <p>Secure Element integration, key provisioning, signed firmware update, attestation. Identity that lives below the OS.</p>
+        <div class="card-meta">IoT security &rarr;</div>
+      </a>
+      <a href="/services/fido-validation-server/" class="card">
+        <div class="card-icon">04</div>
+        <h3>FIDO Validation Server</h3>
+        <p>Production-grade WebAuthn / CTAP2 backend for service providers. Multi-factor, passwordless, deployment-ready.</p>
+        <div class="card-meta">Validation server &rarr;</div>
+      </a>
+      <a href="/services/tool-chain-development/" class="card">
+        <div class="card-icon">05</div>
+        <h3>Tool-Chain Development</h3>
+        <p>Bio enrollment, key managers, multi-card applet loaders, NDEF personalisation &mdash; the unglamorous tooling that makes deployments work.</p>
+        <div class="card-meta">Tooling &rarr;</div>
+      </a>
+      <a href="https://esim.ambimat.com/" class="card">
+        <div class="card-icon cyan">06</div>
+        <h3>eSIM &amp; eUICC</h3>
+        <p>Telecom-grade embedded identity, eSIM/eUICC architecture, profile lifecycle &mdash; explored on our dedicated eSIM Initiative site.</p>
+        <div class="card-meta">Visit eSIM Initiative &rarr;</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== TRUST CHAIN ============== -->
+<section class="alt" aria-labelledby="trust-heading">
+  <div class="section-container">
+    <div class="section-head">
+      <span class="eyebrow">Trust chain</span>
+      <h2 class="section-title" id="trust-heading">A chain that begins below the operating system.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc">
+        Software-only security inherits every weakness of the host. We push the trust
+        anchor into a tamper-resistant Secure Element, then carry it up through
+        firmware, OS, and application boundaries with verifiable transitions.
+      </p>
+    </div>
+    <div class="trust-chain" aria-label="Trust chain layers">
+      <div class="layer root">
+        <span class="layer-name">Silicon &mdash; Secure Element / eUICC</span>
+        <span class="layer-tag">ROOT OF TRUST</span>
+      </div>
+      <div class="layer">
+        <span class="layer-name">Boot ROM &amp; signed bootloader</span>
+        <span class="layer-tag">VERIFY</span>
+      </div>
+      <div class="layer">
+        <span class="layer-name">Firmware &mdash; signed, anti-rollback, recoverable</span>
+        <span class="layer-tag">MEASURE</span>
+      </div>
+      <div class="layer">
+        <span class="layer-name">OS / Runtime &mdash; isolated, attestable</span>
+        <span class="layer-tag">ATTEST</span>
+      </div>
+      <div class="layer">
+        <span class="layer-name">Application &mdash; FIDO, PKI, payment, identity</span>
+        <span class="layer-tag">CONSUME</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SOLUTIONS ============== -->
+<section aria-labelledby="solutions-heading">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Solutions</span>
+      <h2 class="section-title" id="solutions-heading">Problems we are good at.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-3">
+      <a href="/solutions/passwordless-mfa/" class="card">
+        <h3>Passwordless &amp; MFA</h3>
+        <p>Replace shared-secret passwords with hardware-bound FIDO2 credentials. Phishing-resistant by construction.</p>
+        <div class="card-meta">View solution &rarr;</div>
+      </a>
+      <a href="/solutions/iot-root-of-trust/" class="card">
+        <h3>IoT Root of Trust</h3>
+        <p>Provision identity at the factory, attest at boot, rotate keys in the field. From wafer to wallet.</p>
+        <div class="card-meta">View solution &rarr;</div>
+      </a>
+      <a href="/solutions/secure-provisioning/" class="card">
+        <h3>Secure Provisioning</h3>
+        <p>Personalisation lines for cards and devices &mdash; key splits, KMS, audit trails, batch APDUs.</p>
+        <div class="card-meta">View solution &rarr;</div>
+      </a>
+      <a href="/solutions/digital-identity/" class="card">
+        <h3>Digital Identity</h3>
+        <p>PIV, OpenPGP, eID applets on smart cards and tokens. Issuance and revocation that holds up to audit.</p>
+        <div class="card-meta">View solution &rarr;</div>
+      </a>
+      <a href="/solutions/payment-security/" class="card">
+        <h3>Payment Security</h3>
+        <p>EMV-style protocols, secure messaging, key derivation. Tap, dip, contactless, and tokenised flows.</p>
+        <div class="card-meta">View solution &rarr;</div>
+      </a>
+      <a href="/solutions/secure-firmware-update/" class="card">
+        <h3>Secure Firmware Update</h3>
+        <p>Signed images, anti-rollback counters, recovery modes. Field updates without field incidents.</p>
+        <div class="card-meta">View solution &rarr;</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== RESOURCES STRIP ============== -->
+<section class="alt" aria-labelledby="resources-heading">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Resources</span>
+      <h2 class="section-title" id="resources-heading">A toolbox for the engineers building this stack.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc">
+        Free, client-side utilities for parsing the hex you stare at every day.
+        Nothing leaves your browser. No accounts, no ads.
+      </p>
+    </div>
+    <div class="grid-4">
+      <a href="/resources/tools/atr-parser/" class="card">
+        <div class="card-icon cyan">ATR</div>
+        <h3>ATR Parser</h3>
+        <p>Decode Answer-To-Reset bytes &mdash; TS, T0, interface bytes, historical bytes, TCK.</p>
+      </a>
+      <a href="/resources/tools/apdu-parser/" class="card">
+        <div class="card-icon cyan">APDU</div>
+        <h3>APDU Parser</h3>
+        <p>Decode CLA / INS / P1 / P2 / Lc / Le for Case 1&ndash;4, short and extended.</p>
+      </a>
+      <a href="/resources/tools/tlv-parser/" class="card">
+        <div class="card-icon cyan">TLV</div>
+        <h3>TLV Parser</h3>
+        <p>Walk BER-TLV, EMV TLV, and DGI-TLV trees with tag dictionary lookup.</p>
+      </a>
+      <a href="/resources/" class="card">
+        <div class="card-icon">+47</div>
+        <h3>Browse all tools</h3>
+        <p>50+ utilities for ASN.1, SCP03, CAP files, CBOR, NDEF, ICCID, and more.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WHY AMBISECURE ============== -->
+<section aria-labelledby="why-heading">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Why AmbiSecure</span>
+      <h2 class="section-title" id="why-heading">An embedded team, not a security boutique.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="feature-row">
+      <div>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:24px;font-weight:700;margin-bottom:14px;color:var(--ink);letter-spacing:-0.2px;">
+          Forty years of shipping hardware that survives the field.
+        </h3>
+        <p style="color:var(--brand-grey);font-size:16px;line-height:1.75;">
+          AmbiSecure is the security business unit of Ambimat Electronics &mdash; established 1981.
+          We have shipped PCB designs, firmware, contactless modules, GSM and Bluetooth platforms
+          for medical devices, smart watches, smart homes, and utilities. Security is what we add
+          to that DNA, not a marketing layer over someone else&rsquo;s reference design.
+        </p>
+        <ul class="bullet-list" style="margin-top:24px;">
+          <li>One point of contact from spec to shipment.</li>
+          <li>In-house JavaCard, FIDO, and personalisation expertise.</li>
+          <li>Real vendor relationships across silicon, contactless, and biometrics.</li>
+          <li>Cost-effective for both pilot batches and production runs.</li>
+        </ul>
+      </div>
+      <div class="feature-visual" aria-hidden="true">
+        <div>
+          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:48px;color:var(--brand-red);">40+</div>
+          <div style="font-size:13px;color:var(--brand-grey);letter-spacing:0.4px;">YEARS · EMBEDDED · SHIPPING</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== BLOG STRIP ============== -->
+<section class="alt" aria-labelledby="blog-heading">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">From the engineering blog</span>
+      <h2 class="section-title" id="blog-heading">Field notes from the team.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-3">
+      <a href="/blog/implementing-fido2-developer-guide/" class="blog-card">
+        <span class="chip">FIDO2</span>
+        <h3>Implementing FIDO2 Authentication: A Complete Developer Guide</h3>
+        <p>Passwords are one of the biggest security risks for modern systems. A walkthrough of the FIDO2 stack &mdash; CTAP2, WebAuthn, attestation &mdash; with code that compiles.</p>
+        <span class="read-more">Read &rarr;</span>
+      </a>
+      <a href="/blog/why-use-multi-factor-authentication/" class="blog-card">
+        <span class="chip">MFA</span>
+        <h3>Why use Multi-factor Authentication?</h3>
+        <p>Cybercriminals have billions of leaked records. Why a second factor &mdash; especially a hardware-bound one &mdash; cuts off the long tail.</p>
+        <span class="read-more">Read &rarr;</span>
+      </a>
+      <a href="/blog/top-3-benefits-of-mfa/" class="blog-card">
+        <span class="chip">MFA</span>
+        <h3>Top 3 Benefits of Multi-factor Authentication</h3>
+        <p>The three reasons MFA isn&rsquo;t optional any more &mdash; and what changes when the second factor is hardware.</p>
+        <span class="read-more">Read &rarr;</span>
+      </a>
+    </div>
+    <p style="text-align:center; margin-top: 36px;">
+      <a href="/blog/" class="btn btn-outline">All posts</a>
+    </p>
+  </div>
+</section>
+
+<!-- ============== CALLOUT ============== -->
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Have a security problem that lives in hardware?</h2>
+        <p>Talk to engineers, not BDRs. Tell us what you are building and we will tell you what is realistic, what is standards-aware, and what we have shipped before.</p>
+      </div>
+      <div>
+        <a href="/contact/" class="btn btn-primary">Start a conversation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============== FOOTER ============== -->
+<footer class="site-footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand">
+          <span class="brand-mark">AS</span>
+          <span class="brand-text">
+            <span class="brand-line">Ambi<span class="accent">Secure</span></span>
+            <span class="brand-tag">Hardware-rooted security</span>
+          </span>
+        </div>
+        <p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p>
+        <div class="footer-ecosystem">
+          Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot;
+          <a href="https://esim.ambimat.com/">eSIM Initiative</a>
+        </div>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="/products/onepass-card/">OnePass Card</a></li>
+          <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
+          <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
+          <li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li>
+          <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
+          <li><a href="/products/">All products</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Develop</h4>
+        <ul>
+          <li><a href="/resources/">Utility tools</a></li>
+          <li><a href="/resources/tools/atr-parser/">ATR parser</a></li>
+          <li><a href="/resources/tools/apdu-parser/">APDU parser</a></li>
+          <li><a href="/resources/tools/tlv-parser/">TLV parser</a></li>
+          <li><a href="/blog/">Engineering blog</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/about/certifications/">Certifications</a></li>
+          <li><a href="/industries/">Industries</a></li>
+          <li><a href="/support/">Support</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>Ahmedabad, Gujarat 380015<br />India</li>
+          <li>India: +91 79255 01989</li>
+          <li>US: +1 215 397 3819</li>
+          <li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span>
+      <div class="footer-social" aria-label="Social links">
+        <a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a>
+        <a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a>
+        <a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Engineering Blog — AmbiSecure | JavaCard, FIDO, Secure Element, eSIM, NFC</title>
+<meta name="description" content="Field notes from the AmbiSecure engineering team. JavaCard, FIDO, Secure Element, eSIM, NFC/DESFire, embedded cryptography, secure provisioning." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="AmbiSecure Engineering Blog" />
+<meta property="og:description" content="Field notes from the engineering team — JavaCard, FIDO, Secure Element, eSIM, NFC, crypto." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"BreadcrumbList","itemListElement":[
+   {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
+   {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"}
+ ]},
+ {"@type":"Blog","name":"AmbiSecure Engineering Blog","url":"https://ambisecure.ambimat.com/blog/"}
+]}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><span class="current">Blog</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Engineering blog</span>
+    <h1>Field notes from the AmbiSecure team.</h1>
+    <p class="dek">Knowledge sharing &mdash; deployment-focused, technically deep. JavaCard, FIDO, Secure Elements, NFC, eSIM, embedded cryptography, secure provisioning. Tools live in <a href="/resources/" style="color:var(--brand-red);font-weight:600;">Resources</a>; this section is editorial only.</p>
+  </div>
+</section>
+
+<section style="padding-top: 30px;">
+  <div class="section-container">
+
+    <div class="pill-row" aria-label="Categories">
+      <a href="/blog/" class="pill pill--active">All</a>
+      <a href="/blog/category/javacard/" class="pill">JavaCard</a>
+      <a href="/blog/category/fido/" class="pill">FIDO &amp; passwordless</a>
+      <a href="/blog/category/secure-elements/" class="pill">Secure Elements</a>
+      <a href="/blog/category/nfc-desfire/" class="pill">NFC &amp; DESFire</a>
+      <a href="/blog/category/esim/" class="pill">eSIM</a>
+      <a href="/blog/category/apdu/" class="pill">APDU</a>
+      <a href="/blog/category/cryptography/" class="pill">Cryptography</a>
+      <a href="/blog/category/iot-security/" class="pill">IoT security</a>
+      <a href="/blog/category/secure-manufacturing/" class="pill">Secure manufacturing</a>
+    </div>
+
+    <div class="grid-3">
+
+      <a href="/blog/apdu-from-first-principles/" class="blog-card">
+        <span class="chip">APDU &middot; Pillar</span>
+        <h3>APDU from First Principles: CLA, INS, P1/P2, Le, Lc, and SW1/SW2</h3>
+        <p>The wire format every smart-card protocol uses, from EMV to FIDO. Cases 1&ndash;4, short and extended length, status words, and the gotchas that bite people in production.</p>
+        <span class="post-meta" style="margin-top:auto; font-size:11px;">May 2026 &middot; AmbiSecure Engineering &middot; 22 min read</span>
+        <span class="read-more" style="margin-top:8px;">Read &rarr;</span>
+      </a>
+
+      <a href="/blog/implementing-fido2-developer-guide/" class="blog-card">
+        <span class="chip">FIDO2 &middot; Pillar</span>
+        <h3>Implementing FIDO2 Authentication: A Complete Developer Guide</h3>
+        <p>Passwords are the biggest security risk for modern systems. A complete developer walkthrough of the FIDO2 stack &mdash; CTAP2, WebAuthn, attestation, registration, and authentication ceremonies &mdash; with code that compiles.</p>
+        <span class="post-meta" style="margin-top:auto; font-size:11px;">Jan 2025 &middot; AmbiSecure Engineering &middot; 18 min read</span>
+        <span class="read-more" style="margin-top:8px;">Read &rarr;</span>
+      </a>
+
+      <a href="/blog/why-use-multi-factor-authentication/" class="blog-card">
+        <span class="chip">MFA</span>
+        <h3>Why use Multi-factor Authentication (MFA)?</h3>
+        <p>Cybercriminals have billions of leaked records to play with. Why a second factor &mdash; especially a hardware-bound one &mdash; cuts off the long tail of credential-stuffing and phishing attacks.</p>
+        <span class="post-meta" style="margin-top:auto; font-size:11px;">Aug 2021 &middot; AmbiSecure Engineering &middot; 6 min read</span>
+        <span class="read-more" style="margin-top:8px;">Read &rarr;</span>
+      </a>
+
+      <a href="/blog/top-3-benefits-of-mfa/" class="blog-card">
+        <span class="chip">MFA</span>
+        <h3>Top 3 Benefits of Multi-factor Authentication</h3>
+        <p>The three reasons MFA isn&rsquo;t optional any more &mdash; and what changes when the second factor is rooted in hardware rather than a one-time-password seed in someone&rsquo;s phone.</p>
+        <span class="post-meta" style="margin-top:auto; font-size:11px;">Aug 2021 &middot; AmbiSecure Engineering &middot; 5 min read</span>
+        <span class="read-more" style="margin-top:8px;">Read &rarr;</span>
+      </a>
+
+    </div>
+
+    <div style="margin-top: 50px; padding: 30px; background: var(--brand-soft); border-radius: 8px; border-left: 3px solid var(--brand-red);">
+      <h3 style="font-family:'Montserrat',sans-serif; font-size: 17px; margin-bottom: 8px; color: var(--ink);">More posts coming.</h3>
+      <p style="color:var(--brand-grey); font-size: 14.5px; line-height: 1.65; margin-bottom: 0;">
+        We are publishing eight cornerstone pillar posts this quarter &mdash; JavaCard from first principles, APDU from first principles, eSIM RSP architecture, Secure Elements demystified, DESFire EV3 in production, hardware root of trust for IoT, embedded cryptography primitives, and secure personalization lines. Watch this space.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/atr-parser/">ATR parser</a></li><li><a href="/resources/tools/apdu-parser/">APDU parser</a></li><li><a href="/resources/tools/tlv-parser/">TLV parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

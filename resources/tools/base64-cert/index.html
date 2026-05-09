@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Base64 Certificate Decoder — AmbiSecure | Detect &amp; decode any cert blob</title>
+<meta name="description" content="Detect and decode any certificate blob — PEM, base64, or hex — and emit DER bytes plus a clean PEM. Client-side, multi-block." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/base64-cert/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Base64 Certificate Decoder — AmbiSecure" />
+<meta property="og:description" content="Detect and decode PEM/base64/hex cert blobs in the browser." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/base64-cert/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "https://ambisecure.ambimat.com/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Resources",
+"item": "https://ambisecure.ambimat.com/resources/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "Base64 Certificate Decoder",
+"item": "https://ambisecure.ambimat.com/resources/tools/base64-cert/"
+}
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "Base64 Certificate Decoder",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/base64-cert/",
+"offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">Base64 Cert</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">PKI utility</span>
+  <h1>Base64 Certificate Decoder</h1>
+  <p>Got a base64 blob and not sure what is inside? Paste it. We auto-detect PEM, bare base64, or hex; report what each block looks like (X.509 cert, CSR, generic ASN.1); show the DER bytes; and emit a clean PEM.</p>
+  <div class="tool-meta"><span>Client-side</span><span>Auto-detect</span><span>Multi-block</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel" id="b64c-drop">
+    <div class="tool-panel-head">
+      <h2>Input</h2>
+      <div class="tool-panel-actions">
+        <label class="tool-action file-pick">Choose file<input type="file" id="b64c-file" accept=".pem,.crt,.cer,.der,.csr,.key,.txt,.p7b"></label>
+        <button class="tool-action" id="b64c-sample">Sample</button>
+        <button class="tool-action" id="b64c-clear">Clear</button>
+      </div>
+    </div>
+    <label for="b64c-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">PEM, base64, or hex.</label>
+    <textarea id="b64c-input" class="hex-input" rows="10" spellcheck="false"></textarea>
+    
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2></div>
+    <div class="tool-output" id="b64c-output"><div class="placeholder">Paste, drop, or pick a file.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All decoding runs locally.</div>
+
+<section class="tool-reference">
+  <h2>What this tool does</h2>
+  <p>Many tools spit out raw base64 with no header. This tool figures out what is inside the bytes (X.509 cert? CSR? something else?), normalises to DER, and re-armours into PEM with the right label. If you have a chain of multiple PEM blocks, all of them are reported.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Reach</h3><p>PEM, bare base64 (PKCS#7-style), and hex are all accepted.</p></div><div class="ref-card"><h3>Companion tool</h3><p>Decode the structure once you have DER bytes.</p><p><a href="/resources/tools/x509-viewer/">X.509 viewer →</a></p></div><div class="ref-card"><h3>Privacy</h3><p>No bytes are uploaded. Verify with browser dev-tools.</p><p><a href="/about/">Read more →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/lib/asn1.js" defer></script>
+<script src="/assets/js/lib/x509.js" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/base64-cert.js" defer></script>
+</body>
+</html>

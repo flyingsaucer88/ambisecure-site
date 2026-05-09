@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FIDO & WebAuthn — AmbiSecure | Phishing-resistant authentication</title>
+<meta name="description" content="How FIDO2 / WebAuthn / CTAP2 work — the trust chain, registration, authentication, attestation, AAGUIDs — and the AmbiSecure products and services that ship it." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/fido/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="FIDO & WebAuthn — AmbiSecure" />
+<meta property="og:description" content="Phishing-resistant authentication, hardware-bound, deployed." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/fido/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Technologies",
+"item": "/technologies/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "FIDO",
+"item": "https://ambisecure.ambimat.com/technologies/fido/"
+}
+]
+},
+{
+"@type": "TechArticle",
+"headline": "FIDO & WebAuthn \u2014 phishing-resistant authentication",
+"author": {
+"@type": "Organization",
+"name": "AmbiSecure Engineering"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">FIDO</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology</span>
+    <h1>FIDO &amp; WebAuthn — phishing-resistant by construction.</h1>
+    <p class="dek">FIDO replaces shared-secret passwords with public-key cryptography bound to the relying party origin. The credential lives on the authenticator (smart card, USB key, platform TPM); the server never sees a secret. We ship hardware authenticators, write FIDO applets, and run the validation server backend.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Two specs working together</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <ul>
+        <li><strong>WebAuthn</strong> &mdash; the W3C JavaScript API the browser exposes to your relying-party page (<code>navigator.credentials.create()</code> and <code>.get()</code>).</li>
+        <li><strong>CTAP2</strong> &mdash; the Client-To-Authenticator Protocol the browser uses to talk to the actual hardware over USB-HID, NFC, or BLE.</li>
+      </ul>
+      <p>On the server side you implement a <strong>relying party</strong> that issues challenges and verifies signatures &mdash; for example our <a href="/services/fido-validation-server/">FIDO Validation Server</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">The trust chain in five layers</h2><span class="section-line"></span></div>
+    <div class="trust-chain">
+      <div class="layer root"><span class="layer-name">Authenticator (USB key, smart card, platform TPM)</span><span class="layer-tag">PRIVATE KEY</span></div>
+      <div class="layer"><span class="layer-name">CTAP2 — USB-HID, NFC, BLE</span><span class="layer-tag">TRANSPORT</span></div>
+      <div class="layer"><span class="layer-name">Browser / platform — WebAuthn</span><span class="layer-tag">CLIENT</span></div>
+      <div class="layer"><span class="layer-name">Your application + Relying Party server</span><span class="layer-tag">VERIFY</span></div>
+      <div class="layer"><span class="layer-name">User identity — username / federation</span><span class="layer-tag">CONSUME</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Resident vs non-resident credentials</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>A <em>non-resident</em> credential is encoded in the <code>credentialId</code> and lives only on the server. A <em>resident</em> (discoverable) credential lives on the authenticator and enables the smoothest UX: username-less, passwordless &mdash; you tap or insert and you are in. The <a href="/products/onepass-card/">OnePass Card</a> stores up to 25 resident credentials.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Attestation and AAGUIDs</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>An authenticator can prove what it is via an <strong>attestation statement</strong> &mdash; signed by the manufacturer&rsquo;s root key. Each model has an <strong>AAGUID</strong> recorded in the FIDO Metadata Service. Consumer apps usually skip attestation (<code>attestationType: 'none'</code>); enterprise apps that require certified hardware verify the attestation against MDS and enforce AAGUID allow-lists.</p>
+    </div>
+    <div class="grid-3" style="margin-top:30px;">
+      <a href="/resources/tools/cert-fingerprint/" class="card"><h3>Cert fingerprint tool</h3><p>SHA-256 thumbprint of an attestation cert for pinning lists.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/x509-viewer/" class="card"><h3>X.509 viewer</h3><p>Inspect the attestation cert chain.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/asn1-parser/" class="card"><h3>ASN.1 parser</h3><p>Walk the AuthenticatorData / COSE key by hand.</p><div class="card-meta">Open tool &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Where this lives in our stack</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/products/onepass-card/" class="card"><h3>OnePass Card</h3><p>FIDO2 smart card with resident credentials, NFC + USB.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/onepass-usb-key/" class="card"><h3>OnePass USB Key</h3><p>FIDO-certified hardware security key, no battery.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/services/fido-validation-server/" class="card"><h3>FIDO Validation Server</h3><p>Production WebAuthn / CTAP2 backend, ready to deploy.</p><div class="card-meta">View service &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Pillar reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/blog/implementing-fido2-developer-guide/" class="blog-card"><span class="chip">FIDO2 · Pillar</span><h3>Implementing FIDO2: A Complete Developer Guide</h3><p>End-to-end walkthrough &mdash; registration, authentication, pitfalls.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/why-use-multi-factor-authentication/" class="blog-card"><span class="chip">MFA</span><h3>Why use Multi-factor Authentication?</h3><p>Cuts off credential-stuffing attacks.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/top-3-benefits-of-mfa/" class="blog-card"><span class="chip">MFA</span><h3>Top 3 Benefits of MFA</h3><p>Why hardware-bound MFA changes the game.</p><span class="read-more">Read &rarr;</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

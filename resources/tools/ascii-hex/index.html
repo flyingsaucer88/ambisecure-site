@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ASCII ↔ HEX Converter — AmbiSecure | Bidirectional ASCII / HEX</title>
+<meta name="description" content="Convert ASCII text to / from HEX. Multiple separator styles, copy-friendly. Client-side only." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/ascii-hex/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="ASCII ↔ HEX — AmbiSecure" />
+<meta property="og:description" content="Convert between ASCII and HEX, client-side." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/ascii-hex/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "https://ambisecure.ambimat.com/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Resources",
+"item": "https://ambisecure.ambimat.com/resources/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "ASCII \u2194 HEX Converter",
+"item": "https://ambisecure.ambimat.com/resources/tools/ascii-hex/"
+}
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "ASCII \u2194 HEX Converter",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/ascii-hex/",
+"offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">ASCII ↔ HEX</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Encoding utility</span>
+  <h1>ASCII ↔ HEX Converter</h1>
+  <p>Convert ASCII text into a hex byte sequence (or back). Choose your preferred separator. ASCII characters (0x20–0x7E) only — for multi-byte characters use the UTF-8 inspector.</p>
+  <div class="tool-meta"><span>Client-side</span><span>Copy-friendly</span><span>0x20–0x7E</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="ax-sample">Sample</button> <button class="tool-action" id="ax-clear">Clear</button></div></div>
+    <label for="ax-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">ASCII text or hex bytes (depending on direction).</label>
+    <textarea id="ax-input" class="hex-input" rows="8" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label>Direction:
+        <select id="ax-direction"><option value="a2h">ASCII → HEX</option><option value="h2a">HEX → ASCII</option></select>
+      </label>
+      <label>Separator:
+        <select id="ax-sep"><option value="space">space</option><option value="comma">comma</option><option value="dash">-</option><option value="none">none</option></select>
+      </label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="ax-copy">Copy</button></div></div>
+    <div class="tool-output" id="ax-output"><div class="placeholder">Type something to convert.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All conversion runs locally.</div>
+
+<section class="tool-reference">
+  <h2>When to use this</h2>
+  <p>For embedding strings into APDUs, building NDEF payloads, or converting between log captures and source code.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Multi-byte text?</h3><p>For UTF-8 / Unicode use the UTF-8 inspector.</p><p><a href="/resources/tools/utf8/">UTF-8 inspector →</a></p></div><div class="ref-card"><h3>Programmer formats?</h3><p>For C / Java / Python / JS byte-array literals use HEX ↔ Bytes.</p><p><a href="/resources/tools/hex-bytes/">HEX ↔ Bytes →</a></p></div><div class="ref-card"><h3>Companion tool</h3><p>Building APDUs?</p><p><a href="/resources/tools/apdu-parser/">APDU parser →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/ascii-hex.js" defer></script>
+</body>
+</html>

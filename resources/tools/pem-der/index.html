@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PEM ↔ DER Converter — AmbiSecure | Convert certificates and keys client-side</title>
+<meta name="description" content="Free, client-side PEM ↔ DER converter for certificates, CSRs, public/private keys. PEM block detection, multi-block support, downloadable output." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/pem-der/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="PEM ↔ DER Converter — AmbiSecure" />
+<meta property="og:description" content="Convert PEM ↔ DER for certs, CSRs, keys — client-side, downloadable." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/pem-der/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{
+"@type": "ListItem",
+"position": 1,
+"name": "Home",
+"item": "https://ambisecure.ambimat.com/"
+},
+{
+"@type": "ListItem",
+"position": 2,
+"name": "Resources",
+"item": "https://ambisecure.ambimat.com/resources/"
+},
+{
+"@type": "ListItem",
+"position": 3,
+"name": "PEM \u2194 DER Converter",
+"item": "https://ambisecure.ambimat.com/resources/tools/pem-der/"
+}
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "PEM \u2194 DER Converter",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/pem-der/",
+"offers": {
+"@type": "Offer",
+"price": "0",
+"priceCurrency": "USD"
+}
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">PEM ↔ DER</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">PKI utility</span>
+  <h1>PEM ↔ DER Converter</h1>
+  <p>Convert between PEM (base64-armoured) and DER (raw) for certificates, CSRs, and public / private keys. Multi-block PEM bundles are recognised; the first block is exposed for conversion. Drag-and-drop or pick a .pem / .der / .crt / .cer / .key file.</p>
+  <div class="tool-meta"><span>Client-side</span><span>No upload</span><span>RFC 7468 / RFC 5280</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel" id="pem-drop">
+    <div class="tool-panel-head">
+      <h2>Input</h2>
+      <div class="tool-panel-actions">
+        <label class="tool-action file-pick">Choose file<input type="file" id="pem-file" accept=".pem,.crt,.cer,.der,.key,.txt"></label>
+        <button class="tool-action" id="pem-sample">Sample</button>
+        <button class="tool-action" id="pem-clear">Clear</button>
+      </div>
+    </div>
+    <label for="pem-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">PEM, base64, or hex (drag &amp; drop a file too)</label>
+    <textarea id="pem-input" class="hex-input" rows="10" spellcheck="false" placeholder="-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----"></textarea>
+    <div class="tool-options">
+      <label>Direction:
+        <select id="pem-direction">
+          <option value="pem-to-der">PEM → DER</option>
+          <option value="der-to-pem">DER → PEM</option>
+        </select>
+      </label>
+      <label>PEM label:
+        <select id="pem-label">
+          <option>CERTIFICATE</option>
+          <option>CERTIFICATE REQUEST</option>
+          <option>PUBLIC KEY</option>
+          <option>RSA PUBLIC KEY</option>
+          <option>PRIVATE KEY</option>
+          <option>RSA PRIVATE KEY</option>
+          <option>EC PRIVATE KEY</option>
+          <option>X509 CRL</option>
+          <option>PKCS7</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head">
+      <h2>Result</h2>
+      <div class="tool-panel-actions">
+        <button class="tool-action tool-action--primary" id="pem-download">Download</button>
+      </div>
+    </div>
+    <div class="tool-output" id="pem-output"><div class="placeholder">Paste, drop, or pick a file to convert.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All conversion happens in your browser. No certificate or key bytes are sent to any server.</div>
+
+<section class="tool-reference">
+  <h2>PEM and DER in one line</h2>
+  <p>DER is the raw binary encoding of an ASN.1 structure (per X.690). PEM is just DER inside <code>-----BEGIN/END LABEL-----</code> base64 armour, defined by <a href="https://datatracker.ietf.org/doc/html/rfc7468">RFC 7468</a>. The label tells you what is inside (<code>CERTIFICATE</code>, <code>CERTIFICATE REQUEST</code>, <code>PRIVATE KEY</code>, etc.) — but the content is the same DER bytes either way.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Spec</h3><p>RFC 7468 (PEM textual encodings) and X.690 (BER/DER).</p></div><div class="ref-card"><h3>Companion tool</h3><p>Pair with the X.509 viewer to inspect the converted certificate.</p><p><a href="/resources/tools/x509-viewer/">Open X.509 viewer →</a></p></div><div class="ref-card"><h3>Related blog</h3><p>Coming soon: an embedded-engineer’s guide to PKI.</p><p><a href="/blog/">Engineering blog →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/lib/asn1.js" defer></script>
+<script src="/assets/js/lib/x509.js" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/pem-der.js" defer></script>
+</body>
+</html>

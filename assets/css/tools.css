@@ -1,0 +1,283 @@
+/* =========================================================
+   AmbiSecure — Utility Tools Stylesheet
+   Loaded on /resources/tools/<slug>/ pages.
+   Inherits main.css — adds tool-shell, parsed-output, hex-input,
+   technical-badge, drop-zone, ASN.1 tree components.
+   ========================================================= */
+
+.tool-header {
+  padding: 48px 80px 24px;
+  max-width: var(--maxw-section);
+  margin: 0 auto;
+}
+.tool-header .eyebrow { color: var(--secure-cyan-dark); }
+.tool-header h1 {
+  font-size: 36px;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  margin-bottom: 12px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.tool-header p { color: var(--brand-grey); max-width: 760px; line-height: 1.65; font-size: 16px; }
+.tool-meta {
+  margin-top: 14px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: var(--muted-2);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.tool-meta span + span::before { content: '\00b7'; margin: 0 8px; color: var(--line); }
+
+.tool-shell {
+  max-width: var(--maxw-section);
+  margin: 0 auto;
+  padding: 16px 80px 60px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.tool-shell.stacked { grid-template-columns: 1fr; }
+
+.tool-panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+}
+.tool-panel.drop-on {
+  border-color: var(--secure-cyan);
+  box-shadow: 0 0 0 3px var(--secure-cyan-soft);
+}
+.tool-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tool-panel-head h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--brand-dark);
+  font-weight: 700;
+}
+.tool-panel-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.tool-action {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--brand-dark);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all .15s ease;
+  text-decoration: none;
+}
+.tool-action:hover { border-color: var(--brand-red); color: var(--brand-red); }
+.tool-action.tool-action--primary { background: var(--brand-red); color: #fff; border-color: var(--brand-red); }
+.tool-action.tool-action--primary:hover { background: var(--brand-red-dark); border-color: var(--brand-red-dark); color: #fff; }
+
+.hex-input,
+.tool-textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink);
+  background: #fcfcfd;
+  resize: vertical;
+  min-height: 140px;
+  letter-spacing: 0.4px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.hex-input:focus,
+.tool-textarea:focus {
+  outline: none;
+  border-color: var(--secure-cyan);
+  box-shadow: 0 0 0 3px var(--secure-cyan-soft);
+  background: #fff;
+}
+
+.tool-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 12px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13.5px;
+  color: var(--brand-dark);
+}
+.tool-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+.tool-options select,
+.tool-options input[type="number"],
+.tool-options input[type="text"] {
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  background: #fff;
+}
+
+.tool-output {
+  flex: 1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  color: var(--ink);
+  min-height: 140px;
+}
+.tool-output .placeholder {
+  color: var(--muted-2);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.parsed-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--line);
+  align-items: baseline;
+}
+.parsed-row:last-child { border-bottom: none; }
+.parsed-row .label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--brand-dark);
+  font-weight: 700;
+}
+.parsed-row .value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--ink);
+  word-break: break-all;
+}
+.parsed-row .note {
+  display: block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  color: var(--brand-grey);
+  margin-top: 4px;
+  line-height: 1.55;
+}
+
+.tech-badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+  background: var(--brand-soft);
+  color: var(--brand-dark);
+  border: 1px solid var(--line);
+  font-weight: 500;
+}
+.tech-badge--ok    { background: var(--secure-green-soft); color: #1d5e34; border-color: #c5e3d0; }
+.tech-badge--info  { background: var(--secure-cyan-soft); color: var(--secure-cyan-dark); border-color: #bfe1e6; }
+.tech-badge--warn  { background: var(--secure-amber-soft); color: #8a5300; border-color: #f1d6a5; }
+.tech-badge--err   { background: rgba(227,34,42,0.08); color: var(--brand-red-dark); border-color: rgba(227,34,42,0.20); }
+
+.tlv-tree { font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.65; }
+.tlv-tree .node { padding: 4px 0 4px 14px; border-left: 2px solid var(--line); margin-left: 4px; }
+.tlv-tree .node.constructed { border-left-color: var(--secure-cyan); }
+.tlv-tree .tag { color: var(--brand-red-dark); font-weight: 600; }
+.tlv-tree .len { color: var(--muted); }
+.tlv-tree .val { color: var(--ink); }
+.tlv-tree .meaning { color: var(--brand-grey); font-family: 'Source Sans 3', sans-serif; font-size: 12.5px; margin-left: 8px; }
+
+.tool-privacy {
+  max-width: var(--maxw-section);
+  margin: 0 auto;
+  padding: 0 80px 24px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: var(--muted-2);
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tool-privacy::before {
+  content: '';
+  width: 8px; height: 8px;
+  background: var(--secure-green);
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px var(--secure-green-soft);
+}
+.tool-privacy.warn::before { background: var(--secure-amber); box-shadow: 0 0 0 4px var(--secure-amber-soft); }
+
+.tool-reference {
+  max-width: var(--maxw-section);
+  margin: 0 auto;
+  padding: 50px 80px 80px;
+  border-top: 1px solid var(--line);
+}
+.tool-reference h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  letter-spacing: -0.3px;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+.tool-reference p { color: var(--brand-grey); line-height: 1.7; max-width: 760px; }
+.tool-reference .ref-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 28px; }
+.tool-reference .ref-card {
+  border: 1px solid var(--line);
+  padding: 18px;
+  border-radius: 6px;
+  background: #fff;
+}
+.tool-reference .ref-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: var(--ink);
+}
+.tool-reference .ref-card p { font-size: 13.5px; color: var(--brand-grey); }
+.tool-reference .ref-card a { font-size: 13px; color: var(--brand-red); font-family: 'Montserrat', sans-serif; font-weight: 600; text-decoration: none; }
+
+/* File picker label (hidden input + visible label as button) */
+.file-pick {
+  position: relative;
+  display: inline-block;
+}
+.file-pick input[type="file"] {
+  position: absolute; opacity: 0; pointer-events: none; width: 0; height: 0;
+}
+
+@media (max-width: 880px) {
+  .tool-header { padding: 36px 24px 18px; }
+  .tool-shell { padding: 12px 24px 40px; grid-template-columns: 1fr; }
+  .tool-privacy { padding: 0 24px 18px; }
+  .tool-reference { padding: 36px 24px 50px; }
+  .tool-reference .ref-grid { grid-template-columns: 1fr; }
+  .parsed-row { grid-template-columns: 1fr; }
+}
