@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Passkeys vs Traditional MFA — what really changed</title>
+<meta name="description" content="Why passkeys are not "MFA, just stronger" — they are a different cryptographic primitive that retires entire attack classes. The engineer's comparison, the migration paths, and the honest tradeoffs." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/passkeys-vs-traditional-mfa/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Passkeys vs Traditional MFA" />
+<meta property="og:description" content="Why passkeys are not "MFA, just stronger" — they are a different cryptographic primitive that retires entire attack classes. The engineer's comparison, the migration paths, and the honest tradeoffs." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/passkeys-vs-traditional-mfa/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Passkeys vs Traditional MFA",
+     "item": "https://ambisecure.ambimat.com/blog/passkeys-vs-traditional-mfa/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Passkeys vs Traditional MFA",
+   "datePublished": "2026-05-09",
+   "dateModified": "2026-05-09",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   },
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/passkeys-vs-traditional-mfa/",
+   "keywords": "Passkeys, MFA, FIDO2, WebAuthn, phishing-resistant, BE/BS, syncable passkeys"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Passkeys vs Traditional MFA</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>Passkeys</span><span>Cornerstone</span><span>Published 2026-05-09</span><span>Updated 2026-05-09</span><span>24 min read</span>
+    </div>
+
+    <h1>Passkeys vs Traditional MFA.</h1>
+    <p class="dek">"MFA" was a strategy, not a primitive. Passkeys are the primitive. Origin binding, hardware boundary, no replayable secret. Here is what changes for an enterprise that takes phishing-resistance seriously.</p>
+
+
+    <h2>Why &ldquo;MFA&rdquo; was a strategy, not a primitive</h2>
+    <p>Multi-factor authentication started life as a deployment posture: the user presents two of <em>something they know</em> (password), <em>something they have</em> (OTP token, phone), or <em>something they are</em> (fingerprint). The factors were chosen for what they were not &mdash; not just a password &mdash; rather than for any cryptographic property the combination provided. By the late 2010s, this taxonomy was clearly broken. Push fatigue was an industrial issue; SS7 made SMS exfiltrable at scale; TOTP codes were typed by users into phishing pages within seconds of generation.</p>
+    <p>Passkeys are a different category of object. They are not "an additional factor". They are a <strong>cryptographic credential</strong> bound to a relying-party origin and stored in hardware. The question stops being "how many factors did the user present?" and becomes "what does the cryptographic ceremony actually prove?". Once you sit with that shift, the operational consequences cascade.</p>
+    <p>This post is the engineering version of that shift. Where do passkeys win, where do they not, and what does an honest deployment look like for an enterprise that has been running TOTP or push for half a decade.</p>
+
+    <h2>The three factors, re-examined</h2>
+    <h3>Knowledge factor: passwords</h3>
+    <p>Passwords have a single root failure mode: they are reusable and observable. Users reuse them across sites; once leaked at one site, they are usable at others. Phishing pages capture them in real time; humans cannot reliably distinguish a legitimate origin from a homoglyph attack. Server breaches publish them in dumps; even hashed-and-salted, GPU-accelerated cracking handles the long tail. There is no future where the password is the load-bearing primitive in workforce or consumer identity.</p>
+
+    <h3>Possession factor: OTP / push</h3>
+    <p>The classical second factor was meant to address password reuse. It does, partially. An OTP code generated from a TOTP seed and entered into a login page raises the bar &mdash; an attacker needs both the password and the TOTP seed (or a fresh OTP) to log in. SMS variants are weaker still, exposing the OTP delivery to telco interception.</p>
+    <p>The fundamental problem with OTP and push: they remain bearer tokens that the user can hand over. A phishing site that proxies a real auth flow can ask for a password, ask for a TOTP code, get both within the OTP's 30-second window, and complete a successful login on the back end. AdversaryInTheMiddle (AITM) toolkits like Modlishka, Evilginx, and Muraena have been off-the-shelf for years.</p>
+    <p>Push doesn't solve this either. Push fatigue (Microsoft documented multi-thousand-push attacks succeeding because users tap "approve" reflexively) and push interception via stolen Apple/Google credentials are both well-documented attack patterns.</p>
+
+    <h3>Inherence factor: biometrics on the server</h3>
+    <p>Biometric matching that happens on a server is a strictly worse design than biometric matching that happens locally. Server-side matching means the biometric template lives in a database; a breach exposes it; biometrics are not rotatable. It also means the network sees the authentication primitive, with all the AITM consequences that implies.</p>
+    <p>Local biometric matching, where the device's secure element verifies the user and emits an authenticator-internal user-verified flag, sidesteps both. Passkeys take the local-matching path. The biometric never leaves the device.</p>
+
+    <h2>The passkey shift &mdash; what changes</h2>
+    <p>Passkeys are public-key credentials. The private key never leaves the authenticator (hardware token, smart card, TPM, secure enclave). The relying party stores only the public key. Authentication is a digital signature ceremony: the RP issues a fresh challenge, the authenticator signs it (after the user's local UV), the RP verifies the signature.</p>
+    <p>Three structural properties drop out:</p>
+    <ol>
+      <li><strong>Origin binding.</strong> The browser scopes credentials to the registered origin. A phishing site at <code>logIn.example.com</code> cannot trick the authenticator into signing for <code>login.example.com</code>; the browser computes <code>SHA-256(rpId)</code> and refuses to find a credential. Phishing as an attack class becomes structurally impossible.</li>
+      <li><strong>No replayable secret.</strong> The shared secret is the public key &mdash; freely publishable. There is nothing to leak in a server breach beyond the public material.</li>
+      <li><strong>Hardware boundary.</strong> The private key sits in a secure element / TPM / smart card. Compromise requires physical access (or a hardware-level attack against the secure element, which costs orders of magnitude more than software-level extraction).</li>
+    </ol>
+
+    <h2>Where passkeys win &mdash; and how decisively</h2>
+    <p>Phishing: <strong>solved structurally</strong>. The user cannot accidentally hand the credential to an attacker, because the authenticator refuses to act outside its registered origin. This is the load-bearing win.</p>
+    <p>Credential stuffing: <strong>not applicable</strong>. There is no password to stuff. Even if a server-side database leaks, the public-key material is publishable by design.</p>
+    <p>Push fatigue: <strong>not applicable</strong>. The user makes one decision per ceremony &mdash; tap or no tap &mdash; with explicit origin context provided by the browser. There is no out-of-band approval channel for an attacker to flood.</p>
+    <p>Replay: <strong>solved structurally</strong>. Each ceremony is signed over a fresh server-issued challenge.</p>
+    <p>Bulk-attack economics: <strong>devastatingly improved for the defender</strong>. Phishing attacks scale to millions because they cost the attacker little per target. With passkeys, the attacker has no replayable artefact &mdash; no password, no OTP, nothing they can re-use even once. The attack cost shifts from "send phishing emails to a list" to "physically steal hardware from each individual victim". That is a fundamentally different economic regime.</p>
+
+    <h2>Where passkeys don't win &mdash; and what to pair with</h2>
+    <p>Account recovery: passkeys make recovery <em>harder</em>, because you can't simply reset a password. If the user's authenticator is lost, what's the path back in? Three answers in priority order:</p>
+    <ol>
+      <li>Enrol two authenticators per user. Lose one, the other works. Re-issue the lost one through the normal channel.</li>
+      <li>For consumer use, accept syncable passkeys (BE=1). The cloud account is the recovery anchor; we trade some assurance for recoverability.</li>
+      <li>For workforce use, build IT-mediated re-enrolment: in-person identity verification, short-lived TOTP, then a fresh hardware credential. Auditable. Single-shot.</li>
+    </ol>
+    <p>Session theft: once authenticated, a session cookie is bearer. An attacker who steals the cookie has the session until expiry. Mitigations: short session lifetimes, device-binding (DPoP, signed JWTs), continuous device-posture re-check.</p>
+    <p>Cloud-account compromise (for syncable passkeys): a synced passkey lives in a platform vendor's cloud. If the vendor's cloud is compromised, or if the user's cloud account is compromised via a separate attack, the passkey is exposed. For high-assurance use, require BE=0 (device-bound), which removes this branch.</p>
+    <p>Consent-phishing within OAuth flows: even a phishing-resistant authentication doesn't stop the user from approving a malicious application's scope grants. App allow-listing and scope review remain necessary.</p>
+
+    <h2>The BE/BS distinction, applied</h2>
+    <p>WebAuthn level 3 added two flag bits to authenticatorData: <strong>BE</strong> (Backup Eligible) and <strong>BS</strong> (Backup State). These are not cosmetic. They are how the protocol tells the relying party whether a credential is device-bound or syncable.</p>
+    <p>For an enterprise, the policy is simple: high-assurance flows (privileged access, source code, infrastructure consoles) require <code>BE=0</code>. Convenience flows (everyday SaaS) accept <code>BE=1</code>. Tier the application catalogue accordingly.</p>
+    <p>For a consumer service, the policy is also simple: accept everything. The marginal user with a passkey on their iPhone is incomparably better protected than the same user with a password.</p>
+
+    <h2>Migration paths from TOTP / push</h2>
+    <p>Three patterns for moving from a legacy MFA to passkeys.</p>
+    <h3>Pattern 1: dual-factor, then deprecate</h3>
+    <p>Add WebAuthn as an additional factor alongside existing TOTP / push. Roll out to volunteer users first. Once enrolment is at 80%+, deprecate TOTP / push as a sign-in option, leaving them only for recovery. This is the lowest-risk path; it gives users time to adapt.</p>
+    <h3>Pattern 2: forced-rollout by cohort</h3>
+    <p>Mandate passkey enrolment for engineering / privileged-access cohorts first. Provide hardware (USB key + smart card). Schedule cohort-wide enrolment days at the IT desk. Within 90 days, deprecate password+OTP for these cohorts. Expand to other cohorts on a roadmap.</p>
+    <h3>Pattern 3: greenfield IdP migration</h3>
+    <p>Move the IdP itself: new IdP supports passkeys natively, old IdP remains for legacy systems. Migrate apps off the old IdP one at a time, with a hard cutover. Useful when an IdP replacement was already on the roadmap.</p>
+
+    <h2>What ships in production: a posture sketch</h2>
+    <p>The deployment we recommend for a workforce of 10,000+ employees:</p>
+    <ul>
+      <li><strong>Two authenticators per user</strong>: OnePass Card (turnstile + desktop) plus OnePass USB Key (laptops). Both BE=0.</li>
+      <li><strong>FIDO Validation Server</strong> at the IdP, attestation-anchored against AAGUID allow-list, MDS BLOB synced daily.</li>
+      <li><strong>UV required</strong> for high-assurance flows; UP-only acceptable for low-risk session refresh.</li>
+      <li><strong>Recovery: in-person re-enrolment</strong>, never password fallback.</li>
+      <li><strong>Lifecycle: HR-driven</strong>, with revocation propagating to IdP within minutes of offboarding.</li>
+      <li><strong>Audit: AAGUID + serial</strong> logged on every registration; signCount on every assertion; anomalies (counter regression, AAGUID change) alert SecOps.</li>
+    </ul>
+
+    <h2>What this looks like for the user</h2>
+    <p>Day one: tap the card on the desk reader, type the device PIN once. Browser opens to corporate IdP, already authenticated. Click to gmail / slack / jira / build / cloud / git &mdash; all federated. Tap when prompted by the IdP for sensitive actions (privileged ops, code-signing, prod access).</p>
+    <p>Lost card: walk to the IT desk, identity-verify in person, leave with a new card. New card is enrolled before they leave the desk; old card revoked across the IdP within seconds.</p>
+    <p>End of day, end of year, end of employment: the user's identity has never been a string of characters anyone could write down. It has been a piece of hardware they hold. The shift is operational, not just cryptographic.</p>
+
+    <h2>Honest tradeoffs</h2>
+    <p>Three real costs we want to be explicit about:</p>
+    <p><strong>Cost 1: hardware procurement.</strong> Two authenticators per user is real money &mdash; typically $25-$60 per user depending on form factor. Compare against the cost of one phishing incident.</p>
+    <p><strong>Cost 2: enrolment friction.</strong> First-time enrolment requires in-person verification &mdash; harder for distributed workforces. Mitigations: regional IT desk days, supervised enrolment over Zoom plus mailed-key with a tamper-evident envelope.</p>
+    <p><strong>Cost 3: legacy-app integration.</strong> Some legacy apps don't speak SAML or OIDC. They become the long pole. Often the right answer is a reverse proxy that terminates the user session and forwards via a service account &mdash; not pretty, but it preserves the security posture for everything in front of the proxy.</p>
+
+    <h2>Bottom line</h2>
+    <p>Passkeys are not "MFA, just stronger". They are a different cryptographic primitive that retires entire attack classes (phishing, replay, credential stuffing, push fatigue) by virtue of being origin-bound and hardware-rooted. The migration cost is real and one-time; the operating cost is comparable or lower than legacy MFA. For an enterprise that takes phishing-resistance seriously, this is no longer an aspiration &mdash; it is the deployment.</p>
+
+    
+    <h2>The phishing kill chain &mdash; what actually breaks</h2>
+    <p>Walk a normal credential-phishing attack against a TOTP-protected user, step by step. Attacker registers a homoglyph domain (logIn-example.com). Sends a "your account needs verification" email. User clicks. Phishing page loads, looking identical to the real login. User types password. Phishing page proxies the password to the real site, gets the TOTP prompt, returns it to the user. User types TOTP code. Phishing page proxies the code, completes login on the real site, captures the session cookie. The user sees a normal logged-in experience; the attacker has the cookie.</p>
+    <p>That entire chain executes in under 30 seconds. The user did everything &ldquo;right&rdquo; from their perspective &mdash; entered credentials only into what they thought was the legitimate site. The defence failed at the trust-decision layer: the user could not distinguish legit from spoofed.</p>
+    <p>Now walk the same attack against a WebAuthn-protected user. Phishing page loads. User clicks on the WebAuthn ceremony (typically a "tap your security key" prompt). The browser computes <code>SHA-256("logIn-example.com")</code>, looks for a credential scoped to <code>logIn-example.com</code>, finds nothing (the user only ever registered with <code>login.example.com</code>). The ceremony fails with an opaque error. The user, mildly confused, abandons. The attacker gets nothing &mdash; not the password, not the public key, not even confirmation that the user has a credential. Origin binding turned the phishing kill chain into a no-op.</p>
+    <p>Even if the attacker is sophisticated &mdash; AdversaryInTheMiddle proxying the entire WebAuthn ceremony &mdash; the result is the same. The browser scopes the credential to whatever origin <em>the browser</em> sees in the URL bar, not whatever the proxied response claims. As long as the user is at <code>logIn-example.com</code> in the browser, the credential at <code>login.example.com</code> is unreachable. AITM-on-WebAuthn is technically interesting but operationally not a credential-extraction primitive.</p>
+
+    <h2>The bearer-token problem</h2>
+    <p>Authentication is the start of a session. The session continues with cookies, tokens, JWTs, OAuth access tokens. These are bearer tokens: anyone holding the bytes can use them. WebAuthn solves the auth ceremony; it does not solve session-token theft.</p>
+    <p>Mitigations:</p>
+    <ul>
+      <li><strong>Short session lifetimes.</strong> 8-hour sessions for SaaS, 1-hour for sensitive actions, re-prompt for high-impact operations (config changes, billing, destructive actions).</li>
+      <li><strong>Token binding to device.</strong> DPoP (RFC 9449) binds an access token to a key held by the client. Stealing the token without the key gives the attacker nothing.</li>
+      <li><strong>Continuous device-posture re-check.</strong> Periodically re-validate that the device the session is on is still the device the auth happened on. Useful in zero-trust deployments.</li>
+      <li><strong>Step-up auth for sensitive actions.</strong> Cookie-based session for normal navigation; require fresh WebAuthn assertion for password changes, billing, prod access. The fresh assertion is itself bound to a fresh challenge &mdash; the attacker would need the authenticator, not just the cookie.</li>
+    </ul>
+
+    <h2>The push-fatigue case study</h2>
+    <p>In 2022 a series of high-profile breaches (Uber, Cisco, Twilio) showed that push-based MFA collapses under sustained pressure. Attack pattern: attacker has the password (phished, leaked, brute-forced at the OAuth layer). Attacker repeatedly initiates login. User receives N push prompts in succession. User taps approve, either by mistake or to make the prompts stop. Attacker is in.</p>
+    <p>The mitigations in the push ecosystem &mdash; number matching, additional context, geographic correlation &mdash; are real improvements but they are working against the user's tendency to ignore prompts. Number matching adds a step the user can still get wrong; additional context still relies on the user reading carefully under prompt-fatigue conditions.</p>
+    <p>WebAuthn / passkeys avoid this category entirely because there is no out-of-band approval channel. The user makes one decision per ceremony, in immediate context, with the origin shown by the browser. There is no asynchronous push that can be flooded.</p>
+
+    <h2>What about the cost of lost keys?</h2>
+    <p>Common objection: "users will lose their keys, and the recovery cost will exceed the security benefit." The data on real deployments contradicts this.</p>
+    <p>Lost-key rates from real deployments: 1-3% of authenticators per year, depending on form factor and population. With two authenticators per user enrolled, the joint loss probability (lose both in the same incident) is closer to 0.05% per year. For a 10,000-person organisation that is roughly 5 in-person re-enrolment events per year &mdash; not zero, not crippling.</p>
+    <p>Compare with the steady-state cost of password resets. Most enterprise IT desks see password-reset tickets at a rate of 1-2 per user per year. That is 10,000-20,000 tickets per year for the same population &mdash; orders of magnitude more than the post-passwordless lost-key rate.</p>
+    <p>The lost-key economics actually favour passwordless. The error-recovery flow is more in-person and more expensive per event, but it is rare; the password-reset flow is self-service per event but voluminous. Net IT effort goes down.</p>
+
+    <h2>What synced passkeys are, honestly</h2>
+    <p>Synced passkeys (BE=1) live in a platform vendor's cloud account &mdash; iCloud Keychain, Google Password Manager, 1Password, Microsoft Authenticator. They are excellent for consumer use; they are an active risk for high-assurance use.</p>
+    <p>The risk: the cloud account becomes a single point of compromise. A user whose iCloud account is compromised has all their passkeys compromised in one stroke. The cloud-account credentials become the target; the underlying hardware properties of the originally generating device are no longer relevant.</p>
+    <p>Apple's iCloud Keychain has a sophisticated end-to-end encryption design with hardware-bound recovery; Google's Password Manager has its own model. Both are strong against a passive cloud breach. Both are weaker than a discrete hardware authenticator against a determined attacker who can compromise the user's cloud account.</p>
+    <p>For consumer: accept synced passkeys. The marginal user is incomparably better off than with a password.</p>
+    <p>For high-assurance workforce: reject synced passkeys. Require BE=0. Issue discrete hardware.</p>
+
+    <h2>Migration checklist (the quick version)</h2>
+    <p>You are running TOTP / push and want to move to passkeys. Six bullets:</p>
+    <ol>
+      <li>Confirm IdP supports WebAuthn natively. If not, IdP migration is the first project.</li>
+      <li>Procure two authenticators per user; budget $50-100 per user.</li>
+      <li>Set attestation policy: AAGUID allow-list, MDS sync, BE=0 enforcement for high-assurance tier.</li>
+      <li>Roll out in cohorts; 1,000-2,000 users per month is a reasonable cadence.</li>
+      <li>Once 80% enrolment, deprecate TOTP / push as primary; keep as transitional fallback for unenroled users only.</li>
+      <li>At 99% enrolment, disable password sign-in entirely; recovery is IT-mediated re-enrolment only.</li>
+    </ol>
+    <p>That is it. The protocol is simple. The migration discipline is what determines whether you ship in 12 months or you are still talking about it three years from now.</p>
+
+    
+    <h2>FAQ &mdash; the questions that actually come up</h2>
+    <p><strong>Q: Won't users prefer the convenience of synced passkeys?</strong></p>
+    <p>Most consumer users will. Roughly 90% of consumer adoption goes to synced passkeys via the platform vendor's password manager. That is appropriate. For workforce users, the educational framing is "your work credentials are tied to physical hardware so that losing your phone doesn't lose your job's identity". Most users find this reasonable.</p>
+    <p><strong>Q: What about users who refuse to carry a physical authenticator?</strong></p>
+    <p>Three answers in priority. (a) Phone-based platform authenticator with hybrid transport &mdash; no physical thing to carry beyond the phone they already have. (b) Smart card embedded in the corporate ID badge they already carry. (c) Termination of the working relationship if the role requires high-assurance identity and the user is unwilling to comply. The third option is rare but not zero.</p>
+    <p><strong>Q: Are passkeys quantum-safe?</strong></p>
+    <p>Current passkey implementations use ECDSA (P-256) or EdDSA (Ed25519) which are not quantum-safe in principle. However, harvest-now-decrypt-later attacks against authentication signatures are nonsensical &mdash; the signature is verified once and discarded; there is no ciphertext to harvest. Quantum-safe authentication is a 2030+ migration concern; current passkeys remain appropriate.</p>
+    <p><strong>Q: What about FIDO Alliance certifications I should require?</strong></p>
+    <p>Look for FIDO Certified L2 as the floor for workforce use. L1 is functional certification only; L2 confirms the secure element. L3 / L3+ raise the bar to CC EAL5+ with side-channel and fault-injection countermeasures &mdash; right for highest-assurance environments (defence, financial-services prod, critical infrastructure).</p>
+    <p><strong>Q: Can passkeys be used for non-web identity (SSH, signing, VPN)?</strong></p>
+    <p>Yes, with adaptors. SSH supports FIDO2 keys natively (ssh-keygen -t ed25519-sk). VPN clients increasingly speak WebAuthn for sign-in, then derive client-cert material on top. Code-signing tools have FIDO2 integrations (Sigstore, GitHub artifact attestation). The same hardware authenticator covers a wide range of non-web use cases.</p>
+
+    <h2>The deployment runway, restated</h2>
+    <p>For an enterprise migrating from password+OTP today, the realistic timeline is 12-18 months from start to "passwords removed entirely". Six months for foundation and pilot; six for cohort rollout; two-six for cleanup and audit. The cost is meaningful but bounded; the security improvement is durable. This is no longer an aspirational migration; it is a project plan with known steps.</p>
+
+    <hr />
+    <h2>Companion reading</h2>
+    <ul>
+      <li><a href="/technologies/passkeys/">Passkeys reference (technologies)</a></li>
+      <li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant authentication</a></li>
+      <li><a href="/blog/why-hardware-backed-identity-matters/">Why Hardware-Backed Identity Matters</a></li>
+      <li><a href="/blog/designing-enterprise-passwordless-systems/">Designing Enterprise Passwordless Systems</a></li>
+    </ul>
+
+
+  </article>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

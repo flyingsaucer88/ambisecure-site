@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Passkeys — AmbiSecure | BE/BS, syncable vs device-bound, enterprise policy</title>
+<meta name="description" content="Passkeys are WebAuthn credentials with a specific posture. The BE/BS flags decide whether they're device-bound or syncable. This page is the engineering posture page — what to require, what to accept, what to reject." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/passkeys/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Passkeys — AmbiSecure" />
+<meta property="og:description" content="Passkeys are WebAuthn credentials with a specific posture. The BE/BS flags decide whether they're device-bound or syncable. This page is the engineering posture page — what to require, what to accept, what to reject." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/passkeys/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Technologies",
+     "item": "/technologies/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Passkeys",
+     "item": "https://ambisecure.ambimat.com/technologies/passkeys/"
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "Passkeys \u2014 what really changed",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">Passkeys</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology</span>
+    <h1>Passkeys &mdash; what really changed.</h1>
+    <p class="dek">Passkey is the consumer-facing brand. Under the hood it's a WebAuthn credential with a specific posture: discoverable (resident on the authenticator), capable of cross-device flows, and &mdash; on consumer ecosystems &mdash; synced through the platform vendor. The critical engineering question isn't "what is a passkey", it's "is this passkey backup-eligible?".</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">BE / BS &mdash; the only flags that matter for posture</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>WebAuthn level 3 added two flag bits to authenticatorData:</p>
+      <ul>
+        <li><strong>BE (Backup Eligible)</strong> &mdash; the credential is allowed to be backed up. Set at registration; immutable for the lifetime of the credential.</li>
+        <li><strong>BS (Backup State)</strong> &mdash; the credential is currently backed up. Can change over time as the user enables / disables sync.</li>
+      </ul>
+      <p>The four combinations:</p>
+    </div>
+    <table class="spec-table" style="margin:18px 0 0;">
+      <thead><tr><th>BE</th><th>BS</th><th>Posture</th></tr></thead>
+      <tbody>
+        <tr><td>0</td><td>0</td><td><strong>Device-bound.</strong> Hardware key, smart card, TPM-bound platform credential. Lives where it was created. Highest assurance.</td></tr>
+        <tr><td>1</td><td>0</td><td><strong>Backup-eligible, not yet backed up.</strong> Transitional state. Treat as if BS could become 1 at any time.</td></tr>
+        <tr><td>1</td><td>1</td><td><strong>Synced passkey.</strong> Lives in iCloud Keychain, Google Password Manager, 1Password, etc. Convenience-first; recovery is platform-vendor's recovery.</td></tr>
+        <tr><td>0</td><td>1</td><td><strong>Reserved / invalid combination.</strong> Should never appear. If it does, reject.</td></tr>
+      </tbody>
+    </table>
+    <div class="prose" style="max-width:900px;margin:18px 0 0;">
+      <p>For workforce identity in regulated industries, set policy <strong>BE = 0</strong>: only accept device-bound credentials, where compromise of the credential requires physical access to the authenticator.</p>
+      <p>For consumer login, accept everything &mdash; passkeys radically improve recoverability for users who would otherwise reuse passwords.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Discoverable vs non-discoverable</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>A <strong>discoverable</strong> credential (also called <em>resident</em> in CTAP1 parlance) lives on the authenticator and includes the userHandle. The authenticator can produce assertions without the RP supplying a credentialId &mdash; enabling true username-less flows. This is what makes "passwordless" feel passwordless: tap, pick an account from the device, done.</p>
+      <p>A <strong>non-discoverable</strong> credential is encoded inside the credentialId itself (as encrypted data the authenticator can decrypt). The credential lives on the server. To assert, the RP supplies allowCredentials &mdash; the user has already typed a username.</p>
+      <p>Discoverable credentials require storage on the authenticator. Limits range from ~25 (low-end smart cards) to thousands (platform authenticators). Non-discoverable have no storage limit on the authenticator side.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Cross-device authentication (hybrid transport)</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>The hybrid transport (formerly "caBLE") lets a passkey on one device authenticate a session on another. Mechanics: laptop browser shows a QR code, phone scans, both establish a BLE proximity check to prevent attacker-in-the-middle, and the phone&rsquo;s passkey signs the laptop's WebAuthn ceremony.</p>
+      <p>Hybrid is what makes "sign in with your phone" possible without provisioning a new credential per laptop. The phone never leaves your hand; the laptop never gains access to the credential.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Enterprise policy &mdash; the practical levers</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>Three policy decisions decide whether your passkey rollout meets workforce requirements:</p>
+      <ol>
+        <li><strong>BE policy</strong> &mdash; require <code>BE == 0</code> for device-bound, allow <code>BE == 1</code> for convenience-first.</li>
+        <li><strong>Attestation policy</strong> &mdash; <code>attestation: 'direct'</code> + AAGUID allow-list for high assurance; <code>'none'</code> for consumer.</li>
+        <li><strong>UV policy</strong> &mdash; require <code>UV == 1</code> for sensitive actions; <code>UP</code> alone for low-risk session refresh.</li>
+      </ol>
+      <p>OnePass Card and OnePass USB Key both ship as <code>BE = 0</code> &mdash; device-bound by construction. That is the right default for workforce deployments.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Companion reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/blog/passkeys-vs-traditional-mfa/" class="blog-card"><span class="chip">Pillar</span><h3>Passkeys vs Traditional MFA</h3><p>What changes when MFA stops being a code and starts being a hardware-bound signature.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/platform-vs-roaming-authenticators/" class="blog-card"><span class="chip">Pillar</span><h3>Platform vs Roaming Authenticators</h3><p>Choosing the right form factor &mdash; and the matching enrolment path.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/designing-enterprise-passwordless-systems/" class="blog-card"><span class="chip">Pillar</span><h3>Designing Enterprise Passwordless Systems</h3><p>What an end-to-end deployment really looks like.</p><span class="read-more">Read &rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

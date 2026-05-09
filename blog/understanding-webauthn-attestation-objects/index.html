@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Understanding WebAuthn Attestation Objects — the engineering walkthrough</title>
+<meta name="description" content="Walking the WebAuthn attestationObject byte by byte — fmt formats, attStmt structure, x5c chain validation, FIDO MDS BLOB integration, and the verification pipeline that actually ships in production." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/understanding-webauthn-attestation-objects/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Understanding WebAuthn Attestation Objects" />
+<meta property="og:description" content="Walking the WebAuthn attestationObject byte by byte — fmt formats, attStmt structure, x5c chain validation, FIDO MDS BLOB integration, and the verification pipeline that actually ships in production." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/understanding-webauthn-attestation-objects/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Understanding WebAuthn Attestation Objects",
+     "item": "https://ambisecure.ambimat.com/blog/understanding-webauthn-attestation-objects/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Understanding WebAuthn Attestation Objects",
+   "datePublished": "2026-05-09",
+   "dateModified": "2026-05-09",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   },
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/understanding-webauthn-attestation-objects/",
+   "keywords": "WebAuthn, FIDO2, attestation, COSE, CBOR, FIDO MDS, AAGUID, x5c"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Understanding WebAuthn Attestation Objects</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>WebAuthn</span><span>Cornerstone</span><span>Published 2026-05-09</span><span>Updated 2026-05-09</span><span>26 min read</span>
+    </div>
+
+    <h1>Understanding WebAuthn Attestation Objects.</h1>
+    <p class="dek">A relying party that decodes attestation but never verifies it has a decorative pipeline. This is the engineer's walkthrough: what the structure means, what each fmt requires, how MDS fits in, and what the verification path actually does.</p>
+
+
+    <h2>What attestation actually proves</h2>
+    <p>An attestation statement is a signed assertion from the authenticator that says, in effect: "this credential was just generated on a device of this make and model, by an authenticator I am willing to vouch for". The signature is performed by an <em>attestation key</em> &mdash; not the freshly generated credential key &mdash; and the signing material is the concatenation of <code>authenticatorData || SHA-256(clientDataJSON)</code>.</p>
+    <p>Three things sit just outside what attestation proves, and conflating them is where most integrations come unstuck. Attestation does <strong>not</strong> say who the user is &mdash; that is the relying party's job. It does not say the user verified themselves &mdash; that is the UV flag. And it does not by itself say the device is currently in a trustworthy state &mdash; only that the device was a known make and model at the moment of registration. Everything else is policy that the relying party builds on top.</p>
+    <p>The reason attestation matters is operational. Without it, an enterprise has no protocol-level mechanism to require that user-facing credentials are stored in certified hardware. Anyone can ship a software authenticator that says "trust me". Attestation is what shifts the trust decision from a vendor's claim to a manufacturer-signed proof.</p>
+
+    <h2>The attestationObject as a CBOR map</h2>
+    <p>The wire structure is a single CBOR map with three string keys: <code>fmt</code>, <code>attStmt</code>, and <code>authData</code>. The map is serialised at the authenticator and emerges from <code>navigator.credentials.create()</code> as a base64url-encoded blob inside the <code>response.attestationObject</code> field of the returned <code>PublicKeyCredential</code>.</p>
+    <p>The first key, <code>fmt</code>, is a short string identifying the attestation format. The second, <code>attStmt</code>, is a sub-map whose schema depends on <code>fmt</code>. The third, <code>authData</code>, is a binary blob in the WebAuthn-specific authenticatorData layout: a 32-byte rpIdHash, one byte of flags, four bytes of signCount, optionally followed by attested-credential data and CBOR extensions.</p>
+    <p>When you walk an attestation in the field, the first move is always: paste the bytes into the <a href="/resources/tools/cbor-decoder/">CBOR decoder</a>, look at the top-level map, and confirm those three keys are present. If they are not, you have a malformed envelope.</p>
+
+    <h2>The attestation formats, one by one</h2>
+    <h3>fmt: "none"</h3>
+    <p>The simplest possible attestation. <code>attStmt</code> is the empty map. <code>authData</code> still contains the freshly generated public key &mdash; you just have no proof of where it came from. This is the right default for consumer flows. The relying party still gets all the security properties of WebAuthn (origin binding, hardware-bound keys), it just cannot enforce a specific make-and-model policy.</p>
+    <p>Apple consumer flows (Touch ID, Face ID) historically returned <code>none</code>. They have since added <code>apple</code> and <code>apple-appattest</code> for richer cases, but consumer apps that don't require hardware proof are best served by <code>attestation: 'none'</code> in the request options &mdash; that's what Microsoft, Google, and Apple recommend for the public-internet account creation flow.</p>
+
+    <h3>fmt: "packed"</h3>
+    <p>The FIDO Alliance generic attestation format, defined in §8.2 of the WebAuthn spec. <code>attStmt</code> contains <code>alg</code> (the COSE algorithm identifier of the attestation signature, typically -7 for ES256), <code>sig</code> (the signature bytes), and optionally <code>x5c</code> (an array of X.509 certificates representing the attestation cert chain).</p>
+    <p>Three sub-flavours exist. With an <code>x5c</code> chain, the format is <em>basic</em> attestation &mdash; the attestation key is a per-cohort key whose public counterpart sits in the leaf of the x5c. Without an <code>x5c</code> but with a credential-key-bound signature (<em>self attestation</em>), the credential signs its own attestation; you get no make/model assurance, just key consistency. The third flavour is <em>ECDAA</em>, a privacy-preserving group signature scheme that has not seen production deployment.</p>
+    <p>Most certified roaming authenticators (YubiKey, Feitian, Token2, OnePass) ship <code>packed</code> with a basic-attestation x5c chain. The chain typically has a leaf cert (per-batch attestation key), one or two intermediates, and terminates at a manufacturer root. The FIDO MDS BLOB lists the manufacturer root for each AAGUID; that's the trust anchor your RP validates the chain against.</p>
+
+    <h3>fmt: "tpm"</h3>
+    <p>Used by Windows Hello when the platform authenticator is bound to a TPM (most modern Windows laptops). The format mirrors a TPM2_Quote: <code>ver</code>, <code>alg</code>, <code>x5c</code>, <code>sig</code>, plus two TPM-specific structures: <code>certInfo</code> (the TPMS_ATTEST that the TPM signed) and <code>pubArea</code> (the TPMT_PUBLIC describing the new credential key).</p>
+    <p>The verification rule is more involved than packed: parse <code>certInfo</code>, verify the TPM signed it (using the AIK leaf in <code>x5c</code>), verify <code>certInfo.attested.name</code> equals <code>nameAlg(pubArea)</code>, then verify the AIK chain to a TPM manufacturer root. The Trusted Computing Group publishes the canonical TPM EK roots; FIDO MDS includes equivalent material indexed by AAGUID.</p>
+    <p>If your enterprise wants TPM-bound platform credentials accepted, you'll need both the WebAuthn attestation pipeline and a TPM-aware verifier. Most FIDO server libraries handle this transparently, but worth confirming if you're rolling your own.</p>
+
+    <h3>fmt: "android-key" and "android-safetynet"</h3>
+    <p><code>android-key</code> uses the Android KeyStore Attestation feature: a hardware-backed Keymaster module produces a key, and Android signs an x5c chain that includes a custom <em>key-description</em> X.509 extension carrying the key properties (origin, security level, verifiedBootState, verifiedBootHash). The verification rule is to walk the x5c to a Google attestation root, then parse the key-description extension and enforce policy on its fields.</p>
+    <p><code>android-safetynet</code> is a JWS payload from Google's SafetyNet API. Google deprecated SafetyNet in 2023 in favour of the Play Integrity API; production RPs should not adopt it for new deployments. Existing assertions can still be verified against the SafetyNet root, but new flows should require <code>android-key</code> instead.</p>
+
+    <h3>fmt: "fido-u2f"</h3>
+    <p>The legacy U2F envelope, kept for backwards compatibility. <code>attStmt</code> contains <code>x5c</code> and <code>sig</code>. The signed bytes are constructed differently from packed: <code>0x00 || rpIdHash || clientDataHash || credentialId || publicKey</code>, where the public key is the uncompressed P-256 point (<code>0x04 || x || y</code>). You'll see this from older authenticators or new authenticators in U2F-compat mode.</p>
+
+    <h3>fmt: "apple"</h3>
+    <p>Apple Anonymous Attestation. <code>attStmt</code> contains an <code>x5c</code> chain rooted in the Apple Anonymous Attestation CA. The format is anonymous-by-design &mdash; there is no per-device AAGUID; the leaf certifies a per-cohort attestation key. RPs cannot enforce per-device policy, only per-OS-version cohort policy. For the consumer privacy profile this is intentional.</p>
+
+    <h3>fmt: "apple-appattest"</h3>
+    <p>Strictly speaking, App Attest is not a WebAuthn attestation; it's an iOS app-integrity assertion. You'll see it in WebView-mediated WebAuthn flows on iOS where the OS surfaces App Attest. Verification follows the App Attest specification (Apple developer docs), not the WebAuthn one.</p>
+
+    <h2>The verification pipeline, end to end</h2>
+    <p>Putting it all together, here is what a relying party actually does on registration:</p>
+    <ol>
+      <li>Decode the <code>attestationObject</code> as CBOR, extract <code>fmt</code>, <code>attStmt</code>, <code>authData</code>.</li>
+      <li>Decode <code>authData</code>: split rpIdHash | flags | signCount | attestedCredentialData | extensions. Verify rpIdHash equals SHA-256(rpId). Verify flags include UP and (if policy requires) UV; verify AT is set; reject the invalid BE=0 ∧ BS=1 combination.</li>
+      <li>Decode the credentialPublicKey from attestedCredentialData as a COSE_Key (CBOR map). Verify <code>kty</code>, <code>alg</code> are in your accepted set; for EC2 confirm <code>crv</code> is one of P-256 / P-384 / P-521.</li>
+      <li>If <code>fmt !== "none"</code>: verify the attestation signature against <code>authData || SHA-256(clientDataJSON)</code> using the attestation public key (extracted from the leaf of <code>x5c</code> for basic attestation, or from credentialPublicKey for self attestation). Validate the x5c chain against the trust anchor for the AAGUID in your MDS cache.</li>
+      <li>Look up the AAGUID in MDS. Reject if status indicates compromise. Reject if AAGUID not in your enterprise allow-list (where applicable).</li>
+      <li>Persist credentialId, credentialPublicKey, signCount, AAGUID, BE, BS, transports.</li>
+    </ol>
+
+    <h2>The MDS BLOB &mdash; what it is, what's in it</h2>
+    <p>The FIDO Metadata Service publishes a signed JSON document called the MDS BLOB at <code>https://mds.fidoalliance.org/</code>. It is signed using JWS with a key chained to the FIDO Alliance MDS Root CA. Each entry contains a metadata statement describing one authenticator family: AAGUID, vendor, model, attestation root certificates, supported algorithms, transports, certification level, and a statusReports array tracking status changes (initial certification, revocations, compromise reports).</p>
+    <p>Production RPs should fetch the BLOB on a daily cadence, verify the JWS, cache the entries by AAGUID, and use the cache during ceremony verification &mdash; never fetch on the hot path. A daily-stale cache is a far better reliability posture than coupling auth availability to FIDO Alliance uptime.</p>
+    <p>The fields that drive enterprise policy:</p>
+    <ul>
+      <li><code>statusReports[].status</code> &mdash; <code>FIDO_CERTIFIED</code>, <code>NOT_FIDO_CERTIFIED</code>, <code>USER_VERIFICATION_BYPASS</code>, <code>ATTESTATION_KEY_COMPROMISE</code>, <code>USER_KEY_REMOTE_COMPROMISE</code>, <code>USER_KEY_PHYSICAL_COMPROMISE</code>. Any of the compromise statuses should cause a registration to be rejected outright.</li>
+      <li><code>authenticatorVersion</code> &mdash; firmware version. For high-assurance environments, you may pin a minimum version.</li>
+      <li><code>userVerificationDetails</code> &mdash; what UV mechanisms the authenticator supports. Useful when constructing UV-required policy.</li>
+      <li><code>keyProtection</code>, <code>matcherProtection</code>, <code>tcDisplay</code> &mdash; enumerations of the protection level for keys / matcher / transaction confirmation. <code>HARDWARE</code>, <code>SECURE_ELEMENT</code>, <code>TEE</code> are what you want; <code>SOFTWARE</code> is what you reject for high-assurance use.</li>
+    </ul>
+
+    <h2>The AAGUID allow-list pattern</h2>
+    <p>For workforce identity in a regulated industry, the recommended deployment pattern is an explicit AAGUID allow-list maintained by your security team. The allow-list contains the AAGUIDs of authenticators your organisation has procured and certified for use; everything else is rejected at registration time, with a clear UI message.</p>
+    <p>The allow-list is a runtime configuration in your relying party. It pairs with two background processes: an MDS sync job that fetches and verifies the BLOB on a schedule, and a procurement workflow that adds new AAGUIDs to the allow-list when a new device family is approved. The MDS sync should also <em>remove</em> AAGUIDs from effective circulation when their MDS status changes to a compromise indicator &mdash; either by removing from the allow-list or by emitting an alert that prompts a security review.</p>
+
+    <h2>Common pitfalls</h2>
+    <p>Five issues account for most attestation-pipeline incidents:</p>
+    <p><strong>Pitfall 1: not actually verifying the signature.</strong> Some libraries decode the attestation, surface the AAGUID, and call it done &mdash; without verifying the cryptographic signature. The result is an attestation pipeline that is decorative, not load-bearing. Always verify.</p>
+    <p><strong>Pitfall 2: not validating the x5c chain.</strong> Same shape: decoding the chain but never validating it against a known trust anchor. Anyone can construct an x5c chain that appears well-formed; only chain validation against an MDS-derived trust anchor turns it into an actual proof.</p>
+    <p><strong>Pitfall 3: trusting a stale MDS cache.</strong> If a vendor publishes an MDS update flagging a compromise, and your cache is six months stale, you'll keep accepting compromised devices. Set up a sync job, alert on staleness, and have a runbook for rapid AAGUID purges.</p>
+    <p><strong>Pitfall 4: blocking on MDS at registration time.</strong> Don't fetch on the hot path. Cache and serve from the cache; let the sync job be eventual.</p>
+    <p><strong>Pitfall 5: confusing fmt: "none" with "registration failed".</strong> <code>fmt: "none"</code> is a perfectly valid registration. The user has a fresh credential bound to the RP. You just don't have make/model proof. For consumer flows that's fine; the absence of attestation is not the absence of security.</p>
+
+    <h2>Practical: walking a real attestation</h2>
+    <p>Pull a sample registration off your stack. Pop the <code>response.attestationObject</code> field, base64url-decode it, and walk it with the <a href="/resources/tools/attestation-decoder/">attestation decoder</a>. You'll see the three top-level keys, the fmt, and the structure of attStmt. Click through to the <a href="/resources/tools/authdata-parser/">authData parser</a> to walk the binary side. Pull the credentialPublicKey out and feed it to the <a href="/resources/tools/cose-key/">COSE Key inspector</a>. Validate the x5c chain in the <a href="/resources/tools/x509-viewer/">X.509 viewer</a>.</p>
+    <p>The half-hour you spend doing that on a real attestation, with a real authenticator from your fleet, is worth more than reading any number of spec PDFs. Attestation is concrete; it stops being intimidating once you have walked the bytes.</p>
+
+    <h2>What attestation does not solve</h2>
+    <p>A few honest closing notes. Attestation does not protect against a compromised attestation root &mdash; if the manufacturer's signing key leaks, every device vouching with that root becomes untrustworthy. The MDS status report is the mitigation; you trust the FIDO Alliance to reflect compromise quickly, and your sync to apply it.</p>
+    <p>Attestation does not protect against a compromised individual device &mdash; once the device is in the user's hand, attestation tells you what it was when it left the factory, not what it is now. Pair attestation with regular UV and counter monitoring for ongoing assurance.</p>
+    <p>Attestation does not protect against a malicious relying party &mdash; if the RP itself is compromised, attestation gives you no recourse. WebAuthn's origin binding handles this differently: even a compromised RP cannot use its credentials at a different RP, so blast radius is bounded. But the original RP can do whatever it wants on its own side.</p>
+
+    <h2>The summary</h2>
+    <p>Attestation is the policy primitive that lets an enterprise enforce hardware requirements for authentication. It is not magic. It is a signed assertion you verify against a manufacturer's root, indexed by AAGUID, status-reported by the FIDO Metadata Service. Used well, it lets you say <em>"this credential lives in certified hardware"</em> with cryptographic backing. Used poorly &mdash; decoded but not verified &mdash; it is decorative. Use it well.</p>
+
+    
+    <h2>Worked example &mdash; a packed attestation, in detail</h2>
+    <p>Let us walk a concrete example. The user registers a YubiKey 5 NFC against an enterprise RP that has set <code>attestation: 'direct'</code> in the registration options. The browser's <code>credential.response.attestationObject</code> arrives as a base64url string. We decode it, then we pull it apart.</p>
+    <p>The first step is the CBOR unwrap. Drop the bytes into the CBOR decoder; you see a top-level map with three keys. <code>fmt</code> is the text string <code>"packed"</code>. <code>attStmt</code> is a sub-map with three keys: <code>alg</code> (integer -7, meaning ES256), <code>sig</code> (a 70-ish-byte ASN.1 DER-encoded ECDSA signature), and <code>x5c</code> (an array of two byte-strings, each a DER-encoded X.509 certificate). <code>authData</code> is a long byte-string &mdash; the binary blob we'll walk separately.</p>
+    <p>The second step is to walk <code>authData</code>. The first 32 bytes are the rpIdHash. We compare against <code>SHA-256("example.com")</code>. They match. Bytes 33 is the flags byte: 0x45, which means UP (0x01) + UV (0x04) + AT (0x40) are set; BE and BS are clear (this is a YubiKey, BE=0 by construction); ED is clear (no extensions). Bytes 34-37 are the signCount, big-endian: 0x00 0x00 0x00 0x00, signCount = 0. (Note: for a YubiKey, this would be a non-zero counter; we'd verify monotonicity on subsequent assertions.)</p>
+    <p>Because AT is set, attestedCredentialData follows. Bytes 38-53 are the AAGUID: <code>cb69481e-8ff7-4039-93ec-0a2729a154a8</code>. Look it up in the AAGUID directory: YubiKey 5 Series. Bytes 54-55 are the credentialIdLength, big-endian: 0x00 0x40, credLen = 64. Bytes 56-119 are the credentialId itself &mdash; an opaque 64-byte blob. Bytes 120 onward are the credentialPublicKey, which is a CBOR map containing kty=2 (EC2), alg=-7 (ES256), crv=1 (P-256), x and y as 32-byte byte strings.</p>
+    <p>The third step is to verify the attestation signature. We compute <code>SHA-256(clientDataJSON)</code> from the raw client data bytes, append it to authData, and verify the signature in <code>attStmt.sig</code> against the public key in the leaf cert of <code>attStmt.x5c[0]</code>, using ES256. The signature verifies.</p>
+    <p>The fourth step is to validate the x5c chain. The leaf is the per-batch attestation cert. The intermediate is Yubico's attestation CA. We have Yubico's root in our MDS-derived trust anchors. We chain the leaf against the intermediate against the root; standard X.509 path validation. The chain validates.</p>
+    <p>The fifth step is to enforce policy. AAGUID is in our allow-list (we've procured YubiKey 5 NFCs). MDS status for this AAGUID is <code>FIDO_CERTIFIED_L1</code>. UV bit is set. signCount is 0 (acceptable on registration). BE flag is 0 (acceptable for our high-assurance tier).</p>
+    <p>The sixth step is to persist. We store the credentialId, the credentialPublicKey, the AAGUID, and the user binding. We mint the user's session.</p>
+    <p>That is the full pipeline, end-to-end, for one attestation. In production this happens in milliseconds, but every step is necessary; every step has a failure mode.</p>
+
+    <h2>Operational gotchas we have hit in real deployments</h2>
+    <p><strong>Gotcha 1: silently mis-parsed CBOR.</strong> Some FIDO server libraries permissively decode CBOR with non-canonical encodings. If your library accepts non-canonical CBOR but the authenticator emits canonical, you might never notice until you swap libraries. Audit: confirm your library is strict about canonical CBOR.</p>
+    <p><strong>Gotcha 2: x5c expiration.</strong> Per-batch attestation certs typically have a 5-year validity. Old authenticators with expired attestation certs will fail strict X.509 path validation. The right fix is to skip notBefore/notAfter checks for attestation certs &mdash; the attestation has no implicit time validity, the manufacturer key signs it once and it's valid forever (or until MDS revocation).</p>
+    <p><strong>Gotcha 3: x5c root duplication.</strong> Some authenticators include the manufacturer root in <code>x5c</code>; some don't. Your path validator should be tolerant of either &mdash; pre-pend the root to the chain if missing, or de-dupe if duplicated.</p>
+    <p><strong>Gotcha 4: attestation type vs format confusion.</strong> "Attestation type" (none / basic / self / ECDAA / AnonCA) and "attestation format" (none / packed / tpm / android-key / fido-u2f / apple) are different concepts. The format determines the attStmt schema; the type determines the trust model. A packed attestation can be either basic or self; the difference is whether x5c is present.</p>
+    <p><strong>Gotcha 5: Apple Anonymous and the AAGUID.</strong> Apple Anonymous Attestation deliberately does not bind to a per-device AAGUID. The AAGUID in authData is the same across all Apple devices in the same OS-version cohort. Don't try to enforce per-device policy on Apple platform credentials; it cannot work.</p>
+    <p><strong>Gotcha 6: sig over wrong bytes.</strong> Signature is over <code>authData || SHA-256(clientDataJSON)</code>. NOT over <code>authData || clientDataJSON</code>. NOT over <code>SHA-256(authData) || SHA-256(clientDataJSON)</code>. The hash of clientData; the raw authData. Get this wrong and verifications mysteriously fail.</p>
+
+    <h2>Choosing your attestation policy</h2>
+    <p>Three reasonable policies. Pick the one that matches your threat model and audit requirements:</p>
+    <h3>Policy A: attestation: 'none'</h3>
+    <p>You do not require make/model proof. You still get all the cryptographic security of WebAuthn (origin binding, hardware-bound keys, no replayable secret). Right for consumer flows, low-risk SaaS. The simplest and most browser-friendly default; some browsers strip attestation client-side anyway for privacy reasons.</p>
+    <h3>Policy B: attestation: 'direct' + AAGUID allow-list</h3>
+    <p>You require make/model proof; you have an explicit list of AAGUIDs your security team approves. New device families require a security review to add to the allow-list. Right for workforce identity, regulated industries, government.</p>
+    <h3>Policy C: attestation: 'enterprise' + per-device serial</h3>
+    <p>You require per-device identity, not just per-make/model. The authenticator returns enterprise attestation with a per-device serial. The browser only surfaces enterprise attestation to RPs configured at OS-policy level. Right for highest-assurance environments where you need to bind specific physical hardware to specific users.</p>
+
+    <h2>Maintaining the attestation policy over time</h2>
+    <p>Attestation policy is not set-and-forget. The MDS BLOB updates; AAGUIDs get marked compromised; new device families come into procurement. The maintenance loop:</p>
+    <ul>
+      <li>Daily MDS sync (cron or scheduled job). Verify JWS signature against MDS root. Update AAGUID-keyed cache.</li>
+      <li>Weekly review: any AAGUIDs flipped to compromised status? Alert the security team; reject new registrations on those AAGUIDs.</li>
+      <li>Quarterly review: new device families in procurement? Add to allow-list. Discontinued device families? Mark as accepted-existing-only (don't accept new registrations, don't revoke existing credentials).</li>
+      <li>Yearly: full attestation log audit. Reconcile registered credentials against issued hardware. Investigate orphans.</li>
+    </ul>
+    <p>This loop sounds heavy; in practice it is light. The MDS sync is a script; the reviews are 15-minute meetings. The cost of the loop is far less than the cost of being caught with a compromised AAGUID active for months.</p>
+
+    <hr />
+    <h2>Companion reading</h2>
+    <ul>
+      <li><a href="/technologies/webauthn/">WebAuthn engineering reference</a></li>
+      <li><a href="/technologies/attestation/">Attestation deep dive (technologies)</a></li>
+      <li><a href="/blog/passkeys-vs-traditional-mfa/">Passkeys vs Traditional MFA</a></li>
+      <li><a href="/blog/why-hardware-backed-identity-matters/">Why Hardware-Backed Identity Matters</a></li>
+    </ul>
+
+
+  </article>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

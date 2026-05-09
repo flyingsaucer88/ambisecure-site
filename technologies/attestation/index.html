@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WebAuthn Attestation — AmbiSecure | fmt formats, x5c, MDS, AAGUID policy</title>
+<meta name="description" content="WebAuthn attestation — fmt formats, attStmt structure, x5c chain validation, FIDO MDS BLOB integration, AAGUID allow-listing, enterprise attestation. The full deployment guide." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/attestation/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="WebAuthn Attestation — AmbiSecure" />
+<meta property="og:description" content="WebAuthn attestation — fmt formats, attStmt structure, x5c chain validation, FIDO MDS BLOB integration, AAGUID allow-listing, enterprise attestation. The full deployment guide." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/attestation/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Technologies",
+     "item": "/technologies/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Attestation",
+     "item": "https://ambisecure.ambimat.com/technologies/attestation/"
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "WebAuthn attestation \u2014 what the device is, not who the user is",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">Attestation</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology</span>
+    <h1>WebAuthn attestation &mdash; what the device is, not who the user is.</h1>
+    <p class="dek">Attestation is how a relying party verifies the make and model of an authenticator. It does not tell you who the user is &mdash; it tells you what hardware they're using. For consumer flows, skip it. For high-assurance enterprise, it's the policy primitive that lets you require certified hardware.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Attestation formats (fmt)</h2><span class="section-line"></span></div>
+    <table class="spec-table" style="margin:0;">
+      <thead><tr><th>fmt</th><th>Used by</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td><code>none</code></td><td>Consumer flows; some Apple flows</td><td>Empty attStmt. RP cannot verify make/model. Fine for low-assurance use.</td></tr>
+        <tr><td><code>packed</code></td><td>FIDO2 default; most certified hardware authenticators</td><td>Generic format from §8.2 of the WebAuthn spec. Carries alg, sig, optional x5c chain.</td></tr>
+        <tr><td><code>tpm</code></td><td>Windows Hello (TPM-bound)</td><td>TPM2_Quote-style format with versionInfo, pubArea, certInfo.</td></tr>
+        <tr><td><code>android-key</code></td><td>Android Keystore</td><td>Carries the Android KeyStore attestation chain, including device verifiedBootState.</td></tr>
+        <tr><td><code>android-safetynet</code></td><td>Legacy Android (deprecated by Google)</td><td>JWS payload with SafetyNet result. Don't adopt for new deployments.</td></tr>
+        <tr><td><code>fido-u2f</code></td><td>U2F-derived authenticators</td><td>Legacy envelope; same X.509 + ECDSA shape as classic U2F.</td></tr>
+        <tr><td><code>apple</code></td><td>Apple Touch ID / Face ID anonymous</td><td>Apple-specific anonymous attestation; no AAGUID per device, but a per-cohort identity.</td></tr>
+        <tr><td><code>apple-appattest</code></td><td>iOS App Attest</td><td>App-integrity rather than authenticator attestation.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">What gets signed</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>For <code>packed</code> attestation:</p>
+    </div>
+    <div class="annot-struct" style="max-width:900px; margin:18px 0 0;">
+sig = sign(<span class="as-key">attestationKey</span>,
+           <span class="as-key">authData</span> || SHA-256(<span class="as-key">clientDataJSON</span>))
+    </div>
+    <div class="prose" style="max-width:900px; margin:18px 0 0;">
+      <p>The <code>attestationKey</code> is the per-device or per-cohort key shared across many devices of the same model (privacy-preserving). The <code>x5c</code> chain links the attestation key to the manufacturer's root, which is in turn listed in the FIDO Metadata Service (MDS) BLOB. RPs validate the chain up to a trusted root and pin the AAGUID against MDS.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Enterprise attestation</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>Enterprise attestation is a CTAP2.1 capability where the authenticator returns a <em>per-device</em> identifier (typically a serial number) inside the attestation. Browsers won't surface this to RPs unless the user agent is configured to do so &mdash; typically by a managed-device policy.</p>
+      <p>Use case: an organisation that bought 5,000 authenticators wants to bind each registration to a specific physical device they shipped to a specific employee. Without enterprise attestation, the AAGUID tells you "this is a YubiKey 5C" but not "this is the YubiKey 5C with serial 12345". With enterprise attestation, you can.</p>
+      <p>Privacy considerations are real &mdash; enterprise attestation is a tracking primitive. Browsers gate it behind explicit policy and never expose it to consumer-context RPs.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">FIDO Metadata Service (MDS) integration</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>MDS is the directory that maps AAGUIDs to certified authenticator metadata: vendor, model, certification level, attestation root certificates, supported algorithms, transports, and a status field that tracks revocations / known-compromised devices.</p>
+      <p>Production RPs should:</p>
+      <ol>
+        <li>Fetch the signed MDS BLOB from <code>https://mds.fidoalliance.org/</code> on a schedule (daily is typical).</li>
+        <li>Verify the JWT signature against the FIDO Alliance MDS root.</li>
+        <li>Cache the entries by AAGUID.</li>
+        <li>At registration time, check the AAGUID against the cached MDS and reject if status is <code>USER_VERIFICATION_BYPASS</code>, <code>ATTESTATION_KEY_COMPROMISE</code>, etc.</li>
+      </ol>
+      <p>Don't fetch MDS on the registration hot path &mdash; runtime fetches couple your auth availability to the FIDO Alliance.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Tools you'll reach for</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/resources/tools/attestation-decoder/" class="card"><h3>Attestation decoder</h3><p>Walk fmt / attStmt / authData.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/cbor-decoder/" class="card"><h3>CBOR decoder</h3><p>The full attestation object as a CBOR map.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/x509-viewer/" class="card"><h3>X.509 viewer</h3><p>Inspect the x5c chain.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/cert-fingerprint/" class="card"><h3>Cert fingerprint</h3><p>SHA-256 thumbprint for pinning.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/cose-key/" class="card"><h3>COSE Key inspector</h3><p>Decode credentialPublicKey from authData.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/aaguid-lookup/" class="card"><h3>AAGUID lookup</h3><p>Vendor / model directory.</p><div class="card-meta">Open tool &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

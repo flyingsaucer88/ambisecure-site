@@ -143,9 +143,26 @@
 
     <h2 class="resource-cat-head">FIDO / WebAuthn</h2>
     <div class="resource-grid">
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">WebAuthn</span><h3>WebAuthn Attestation Decoder</h3><p>CBOR &rarr; AuthData &rarr; COSE key.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">COSE</span><h3>COSE Key Decoder</h3><p>Decode COSE_Key (RFC 8152).</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">AAGUID</span><h3>AAGUID Lookup</h3><p>FIDO MDS lookup directory.</p></a>
+      <a href="/resources/webauthn/" class="resource-card"><span class="rc-tag">REFERENCE</span><h3>WebAuthn Reference</h3><p>Developer-portal reference for registration / authentication / attestation, with copy-able code samples.</p></a>
+      <a href="/resources/tools/attestation-decoder/" class="resource-card"><span class="rc-tag">WebAuthn</span><h3>WebAuthn Attestation Decoder</h3><p>Walk attestationObject &mdash; fmt / attStmt / authData &mdash; with verification checklist.</p></a>
+      <a href="/resources/tools/authdata-parser/" class="resource-card"><span class="rc-tag">WebAuthn</span><h3>authenticatorData Parser</h3><p>Walk rpIdHash | flags | counter | AAGUID | credId | publicKey | extensions.</p></a>
+      <a href="/resources/tools/cbor-decoder/" class="resource-card"><span class="rc-tag">CBOR</span><h3>CBOR Decoder</h3><p>RFC 8949 walker. WebAuthn attestation, COSE keys, CTAP2 messages.</p></a>
+      <a href="/resources/tools/cose-key/" class="resource-card"><span class="rc-tag">COSE</span><h3>COSE Key Inspector</h3><p>Decode COSE_Key (RFC 8152) &mdash; kty / alg / crv / x / y / n / e.</p></a>
+      <a href="/resources/tools/aaguid-lookup/" class="resource-card"><span class="rc-tag">AAGUID</span><h3>AAGUID Lookup</h3><p>Curated offline directory of well-known FIDO authenticators.</p></a>
+      <a href="/resources/tools/clientdata-decoder/" class="resource-card"><span class="rc-tag">WebAuthn</span><h3>clientDataJSON Decoder</h3><p>Decode type / challenge / origin / SHA-256 of the signed payload.</p></a>
+      <a href="/resources/tools/rp-id-validator/" class="resource-card"><span class="rc-tag">RP ID</span><h3>RP ID / Origin Validator</h3><p>WebAuthn §5.1.3 registrable-suffix rule, HTTPS, PSL constraints.</p></a>
+      <a href="/resources/tools/credential-id/" class="resource-card"><span class="rc-tag">WebAuthn</span><h3>Credential ID Inspector</h3><p>Length, entropy, AAGUID-shaped prefix.</p></a>
+      <a href="/resources/tools/challenge-viewer/" class="resource-card"><span class="rc-tag">WebAuthn</span><h3>Challenge Viewer / Generator</h3><p>Inspect challenge length and entropy. Generate fresh 32-byte challenges with the platform CSPRNG.</p></a>
+      <a href="/resources/tools/base64url/" class="resource-card"><span class="rc-tag">B64URL</span><h3>Base64URL Converter</h3><p>RFC 4648 §5. The form WebAuthn / JOSE / CTAP2 use everywhere.</p></a>
+    </div>
+
+    <h2 class="resource-cat-head">Smart-card developer tools</h2>
+    <div class="resource-grid">
+      <a href="/resources/tools/iso7816-cla/" class="resource-card"><span class="rc-tag">7816</span><h3>ISO 7816-4 CLA Decoder</h3><p>Walk the bit-fields of CLA &mdash; SM, chaining, channel, type.</p></a>
+      <a href="/resources/tools/ber-length/" class="resource-card"><span class="rc-tag">BER</span><h3>BER Length Visualizer</h3><p>Decode and encode short / long / indefinite-form BER lengths.</p></a>
+      <a href="/resources/tools/emv-tag-dict/" class="resource-card"><span class="rc-tag">EMV</span><h3>EMV Tag Dictionary</h3><p>Filterable directory of EMV Books 3, 4, and CL tags.</p></a>
+      <a href="/resources/tools/key-diversification/" class="resource-card"><span class="rc-tag">DESFire</span><h3>Key Diversification Visualizer</h3><p>Educational illustration of AES-CMAC diversification (NXP AN10922 / AV2).</p></a>
+      <a href="/resources/tools/scp03-walkthrough/" class="resource-card"><span class="rc-tag">SCP03</span><h3>SCP03 Session Walkthrough</h3><p>Educational annotation of the GP 2.3.1 secure-channel protocol.</p></a>
     </div>
 
     <h2 class="resource-cat-head">Misc developer utilities</h2>
@@ -179,7 +196,7 @@
 <footer class="site-footer"><div class="footer-inner">
   <div class="footer-grid">
     <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
-    <div><h4>Products</h4><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
     <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/atr-parser/">ATR parser</a></li><li><a href="/resources/tools/apdu-parser/">APDU parser</a></li><li><a href="/resources/tools/tlv-parser/">TLV parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
     <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
     <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>

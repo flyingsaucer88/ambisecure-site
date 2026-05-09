@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WebAuthn Reference — AmbiSecure | Developer documentation portal</title>
+<meta name="description" content="WebAuthn engineering reference — registration, authentication, attestation, RP ID rules, BE/BS flags, troubleshooting. Developer-portal layout. Static, fast, copy-able code samples." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/webauthn/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="WebAuthn Reference — AmbiSecure" />
+<meta property="og:description" content="Engineering documentation for WebAuthn / FIDO2 — built for developers." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/webauthn/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{"@type": "BreadcrumbList","itemListElement": [
+{"@type": "ListItem","position": 1,"name": "Home","item": "/"},
+{"@type": "ListItem","position": 2,"name": "Resources","item": "/resources/"},
+{"@type": "ListItem","position": 3,"name": "WebAuthn reference","item": "https://ambisecure.ambimat.com/resources/webauthn/"}
+]},
+{"@type": "TechArticle","headline": "WebAuthn engineering reference",
+"author": {"@type": "Organization","name": "AmbiSecure Engineering"}}
+]}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">WebAuthn reference</span></nav>
+
+<main id="main">
+
+<div class="docs-shell">
+  <aside class="docs-nav" aria-label="Documentation sections">
+    <h4>Getting started</h4>
+    <ul>
+      <li><a href="#overview" class="active">Overview</a></li>
+      <li><a href="#prerequisites">Prerequisites</a></li>
+      <li><a href="#first-ceremony">First ceremony</a></li>
+    </ul>
+    <h4>Ceremonies</h4>
+    <ul>
+      <li><a href="#registration">Registration</a></li>
+      <li><a href="#authentication">Authentication</a></li>
+      <li><a href="#error-handling">Error handling</a></li>
+    </ul>
+    <h4>Reference</h4>
+    <ul>
+      <li><a href="#auth-data">authenticatorData</a></li>
+      <li><a href="#client-data">clientDataJSON</a></li>
+      <li><a href="#attestation">Attestation</a></li>
+      <li><a href="#flags">Flags / BE / BS</a></li>
+    </ul>
+    <h4>Tooling</h4>
+    <ul>
+      <li><a href="/resources/tools/cbor-decoder/">CBOR decoder</a></li>
+      <li><a href="/resources/tools/cose-key/">COSE Key inspector</a></li>
+      <li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li>
+      <li><a href="/resources/tools/authdata-parser/">authData parser</a></li>
+    </ul>
+  </aside>
+
+  <article class="docs-content">
+    <div class="version-banner">
+      <span class="vb-tag">DOC</span>
+      <span>WebAuthn reference &middot; <strong>v1.0</strong></span>
+      <span class="vb-meta">Updated 2026-05-09 &middot; Static portal &middot; <a href="/blog/" style="color:var(--secure-cyan-dark);">Engineering blog</a></span>
+    </div>
+
+    <h1 id="overview">WebAuthn engineering reference<a href="#overview" class="anchor-link">#</a></h1>
+    <p>This is a developer-portal reference. It assumes you are integrating WebAuthn into a relying-party backend or a JavaScript client; it does not assume you have read the W3C spec end-to-end. Every section links into the AmbiSecure tools that let you walk the binary structures while you read.</p>
+    <p>If you only have ten minutes, read <a href="#registration">Registration</a> and <a href="#authentication">Authentication</a> &mdash; everything else is depth.</p>
+
+    <h2 id="prerequisites">Prerequisites<a href="#prerequisites" class="anchor-link">#</a></h2>
+    <ul>
+      <li><strong>HTTPS origin</strong> &mdash; localhost is the only HTTP exception (development).</li>
+      <li><strong>RP ID</strong> &mdash; pick the broadest registrable domain you want credentials to roam across.</li>
+      <li><strong>CSPRNG</strong> &mdash; for challenge generation.</li>
+      <li><strong>Persistence</strong> &mdash; for credentialId, credentialPublicKey, signCount, BE/BS, AAGUID.</li>
+    </ul>
+
+    <h2 id="first-ceremony">Your first ceremony<a href="#first-ceremony" class="anchor-link">#</a></h2>
+    <p>The two ceremonies are nearly symmetric. <code>navigator.credentials.create()</code> creates a fresh credential; <code>.get()</code> uses an existing one. Both produce a <code>PublicKeyCredential</code> object with attached binary fields.</p>
+
+    <div class="code-block">
+      <div class="code-block-head"><span>JavaScript &middot; client</span><button class="copy-code">Copy</button></div>
+<pre>
+<span class="c">// Registration — issued by the RP, called by the client</span>
+<span class="k">const</span> credential = <span class="k">await</span> navigator.credentials.create({
+  publicKey: {
+    challenge: <span class="n">challengeFromServer</span>,        <span class="c">// Uint8Array, 32 bytes</span>
+    rp: { name: <span class="s">"Example Corp"</span>, id: <span class="s">"example.com"</span> },
+    user: {
+      id: <span class="n">userIdBytes</span>,                  <span class="c">// opaque, max 64 bytes</span>
+      name: <span class="s">"alice@example.com"</span>,
+      displayName: <span class="s">"Alice"</span>
+    },
+    pubKeyCredParams: [
+      { type: <span class="s">"public-key"</span>, alg: <span class="n">-7</span> },     <span class="c">// ES256</span>
+      { type: <span class="s">"public-key"</span>, alg: <span class="n">-257</span> }    <span class="c">// RS256</span>
+    ],
+    authenticatorSelection: {
+      authenticatorAttachment: <span class="s">"cross-platform"</span>,
+      requireResidentKey: <span class="k">true</span>,
+      userVerification: <span class="s">"required"</span>
+    },
+    attestation: <span class="s">"direct"</span>
+  }
+});</pre>
+    </div>
+
+    <h2 id="registration">Registration ceremony<a href="#registration" class="anchor-link">#</a></h2>
+    <p>The relying party server has six things to verify on registration. Skip any of these and you've broken the security model.</p>
+
+    <details class="ref-block" open>
+      <summary>1. Verify clientDataJSON</summary>
+      <div class="ref-body">
+        <p>Decode the base64url <code>clientDataJSON</code> as UTF-8 JSON. Verify <code>type === "webauthn.create"</code>, the challenge matches the one your server issued (single-use), and the origin is in your allow-list (exact match — case-insensitive host, scheme, port).</p>
+        <p>Use the <a href="/resources/tools/clientdata-decoder/">clientDataJSON decoder</a> to walk the structure during integration.</p>
+      </div>
+    </details>
+    <details class="ref-block">
+      <summary>2. Verify authData.rpIdHash</summary>
+      <div class="ref-body">
+        <p>Compute <code>SHA-256(rpId)</code>. Compare against the first 32 bytes of authenticatorData. Mismatch &rarr; reject. Common cause: rpId mismatch between client options and server expectation.</p>
+      </div>
+    </details>
+    <details class="ref-block">
+      <summary>3. Verify flags</summary>
+      <div class="ref-body">
+        <p>Verify <code>UP</code> bit (0x01) is set; verify <code>UV</code> bit (0x04) if your policy requires user verification. <code>AT</code> (0x40) MUST be set on registration. Reject if <code>BE=0 ∧ BS=1</code> (invalid combination per WebAuthn level 3).</p>
+      </div>
+    </details>
+    <details class="ref-block">
+      <summary>4. Verify attestation</summary>
+      <div class="ref-body">
+        <p>If <code>fmt !== "none"</code>, validate the attestation signature against <code>authData || SHA-256(clientDataJSON)</code>. Validate the x5c chain against your trust anchors and the FIDO MDS BLOB. Walk attestStmt with the <a href="/resources/tools/attestation-decoder/">attestation decoder</a>.</p>
+      </div>
+    </details>
+    <details class="ref-block">
+      <summary>5. Enforce AAGUID policy</summary>
+      <div class="ref-body">
+        <p>Look up the AAGUID in your cached MDS BLOB. Reject if status is <code>USER_VERIFICATION_BYPASS</code>, <code>ATTESTATION_KEY_COMPROMISE</code>, or any other revocation. Reject if AAGUID is not in your allow-list (enterprise).</p>
+      </div>
+    </details>
+    <details class="ref-block">
+      <summary>6. Persist credential</summary>
+      <div class="ref-body">
+        <p>Store: credentialId (bytes), credentialPublicKey (COSE_Key bytes), signCount (uint32), AAGUID, BE flag, BS flag, transports, and the user binding. The BE flag is immutable for the credential&rsquo;s lifetime; BS is mutable and may be re-evaluated on every assertion.</p>
+      </div>
+    </details>
+
+    <h2 id="authentication">Authentication ceremony<a href="#authentication" class="anchor-link">#</a></h2>
+    <p>Authentication is the easier half — fewer fields to verify, no attestation, no attestedCredentialData. The signature is the load-bearing primitive.</p>
+
+    <div class="code-block">
+      <div class="code-block-head"><span>JavaScript &middot; client</span><button class="copy-code">Copy</button></div>
+<pre>
+<span class="k">const</span> assertion = <span class="k">await</span> navigator.credentials.get({
+  publicKey: {
+    challenge: <span class="n">challengeFromServer</span>,        <span class="c">// fresh per-session</span>
+    rpId: <span class="s">"example.com"</span>,
+    allowCredentials: [
+      { type: <span class="s">"public-key"</span>, id: <span class="n">credentialIdBytes</span> }
+    ],
+    userVerification: <span class="s">"required"</span>
+  }
+});</pre>
+    </div>
+
+    <p>Server verification:</p>
+    <ol>
+      <li>Decode <code>clientDataJSON</code>; verify type, challenge, origin.</li>
+      <li>Compute <code>SHA-256(rpId)</code>; compare with authData.rpIdHash.</li>
+      <li>Verify UP / UV per policy.</li>
+      <li>Verify the signature: <code>verify(publicKey, authData || SHA-256(clientDataJSON), signature)</code>.</li>
+      <li>Verify <code>signCount &gt; storedSignCount</code> (or both 0 — many platform authenticators).</li>
+      <li>Update stored signCount; mint session.</li>
+    </ol>
+
+    <h2 id="auth-data">authenticatorData reference<a href="#auth-data" class="anchor-link">#</a></h2>
+    <p>The exact byte layout of authenticatorData. Use the <a href="/resources/tools/authdata-parser/">authData parser</a> to walk live data.</p>
+    <div class="annot-struct">
+<span class="as-key">rpIdHash</span>     <span class="as-cmt">32 bytes — SHA-256(rpId)</span>
+<span class="as-key">flags</span>        <span class="as-cmt">1 byte — UP|UV|BE|BS|AT|ED bits</span>
+<span class="as-key">signCount</span>    <span class="as-cmt">4 bytes BE — counter (anti-clone)</span>
+
+<span class="as-cmt">if (flags &amp; AT) — registration only</span>
+  <span class="as-key">aaguid</span>      <span class="as-cmt">16 bytes — make/model</span>
+  <span class="as-key">credLen</span>     <span class="as-cmt">2 bytes BE</span>
+  <span class="as-key">credId</span>      <span class="as-cmt">credLen bytes — opaque</span>
+  <span class="as-key">credentialPublicKey</span> <span class="as-cmt">COSE_Key (CBOR map)</span>
+
+<span class="as-cmt">if (flags &amp; ED)</span>
+  <span class="as-key">extensions</span>  <span class="as-cmt">CBOR map (e.g. credProtect)</span>
+    </div>
+
+    <h2 id="client-data">clientDataJSON reference<a href="#client-data" class="anchor-link">#</a></h2>
+    <p>JSON object built by the user agent. The bytes are what the authenticator's signature covers (after SHA-256).</p>
+    <div class="code-block">
+      <div class="code-block-head"><span>clientDataJSON &middot; example</span><button class="copy-code">Copy</button></div>
+<pre>{
+  <span class="s">"type"</span>: <span class="s">"webauthn.get"</span>,
+  <span class="s">"challenge"</span>: <span class="s">"aabbccddeeff..."</span>,    <span class="c">// base64url</span>
+  <span class="s">"origin"</span>: <span class="s">"https://login.example.com"</span>,
+  <span class="s">"crossOrigin"</span>: <span class="k">false</span>
+}</pre>
+    </div>
+
+    <h2 id="attestation">Attestation reference<a href="#attestation" class="anchor-link">#</a></h2>
+    <p>The attestationObject is a CBOR map keyed by short strings. See <a href="/technologies/attestation/">technologies / attestation</a> for the full deep dive on each fmt.</p>
+    <div class="annot-struct">
+attestationObject = {
+  <span class="as-key">"fmt"</span>: <span class="as-cmt">text — "none" / "packed" / "tpm" / "android-key" / ...</span>
+  <span class="as-key">"attStmt"</span>: <span class="as-cmt">map — fmt-specific (alg, sig, x5c)</span>
+  <span class="as-key">"authData"</span>: <span class="as-cmt">bytes — the binary structure above</span>
+}
+    </div>
+
+    <h2 id="flags">Flags &mdash; BE / BS / UP / UV<a href="#flags" class="anchor-link">#</a></h2>
+    <table class="spec-table" style="margin-top:14px;">
+      <thead><tr><th>Bit</th><th>Name</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>0x01</td><td>UP</td><td>User Present (touch / tap).</td></tr>
+        <tr><td>0x04</td><td>UV</td><td>User Verified (PIN / biometric).</td></tr>
+        <tr><td>0x08</td><td>BE</td><td>Backup Eligible. Set at registration; immutable.</td></tr>
+        <tr><td>0x10</td><td>BS</td><td>Backup State (currently backed up). Mutable.</td></tr>
+        <tr><td>0x40</td><td>AT</td><td>Attested credential data included (registration only).</td></tr>
+        <tr><td>0x80</td><td>ED</td><td>Extension data included.</td></tr>
+      </tbody>
+    </table>
+    <div class="version-banner" style="margin-top:24px;">
+      <span class="vb-tag">CHANGELOG</span>
+      <span><strong>v1.0 &middot;</strong> Initial publication. WebAuthn level 2 + level 3 BE/BS coverage.</span>
+    </div>
+
+    <h2 id="error-handling">Error handling<a href="#error-handling" class="anchor-link">#</a></h2>
+    <p>Common DOMExceptions during a ceremony:</p>
+    <ul>
+      <li><strong>NotAllowedError</strong> — user cancelled or timed out, or browser refused due to RP ID / origin mismatch.</li>
+      <li><strong>InvalidStateError</strong> — credential already registered (de-dup mismatch on registration).</li>
+      <li><strong>NotSupportedError</strong> — none of the requested algorithms are supported by the available authenticator.</li>
+      <li><strong>SecurityError</strong> — RP ID is not a registrable suffix of the origin.</li>
+      <li><strong>ConstraintError</strong> — userVerification: "required" but the authenticator can't perform UV.</li>
+    </ul>
+
+    <p style="margin-top:36px; padding-top:18px; border-top:1px solid var(--line); color:var(--brand-grey); font-size:14px;">
+      Found a bug or have a suggestion? File at <a href="/contact/">/contact/</a>. This portal is static and version-pinned; planned migration target is <code>docs.ambimat.com</code> for a future Phase.
+    </p>
+  </article>
+
+  <aside class="docs-toc" aria-label="On this page">
+    <h4>On this page</h4>
+    <ul>
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#prerequisites">Prerequisites</a></li>
+      <li><a href="#first-ceremony">First ceremony</a></li>
+      <li><a href="#registration">Registration</a></li>
+      <li><a href="#authentication">Authentication</a></li>
+      <li><a href="#auth-data">authenticatorData</a></li>
+      <li><a href="#client-data">clientDataJSON</a></li>
+      <li><a href="#attestation">Attestation</a></li>
+      <li><a href="#flags">Flags</a></li>
+      <li><a href="#error-handling">Error handling</a></li>
+    </ul>
+  </aside>
+</div>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script>
+// Documentation portal: copy-code buttons, scroll-spy for left nav.
+document.querySelectorAll('.copy-code').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.closest('.code-block').querySelector('pre');
+    var text = pre.innerText;
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function () {
+        var prev = btn.textContent; btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = prev; }, 1200);
+      });
+    }
+  });
+});
+// Scroll-spy: highlight left nav link matching the section in view.
+(function () {
+  var nav = document.querySelector('.docs-nav');
+  if (!nav) return;
+  var links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+  var headings = links.map(function (a) { return document.getElementById(a.getAttribute('href').slice(1)); }).filter(Boolean);
+  function update() {
+    var fromTop = window.scrollY + 120;
+    var current = headings[0];
+    headings.forEach(function (h) { if (h && h.offsetTop <= fromTop) current = h; });
+    links.forEach(function (a) { a.classList.toggle('active', a.getAttribute('href') === '#' + current.id); });
+  }
+  window.addEventListener('scroll', update); update();
+})();
+</script>
+</body>
+</html>

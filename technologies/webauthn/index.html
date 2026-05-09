@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WebAuthn — AmbiSecure | Registration & authentication, attestation, RP ID</title>
+<meta name="description" content="WebAuthn (W3C) — registration and authentication ceremonies, clientDataJSON, authenticatorData, attestation objects, RP ID rules, BE/BS flags. With diagrams and verification checklists." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/webauthn/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="WebAuthn — AmbiSecure" />
+<meta property="og:description" content="A working engineer's reference for WebAuthn — registration, authentication, attestation, and RP ID rules." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/webauthn/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{"@type": "BreadcrumbList","itemListElement": [
+{"@type": "ListItem","position": 1,"name": "Home","item": "/"},
+{"@type": "ListItem","position": 2,"name": "Technologies","item": "/technologies/"},
+{"@type": "ListItem","position": 3,"name": "WebAuthn","item": "https://ambisecure.ambimat.com/technologies/webauthn/"}
+]},
+{"@type": "TechArticle","headline": "WebAuthn — a working engineer's reference",
+"author": {"@type": "Organization","name": "AmbiSecure Engineering"}}
+]}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">WebAuthn</span></nav>
+
+<main id="main">
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology</span>
+    <h1>WebAuthn &mdash; a working engineer's reference.</h1>
+    <p class="dek">WebAuthn replaces shared-secret passwords with public-key cryptography bound to the relying-party origin. The credential lives on the authenticator (smart card, USB key, platform TPM, secure enclave). The server never sees a secret. Origin binding is what kills the entire phishing class.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Two specs working in concert</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>WebAuthn is a Web API. CTAP2 is the wire protocol that backs it. <strong>WebAuthn</strong> is what your relying-party JavaScript calls (<code>navigator.credentials.create()</code> for registration, <code>.get()</code> for authentication). <strong>CTAP2</strong> is what the browser speaks to a roaming authenticator over USB-HID, NFC, or BLE. Platform authenticators (Windows Hello, Apple Touch ID, Android Keystore) skip CTAP and go through OS-native APIs &mdash; but the WebAuthn surface is identical from the RP's perspective.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Registration ceremony</h2><span class="section-line"></span></div>
+    <div class="seq-grid" style="max-width:1100px; margin:0;">
+      <div class="seq-step"><span class="seq-n">RP → client</span><span class="seq-h">1. Issue PublicKeyCredentialCreationOptions</span><p>Server generates a 32-byte random challenge, picks an RP ID, sets user.id (opaque), pubKeyCredParams (e.g. ES256, EdDSA), and an attestation policy (none / direct / enterprise).</p></div>
+      <div class="seq-step"><span class="seq-n">browser</span><span class="seq-h">2. Build clientDataJSON</span><p>Browser serialises the type, origin, and challenge into a JSON object. The SHA-256 of these bytes is what the authenticator signs.</p></div>
+      <div class="seq-step"><span class="seq-n">authenticator</span><span class="seq-h">3. Generate keypair, sign attestation</span><p>Authenticator generates a fresh key, stores private side internally, returns public key inside an attestationObject (CBOR with fmt, attStmt, authData).</p></div>
+      <div class="seq-step"><span class="seq-n">RP</span><span class="seq-h">4. Verify and store</span><p>RP verifies clientData, computes SHA-256(rpId), checks rpIdHash, validates attestation if required, persists credentialId + publicKey + signCount.</p></div>
+    </div>
+    <div class="prose" style="max-width:900px; margin:30px 0 0;">
+      <p>Use the <a href="/resources/tools/clientdata-decoder/">clientDataJSON decoder</a> and the <a href="/resources/tools/attestation-decoder/">attestation decoder</a> to walk these structures byte-by-byte during integration.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Authentication ceremony</h2><span class="section-line"></span></div>
+    <div class="seq-grid" style="max-width:1100px; margin:0;">
+      <div class="seq-step"><span class="seq-n">RP → client</span><span class="seq-h">1. Issue PublicKeyCredentialRequestOptions</span><p>Server generates a fresh challenge, optionally lists allowCredentials (credentialIds it accepts for this user), sets userVerification policy.</p></div>
+      <div class="seq-step"><span class="seq-n">browser ↔ authenticator</span><span class="seq-h">2. Authenticator signs assertion</span><p>Authenticator builds authenticatorData (rpIdHash, flags, signCount), signs <code>authData || SHA-256(clientDataJSON)</code>, returns the signature plus the credentialId.</p></div>
+      <div class="seq-step"><span class="seq-n">RP</span><span class="seq-h">3. Verify signature</span><p>Lookup stored publicKey by credentialId, verify signature, check rpIdHash, verify UP / UV / counter monotonicity.</p></div>
+      <div class="seq-step"><span class="seq-n">RP</span><span class="seq-h">4. Issue session</span><p>If everything checks, mint a session. Total round-trip on USB-HID is sub-second; NFC is sub-300ms.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Trust-zone diagram</h2><span class="section-line"></span></div>
+    <div class="diagram">
+      <svg viewBox="0 0 1100 360" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arrow-head" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3A3F40"/></marker>
+          <marker id="arrow-head-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0E8C9C"/></marker>
+        </defs>
+        <!-- Trust zones -->
+        <rect class="trust-zone" x="20" y="20" width="220" height="320" />
+        <rect class="trust-zone" x="280" y="20" width="220" height="320" />
+        <rect class="trust-zone" x="540" y="20" width="220" height="320" />
+        <rect class="trust-zone" x="800" y="20" width="280" height="320" />
+        <text class="trust-label" x="40" y="42">USER</text>
+        <text class="trust-label" x="300" y="42">CLIENT</text>
+        <text class="trust-label" x="560" y="42">NETWORK</text>
+        <text class="trust-label" x="820" y="42">RELYING PARTY</text>
+        <!-- Actors -->
+        <rect class="actor-box" x="50" y="100" width="160" height="80" />
+        <text x="130" y="135" text-anchor="middle" font-weight="700">User</text>
+        <text class="lbl-mono" x="130" y="155" text-anchor="middle">touch / PIN / bio</text>
+
+        <rect class="actor-box accent" x="55" y="220" width="155" height="80" />
+        <text x="132" y="250" text-anchor="middle" font-weight="700">Authenticator</text>
+        <text class="lbl-mono" x="132" y="268" text-anchor="middle">private key</text>
+        <text class="lbl-tag" x="132" y="288" text-anchor="middle">SECURE ELEMENT</text>
+
+        <rect class="actor-box" x="295" y="160" width="190" height="80" />
+        <text x="390" y="190" text-anchor="middle" font-weight="700">Browser</text>
+        <text class="lbl-mono" x="390" y="210" text-anchor="middle">WebAuthn API</text>
+        <text class="lbl-tag" x="390" y="228" text-anchor="middle">USER AGENT</text>
+
+        <rect class="actor-box cyan" x="555" y="160" width="190" height="80" />
+        <text x="650" y="190" text-anchor="middle" font-weight="700">TLS / HTTPS</text>
+        <text class="lbl-mono" x="650" y="210" text-anchor="middle">origin-bound</text>
+
+        <rect class="actor-box" x="815" y="100" width="250" height="80" />
+        <text x="940" y="135" text-anchor="middle" font-weight="700">RP front-end</text>
+        <text class="lbl-mono" x="940" y="155" text-anchor="middle">JavaScript</text>
+
+        <rect class="actor-box accent" x="815" y="220" width="250" height="80" />
+        <text x="940" y="250" text-anchor="middle" font-weight="700">RP server</text>
+        <text class="lbl-mono" x="940" y="268" text-anchor="middle">verifies signature</text>
+        <text class="lbl-tag" x="940" y="288" text-anchor="middle">PUBLIC KEY ONLY</text>
+
+        <!-- Arrows -->
+        <path class="arrow-cyan" d="M212 260 C 250 260, 270 200, 295 200" />
+        <path class="arrow-cyan" d="M485 200 L 555 200" />
+        <path class="arrow" d="M745 200 C 790 200, 790 140, 815 140" />
+        <path class="arrow" d="M745 200 C 790 200, 790 260, 815 260" />
+      </svg>
+      <div class="diagram-caption">User and authenticator are paired physically. The browser mediates between authenticator and the RP. The RP only ever holds a public key. Origin binding inside the browser is what makes phishing structurally impossible.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">authenticatorData &mdash; the load-bearing structure</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p><code>authenticatorData</code> is the binary the authenticator builds and signs over. The structure is fixed: <code>rpIdHash(32) || flags(1) || signCount(4)</code>, optionally followed by attested-credential data (registration only) and CBOR extensions.</p>
+    </div>
+    <div class="annot-struct" style="max-width:900px; margin:18px 0 0;">
+<span class="as-key">rpIdHash</span>     <span class="as-cmt">SHA-256(rpId) — anti-phishing anchor</span>
+<span class="as-key">flags</span>        <span class="as-cmt">UP | UV | BE | BS | AT | ED</span>
+<span class="as-key">signCount</span>    <span class="as-cmt">monotonic counter (anti-clone)</span>
+<span class="as-key">[attestedCredentialData]</span>
+  <span class="as-key">aaguid</span>     <span class="as-cmt">16-byte make/model id</span>
+  <span class="as-key">credLen</span>    <span class="as-cmt">2 bytes BE</span>
+  <span class="as-key">credId</span>     <span class="as-cmt">opaque to RP</span>
+  <span class="as-key">credentialPublicKey</span> <span class="as-cmt">COSE_Key (CBOR map)</span>
+<span class="as-key">[extensions]</span> <span class="as-cmt">CBOR map (e.g. credProtect, hmac-secret)</span>
+    </div>
+    <div class="prose" style="max-width:900px; margin:18px 0 0;">
+      <p>The flags byte is where most policy decisions live. <strong>UP</strong> (User Present) is the touch / tap. <strong>UV</strong> (User Verified) is local user verification &mdash; PIN, biometric, or pattern. <strong>BE</strong> (Backup Eligible) and <strong>BS</strong> (Backup State) tell you whether the credential is a syncable passkey. <strong>AT</strong> indicates attested-credential data is present (registration only). <strong>ED</strong> indicates extension data follows.</p>
+      <p>For high-assurance enterprise environments where you want a device-bound credential, require <code>BE = 0</code>. For consumer flows where convenience trumps assurance, accept <code>BE = 1</code>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">RP ID rules &mdash; §5.1.3</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>The <strong>RP ID</strong> is the scope of a credential. It must be a registrable domain suffix of, or equal to, the origin's effective domain. In practice this lets you set <code>rpId = example.com</code> on a page served from <code>login.example.com</code> &mdash; the credential becomes usable across all <code>*.example.com</code> hosts.</p>
+      <ul>
+        <li><strong>Browsers reject</strong> public-suffix RP IDs (you can't register at <code>com</code> or <code>co.uk</code>).</li>
+        <li><strong>HTTPS is required</strong> &mdash; localhost is the only HTTP exception (development).</li>
+        <li><strong>Origin verification</strong> on the RP must be exact &mdash; case-insensitive host match, scheme + port comparison, no substring matching.</li>
+      </ul>
+      <p>Use the <a href="/resources/tools/rp-id-validator/">RP ID validator</a> to dry-run combinations before shipping.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Attestation, AAGUIDs, and the FIDO MDS</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>An authenticator can prove what it is via an <strong>attestation statement</strong> &mdash; signed by the manufacturer's root key. Each model has an <strong>AAGUID</strong> recorded in the FIDO Metadata Service (MDS) BLOB. Consumer apps usually skip attestation (<code>attestationType: 'none'</code>); enterprise apps that require certified hardware verify the attestation against MDS and enforce AAGUID allow-lists.</p>
+      <p>The MDS BLOB is signed by the FIDO Alliance and updated periodically; production RPs should fetch and verify it on a schedule, not at runtime.</p>
+      <p>For diagnostic work the AmbiSecure <a href="/resources/tools/aaguid-lookup/">AAGUID lookup</a> covers a curated subset of well-known devices.</p>
+    </div>
+    <div class="grid-3" style="margin-top:30px;">
+      <a href="/resources/tools/attestation-decoder/" class="card"><h3>Attestation decoder</h3><p>Walks fmt / attStmt / authData.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/cose-key/" class="card"><h3>COSE Key inspector</h3><p>kty / alg / crv / x / y for credentialPublicKey.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/x509-viewer/" class="card"><h3>X.509 viewer</h3><p>Inspect attestation cert chains.</p><div class="card-meta">Open tool &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Verification checklists</h2><span class="section-line"></span></div>
+    <details class="ref-block" open>
+      <summary>Registration verification (server-side)</summary>
+      <div class="ref-body">
+        <ol>
+          <li>Decode <code>clientDataJSON</code>; verify <code>type === "webauthn.create"</code>, challenge matches the one your RP issued (single-use), origin is in your allow-list.</li>
+          <li>Compute <code>SHA-256(rpId)</code> and verify <code>authData.rpIdHash</code> matches.</li>
+          <li>Verify <code>UP</code> flag is set; verify <code>UV</code> if your policy requires user verification.</li>
+          <li>If you require an attestation policy stronger than <em>none</em>, verify the attestation signature against <code>authData || SHA-256(clientDataJSON)</code>, and validate the x5c chain against your trust anchors and the FIDO MDS BLOB.</li>
+          <li>Enforce the AAGUID allow-list (enterprise).</li>
+          <li>Persist <code>credentialId</code>, <code>credentialPublicKey</code>, <code>signCount</code>, and the BE/BS flags for policy use.</li>
+        </ol>
+      </div>
+    </details>
+    <details class="ref-block">
+      <summary>Authentication verification (server-side)</summary>
+      <div class="ref-body">
+        <ol>
+          <li>Decode <code>clientDataJSON</code>; verify <code>type === "webauthn.get"</code>, challenge matches, origin matches.</li>
+          <li>Look up the stored credentialPublicKey by credentialId.</li>
+          <li>Compute <code>SHA-256(rpId)</code>; verify <code>authData.rpIdHash</code>.</li>
+          <li>Verify <code>UP</code> set; <code>UV</code> if required.</li>
+          <li>Verify the signature over <code>authData || SHA-256(clientDataJSON)</code> using the stored public key.</li>
+          <li>Verify the new <code>signCount &gt; stored signCount</code> (or both 0 — many platform authenticators keep counter at 0).</li>
+          <li>Update stored <code>signCount</code>; mint session.</li>
+        </ol>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Where this lives in our stack</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/products/onepass-card/" class="card"><h3>OnePass Card</h3><p>FIDO2 smart card, resident credentials, NFC + USB.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/onepass-usb-key/" class="card"><h3>OnePass USB Key</h3><p>FIDO-certified hardware security key, no battery.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/onepass-platform/" class="card"><h3>OnePass Platform</h3><p>Authenticators + validation server + device lifecycle.</p><div class="card-meta">View platform &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Pillar reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/blog/understanding-webauthn-attestation-objects/" class="blog-card"><span class="chip">WebAuthn · Pillar</span><h3>Understanding WebAuthn Attestation Objects</h3><p>Walking the fmt / attStmt / authData CBOR map, byte by byte.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/passkeys-vs-traditional-mfa/" class="blog-card"><span class="chip">Passkeys · Pillar</span><h3>Passkeys vs Traditional MFA</h3><p>What changes when the second factor moves from "something you know" to "something only your hardware can prove".</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/why-hardware-backed-identity-matters/" class="blog-card"><span class="chip">Identity · Pillar</span><h3>Why Hardware-Backed Identity Matters</h3><p>Where the trust really lives, and why software-only identity is structurally weaker.</p><span class="read-more">Read &rarr;</span></a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/passwordless-mfa/">Passwordless MFA</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

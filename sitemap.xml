@@ -117,4 +117,45 @@
   <url><loc>https://ambisecure.ambimat.com/blog/why-sams-matter-in-closed-loop-transit/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/designing-low-latency-secure-transit-validators/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
 
+  <!-- Phase 4: FIDO / WebAuthn authority -->
+  <url><loc>https://ambisecure.ambimat.com/technologies/webauthn/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/fido2/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/passkeys/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/attestation/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/ctap2/</loc><priority>0.8</priority></url>
+
+  <!-- Phase 4: OnePass ecosystem & solutions -->
+  <url><loc>https://ambisecure.ambimat.com/products/onepass-platform/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/passwordless-enterprise/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/solutions/phishing-resistant-authentication/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+
+  <!-- Phase 4: documentation portal -->
+  <url><loc>https://ambisecure.ambimat.com/resources/webauthn/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+
+  <!-- Phase 4: Batch E FIDO / WebAuthn tools -->
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/cbor-decoder/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/cose-key/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/aaguid-lookup/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/clientdata-decoder/</loc><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/authdata-parser/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/attestation-decoder/</loc><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/rp-id-validator/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/base64url/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/credential-id/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/challenge-viewer/</loc><priority>0.7</priority></url>
+
+  <!-- Phase 4: Batch F developer tools -->
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/iso7816-cla/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/ber-length/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/emv-tag-dict/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/key-diversification/</loc><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/scp03-walkthrough/</loc><priority>0.65</priority></url>
+
+  <!-- Phase 4: cornerstone blogs -->
+  <url><loc>https://ambisecure.ambimat.com/blog/understanding-webauthn-attestation-objects/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/passkeys-vs-traditional-mfa/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/why-hardware-backed-identity-matters/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/designing-enterprise-passwordless-systems/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/platform-vs-roaming-authenticators/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+
 </urlset>

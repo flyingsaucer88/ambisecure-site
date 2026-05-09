@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CTAP2 — AmbiSecure | Client-To-Authenticator Protocol</title>
+<meta name="description" content="CTAP2 is the FIDO Alliance Client-To-Authenticator Protocol — the wire format the browser uses to talk to USB-HID, NFC, and BLE roaming authenticators. Commands, transports, PIN/UV protocols." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/ctap2/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="CTAP2 — AmbiSecure" />
+<meta property="og:description" content="CTAP2 is the FIDO Alliance Client-To-Authenticator Protocol — the wire format the browser uses to talk to USB-HID, NFC, and BLE roaming authenticators. Commands, transports, PIN/UV protocols." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/ctap2/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Technologies",
+     "item": "/technologies/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "CTAP2",
+     "item": "https://ambisecure.ambimat.com/technologies/ctap2/"
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "CTAP2 \u2014 the protocol behind WebAuthn",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">CTAP2</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology</span>
+    <h1>CTAP2 &mdash; the protocol behind WebAuthn.</h1>
+    <p class="dek">CTAP2 is the FIDO Alliance Client-To-Authenticator Protocol. The browser uses it to talk to USB-HID, NFC, and BLE roaming authenticators. WebAuthn is the API; CTAP2 is the wire. They were co-designed; you can't ship a level-2 WebAuthn RP without understanding what the authenticator is doing on the other side.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Transports</h2><span class="section-line"></span></div>
+    <div class="fido-grid">
+      <div class="fido-card"><span class="fc-tag">USB-HID</span><h3>Direct USB</h3><p>Uses the FIDO HID profile (vendor-specific HID device with a fixed report format). Frame size 64 bytes; long messages are CHUNK-ed across CONT frames.</p></div>
+      <div class="fido-card"><span class="fc-tag">NFC</span><h3>ISO/IEC 14443-4</h3><p>The authenticator presents itself as a Type-A or Type-B PICC. WebAuthn maps to APDU exchanges via a FIDO-specific AID. ATR negotiation, NDEF discovery, full APDU stack.</p></div>
+      <div class="fido-card"><span class="fc-tag">BLE</span><h3>FIDO BLE profile</h3><p>GATT service with FIDO control characteristic. Power-conscious; uses ATT MTU and queued indications.</p></div>
+      <div class="fido-card"><span class="fc-tag">hybrid</span><h3>Cross-device (caBLE)</h3><p>QR-code initiated, BLE proximity-checked, end-to-end encrypted. Lets a phone authenticate a laptop session.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">CTAP2 message envelope</h2><span class="section-line"></span></div>
+    <div class="annot-struct" style="max-width:900px; margin:0;">
+<span class="as-key">command_byte</span>   <span class="as-cmt">single byte (0x01..0x0C)</span>
+<span class="as-key">params</span>         <span class="as-cmt">CBOR map keyed by small integers</span>
+                <span class="as-cmt">(varies per command)</span>
+
+response =
+<span class="as-key">status_code</span>    <span class="as-cmt">single byte (0x00 = OK, &gt;0 = error)</span>
+<span class="as-key">data</span>           <span class="as-cmt">CBOR map (response payload)</span>
+    </div>
+    <div class="prose" style="max-width:900px; margin:18px 0 0;">
+      <p>Use the <a href="/resources/tools/cbor-decoder/">CBOR decoder</a> to walk any CTAP2 request or response payload. Use the <a href="/resources/tools/sw-lookup/">SW1/SW2 lookup</a> for the NFC / APDU envelope status words.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">PIN/UV protocol &mdash; what the authenticator actually does</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>CTAP2.1 specifies two PIN/UV protocols that handle PIN setup, change, and the per-session pinUvAuthToken handshake. The protocols never transmit the PIN in the clear &mdash; they use ECDH to establish a shared secret with the authenticator, and AES-encrypt the PIN under that secret.</p>
+      <ul>
+        <li><strong>PIN/UV Protocol 1</strong> &mdash; AES-CBC + HMAC. Older deployments.</li>
+        <li><strong>PIN/UV Protocol 2</strong> &mdash; AES-CBC + HMAC with separate keys; AAD support. CTAP2.1 default.</li>
+      </ul>
+      <p>The PIN never leaves the client. After successful authentication, the authenticator emits a pinUvAuthToken &mdash; a short-lived secret that subsequent CTAP2 commands use to authorise sensitive operations (credential management, factory reset).</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Companion reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/technologies/webauthn/" class="card"><h3>WebAuthn reference</h3><p>The browser-side counterpart.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/technologies/fido2/" class="card"><h3>FIDO2 family overview</h3><p>The full alliance spec graph.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/blog/understanding-webauthn-attestation-objects/" class="blog-card"><span class="chip">Pillar</span><h3>Understanding WebAuthn Attestation Objects</h3><p>Walks attestationObject byte-by-byte.</p><span class="read-more">Read &rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

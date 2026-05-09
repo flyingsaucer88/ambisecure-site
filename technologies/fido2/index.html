@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FIDO2 — AmbiSecure | The alliance, the spec, the certification</title>
+<meta name="description" content="FIDO2 is two specs working in concert: WebAuthn (W3C API) and CTAP2 (FIDO Alliance authenticator wire protocol). What's in the family, what each spec does, and how certification levels work." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/fido2/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="FIDO2 — AmbiSecure" />
+<meta property="og:description" content="FIDO2 is two specs working in concert: WebAuthn (W3C API) and CTAP2 (FIDO Alliance authenticator wire protocol). What's in the family, what each spec does, and how certification levels work." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/fido2/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Technologies",
+     "item": "/technologies/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "FIDO2",
+     "item": "https://ambisecure.ambimat.com/technologies/fido2/"
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "FIDO2 \u2014 the alliance, the spec, the certification",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">FIDO2</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology</span>
+    <h1>FIDO2 &mdash; the alliance, the spec family, the certification.</h1>
+    <p class="dek">FIDO2 isn't a protocol. It's a brand for two specifications working in concert: WebAuthn (the W3C Web API the browser exposes to the relying party) and CTAP2 (the FIDO Alliance protocol the browser speaks to the authenticator). Together they replace shared-secret passwords with hardware-rooted public-key cryptography.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">The FIDO2 family at a glance</h2><span class="section-line"></span></div>
+    <div class="fido-grid">
+      <div class="fido-card"><span class="fc-tag">W3C</span><h3>WebAuthn</h3><p>JavaScript API on the relying-party page. <code>navigator.credentials.create()</code> and <code>.get()</code> &mdash; that's the entire surface area.</p></div>
+      <div class="fido-card"><span class="fc-tag">FIDO Alliance</span><h3>CTAP2 (Client-To-Authenticator)</h3><p>USB-HID, NFC, BLE wire format the browser uses to talk to a roaming authenticator. Platform authenticators bypass CTAP and use OS-native APIs.</p></div>
+      <div class="fido-card"><span class="fc-tag">Standards</span><h3>COSE / CBOR</h3><p>RFC 8152 / RFC 8949 &mdash; the binary structures FIDO2 uses for keys and messages. Compact enough to run on small MCUs.</p></div>
+      <div class="fido-card"><span class="fc-tag">FIDO MDS</span><h3>Metadata Service</h3><p>Signed JSON BLOB published by the Alliance, listing every certified authenticator (AAGUID, certification level, attestation root). Production RPs verify against MDS.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">CTAP1 vs CTAP2</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p><strong>CTAP1 (also U2F)</strong> is the original FIDO protocol: a U2F register / authenticate flow with a 16-byte counter. No PIN, no resident credentials, no user verification beyond physical presence. Still in deployment, but considered legacy &mdash; CTAP2 supersedes it for everything new.</p>
+      <p><strong>CTAP2</strong> introduces resident (discoverable) credentials, PIN/UV protocols, larger commands, and a richer error model. It is what enables real <em>passwordless</em> flows &mdash; the username can come from the authenticator instead of the user.</p>
+      <p>A CTAP2 authenticator can also expose a CTAP1 transport for backwards compatibility with U2F-only RPs. WebAuthn level-1 and level-2 RPs interoperate with both via the WebAuthn API.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">CTAP2 commands that matter</h2><span class="section-line"></span></div>
+    <table class="spec-table" style="margin:0;">
+      <thead><tr><th>Command</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>authenticatorMakeCredential (0x01)</td><td>Registration: generate keypair, return attestationObject.</td></tr>
+        <tr><td>authenticatorGetAssertion (0x02)</td><td>Authentication: sign a challenge with an existing credential.</td></tr>
+        <tr><td>authenticatorGetInfo (0x04)</td><td>Discovery: report supported algorithms, transports, AAGUID, options.</td></tr>
+        <tr><td>authenticatorClientPIN (0x06)</td><td>PIN setup, PIN change, get pinUvAuthToken (CTAP2.1 PIN/UV protocol).</td></tr>
+        <tr><td>authenticatorReset (0x07)</td><td>Factory reset (invalidates all stored credentials).</td></tr>
+        <tr><td>authenticatorBioEnrollment (0x09)</td><td>On-device fingerprint enrolment (CTAP2.1 only).</td></tr>
+        <tr><td>authenticatorCredentialManagement (0x0A)</td><td>Enumerate / delete resident credentials.</td></tr>
+        <tr><td>authenticatorSelection (0x0B)</td><td>UA prompts user to pick which authenticator to use.</td></tr>
+        <tr><td>authenticatorLargeBlobs (0x0C)</td><td>Per-credential opaque blob storage (e.g. encrypted backup material).</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Authenticator certification levels</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>The FIDO Alliance certifies authenticators across <strong>L1</strong> (software / functional), <strong>L2</strong> (hardware-protected key, lightweight attack resistance), <strong>L3</strong> (Common-Criteria-style hardware), and <strong>L3+</strong> (highest assurance with side-channel and fault-injection resistance).</p>
+      <p>For enterprise deployments the AAGUID allow-list is typically derived from a target certification level &mdash; e.g. "L2 or higher", with explicit denials for AAGUIDs flagged in MDS as compromised.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Companion pages and tools</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/technologies/webauthn/" class="card"><h3>WebAuthn reference</h3><p>Registration / authentication ceremonies, structures, RP rules.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/technologies/passkeys/" class="card"><h3>Passkeys</h3><p>BE/BS flags, syncable vs device-bound, enterprise policy.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/technologies/attestation/" class="card"><h3>Attestation deep dive</h3><p>fmt formats, x5c chains, MDS verification, AAGUID policy.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/resources/tools/cbor-decoder/" class="card"><h3>CBOR decoder</h3><p>Walk any CTAP2 message or attestation object.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/cose-key/" class="card"><h3>COSE Key inspector</h3><p>kty / alg / crv / x / y for credentialPublicKey.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/aaguid-lookup/" class="card"><h3>AAGUID lookup</h3><p>Vendor / model directory of well-known authenticators.</p><div class="card-meta">Open tool &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

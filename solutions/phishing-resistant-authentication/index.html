@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Phishing-resistant Authentication — AmbiSecure | What it really means</title>
+<meta name="description" content="Phishing-resistant MFA has a precise technical meaning — origin-bound, hardware-backed credentials. What WebAuthn buys you, what it doesn't, and how it maps to NIST AAL3 / CISA / OMB M-22-09." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/solutions/phishing-resistant-authentication/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Phishing-resistant Authentication — AmbiSecure" />
+<meta property="og:description" content="Phishing-resistant MFA has a precise technical meaning — origin-bound, hardware-backed credentials. What WebAuthn buys you, what it doesn't, and how it maps to NIST AAL3 / CISA / OMB M-22-09." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/solutions/phishing-resistant-authentication/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Solutions",
+     "item": "/solutions/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Phishing-resistant",
+     "item": "https://ambisecure.ambimat.com/solutions/phishing-resistant-authentication/"
+    }
+   ]
+  },
+  {
+   "@type": "Service",
+   "name": "Phishing-resistant authentication",
+   "provider": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/" class="active">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/solutions/">Solutions</a><span class="sep">/</span><span class="current">Phishing-resistant</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Solution</span>
+    <h1>Phishing-resistant MFA &mdash; what that actually means.</h1>
+    <p class="dek">"Phishing-resistant" is a regulatory phrase (CISA, NIST AAL3, M-22-09). It has a precise technical meaning. This page is the engineering version: what makes WebAuthn phishing-resistant, what doesn't, and what compromises break the property.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">The structural property</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>WebAuthn binds every credential to an <strong>origin</strong>. The browser, not the relying party, enforces this binding. When a user visits a phishing site, the browser computes <code>SHA-256(origin)</code>, looks for a credential scoped to that origin, finds none (because the user only ever registered with the legitimate origin), and refuses to assert.</p>
+      <p>This is structurally different from TOTP, push, SMS, and even legacy U2F-via-cross-origin: the user cannot accidentally hand their second factor to an attacker, because the second factor refuses to act outside its registered origin. The protection is at the protocol layer, not at the user layer.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">What "MFA" doesn't get you</h2><span class="section-line"></span></div>
+    <table class="spec-table" style="margin:0;">
+      <thead><tr><th>Method</th><th>Phishing-resistant?</th><th>Why / why not</th></tr></thead>
+      <tbody>
+        <tr><td>SMS code</td><td>No</td><td>User reads code, types into phishing page, attacker forwards. SIM-swap and SS7 attacks for free.</td></tr>
+        <tr><td>TOTP (authenticator app)</td><td>No</td><td>User types 6-digit code into phishing page. Attacker has 30 seconds.</td></tr>
+        <tr><td>Push notification</td><td>No</td><td>User taps "approve" on phone while attacker is logging in elsewhere. Push fatigue is industrial-scale.</td></tr>
+        <tr><td>Magic link</td><td>No</td><td>Email is phishable. The magic link itself is a bearer token.</td></tr>
+        <tr><td>WebAuthn / passkey (BE=0)</td><td>YES</td><td>Origin binding enforced by browser; private key never leaves authenticator.</td></tr>
+        <tr><td>WebAuthn / synced passkey (BE=1)</td><td>YES (with caveats)</td><td>Same origin binding. But cloud-account compromise affects the credential.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">What can still go wrong</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>Phishing-resistance is a property of the cryptographic ceremony, not of the entire system. Things that <em>can</em> still go wrong:</p>
+      <ul>
+        <li><strong>Account-recovery phishing</strong> &mdash; if losing your key drops you back to a password, the password is now the weak link. Fix: enrol two authenticators, IT-mediated recovery only.</li>
+        <li><strong>Session-token theft</strong> &mdash; once the user is signed in, a session cookie is bearer. Fix: token-binding equivalent (DPoP, signed JWTs); short session lifetimes; device posture re-checks.</li>
+        <li><strong>Consent-phishing inside an OAuth flow</strong> &mdash; the user authenticates legitimately, then approves an attacker-controlled scope. Fix: scope review, app-allow-listing.</li>
+        <li><strong>Backed-up passkeys + cloud account compromise</strong> &mdash; if the platform vendor's cloud is compromised, syncable passkeys can leak. Fix: enforce BE=0 for high-assurance use.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Regulatory mapping</h2><span class="section-line"></span></div>
+    <div class="fido-grid">
+      <div class="fido-card"><span class="fc-tag">NIST 800-63-3</span><h3>AAL3</h3><p>Phishing-resistant authenticator (hardware-bound multifactor crypto). FIDO2 with attestation-pinned hardware satisfies.</p></div>
+      <div class="fido-card"><span class="fc-tag">CISA</span><h3>Zero Trust Maturity</h3><p>Phishing-resistant MFA is "Advanced" tier. WebAuthn / FIDO2 explicitly cited.</p></div>
+      <div class="fido-card"><span class="fc-tag">OMB M-22-09</span><h3>US federal</h3><p>"Agencies must require phishing-resistant MFA". WebAuthn is the canonical implementation.</p></div>
+      <div class="fido-card"><span class="fc-tag">PSD2 / SCA</span><h3>EU payments</h3><p>Strong Customer Authentication. WebAuthn satisfies inherence + possession when bound to certified hardware.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Engineering reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/blog/why-hardware-backed-identity-matters/" class="blog-card"><span class="chip">Pillar</span><h3>Why Hardware-Backed Identity Matters</h3><p>Where the trust really lives.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/passkeys-vs-traditional-mfa/" class="blog-card"><span class="chip">Pillar</span><h3>Passkeys vs Traditional MFA</h3><p>What changes when MFA is hardware-bound.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/designing-enterprise-passwordless-systems/" class="blog-card"><span class="chip">Pillar</span><h3>Designing Enterprise Passwordless Systems</h3><p>End-to-end deployment patterns.</p><span class="read-more">Read &rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

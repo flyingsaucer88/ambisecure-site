@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WebAuthn Attestation Decoder — AmbiSecure</title>
+<meta name="description" content="Decode WebAuthn attestationObject (CBOR with fmt, attStmt, authData). Walks attStmt and links into the authenticatorData parser." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/attestation-decoder/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="WebAuthn Attestation Decoder" />
+<meta property="og:description" content="Decode WebAuthn attestationObject (CBOR with fmt, attStmt, authData). Walks attStmt and links into the authenticatorData parser." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/attestation-decoder/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "WebAuthn Attestation Decoder",
+     "item": "https://ambisecure.ambimat.com/resources/tools/attestation-decoder/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "WebAuthn Attestation Decoder",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/attestation-decoder/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">WebAuthn Attestation Decoder</span></nav>
+
+<main id="main">
+<header class="tool-header">
+  <span class="eyebrow">WebAuthn / FIDO2</span>
+  <h1>WebAuthn Attestation Decoder</h1>
+  <p>Decode a WebAuthn attestationObject — the CBOR map { fmt, attStmt, authData } returned during registration. Surfaces format, walks attStmt fields, and links into the authData and COSE Key tools.</p>
+</header>
+<div class="tool-shell">
+<div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="att-sample">Sample</button><button class="tool-action" id="att-clear">Clear</button></div></div><label for="att-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">attestationObject (CBOR — hex or base64url).</label><textarea id="att-input" class="hex-input" rows="8" spellcheck="false"></textarea></div><div class="tool-panel"><div class="tool-panel-head"><h2>Decoded</h2></div><div class="tool-output" id="att-output"><div class="placeholder">Paste attestationObject.</div></div></div>
+</div>
+<div class="tool-privacy">All decoding runs locally.</div>
+<section class="tool-reference">
+  <h2>About attestation</h2>
+  <p>Attestation lets a relying party verify that a credential was generated on a particular make and model of authenticator. Most consumer flows skip attestation entirely (<code>fmt: none</code>); enterprise flows that require certified hardware verify the attestation signature and pin the AAGUID against the FIDO MDS BLOB. Attestation never reveals the user identity — it identifies the device, not the person.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §6.5 / FIDO 2.0 attestation formats.</p></div><div class="ref-card"><h3>Companion tools</h3><p><a href="/resources/tools/authdata-parser/">authenticatorData parser</a> &middot; <a href="/resources/tools/x509-viewer/">X.509 viewer</a></p></div><div class="ref-card"><h3>Pillar</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Understanding WebAuthn attestation objects</a></p></div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/resources/tools/cbor-decoder/">CBOR decoder</a></li><li><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/iot-root-of-trust/">IoT root of trust</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/lib/cbor.js" defer></script>
+<script src="/assets/js/lib/base64url.js" defer></script>
+<script src="/assets/js/lib/aaguid-dict.js" defer></script>
+<script src="/assets/js/tools/attestation-decoder.js" defer></script>
+</body>
+</html>
