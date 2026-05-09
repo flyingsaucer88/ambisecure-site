@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Passkey Flow Visualizer — AmbiSecure | Registration & authentication</title>
+<meta name="description" content="Step-by-step walkthrough of the WebAuthn registration and authentication ceremonies, with annotation linking to the relevant decoder tools." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/passkey-flow-viz/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Passkey Flow Visualizer" />
+<meta property="og:description" content="Step-by-step walkthrough of the WebAuthn registration and authentication ceremonies, with annotation linking to the relevant decoder tools." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/passkey-flow-viz/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Passkey Flow Visualizer",
+     "item": "https://ambisecure.ambimat.com/resources/tools/passkey-flow-viz/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "Passkey Flow Visualizer",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/passkey-flow-viz/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">Passkey Flow Visualizer</span></nav>
+
+<main id="main">
+<header class="tool-header">
+  <span class="eyebrow">WebAuthn</span>
+  <h1>Passkey Flow Visualizer</h1>
+  <p>Step-by-step walkthrough of WebAuthn registration and authentication ceremonies. Each step is annotated with the relevant byte structures and the AmbiSecure decoder you would use to inspect them. <strong>Annotation only — no live ceremony runs.</strong></p>
+</header>
+<div class="tool-shell">
+<div class="tool-panel" style="grid-column: 1 / -1;"><div class="tool-panel-head"><h2>Ceremony</h2><div class="tool-panel-actions"><button class="tool-action tool-action--primary" data-pf-mode="register">Registration</button><button class="tool-action" data-pf-mode="auth">Authentication</button></div></div><div id="pf-output"></div></div>
+</div>
+<div class="tool-privacy">All decoding runs locally.</div>
+<section class="tool-reference">
+  <h2>About WebAuthn ceremonies</h2>
+  <p>Two ceremonies make up the WebAuthn surface: <code>navigator.credentials.create()</code> for registration (fresh keypair + attestation) and <code>.get()</code> for authentication (signed assertion). The browser binds both to the relying-party origin; that binding is what kills the entire phishing class.</p>
+  <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>W3C WebAuthn Level 2 §4–6.</p></div><div class="ref-card"><h3>Companion tools</h3><p><a href="/resources/tools/clientdata-decoder/">clientDataJSON</a> &middot; <a href="/resources/tools/authdata-parser/">authenticatorData</a> &middot; <a href="/resources/tools/attestation-decoder/">attestation</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/passkeys-vs-traditional-mfa/">Passkeys vs Traditional MFA</a></p></div></div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/passkey-flow-viz.js" defer></script>
+</body>
+</html>

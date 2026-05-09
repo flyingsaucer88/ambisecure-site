@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Secure Element Integration — AmbiSecure | Silicon-to-cloud</title>
+<meta name="description" content="Secure-element integration into your product — chip selection, host driver, JavaCard applet, lifecycle. NXP, Infineon, STMicro families. CC EAL5+ secure elements." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/solutions/secure-element-integration/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Secure Element Integration — AmbiSecure" />
+<meta property="og:description" content="Secure-element integration into your product — chip selection, host driver, JavaCard applet, lifecycle. NXP, Infineon, STMicro families. CC EAL5+ secure elements." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/solutions/secure-element-integration/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Solutions",
+     "item": "/solutions/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Secure-element integration",
+     "item": "https://ambisecure.ambimat.com/solutions/secure-element-integration/"
+    }
+   ]
+  },
+  {
+   "@type": "Service",
+   "name": "Secure element integration",
+   "provider": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/" class="active">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/solutions/">Solutions</a><span class="sep">/</span><span class="current">Secure-element integration</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Solution</span>
+    <h1>Secure element integration &mdash; the chip in the product.</h1>
+    <p class="dek">A secure element is the trust anchor. Picking the right one, integrating it into a product, and operating it through the product's lifecycle are three different problems. AmbiSecure handles all three &mdash; from chip selection through firmware, applet, personalisation, and field rotation.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Why an SE</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>A secure element is a tamper-resistant chip that holds keys and runs cryptographic operations without ever exposing the keys to the host. The chip's physical packaging, side-channel countermeasures, and on-die verifier resist attacks that would trivially break software-only crypto.</p>
+      <p>Use cases where an SE is the right choice:</p>
+      <ul>
+        <li>FIDO2 / WebAuthn authenticators (smart card, USB key, embedded SE in phone).</li>
+        <li>Payment terminals (EMV chip-and-PIN, EMV contactless).</li>
+        <li>Connected vehicles (V2X HSMs, automotive cybersecurity).</li>
+        <li>Industrial IoT root-of-trust.</li>
+        <li>eSIM / iUICC for cellular authentication.</li>
+        <li>Document signing terminals (eIDAS qualified signatures).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Integration scope</h2><span class="section-line"></span></div>
+    <div class="arch-row">
+      <div class="arch-cell"><span class="arch-tag">SELECTION</span><h4>Chip selection</h4><p>Match SE family to security tier (CC EAL5+ vs EAL4+), interface (ISO 7816, ISO 14443, SPI, I2C), throughput, certifications.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">FIRMWARE</span><h4>Host driver</h4><p>Driver on the host MCU / SoC for talking to the SE. APDU framing, secure channel (SCP03), session management.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">APPLET</span><h4>SE-side applet</h4><p>JavaCard applet running on the SE. Custom or off-the-shelf (FIDO, PIV, OpenPGP). Designed for the product's threat model.</p></div>
+      <div class="arch-cell"><span class="arch-tag">LIFECYCLE</span><h4>Field operations</h4><p>Issuance, key rotation, applet update under SCP03. Telemetry for tamper detection.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">SE families we ship</h2><span class="section-line"></span></div>
+    <div class="fido-grid">
+      <div class="fido-card"><span class="fc-tag">NXP</span><h3>NXP SmartMX</h3><p>JavaCard 3.x, GlobalPlatform 2.3.1, CC EAL6+ on flagship variants. Used in OnePass Card.</p></div>
+      <div class="fido-card"><span class="fc-tag">Infineon</span><h3>Infineon SLE / SLJ</h3><p>JavaCard, CC EAL5+ / EAL6+. Strong eID / payments deployment history.</p></div>
+      <div class="fido-card"><span class="fc-tag">STMicro</span><h3>ST33 family</h3><p>CC EAL5+ secure microcontrollers. Embedded SE common in IoT root-of-trust.</p></div>
+      <div class="fido-card"><span class="fc-tag">Multi-vendor</span><h3>Vendor-agnostic integration</h3><p>For customers wanting to dual-source. We handle abstraction at the host-driver layer.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Where to start</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/technologies/secure-elements/" class="card"><h3>Secure elements (technology)</h3><p>The reference page on what secure elements actually do.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/technologies/javacard/" class="card"><h3>JavaCard reference</h3><p>The applet platform we write for.</p><div class="card-meta">Read &rarr;</div></a>
+      <a href="/blog/why-hardware-backed-identity-matters/" class="blog-card"><span class="chip">Pillar</span><h3>Why Hardware-Backed Identity Matters</h3><p>The cost-per-extraction frame.</p><span class="read-more">Read &rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Embedding a secure element in your product?</h2>
+        <p>We have shipped silicon-to-cloud integrations across smart cards, USB authenticators, payment terminals, IoT gateways, and connected vehicles. Tell us your platform and constraints.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Talk to engineers</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/workforce-identity/">Workforce identity</a></li><li><a href="/solutions/government-identity/">Government identity</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

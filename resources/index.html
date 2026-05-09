@@ -61,7 +61,18 @@
     <span class="eyebrow">Engineer's toolbox</span>
     <h1>Free, client-side utilities for the hex you stare at every day.</h1>
     <p class="dek">ATR, APDU, TLV, ASN.1, CBOR, ICCID, NDEF, SCP03 &mdash; all the parsers, decoders, and lookups that smart-card, secure-element, and telecom engineers reach for. No accounts. No ads. <strong>Nothing leaves your browser.</strong></p>
-    <p style="margin-top: 14px; color: var(--brand-grey); font-size: 14.5px;">Knowledge sharing belongs in our <a href="/blog/" style="color:var(--brand-red);font-weight:600;">blog</a>. This page is utilities only.</p>
+    <p style="margin-top: 14px; color: var(--brand-grey); font-size: 14.5px;">Need a searchable reference? Try the <a href="/references/" style="color:var(--brand-red);font-weight:600;">references section</a> — APDU status words, EMV tags, AAGUIDs, COSE algorithms, X.509 OIDs, and more. Knowledge sharing belongs in the <a href="/blog/" style="color:var(--brand-red);font-weight:600;">blog</a>.</p>
+  </div>
+</section>
+
+<section style="padding: 0 80px 30px;">
+  <div class="section-container">
+    <div class="featured-strip-row">
+      <a href="/references/"><span class="fs-tag">REFS</span><span class="fs-label">12 searchable reference databases &rarr;</span></a>
+      <a href="/resources/webauthn/"><span class="fs-tag">DOCS</span><span class="fs-label">WebAuthn engineering reference &rarr;</span></a>
+      <a href="/resources/tools/passkey-flow-viz/"><span class="fs-tag">VIZ</span><span class="fs-label">Passkey flow visualizer &rarr;</span></a>
+      <a href="/resources/tools/apdu-script-validator/"><span class="fs-tag">SCRIPT</span><span class="fs-label">APDU script validator &rarr;</span></a>
+    </div>
   </div>
 </section>
 
@@ -154,6 +165,8 @@
       <a href="/resources/tools/credential-id/" class="resource-card"><span class="rc-tag">WebAuthn</span><h3>Credential ID Inspector</h3><p>Length, entropy, AAGUID-shaped prefix.</p></a>
       <a href="/resources/tools/challenge-viewer/" class="resource-card"><span class="rc-tag">WebAuthn</span><h3>Challenge Viewer / Generator</h3><p>Inspect challenge length and entropy. Generate fresh 32-byte challenges with the platform CSPRNG.</p></a>
       <a href="/resources/tools/base64url/" class="resource-card"><span class="rc-tag">B64URL</span><h3>Base64URL Converter</h3><p>RFC 4648 §5. The form WebAuthn / JOSE / CTAP2 use everywhere.</p></a>
+      <a href="/resources/tools/fido-mds-explorer/" class="resource-card"><span class="rc-tag">MDS</span><h3>FIDO Metadata Explorer</h3><p>Browse the curated AAGUID directory in metadata-style cards. Searchable by vendor / model.</p></a>
+      <a href="/resources/tools/passkey-flow-viz/" class="resource-card"><span class="rc-tag">FLOW</span><h3>Passkey Flow Visualizer</h3><p>Step-by-step walkthrough of registration and authentication ceremonies.</p></a>
     </div>
 
     <h2 class="resource-cat-head">Smart-card developer tools</h2>
@@ -163,6 +176,22 @@
       <a href="/resources/tools/emv-tag-dict/" class="resource-card"><span class="rc-tag">EMV</span><h3>EMV Tag Dictionary</h3><p>Filterable directory of EMV Books 3, 4, and CL tags.</p></a>
       <a href="/resources/tools/key-diversification/" class="resource-card"><span class="rc-tag">DESFire</span><h3>Key Diversification Visualizer</h3><p>Educational illustration of AES-CMAC diversification (NXP AN10922 / AV2).</p></a>
       <a href="/resources/tools/scp03-walkthrough/" class="resource-card"><span class="rc-tag">SCP03</span><h3>SCP03 Session Walkthrough</h3><p>Educational annotation of the GP 2.3.1 secure-channel protocol.</p></a>
+      <a href="/resources/tools/cmac-length/" class="resource-card"><span class="rc-tag">CMAC</span><h3>CMAC Length Calculator</h3><p>Block count, padded length, and standard truncation for AES / TDES CMAC.</p></a>
+      <a href="/resources/tools/secure-messaging-viz/" class="resource-card"><span class="rc-tag">SM</span><h3>Secure Messaging Field Visualizer</h3><p>Walk SM-wrapped APDU body — DOs 87 / 97 / 99 / 8E / 84.</p></a>
+      <a href="/resources/tools/apdu-script-validator/" class="resource-card"><span class="rc-tag">SCRIPT</span><h3>APDU Script Validator</h3><p>Multi-line APDU script validation. Validation only — no execution.</p></a>
+      <a href="/resources/tools/javacard-cap/" class="resource-card"><span class="rc-tag">CAP</span><h3>JavaCard CAP Structure Explorer</h3><p>Decode the 12 standard CAP file components. Header.cap walker.</p></a>
+      <a href="/resources/tools/asn1-tree-explorer/" class="resource-card"><span class="rc-tag">ASN.1</span><h3>ASN.1 Tree Explorer</h3><p>Collapsible DER walker with OID lookup. PEM input accepted.</p></a>
+      <a href="/resources/tools/tlv-tree-viz/" class="resource-card"><span class="rc-tag">TLV</span><h3>TLV Tree Visualizer</h3><p>Visual companion to the TLV parser — collapsible nested tree with EMV tag lookup.</p></a>
+    </div>
+
+    <h2 class="resource-cat-head">DESFire / Transit</h2>
+    <div class="resource-grid">
+      <a href="/resources/tools/desfire-status/" class="resource-card"><span class="rc-tag">DESFire</span><h3>DESFire Status Decoder</h3><p>OK, AUTH_ERROR, ADDITIONAL_FRAME, etc.</p></a>
+      <a href="/resources/tools/desfire-access-rights/" class="resource-card"><span class="rc-tag">DESFire</span><h3>Access-Rights Decoder</h3><p>Decode the 16-bit access-rights word.</p></a>
+      <a href="/resources/tools/desfire-file-settings/" class="resource-card"><span class="rc-tag">DESFire</span><h3>File Settings Parser</h3><p>Decode the GetFileSettings response per file type.</p></a>
+      <a href="/resources/tools/desfire-key-settings/" class="resource-card"><span class="rc-tag">DESFire</span><h3>Key Settings Interpreter</h3><p>Decode the 2-byte GetKeySettings response.</p></a>
+      <a href="/resources/tools/tmac-visualizer/" class="resource-card"><span class="rc-tag">TMAC</span><h3>Transaction MAC Visualizer</h3><p>EV2/EV3 TMAC field — TMC counter + TMV MAC.</p></a>
+      <a href="/resources/tools/iso14443-frame/" class="resource-card"><span class="rc-tag">14443</span><h3>ISO 14443 Frame Explorer</h3><p>REQA, WUPA, ATQA, SAK, RATS, I-block / R-block / S-block.</p></a>
     </div>
 
     <h2 class="resource-cat-head">Misc developer utilities</h2>

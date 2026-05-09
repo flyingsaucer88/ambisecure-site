@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Smart-Card Personalisation — AmbiSecure | Issuance line</title>
+<meta name="description" content="Smart-card personalisation as a service or in-country line. SCP03 + HSM-backed issuance for FIDO2 / PIV / EMV / eID applets. CC EAL5+ secure elements." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/solutions/smart-card-personalization/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Smart-Card Personalisation — AmbiSecure" />
+<meta property="og:description" content="Smart-card personalisation as a service or in-country line. SCP03 + HSM-backed issuance for FIDO2 / PIV / EMV / eID applets. CC EAL5+ secure elements." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/solutions/smart-card-personalization/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Solutions",
+     "item": "/solutions/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Smart-card personalisation",
+     "item": "https://ambisecure.ambimat.com/solutions/smart-card-personalization/"
+    }
+   ]
+  },
+  {
+   "@type": "Service",
+   "name": "Smart-card personalisation",
+   "provider": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/" class="active">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/solutions/">Solutions</a><span class="sep">/</span><span class="current">Smart-card personalisation</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Solution</span>
+    <h1>Smart-card personalisation &mdash; the line, not just the card.</h1>
+    <p class="dek">Personalisation is where issuer secrets meet pre-personalised cards under controlled conditions. The card is the cheap part; the line is the expensive part. AmbiSecure runs both, in-house, with HSM-rooted custody.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">What personalisation actually does</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>A pre-personalised card from the silicon vendor has a fresh secure element with default keys, no applets, no per-card identity. Personalisation is the supervised process that:</p>
+      <ul>
+        <li>Loads the issuer's applets (FIDO2, PIV, EMV, eID, transit) onto the card under SCP02 / SCP03 secure messaging.</li>
+        <li>Diversifies issuer master keys into per-card derivative keys using AES-CMAC (NXP AN10922) or equivalent.</li>
+        <li>Writes per-card identity (PAN, AAGUID + serial, eID number, transit fare media ID).</li>
+        <li>Loads attestation cert chain rooted in the issuer's CA.</li>
+        <li>Locks the card into ISSUED state per GlobalPlatform 2.3.1 lifecycle.</li>
+        <li>Records the card's identity in an issuance manifest signed by the issuer's HSM.</li>
+      </ul>
+      <p>Each step is audited. Each step happens inside a tamper-evident facility. None of these steps can be repeated on a card after it leaves the line.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">The line</h2><span class="section-line"></span></div>
+    <div class="arch-row">
+      <div class="arch-cell accent"><span class="arch-tag">INPUT</span><h4>Pre-personalised cards</h4><p>From silicon vendors, in batches with fresh default keys. Tamper-evident shipping.</p></div>
+      <div class="arch-cell"><span class="arch-tag">HSM</span><h4>Key custody</h4><p>FIPS 140-2 Level 3+ HSM holds the issuer master keys. Diversification happens inside the HSM; per-card derivatives are exported only to the card under SCP03.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">PERSONALISATION</span><h4>Per-card flow</h4><p>SCP03 channel; applet load + register + personalise + lock. Throughput depends on chip; 30-90 cards/hour per station typical.</p></div>
+      <div class="arch-cell"><span class="arch-tag">OUTPUT</span><h4>Manifest + cards</h4><p>Each card paired with its row in a HSM-signed issuance manifest (UID, AID, AAGUID, serial). Cards graded out, packaged, dispatched.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">What we ship</h2><span class="section-line"></span></div>
+    <div class="fido-grid">
+      <div class="fido-card"><span class="fc-tag">In-house line</span><h3>Personalisation runs at our facility</h3><p>Tamper-evident, audited, video-recorded. Customer can attend and verify.</p></div>
+      <div class="fido-card"><span class="fc-tag">In-country line</span><h3>Customer-controlled facility</h3><p>For sovereign deployments. We supply the line; customer runs operations under their HSM.</p></div>
+      <div class="fido-card"><span class="fc-tag">Mixed</span><h3>Personalisation-as-a-service</h3><p>Pre-personalisation by us; final personalisation (per-cardholder data) by the customer's in-country facility.</p></div>
+      <div class="fido-card"><span class="fc-tag">Manifest</span><h3>HSM-signed audit trail</h3><p>Every card ships with a manifest entry the customer's RP can validate against attestation at registration time.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Standards we track</h2><span class="section-line"></span></div>
+    <table class="proc-table">
+      <thead><tr><th>Standard</th><th>Coverage</th></tr></thead>
+      <tbody>
+        <tr><td class="pt-feature">GlobalPlatform 2.3.1 + Amendment D (SCP03)</td><td><span class="pt-yes">YES</span> — applet load, register, personalise, lock under SCP03 secure channel.</td></tr>
+        <tr><td class="pt-feature">FIPS 140-2 / 140-3 Level 3</td><td><span class="pt-yes">YES</span> — HSM custody for issuer master keys.</td></tr>
+        <tr><td class="pt-feature">Common Criteria EAL5+</td><td><span class="pt-yes">YES</span> — secure-element platforms supported.</td></tr>
+        <tr><td class="pt-feature">FIDO Alliance attestation</td><td><span class="pt-yes">YES</span> — per-batch attestation cert installed at line; AAGUID + serial recorded in manifest.</td></tr>
+        <tr><td class="pt-feature">EMV personalisation</td><td><span class="pt-yes">YES</span> — VISA / Mastercard / Discover / RuPay personalisation flows supported.</td></tr>
+        <tr><td class="pt-feature">eID issuance</td><td><span class="pt-yes">YES</span> — eIDAS qualified-credential issuance possible under customer roots.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Where this fits</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/products/onepass-card/" class="card"><h3>OnePass Card</h3><p>The card we personalise.</p><div class="card-meta">View &rarr;</div></a>
+      <a href="/solutions/government-identity/" class="card"><h3>Government identity</h3><p>Sovereign issuance under customer roots.</p><div class="card-meta">Solution &rarr;</div></a>
+      <a href="/solutions/closed-loop-ticketing/" class="card"><h3>Closed-loop ticketing</h3><p>DESFire personalisation with per-card diversification.</p><div class="card-meta">Solution &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Pricing a personalisation line?</h2>
+        <p>Tell us your volumes, your standards, your jurisdiction. We will price the line and quote the lead time.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Request a quote</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/workforce-identity/">Workforce identity</a></li><li><a href="/solutions/government-identity/">Government identity</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

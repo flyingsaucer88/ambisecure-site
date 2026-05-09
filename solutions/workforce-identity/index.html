@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workforce Identity — AmbiSecure | Hardware-backed enterprise identity</title>
+<meta name="description" content="Workforce identity programme — issuance, daily authentication, recovery, off-boarding. Hardware-rooted with attestation-anchored AAGUID policy and IdP-layer federation." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/solutions/workforce-identity/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Workforce Identity — AmbiSecure" />
+<meta property="og:description" content="Workforce identity programme — issuance, daily authentication, recovery, off-boarding. Hardware-rooted with attestation-anchored AAGUID policy and IdP-layer federation." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/solutions/workforce-identity/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Solutions",
+     "item": "/solutions/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Workforce identity",
+     "item": "https://ambisecure.ambimat.com/solutions/workforce-identity/"
+    }
+   ]
+  },
+  {
+   "@type": "Service",
+   "name": "Workforce identity",
+   "provider": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/" class="active">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/solutions/">Solutions</a><span class="sep">/</span><span class="current">Workforce identity</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Solution</span>
+    <h1>Workforce identity &mdash; from day-one to off-boarding.</h1>
+    <p class="dek">A workforce identity programme is not "we deployed a security key". It is the operational chain from HR onboarding through credential issuance, daily authentication, recovery, role transitions, and clean off-boarding. AmbiSecure ships the platform that makes every link of that chain work.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">The buyer's problem</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>Workforce identity teams in 2026 typically inherit a layered, brittle stack: passwords for some systems, TOTP for others, push for SaaS, badges for the building, smart cards for legacy on-prem, hardware tokens for engineers and execs, recovery mailboxes that no one tested. Audit costs scale; help-desk costs scale faster; the security posture is a patchwork.</p>
+      <p>The strategic objective is consolidation: one credential family that covers logical access (laptops, SSO, VPN, prod consoles) and physical access (turnstiles, doors), with a single issuance pipeline, an auditable lifecycle, and recovery flows that don't collapse back to a password.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Architecture overview</h2><span class="section-line"></span></div>
+    <div class="arch-row">
+      <div class="arch-cell accent"><span class="arch-tag">DAY 0</span><h4>Issuance</h4><p>HR onboarding triggers IT desk visit. New hire identity-verified in-person. Both authenticators (card + USB) registered against the IdP.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">DAY-TO-DAY</span><h4>Authentication</h4><p>Tap card or insert USB. Browser passes WebAuthn assertion to IdP. SSO mints session for downstream apps.</p></div>
+      <div class="arch-cell"><span class="arch-tag">RECOVERY</span><h4>Lost-key flow</h4><p>Sign in with the second authenticator; IT issues a replacement; old AAGUID + serial revoked across the IdP.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">OFF-BOARDING</span><h4>Revocation</h4><p>HR off-boarding triggers credential revocation in the IdP, sessions terminated within minutes, hardware collected.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Security model</h2><span class="section-line"></span></div>
+    <div class="fido-grid">
+      <div class="fido-card"><span class="fc-tag">Phishing-resistant</span><h3>Origin-bound credentials</h3><p>WebAuthn binds every credential to the registered origin. Phishing attacks against workforce identity become structurally impossible.</p></div>
+      <div class="fido-card"><span class="fc-tag">BE = 0</span><h3>Device-bound by construction</h3><p>OnePass authenticators ship with BE=0. Compromise requires physical possession of the hardware.</p></div>
+      <div class="fido-card"><span class="fc-tag">Attestation-anchored</span><h3>AAGUID allow-listing</h3><p>RP enforces an explicit allow-list of certified AAGUIDs, sourced from the FIDO MDS BLOB.</p></div>
+      <div class="fido-card"><span class="fc-tag">Auditable</span><h3>Per-ceremony logging</h3><p>AAGUID + serial + signCount logged on every registration / assertion. Anomalies feed SOC.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Integration points</h2><span class="section-line"></span></div>
+    <table class="proc-table">
+      <thead><tr><th>Surface</th><th>Integration</th></tr></thead>
+      <tbody>
+        <tr><td class="pt-feature">Identity Provider</td><td>WebAuthn at the IdP layer (Okta, Entra ID, Ping, Auth0, ForgeRock). Downstream apps inherit via SAML / OIDC.</td></tr>
+        <tr><td class="pt-feature">VPN</td><td>OIDC client federated to IdP; FIDO assertion satisfies AAL3.</td></tr>
+        <tr><td class="pt-feature">Privileged Access (PAM)</td><td>Session approval gated by fresh WebAuthn assertion via the IdP.</td></tr>
+        <tr><td class="pt-feature">SSH</td><td>FIDO2 SSH (ssh-keygen -t ed25519-sk) directly with the OnePass authenticator.</td></tr>
+        <tr><td class="pt-feature">Code-signing / artefact attestation</td><td>Sigstore / GitHub artifact attestation backed by the same authenticator.</td></tr>
+        <tr><td class="pt-feature">Physical access</td><td>Smart card body doubles as the badge; NFC + USB-C for desk and door readers alike.</td></tr>
+        <tr><td class="pt-feature">HRIS</td><td>Event-driven: HR onboarding/offboarding fires events that drive credential lifecycle in the IdP.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Recommended AmbiSecure capabilities</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/products/onepass-platform/" class="card"><h3>OnePass Platform</h3><p>Authenticators, validation server, lifecycle.</p><div class="card-meta">Platform &rarr;</div></a>
+      <a href="/products/onepass-card/" class="card"><h3>OnePass Card</h3><p>Smart card &mdash; FIDO2 + NFC + USB-C, doubles as employee badge.</p><div class="card-meta">View &rarr;</div></a>
+      <a href="/products/onepass-usb-key/" class="card"><h3>OnePass USB Key</h3><p>Engineer-friendly second authenticator. No battery.</p><div class="card-meta">View &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Related reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/blog/designing-enterprise-passwordless-systems/" class="blog-card"><span class="chip">Pillar</span><h3>Designing Enterprise Passwordless Systems</h3><p>The 9-component deployment runbook.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/passkeys-vs-traditional-mfa/" class="blog-card"><span class="chip">Pillar</span><h3>Passkeys vs Traditional MFA</h3><p>What changes when MFA is hardware-bound.</p><span class="read-more">Read &rarr;</span></a>
+      <a href="/blog/why-hardware-backed-identity-matters/" class="blog-card"><span class="chip">Pillar</span><h3>Why Hardware-Backed Identity Matters</h3><p>The cost-per-extraction frame.</p><span class="read-more">Read &rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Ready to scope a workforce identity rollout?</h2>
+        <p>Talk to engineers, not BDRs. We will tell you what is realistic for your headcount, your compliance posture, and your existing IdP.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Start a conversation</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/workforce-identity/">Workforce identity</a></li><li><a href="/solutions/government-identity/">Government identity</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

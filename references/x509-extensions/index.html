@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>X.509 Extensions Reference — AmbiSecure</title>
+<meta name="description" content="Reference for common X.509 v3 certificate extensions — SKID, AKID, KU, EKU, SAN, BC, CDP, AIA, certificatePolicies, FIDO AAGUID extension." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/references/x509-extensions/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="X.509 Extensions" />
+<meta property="og:description" content="Reference for common X.509 v3 certificate extensions — SKID, AKID, KU, EKU, SAN, BC, CDP, AIA, certificatePolicies, FIDO AAGUID extension." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/references/x509-extensions/" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "References",
+     "item": "/references/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "X.509 Extensions",
+     "item": "https://ambisecure.ambimat.com/references/x509-extensions/"
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "X.509 Extensions",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">X.509 Extensions</span></nav>
+
+<main id="main">
+<header class="tool-header" style="padding-bottom:18px;">
+  <span class="eyebrow">X.509 / PKIX</span>
+  <h1>X.509 Extensions</h1>
+  <p>Common X.509 v3 extensions — what they are, criticality, and what they encode. Pair with the X.509 viewer to walk live certs.</p>
+</header>
+<div class="ref-shell">
+  <div class="ref-search-bar">
+    <input id="ref-search" type="search" placeholder="Search this reference…" autocomplete="off" />
+    <span class="ref-count" id="ref-count"></span>
+  </div>
+  <div class="ref-tag-filter" id="ref-tag-filter"></div>
+  <div class="ref-table-wrap" id="ref-output"></div>
+</div>
+<section class="tool-reference">
+  <h2>About this reference</h2>
+  <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>RFC 5280 §4.2.</p></div><div class="ref-card"><h3>Companion tool</h3><p><a href="/resources/tools/x509-viewer/">X.509 viewer</a> &middot; <a href="/resources/tools/cert-chain/">Cert chain viewer</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Attestation objects</a></p></div></div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script>window.AS_REF = {"slug": "x509-extensions", "idCol": "oid", "columns": [{"field": "oid", "label": "OID", "cls": "ref-key", "width": "210px"}, {"field": "name", "label": "Extension"}, {"field": "criticality", "label": "Criticality", "cls": "ref-meta", "width": "100px"}, {"field": "tag", "label": "Class", "cls": "ref-meta", "width": "110px"}, {"field": "detail", "label": "Detail", "cls": "ref-detail"}], "rows": [{"oid": "2.5.29.14", "name": "subjectKeyIdentifier (SKID)", "criticality": "non-critical", "detail": "Hash of subject public key \u2014 for certificate path building.", "tag": "Identification"}, {"oid": "2.5.29.35", "name": "authorityKeyIdentifier (AKID)", "criticality": "non-critical", "detail": "Identifies the issuer's public key \u2014 pairs with SKID.", "tag": "Identification"}, {"oid": "2.5.29.15", "name": "keyUsage", "criticality": "critical", "detail": "Bit field: digitalSignature, contentCommitment, keyEncipherment, dataEncipherment, keyAgreement, keyCertSign, cRLSign, encipherOnly, decipherOnly.", "tag": "Security"}, {"oid": "2.5.29.37", "name": "extKeyUsage (EKU)", "criticality": "non-critical", "detail": "OID list: serverAuth, clientAuth, codeSigning, emailProtection, ipsecEndSystem, timeStamping, OCSPSigning.", "tag": "Security"}, {"oid": "2.5.29.17", "name": "subjectAltName (SAN)", "criticality": "non-critical", "detail": "List of alternative names (DNS, RFC822, URI, IP, otherName).", "tag": "Identification"}, {"oid": "2.5.29.19", "name": "basicConstraints", "criticality": "critical", "detail": "cA flag + pathLenConstraint. Distinguishes CAs from end-entity certs.", "tag": "Security"}, {"oid": "2.5.29.31", "name": "cRLDistributionPoints (CDP)", "criticality": "non-critical", "detail": "URI to fetch CRL.", "tag": "Revocation"}, {"oid": "1.3.6.1.5.5.7.1.1", "name": "authorityInfoAccess (AIA)", "criticality": "non-critical", "detail": "OCSP responder URI; CA Issuer URI.", "tag": "Revocation"}, {"oid": "2.5.29.32", "name": "certificatePolicies", "criticality": "non-critical", "detail": "OID list of issuance policies + qualifiers.", "tag": "Policy"}, {"oid": "2.5.29.36", "name": "policyConstraints", "criticality": "critical", "detail": "", "tag": "Policy"}, {"oid": "2.5.29.30", "name": "nameConstraints", "criticality": "critical", "detail": "Limits the names a CA may issue under.", "tag": "Policy"}, {"oid": "1.3.6.1.4.1.11129.2.4.2", "name": "CT precertificate SCT list", "criticality": "non-critical", "detail": "Certificate Transparency embedded SCTs.", "tag": "CT"}, {"oid": "1.3.6.1.4.1.45724.1.1.4", "name": "id-fido-gen-ce-aaguid", "criticality": "non-critical", "detail": "FIDO attestation cert AAGUID \u2014 must match the AAGUID in authData.", "tag": "FIDO"}]};</script>
+<script src="/assets/js/refs/refs-page.js" defer></script>
+</body>
+</html>
