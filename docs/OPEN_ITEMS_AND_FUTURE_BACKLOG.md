@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 12 — audit suite + matured automation)
+**Last updated:** 2026-05-11 (Phase 13 — Yoast audit + editorial compression)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
@@ -65,6 +65,15 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 | Per-blog-post OG cards (one per post, not per section) | Phase 12 ships 22 per-section OG cards via `tools/gen-og-batch.py`; per-post variants would push the OG image count to ~50+ | S | A post-share volume signal showing per-post OG matters | Sharper per-share social previews |
 
 ---
+
+## 4b. SEO / editorial governance (Phase 13 add-ons)
+
+| Item | Why deferred | Complexity | Trigger | Value |
+|------|--------------|:----------:|---------|-------|
+| Per-blog FAQ block + FAQPage JSON-LD | The 5 compressed blogs lost their FAQ section in Phase 13; targeted FAQ schema only adds value when there's a real common-question cluster | S | A specific SERP slot we want | Rich SERP snippets |
+| Internal-link suggestion script | Audit reports under-linked blogs; today the operator fixes by hand | M | Repeated under-link findings | Closes a recurring warning class |
+| Passive-voice / readability score refinement | Current heuristic is rough; a saner score would surface real problems | M | Editorial team wants a single readability index per post | Better long-form quality |
+| Per-post `last_reviewed` bump-on-edit hook | Today operators forget to bump the date when re-editing | S | Multiple operators on the same post | Keeps the freshness metadata honest |
 
 ## 5. CI + automation
 

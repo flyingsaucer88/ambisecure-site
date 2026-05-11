@@ -294,78 +294,28 @@
   <url><loc>https://ambisecure.ambimat.com/tags/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/page/2/</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/aaguid/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/aal3/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/apdu/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/applets/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/attestation/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/audit/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/biometrics/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/ca/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/closed-loop/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/common-criteria/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/comparison/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/cose/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/credential-stuffing/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/crl/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/ctap2/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/cyber-security/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/desfire/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/developer-guide/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/enterprise/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/epassport/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/est/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/ev1/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/ev2/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/ev3/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/explainer/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/fido/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/fido-coverage/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/fips-140/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/globalplatform/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/government-identity/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/hardware-identity/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/hsm/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/identity/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/idp/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/implementation/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/iot/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/iso-7816/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/issuance/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/javacard/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/key-ceremony/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/latency/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/mds/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/mfa/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/mfa-basics/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/mfa-bypass/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/mfa-comparison/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/ocsp/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/offline-trust/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/origin-binding/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/passkeys/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/passwordless/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/personalisation/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/phishing/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/platform-authenticator/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/practical/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/privacy/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/ra/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/recovery/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/revocation/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/roaming-authenticator/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/rotation/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/sam/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/scp02/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/scp03/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/secure-element/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/sim-swap/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/smart-cards/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/sw1-sw2/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/threat-model/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/tpm/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/transit/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/validators/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/webauthn/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/x-509/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
+
+  <url><loc>https://ambisecure.ambimat.com/tags/hardware/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/tags/pki/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
 
 </urlset>

@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 12 — audit suite + per-section OG + matured search/vitals)
+**Last updated:** 2026-05-11 (Phase 13 — Yoast-style audit + editorial compression + taxonomy cleanup)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -106,6 +106,7 @@ Fonts: Montserrat (display), Source Sans 3 (body), JetBrains Mono (code).
 │   ├── audit-seo.py           Sitemap / canonical / orphan / href / htaccess
 │   ├── audit-media.py         Oversize / missing-WebP / dead-weight
 │   ├── audit-freshness.py     Blog last_reviewed / freshness audit
+│   ├── audit-yoast.py         Yoast-style SEO + readability audit
 │   └── audit-all.sh           Run every audit in one go
 ├── legacysitedata/     Frozen scrape of the legacy WordPress site (gitignored MP4s)
 ├── docs/               THIS DOC + OPEN_ITEMS_AND_FUTURE_BACKLOG.md (only these two)
@@ -291,7 +292,36 @@ Phase 9 sections (Core pillars, Videos teaser, Where AmbiSecure Fits) and Phase 
 6. If any tags are new, regenerate `/tags/` via the Phase 11 generator pattern (or copy an existing per-tag page and reuse).
 7. Run `bash tools/audit-all.sh` before committing.
 
-### 6.3 Lifecycle metadata (Phase 12)
+### 6.3 Editorial bands (Phase 13)
+
+Word-count targets by page type, enforced by `audit-yoast`. Hard limits below cause CI to fail.
+
+| Page type     | Min words | Max words |
+|---------------|----------:|----------:|
+| blog          | 300       | 2200      |
+| blog-archive  | 300       | 2500      |
+| case-study    | 900       | 2000      |
+| brochure      | 300       | 800       |
+| product       | 200       | 900       |
+| service       | 200       | 900       |
+| solution      | 200       | 1100      |
+| technology    | 200       | 1300      |
+| industry      | 120       | 800       |
+| tag           | 30        | 600       |
+| category      | 30        | 600       |
+| reference     | 20        | 2000      |
+| tool          | 20        | 2000      |
+| hub           | 100       | 2000      |
+
+Title bands: 30–70 chars for blog/case-study/brochure; 25–70 for product/service/solution/technology; 20–80 for hub/tag/category. Description bands: 110–170 chars for content pages; 80–170 for hubs.
+
+Editorial rule on blog length: aim for 1400–1900 words on cornerstone posts. Above 2000, audit. The cornerstone passes the audit only when its content density justifies the length — no filler, no repeated explanations, no "future of security" preambles.
+
+### 6.4 Tag taxonomy
+
+Phase 13 consolidated 74 fine-grained tags into 23 broader topic clusters. Tag editing rule: when a new post would create a singleton tag, prefer extending an existing tag instead. If a new cluster genuinely deserves to exist, it needs at least 2 posts on day one — otherwise it's noise.
+
+### 6.5 Lifecycle metadata (Phase 12)
 
 Each entry in `blogs.json` carries:
 
@@ -462,7 +492,7 @@ The config exercises 8 representative pages (homepage, blog, product, case study
 
 ### 12.2 GitHub Actions
 
-`.github/workflows/lighthouse.yml` runs seven jobs on every push to `main` and every PR:
+`.github/workflows/lighthouse.yml` runs eight jobs on every push to `main` and every PR:
 
 1. `lighthouse` — full LHCI run (advisory, `continue-on-error: true`).
 2. `htaccess-lint` — `python3 tools/lint-htaccess.py`.
@@ -471,8 +501,9 @@ The config exercises 8 representative pages (homepage, blog, product, case study
 5. `audit-seo` — `python3 tools/audit-seo.py` (sitemap, canonical, orphans, hrefs, htaccess targets).
 6. `audit-media` — `python3 tools/audit-media.py` (oversize, missing-WebP, dead-weight, missing references).
 7. `audit-freshness` — `python3 tools/audit-freshness.py --strict` (blog `last_reviewed` / `freshness` metadata).
+8. `audit-yoast` — `python3 tools/audit-yoast.py --strict` (per-page-type word-count bands, title / desc lengths, H1 uniqueness, heading hierarchy, paragraph length, internal-link count).
 
-Treat audits 2–7 as blocking and Lighthouse as advisory.
+Treat audits 2–8 as blocking and Lighthouse as advisory.
 
 ### 12.3 Local one-shot audit
 

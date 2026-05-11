@@ -22,6 +22,7 @@ run "audit-content"     python3 tools/audit-content.py
 run "audit-seo"         python3 tools/audit-seo.py
 run "audit-media"       python3 tools/audit-media.py
 run "audit-freshness"   python3 tools/audit-freshness.py --strict
+run "audit-yoast"       python3 tools/audit-yoast.py --strict
 
 echo
 if [ "$fail" -eq 0 ]; then

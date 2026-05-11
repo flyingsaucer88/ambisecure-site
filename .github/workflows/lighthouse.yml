@@ -99,3 +99,12 @@ jobs:
         with: { python-version: "3.x" }
       - name: Content freshness audit (informational)
         run: python3 tools/audit-freshness.py --strict
+
+  audit-yoast:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.x" }
+      - name: Yoast-style SEO + readability audit
+        run: python3 tools/audit-yoast.py --strict

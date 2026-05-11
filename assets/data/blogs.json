@@ -16,8 +16,8 @@
    "tags": [
     "AAGUID",
     "Attestation",
-    "Recovery",
-    "Comparison"
+    "FIDO",
+    "Recovery"
    ],
    "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
@@ -33,11 +33,7 @@
    ],
    "type": "modern",
    "tags": [
-    "Secure Element",
-    "TPM",
-    "HSM",
-    "FIPS 140",
-    "Common Criteria"
+    "Hardware"
    ],
    "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
@@ -53,11 +49,7 @@
    ],
    "type": "modern",
    "tags": [
-    "Issuance",
-    "Rotation",
-    "Recovery",
-    "Revocation",
-    "Audit"
+    "Recovery"
    ],
    "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
@@ -76,8 +68,7 @@
    "tags": [
     "DESFire",
     "SAM",
-    "Validators",
-    "Offline Trust"
+    "Transit"
    ],
    "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
@@ -93,12 +84,7 @@
    ],
    "type": "modern",
    "tags": [
-    "JavaCard",
-    "Applets",
-    "SCP02",
-    "SCP03",
-    "GlobalPlatform",
-    "Personalisation"
+    "JavaCard"
    ],
    "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
@@ -114,13 +100,7 @@
    ],
    "type": "modern",
    "tags": [
-    "X.509",
-    "EST",
-    "OCSP",
-    "CRL",
-    "Key Ceremony",
-    "RA",
-    "CA"
+    "PKI"
    ],
    "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
@@ -136,9 +116,7 @@
    ],
    "type": "modern",
    "tags": [
-    "CTAP2",
-    "Origin Binding",
-    "Explainer"
+    "FIDO"
    ],
    "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
@@ -154,9 +132,8 @@
    ],
    "type": "modern",
    "tags": [
-    "FIDO Coverage",
-    "WebAuthn",
-    "Practical"
+    "FIDO",
+    "WebAuthn"
    ],
    "last_reviewed": "2026-05-11",
    "freshness": "current"
@@ -172,10 +149,8 @@
    ],
    "type": "modern",
    "tags": [
-    "Phishing",
-    "MFA Bypass",
-    "SIM Swap",
-    "Credential Stuffing"
+    "Cyber Security",
+    "MFA"
    ],
    "last_reviewed": "2026-05-11",
    "freshness": "current"
@@ -192,9 +167,7 @@
    ],
    "type": "modern",
    "tags": [
-    "WebAuthn",
-    "Implementation",
-    "Developer Guide"
+    "WebAuthn"
    ],
    "last_reviewed": "2026-01-20",
    "freshness": "current"
@@ -212,9 +185,7 @@
    "type": "modern",
    "tags": [
     "Enterprise",
-    "Passwordless",
-    "AAL3",
-    "IdP"
+    "Passwordless"
    ],
    "last_reviewed": "2026-01-15",
    "freshness": "current"
@@ -231,8 +202,8 @@
    ],
    "type": "modern",
    "tags": [
-    "Passkeys",
-    "MFA Comparison"
+    "MFA",
+    "Passkeys"
    ],
    "last_reviewed": "2026-01-10",
    "freshness": "current"
@@ -248,8 +219,7 @@
    ],
    "type": "modern",
    "tags": [
-    "Platform Authenticator",
-    "Roaming Authenticator"
+    "FIDO"
    ],
    "last_reviewed": "2026-01-05",
    "freshness": "evergreen"
@@ -266,10 +236,9 @@
    ],
    "type": "modern",
    "tags": [
-    "Attestation",
     "AAGUID",
-    "COSE",
-    "MDS"
+    "Attestation",
+    "FIDO"
    ],
    "last_reviewed": "2025-12-28",
    "freshness": "evergreen"
@@ -286,8 +255,8 @@
    ],
    "type": "modern",
    "tags": [
-    "Hardware Identity",
-    "Threat Model"
+    "Cyber Security",
+    "Hardware"
    ],
    "last_reviewed": "2025-12-20",
    "freshness": "evergreen"
@@ -303,9 +272,7 @@
    ],
    "type": "modern",
    "tags": [
-    "APDU",
-    "ISO 7816",
-    "SW1 SW2"
+    "Smart Cards"
    ],
    "last_reviewed": "2025-12-12",
    "freshness": "evergreen"
@@ -322,10 +289,7 @@
    ],
    "type": "modern",
    "tags": [
-    "DESFire",
-    "EV1",
-    "EV2",
-    "EV3"
+    "DESFire"
    ],
    "last_reviewed": "2025-12-05",
    "freshness": "evergreen"
@@ -342,9 +306,7 @@
    ],
    "type": "modern",
    "tags": [
-    "Transit",
-    "Validators",
-    "Latency"
+    "Transit"
    ],
    "last_reviewed": "2025-11-28",
    "freshness": "current"
@@ -362,7 +324,6 @@
    "type": "modern",
    "tags": [
     "SAM",
-    "Closed Loop",
     "Transit"
    ],
    "last_reviewed": "2025-11-20",
@@ -379,7 +340,7 @@
    ],
    "type": "modern",
    "tags": [
-    "MFA Basics"
+    "MFA"
    ],
    "last_reviewed": "2025-11-15",
    "freshness": "current"
@@ -395,7 +356,7 @@
    ],
    "type": "modern",
    "tags": [
-    "MFA Basics"
+    "MFA"
    ],
    "last_reviewed": "2025-11-10",
    "freshness": "current"

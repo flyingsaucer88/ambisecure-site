@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Designing Enterprise Passwordless Systems — the deployment runbook</title>
-<meta name="description" content="The protocol is the easy part. The deployment — provisioning, recovery, lifecycle, federation, attestation policy, audit — is what separates a demo from a 10,000-person rollout. The runbook." />
+<meta name="description" content="What a passwordless rollout actually looks like at workforce scale. Nine load-bearing components, the recovery flow, attestation policy, lifecycle automation, and the migration plan." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/blog/designing-enterprise-passwordless-systems/" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Designing Enterprise Passwordless Systems" />
-<meta property="og:description" content="The protocol is the easy part. The deployment — provisioning, recovery, lifecycle, federation, attestation policy, audit — is what separates a demo from a 10,000-person rollout. The runbook." />
+<meta property="og:description" content="What a passwordless rollout actually looks like at workforce scale. Nine load-bearing components, the recovery flow, attestation policy, lifecycle automation, and the migration plan." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/blog/designing-enterprise-passwordless-systems/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
 <meta property="og:image:type" content="image/png" />
@@ -84,7 +84,6 @@
 
     <h1>Designing Enterprise Passwordless Systems.</h1>
     <p class="dek">WebAuthn is well-specified and library-supported. Anyone can stand up a demo in a weekend. What separates a demo from a production deployment is the nine load-bearing operational components around the protocol. Here they are, in order.</p>
-
 
     <h2>The deployment, not the protocol</h2>
     <p>WebAuthn is the easy part. The protocol is well-specified, browser-native, library-supported. Anyone can stand up a demo in a weekend. What separates a demo from a production deployment for 10,000+ employees is the operational work around it: provisioning, recovery, lifecycle, federation, attestation policy, incident response. This post is the deployment runbook.</p>
@@ -228,89 +227,6 @@
     <p>Enterprise passwordless is a deployment, not a feature. The protocol is necessary but not sufficient. Get the nine components right and the result is operationally calmer than what you replaced &mdash; fewer incidents, lower support load, higher assurance. Skip any of the nine and you ship something that works on day one and breaks on day thirty.</p>
 
     
-    <h2>The role of HR as system of record</h2>
-    <p>Identity lifecycle is, ultimately, downstream of HR. The HR system knows when an employee starts, when they change roles, when they leave. Every other identity system in the enterprise &mdash; IdP, SSO, authenticator inventory, audit log &mdash; should derive its state from HR events.</p>
-    <p>The integration pattern is event-driven, not query-driven. HR emits events ("alice.doe@example.com started 2026-05-09 in role engineer"); subscribers (IdP, authenticator inventory, badging system) react. The reverse pattern &mdash; everyone polling HR for changes &mdash; is fragile and slow. Build the event bus once.</p>
-    <p>For passwordless specifically, the HR integration covers:</p>
-    <ul>
-      <li>Onboarding: schedule day-1 enrolment with IT desk; pre-stage hardware.</li>
-      <li>Role change: re-evaluate AAGUID allow-list eligibility (e.g. user moves from marketing to engineering &mdash; high-assurance tier).</li>
-      <li>Offboarding: revoke credentials at IdP; collect hardware.</li>
-      <li>Long absence: if user is on leave > 90 days, optionally suspend credentials with restoration on return.</li>
-    </ul>
-
-    <h2>Performance requirements you should plan for</h2>
-    <p>WebAuthn is fast. Most ceremonies complete in 200-500ms end-to-end on a modern laptop with USB-HID; NFC adds another 100-200ms; mobile platform authenticators are 100-300ms. Compare to typing a password (3-5 seconds on average) plus typing a TOTP code (4-6 seconds): the user-perceived latency goes down meaningfully.</p>
-    <p>Server-side, ceremony verification is a few CRYPTO operations: SHA-256 on the rpId, SHA-256 on clientData, ECDSA verification. On a modern server, these run in single-digit milliseconds. The throughput limit is your IdP's request handling, not the cryptographic work.</p>
-    <p>Plan capacity for: peak login burst (Monday morning, 1,000 users sign on in 5 minutes &mdash; 200/sec sustained, comfortable headroom should be 1,000/sec), ceremony verification latency (P99 under 100ms server-side), MDS lookup latency (cached, single-digit microseconds). None of these stress modern infrastructure; this is a non-issue.</p>
-
-    <h2>Browser interop &mdash; what works, what doesn't</h2>
-    <p>WebAuthn is broadly interoperable in 2026, but there are quirks:</p>
-    <ul>
-      <li><strong>Chrome / Edge / Firefox</strong> all implement WebAuthn level 2; Chrome also supports level 3 (passkey BE/BS flags). Most enterprise UAs are at this level.</li>
-      <li><strong>Safari</strong> has been pickier about attestation. Safari 16+ supports passkey UX; attestation: 'direct' is increasingly accepted but historically Safari stripped it to 'none'. Test your specific Safari version.</li>
-      <li><strong>Mobile WebViews</strong> (in-app browsers) often have weaker WebAuthn support than the system browser. If your users are using your iOS / Android app, integrate native WebAuthn (ASAuthorizationPlatformPublicKeyCredentialProvider on iOS, FIDO2 API on Android), not in-app WebView WebAuthn.</li>
-      <li><strong>Hybrid transport (caBLE)</strong> requires Chrome 108+ on the laptop and a recent OS on the phone (iOS 16+, Android 9+). Older combinations fall back to direct USB / NFC.</li>
-    </ul>
-
-    <h2>Common runbook: a user reports they cannot sign in</h2>
-    <p>The runbook for the most common support call:</p>
-    <ol>
-      <li><strong>What does the user see?</strong> Specific error message determines the path. "Tap your security key" + nothing happens &rarr; check transport (USB / NFC). "Browser says not allowed" &rarr; check rpId / origin. "PIN locked" &rarr; PIN reset flow.</li>
-      <li><strong>Is the authenticator detected?</strong> USB: device manager shows YubiKey / OnePass. NFC: tap on a known-good reader. If the host doesn't see the authenticator, hardware fail.</li>
-      <li><strong>Is the credentialId in the IdP's allowCredentials?</strong> Check the user's enrolled credentials. If the user has lost the authenticator they are trying to use, switch to the second authenticator.</li>
-      <li><strong>Is the AAGUID still allowed?</strong> Check current allow-list state. Recent MDS update may have flagged the AAGUID; user needs replacement.</li>
-      <li><strong>Is there a server-side error?</strong> Logs at the IdP / FIDO Validation Server should show the verification step that failed.</li>
-    </ol>
-    <p>Most calls resolve at step 1 or 2; the user has the wrong authenticator, the wrong port, or didn't realise they need to tap.</p>
-
-    <h2>Disaster recovery posture</h2>
-    <p>Two scenarios to plan for:</p>
-    <h3>Scenario 1: the IdP is unavailable</h3>
-    <p>Mitigation: passwordless does not change the IdP-availability SLA significantly. The IdP was already a critical dependency; passwordless makes it slightly more critical (no fallback to per-app passwords). High-availability the IdP; provide a documented break-glass path for a known small set of administrators.</p>
-    <h3>Scenario 2: the FIDO Validation Server is unavailable</h3>
-    <p>Mitigation: the validation server is a stateless verifier. Run multiple instances behind a load balancer. The credentialPublicKey storage is your primary database (highly available). Failover to a secondary region on regional outage.</p>
-    <h3>Scenario 3: MDS is stale or unreachable</h3>
-    <p>Mitigation: serve from cache. Daily sync target; alert on >7-day stale. Continue accepting registrations against the cached data; defer policy decisions until sync recovers if a recent compromise is suspected.</p>
-
-    <h2>Auditing your deployment</h2>
-    <p>Annual audit checklist:</p>
-    <ul>
-      <li>All employees enrolled (% of HR active).</li>
-      <li>All employees enrolled with at least 2 authenticators.</li>
-      <li>No password-only sign-in paths active for any user.</li>
-      <li>AAGUID allow-list reviewed; no unapproved AAGUIDs in registered credentials.</li>
-      <li>MDS sync running on schedule; cache freshness < 7 days.</li>
-      <li>Ceremony logs preserved for required retention period.</li>
-      <li>Recovery flow tested in last 12 months (paper exercise + actual use).</li>
-      <li>Incident response runbooks for: lost-key burst, MDS compromise notification, IdP outage.</li>
-      <li>Hardware inventory reconciles to issuance manifest within 1%.</li>
-    </ul>
-
-    <h2>What we wish we had known earlier</h2>
-    <p>From multiple deployments, three lessons that shorten the timeline:</p>
-    <p><strong>Lesson 1: pilot with engineering first.</strong> Engineers are forgiving of UX rough edges and provide useful technical feedback. Pilot with engineers; iterate; expand. Do not pilot with executives or with customer-facing roles; you have one shot at first impressions in those cohorts.</p>
-    <p><strong>Lesson 2: the IT desk is the bottleneck.</strong> Day-1 enrolment scales as fast as the IT desk does. Pre-stage; train the IT desk; have at least 2 IT staff capable of enrolment per office. The cohort rollout speed is set by IT desk capacity.</p>
-    <p><strong>Lesson 3: communicate the why, not just the what.</strong> Users tolerate disruption when they understand the threat model. "Phishing took down [company X] last quarter; this is what we are doing about it" is more persuasive than "we are improving security posture".</p>
-
-    
-    <h2>Cohort prioritisation &mdash; who first, who last</h2>
-    <p>Most large rollouts spend the first month arguing about cohort order before settling on a sub-optimal one. Save time: prioritise as follows.</p>
-    <p><strong>First wave (months 1-2): IT and security teams.</strong> They will hit every bug, every UX friction, every integration gap. They will absorb fixes and feed back constructively. Plus, they need to support the rest of the rollout from a position of personal experience.</p>
-    <p><strong>Second wave (months 3-4): privileged-access cohorts.</strong> Engineers with prod access; finance with payment authority; legal with privileged data. These cohorts have the highest cost-of-compromise; the security improvement has the most leverage.</p>
-    <p><strong>Third wave (months 5-7): general office staff.</strong> The bulk of the headcount. Standardised playbook, predictable IT desk capacity.</p>
-    <p><strong>Fourth wave (months 8-9): special cases.</strong> Field staff, sales reps in transit, contractors with limited site access. Each may need a non-standard provisioning pattern.</p>
-    <p><strong>Last wave (months 10-12): executives.</strong> Counter-intuitive but true: executives produce the most pushback with the most political weight. Roll out to them <em>after</em> the program has demonstrated success and the patterns are mature. Their concerns will have answers because earlier cohorts have asked them.</p>
-
-    <h2>The change-management mindset</h2>
-    <p>Passwordless deployment is 30% technology and 70% change management. The protocol works; the deployment fails when users don't understand or don't comply. Two principles that pay outsized dividends:</p>
-    <p><strong>Principle 1: communicate weekly during rollout.</strong> Internal newsletter section: this week's enrolment cohort, this week's lost-key incidents and how they resolved, FAQ updates. Visibility creates predictability.</p>
-    <p><strong>Principle 2: never make passwordless feel like a punishment.</strong> Users associate "we are removing your password" with "we don't trust you" if framed clumsily. Frame it as "we are giving you a key that can't be phished out from under you" &mdash; a benefit they receive, not a freedom they lose.</p>
-
-    
-    <h2>One last thought &mdash; this is fundamentally a discipline problem</h2>
-    <p>The protocol is simple. The hardware is well-defined. The libraries exist. What separates organisations that successfully deploy passwordless from those that do not is not technical ability; it is operational discipline. The teams that ship are the teams that show up to the IT desk every Monday for nine months running. The teams that do not ship are the teams that schedule a kickoff, write a strategy document, and then drift onto something more interesting. Passwordless deployment requires the deeply unglamorous discipline of doing the same thing every week, in fifty offices, against ten thousand calendars. The reward is real and durable. But the reward is on the other side of nine months of routine work. Plan accordingly.</p>
-
     <hr />
     <h2>Companion reading</h2>
     <ul>
@@ -319,7 +235,6 @@
       <li><a href="/blog/passkeys-vs-traditional-mfa/">Passkeys vs Traditional MFA</a></li>
       <li><a href="/blog/why-hardware-backed-identity-matters/">Why Hardware-Backed Identity Matters</a></li>
     </ul>
-
 
   </article>
 </section>
