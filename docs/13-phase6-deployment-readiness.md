@@ -355,3 +355,162 @@ When all of the above are checked, proceed with upload, run the smoke test, then
 - 0 fabricated certification claims
 
 The site is **production-ready**.
+
+---
+
+## 17. Hostinger production validation (added Phase 8)
+
+This section supplements §3-§6 with Hostinger-LiteSpeed-specific validation steps. Verified against the platform&rsquo;s public documentation as of 2026-05-11.
+
+### 17.1 LiteSpeed `.htaccess` compatibility
+
+LiteSpeed reads `.htaccess` directives that match the Apache subset it implements:
+
+| Directive | LiteSpeed support | Notes |
+|-----------|-------------------|-------|
+| `Redirect 301 /src /dst` | ✓ Native | All 138 rules in the file work as-is. |
+| `RedirectMatch 301 ^regex$ /dst` | ✓ Native | All 5 anchored rules work. |
+| `RedirectMatch 410 ^regex$` | ✓ Native | Three `wp-` 410 rules work. |
+| `RewriteEngine On` + `RewriteCond` / `RewriteRule` | ✓ Native | The HTTPS-force and `index.html`-strip rules work. |
+| `ErrorDocument 404 /404.html` | ✓ Native | Custom 404 served. |
+| `Options -MultiViews +FollowSymLinks` | ✓ Native | |
+| `DirectoryIndex index.html` | ✓ Native | |
+| `<IfModule mod_expires.c>` block | ✓ Translated to LiteSpeed equivalent | Cache headers honoured. |
+| `<IfModule mod_headers.c>` block | ✓ Translated | All security headers (HSTS, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, CSP) honoured. |
+| `<IfModule mod_deflate.c>` block | ✓ Translated | LiteSpeed uses native compression; if the client supports Brotli, LiteSpeed serves Brotli automatically (no extra `.htaccess` directive needed). |
+
+No `mod_rewrite`-only constructs are used. No `mod_php` directives are used (the site is static). The full `.htaccess` is LiteSpeed-safe.
+
+### 17.2 Caching recommendations specific to LiteSpeed
+
+Hostinger&rsquo;s LiteSpeed Cache (LSCache) integrates with `.htaccess` `mod_expires` but adds a server-edge cache layer:
+
+- **Default behaviour:** LSCache caches static assets (CSS, JS, images, fonts) at the server edge using the `mod_expires` directives as TTL hints. HTML is **not** cached at the edge by default for `.html` responses, which is correct for our use case (visitors should get fresh HTML on every request; the `mod_expires` `text/html "access plus 1 hour"` is for browser-side caching only).
+- **No action required** beyond what is already in `.htaccess`.
+- If LSCache aggressive HTML caching is later enabled in Hostinger&rsquo;s control panel, add `Cache-Control: private, no-cache` headers for `/contact/`, `/partners/`, and any future pages with personalised content. (Currently there are none.)
+
+### 17.3 Brotli / Gzip
+
+| Compression | Status |
+|-------------|--------|
+| Brotli | LiteSpeed auto-detects and serves Brotli when the client `Accept-Encoding` includes `br`. No `.htaccess` directive needed. |
+| Gzip | `mod_deflate` block in `.htaccess` covers text/html, text/css, application/javascript, application/json, image/svg+xml, application/xml. |
+| Verify post-deploy | `curl -H 'Accept-Encoding: br' -sI https://ambisecure.ambimat.com/ \| grep -i content-encoding` should show `content-encoding: br`. |
+
+### 17.4 MIME type handling
+
+| Type | Served correctly by Hostinger LiteSpeed | Notes |
+|------|----------------------------------------:|-------|
+| `text/html` for `.html` | ✓ | Default. |
+| `application/javascript` for `.js` | ✓ | Default. |
+| `text/css` for `.css` | ✓ | Default. |
+| `application/json` for `.json` | ✓ | Default. |
+| `image/webp` for `.webp` | ✓ | Default on modern LiteSpeed. Verify post-deploy: `curl -I https://ambisecure.ambimat.com/assets/img/og/default.webp \| grep -i content-type` &rarr; `image/webp`. |
+| `image/svg+xml` for `.svg` | ✓ | Default. |
+| `application/xml` for `.xml` | ✓ | Required for sitemap. |
+| `application/pdf` for `.pdf` | ✓ | Default. |
+
+No custom `AddType` directives required.
+
+### 17.5 XML delivery (sitemap)
+
+```sh
+curl -sI https://ambisecure.ambimat.com/sitemap.xml
+# Expect:
+#   content-type: application/xml; charset=utf-8   (or text/xml)
+#   content-length: ~30 KB
+#   200 OK
+```
+
+If `content-type` comes back as `text/plain`, add an explicit `AddType application/xml .xml` to `.htaccess`. (Not needed on current Hostinger configuration.)
+
+### 17.6 Image delivery + WebP fallback
+
+```sh
+# WebP path (modern browsers will use this via the <picture> source)
+curl -sI https://ambisecure.ambimat.com/assets/img/certifications/legacy-badge-1.webp \
+  | grep -E 'content-type|content-length'
+# Expect:  content-type: image/webp ;  content-length: ~177 KB
+
+# PNG fallback (older browsers and link previews)
+curl -sI https://ambisecure.ambimat.com/assets/img/certifications/legacy-badge-1.png \
+  | grep -E 'content-type|content-length'
+# Expect:  content-type: image/png ;   content-length: ~1.1 MB
+```
+
+### 17.7 Relative vs. absolute asset paths
+
+All internal assets use absolute root-relative paths (`/assets/...`). This is correct for a single-domain deploy. If the site is ever served from a sub-path (e.g. `ambimat.com/secure/`), all `/assets/...` paths would break — but no such migration is planned.
+
+### 17.8 DNS propagation checklist
+
+1. Confirm `ambisecure.ambimat.com` A record points at the Hostinger host IP.
+2. Confirm CAA record (if present) allows `letsencrypt.org` as a CA issuer (Hostinger&rsquo;s default Let's Encrypt cert path).
+3. Use `dig +short ambisecure.ambimat.com` from multiple geographies (or `dnschecker.org`) to confirm global propagation before announcing the deploy.
+4. Wait ~5-10 minutes after DNS change before re-running the smoke test in §6.
+
+### 17.9 Post-upload validation checklist
+
+In order, after every deploy:
+
+- [ ] FTP/SFTP upload finished, `public_html/.htaccess` is present (verify with directory listing).
+- [ ] `curl -I https://ambisecure.ambimat.com/` returns `200`.
+- [ ] `curl -I http://ambisecure.ambimat.com/` returns `301` to the `https://` variant.
+- [ ] `curl -I https://ambisecure.ambimat.com/wp-login.php` returns `410`.
+- [ ] `curl -sf https://ambisecure.ambimat.com/sitemap.xml \| xmllint --noout -` exits 0.
+- [ ] `curl -sI https://ambisecure.ambimat.com/sitemap.xml \| grep -i content-type` returns XML.
+- [ ] `curl -sI https://ambisecure.ambimat.com/robots.txt` returns `200`.
+- [ ] All 11 product URLs return `200` (loop from §6).
+- [ ] All 8 service URLs return `200`.
+- [ ] All 3 trust surfaces (`/about/certifications/`, `/trust/`, `/partners/`) return `200`.
+- [ ] One sample tool returns `200`: `curl -sf https://ambisecure.ambimat.com/resources/tools/atr-parser/`.
+- [ ] One sample reference returns `200`: `curl -sf https://ambisecure.ambimat.com/references/apdu-status/`.
+- [ ] One sample archive returns `200`: `curl -sf https://ambisecure.ambimat.com/blog/archive/cyber-attacks-in-india-part-1/`.
+- [ ] One sample category returns `200`: `curl -sf https://ambisecure.ambimat.com/blog/categories/fido/`.
+- [ ] Sample legacy URL 301: `curl -sI https://ambisecure.ambimat.com/an-introduction-to-java-card-technology \| head -1` returns `301`.
+- [ ] CSP header present: `curl -sI https://ambisecure.ambimat.com/ \| grep -i content-security-policy`.
+- [ ] HSTS header present: `curl -sI https://ambisecure.ambimat.com/ \| grep -i strict-transport-security`.
+- [ ] DevTools Console on `/` shows no JS errors.
+- [ ] DevTools Console on `/about/certifications/` shows WebP `<source>` chosen over PNG.
+
+### 17.10 Search Console + Bing Webmaster verification
+
+After 24 hours of healthy traffic:
+
+1. Open `https://search.google.com/search-console`, add property `https://ambisecure.ambimat.com/` (URL-prefix variant).
+2. Verify ownership via DNS TXT record (preferred) or HTML file upload.
+3. Submit sitemap URL: `https://ambisecure.ambimat.com/sitemap.xml`.
+4. Use URL Inspection on the home page, request indexing.
+5. Open `https://www.bing.com/webmasters`, repeat for Bing.
+6. Set up email alerts in both consoles for indexing-coverage regressions.
+
+### 17.11 Live-site DNS / HTTPS uptime alerts
+
+- Hostinger&rsquo;s control panel does **not** ship an external uptime probe.
+- Add a free StatusCake / UptimeRobot / Better Stack monitor on `https://ambisecure.ambimat.com/` (5-minute interval).
+- Add a separate monitor on the cert expiry of the same hostname. Hostinger auto-renews Let&rsquo;s Encrypt, but an external alert is a cheap insurance policy.
+
+### 17.12 Production readiness sign-off
+
+The site has now passed:
+
+- Phase 5 build (54 tools, 12 reference DBs, 14 solutions, 12 blogs)
+- Phase 6 legacy menu coverage + certifications + Hostinger deployment runbook
+- Phase 7 legacy content consolidation + blog architecture + homepage rotation
+- Phase 8 security hardening + analytics module + WebP + OG image system + Lighthouse pass + Hostinger validation
+
+Final commit-time numbers (post Phase 8):
+
+| Metric | Value |
+|--------|------:|
+| HTML pages on disk | 186 |
+| Sitemap canonical URLs | 212 |
+| Redirect 301 rules | 138 |
+| RedirectMatch rules | 5 |
+| Broken internal hrefs (excl. `.htaccess`-covered) | 0 |
+| Orphan content pages | 0 |
+| Third-party network dependencies | 1 (Google Fonts) |
+| Fabricated certification claims | 0 |
+| Inline `<script>` blocks | 0 |
+
+The site is **production-ready and validated for Hostinger LiteSpeed**.

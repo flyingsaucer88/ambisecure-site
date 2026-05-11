@@ -10,6 +10,13 @@
 <meta property="og:title" content="AmbiSecure Technologies" />
 <meta property="og:description" content="JavaCard, FIDO, Secure Elements, NFC, eSIM, PKI, APDU, cryptography." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/technologies/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -44,11 +51,14 @@
       <a href="/technologies/javacard/" class="card"><div class="card-icon">JC</div><h3>JavaCard</h3><p>Bytecode-based applet platform that runs on most secure elements. JavaCard 3.x APIs, CAP file format, applet lifecycle, install parameters, transient memory.</p><div class="card-meta">Explore JavaCard &rarr;</div></a>
       <a href="/technologies/secure-elements/" class="card"><div class="card-icon">SE</div><h3>Secure Elements</h3><p>Tamper-resistant chips that hold keys and run cryptographic operations in hardware. SE vs TEE vs TPM vs HSM &mdash; what each is good for and where they fail.</p><div class="card-meta">Explore Secure Elements &rarr;</div></a>
       <a href="/technologies/fido/" class="card"><div class="card-icon">FIDO</div><h3>FIDO &amp; WebAuthn</h3><p>Phishing-resistant authentication built on public-key cryptography. CTAP1 / CTAP2, attestation, AAGUIDs, resident credentials, MDS.</p><div class="card-meta">Explore FIDO &rarr;</div></a>
-      <a href="/technologies/pki/" class="card"><div class="card-icon">PKI</div><h3>PKI</h3><p>Certificates that live in silicon: device PKI, issuance, revocation, OCSP, embedded CA design. The pieces that get audited and the ones that get forgotten.</p><div class="card-meta">Explore PKI &rarr;</div></a>
-      <a href="/technologies/nfc-desfire/" class="card"><div class="card-icon">NFC</div><h3>NFC &amp; DESFire</h3><p>ISO/IEC 14443 contactless, NDEF records, MIFARE DESFire EV2 / EV3 authentication and session model. Where the chip says &ldquo;91 AE&rdquo; and you need to know why.</p><div class="card-meta">Explore NFC &rarr;</div></a>
-      <a href="/technologies/esim/" class="card"><div class="card-icon cyan">eSIM</div><h3>eSIM &amp; eUICC</h3><p>Telecom-grade embedded identity, eSIM/eUICC architecture, profile lifecycle &mdash; explored on our dedicated <a href="https://esim.ambimat.com/" style="color:var(--brand-red); font-weight:600;">eSIM Initiative</a> site.</p><div class="card-meta">eSIM Initiative &rarr;</div></a>
-      <a href="/technologies/apdu/" class="card"><div class="card-icon">APDU</div><h3>APDU</h3><p>The wire format of the smart card world. CLA, INS, P1/P2, Lc/Le, Case 1&ndash;4, extended length, SW1/SW2 status words. Pair this page with the APDU parser tool.</p><div class="card-meta">Explore APDU &rarr;</div></a>
-      <a href="/technologies/cryptography/" class="card"><div class="card-icon">CRY</div><h3>Cryptography</h3><p>Embedded-side cryptography &mdash; ECC curves, RSA padding, AES modes, KDFs, secure messaging. What chips actually support, and what is just on a slide.</p><div class="card-meta">Explore cryptography &rarr;</div></a>
+      <a href="/technologies/desfire/" class="card"><div class="card-icon">NFC</div><h3>DESFire</h3><p>ISO/IEC 14443 contactless, MIFARE DESFire EV1/EV2/EV3 authentication, session keys, TMAC, key diversification. Where the chip says &ldquo;91 AE&rdquo; and you need to know why.</p><div class="card-meta">Explore DESFire &rarr;</div></a>
+      <a href="/technologies/sam/" class="card"><div class="card-icon">SAM</div><h3>Secure Access Module</h3><p>SAM-AV3 architecture, host-to-SAM protocol, key derivation, transit validator integration. The silicon that makes offline trust possible.</p><div class="card-meta">Explore SAM &rarr;</div></a>
+      <a href="/technologies/card-reader-sam-flow/" class="card"><div class="card-icon">FLOW</div><h3>Reader / Card / SAM Flow</h3><p>End-to-end sequence diagram of what happens when a card is tapped on a SAM-backed reader. Every APDU, every session key, every TMAC.</p><div class="card-meta">Explore the flow &rarr;</div></a>
+      <a href="/technologies/webauthn/" class="card"><div class="card-icon">WAU</div><h3>WebAuthn</h3><p>W3C WebAuthn level 2, attestation statement formats, COSE keys, user verification, AAGUID lookup, MDS. The browser side of FIDO2.</p><div class="card-meta">Explore WebAuthn &rarr;</div></a>
+      <a href="/technologies/ctap2/" class="card"><div class="card-icon">CTP</div><h3>CTAP2</h3><p>Client-to-Authenticator Protocol v2.1. CBOR-encoded commands, PIN/UV auth protocol, large-blob, credBlob, configurable PIN policy.</p><div class="card-meta">Explore CTAP2 &rarr;</div></a>
+      <a href="/technologies/attestation/" class="card"><div class="card-icon">ATT</div><h3>Attestation</h3><p>How an authenticator proves which kind of authenticator it is &mdash; attestation statement formats, AAGUIDs, packed / fido-u2f / tpm formats, MDS verification.</p><div class="card-meta">Explore attestation &rarr;</div></a>
+      <a href="/technologies/passkeys/" class="card"><div class="card-icon">PSK</div><h3>Passkeys</h3><p>Multi-device credentials and the device-bound vs synced credential distinction. Where passkeys make recovery easier and where they soften enterprise assurance.</p><div class="card-meta">Explore passkeys &rarr;</div></a>
+      <a href="https://esim.ambimat.com/" class="card"><div class="card-icon cyan">eSIM</div><h3>eSIM &amp; eUICC</h3><p>Telecom-grade embedded identity, eSIM/eUICC architecture, SGP.22 / SGP.32, profile lifecycle &mdash; explored on the dedicated Ambimat eSIM Initiative property.</p><div class="card-meta">eSIM Initiative &rarr;</div></a>
     </div>
   </div>
 </section>
