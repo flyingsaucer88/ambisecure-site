@@ -1,20 +1,17 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 16 — cornerstone blogs + per-product OG cards + FIDO server trust-chain)
+**Last updated:** 2026-05-11 (Phase 17 — Hostinger package + backlog close-out)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
-This file is the **only** running backlog. Every item below is one of:
-- **Future enhancement** — useful but not load-bearing yet.
-- **Operationally deferred** — gated on an operational signal (analytics on, traffic threshold, etc.).
-- **Architectural expansion** — would only matter at a future scale.
+Every item below is **genuinely deferred** — it requires an external decision (business, legal, product, or operational data we don't have yet). Items that could be implemented without that gate have been built and removed from this file.
 
 Each item carries:
 - **Why deferred** — the actual reason it isn't done.
-- **Complexity** — S / M / L.
-- **Trigger** — the event that would unblock it.
-- **Value** — what shipping it would unlock.
+- **Decision owner** — who must approve / decide.
+- **Trigger** — the event that unblocks it.
+- **Next action** — what the operator does when the trigger fires.
 
 When an item ships, delete its row. When an item stops being relevant, delete it. Do not let this file grow unbounded.
 
@@ -22,70 +19,67 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 
 ## 1. Analytics depth (post-launch instrumentation)
 
-| Item | Why deferred | Complexity | Trigger | Value |
-|------|--------------|:----------:|---------|-------|
-| Flip analytics provider on (Plausible-first) | No operator decision yet on hosted vs self-hosted Plausible | S | Operator decision | Site visibility |
-| Surface Web Vitals dashboard in operator portal | Beacon ships in Phase 11; the dashboard depends on the provider | M | Provider on | Performance regression detection |
-| Per-page conversion-event tagging (`Contact Click`, `Brochure Download`, `Case Study Read`) | Need real traffic to know which events matter | S | Provider on + 30 days of traffic | Funnel insight |
-| Hook Web Vitals beacon into Plausible custom-event API | Wired in `analytics.js` `report()` — just needs provider to be on | XS | Provider on | RUM Web Vitals data |
+| Item | Why deferred | Decision owner | Trigger | Next action |
+|------|--------------|----------------|---------|-------------|
+| Flip analytics provider on (Plausible-first) | Operator must choose hosted vs self-hosted Plausible. Pricing + privacy posture decision. | Business / operator | Provider chosen | Edit `assets/js/analytics-config.js` `provider:` field; apply matching CSP delta in `.htaccess`. |
+| Surface Web Vitals dashboard in operator portal | Provider must be on to feed it. | Operator | Provider on | Add Plausible / GA4 dashboard panel filtering on `vitals_*` custom events. |
+| Per-page conversion-event tagging (Contact Click, Brochure Download, Case Study Read) | Tagging without traffic data is guessing. | Operator + product | Provider on + 30 days of traffic | Add `data-analytics-event` attributes to CTAs; wire to `AS_ANALYTICS.report()`. |
+| Hook Web Vitals beacon into Plausible custom-event API | Beacon shape already wired in `analytics.js`. | Operator | Provider on | Set `provider: "plausible"`; vitals automatically flow through `report()`. |
 
 ---
 
 ## 2. Content depth
 
-| Item | Why deferred | Complexity | Trigger | Value |
-|------|--------------|:----------:|---------|-------|
-| 4th and 5th anonymised case study (e.g. eSIM rollout, partner-led JavaCard programme, ePassport platform) | Phase 10 shipped the first three; further studies need real engagement debriefs | M | Two new engagements complete and willing to be anonymised | Conversion authority |
-| Customer-named case studies with logo permission | Today everything is anonymised | M | Customer sign-off + legal review | Authority + trust |
-| Pricing tier publishing | Today `/engagement-models/` describes shapes, not prices | S | Procurement decision to publish | Reduces inbound qualification friction |
-| Tech-talk video series | Existing video set is product walkthroughs, not technical deep-dives | L | Production budget + speaker availability | Brand authority on engineering blog topics |
+| Item | Why deferred | Decision owner | Trigger | Next action |
+|------|--------------|----------------|---------|-------------|
+| 4th and 5th anonymised case study (eSIM rollout, partner-led JavaCard programme, ePassport) | Three exist already; further studies need real engagement debriefs we can anonymise honestly. Fabricating them is off the table. | Engineering + customer success | Two new engagements complete + willing to be anonymised | Author `/case-studies/<slug>/` following the existing template; link from `/case-studies/index.html` and the homepage commercial strip. |
+| Customer-named case studies with logo permission | Everything is anonymised today. Named studies need customer + legal sign-off. | Customer + legal | Customer sign-off + AmbiSecure legal review | Author the page; add logo asset to `/assets/img/customers/`; cite specific metrics with the customer's written approval. |
+| Pricing tier publishing | `/engagement-models/` describes engagement shapes but not prices. | Procurement / leadership | Procurement decision to publish public pricing | Add pricing rows to `/engagement-models/`; add structured `Offer` data to existing JSON-LD; update the contact-form qualification copy. |
+| Tech-talk video series | Existing video set is product walkthroughs, not technical deep-dives. | Marketing + engineering | Production budget + speaker availability | Record per talk; transcode to YouTube; add `/videos/<slug>/` pages using the existing YT-facade template. |
 
 ---
 
 ## 3. Site-wide UX features
 
-| Item | Why deferred | Complexity | Trigger | Value |
-|------|--------------|:----------:|---------|-------|
-| Blog-post pagination across the modern blog | Phase 11 ships the `/blog/page/2/` scaffold; real second-page content kicks in when modern entry count > 24 | S | 25th modern blog post merged | Discovery |
-| Per-category pagination | Same threshold — no current category exceeds 24 entries | S | Single category > 24 entries | Discovery |
-| In-page table-of-contents on long-form posts | Cornerstone posts are 15–20 min reads | S | Anyone asks; no signal today | Long-read UX |
-| Dark mode | Brand palette is light-first | M | Operator decision | Aesthetic |
-| Per-section search beyond the blog | Resources/tools are findable via navigation; references via navigation | M | A specific user complaint | Discovery |
+| Item | Why deferred | Decision owner | Trigger | Next action |
+|------|--------------|----------------|---------|-------------|
+| Per-category pagination | No category currently exceeds 24 entries. | Operator (data-driven) | A single category passes 24 entries (today's largest is FIDO at 13). | Apply the same `/blog/page/N/` pattern to `/blog/categories/<cat>/page/N/`. |
+| In-page table-of-contents on long-form posts | Cornerstone posts are 13–20 min reads but no user signal yet that TOC is missing. | Operator | A reader feedback signal or an analytics signal that the long posts have a high drop rate after 30%. | Add a small `assets/js/blog-toc.js` that scans H2/H3 in `<main>` and renders a fixed-position TOC on viewports >= 1100px. |
+| Dark mode | Brand palette is light-first by design. | Operator / brand | Operator decision to invest in a dual palette. | Add `prefers-color-scheme` CSS variables + a manual toggle to nav. |
+| Per-section search beyond the blog | Resources/tools/references are reachable via navigation. | Operator | A specific user complaint or a drop in tool-page traffic. | Extend `assets/js/blog-search.js` index format to cover resources/references; expose at `/search/?scope=...`. |
 
 ---
 
 ## 4. Performance / front-end maintenance
 
-| Item | Why deferred | Complexity | Trigger | Value |
-|------|--------------|:----------:|---------|-------|
-| CSS without `style-src 'unsafe-inline'` | Most inline styles already removed; a few hand-edited card grids use inline style for the date row | M | Security-review push | CSP tightening |
-| Service worker / offline cache | Static site is already cacheable; SW is over-engineering today | M | Lighthouse asks for installability score | PWA installability |
-| Brotli pre-compression on disk | LiteSpeed compresses on the fly | S | Move off LiteSpeed | Cold-cache TTFB |
-| Per-route CSS splitting | Single 60 KB CSS is fine | M | CSS exceeds 200 KB | Initial paint |
-| Per-blog-post OG cards (one per post, not per section) | Phase 12 ships 22 per-section OG cards via `tools/gen-og-batch.py`; per-post variants would push the OG image count to ~50+ | S | A post-share volume signal showing per-post OG matters | Sharper per-share social previews |
+| Item | Why deferred | Decision owner | Trigger | Next action |
+|------|--------------|----------------|---------|-------------|
+| Remove `style-src 'unsafe-inline'` from CSP | Some hand-edited card grids still use inline `style=` for the date row. Removing requires a sweep + class extraction. | Engineering | Security review push, or a CSP audit failure | Convert remaining inline styles to utility classes in `assets/css/main.css`; drop `'unsafe-inline'` from CSP in `.htaccess` and per-page meta. |
+| Tighten CSP: remove unused Google Fonts whitelist | CSP currently allows `fonts.googleapis.com` and `fonts.gstatic.com` though the site is fully self-hosted. Defensive but unused — security hygiene says drop it. | Engineering | Security audit | Remove the `fonts.googleapis.com` / `fonts.gstatic.com` allow-list from the CSP `style-src` / `font-src` directives in `.htaccess`. |
+| Service worker / offline cache | Static site already caches well via LiteSpeed + browser. SW adds installability but is over-engineering at current scale. | Operator | Lighthouse PWA-installability becomes a requirement | Add `service-worker.js` + manifest; cache the asset shell; do not cache the HTML pages (sitemap drift problem). |
+| Brotli pre-compression on disk | LiteSpeed compresses on the fly. Pre-compression matters only on cold cache + slower origins. | Operator | Move off LiteSpeed | `find . -name '*.html' -o -name '*.css' -o -name '*.js' \| xargs -I {} brotli -k {}` as part of the package build. |
+| Per-route CSS splitting | Single 60 KB CSS is well under the budget. | Engineering | `main.css` exceeds 200 KB | Split per top-level section; lazy-load via media queries / link rel preload. |
+| Per-blog-post OG cards | Phase 16 added 7 per-product OG cards; per-blog cards would push the OG-image count to ~80+. Section OGs are sharp enough today. | Operator | A signal that per-post social shares matter (e.g. analytics shows a single post driving 50%+ of LinkedIn traffic). | Extend `tools/og-templates.json` with per-blog match prefixes; re-run `gen-og-batch.py --wire`. |
 
 ---
 
 ## 5. CI + automation
 
-| Item | Why deferred | Complexity | Trigger | Value |
-|------|--------------|:----------:|---------|-------|
-| Lighthouse CI auto-blocking on regression | Phase 11 workflow is advisory (`continue-on-error: true`) | S | One real regression that the advisory CI catches | Performance guardrails |
-| Automated WebP regeneration when a PNG > 200 KB is added | Today the `audit-media` check surfaces it; regeneration is still manual | S | Operator chooses to invest the script time | Reduces drift |
-| Automated sitemap regeneration from on-disk page set | Sitemap is hand-curated; `audit-seo` catches drift but doesn't fix it | M | Sitemap entry count > 500 | Removes manual error class |
-| Expand `.githooks/pre-commit` to also run `tools/audit-all.sh` | Phase 14 hook only runs `lint-htaccess` + `check-last-reviewed`; the full audit suite is too slow (~6s) to gate every commit | S | Audit suite drops below 2s, or a regression slips through | Catches everything before CI |
-| `audit-freshness` operator-side reminder dashboard | Today it's a CI report; could be a one-page operator view | S | Engineering team wants a single "what to review" page | Drives quarterly content review |
+| Item | Why deferred | Decision owner | Trigger | Next action |
+|------|--------------|----------------|---------|-------------|
+| Expand `.githooks/pre-commit` to also run `tools/audit-all.sh` | Audit suite is ~6s — too slow to gate every commit. | Engineering | Audit suite drops below 2s, OR a regression slips through to CI that the hook would catch. | Append `bash tools/audit-all.sh` to `.githooks/pre-commit`. |
+| `audit-freshness` operator-side reminder dashboard (single HTML page that summarises stale blogs) | Today the freshness report is CI-only. A one-page operator view would drive quarterly review better. | Operator | Engineering team explicitly asks for a single "what to review" surface. | Add `tools/render-freshness-page.py` that emits `/_internal/freshness.html`; gate behind `.htaccess` if it should be operator-only. |
 
 ---
 
 ## 6. Architectural expansion
 
-| Item | Why deferred | Complexity | Trigger | Value |
-|------|--------------|:----------:|---------|-------|
-| `developer.ambimat.com` subdomain split | No current trigger; navigation isn't crowded yet | L | Resources/references surface exceeds ~100 tools each | Domain-of-concerns separation, faster mental model |
-| External docs platform (Mintlify/Docusaurus) for the technologies section | Static HTML is fine at current scale | L | Tech docs grow to need search + versioning | Better docs UX |
-| Multilingual content | Audience is English-first today | XL | India or Latam expansion brief | Regional reach |
-| Public-API or developer portal for the FIDO Validation Server | Page now documents the four-step enterprise onboarding (Phase 16); actual self-serve developer sandbox is still operator-driven | L | Productisation decision to open up self-serve sandbox + API key issuance | Developer adoption |
+| Item | Why deferred | Decision owner | Trigger | Next action |
+|------|--------------|----------------|---------|-------------|
+| `developer.ambimat.com` subdomain split | Navigation isn't crowded yet; resources/references combined are 66 surfaces. Split adds DNS, CSP, sitemap work for no current user benefit. | Architecture / operator | Resources OR references exceeds ~100 surfaces each. | Carve out `/resources/` + `/references/` into a sister origin; rewrite cross-origin links to absolute URLs; add a `sitemapindex` referencing both per-origin sitemaps. |
+| External docs platform (Mintlify / Docusaurus) for `/technologies/` | Static HTML is fine at current scale. Adds a build system and a deploy target for marginal docs UX gain today. | Architecture / operator | Tech docs grow to need search + versioning (more than ~30 distinct technology surfaces). | Decide on platform; migrate `/technologies/` content; set up redirects from old paths. |
+| Multilingual content | English-first audience today. Localisation cost is high (translation + dual asset trees). | Business / operator | Operator decides to expand into a non-English-primary market. | Add `lang` query param or per-language subpath; provide translations for the homepage + top 10 product pages first; extend later. |
+| Public-API / self-serve developer portal for the FIDO Validation Server | Phase 16 documented the four-step **enterprise** onboarding. A self-serve sandbox needs productisation: sign-up flow, rate limiting, abuse prevention, billing pipeline. | Product / business | Productisation decision to open up self-serve sandbox + API key issuance. | Stand up `developer.ambisecure.ambimat.com`; add sign-up UI; integrate billing; document the sandbox-tenant policy. |
 
 ---
 

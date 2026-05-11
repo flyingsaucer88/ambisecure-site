@@ -35,7 +35,8 @@ EXEMPT = {
 # What HTML files to scan
 def iter_html():
     for dirpath, _, files in os.walk(ROOT):
-        if "/legacysitedata/" in dirpath or "/.git/" in dirpath or "/node_modules/" in dirpath:
+        if any(s in dirpath for s in ("/legacysitedata/", "/.git/", "/node_modules/",
+                                       "/.lighthouseci/", "/dist/")):
             continue
         if dirpath.endswith("assets") or "/assets/" in dirpath:
             continue

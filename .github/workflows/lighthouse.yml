@@ -22,8 +22,9 @@ jobs:
         run: npm install -g @lhci/cli@0.13.x
 
       - name: Run Lighthouse CI
+        # Blocks on regressions per .lighthouserc.json thresholds
+        # (Performance ≥0.90, Accessibility ≥0.95, BP/SEO ≥0.95).
         run: lhci autorun --config=.lighthouserc.json
-        continue-on-error: true
 
       - name: Upload report artifacts
         if: always()

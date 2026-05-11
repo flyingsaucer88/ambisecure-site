@@ -40,7 +40,7 @@ ORPHAN_EXEMPT = {
 
 def iter_html():
     for dirpath, _, files in os.walk(ROOT):
-        if any(skip in dirpath for skip in ("/legacysitedata/", "/.git/", "/node_modules/", "/.lighthouseci/")):
+        if any(skip in dirpath for skip in ("/legacysitedata/", "/.git/", "/node_modules/", "/.lighthouseci/", "/dist/")):
             continue
         if "/assets/" in dirpath or dirpath.endswith("assets"):
             continue

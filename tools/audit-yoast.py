@@ -372,7 +372,7 @@ def main():
     rows = []
     for dirpath, _, files in os.walk(ROOT):
         if any(s in dirpath for s in ("/legacysitedata/", "/.git/", "/node_modules/",
-                                       "/.lighthouseci/", "/assets/")):
+                                       "/.lighthouseci/", "/assets/", "/dist/")):
             continue
         for name in files:
             if not name.endswith(".html"):
