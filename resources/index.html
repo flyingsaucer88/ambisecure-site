@@ -14,7 +14,7 @@
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="AmbiSecure — Hardware-rooted security" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
@@ -29,6 +29,8 @@
     background: #fff; border: 1px solid var(--line); padding: 18px 20px; border-radius: 6px;
     text-decoration: none; color: inherit; display: block; transition: all .2s ease; position: relative;
   }
+    .resource-card.soon-tile { cursor: default; opacity: 0.75; }
+  .resource-card.soon-tile:hover { transform: none; box-shadow: none; border-color: var(--line); }
   .resource-card:hover { transform: translateY(-3px); box-shadow: 0 14px 28px rgba(58,63,64,0.08); border-color: #d8d8da; }
   .resource-card .rc-tag {
     font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.6px;
@@ -91,12 +93,12 @@
       <a href="/resources/tools/atr-parser/" class="resource-card"><span class="rc-tag">ATR</span><h3>ATR Parser</h3><p>Parse Answer-To-Reset bytes &mdash; TS, T0, TA/TB/TC/TD interface bytes, historical bytes, TCK.</p></a>
       <a href="/resources/tools/apdu-parser/" class="resource-card"><span class="rc-tag">APDU</span><h3>APDU Parser</h3><p>Decode CLA / INS / P1 / P2 / Lc / data / Le for Case 1&ndash;4, short and extended length.</p></a>
       <a href="/resources/tools/tlv-parser/" class="resource-card"><span class="rc-tag">TLV</span><h3>TLV Parser</h3><p>Walk BER-TLV, EMV TLV, and DGI-TLV trees with tag dictionary lookup.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">APDU</span><h3>APDU Builder</h3><p>Build a valid APDU from selected fields with live validation.</p></a>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">APDU</span><h3>APDU Builder</h3><p>Build a valid APDU from selected fields with live validation.</p></div>
       <a href="/resources/tools/asn1-parser/" class="resource-card"><span class="rc-tag">ASN.1</span><h3>ASN.1 Decoder</h3><p>Decode BER/DER blobs into a clickable tree with X.509 OID lookup.</p></a>
       <a href="/resources/tools/asn1-parser/" class="resource-card"><span class="rc-tag">BER/DER</span><h3>BER/DER Decoder</h3><p>Same lower-level walker as the ASN.1 parser.</p></a>
       <a href="/resources/tools/sw-lookup/" class="resource-card"><span class="rc-tag">SW</span><h3>SW1/SW2 Lookup</h3><p>Search status words by hex or phrase &mdash; ISO + GP + EMV + FIDO.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">CAP</span><h3>CAP File Inspector</h3><p>Decode JavaCard CAP file components.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">SCP03</span><h3>SCP03 Helper</h3><p>Compute SCP03 session keys / cryptograms / MACs.</p></a>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">CAP</span><h3>CAP File Inspector</h3><p>Decode JavaCard CAP file components.</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">SCP03</span><h3>SCP03 Helper</h3><p>Compute SCP03 session keys / cryptograms / MACs.</p></div>
       <a href="/resources/tools/gp-status/" class="resource-card"><span class="rc-tag">GP</span><h3>GP Status Reference</h3><p>GlobalPlatform 2.3.1 card &amp; application lifecycle states.</p></a>
     </div>
 
@@ -117,36 +119,36 @@
       <a href="/resources/tools/ascii-hex/" class="resource-card"><span class="rc-tag">ASCII</span><h3>ASCII &harr; HEX</h3><p>Bidirectional converter with multiple grouping styles.</p></a>
       <a href="/resources/tools/hex-bytes/" class="resource-card"><span class="rc-tag">HEX</span><h3>HEX &harr; byte array</h3><p>Convert across C / Java / Python / JS / escape-string formats.</p></a>
       <a href="/resources/tools/base64/" class="resource-card"><span class="rc-tag">B64</span><h3>Base64</h3><p>Encode / decode with URL-safe variant. UTF-8 friendly.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">B32</span><h3>Base32</h3><p>Encode / decode (RFC 4648).</p></a>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">B32</span><h3>Base32</h3><p>Encode / decode (RFC 4648).</p></div>
       <a href="/resources/tools/utf8/" class="resource-card"><span class="rc-tag">UTF-8</span><h3>UTF-8 inspector</h3><p>Codepoints, byte counts, BOM detection, per-char view.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">URL</span><h3>URL encoder</h3><p>Percent-encode / decode.</p></a>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">URL</span><h3>URL encoder</h3><p>Percent-encode / decode.</p></div>
     </div>
 
     <h2 class="resource-cat-head">Crypto &amp; security helpers</h2>
     <div class="resource-grid">
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">CRC</span><h3>CRC calculator</h3><p>CRC-8 / CRC-16 / CRC-32 with polynomial picker.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">LRC</span><h3>LRC calculator</h3><p>Longitudinal Redundancy Check.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">SUM</span><h3>Checksum</h3><p>XOR / sum-mod-256 / two&rsquo;s-complement.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">SHA</span><h3>SHA hash generator</h3><p>SHA-1, SHA-256/384/512, SHA3 (via Web Crypto).</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">RSA</span><h3>RSA key formats</h3><p>PKCS#1 / PKCS#8 / SPKI / OpenSSH reference.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">ECC</span><h3>ECC curve reference</h3><p>P-256, P-384, Curve25519, secp256k1, brainpool.</p></a>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">CRC</span><h3>CRC calculator</h3><p>CRC-8 / CRC-16 / CRC-32 with polynomial picker.</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">LRC</span><h3>LRC calculator</h3><p>Longitudinal Redundancy Check.</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">SUM</span><h3>Checksum</h3><p>XOR / sum-mod-256 / two&rsquo;s-complement.</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">SHA</span><h3>SHA hash generator</h3><p>SHA-1, SHA-256/384/512, SHA3 (via Web Crypto).</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">RSA</span><h3>RSA key formats</h3><p>PKCS#1 / PKCS#8 / SPKI / OpenSSH reference.</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">ECC</span><h3>ECC curve reference</h3><p>P-256, P-384, Curve25519, secp256k1, brainpool.</p></div>
     </div>
 
     <h2 class="resource-cat-head">eSIM, SIM &amp; telecom</h2>
     <div class="resource-grid">
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">ICCID</span><h3>ICCID Decoder</h3><p>Issuer ID, country code, MII, Luhn check.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">IMSI</span><h3>IMSI Decoder</h3><p>MCC / MNC / MSIN.</p></a>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">ICCID</span><h3>ICCID Decoder</h3><p>Issuer ID, country code, MII, Luhn check.</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">IMSI</span><h3>IMSI Decoder</h3><p>MCC / MNC / MSIN.</p></div>
       <a href="/resources/tools/iso7816-ref/" class="resource-card"><span class="rc-tag">7816</span><h3>ISO/IEC 7816 Reference</h3><p>APDU shape, CLA bits, common INS bytes &mdash; bookmarkable.</p></a>
       <a href="/resources/tools/apdu-status-dict/" class="resource-card"><span class="rc-tag">SW</span><h3>APDU Status Dictionary</h3><p>Filterable full table &mdash; ISO 7816-4 + GP + EMV + FIDO.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">EID</span><h3>eUICC EID Decoder</h3><p>Per ITU-T E.118 / GSMA.</p></a>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">EID</span><h3>eUICC EID Decoder</h3><p>Per ITU-T E.118 / GSMA.</p></div>
     </div>
 
     <h2 class="resource-cat-head">JSON / data utilities</h2>
     <div class="resource-grid">
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">JSON</span><h3>JSON Formatter</h3><p>Format, minify, error pinpointing.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">JSON</span><h3>JSON Validator</h3><p>Schema-against-instance checker.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">CBOR</span><h3>CBOR Parser</h3><p>RFC 8949 decoder &mdash; FIDO/CTAP2 attestation friendly.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">XML</span><h3>XML Formatter</h3><p>Format and validate.</p></a>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">JSON</span><h3>JSON Formatter</h3><p>Format, minify, error pinpointing.</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">JSON</span><h3>JSON Validator</h3><p>Schema-against-instance checker.</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">CBOR</span><h3>CBOR Parser</h3><p>RFC 8949 decoder &mdash; FIDO/CTAP2 attestation friendly.</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">XML</span><h3>XML Formatter</h3><p>Format and validate.</p></div>
     </div>
 
     <h2 class="resource-cat-head">NFC &amp; DESFire</h2>
@@ -203,8 +205,8 @@
 
     <h2 class="resource-cat-head">Misc developer utilities</h2>
     <div class="resource-grid">
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">BIN</span><h3>Binary Calculator</h3><p>AND / OR / XOR / NOT / shift, multi-base.</p></a>
-      <a href="#" class="resource-card"><span class="soon">SOON</span><span class="rc-tag">OFF</span><h3>Byte-offset Calculator</h3><p>Quick parsing assistance.</p></a>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">BIN</span><h3>Binary Calculator</h3><p>AND / OR / XOR / NOT / shift, multi-base.</p></div>
+      <div class="resource-card soon-tile"><span class="soon">SOON</span><span class="rc-tag">OFF</span><h3>Byte-offset Calculator</h3><p>Quick parsing assistance.</p></div>
       <a href="/resources/tools/length-field/" class="resource-card"><span class="rc-tag">LEN</span><h3>Length-field Encoder</h3><p>BER long-form, DGI long-form, u8, u16 BE / LE.</p></a>
       <a href="/resources/tools/endian/" class="resource-card"><span class="rc-tag">END</span><h3>Endian Converter</h3><p>LE &harr; BE for u16/u32/u64 with grouped table view.</p></a>
     </div>

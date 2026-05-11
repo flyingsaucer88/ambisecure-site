@@ -2694,3 +2694,16 @@ section.brochure {
   color: var(--brand-red, #E3222A);
   border-color: var(--brand-red, #E3222A);
 }
+
+/* Phase 18 — informational "Coming soon" tiles that look like cards but
+   are deliberately non-clickable. Applies to both .card and .resource-card. */
+.card.soon-tile,
+.resource-card.soon-tile {
+  cursor: default;
+  opacity: 0.75;
+}
+.card.soon-tile:hover,
+.resource-card.soon-tile:hover {
+  transform: none;
+  box-shadow: none;
+}

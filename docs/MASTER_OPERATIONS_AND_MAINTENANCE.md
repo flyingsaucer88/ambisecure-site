@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 16 — platform maturity: cornerstone blogs, per-product OG cards, FIDO Validation Server trust-chain visuals + enterprise onboarding)
+**Last updated:** 2026-05-11 (Phase 18 — circular-link audit + branding consistency pass)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -586,9 +586,9 @@ The config exercises 8 representative pages (homepage, blog, product, case study
 
 ### 12.2 GitHub Actions
 
-`.github/workflows/lighthouse.yml` runs eight jobs on every push to `main` and every PR:
+`.github/workflows/lighthouse.yml` runs nine jobs on every push to `main` and every PR:
 
-1. `lighthouse` — full LHCI run (advisory, `continue-on-error: true`).
+1. `lighthouse` — full LHCI run. Phase 17 dropped `continue-on-error`, so the thresholds in `.lighthouserc.json` (Performance ≥0.90, A11y/BP/SEO ≥0.95) now block.
 2. `htaccess-lint` — `python3 tools/lint-htaccess.py`.
 3. `sitemap-validate` — `xmllint --noout sitemap.xml` + URL-count sanity check.
 4. `audit-content` — `python3 tools/audit-content.py` (titles, descriptions, OG, schema, alts).
@@ -596,8 +596,9 @@ The config exercises 8 representative pages (homepage, blog, product, case study
 6. `audit-media` — `python3 tools/audit-media.py` (oversize, missing-WebP, dead-weight, missing references).
 7. `audit-freshness` — `python3 tools/audit-freshness.py --strict` (blog `last_reviewed` / `freshness` metadata).
 8. `audit-yoast` — `python3 tools/audit-yoast.py --strict` (per-page-type word-count bands, title / desc lengths, H1 uniqueness, heading hierarchy, paragraph length, internal-link count, FAQPage schema validity, Phase 14 readability metrics: avg sentence length, long-sentence count, heading density, top repeated 3-grams).
+9. `audit-circular` — `python3 tools/audit-circular-links.py --hard-only` (Phase 18). Fails CI if any clickable anchor's target normalises to the same canonical URL as the page it lives on (excluding navbar, breadcrumb, ecosystem bar, footer — those are expected to back-link).
 
-Treat audits 2–8 as blocking and Lighthouse as advisory.
+Treat audits 2–9 as blocking.
 
 ### 12.3 Local one-shot audit
 
@@ -682,3 +683,61 @@ If a future split (e.g. `developer.ambimat.com` for /resources/ and /references/
 - Analytics: each origin should configure its own `provider` value separately. Sharing one config across splits is fine if the analytics provider supports multiple domains.
 
 No split is planned today. The architecture supports it without rewrites.
+
+---
+
+## 17. Navigation integrity (Phase 18)
+
+Every clickable anchor on the site must take the user **somewhere new**. Self-referencing cards, dead-end placeholders, and "Learn more →" links that reload the current page are explicitly forbidden — they damage trust and SEO equally.
+
+### 17.1 Hard rules
+
+- **No `href="#"` placeholders.** If a card is announcing future content, use `<div class="card soon-tile">` or `<div class="resource-card soon-tile">`. The `.soon-tile` modifier removes hover-lift so the tile is visually non-interactive.
+- **No card on `/X/` whose href is `/X/`.** Section-index pages list children; if a child page does not exist yet, link to the closest meaningful sibling (sister property, related blog, related product) — never back to the section itself.
+- **No "Learn more" anchors on a page whose target normalises to the same canonical URL.** The `audit-circular-links.py` audit excludes the navbar, breadcrumb, ecosystem bar, and footer (those are expected to back-link); anywhere else, a self-link is a bug.
+
+### 17.2 The audit
+
+```bash
+python3 tools/audit-circular-links.py             # full report
+python3 tools/audit-circular-links.py --hard-only # CI gate (Phase 18)
+```
+
+Wired into `tools/audit-all.sh` and the CI workflow as the 9th audit job.
+
+### 17.3 Where placeholders are acceptable
+
+- `javascript:window.print()` on brochure pages — the "Print → PDF" anchor is the intentional UX (no binary PDFs in the repo per the closed-decisions list).
+- `<a href="#main" class="skip-link">` — the accessibility skip-link. The audit ignores `#`, `#main`, `#content`, `#top`, `#main-content`.
+
+### 17.4 Brand markup (cross-page consistency)
+
+All 254 production pages carry an identical navbar and footer brand block:
+
+```html
+<a href="/" class="brand">
+  <span class="brand-mark">AS</span>
+  <span class="brand-text">
+    <span class="brand-line">Ambi<span class="accent">Secure</span></span>
+    <span class="brand-tag">Hardware-rooted security</span>
+  </span>
+</a>
+```
+
+The brand mark uses the `--brand-red: #E3222A` token; the accent on "Secure" uses the same. The Ambimat ecosystem bar at the very top of each page lists the sister properties (`ambimat.com`, `esim.ambimat.com`, `/blog/`) — keep these in sync if Ambimat group identity changes.
+
+### 17.5 Brand assets
+
+- `assets/img/favicon.svg` — 64×64 red rounded square with "AS" wordmark and the small accent circle. Used as the browser tab icon and for OG fallbacks where a section card does not exist.
+- `assets/img/logo.svg` — 220×64 horizontal lockup with the AS mark + "AmbiSecure" wordmark + "HARDWARE-ROOTED SECURITY" tagline. Used in printable brochures.
+- `assets/img/og/*.svg + *.png + *.webp` — per-section + per-product OG cards (Phase 12 + 15 + 16). All 1200×630. Regenerate via `python3 tools/gen-og-batch.py --wire` if any section title/eyebrow/subtitle changes in `tools/og-templates.json`.
+
+### 17.6 Cross-property visual identity (Ambimat group)
+
+The AmbiSecure site sits between `ambimat.com` (parent corporate site) and `esim.ambimat.com` (sister property). All three share:
+
+- The red `#E3222A` brand accent
+- The "AS" / "AM" / "eS" 48 × 48 rounded brand-mark pattern
+- The ecosystem bar at the top of every page linking sister properties
+
+When updating the navbar or the ecosystem bar, keep parity with the sister sites; don't introduce visual treatments that wouldn't read as "Ambimat-group".
