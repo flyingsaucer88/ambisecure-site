@@ -423,18 +423,40 @@
 </section>
 
 <!-- ============== BLOG STRIP ============== -->
+<!-- ============== HIGHLIGHT BANNER (JSON-driven) ============== -->
+<section aria-labelledby="banner-heading">
+  <div class="section-container">
+    <h2 id="banner-heading" class="visually-hidden" style="position:absolute;left:-10000px;">Featured highlight</h2>
+    <div class="hp-banner-slot">
+      <!-- Static fallback if JS is disabled -->
+      <div class="hp-banner" style="background:linear-gradient(135deg,#FFFFFF 0%,#F4F5F6 100%);border:1px solid var(--rule);border-left:4px solid var(--brand-red);border-radius:8px;padding:28px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;">
+        <div style="flex:1 1 480px;min-width:0;">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;letter-spacing:0.5px;color:var(--brand-red);text-transform:uppercase;margin-bottom:6px;">FEATURED &middot; OnePass platform</div>
+          <h2 style="font-family:'Montserrat',sans-serif;font-size:24px;font-weight:700;color:var(--ink);margin:0 0 8px 0;line-height:1.25;">One identity card. Phishing-resistant. Procurement-ready.</h2>
+          <p style="margin:0;color:var(--brand-grey);font-size:15px;line-height:1.65;">Replace badges and security keys with a single FIDO2 smart card that ships under your issuer keys, brand artwork, and audit hooks.</p>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+          <a href="/products/onepass-platform/" class="btn btn-primary">Explore OnePass</a>
+          <a href="/contact/" class="btn btn-outline">Request a pilot</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== ENGINEERING BLOG SPOTLIGHT (rotates daily) ============== -->
 <section class="alt" aria-labelledby="blog-heading">
   <div class="section-container">
     <div class="section-head left">
-      <span class="eyebrow">From the engineering blog</span>
-      <h2 class="section-title" id="blog-heading">Field notes from the team.</h2>
+      <span class="eyebrow">From the engineering blog &middot; rotates daily</span>
+      <h2 class="section-title" id="blog-heading">Featured technical reads.</h2>
       <span class="section-line"></span>
     </div>
-    <div class="grid-3">
+    <div class="grid-3 hp-spotlight-featured">
       <a href="/blog/implementing-fido2-developer-guide/" class="blog-card">
         <span class="chip">FIDO2</span>
         <h3>Implementing FIDO2 Authentication: A Complete Developer Guide</h3>
-        <p>Passwords are one of the biggest security risks for modern systems. A walkthrough of the FIDO2 stack &mdash; CTAP2, WebAuthn, attestation &mdash; with code that compiles.</p>
+        <p>A walkthrough of the FIDO2 stack &mdash; CTAP2, WebAuthn, attestation &mdash; with code that compiles.</p>
         <span class="read-more">Read &rarr;</span>
       </a>
       <a href="/blog/why-use-multi-factor-authentication/" class="blog-card">
@@ -451,8 +473,33 @@
       </a>
     </div>
     <p style="text-align:center; margin-top: 36px;">
-      <a href="/blog/" class="btn btn-outline">All posts</a>
+      <a href="/blog/" class="btn btn-outline">Browse all posts</a>
+      &nbsp;
+      <a href="/blog/categories/" class="btn btn-outline">By topic</a>
+      &nbsp;
+      <a href="/blog/archive/" class="btn btn-outline">Historical archive</a>
     </p>
+  </div>
+</section>
+
+<!-- ============== HISTORICAL INSIGHTS (one rotating archive spotlight) ============== -->
+<section aria-labelledby="historical-heading">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Historical insight</span>
+      <h2 class="section-title" id="historical-heading">From the archive.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">A different historical piece from 2017&ndash;2025 surfaces each day. Preserved as-is; cross-linked to current coverage where it exists.</p>
+    </div>
+    <div class="grid-3 hp-spotlight-archive">
+      <!-- JS will replace this with a daily-rotating archive entry -->
+      <a href="/blog/archive/" class="blog-card">
+        <span class="chip">ARCHIVE</span>
+        <h3>Browse the historical AmbiSecure archive</h3>
+        <p>Preserved engineering writing on FIDO, smart cards, MFA, transit, and IoT security from 2017 onwards. Each piece is labelled as historical with a forward-link to current coverage.</p>
+        <span class="read-more">Open archive &rarr;</span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -544,5 +591,9 @@
 </footer>
 
 <script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/blog-pool.js" defer></script>
+<script src="/assets/js/blog-spotlight.js" defer></script>
+<script src="/assets/js/highlight-banner-config.js" defer></script>
+<script src="/assets/js/highlight-banner.js" defer></script>
 </body>
 </html>

@@ -218,4 +218,51 @@
   <url><loc>https://ambisecure.ambimat.com/services/tool-chain-development/multi-card-applet-loader/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ambisecure.ambimat.com/services/tool-chain-development/ndef-personalisation/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
+  <!-- Phase 7: Blog architecture (archive landing + 23 archive posts + categories) -->
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/common-misconceptions-about-2fa/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/single-sign-on-vs-mfa/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/mfa-in-government/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/cyber-attacks-in-india-part-3/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/cyber-attacks-in-india-part-2/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/cyber-attacks-in-india-part-1/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/enterprise-security-threats/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/what-is-passwordless-authentication/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/is-passwordless-the-future/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/sms-otp-disadvantages/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/security-future-for-government/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/how-chip-based-epassports-work/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/epassport-applications/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/introduction-to-java-card/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/fast-identity-online/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/emv-certification-in-public-transport/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/workplace-biometrics/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/consumer-biometrics-and-privacy/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/securing-iiot-infrastructure/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/public-transport-ticketing-part-3/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/public-transport-ticketing-part-2/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/public-transport-ticketing-part-1/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/iot-security-challenges-part-2/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/archive/iot-security-challenges-part-1/</loc><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/biometrics/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/cryptography/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/cyber-threats/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/cybersecurity/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/desfire/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/enterprise-mfa/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/epassport/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/fido/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/government-identity/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/identity/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/iot-security/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/javacard/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/mfa/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/offline-authentication/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/passwordless/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/privacy/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/smart-cards/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/transit/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/webauthn/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+
 </urlset>

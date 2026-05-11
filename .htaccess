@@ -38,6 +38,7 @@ Redirect 301 /ambisecure-digital-signature-token /products/digital-signature-tok
 Redirect 301 /ambisecure-javacard-applet-enterprise-solution /products/javacard-applets/
 Redirect 301 /ambisecure-esim-solution /products/esim-solution/
 Redirect 301 /products/javacard-applet-enterprise-solution /products/javacard-applets/
+Redirect 301 /products/ambisecure-fido-validation-server /services/fido-validation-server/
 Redirect 301 /applets /products/javacard-applets/
 Redirect 301 /authenticators/ /products/
 Redirect 301 /mobile-solution /products/tappable/
@@ -88,15 +89,12 @@ Redirect 301 /industries/healthcare /industries/
 Redirect 301 /industries/iot-and-industrial /industries/
 Redirect 301 /industries/retail-and-hospitality /industries/
 
-# Blog category landings (categories not implemented as separate pages)
-Redirect 301 /blog/category/javacard /blog/
-Redirect 301 /blog/category/fido /blog/
+# Blog category landings (singular -> plural; categories not in Phase 7 set fall back to /blog/)
 Redirect 301 /blog/category/secure-elements /blog/
-Redirect 301 /blog/category/nfc-desfire /blog/
+Redirect 301 /blog/category/nfc-desfire /blog/categories/desfire/
 Redirect 301 /blog/category/esim /blog/
-Redirect 301 /blog/category/apdu /blog/
-Redirect 301 /blog/category/cryptography /blog/
-Redirect 301 /blog/category/iot-security /blog/
+Redirect 301 /blog/category/apdu /blog/categories/javacard/
+Redirect 301 /blog/category/cryptography /blog/categories/cryptography/
 Redirect 301 /blog/category/secure-manufacturing /blog/
 
 # Tool aliases (tools that were referenced but not yet built; map to nearest existing tool)
@@ -135,6 +133,68 @@ Redirect 301 /blogs /blog/
 Redirect 301 /implementing-fido2-authentication-a-complete-developer-guide-by-ambisecure /blog/implementing-fido2-developer-guide/
 Redirect 301 /why-use-multi-factor-authentication-mfa /blog/why-use-multi-factor-authentication/
 Redirect 301 /top-3-benefits-of-multi-factor-authentication /blog/top-3-benefits-of-mfa/
+
+# ============================================================================
+# Phase 7: 47 legacy blog URLs preserved with zero information loss
+# AmbiSecure-classified blogs -> /blog/archive/<slug>/ (or modern if existed)
+# Ambimat-classified blogs -> https://ambimat.com/
+# eSIM-classified blogs -> https://esim.ambimat.com/
+# Three duplicates omitted (already redirected above).
+# ============================================================================
+# AmbiSecure historical archive
+Redirect 301 /common-misconceptions-about-two-factor-authentication /blog/archive/common-misconceptions-about-2fa/
+Redirect 301 /single-sign-on-vs-multi-factor-authentication /blog/archive/single-sign-on-vs-mfa/
+Redirect 301 /multi-factor-authentication-in-government-sector /blog/archive/mfa-in-government/
+Redirect 301 /cyber-attacks-in-india-part-3 /blog/archive/cyber-attacks-in-india-part-3/
+Redirect 301 /cyber-attacks-in-india-part-2 /blog/archive/cyber-attacks-in-india-part-2/
+Redirect 301 /cyber-attacks-in-india /blog/archive/cyber-attacks-in-india-part-1/
+Redirect 301 /enterprise-security-threats /blog/archive/enterprise-security-threats/
+Redirect 301 /what-is-passwordless-authentication /blog/archive/what-is-passwordless-authentication/
+Redirect 301 /is-passwordless-the-future /blog/archive/is-passwordless-the-future/
+Redirect 301 /sms-based-otp-authentication-and-its-disadvantages /blog/archive/sms-otp-disadvantages/
+Redirect 301 /taking-security-future-for-government /blog/archive/security-future-for-government/
+Redirect 301 /e-passport-and-how-will-chip-based-e-passports-work /blog/archive/how-chip-based-epassports-work/
+Redirect 301 /e-passport-and-its-application /blog/archive/epassport-applications/
+Redirect 301 /an-introduction-to-java-card-technology /blog/archive/introduction-to-java-card/
+Redirect 301 /fast-identity-online-fido /blog/archive/fast-identity-online/
+Redirect 301 /contactless-emv-payments-in-public-transportation /blog/archive/emv-certification-in-public-transport/
+Redirect 301 /workplace-security-how-biometrics-is-the-key-to-the-new-normal /blog/archive/workplace-biometrics/
+Redirect 301 /consumer-biometrics-in-the-data-privacy-age /blog/archive/consumer-biometrics-and-privacy/
+Redirect 301 /securing-your-iiot-infrastructure /blog/archive/securing-iiot-infrastructure/
+Redirect 301 /public-transport-ticketing-system-part-3 /blog/archive/public-transport-ticketing-part-3/
+Redirect 301 /public-transport-ticketing-2 /blog/archive/public-transport-ticketing-part-2/
+Redirect 301 /public-transport-ticketing-system-part-1 /blog/archive/public-transport-ticketing-part-1/
+Redirect 301 /challenges-to-iot-security-2 /blog/archive/iot-security-challenges-part-2/
+Redirect 301 /challenges-to-iot-security-1 /blog/archive/iot-security-challenges-part-1/
+Redirect 301 /challenges-to-iot-security /blog/archive/iot-security-challenges-part-1/
+
+# Ambimat-classified historical blogs (corporate / electronics / general IoT)
+Redirect 301 /the-great-semiconductor-shortage https://ambimat.com/
+Redirect 301 /mqtt-sn-lowering-the-cost-of-iot-at-scale https://ambimat.com/
+Redirect 301 /rise-of-uwb-and-the-impact-on-different-industry-verticals https://ambimat.com/
+Redirect 301 /cold-chain-logistics-podcast https://ambimat.com/
+Redirect 301 /cold-chain-logistics https://ambimat.com/
+Redirect 301 /cold-chain-logistics-solutions-benefits https://ambimat.com/
+Redirect 301 /cold-chain-logistics-effective-vaccine-management https://ambimat.com/
+Redirect 301 /what-is-ultra-wideband-and-how-does-it-work https://ambimat.com/
+Redirect 301 /5g-and-iot-the-future-of-5g-communications https://ambimat.com/
+Redirect 301 /zoom-fatigue-how-to-make-video-calls-less-tiring https://ambimat.com/
+Redirect 301 /uvc-based-sanitization-devices-really-effective-against-covid-19 https://ambimat.com/
+Redirect 301 /the-transformation-of-city-street-lighting https://ambimat.com/
+Redirect 301 /the-story-of-yet-another-framework-propeller-2 https://ambimat.com/
+Redirect 301 /a-hardware-start-up-part-2-ideationconceptualization https://ambimat.com/
+Redirect 301 /a-hardware-start-up-part-3-proof-of-concept-poc https://ambimat.com/
+
+# eSIM-classified historical blogs (telecom / SIM / LPWAN / 5G security)
+Redirect 301 /how-secure-is-5g-really https://esim.ambimat.com/
+Redirect 301 /non-cellular-network-based-wide-area-networks-1 https://esim.ambimat.com/
+Redirect 301 /cellular-network-based-wide-area-networks https://esim.ambimat.com/
+Redirect 301 /what-is-lpwan-and-types-of-lpwan-network https://esim.ambimat.com/
+
+# Phase 7: upgrade legacy /blog/category/* aliases to the new /blog/categories/ pages
+Redirect 301 /blog/category/javacard /blog/categories/javacard/
+Redirect 301 /blog/category/fido /blog/categories/fido/
+Redirect 301 /blog/category/iot-security /blog/categories/iot-security/
 
 # Brochure PDFs (preserve external backlinks pointing at /wp-content/uploads/)
 Redirect 301 /wp-content/uploads/2023/09/Brochure-3.pdf /assets/downloads/onepass-usb-key.pdf
