@@ -58,10 +58,6 @@
   <url><loc>https://ambisecure.ambimat.com/resources/tools/iso7816-ref/</loc><priority>0.65</priority></url>
   <url><loc>https://ambisecure.ambimat.com/resources/tools/gp-status/</loc><priority>0.65</priority></url>
   <!-- Phase 2: detail pages -->
-  <url><loc>https://ambisecure.ambimat.com/technologies/javacard/</loc><priority>0.75</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/technologies/fido/</loc><priority>0.75</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/solutions/passwordless-mfa/</loc><priority>0.75</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/products/onepass-usb-key/</loc><priority>0.85</priority></url>
   <!-- Phase 2: pillar blog -->
   <url><loc>https://ambisecure.ambimat.com/blog/apdu-from-first-principles/</loc><priority>0.85</priority></url>
 
@@ -86,7 +82,6 @@
   <!-- Phase 3: industries -->
   <url><loc>https://ambisecure.ambimat.com/industries/transportation/</loc><priority>0.8</priority></url>
   <url><loc>https://ambisecure.ambimat.com/industries/smart-cities/</loc><priority>0.75</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/industries/government-and-defence/</loc><priority>0.75</priority></url>
   <url><loc>https://ambisecure.ambimat.com/industries/enterprise-access/</loc><priority>0.75</priority></url>
 
   <!-- Phase 3: Batch D tools (DESFire / NFC) -->
@@ -186,14 +181,13 @@
   <url><loc>https://ambisecure.ambimat.com/partners/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
 
   <!-- Phase 6: Legacy product/service menu coverage -->
-  <url><loc>https://ambisecure.ambimat.com/products/onepass-bio-card/</loc><changefreq>monthly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/products/iot-security-chipset/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/products/biokey/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/products/tappable/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/products/digital-signature-token/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/products/javacard-applets/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/products/iot-solution/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/products/esim-solution/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/piv-nano-sim-applet/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/secure-mail-suite/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/pkcs-signature-suite/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/iot-security-applets/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/services/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/services/javacard-development/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/services/fido-validation-server/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
@@ -202,6 +196,7 @@
   <url><loc>https://ambisecure.ambimat.com/services/tool-chain-development/security-key-manager/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ambisecure.ambimat.com/services/tool-chain-development/multi-card-applet-loader/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ambisecure.ambimat.com/services/tool-chain-development/ndef-personalisation/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/services/epassport-platform/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
 
   <!-- Phase 7: Blog architecture (archive landing + 23 archive posts + categories) -->
   <url><loc>https://ambisecure.ambimat.com/blog/archive/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -286,7 +281,6 @@
   <url><loc>https://ambisecure.ambimat.com/blog/fido-supported-services/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/how-fido-authentication-works/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 
-  <url><loc>https://ambisecure.ambimat.com/technologies/secure-elements/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
 
   <!-- Phase 11: search, privacy, tags, pagination -->
   <url><loc>https://ambisecure.ambimat.com/search/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>

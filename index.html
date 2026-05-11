@@ -208,14 +208,14 @@
       <a href="/services/fido-validation-server/" class="card">
         <div class="card-icon">04</div>
         <h3>FIDO Validation Server</h3>
-        <p>Production-grade WebAuthn / CTAP2 backend for service providers. Multi-factor, passwordless, deployment-ready.</p>
+        <p>Multi-tenant FIDO2 / WebAuthn SaaS. Per-tenant policy, attestation verification, MDS lookup. Drop-in JS + tenant-scoped REST.</p>
         <div class="card-meta">Validation server &rarr;</div>
       </a>
-      <a href="/services/tool-chain-development/" class="card">
+      <a href="/services/epassport-platform/" class="card">
         <div class="card-icon">05</div>
-        <h3>Tool-Chain Development</h3>
-        <p>Bio enrollment, key managers, multi-card applet loaders, NDEF personalisation &mdash; the unglamorous tooling that makes deployments work.</p>
-        <div class="card-meta">Tooling &rarr;</div>
+        <h3>ePassport Platform Engineering</h3>
+        <p>End-to-end ICAO 9303 platform &mdash; backend, frontend, CSCA / DSC / PKD PKI, enrolment, personalisation. Architecture-led.</p>
+        <div class="card-meta">ePassport service &rarr;</div>
       </a>
       <a href="https://esim.ambimat.com/" class="card">
         <div class="card-icon cyan">06</div>
@@ -308,6 +308,75 @@
   </div>
 </section>
 
+<!-- ============== ECOSYSTEM MAP (Phase 15) ============== -->
+<section aria-labelledby="ecosystem-heading">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Ecosystem map</span>
+      <h2 class="section-title" id="ecosystem-heading">Explore the platform.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">Four ways into the same trust chain &mdash; by what you ship, by who you protect, by which standard you target, by where in the stack you operate.</p>
+    </div>
+    <div class="grid-4" style="margin-top:32px;">
+      <a href="/products/" class="card">
+        <div class="card-icon">PROD</div>
+        <h3>By product</h3>
+        <p>Cards, USB keys, biometric tokens, SIM-resident applets, IoT applets, signature suites &mdash; all the hardware AmbiSecure ships.</p>
+        <div class="card-meta">12 products &rarr;</div>
+      </a>
+      <a href="/services/" class="card">
+        <div class="card-icon">SVC</div>
+        <h3>By service</h3>
+        <p>JavaCard development, FIDO validation server, tool-chain engineering, ePassport platform &mdash; engineering work AmbiSecure does directly.</p>
+        <div class="card-meta">4 services &rarr;</div>
+      </a>
+      <a href="/solutions/" class="card">
+        <div class="card-icon">SOL</div>
+        <h3>By solution</h3>
+        <p>Passwordless workforce, closed-loop transit, government identity, IoT trust, phishing-resistant MFA &mdash; problem-shaped views.</p>
+        <div class="card-meta">14 solutions &rarr;</div>
+      </a>
+      <a href="/technologies/" class="card">
+        <div class="card-icon">TECH</div>
+        <h3>By technology</h3>
+        <p>FIDO2, WebAuthn, CTAP2, passkeys, JavaCard, DESFire, secure elements, SAMs, attestation &mdash; the standards layer.</p>
+        <div class="card-meta">12 technologies &rarr;</div>
+      </a>
+      <a href="/industries/" class="card">
+        <div class="card-icon">IND</div>
+        <h3>By industry</h3>
+        <p>Government, enterprise IT, transit, IoT/industrial, telecom &mdash; vertical-specific deployment shapes and constraints.</p>
+        <div class="card-meta">5 industries &rarr;</div>
+      </a>
+      <a href="/references/" class="card">
+        <div class="card-icon cyan">REF</div>
+        <h3>By reference</h3>
+        <p>AAGUIDs, APDU status, ASN.1, ISO 7816, COSE, X.509, GlobalPlatform, EMV, NFC, CAP files, DESFire &mdash; searchable databases.</p>
+        <div class="card-meta">12 references &rarr;</div>
+      </a>
+      <a href="/resources/" class="card">
+        <div class="card-icon cyan">TOOL</div>
+        <h3>By tool</h3>
+        <p>54 client-side utilities for parsing, decoding, building, and signing &mdash; the engineer&rsquo;s toolbox.</p>
+        <div class="card-meta">54 tools &rarr;</div>
+      </a>
+      <a href="/blog/" class="card">
+        <div class="card-icon cyan">READ</div>
+        <h3>By article</h3>
+        <p>21 modern engineering deep-dives plus 24 archived posts &mdash; cornerstone reading on FIDO, JavaCard, PKI, transit, IoT.</p>
+        <div class="card-meta">45 articles &rarr;</div>
+      </a>
+    </div>
+    <div class="featured-strip-row" style="margin-top:30px;">
+      <a href="/case-studies/"><span class="fs-tag">CASES</span><span class="fs-label">Anonymised case studies &rarr;</span></a>
+      <a href="/brochures/"><span class="fs-tag">PDFS</span><span class="fs-label">Platform brochures &rarr;</span></a>
+      <a href="/engagement-models/"><span class="fs-tag">SCOPE</span><span class="fs-label">Engagement models &rarr;</span></a>
+      <a href="/videos/"><span class="fs-tag">VIDEO</span><span class="fs-label">Walkthroughs &rarr;</span></a>
+      <a href="/about/certifications/"><span class="fs-tag">TRUST</span><span class="fs-label">Certifications &rarr;</span></a>
+    </div>
+  </div>
+</section>
+
 <!-- ============== RESOURCES STRIP ============== -->
 <section class="alt" aria-labelledby="resources-heading">
   <div class="section-container">
@@ -396,12 +465,15 @@
     <div class="featured-strip-row">
       <a href="/solutions/passwordless-enterprise/"><span class="fs-tag">IDENT</span><span class="fs-label">Passwordless enterprise</span></a>
       <a href="/solutions/phishing-resistant-authentication/"><span class="fs-tag">IDENT</span><span class="fs-label">Phishing-resistant MFA</span></a>
+      <a href="/products/fido2-nano-sim-applet/"><span class="fs-tag">TELECOM</span><span class="fs-label">FIDO2 on a nano SIM</span></a>
+      <a href="/products/piv-nano-sim-applet/"><span class="fs-tag">GOV</span><span class="fs-label">PIV on a nano SIM</span></a>
+      <a href="/services/epassport-platform/"><span class="fs-tag">GOV</span><span class="fs-label">ePassport platform engineering</span></a>
+      <a href="/products/secure-mail-suite/"><span class="fs-tag">PKI</span><span class="fs-label">Email + document signing</span></a>
+      <a href="/products/pkcs-signature-suite/"><span class="fs-tag">PKI</span><span class="fs-label">PKCS signature suite</span></a>
+      <a href="/products/iot-security-applets/"><span class="fs-tag">IoT</span><span class="fs-label">IoT security applets</span></a>
       <a href="/solutions/closed-loop-ticketing/"><span class="fs-tag">TRANSIT</span><span class="fs-label">Closed-loop ticketing</span></a>
-      <a href="/solutions/transit-ticketing/"><span class="fs-tag">TRANSIT</span><span class="fs-label">Transit ticketing</span></a>
-      <a href="/solutions/smart-card-personalization/"><span class="fs-tag">ISSUE</span><span class="fs-label">Smart-card personalisation</span></a>
-      <a href="/solutions/javacard-deployment/"><span class="fs-tag">APPLET</span><span class="fs-label">JavaCard deployment</span></a>
       <a href="/solutions/secure-element-integration/"><span class="fs-tag">SILICON</span><span class="fs-label">Secure-element integration</span></a>
-      <a href="/solutions/esim-security/"><span class="fs-tag">TELECOM</span><span class="fs-label">eSIM security</span></a>
+      <a href="/services/fido-validation-server/"><span class="fs-tag">SAAS</span><span class="fs-label">FIDO validation server</span></a>
     </div>
   </div>
 </section>

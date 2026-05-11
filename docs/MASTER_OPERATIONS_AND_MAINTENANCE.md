@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 14 — SEO audit close-out: FAQ schema, link suggester, readability metrics, pre-commit hook)
+**Last updated:** 2026-05-11 (Phase 15 — identity platform expansion: 6 new product/service pages, FIDO Validation Server SaaS architecture, homepage ecosystem map)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -17,8 +17,8 @@ If you are reading this for the first time, start at §1 (Platform) → §3 (Dep
 | Hosting | Hostinger LiteSpeed (production). |
 | Domain | `https://ambisecure.ambimat.com/` |
 | Ecosystem | Sub-property of Ambimat Electronics (`ambimat.com`); sister to `esim.ambimat.com`. |
-| HTML pages on disk | ~290 |
-| Sitemap canonical URLs | 305 |
+| HTML pages on disk | ~298 |
+| Sitemap canonical URLs | 248 (deduped in Phase 15) |
 | Practical utility tools | 54 |
 | Searchable reference databases | 12 |
 | Modern blog entries | 21 |
@@ -26,6 +26,8 @@ If you are reading this for the first time, start at §1 (Platform) → §3 (Dep
 | Case studies | 3 |
 | Brochures | 7 (1 landing + 6 platform overviews) |
 | Videos | 8 (7 hosted + 1 archived elsewhere) |
+| Products | 17 (12 core + 5 Phase 15: FIDO2 nano SIM, PIV nano SIM, Secure Mail Suite, PKCS Signature Suite, IoT Security Applets) |
+| Services | 4 (JavaCard development, FIDO validation server, tool-chain development, ePassport platform engineering) |
 | `Redirect 301` rules in `.htaccess` | 138 |
 | `RedirectMatch 301` rules | 2 |
 | Total Lighthouse target | ≥95 Performance / ≥95 Accessibility / 100 BP / 100 SEO |
@@ -267,6 +269,23 @@ Edit `assets/js/highlight-banner-config.js` only. Each entry has `id`, `enabled`
 
 Phase 9 sections (Core pillars, Videos teaser, Where AmbiSecure Fits) and Phase 10 sections (Commercial surfaces) are hard-coded in `index.html`. To change them, edit the HTML.
 
+### 5.4 Ecosystem map (Phase 15)
+
+Between "Solutions" and "Resources" the homepage carries an "Ecosystem map" section &mdash; eight cards giving multi-axis navigation into the site:
+
+- By product → `/products/`
+- By service → `/services/`
+- By solution → `/solutions/`
+- By technology → `/technologies/`
+- By industry → `/industries/`
+- By reference → `/references/`
+- By tool → `/resources/`
+- By article → `/blog/`
+
+Plus a short featured-strip-row to case studies, brochures, engagement models, videos, and certifications. The section&rsquo;s purpose: anyone landing on the homepage can reach any major surface in one click. Keep the counts in the card descriptions in sync with the actual on-disk counts when new content is added.
+
+The "Explore by use case" featured strip below is the tactical view &mdash; specific high-intent destinations (FIDO2 on a nano SIM, PIV on a nano SIM, ePassport, etc.). Update this strip when adding a high-value product or service.
+
 ---
 
 ## 6. Blog workflow
@@ -467,6 +486,23 @@ CI also validates sitemap XML via `.github/workflows/lighthouse.yml`.
 ### 9.3 Robots / indexability
 
 `robots.txt` is permissive (allow all). Per-page `<meta name="robots">` overrides exist only on transient pages (none today).
+
+---
+
+## 9b. FIDO Validation Server integration (Phase 15)
+
+The marketing surface at `/services/fido-validation-server/` documents the FIDO Validation Server as a multi-tenant SaaS. The actual implementation lives at `~/Documents/git_repo/FIDO_latest/` (separate Node.js / Express / DynamoDB project) and is NOT bundled into this static site &mdash; the site only ships the explanatory page.
+
+What the page says (and what the implementation backs):
+
+- **Multi-tenant** &mdash; every credential, challenge, audit record scoped to a tenant identifier. Cross-tenant queries refused at persistence layer.
+- **API key per environment** &mdash; separate keys for dev / staging / production. Hashed at rest; cleartext shown once at issuance.
+- **Per-tenant policy** &mdash; allowed AAGUIDs, required UV, required attestation conveyance.
+- **Six REST endpoints** &mdash; `/register/begin`, `/register/finish`, `/login/begin`, `/login/finish`, `/credentials/:userId`, `DELETE /credentials/:credentialId`.
+- **Three deployment shapes** &mdash; hosted SaaS, operator-hosted (same container in operator&rsquo;s cloud), hybrid (operator runs the data plane, AmbiSecure runs the MDS pipeline + usage metering).
+- **Attestation formats** &mdash; Packed, FIDO-U2F, TPM, Android-Key, Android-SafetyNet, Apple Anonymous, None.
+
+When updating this page, do NOT publish implementation-specific details that would expose attack surface: AWS region choices, database table names, internal admin endpoints, session-cookie names, secret rotation cadence, internal modules. Keep it architectural.
 
 ---
 

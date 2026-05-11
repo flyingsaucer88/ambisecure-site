@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AmbiSecure FIDO Validation Server &mdash; Passwordless Authentication Platform | AmbiSecure</title>
-<meta name="description" content="FIDO-based passwordless authentication platform. JS API + REST. Strong security, seamless UX, transparent billing. WebAuthn, CTAP2, MDS lookup." />
+<title>AmbiSecure FIDO Validation Server &mdash; Multi-tenant FIDO2 SaaS</title>
+<meta name="description" content="FIDO-based passwordless authentication platform. Multi-tenant SaaS. JS API + REST. WebAuthn, CTAP2, MDS lookup. Per-tenant policy and attestation verification." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/services/fido-validation-server/" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="AmbiSecure FIDO Validation Server" />
@@ -133,6 +133,60 @@
   </div>
 </section>
 
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Multi-tenant architecture</span>
+      <h2 class="section-title">One platform, isolated tenants, per-tenant policy.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">The server is multi-tenant by design. Each relying party gets its own tenant boundary with its own AAGUID allow-list, attestation conveyance policy, user verification posture, and credential store. Tenants do not see each other's data.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Tenant isolation</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Every credential, every challenge, every audit record is scoped to a single tenant identifier. Cross-tenant queries are refused at the persistence layer, not just the API layer.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">API key per environment</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Separate API keys per environment (dev / staging / production). Keys are hashed at rest; the cleartext value is shown once at issuance. Rotation is operator-driven, not on-call work.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Per-tenant policy</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Allowed authenticator AAGUIDs, required UV, required attestation conveyance, residency requirements for resident credentials, user-handle namespace &mdash; all configured per tenant.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Usage + billing</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Active-credential counts, registration volume, and authentication volume are tracked per tenant. The billing line is whatever the operator wants to expose; the metering is honest.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Attestation verification</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Packed, FIDO-U2F, TPM, Android-Key, Android-SafetyNet, Apple Anonymous, and None formats are verified inside the server. AAGUID lookups go through a refreshed FIDO Metadata Service mirror.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Origin + RP-ID binding</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Every registration locks the credential to a tenant-declared RP-ID and origin set. Mis-matched origins are rejected before any signature is examined, eliminating the phishing-replay surface.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">API surface</span>
+      <h2 class="section-title">Two ceremonies, four endpoints.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">The server&rsquo;s public surface is small on purpose. Two REST calls per ceremony, scoped by an API key plus a tenant identifier. The browser-side WebAuthn API does the rest.</p>
+    </div>
+    <table class="spec-table">
+      <tr><th>POST /register/begin</th><td>Returns a <code>PublicKeyCredentialCreationOptions</code> challenge for the user. Tenant policy populates <code>authenticatorSelection</code>, <code>attestation</code>, and <code>excludeCredentials</code>.</td></tr>
+      <tr><th>POST /register/finish</th><td>Verifies the authenticator&rsquo;s signed attestation, applies the tenant&rsquo;s AAGUID policy, persists the credential. Returns the credential record on success.</td></tr>
+      <tr><th>POST /login/begin</th><td>Returns a <code>PublicKeyCredentialRequestOptions</code> challenge. Supports both username-first and discoverable-credential (passkey) flows.</td></tr>
+      <tr><th>POST /login/finish</th><td>Verifies the assertion against the stored public key, increments the signature counter, applies tenant freshness policy, emits a tenant-scoped session token.</td></tr>
+      <tr><th>GET /credentials/:userId</th><td>Tenant-scoped credential enumeration for account-management surfaces. Includes AAGUID, transports, sign-count, and last-used timestamp.</td></tr>
+      <tr><th>DELETE /credentials/:credentialId</th><td>Tenant-scoped credential revocation. Idempotent.</td></tr>
+      <tr><th>Admin / tenant /usage</th><td>Internal admin endpoints (separately scoped) for tenant CRUD, key rotation, and usage metering.</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Deployment options</span>
+      <h2 class="section-title">Three deployment shapes, one server image.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-3">
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Hosted SaaS</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">AmbiSecure runs the server. Operators receive an admin console, API keys, and a sandbox tenant within a business day. Right for greenfield deployments and proofs of concept.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Operator-hosted</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Same container image, deployed into the operator&rsquo;s cloud account (AWS / Azure / GCP) or on-premises. Right for residency requirements and operators with existing identity-stack ownership.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Hybrid</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Verification + tenant data in the operator&rsquo;s account; usage metering and MDS mirror centrally hosted. Right for operators who want the data plane and don&rsquo;t want to run the MDS pipeline.</p></div>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="section-container">
     <div class="section-head left">
@@ -140,7 +194,14 @@
       <h2 class="section-title">Where this fits in the bigger picture.</h2>
       <span class="section-line"></span>
     </div>
-    <div class="grid-3"><a href="/products/onepass-card/" class="card"><h3>Product: OnePass Card</h3><p>A FIDO2 authenticator the validation server is purpose-built to verify.</p><div class="card-meta">View product &rarr;</div></a><a href="/solutions/passwordless-mfa/" class="card"><h3>Solution: Passwordless MFA</h3><p>Why the validation server is the deployable end of the FIDO story.</p><div class="card-meta">View solution &rarr;</div></a><a href="/technologies/webauthn/" class="card"><h3>Technology: WebAuthn</h3><p>How the JS API and REST endpoints map to the spec.</p><div class="card-meta">View technology &rarr;</div></a></div>
+    <div class="grid-3">
+      <a href="/products/onepass-card/" class="card"><h3>Product: OnePass Card</h3><p>A FIDO2 authenticator the validation server is purpose-built to verify.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/fido2-nano-sim-applet/" class="card"><h3>Product: FIDO2 Nano SIM Applet</h3><p>SIM-resident FIDO2 authenticator the server verifies natively.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/solutions/passwordless-mfa/" class="card"><h3>Solution: Passwordless MFA</h3><p>Why the validation server is the deployable end of the FIDO story.</p><div class="card-meta">View solution &rarr;</div></a>
+      <a href="/technologies/webauthn/" class="card"><h3>Technology: WebAuthn</h3><p>How the JS API and REST endpoints map to the spec.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/references/aaguids/" class="card"><h3>Reference: AAGUIDs</h3><p>The authenticator-model identifiers the server&rsquo;s policy engine matches against.</p><div class="card-meta">View reference &rarr;</div></a>
+      <a href="/blog/understanding-webauthn-attestation-objects/" class="card"><h3>Blog: Attestation objects</h3><p>The format the server verifies on every registration.</p><div class="card-meta">Read article &rarr;</div></a>
+    </div>
   </div>
 </section>
 
