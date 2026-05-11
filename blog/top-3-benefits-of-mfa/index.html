@@ -25,6 +25,27 @@
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the single biggest benefit of MFA?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Cutting off credential-stuffing at the source. A breached password from an unrelated site can no longer be used to take over an MFA-protected account, because the attacker also needs the second factor — which they do not have."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does hardware-bound MFA differ from app-based MFA?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "App-based MFA (TOTP, push) is still a shared secret or a relayable approval and remains phishable through adversary-in-the-middle attacks. Hardware-bound MFA (FIDO2 / passkeys) is origin-bound at the protocol layer; even a perfect phishing site cannot extract a useful signature."
+     }
+    }
+   ]
+  },
  {"@type":"BreadcrumbList","itemListElement":[
    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
@@ -60,10 +81,10 @@
     <p>Even sophisticated organisations get phished. The question is what an attacker gets when a single employee falls for it. With password-only auth, the attacker gets the account. With MFA based on a phone OTP, the attacker still has to interact with the user a second time. With hardware-bound MFA &mdash; FIDO2 keys, smart cards, biometric tokens &mdash; the attacker cannot use the phished credential at all, because it is cryptographically bound to the legitimate origin.</p>
 
     <h2>3. Builds compliance and audit posture</h2>
-    <p>Modern compliance frameworks &mdash; PCI DSS, NIST 800-63, SOC 2, ISO 27001, India DPDP &mdash; treat MFA as effectively mandatory for privileged access, and increasingly for ordinary access. Hardware-bound MFA reduces audit burden because the auditor can verify, by AAGUID and attestation, that a specific certified device authenticated each session.</p>
+    <p>Modern compliance frameworks &mdash; PCI DSS, NIST 800-63, SOC 2, ISO 27001, India DPDP &mdash; treat MFA as effectively mandatory for privileged access, and increasingly for ordinary access. Hardware-bound MFA reduces audit burden because the auditor can verify, by <a href="/references/aaguids/">AAGUID</a> and <a href="/technologies/attestation/">attestation</a>, that a specific certified device authenticated each session.</p>
 
     <h2>What "hardware-bound" actually changes</h2>
-    <p>The shift from "MFA in general" to "hardware-bound MFA" is the same shift as from "passwords in a database" to "passwords as bcrypt hashes". The mechanism stays the same to the user; the security properties leap forward. A FIDO2 smart card like the <a href="/products/onepass-card/">OnePass Card</a> binds each credential to a specific origin in silicon &mdash; phishable through neither the user nor the wire.</p>
+    <p>The shift from "MFA in general" to "hardware-bound MFA" is the same shift as from "passwords in a database" to "passwords as bcrypt hashes". The mechanism stays the same to the user; the security properties leap forward. A <a href="/technologies/fido2/">FIDO2</a> smart card like the <a href="/products/onepass-card/">OnePass Card</a> binds each credential to a specific origin in silicon &mdash; phishable through neither the user nor the wire.</p>
 
     <p>Related reading: <a href="/blog/why-use-multi-factor-authentication/">Why use Multi-factor Authentication?</a> &middot; <a href="/blog/implementing-fido2-developer-guide/">Implementing FIDO2 (full developer guide)</a>.</p>
 

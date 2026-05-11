@@ -27,6 +27,43 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Are passkeys just stronger MFA?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Passkeys are a different cryptographic primitive, not an additional factor. They are origin-bound public-key credentials stored in hardware, which retires phishing, replay, credential stuffing, and push fatigue as attack classes — outcomes traditional MFA cannot offer regardless of factor count."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can a phishing site capture a passkey the way it captures a TOTP code?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Passkey authentication is bound to the relying-party origin at the WebAuthn protocol layer. A phishing origin cannot ask the authenticator to sign for the legitimate origin, so adversary-in-the-middle proxy attacks (Modlishka, Evilginx) stop working."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does the BE/BS distinction mean for an enterprise rollout?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "BE (Backup Eligibility) marks a credential that can sync across the user's devices; BS (Backup State) marks one that already has. For workforce identity, many enterprises require BE=0 device-bound keys for privileged access and allow BE=1 syncable passkeys for general workforce sign-in."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do we still need a second factor if we deploy passkeys?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For most consumer and workforce flows the passkey is itself the phishing-resistant authentication ceremony — no extra factor is required. High-risk admin paths often pair a passkey with device-posture or step-up to a separate hardware key, but this is risk-tier policy, not a passkey limitation."
+     }
+    }
+   ]
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {

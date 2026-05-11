@@ -205,7 +205,7 @@
     "MFA",
     "Passkeys"
    ],
-   "last_reviewed": "2026-01-10",
+   "last_reviewed": "2026-05-11",
    "freshness": "current"
   },
   {
@@ -221,7 +221,7 @@
    "tags": [
     "FIDO"
    ],
-   "last_reviewed": "2026-01-05",
+   "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
   },
   {
@@ -240,7 +240,7 @@
     "Attestation",
     "FIDO"
    ],
-   "last_reviewed": "2025-12-28",
+   "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
   },
   {
@@ -258,7 +258,7 @@
     "Cyber Security",
     "Hardware"
    ],
-   "last_reviewed": "2025-12-20",
+   "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
   },
   {
@@ -291,7 +291,7 @@
    "tags": [
     "DESFire"
    ],
-   "last_reviewed": "2025-12-05",
+   "last_reviewed": "2026-05-11",
    "freshness": "evergreen"
   },
   {
@@ -342,7 +342,7 @@
    "tags": [
     "MFA"
    ],
-   "last_reviewed": "2025-11-15",
+   "last_reviewed": "2026-05-11",
    "freshness": "current"
   },
   {
@@ -358,7 +358,7 @@
    "tags": [
     "MFA"
    ],
-   "last_reviewed": "2025-11-10",
+   "last_reviewed": "2026-05-11",
    "freshness": "current"
   },
   {

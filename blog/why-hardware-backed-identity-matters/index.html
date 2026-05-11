@@ -27,6 +27,35 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why isn't a software-only credential secure enough?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Software-only credentials live in memory or on disk where any code with the right privilege can read them — malware, browser extensions, sloppy memory dumps, OS exploits. Hardware-backed credentials make extraction physically expensive: the private key never leaves the secure boundary, even to the operating system that owns the device."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is the platform vendor's secure enclave good enough?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Often yes, for the threat model of a workforce daily-sign-in. It is not good enough when you need an independently certified boundary, when keys must survive a device-vendor breach, or when the credential needs to outlive the device. That is when an external secure element earns its keep."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does hardware-backed identity not solve?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It does not solve phishing of the human (social engineering), credential issuance fraud, lateral movement after authentication, or compromise of the relying-party server. Hardware moves the credential's threat surface; it does not eliminate the rest of the trust chain."
+     }
+    }
+   ]
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {

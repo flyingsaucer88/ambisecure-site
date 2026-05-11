@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 13 — Yoast-style audit + editorial compression + taxonomy cleanup)
+**Last updated:** 2026-05-11 (Phase 14 — SEO audit close-out: FAQ schema, link suggester, readability metrics, pre-commit hook)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -106,12 +106,17 @@ Fonts: Montserrat (display), Source Sans 3 (body), JetBrains Mono (code).
 │   ├── audit-seo.py           Sitemap / canonical / orphan / href / htaccess
 │   ├── audit-media.py         Oversize / missing-WebP / dead-weight
 │   ├── audit-freshness.py     Blog last_reviewed / freshness audit
-│   ├── audit-yoast.py         Yoast-style SEO + readability audit
+│   ├── audit-yoast.py         Yoast-style SEO + readability audit + FAQ schema check
+│   ├── suggest-internal-links.py  Under-linked-blog suggester (Phase 14)
 │   └── audit-all.sh           Run every audit in one go
+├── scripts/            Pre-commit guardrails (Phase 14)
+│   └── check-last-reviewed.py  Bumps `last_reviewed` when blog HTML is edited
+├── .githooks/          Opt-in git hooks (Phase 14, `git config core.hooksPath .githooks`)
+│   └── pre-commit             Runs lint-htaccess + check-last-reviewed + blog-pool sanity
 ├── legacysitedata/     Frozen scrape of the legacy WordPress site (gitignored MP4s)
 ├── docs/               THIS DOC + OPEN_ITEMS_AND_FUTURE_BACKLOG.md (only these two)
 ├── .lighthouserc.json  Lighthouse CI config
-└── .github/workflows/  Lighthouse CI + htaccess-lint + sitemap-validate
+└── .github/workflows/  Lighthouse CI + 7 audit jobs
 ```
 
 ---
@@ -141,6 +146,8 @@ A working `.htaccess` rsync exclude list:
 --exclude=legacysitedata/
 --exclude=.git/
 --exclude=.github/
+--exclude=.githooks/
+--exclude=scripts/
 --exclude=tools/
 --exclude=.lighthouseci/
 --exclude=node_modules/
@@ -333,6 +340,49 @@ Each entry in `blogs.json` carries:
 
 The `audit-freshness` check fails CI if any entry is missing these fields. It does not fail on age — that's intentional, operator-side judgment.
 
+### 6.6 FAQPage structured data (Phase 14)
+
+12 high-intent modern blogs carry FAQPage JSON-LD embedded in the article's existing `@graph`:
+
+- All five comparison cornerstones (`passkeys-vs-traditional-mfa`, `smart-cards-vs-fido-tokens-vs-passkeys`, `secure-element-vs-tpm-vs-hsm`, `platform-vs-roaming-authenticators`, `desfire-ev1-vs-ev2-vs-ev3`).
+- The high-intent explainers (`why-hardware-backed-identity-matters`, `how-fido-authentication-works`, `why-use-multi-factor-authentication`, `top-3-benefits-of-mfa`).
+- Deep-dive technicals (`credential-lifecycle-management`, `understanding-webauthn-attestation-objects`, `javacard-applet-development-enterprise-identity`).
+
+Rules:
+
+- 2–4 Q&A pairs per post; answers paraphrase real article content. No fabricated answers, no keyword stuffing.
+- No visible FAQ blocks. The H2 sections already answer the questions; the schema just helps Google parse them.
+- `audit-yoast` validates FAQPage entries: non-empty `name` + `acceptedAnswer.text`, no duplicate questions per page.
+- To add FAQ schema to another post, inject the JSON-LD into the existing `<script type="application/ld+json">` `@graph` array — see any of the 12 listed posts for the canonical shape.
+
+### 6.7 Internal-link maintenance (Phase 14)
+
+`tools/suggest-internal-links.py` reports under-linked modern blogs:
+
+```bash
+python3 tools/suggest-internal-links.py                                  # console report
+python3 tools/suggest-internal-links.py --threshold 6                    # raise the bar
+python3 tools/suggest-internal-links.py --json tools/reports/internal-link-suggestions.json
+```
+
+For each modern post the tool reports current internal link count, priority (high < 3 links, medium < threshold, low otherwise), and concrete target URLs based on keyword matches and category/tag overlap. The tool only suggests — operators decide which links to apply inline.
+
+### 6.8 Pre-commit hook (Phase 14)
+
+Opt-in. Enable once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+`.githooks/pre-commit` runs:
+
+1. `python3 scripts/check-last-reviewed.py --check` — fails the commit if a modern blog HTML is staged without bumping its `last_reviewed` in `assets/data/blogs.json`. Archive posts warn only.
+2. `python3 tools/lint-htaccess.py` — chains/loops/duplicates.
+3. Sanity: if `blogs.json` is staged but `blog-pool.js` is not, prints a warning telling the operator to run `tools/regen-blog-pool.py`.
+
+The full `audit-all.sh` suite is too slow (~6s) for every commit; it stays in CI. The hook covers the cheap, high-value checks only.
+
 ### 6.3 Categories vs tags
 
 - **Categories** are coarse-grained editorial buckets ("FIDO", "Transit", "JavaCard"). The category landing pages live at `/blog/categories/<slug>/`.
@@ -501,7 +551,7 @@ The config exercises 8 representative pages (homepage, blog, product, case study
 5. `audit-seo` — `python3 tools/audit-seo.py` (sitemap, canonical, orphans, hrefs, htaccess targets).
 6. `audit-media` — `python3 tools/audit-media.py` (oversize, missing-WebP, dead-weight, missing references).
 7. `audit-freshness` — `python3 tools/audit-freshness.py --strict` (blog `last_reviewed` / `freshness` metadata).
-8. `audit-yoast` — `python3 tools/audit-yoast.py --strict` (per-page-type word-count bands, title / desc lengths, H1 uniqueness, heading hierarchy, paragraph length, internal-link count).
+8. `audit-yoast` — `python3 tools/audit-yoast.py --strict` (per-page-type word-count bands, title / desc lengths, H1 uniqueness, heading hierarchy, paragraph length, internal-link count, FAQPage schema validity, Phase 14 readability metrics: avg sentence length, long-sentence count, heading density, top repeated 3-grams).
 
 Treat audits 2–8 as blocking and Lighthouse as advisory.
 
@@ -561,6 +611,8 @@ Before every commit:
 - [ ] `bash tools/audit-all.sh` — single command that runs every audit. Exit 0 = clean.
 - [ ] `python3 tools/regen-blog-pool.py` (if `blogs.json` changed)
 - [ ] `python3 tools/gen-og-batch.py --wire` (if a section's eyebrow/title/subtitle changed)
+- [ ] If a blog HTML changed, bump its `last_reviewed` in `assets/data/blogs.json` (the `.githooks/pre-commit` hook enforces this once enabled).
+- [ ] `python3 tools/suggest-internal-links.py` — review high-priority under-linked posts and add inline links where natural.
 - [ ] Visual sanity check of `/` in a browser (banner, spotlight, no console errors)
 - [ ] Verify no new `https://fonts.googleapis.com` link slipped into a hand-edited page (we are fully self-hosted)
 - [ ] Verify any new HTML page has the `/privacy/` footer link

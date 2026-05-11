@@ -12,8 +12,19 @@ Per-page signals:
   - max_para       : longest paragraph word count.
   - internal_links : <a href="/..."> count.
   - external_links : <a href="http..."> count (informational only).
-  - passive_hits   : rough passive-voice heuristic.
+  - passive_hits   : rough passive-voice heuristic (warnings only).
   - reading_min    : word_count / 220 minutes.
+
+Phase 14 readability signals (warnings only — never hard failures):
+  - avg_sent_len   : average words per sentence.
+  - long_sents    : sentences > 28 words.
+  - max_sent      : longest sentence (words).
+  - heading_density: words per heading (lower = more scannable).
+  - top_repeats   : top-3 most-frequent 3-grams in body (for diction repetition).
+
+Phase 14 FAQ schema validation:
+  - FAQPage entries must have non-empty Question.name and Answer.text.
+  - No duplicate questions per page.
 
 Per-page-type bands ("blog" includes /blog/<slug>/ posts, NOT the archive):
 
@@ -43,8 +54,8 @@ Default: report-only (exit 0). Use --strict to gate CI.
     python3 tools/audit-yoast.py --strict
     python3 tools/audit-yoast.py --only blog
 """
-import argparse, os, re, sys
-from collections import defaultdict
+import argparse, json, os, re, sys
+from collections import Counter, defaultdict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -151,6 +162,73 @@ def text_words(html_fragment):
     text = re.sub(r"\s+", " ", text).strip()
     return text.split() if text else []
 
+def sentences(words):
+    """Split a flat word stream into sentences by terminal punctuation.
+    Rough but deterministic. Treats . ! ? as terminators."""
+    out = []
+    current = []
+    for w in words:
+        current.append(w)
+        if w.endswith((".", "!", "?")) and len(w) > 1:
+            out.append(current)
+            current = []
+    if current:
+        out.append(current)
+    return out
+
+STOP_3GRAM_WORDS = set("the a an and or but of to in for on with at by is are was were be been being it its this that these those as if then so not no".split())
+
+def top_repeats(words, n=3, top=3):
+    """Return top-N most-frequent n-grams that aren't dominated by stop words."""
+    clean = [re.sub(r"[^a-z0-9]", "", w.lower()) for w in words]
+    clean = [w for w in clean if w]
+    grams = []
+    for i in range(len(clean) - n + 1):
+        gram = clean[i:i+n]
+        if sum(1 for g in gram if g in STOP_3GRAM_WORDS) >= 2:
+            continue
+        grams.append(" ".join(gram))
+    counts = Counter(grams)
+    return counts.most_common(top)
+
+# ---- FAQPage schema extraction + validation -----------------------------
+JSONLD_RE = re.compile(r'<script type="application/ld\+json">\s*(\{.*?\})\s*</script>', re.DOTALL | re.IGNORECASE)
+
+def faq_schema_issues(html):
+    """Return list of issues with FAQPage schema on the page (if present)."""
+    issues = []
+    for m in JSONLD_RE.finditer(html):
+        try:
+            d = json.loads(m.group(1))
+        except Exception:
+            continue
+        graph = d.get("@graph", [d])
+        for node in graph:
+            if not isinstance(node, dict):
+                continue
+            if node.get("@type") != "FAQPage":
+                continue
+            entities = node.get("mainEntity", [])
+            if not entities:
+                issues.append("FAQPage with empty mainEntity")
+                continue
+            seen_qs = set()
+            for q in entities:
+                if not isinstance(q, dict):
+                    issues.append("FAQ entry not an object")
+                    continue
+                name = (q.get("name") or "").strip()
+                ans = q.get("acceptedAnswer", {})
+                ans_text = (ans.get("text") if isinstance(ans, dict) else "" or "").strip()
+                if not name:
+                    issues.append("FAQ entry missing question text")
+                if not ans_text:
+                    issues.append(f"FAQ '{name[:50]}' missing answer text")
+                if name in seen_qs:
+                    issues.append(f"duplicate FAQ question: {name[:50]}")
+                seen_qs.add(name)
+    return issues
+
 # ---- Per-page audit ------------------------------------------------------
 def audit_page(path):
     rel = os.path.relpath(path, ROOT)
@@ -192,6 +270,18 @@ def audit_page(path):
     passive_hits = len(ATTR_PASSIVE_RE.findall(" ".join(words)))
     reading_min = round(wc / 220, 1)
 
+    sents = sentences(words)
+    sent_lens = [len(s) for s in sents]
+    avg_sent_len = round(sum(sent_lens) / len(sent_lens), 1) if sent_lens else 0
+    long_sents = sum(1 for n in sent_lens if n > 28)
+    max_sent = max(sent_lens) if sent_lens else 0
+
+    n_headings = len(headings)
+    heading_density = round(wc / n_headings, 1) if n_headings else wc
+
+    repeats = top_repeats(words)
+    faq_issues = faq_schema_issues(html)
+
     return {
         "path": rel,
         "type": classify(rel),
@@ -208,6 +298,12 @@ def audit_page(path):
         "external_links": ext_links,
         "passive_hits": passive_hits,
         "reading_min": reading_min,
+        "avg_sent_len": avg_sent_len,
+        "long_sents": long_sents,
+        "max_sent": max_sent,
+        "heading_density": heading_density,
+        "top_repeats": repeats,
+        "faq_issues": faq_issues,
     }
 
 # ---- Scoring -------------------------------------------------------------
@@ -244,6 +340,22 @@ def score(row):
         warnings.append(f"{row['long_paras']} paragraph(s) > 80 words (max {row['max_para']})")
     if row["internal_links"] < 3 and row["type"] in ("blog", "case-study", "brochure"):
         warnings.append(f"only {row['internal_links']} internal link(s)")
+
+    # Phase 14 readability warnings (never hard failures — technical content
+    # is allowed to be technical; goal is operator visibility).
+    if row["type"] in ("blog", "case-study"):
+        if row["avg_sent_len"] > 24:
+            warnings.append(f"avg sentence length {row['avg_sent_len']} words (target ≤24)")
+        if row["long_sents"] > 8:
+            warnings.append(f"{row['long_sents']} sentence(s) > 28 words (max {row['max_sent']})")
+        if row["heading_density"] > 350:
+            warnings.append(f"heading density {row['heading_density']} words/heading (target ≤350)")
+
+    # FAQ schema validity is a hard issue when present — broken FAQ schema is
+    # worse than no FAQ schema.
+    for fi in row["faq_issues"]:
+        issues.append(f"FAQ schema: {fi}")
+
     return issues, warnings
 
 def main():
@@ -313,11 +425,38 @@ def main():
             if not (iss or (args.verbose and warn)):
                 continue
             print(f"\n  {r['path']}  [{r['type']}, {r['word_count']}w, {r['title_len']}t, {r['desc_len']}d]")
+            if args.verbose:
+                print(f"    avg sent={r['avg_sent_len']}w  long sents={r['long_sents']}  "
+                      f"heading density={r['heading_density']}w/h  reading={r['reading_min']}min")
+                if r.get("top_repeats"):
+                    rep = ", ".join(f"{g} ({n})" for g, n in r["top_repeats"])
+                    print(f"    top 3-grams: {rep}")
             for i in iss:
                 print(f"    ! {i}")
             if args.verbose:
                 for w in warn:
                     print(f"    . {w}")
+
+    # FAQ schema summary (informational — issues are already in flagged list)
+    faq_pages = [r for r in rows if r.get("faq_issues") is not None
+                 and any('"@type": "FAQPage"' in open(os.path.join(ROOT, r["path"])).read()
+                         for _ in [0])]
+    # Cheaper: just count those whose audit_page found FAQ content (issues empty means clean FAQ)
+    faq_present = []
+    for r in rows:
+        path = os.path.join(ROOT, r["path"])
+        try:
+            with open(path) as f:
+                if '"@type": "FAQPage"' in f.read():
+                    faq_present.append(r["path"])
+        except OSError:
+            continue
+    if faq_present:
+        print(f"\nFAQPage schema present on {len(faq_present)} page(s)")
+        for p in faq_present[:5]:
+            print(f"  - {p}")
+        if len(faq_present) > 5:
+            print(f"  ... and {len(faq_present)-5} more")
 
     if args.strict and total_issues > 0:
         sys.exit(1)

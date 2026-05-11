@@ -27,6 +27,35 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the difference between a platform and a roaming authenticator?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A platform authenticator is tied to a specific device (laptop TPM, phone secure enclave) and produces credentials that stay on that device. A roaming authenticator (USB / NFC / Bluetooth security key) is portable and can sign across multiple devices. Both implement WebAuthn; the operational properties differ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which authenticator type should we deploy for our workforce?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For most modern workforces the right answer is both. Platform authenticators give a frictionless daily-sign-in path on managed devices; roaming authenticators cover account recovery, BYOD, shared workstations, and high-assurance access. Treating them as substitutes leads to either UX friction or recovery dead-ends."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does caBLE / hybrid transport fit in?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hybrid transport (originally called caBLE) lets a phone act as a roaming authenticator over Bluetooth + a QR-code handshake. This is convenient as a recovery path but should not be the primary roaming credential for high-assurance access — the trust chain runs through the phone vendor's sync fabric."
+     }
+    }
+   ]
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {

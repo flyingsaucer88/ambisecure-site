@@ -29,6 +29,35 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the practical difference between a smart card, a FIDO security key, and a passkey?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A smart card is a contact/contactless authenticator tied to a personnel-issued credential and PKI lifecycle; a FIDO token is a dedicated hardware authenticator with no user-PII binding by default; a passkey is a WebAuthn credential stored in a platform or roaming authenticator, often syncable. The three differ in lifecycle, recovery, and the question of who issues and revokes them."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which credential type is right for a government or regulated workforce?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Smart cards remain the default in environments that need PIV/CAC-style identity binding, attribute certificates, and dual-purpose physical-access integration. FIDO tokens cover the same threat model for the authentication ceremony but do not carry the same identity-card semantics."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can passkeys replace smart cards entirely?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Not yet in regulated identity programmes. Passkeys are excellent for sign-in but do not carry the personnel-record / attribute-certificate semantics that smart cards do. Many estates run a hybrid: smart cards for identity proofing and physical access, passkeys for daily SSO."
+     }
+    }
+   ]
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {

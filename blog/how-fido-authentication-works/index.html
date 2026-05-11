@@ -29,6 +29,35 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does FIDO authentication actually do under the hood?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "On registration, the authenticator generates a fresh public/private keypair scoped to the relying-party origin and returns the public key (plus optional attestation). On authentication, the relying party sends a challenge; the authenticator signs it with the private key, proving possession without sending the key itself. The private key never leaves the authenticator."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is FIDO considered phishing-resistant?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because the authenticator binds each credential to the relying-party origin at the protocol level. A phishing site at a look-alike domain cannot trigger a signature for the legitimate domain — the WebAuthn client refuses the request. There is no shared secret to type into the wrong page."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is FIDO2 the same as WebAuthn?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "FIDO2 is the umbrella standard; WebAuthn is the W3C web-platform API used by browsers, and CTAP is the authenticator-to-platform protocol used by external authenticators. Together they make up the FIDO2 stack."
+     }
+    }
+   ]
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {

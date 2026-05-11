@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# AmbiSecure pre-commit hook.
+#
+# Enable once per clone:
+#   git config core.hooksPath .githooks
+#
+# Bypass once (use sparingly, never on protected branches):
+#   git commit --no-verify
+set -e
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+# 1. last_reviewed must be bumped when modern-blog HTML is staged.
+if [ -f scripts/check-last-reviewed.py ]; then
+    python3 scripts/check-last-reviewed.py --check
+fi
+
+# 2. .htaccess lint (cheap, runs in <1s).
+if [ -f tools/lint-htaccess.py ]; then
+    python3 tools/lint-htaccess.py >/dev/null
+fi
+
+# 3. blog-pool consistency: if blogs.json is staged, blog-pool.js + search
+#    index should be staged too (or regenerated).
+if git diff --cached --name-only | grep -q '^assets/data/blogs.json$'; then
+    if ! git diff --cached --name-only | grep -q '^assets/js/blog-pool.js$'; then
+        echo "WARN: blogs.json staged but blog-pool.js is not."
+        echo "      Run: python3 tools/regen-blog-pool.py && git add assets/js/blog-pool.js assets/data/blog-search-index.json"
+    fi
+fi
+
+exit 0

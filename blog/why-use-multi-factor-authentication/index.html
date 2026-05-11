@@ -25,6 +25,35 @@
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Is MFA still useful in 2026?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes — but the value is in the kind of MFA, not the count of factors. SMS-OTP and push are weakly phishing-resistant; WebAuthn-based hardware MFA (FIDO2 / passkeys) is genuinely phishing-resistant. If you are still on the former, the upgrade path is real and time-sensitive."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does MFA protect against that a strong password does not?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A strong password fails as soon as it is captured by a phishing page, a key-logger, or a database breach. A second factor — especially a hardware-bound one — means an attacker who has the password still cannot complete the authentication ceremony. That is the threat class MFA closes."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Are all second factors equal?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. SMS-OTP is vulnerable to SIM swap. Authenticator-app TOTP is vulnerable to phishing-page relay. Push notifications are vulnerable to push fatigue. Hardware-bound WebAuthn credentials are vulnerable to none of these classes."
+     }
+    }
+   ]
+  },
  {"@type":"BreadcrumbList","itemListElement":[
    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
@@ -66,10 +95,10 @@
     <p>Even an SMS OTP raises the cost of credential-stuffing dramatically: the attacker now needs to also intercept (or social-engineer) a code in real time, per account. Most stop trying.</p>
 
     <h2>Not all second factors are equal</h2>
-    <p>OTPs delivered by SMS or app are vulnerable to phishing pages: the attacker shows a fake login, harvests password + OTP, and replays them within the OTP&rsquo;s 30-second window. <strong>Hardware-bound</strong> factors &mdash; FIDO2 security keys, smart cards, biometric tokens &mdash; are not vulnerable, because the cryptographic challenge is bound to the real origin. The phishing page can&rsquo;t replay it.</p>
+    <p>OTPs delivered by SMS or app are vulnerable to phishing pages: the attacker shows a fake login, harvests password + OTP, and replays them within the OTP&rsquo;s 30-second window. <strong>Hardware-bound</strong> factors &mdash; <a href="/technologies/fido2/">FIDO2</a> security keys, smart cards, biometric tokens &mdash; are not vulnerable, because the cryptographic challenge is bound to the real origin. The phishing page can&rsquo;t replay it.</p>
 
     <h2>What this means for you</h2>
-    <p>If you are protecting an enterprise: your password-based auth has already been bypassed. The question is whether you know it yet. Layer on hardware-bound MFA &mdash; FIDO2 cards or USB keys &mdash; for any account that touches money, identity, or production access.</p>
+    <p>If you are protecting an enterprise: your password-based auth has already been bypassed. The question is whether you know it yet. Layer on <a href="/solutions/phishing-resistant-authentication/">hardware-bound MFA</a> &mdash; FIDO2 cards or USB keys &mdash; for any account that touches money, identity, or production access.</p>
 
     <p>Related reading: <a href="/blog/top-3-benefits-of-mfa/">Top 3 Benefits of MFA</a> &middot; <a href="/blog/implementing-fido2-developer-guide/">Implementing FIDO2 (full developer guide)</a> &middot; <a href="/products/onepass-card/">OnePass Card</a> (hardware authenticator).</p>
 

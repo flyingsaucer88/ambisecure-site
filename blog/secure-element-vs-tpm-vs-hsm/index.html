@@ -29,6 +29,35 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "When should I use a secure element instead of a TPM?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Use a secure element when the credential needs to be transportable, certifiable to FIPS 140-3 / Common Criteria EAL5+, or embedded in a card / token form factor. TPMs are bound to a single host motherboard; secure elements travel with the user or device that carries them."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is a TPM enough for enterprise authentication?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For workforce sign-in on a managed device, yes — the TPM provides hardware-bound key storage adequate for FIDO2 platform-authenticator deployments. It is not the right answer for portable identity, cross-device credentials, or any case requiring an externally certified secure boundary."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does an HSM provide that a secure element does not?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An HSM provides high-throughput, multi-tenant cryptographic operations and centralised key management for server-side workloads (CA signing, code signing, payment processing). Secure elements are single-tenant endpoint devices. The two are complementary, not interchangeable."
+     }
+    }
+   ]
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {

@@ -29,6 +29,35 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does credential lifecycle management actually cover?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Issuance (provisioning a credential into a verified user's device), rotation (refreshing keys on schedule or compromise), revocation (removing a credential's authority on loss / departure), and recovery (re-enrolling a user who has lost a device). The four are operationally distinct and have to be designed together."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is FIDO credential lifecycle different from PKI credential lifecycle?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "PKI assumes a central CA issues certificates and publishes revocation (CRL/OCSP). FIDO assumes the authenticator generates its own keypair per relying party, so lifecycle is per-RP and revocation is per-credential at the RP. The trust roots are different, and operational tooling diverges accordingly."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the right recovery path for a lost hardware authenticator?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Pre-enrolled backup authenticators (a second hardware key, a platform authenticator on a managed device) are the right answer. Help-desk-driven recovery is the fallback and must itself be phishing-resistant — usually proof of identity + a step-up at a trusted location."
+     }
+    }
+   ]
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {

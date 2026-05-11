@@ -29,6 +29,35 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why build a custom JavaCard applet instead of using an off-the-shelf one?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Off-the-shelf applets (PIV, OpenPGP, FIDO2) cover the standard ceremonies. A custom applet earns its place when your enterprise has a credential model that does not map cleanly — multi-credential cards, custom attribute certificates, contactless transit + access combined on one card, or proprietary key-derivation requirements."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is GlobalPlatform SCP and which version should we use?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "GlobalPlatform Secure Channel Protocol (SCP) is the protocol used to load and manage applets on a card after issuance. SCP02 is legacy 3DES; SCP03 is AES-128/256 and is the right baseline today. New deployments should specify SCP03 and verify the chosen platform supports the key-block size the operational keys require."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does applet personalisation actually work in production?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Personalisation runs in a controlled facility with the issuance HSM holding the operational keys. The flow: card → GlobalPlatform load applet → derive per-card master key from issuer master + card UID → inject per-applet data over SCP03 → lock the security domain. Audit trails are signed and retained per the issuer's compliance regime."
+     }
+    }
+   ]
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {

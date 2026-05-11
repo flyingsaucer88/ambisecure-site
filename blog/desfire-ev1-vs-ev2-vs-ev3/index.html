@@ -27,6 +27,35 @@
 {
 "@context": "https://schema.org",
 "@graph": [
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the practical difference between DESFire EV1, EV2, and EV3?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "EV1 introduced AES-128 and the file-level key model; EV2 added Secure Messaging mode and Transaction MAC for tamper-evident sessions; EV3 added Secure Dynamic Messaging (SDM) for NDEF tags and tightened the side-channel posture. Each step is a real protocol delta, not a marketing version bump."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I deploy EV3 cards into a system designed for EV1 readers?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Backward compatibility for legacy commands is good, but EV3-specific features (SDM, advanced Secure Messaging) require reader-side support. Plan a reader-firmware refresh in step with a card migration if you want the cryptographic improvements rather than just newer silicon."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which EV generation is right for closed-loop transit?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "EV2 or EV3 — both give you Transaction MAC, which is the property you need for offline validators that must reconcile fare debits without trusting an attacker-controlled reader. EV1 lacks Transaction MAC and is best treated as legacy."
+     }
+    }
+   ]
+  },
 {
 "@type": "BreadcrumbList",
 "itemListElement": [

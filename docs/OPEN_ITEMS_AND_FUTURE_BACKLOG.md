@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 13 — Yoast audit + editorial compression)
+**Last updated:** 2026-05-11 (Phase 14 — SEO audit close-out + content governance)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
@@ -66,15 +66,6 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 
 ---
 
-## 4b. SEO / editorial governance (Phase 13 add-ons)
-
-| Item | Why deferred | Complexity | Trigger | Value |
-|------|--------------|:----------:|---------|-------|
-| Per-blog FAQ block + FAQPage JSON-LD | The 5 compressed blogs lost their FAQ section in Phase 13; targeted FAQ schema only adds value when there's a real common-question cluster | S | A specific SERP slot we want | Rich SERP snippets |
-| Internal-link suggestion script | Audit reports under-linked blogs; today the operator fixes by hand | M | Repeated under-link findings | Closes a recurring warning class |
-| Passive-voice / readability score refinement | Current heuristic is rough; a saner score would surface real problems | M | Editorial team wants a single readability index per post | Better long-form quality |
-| Per-post `last_reviewed` bump-on-edit hook | Today operators forget to bump the date when re-editing | S | Multiple operators on the same post | Keeps the freshness metadata honest |
-
 ## 5. CI + automation
 
 | Item | Why deferred | Complexity | Trigger | Value |
@@ -82,7 +73,7 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 | Lighthouse CI auto-blocking on regression | Phase 11 workflow is advisory (`continue-on-error: true`) | S | One real regression that the advisory CI catches | Performance guardrails |
 | Automated WebP regeneration when a PNG > 200 KB is added | Today the `audit-media` check surfaces it; regeneration is still manual | S | Operator chooses to invest the script time | Reduces drift |
 | Automated sitemap regeneration from on-disk page set | Sitemap is hand-curated; `audit-seo` catches drift but doesn't fix it | M | Sitemap entry count > 500 | Removes manual error class |
-| Pre-commit hook (`pre-commit` or `lefthook`) running `tools/audit-all.sh` | Today operators run it manually | S | Multiple engineers on the repo | Catches regressions earlier than CI |
+| Expand `.githooks/pre-commit` to also run `tools/audit-all.sh` | Phase 14 hook only runs `lint-htaccess` + `check-last-reviewed`; the full audit suite is too slow (~6s) to gate every commit | S | Audit suite drops below 2s, or a regression slips through | Catches everything before CI |
 | `audit-freshness` operator-side reminder dashboard | Today it's a CI report; could be a one-page operator view | S | Engineering team wants a single "what to review" page | Drives quarterly content review |
 
 ---
