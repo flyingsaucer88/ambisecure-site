@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Secure device identity for IoT &mdash; AmbiSecure case study</title>
+<meta name="description" content="Adding hardware-rooted device identity to a connected-device line: secure element on the BOM, SMT-line personalisation, and PKI lifecycle." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/case-studies/secure-device-identity/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Secure device identity for IoT &mdash; AmbiSecure case study" />
+<meta property="og:description" content="Adding hardware-rooted device identity to a connected-device line: secure element on the BOM, SMT-line personalisation, and PKI lifecycle." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/case-studies/secure-device-identity/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="article:published_time" content="2026-05-11" />
+<meta property="article:author" content="AmbiSecure Engineering" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Case studies",
+     "item": "https://ambisecure.ambimat.com/case-studies/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Secure device identity",
+     "item": "https://ambisecure.ambimat.com/case-studies/secure-device-identity/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Putting hardware-rooted identity on a connected-device line at the SMT stage",
+   "description": "Case study: fleet-class IoT manufacturer adding secure-element + PKI device identity to a new product line.",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
+   "datePublished": "2026-05-11",
+   "dateModified": "2026-05-11",
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/case-studies/secure-device-identity/",
+   "keywords": "secure element, IoT identity, X.509, EST, attestation, PKI, JavaCard"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/case-studies/">Case studies</a><span class="sep">/</span><span class="current">Secure device identity</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>Case study</span>
+      <span>IoT &middot; Secure elements &middot; PKI</span>
+      <span>Published 2026-05-11</span>
+      <span>Updated 2026-05-11</span>
+      <span>13 min read</span>
+    </div>
+
+    <span class="eyebrow">Case study &middot; Secure device identity</span>
+    <h1>Putting hardware-rooted identity on a connected-device line at the SMT stage.</h1>
+    <p class="dek">A fleet-class IoT manufacturer adding hardware-backed device identity to a connected industrial product line &mdash; secure element on the BOM, certificate provisioning at the personalisation line, and a PKI lifecycle that survives 10-year fielded devices.</p>
+
+    <h2 id="challenge">The challenge</h2>
+    <p>The customer ships connected industrial controllers in tens of thousands per year, into environments where physical access is sometimes weeks of travel away. The existing identity story was a static device certificate per stock-keeping unit, signed by a single corporate CA, with a private key in flash.</p>
+    <p>That posture failed three tests their security team had begun to apply:</p>
+    <ul>
+      <li><strong>Per-device uniqueness.</strong> An attacker who pulled the key out of one device could speak as any device of that SKU.</li>
+      <li><strong>Certificate lifecycle.</strong> Certificates were valid for the lifetime of the device, with no rotation path. A 10-year SHA-1 era certificate was still in service in some fielded units.</li>
+      <li><strong>Attestation.</strong> Backend services trusted the certificate but had no way to verify that the key the certificate covered was really inside a hardware secure element rather than in software somewhere.</li>
+    </ul>
+    <p>The brief was to redesign the device-identity stack so that the next-generation product line shipped with each unit hardware-uniquely-identified, with a key rotation path, and with provable hardware-binding.</p>
+
+    <h2 id="architecture">Architecture overview</h2>
+    <p>The design centres on three components:</p>
+
+    <div class="arch-row">
+      <div class="arch-cell"><span class="arch-tag">SILICON</span><h4>Secure element</h4><p>An <a href="/products/iot-security-chipset/">AmbiSecure IoT security chipset</a> on the device BOM, communicating with the host MCU over I2C / SPI. Each chip ships with a per-unit serial and a factory-injected attestation key.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">PROVISIONING</span><h4>SMT-line personalisation</h4><p>At the manufacturer&rsquo;s SMT line, each device runs a brief personalisation step: generate an on-chip device-identity keypair, get a per-device certificate from the customer&rsquo;s issuing CA, attestation-sign the keypair, write all three back to the secure element.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">PKI</span><h4>Issuing CA + lifecycle</h4><p>Customer-operated issuing CA backed by an HSM. Certificate issuance receives the secure element&rsquo;s attestation as input, so the CA only signs certificates over keys that actually live inside a certified secure element.</p></div>
+      <div class="arch-cell"><span class="arch-tag">RUNTIME</span><h4>Device-to-cloud attestation</h4><p>Cloud services authenticate devices via mTLS, and verify the per-device certificate plus the secure element&rsquo;s attestation. Devices can&rsquo;t be impersonated by a stolen certificate alone.</p></div>
+    </div>
+
+    <h2 id="standards">Standards involved</h2>
+    <ul>
+      <li><strong>X.509</strong> &mdash; device certificate format.</li>
+      <li><strong>RFC 7030 EST</strong> &mdash; enrollment-over-secure-transport for re-issuance.</li>
+      <li><strong>RFC 8902</strong> &mdash; attestation as an X.509 extension (where applicable).</li>
+      <li><strong>FIPS 140-3 Level 2/3</strong> &mdash; secure element certification (where the chip is certified to that level).</li>
+      <li><strong>Common Criteria EAL5+</strong> &mdash; for the secure element silicon.</li>
+      <li><strong>IEC 62443-4-2</strong> &mdash; the customer&rsquo;s industrial-controls cyber-security framework.</li>
+    </ul>
+
+    <h2 id="constraints">Deployment constraints</h2>
+    <ul>
+      <li><strong>SMT-line time budget.</strong> Personalisation has to fit into the existing line cadence. Adding more than a handful of seconds per board would cost more than the security upgrade is worth.</li>
+      <li><strong>Field rotation.</strong> Devices sit in remote environments for years. Certificate rotation has to be possible over a constrained cellular link without ever exposing the private key.</li>
+      <li><strong>10-year horizon.</strong> The certificate chain has to be defensible for the life of the device. Algorithms picked today have to be ones the customer is happy holding in 2036.</li>
+      <li><strong>Cost.</strong> The secure element is a per-unit BOM line, so the bill has to fit the product margin.</li>
+      <li><strong>Existing devices.</strong> Already-fielded units cannot be retrofitted with a secure element; the customer accepted that the security upgrade applied to the new product line only and is shipped alongside the existing stack during a multi-year transition.</li>
+    </ul>
+
+    <h2 id="trust">Trust model</h2>
+    <p>The threats the customer&rsquo;s security team had escalated:</p>
+    <ul>
+      <li><strong>Device cloning.</strong> A counterfeit device with a copied certificate authenticating to the cloud as a legitimate unit.</li>
+      <li><strong>Key extraction.</strong> Recovery of a private key from a single physical device giving attackers durable identity-spoofing capability.</li>
+      <li><strong>Long-tail algorithm risk.</strong> A 10-year-old certificate locked to a deprecated algorithm with no rotation path.</li>
+      <li><strong>Insider supply-chain risk.</strong> A malicious actor at the contract manufacturer issuing valid certificates against fake devices.</li>
+    </ul>
+    <p>The chosen architecture addresses each by construction:</p>
+    <table>
+      <thead><tr><th>Threat</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td>Device cloning</td><td>Per-device hardware-unique key + attestation. A cloned cert without the secure element&rsquo;s attestation fails the cloud check.</td></tr>
+        <tr><td>Key extraction</td><td>Key is generated inside the secure element and never exists outside it. Side-channel resistance is part of the chip&rsquo;s CC certification.</td></tr>
+        <tr><td>Long-tail algorithm risk</td><td>EST-based re-enrolment is supported from day one. The customer can roll the device population to a new algorithm without retrieving the devices.</td></tr>
+        <tr><td>Supply-chain insider risk</td><td>The issuing CA only signs certificates over attestation-verified keys. A contract-manufacturer operator with valid CA credentials cannot issue a certificate over a key that isn&rsquo;t hardware-attested.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="approach">Implementation approach</h2>
+    <p>Three tracks, run in parallel:</p>
+    <ol>
+      <li><strong>Silicon &amp; firmware.</strong> AmbiSecure delivered the secure element and the host-side firmware library that runs on the device&rsquo;s main MCU. Library exposes a small API: <code>generate_keypair()</code>, <code>attest()</code>, <code>sign()</code>, <code>import_certificate()</code>, <code>get_certificate()</code>.</li>
+      <li><strong>PKI.</strong> Customer security team operated the issuing CA. AmbiSecure provided integration to the SMT-line personalisation rig (a small appliance that talks to the CA on one side and the device under test on the other).</li>
+      <li><strong>Cloud-side verification.</strong> Customer cloud team updated the device-onboarding service to verify per-device certificates and the attestation extension. Old-style devices kept working during the transition.</li>
+    </ol>
+
+    <h3 id="personalisation">SMT-line personalisation, step by step</h3>
+<pre><code><span class="c">// Per-device personalisation, end to end. Target: under 2 s.</span>
+1. Personalisation rig powers the device under test.
+2. Rig sends: secure_element.generate_keypair("device-identity")
+   -&gt; secure element returns: public key + attestation signature
+3. Rig forwards (CSR + attestation) to issuing CA over EST.
+4. CA verifies attestation; signs a device certificate; returns it.
+5. Rig sends: secure_element.import_certificate(cert)
+6. Rig pings device: prove_possession(challenge)
+7. Device proves possession of the private key with the secure element.
+8. Rig logs the unit serial + certificate to manufacturing MES.
+</code></pre>
+    <p>The full sequence fits comfortably inside two seconds per board, which the customer&rsquo;s SMT line accommodates without a cadence change.</p>
+
+    <h2 id="ops">Operational considerations</h2>
+    <ul>
+      <li><strong>Manufacturing-rig redundancy.</strong> The personalisation rig is a single point of failure during line production. The customer ships two; either can run alone, but throughput depends on both.</li>
+      <li><strong>CA availability.</strong> The issuing CA is on the customer&rsquo;s side of the network. Manufacturing has to call back to it for every device. Outages stop production. The customer accepted this; the alternative (offline issuance) had been rejected on supply-chain-risk grounds.</li>
+      <li><strong>Certificate validity.</strong> Initial certificates are issued for 5 years. EST re-enrolment over the device&rsquo;s normal connectivity gives the customer the ability to rotate without touching devices.</li>
+      <li><strong>Cryptographic agility.</strong> The customer&rsquo;s long-term roadmap names a candidate post-quantum algorithm and is comfortable that the secure element can be migrated to it in a future product generation. The fleet doesn&rsquo;t need to move yet; the architecture doesn&rsquo;t prevent it.</li>
+    </ul>
+
+    <h2 id="integration">Integration flow</h2>
+    <p>Once devices are in the field:</p>
+    <ol>
+      <li>Device boots, opens mTLS to the cloud, presenting its device-identity certificate.</li>
+      <li>Cloud-side TLS terminator extracts the certificate, checks the chain, and pulls the attestation extension.</li>
+      <li>Cloud-side onboarding service verifies the attestation against the secure element&rsquo;s manufacturer&rsquo;s attestation root.</li>
+      <li>If both pass, the device is allowed to publish telemetry / accept commands.</li>
+      <li>If the certificate is approaching expiry, the device runs EST re-enrolment over the same mTLS channel; the secure element generates a new keypair, the CA issues a new certificate, and the rotation completes without operator intervention.</li>
+    </ol>
+
+    <h2 id="lessons">Lessons learned</h2>
+    <ol>
+      <li><strong>"Device identity" is a four-layer problem.</strong> Silicon, personalisation, PKI, and runtime verification each have to be designed by the people who own them. A vendor that "does device identity" is usually only doing one or two layers; planning the other two is on you.</li>
+      <li><strong>SMT-line time is the binding constraint.</strong> Every second of personalisation time costs real money at fleet volume. Designs that take 30 seconds per board do not survive into production. Design for two seconds.</li>
+      <li><strong>Rotation > duration.</strong> A 5-year certificate with a working rotation path is safer than a 25-year certificate without one.</li>
+      <li><strong>Attestation is what makes the certificate trustworthy.</strong> Without it, you have a PKI that says "this key has been signed by my CA" with no way to verify what the key is.</li>
+    </ol>
+
+    <h2 id="related">Related products and services</h2>
+    <ul>
+      <li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li>
+      <li><a href="/technologies/secure-elements/">Technology: Secure elements</a></li>
+      <li><a href="/products/digital-signature-token/">Digital Signature Token (companion PKI hardware)</a></li>
+      <li><a href="/solutions/secure-element-integration/">Solution: secure-element integration</a></li>
+      <li><a href="/services/javacard-development/">JavaCard development service</a> &mdash; for higher-end applet-based device identity.</li>
+    </ul>
+
+    <h2 id="resources">Related references &amp; reading</h2>
+    <ul>
+      <li><a href="/blog/why-hardware-backed-identity-matters/">Why Hardware-Backed Identity Matters</a></li>
+      <li><a href="/blog/apdu-from-first-principles/">APDU From First Principles</a></li>
+      <li><a href="/products/iot-security-chipset/">Product: IoT Security Chipset (alternate link)</a></li>
+      <li><a href="/resources/tools/x509-viewer/">Tool: X.509 viewer</a></li>
+      <li><a href="/resources/tools/asn1-parser/">Tool: ASN.1 parser</a></li>
+    </ul>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Putting hardware identity into a product line?</h2>
+        <p>The first-call agenda is your BOM, your SMT cadence, and your PKI. We&rsquo;ll bring a workable architecture sketch within a week of that call.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Start a conversation</a><a href="/engagement-models/" class="btn btn-outline" style="margin-left:8px;">Engagement models</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Engage</h4><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

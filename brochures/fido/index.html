@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FIDO deployment brochure &mdash; AmbiSecure</title>
+<meta name="description" content="What an enterprise FIDO2 rollout actually looks like &mdash; AAGUID policy, attestation, recovery, common deployment mistakes." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/brochures/fido/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="FIDO deployment brochure &mdash; AmbiSecure" />
+<meta property="og:description" content="What an enterprise FIDO2 rollout actually looks like &mdash; AAGUID policy, attestation, recovery, common deployment mistakes." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/brochures/fido/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Brochures",
+     "item": "https://ambisecure.ambimat.com/brochures/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "FIDO deployment",
+     "item": "https://ambisecure.ambimat.com/brochures/fido/"
+    }
+   ]
+  },
+  {
+   "@type": "CreativeWork",
+   "name": "AmbiSecure FIDO deployment brochure",
+   "url": "https://ambisecure.ambimat.com/brochures/fido/",
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/brochures/">Brochures</a><span class="sep">/</span><span class="current">FIDO deployment</span></nav>
+<main id="main">
+
+<section class="brochure" style="padding: 50px 80px 20px;">
+  <div class="brochure-page">
+    <div class="brochure-head">
+      <div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div>
+      <div class="brochure-meta"><span class="eyebrow">Brochure &middot; FIDO deployment</span><span class="brochure-print"><a href="javascript:window.print()" onclick="window.print();return false;">Print &rarr; PDF</a></span></div>
+    </div>
+    <h1 class="brochure-title">Phishing-resistant authentication, deployed.</h1>
+    <p class="dek brochure-dek">What it actually takes to roll FIDO2 across an enterprise &mdash; the policy decisions, the architecture, the recovery flow, and the operational realities that decide whether the programme succeeds.</p>
+  </div>
+</section>
+
+<section class="brochure">
+  <div class="section-container brochure-body">
+    <div class="brochure-section">
+      <h2>What FIDO2 buys you</h2>
+      <ul>
+              <li><strong>Phishing resistance by construction.</strong> Origin binding refuses authentication to the wrong domain. Adversary-in-the-middle proxies don&rsquo;t harvest a usable credential.</li>
+              <li><strong>No shared secret.</strong> The RP holds your public key. There&rsquo;s no password database to leak.</li>
+              <li><strong>Hardware-bound private key.</strong> Generated on-chip, never leaves the authenticator. Key extraction is hard.</li>
+              <li><strong>Attestation-pinnable.</strong> You can enforce that only your hardware registers against your accounts.</li>
+            </ul>
+    </div>
+    <div class="brochure-section">
+      <h2>The deployment architecture</h2>
+      <table>
+              <thead><tr><th>Layer</th><th>What it does</th></tr></thead>
+              <tbody>
+                <tr><td>Authenticator</td><td>OnePass Card / USB Key / Bio Card. Holds the private key in a secure element.</td></tr>
+                <tr><td>IdP</td><td>Okta / Entra ID / Ping / CAS. The relying party for the SaaS estate. WebAuthn-enabled.</td></tr>
+                <tr><td>Validation server</td><td>The relying party for internal applications that don&rsquo;t speak WebAuthn natively.</td></tr>
+                <tr><td>Lifecycle</td><td>Issuance, rotation, recovery, revocation, audit log.</td></tr>
+              </tbody>
+            </table>
+    </div>
+    <div class="brochure-section">
+      <h2>AAGUID policy</h2>
+      <p>AAGUID is the identifier for the authenticator model. A FIDO2-capable IdP can refuse to register any authenticator that isn&rsquo;t on a pre-approved list. The policy must be paired with FIDO Metadata Service (MDS) verification at registration; otherwise AAGUIDs can be spoofed by self-signed attestations.</p>
+            <ol>
+              <li>Decide your allowed authenticator classes (your issued OnePass cards, your issued OnePass USB keys, optionally a small TPM-platform allow-list).</li>
+              <li>Pin AAGUIDs at the IdP&rsquo;s WebAuthn configuration.</li>
+              <li>Enable MDS validation.</li>
+              <li>Document the policy in your CPS / security policy.</li>
+            </ol>
+    </div>
+    <div class="brochure-section">
+      <h2>Recovery</h2>
+      <p>The biggest failure mode of a FIDO programme. Recovery has to be at least as strong as initial issuance &mdash; otherwise recovery becomes the phishing target.</p>
+            <ul>
+              <li><strong>Sealed backup credential</strong> issued at the same time as the primary. User goes to IT desk on loss, breaks seal, logs in, gets re-issued.</li>
+              <li><strong>M-of-N break-glass</strong> for privileged accounts that can&rsquo;t wait for in-person.</li>
+              <li><strong>No SMS, no email-link recovery.</strong> Either of those reintroduces the credential FIDO is replacing.</li>
+            </ul>
+    </div>
+    <div class="brochure-section">
+      <h2>Common deployment mistakes</h2>
+      <ol>
+              <li>AAGUID without MDS &mdash; spoofable; not a real policy.</li>
+              <li>Allowing personal-bought keys to register &mdash; dilutes the attestation story.</li>
+              <li>SMS as a recovery factor &mdash; vector for SIM-swap.</li>
+              <li>Push approval as second factor &mdash; vulnerable to push-fatigue.</li>
+              <li>No backup credential &mdash; helpdesk floods on first major outage.</li>
+              <li>Online-only validation with no offline path for kiosks &mdash; gates fail during backend outages.</li>
+            </ol>
+    </div>
+    <div class="brochure-section">
+      <h2>Related on the AmbiSecure site</h2>
+      <ul>
+        <li><a href="/blog/how-fido-authentication-works/">Blog: How FIDO Authentication Works</a></li>
+        <li><a href="/blog/implementing-fido2-developer-guide/">Blog: Implementing FIDO2 &mdash; A Complete Developer Guide</a></li>
+        <li><a href="/blog/designing-enterprise-passwordless-systems/">Blog: Designing Enterprise Passwordless Systems</a></li>
+        <li><a href="/solutions/passwordless-enterprise/">Solution: Passwordless enterprise</a></li>
+        <li><a href="/services/fido-validation-server/">Service: FIDO Validation Server</a></li>
+        <li><a href="/case-studies/passwordless-workforce/">Case study: Passwordless workforce</a></li>
+      </ul>
+    </div>
+    <div class="brochure-section brochure-cta">
+      <h2>Planning a FIDO rollout?</h2>
+      <p>The first call is engineering &mdash; your IdP, your application catalogue, your recovery posture. The first deliverable is a deployment plan, not a deck.</p>
+      <p><a href="/contact/" class="btn btn-primary">Start a conversation</a> <a href="/engagement-models/" class="btn btn-outline">Engagement models</a></p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Engage</h4><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

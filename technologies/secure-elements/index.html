@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Secure elements &mdash; AmbiSecure</title>
+<meta name="description" content="What a secure element is, how it differs from TPM and HSM, and where AmbiSecure uses them across cards, USB keys, IoT chipsets, and applet platforms." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/secure-elements/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Secure elements &mdash; AmbiSecure" />
+<meta property="og:description" content="What a secure element is, how it differs from TPM and HSM, and where AmbiSecure uses them across cards, USB keys, IoT chipsets, and applet platforms." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/secure-elements/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Technologies",
+     "item": "https://ambisecure.ambimat.com/technologies/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Secure elements",
+     "item": "https://ambisecure.ambimat.com/technologies/secure-elements/"
+    }
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "name": "Secure elements &mdash; AmbiSecure",
+   "description": "Technology overview: what a secure element is, how it differs from TPM and HSM, and where AmbiSecure uses them.",
+   "url": "https://ambisecure.ambimat.com/technologies/secure-elements/"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">Secure elements</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology &middot; Secure elements</span>
+    <h1>Secure elements: where the keys actually live.</h1>
+    <p class="dek">A secure element is a tamper-resistant chip whose entire purpose is to store keys and run cryptographic operations on those keys. It is the foundation that every hardware-rooted credential is built on &mdash; smart cards, FIDO authenticators, IoT device identity, eSIM. This is the technology overview.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">What a secure element is</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>A secure element (SE) is a chip:</p>
+      <ul>
+        <li>Designed for the single purpose of holding key material and executing cryptographic operations on it.</li>
+        <li>Common Criteria EAL5+ certified for the chip class (silicon + OS), often with FIPS 140-3 Level 2 or higher for the cryptographic-module side.</li>
+        <li>Resistant to physical-attack classes that consumer chips are not &mdash; differential power analysis, fault injection, microprobing.</li>
+        <li>Lives on the BOM of something else: a smart card, an IoT controller, a phone&rsquo;s system-on-chip.</li>
+      </ul>
+      <p>Secure elements are <em>not</em> general-purpose processors. They do a small number of operations very securely; they do not run application code in the way an MCU does.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">How it differs from TPM and HSM</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <table>
+        <thead><tr><th>Property</th><th>Secure element</th><th>TPM</th><th>HSM</th></tr></thead>
+        <tbody>
+          <tr><td>Where it lives</td><td>Inside a device</td><td>On a PC/server motherboard</td><td>Data centre / rack</td></tr>
+          <tr><td>Designed for</td><td>Per-device identity, smart cards</td><td>Platform attestation, boot integrity</td><td>Bulk crypto, CA root, KMS</td></tr>
+          <tr><td>Throughput</td><td>Low (a few ops/s typical)</td><td>Low</td><td>High (10,000s+ ops/s)</td></tr>
+          <tr><td>Per-unit cost</td><td>Low</td><td>Low</td><td>High</td></tr>
+        </tbody>
+      </table>
+      <p>For a fuller treatment, see <a href="/blog/secure-element-vs-tpm-vs-hsm/">Secure Element vs TPM vs HSM &mdash; Where Each Fits</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Where AmbiSecure uses secure elements</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/products/onepass-card/" class="card"><h3>OnePass Card</h3><p>Smart card form factor. Secure element holds the FIDO2 keypair and badge credential.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/onepass-usb-key/" class="card"><h3>OnePass USB Key</h3><p>Hardware security key. Secure element holds the FIDO2 keypair.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/iot-security-chipset/" class="card"><h3>IoT Security Chipset</h3><p>Discrete secure element for connected-device manufacturers. Goes on the device BOM.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/javacard-applets/" class="card"><h3>JavaCard Applets</h3><p>Twelve applets co-resident on a single CC EAL5+ secure element.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/digital-signature-token/" class="card"><h3>Digital Signature Token</h3><p>USB-attached secure element for PKI signing operations.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/solutions/secure-element-integration/" class="card"><h3>Secure element integration</h3><p>The solution-level overview of putting a secure element on a new product line.</p><div class="card-meta">View solution &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Engineering ground rules</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <ol>
+        <li><strong>Keys are generated on-chip.</strong> A secure element that ever exposes a private key in cleartext, even at provisioning time, is being used incorrectly.</li>
+        <li><strong>Attestation in the issuance flow.</strong> The certification of the chip class is only useful if your CA verifies the attestation at certificate-signing time. (See <a href="/blog/pki-credential-issuance-workforce-government/">PKI Credential Issuance for Workforce and Government</a>.)</li>
+        <li><strong>Use the chip&rsquo;s crypto coprocessor.</strong> The framework primitives are side-channel-hardened. Reimplementing crypto in card-side bytecode loses that protection.</li>
+        <li><strong>Personalise under secure messaging.</strong> SCP02 / SCP03 at the personalisation line; refuse plain APDUs once personalised.</li>
+        <li><strong>Treat the chip as the trust boundary.</strong> Everything around the chip is plumbing.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Related on the AmbiSecure site</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <ul>
+        <li><a href="/blog/why-hardware-backed-identity-matters/">Blog: Why Hardware-Backed Identity Matters</a></li>
+        <li><a href="/blog/secure-element-vs-tpm-vs-hsm/">Blog: Secure Element vs TPM vs HSM</a></li>
+        <li><a href="/blog/javacard-applet-development-enterprise-identity/">Blog: JavaCard Applet Development for Enterprise Identity</a></li>
+        <li><a href="/blog/credential-lifecycle-management/">Blog: Designing Secure Credential Lifecycle Management</a></li>
+        <li><a href="/case-studies/secure-device-identity/">Case study: Secure device identity</a></li>
+        <li><a href="/brochures/device-identity/">Brochure: Device identity / IoT</a></li>
+        <li><a href="/technologies/javacard/">Technology: JavaCard</a></li>
+        <li><a href="/about/certifications/">Certifications &mdash; which secure-element classes we ship under</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Putting a secure element on your BOM?</h2>
+        <p>The first call is engineering. Bring your BOM constraints, your SMT cadence, and your PKI. We&rsquo;ll bring an architecture sketch.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Start a conversation</a><a href="/engagement-models/" class="btn btn-outline" style="margin-left:8px;">Engagement models</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Engage</h4><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

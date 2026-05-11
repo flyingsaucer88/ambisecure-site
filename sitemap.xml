@@ -275,4 +275,32 @@
   <url><loc>https://ambisecure.ambimat.com/videos/ambisecure-card-use-cases/</loc><changefreq>yearly</changefreq><priority>0.75</priority></url>
   <url><loc>https://ambisecure.ambimat.com/videos/biokey-product-loop/</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
 
+  <!-- Phase 10: Case studies, brochures, engagement models, cornerstone blogs -->
+  <url><loc>https://ambisecure.ambimat.com/case-studies/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/case-studies/passwordless-workforce/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/case-studies/transit-ticketing/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/case-studies/secure-device-identity/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+
+  <url><loc>https://ambisecure.ambimat.com/brochures/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/brochures/onepass/</loc><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/brochures/fido/</loc><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/brochures/transit-security/</loc><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/brochures/javacard/</loc><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/brochures/pki/</loc><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/brochures/device-identity/</loc><changefreq>monthly</changefreq><priority>0.75</priority></url>
+
+  <url><loc>https://ambisecure.ambimat.com/engagement-models/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+
+  <url><loc>https://ambisecure.ambimat.com/blog/smart-cards-vs-fido-tokens-vs-passkeys/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/secure-element-vs-tpm-vs-hsm/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/credential-lifecycle-management/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/transit-validators-offline-trust-architecture/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/javacard-applet-development-enterprise-identity/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/pki-credential-issuance-workforce-government/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/cyber-security-threats-overview/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/fido-supported-services/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/how-fido-authentication-works/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+
+  <url><loc>https://ambisecure.ambimat.com/technologies/secure-elements/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
 </urlset>

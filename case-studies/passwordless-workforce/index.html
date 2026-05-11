@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Passwordless workforce authentication &mdash; AmbiSecure case study</title>
+<meta name="description" content="How a 9,000-seat workforce migrated from SMS and TOTP to FIDO2 across Okta, Microsoft Entra ID, and a legacy CAS portal." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/case-studies/passwordless-workforce/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Passwordless workforce authentication &mdash; AmbiSecure case study" />
+<meta property="og:description" content="How a 9,000-seat workforce migrated from SMS and TOTP to FIDO2 across Okta, Microsoft Entra ID, and a legacy CAS portal." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/case-studies/passwordless-workforce/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="article:published_time" content="2026-05-11" />
+<meta property="article:author" content="AmbiSecure Engineering" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Case studies",
+     "item": "https://ambisecure.ambimat.com/case-studies/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Passwordless workforce",
+     "item": "https://ambisecure.ambimat.com/case-studies/passwordless-workforce/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Phasing out SMS and TOTP across a mixed enterprise estate",
+   "description": "Case study: 9,000-seat workforce migrating to FIDO2 across Okta, Microsoft Entra ID, and a legacy CAS-backed portal.",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
+   "datePublished": "2026-05-11",
+   "dateModified": "2026-05-11",
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/case-studies/passwordless-workforce/",
+   "keywords": "FIDO2, WebAuthn, passwordless, enterprise MFA, AAGUID, OnePass"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/case-studies/">Case studies</a><span class="sep">/</span><span class="current">Passwordless workforce</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>Case study</span>
+      <span>Passwordless &middot; FIDO2 &middot; Workforce</span>
+      <span>Published 2026-05-11</span>
+      <span>Updated 2026-05-11</span>
+      <span>14 min read</span>
+    </div>
+
+    <span class="eyebrow">Case study &middot; Passwordless workforce</span>
+    <h1>Phasing out SMS and TOTP across a mixed enterprise estate.</h1>
+    <p class="dek">A 9,000-seat engineering and operations workforce migrating from SMS one-time codes and TOTP apps to FIDO2 hardware authenticators &mdash; against a legacy stack that included Okta SSO for SaaS, Microsoft Entra ID for Windows, and a CAS-backed internal application portal that predated WebAuthn by a decade.</p>
+
+    <h2 id="challenge">The challenge</h2>
+    <p>The customer had a credible MFA programme on paper. In practice they had three problems they wanted addressed before their next ISO/IEC 27001 surveillance audit:</p>
+    <ul>
+      <li><strong>Phishable second factors.</strong> SMS and TOTP remained dominant, and the SOC was logging credible MFA-fatigue and SIM-swap attempts against high-privilege accounts.</li>
+      <li><strong>Inconsistent enrolment quality.</strong> Roughly 12% of staff were on SMS, 60% on a vendor authenticator app, and the remainder on a mixed bag of hardware tokens accumulated from prior pilots.</li>
+      <li><strong>Coverage gaps in their legacy application portal.</strong> An internal CAS-backed portal hosted approximately 40 line-of-business applications and had no WebAuthn support at all.</li>
+    </ul>
+    <p>The brief was: deliver phishing-resistant authentication across the whole estate, keep the legacy portal working, and do it inside a single annual budget cycle.</p>
+
+    <h2 id="architecture">Architecture overview</h2>
+    <p>The design centred on three decisions:</p>
+    <ol>
+      <li><strong>Choose a single attestation policy across the estate.</strong> Rather than allow any FIDO authenticator, the customer pinned to a small set of AAGUIDs &mdash; their issued <a href="/products/onepass-card/">OnePass Card</a>, the <a href="/products/onepass-usb-key/">OnePass USB Key</a> for shared kiosks, and a small TPM-platform allow-list for managed laptops.</li>
+      <li><strong>Run a single validation server.</strong> The customer&rsquo;s SaaS estate already used Okta and Entra ID as relying parties. For the legacy CAS portal, we deployed the <a href="/services/fido-validation-server/">FIDO Validation Server</a> as an SSO-side authenticator behind CAS, so the portal didn&rsquo;t need to learn WebAuthn natively.</li>
+      <li><strong>Bind attestation to lifecycle.</strong> AAGUID allow-listing only protects you if registration enforces it. Issuance used <a href="/products/onepass-platform/">OnePass platform</a> tooling so every credential was bound to a known hardware lot.</li>
+    </ol>
+
+    <div class="arch-row">
+      <div class="arch-cell"><span class="arch-tag">DEVICE</span><h4>OnePass Card / USB Key</h4><p>FIDO2 + WebAuthn authenticator, AAGUID-pinned. Smart card form factor for office estate, USB key for shared workstations and travel.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">VALIDATION</span><h4>FIDO Validation Server</h4><p>Used by the CAS portal directly; used as an external authenticator behind Okta / Entra for the SaaS estate via OIDC.</p></div>
+      <div class="arch-cell"><span class="arch-tag">IDP</span><h4>Okta &middot; Entra ID &middot; CAS</h4><p>Three relying parties, one credential. Each user binds one credential and reuses it across every login surface.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">LIFECYCLE</span><h4>Issuance &amp; recovery</h4><p>HSM-backed personalisation. Recovery via in-person re-issuance at IT desk, with a 24-hour break-glass code escrowed under M-of-N.</p></div>
+    </div>
+
+    <h2 id="standards">Standards involved</h2>
+    <ul>
+      <li><strong>FIDO2 &middot; CTAP2.1</strong> &mdash; authenticator protocol.</li>
+      <li><strong>W3C WebAuthn Level 2</strong> &mdash; relying-party API.</li>
+      <li><strong>Packed attestation</strong> with FIDO Metadata Service (MDS) verification at registration.</li>
+      <li><strong>NIST SP 800-63B AAL3</strong> &mdash; the customer&rsquo;s target assurance level for privileged accounts.</li>
+      <li><strong>OpenID Connect</strong> &mdash; the bridge to the legacy CAS portal.</li>
+    </ul>
+
+    <h2 id="constraints">Deployment constraints</h2>
+    <p>The constraint set drove every design choice:</p>
+    <ul>
+      <li><strong>Mixed device fleet.</strong> The customer had Windows-managed laptops, BYOD macOS, kiosks for shift-worker logins, and shared field-service tablets. No single authenticator class fit all four.</li>
+      <li><strong>Audit-grade attestation.</strong> The compliance team wanted evidence that every credential registered against a corporate account was on certified hardware. AAGUID alone is not evidence; attestation chain validation against FIDO MDS is.</li>
+      <li><strong>Legacy portal had to keep working.</strong> The internal portal was on a multi-year sunset path but couldn&rsquo;t move first. So the FIDO Validation Server had to slot in as a CAS authenticator without modifying the 40 downstream applications.</li>
+      <li><strong>Self-service helpdesk pressure.</strong> A single major outage of the recovery flow would cost more than the entire deployment. So recovery had to be in-person and resilient, not online and clever.</li>
+    </ul>
+
+    <h2 id="trust">Trust model</h2>
+    <p>The threat model the customer wanted hardened was specifically:</p>
+    <ul>
+      <li><strong>Phishing-resistant primary auth.</strong> FIDO2 origin binding gives this for free as long as MITM proxies are detected at the RP. Origin binding handled the bulk of credential-phishing attempts the SOC had been logging.</li>
+      <li><strong>SIM-swap and push-fatigue resistance.</strong> Eliminated by design once SMS and push are removed from the second-factor catalogue.</li>
+      <li><strong>Bring-your-own-authenticator dilution.</strong> Mitigated by AAGUID allow-listing + MDS verification &mdash; a personal $20 key cannot register against a managed account.</li>
+      <li><strong>Lost-device window.</strong> Recovery is via in-person re-issuance; the lost credential is revoked at the validation server in real time, and credential revocation propagates to every RP via the existing IdP session-revocation pipeline.</li>
+    </ul>
+
+    <h2 id="approach">Implementation approach</h2>
+    <p>Delivery was three tracks running in parallel, each owned by a different customer team but with shared architecture review:</p>
+
+    <table>
+      <thead><tr><th>Track</th><th>Owner</th><th>Scope</th></tr></thead>
+      <tbody>
+        <tr><td>Hardware</td><td>Customer IT supply chain</td><td>Procurement of OnePass Card (employee badge + authenticator) and OnePass USB Key for shared estate. Personalisation under issuer keys.</td></tr>
+        <tr><td>Identity plane</td><td>Customer IAM team</td><td>WebAuthn rollout in Okta and Entra ID. AAGUID policy. Recovery and break-glass flow design. Helpdesk runbooks.</td></tr>
+        <tr><td>Legacy bridge</td><td>AmbiSecure + customer portal team</td><td>FIDO Validation Server deployment behind CAS. OIDC bridge integration. Application-side regression test of the 40 line-of-business apps.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="issuance">Issuance flow</h3>
+    <p>Issuance ran at the customer&rsquo;s existing IT desk with a small operator console:</p>
+    <ol>
+      <li>Employee shows ID; the operator confirms identity from the HR record.</li>
+      <li>The console writes a fresh, hardware-bound FIDO credential to the OnePass Card, registers it against the user&rsquo;s Okta and Entra accounts (via the IdPs&rsquo; admin APIs), and prints the badge artwork on the card surface in the same pass.</li>
+      <li>If the user is in the privileged group, a backup OnePass USB Key is also enrolled and issued under sealed cover for emergency recovery.</li>
+      <li>Operator hands over the card and the optional backup; employee is logged in once at a kiosk to validate the credential.</li>
+    </ol>
+    <p>The whole flow targeted under five minutes per employee. With practice, the IT desk routinely beat that.</p>
+
+    <h2 id="ops">Operational considerations</h2>
+    <ul>
+      <li><strong>Helpdesk training mattered more than UX.</strong> The vast majority of "FIDO doesn&rsquo;t work" tickets in the first month were a single confusion: users tapping the card on the laptop&rsquo;s NFC reader before the relying-party page had finished prompting. The fix was a 10-minute helpdesk video, not a software change.</li>
+      <li><strong>Privileged-account recovery is a process, not a feature.</strong> The customer adopted an M-of-3 escrow for break-glass codes, audited monthly. Engineering kept the protocol simple so the security team could explain it to auditors.</li>
+      <li><strong>Browser/IdP version pinning.</strong> WebAuthn behaviour drifted in two relying parties during the rollout (a Chromium change in extension API, an Okta policy change in conditional-access). The lesson logged: pin a minimum browser version in the conditional-access policy, then track upstream changes deliberately.</li>
+    </ul>
+
+    <h2 id="integration">Integration flow</h2>
+<pre><code><span class="c">// Simplified RP-side credential-creation policy</span>
+authenticatorSelection: {
+  authenticatorAttachment: "cross-platform",  // OnePass Card / USB Key
+  residentKey: "preferred",                   // discoverable creds where supported
+  userVerification: "required"                // PIN or bio always required
+}
+attestation: "direct"
+extensions:        { credProps: true }
+allowedAAGUIDs:    [/* AmbiSecure-issued AAGUIDs only */]
+mdsValidation:     true                       // FIDO Metadata Service
+</code></pre>
+    <p>The validation server was configured to reject any credential where the AAGUID was outside the allow-list, where attestation chain validation failed against MDS, or where the metadata statement&rsquo;s certification level didn&rsquo;t meet the customer&rsquo;s AAL3 floor.</p>
+
+    <h2 id="lessons">Lessons learned</h2>
+    <ol>
+      <li><strong>AAGUID allow-listing without MDS validation is theatre.</strong> Without verifying the attestation chain against FIDO Metadata Service, AAGUID alone can be spoofed by self-signed attestations.</li>
+      <li><strong>The legacy bridge mattered more than the modern apps.</strong> The Okta / Entra integration was textbook. The CAS bridge was where 60% of the integration effort actually went. Plan accordingly.</li>
+      <li><strong>Issuance is faster than recovery, so design recovery first.</strong> Once you know exactly what an employee does when they lose their card on a Friday night, the rest of the system is much easier to design.</li>
+      <li><strong>Print badge + credential on the same card.</strong> "Two things" is two things to lose. The OnePass Card form factor halves the loss rate.</li>
+    </ol>
+
+    <h2 id="related">Related products and services</h2>
+    <ul>
+      <li><a href="/products/onepass-platform/">OnePass Platform</a> &mdash; the hardware-backed identity platform.</li>
+      <li><a href="/products/onepass-card/">OnePass Card</a> &mdash; smart card + FIDO authenticator.</li>
+      <li><a href="/products/onepass-usb-key/">OnePass USB Key</a> &mdash; FIDO-certified hardware key.</li>
+      <li><a href="/services/fido-validation-server/">FIDO Validation Server</a> &mdash; deployable WebAuthn RP backend.</li>
+      <li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise solution</a> &mdash; the deployment overview.</li>
+    </ul>
+
+    <h2 id="resources">Related references &amp; reading</h2>
+    <ul>
+      <li><a href="/blog/implementing-fido2-developer-guide/">Implementing FIDO2: A Complete Developer Guide</a></li>
+      <li><a href="/blog/designing-enterprise-passwordless-systems/">Designing Enterprise Passwordless Systems</a></li>
+      <li><a href="/blog/understanding-webauthn-attestation-objects/">Understanding WebAuthn Attestation Objects</a></li>
+      <li><a href="/blog/platform-vs-roaming-authenticators/">Platform vs Roaming Authenticators</a></li>
+      <li><a href="/references/webauthn-cose/">Reference: WebAuthn COSE key formats</a></li>
+      <li><a href="/resources/tools/aaguid-lookup/">Tool: AAGUID lookup</a></li>
+    </ul>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Planning a similar passwordless rollout?</h2>
+        <p>Talk to the engineers who shipped this architecture. We&rsquo;ll bring a one-page deployment sketch to the first call, not a sales deck.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Start a conversation</a><a href="/engagement-models/" class="btn btn-outline" style="margin-left:8px;">Engagement models</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Engage</h4><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

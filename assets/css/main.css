@@ -2322,3 +2322,144 @@ footer.site-footer a:hover { color: var(--brand-red); }
   line-height: 1.55;
   margin: 0;
 }
+
+/* ===== Phase 10 — Brochures ===== */
+.brochure-page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.brochure-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--rule, #E1E3E4);
+  padding-bottom: 14px;
+  margin-bottom: 22px;
+}
+.brochure-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  font-size: 12px;
+}
+.brochure-print a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: var(--brand-grey, #616A6C);
+  text-decoration: none;
+  border: 1px solid var(--rule, #E1E3E4);
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+.brochure-print a:hover {
+  color: var(--brand-red, #E3222A);
+  border-color: var(--brand-red, #E3222A);
+}
+.brochure-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+  line-height: 1.2;
+  margin: 8px 0 14px 0;
+}
+.brochure-dek {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--brand-grey, #616A6C);
+  max-width: 900px;
+}
+section.brochure {
+  padding-top: 0;
+}
+.brochure-body {
+  max-width: 1100px;
+  padding-top: 10px;
+  padding-bottom: 40px;
+}
+.brochure-section {
+  padding: 18px 0 22px;
+  border-bottom: 1px dashed var(--rule, #E1E3E4);
+}
+.brochure-section:last-child {
+  border-bottom: none;
+}
+.brochure-section h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: var(--brand-dark, #3A3F40);
+}
+.brochure-section ul, .brochure-section ol {
+  margin: 0 0 6px 0;
+  padding-left: 22px;
+}
+.brochure-section li {
+  margin-bottom: 6px;
+  line-height: 1.55;
+}
+.brochure-section table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+.brochure-section table th,
+.brochure-section table td {
+  text-align: left;
+  border-bottom: 1px solid var(--rule, #E1E3E4);
+  padding: 8px 10px;
+  vertical-align: top;
+}
+.brochure-section table th {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  background: #FAFAFA;
+}
+.brochure-cta {
+  background: #FAFAFA;
+  padding: 18px 20px;
+  border-radius: 6px;
+  border-bottom: none;
+}
+
+/* Print: collapse navigation, ecosystem bar, footer; flatten section padding. */
+@media print {
+  .ecosystem-bar,
+  .navbar,
+  .breadcrumb,
+  .skip-link,
+  .site-footer,
+  .brochure-print {
+    display: none !important;
+  }
+  body {
+    color: #000;
+    background: #fff;
+    font-size: 11pt;
+  }
+  section.brochure {
+    padding: 0 !important;
+  }
+  .brochure-body {
+    padding: 0 !important;
+  }
+  .brochure-head {
+    border-bottom: 2px solid #000;
+  }
+  .brochure-title {
+    font-size: 24pt;
+  }
+  .brochure-section {
+    page-break-inside: avoid;
+  }
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+  a[href^="/"]::after,
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 9pt;
+    color: #555;
+  }
+}

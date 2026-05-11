@@ -103,16 +103,18 @@ Each row maps to a previously-deferred item in an earlier doc. Phase 9 either im
 
 This is the *only* list of unresolved work. Everything else is either done, operational, or explicitly decided against. Each item is scoped to a specific future phase.
 
-### Phase 10 — Customer evidence & content depth
+### Phase 10 — Customer evidence & content depth — **SHIPPED 2026-05-11**
 
-| Item | Why this phase | Effort |
-|------|----------------|--------|
-| 3 anonymised customer case studies | High commercial-conversion value. Requires customer permission. | M |
-| Customer-story rotation on the home page | Same banner pattern as `highlight-banner-config.js`. | S |
-| 6 cornerstone blog posts (Choosing between SC / FIDO / Passkeys; SE vs TPM vs HSM; Credential Lifecycle; Transit Validators Offline Trust; JavaCard Applet Dev for Enterprise; PKI for Workforce / Government) | Lift topical authority on the modern blog. | L |
-| Brochure PDFs for new products | Currently buttons link to `/contact/`. | M |
-| Pricing landing page (contact-driven) | Sometimes asked-for by procurement. | S |
-| Modern coverage of three `pending-review` editorial slugs (only if SEO data shows continued inbound traffic). | Removes 3 fallback 301s. | M |
+All items below were implemented in Phase 10. See docs/26 for the full Phase 10 write-up.
+
+| Item | Phase 10 disposition |
+|------|----------------------|
+| 3 anonymised customer case studies | **Shipped** at `/case-studies/{passwordless-workforce, transit-ticketing, secure-device-identity}/`. Anonymised, architecture-led, no fabricated metrics. |
+| Customer-story rotation on the home page | **Shipped via banner config** (`case-studies-launch-2026` entry in `highlight-banner-config.js`), plus a dedicated home-page "Three places to go next" commercial-surfaces section. |
+| 6 cornerstone blog posts | **Shipped** at `/blog/{smart-cards-vs-fido-tokens-vs-passkeys, secure-element-vs-tpm-vs-hsm, credential-lifecycle-management, transit-validators-offline-trust-architecture, javacard-applet-development-enterprise-identity, pki-credential-issuance-workforce-government}/`. 16–19 min read each, ~2.5–4k words. |
+| Brochure PDFs for new products | **Shipped as printable HTML** at `/brochures/` (1 landing + 6 platform overviews). Print-to-PDF via the browser; CSS print rules included. No PDF binary in the repo. |
+| Pricing landing page (contact-driven) | **Shipped** as `/engagement-models/` — six engagement shapes, no published prices. |
+| Modern coverage of three `pending-review` editorial slugs | **Shipped** — the three `.htaccess` redirects (`/cyber-security-threats`, `/learn/ambisecure-fido-supported-services`, `/learn/how-it-work`) now resolve to real modern pages at `/blog/{cyber-security-threats-overview, fido-supported-services, how-fido-authentication-works}/`. |
 
 ### Phase 11 — Site search / analytics depth
 
@@ -183,13 +185,15 @@ This is the *only* list of unresolved work. Everything else is either done, oper
 
 ## 5. Unresolved items remaining on the site (excluding future-phase backlog)
 
-After Phase 9, the only deferred item that is **specific to the live site** rather than to a future phase is:
+After Phase 10, **there are no live-site items remaining**. The 3 `pending-review` legacy editorial slugs flagged in §5 above (during Phase 9) were resolved in Phase 10 — the corresponding modern blog pages now exist at:
 
-| Item | Why deferred | Owner |
-|------|--------------|-------|
-| 3 `pending-review` legacy editorial slugs (`/cyber-security-threats`, `/learn/ambisecure-fido-supported-services`, `/learn/how-it-work`) | They currently 301 to `/blog/`. We will not write modern coverage unless inbound SEO data justifies it. | Live-site triage; reassess after first 90 days of analytics. |
+- `/blog/cyber-security-threats-overview/`
+- `/blog/fido-supported-services/`
+- `/blog/how-fido-authentication-works/`
 
-That is **one item**. Everything else is either operational (lives in docs/13, /17, /20, /21), explicitly closed, or scoped to a numbered future phase.
+The existing `.htaccess` 301 redirects (`/cyber-security-threats`, `/learn/ambisecure-fido-supported-services`, `/learn/how-it-work`) now land on real, contemporary content instead of falling through to `/blog/`.
+
+Everything else is either operational (lives in docs/13, /17, /20, /21), explicitly closed, or scoped to a numbered future phase (11, 12, 13).
 
 ---
 
@@ -214,7 +218,7 @@ That is **one item**. Everything else is either operational (lives in docs/13, /
 | No self-redirect loops | ✓ |
 | No orphan content pages | ✓ |
 | Custom 404 served | ✓ |
-| Sitemap valid XML | ✓ (220 URLs after Phase 9) |
+| Sitemap valid XML | ✓ (242 URLs after Phase 10) |
 | robots.txt valid | ✓ |
 | Analytics off by default; opt-out + DNT respected | ✓ |
 | Vulnerability disclosure channel published | ✓ |

@@ -9,6 +9,16 @@
  */
 window.AS_HOMEPAGE_BANNERS = [
   {
+    id: "case-studies-launch-2026",
+    enabled: true,
+    eyebrow: "NEW · Case studies",
+    title: "Three anonymised deployments, written by the engineers who shipped them.",
+    body: "Passwordless workforce across mixed IdPs. DESFire EV2 transit with SAM-backed offline trust. Hardware-rooted device identity on a connected-product BOM. Architecture-first, no fabricated metrics.",
+    accent: "red",
+    primaryCta: { label: "Read case studies", url: "/case-studies/" },
+    secondaryCta: { label: "Engagement models", url: "/engagement-models/" }
+  },
+  {
     id: "onepass-platform-2026",
     enabled: true,
     eyebrow: "FEATURED · OnePass platform",

@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JavaCard Applet Development for Enterprise Identity | AmbiSecure</title>
+<meta name="description" content="JavaCard applets are how custom enterprise-identity behaviour lives on a smart card. A practical guide to building applets that ship: AID design, lifecycle, secure messaging, personalisation, and the mistakes to avoid." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/javacard-applet-development-enterprise-identity/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="JavaCard Applet Development for Enterprise Identity" />
+<meta property="og:description" content="JavaCard applets are how custom enterprise-identity behaviour lives on a smart card. A practical guide to building applets that ship: AID design, lifecycle, secure messaging, personalisation, and the mistakes to avoid." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/javacard-applet-development-enterprise-identity/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="article:published_time" content="2026-05-11" />
+<meta property="article:author" content="AmbiSecure Engineering" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "JavaCard Applet Development for Enterprise Identity",
+     "item": "https://ambisecure.ambimat.com/blog/javacard-applet-development-enterprise-identity/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "JavaCard Applet Development for Enterprise Identity",
+   "description": "JavaCard applets are how custom enterprise-identity behaviour lives on a smart card. A practical guide to building applets that ship: AID design, lifecycle, secure messaging, personalisation, and the mistakes to avoid.",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
+   "datePublished": "2026-05-11",
+   "dateModified": "2026-05-11",
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/javacard-applet-development-enterprise-identity/",
+   "keywords": "JavaCard, applet development, GlobalPlatform, SCP02, SCP03, personalisation, enterprise identity, smart cards"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">JavaCard Applet Development for Enterprise Identity</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>JavaCard &middot; Applet engineering</span>
+      <span>Cornerstone</span>
+      <span>Published 2026-05-11</span>
+      <span>Updated 2026-05-11</span>
+      <span>19 min read</span>
+    </div>
+
+    <h1>JavaCard Applet Development for Enterprise Identity</h1>
+    <p class="dek">Smart-card programmes hit a wall the moment the off-the-shelf applets don&rsquo;t do quite what the enterprise needs. JavaCard is the answer. This is what shipping an enterprise applet actually involves &mdash; from AID design to personalisation hooks to the GlobalPlatform plumbing.</p>
+
+    <p>If you are at the point of asking "can we add this custom behaviour to our identity card", you are at the point of considering a JavaCard applet. This post is for the people who have shipped a Java microservice in the past and are about to discover that JavaCard is a different language with the same name. It will save you a few weeks.</p>
+
+    <h2 id="what-is-javacard">What JavaCard actually is</h2>
+    <p>JavaCard is a stripped-down Java for smart-card chips. The runtime is a few kilobytes; there is no garbage collector (mostly); the standard library is tiny and crypto-focused; primitive types are limited (typically <code>byte</code>, <code>short</code>, sometimes <code>int</code>); object allocation in the steady state is forbidden.</p>
+    <p>What you get in exchange:</p>
+    <ul>
+      <li>A hardware-isolated execution environment running on an EAL5+ secure element.</li>
+      <li>Standardised APDU communication via the JavaCard framework.</li>
+      <li>A standardised lifecycle: install, personalise, lock, terminate.</li>
+      <li>The GlobalPlatform card-management protocol for installing and updating applets in the field.</li>
+      <li>Hardware cryptographic primitives exposed via <code>javacard.security</code> &mdash; AES, ECC, RSA, hashing &mdash; running on the chip&rsquo;s crypto coprocessor, not in interpreted bytecode.</li>
+    </ul>
+    <p>Think of it as embedded development with a Java surface and very strict memory rules.</p>
+
+    <h2 id="when-applet">When you actually need an applet</h2>
+    <p>Most enterprise-identity programmes can be built with off-the-shelf applets: FIDO2, PIV, OpenPGP, NDEF, plus a closed-loop or transit applet. You write a custom applet when:</p>
+    <ul>
+      <li>You need a <strong>combination of behaviours</strong> that no standard applet offers (e.g. FIDO2 + a proprietary access-control protocol on the same card).</li>
+      <li>You have <strong>regulatory or scheme-specific requirements</strong> the off-the-shelf applets don&rsquo;t meet.</li>
+      <li>You need to <strong>integrate with a legacy reader protocol</strong> that&rsquo;s never been standardised.</li>
+      <li>You want <strong>card-side policy</strong> &mdash; counters, velocity limits, geofence-aware permission gates &mdash; that lives on the card rather than the backend.</li>
+    </ul>
+    <p>If none of these apply, save yourself the effort and use a standard applet.</p>
+
+    <h2 id="aid">AID design</h2>
+    <p>Every applet is selected by its Application Identifier (AID), a 5-16 byte identifier in the <code>SELECT</code> APDU. The AID structure matters more than people initially think:</p>
+    <ul>
+      <li>The first 5 bytes are the <strong>RID (Registered application provider Identifier)</strong>. If you want to be globally unambiguous, register your RID with the ISO body. Many enterprises use a private RID and accept that it&rsquo;s administratively, not formally, unique.</li>
+      <li>The remaining 0-11 bytes are the <strong>PIX (Proprietary application Identifier eXtension)</strong>. Use this to encode your applet version, target use, or instance identifier.</li>
+    </ul>
+    <p>A few rules in practice:</p>
+    <ol>
+      <li><strong>Encode the version in the AID.</strong> When you ship v2 of your applet, the v1 AID and the v2 AID should be different. This lets you co-resident both on transition cards.</li>
+      <li><strong>Don&rsquo;t collide with well-known AIDs.</strong> The FIDO2 AID, the PIV AID, EMV AIDs &mdash; all reserved. Use a different RID.</li>
+      <li><strong>Keep the AID short.</strong> Some readers truncate at 16 bytes regardless of spec.</li>
+    </ol>
+
+    <h2 id="lifecycle">Applet lifecycle</h2>
+    <p>JavaCard applet lifecycle is rigid and well-defined:</p>
+    <ol>
+      <li><strong>Load.</strong> The CAP file (compiled applet) is loaded onto the card via GlobalPlatform&rsquo;s <code>LOAD</code> command. The applet now exists as code on the card.</li>
+      <li><strong>Install.</strong> An instance of the applet is created. <code>install()</code> runs on the card. Persistent storage is allocated. The applet is registered against its AID.</li>
+      <li><strong>Selectable.</strong> The applet can be selected by AID and respond to APDUs.</li>
+      <li><strong>Personalise.</strong> The applet is given its per-card data &mdash; keys, certificates, user identifiers. This typically happens at the personalisation line, under SCP02 / SCP03 secure messaging.</li>
+      <li><strong>Locked / Terminated.</strong> Depending on use case, the applet may be locked (no further personalisation) or terminated (no further use, ever).</li>
+    </ol>
+    <p>The applet author writes code for <code>install()</code>, <code>select()</code>, <code>deselect()</code>, and <code>process()</code> (the APDU dispatcher). The framework calls these at the right state transitions.</p>
+
+    <h2 id="memory">Memory rules</h2>
+    <p>The single biggest culture shock for developers coming from server-side Java. JavaCard has three memory regions:</p>
+    <ul>
+      <li><strong>Persistent (EEPROM / Flash)</strong>. Survives power loss. Slow to write. Limited write-cycle endurance (typically 100k-500k cycles). Holds everything that has to live across power events &mdash; keys, certificates, counters.</li>
+      <li><strong>Transient (RAM)</strong>. Lost on power loss or applet deselect. Fast. Used for session state, scratch buffers, derived session keys.</li>
+      <li><strong>Code</strong>. The CAP file itself, immutable after load.</li>
+    </ul>
+    <p>Rules to live by:</p>
+    <ol>
+      <li><strong>Allocate everything in <code>install()</code>.</strong> Once <code>install()</code> returns, the steady-state applet should not allocate. New <code>new</code> in <code>process()</code> is the canonical mistake.</li>
+      <li><strong>Use <code>JCSystem.makeTransientByteArray()</code> for scratch buffers.</strong> These live in RAM, are fast, and can be reused.</li>
+      <li><strong>Treat persistent writes as expensive.</strong> Batch writes into transactions. Use <code>JCSystem.beginTransaction()</code> / <code>commitTransaction()</code> to make multi-field updates atomic.</li>
+      <li><strong>Watch your counter granularity.</strong> A counter that increments on every operation eats your EEPROM endurance. Cache in RAM and flush on deselect, or only persist every N operations.</li>
+    </ol>
+
+    <h2 id="apdu-dispatch">APDU dispatch</h2>
+    <p>Inside <code>process(APDU apdu)</code> the applet inspects the CLA / INS bytes and dispatches:</p>
+<pre><code>public void process(APDU apdu) {
+    if (selectingApplet()) return;            // standard handshake
+    byte[] buf = apdu.getBuffer();
+    if (buf[ISO7816.OFFSET_CLA] != PROPRIETARY_CLA) {
+        ISOException.throwIt(ISO7816.SW_CLA_NOT_SUPPORTED);
+    }
+    switch (buf[ISO7816.OFFSET_INS]) {
+        case INS_GET_DATA:    doGetData(apdu);     break;
+        case INS_PUT_DATA:    requireSecureMessaging(apdu); doPutData(apdu); break;
+        case INS_VERIFY_PIN:  doVerifyPin(apdu);   break;
+        case INS_SIGN:        requireUserAuthed(); doSign(apdu); break;
+        default:              ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
+    }
+}
+</code></pre>
+    <p>Notice the explicit checks. Every privileged operation has a precondition (secure messaging, user authentication, an unlocked state). The dispatcher enforces them before the handler runs. This is the foundation of secure applet design.</p>
+
+    <h2 id="secure-messaging">Secure messaging (SCP02 / SCP03)</h2>
+    <p>An applet personalised at the line and then handed to a user has to know that any further administrative APDU comes from an authorised issuer. GlobalPlatform&rsquo;s SCP02 and SCP03 are the standardised secure-messaging protocols for this.</p>
+    <p>SCP03 in particular is the modern default: AES-128 / AES-256 session keys derived from issuer keys, MAC&rsquo;d and optionally encrypted APDUs. The applet decrypts and verifies before acting.</p>
+    <p>What you have to get right:</p>
+    <ul>
+      <li><strong>Refuse plain-text administrative APDUs after personalisation.</strong> If the personalisation step set a "personalised" flag, any subsequent <code>PUT DATA</code> outside SCP03 must be rejected.</li>
+      <li><strong>Distinguish user-mode APDUs from issuer-mode APDUs.</strong> User-mode (sign, verify PIN) is fine in plain text. Issuer-mode (update key, add credential) requires SCP03.</li>
+      <li><strong>Handle session-key derivation correctly.</strong> The session key has to be derived per session from the static issuer key. Caching it across sessions is a vulnerability.</li>
+    </ul>
+
+    <h2 id="personalisation">Personalisation</h2>
+    <p>Personalisation is the bridge between the applet on the card and the rest of the world.</p>
+    <p>For an enterprise identity applet, personalisation typically writes:</p>
+    <ul>
+      <li>The user&rsquo;s identifier (employee ID, account UUID).</li>
+      <li>The user&rsquo;s public certificate (or trust anchor, if the cert is generated on-card).</li>
+      <li>Initial PIN policy (length, retry counter).</li>
+      <li>Per-card derived keys (or seeds the applet uses to generate them).</li>
+    </ul>
+    <p>Personalisation runs over SCP03 secure messaging, against the issuer key set installed at GP load time. The personalisation script is owned by the issuer; it never leaves the personalisation line in cleartext.</p>
+
+    <h2 id="testing">Testing</h2>
+    <p>JavaCard applets are tested in three places, in order of fidelity:</p>
+    <ol>
+      <li><strong>jCardSim or similar emulator.</strong> A pure-Java simulation of the JavaCard runtime. Fast iteration; misses chip-specific behaviour. Use for unit tests of business logic.</li>
+      <li><strong>Real card + APDU tooling.</strong> <code>gpshell</code>, <code>pcsc-tools</code>, custom scripts. Slower, but catches issues the emulator hides (transient memory exhaustion, real crypto coprocessor behaviour, GP keyset issues).</li>
+      <li><strong>Personalisation rig + full integration.</strong> The end-to-end flow your production line will run. This is where the long-tail bugs surface.</li>
+    </ol>
+    <p>The mistake to avoid: assuming the emulator is enough. It catches 80% of logic bugs and 0% of real-card bugs.</p>
+
+    <h2 id="security">Security-critical patterns</h2>
+
+    <h3>Constant-time comparison</h3>
+    <p>Comparing a user-supplied PIN to a stored PIN with <code>Util.arrayCompare()</code> short-circuits on the first mismatch and leaks timing. Use the framework&rsquo;s <code>OwnerPIN</code> class, which is designed to be constant-time, or implement your own with explicit XOR loops.</p>
+
+    <h3>Retry counters</h3>
+    <p>Always decrement the retry counter <em>before</em> attempting the comparison. If power is yanked mid-operation, the counter has to have already decremented or the attacker can run indefinitely.</p>
+
+    <h3>Atomic state changes</h3>
+    <p>Multi-field state transitions (e.g. "set key" + "set certificate" + "set PIN") have to be in a transaction. Power-loss between two of them must leave the applet in either the old state or the new state, never an in-between.</p>
+
+    <h3>Side-channel resistance</h3>
+    <p>The crypto primitives provided by the framework are implemented on the chip&rsquo;s coprocessor with side-channel resistance baked in. Implementing your own crypto in JavaCard bytecode is almost always a mistake. Use the framework.</p>
+
+    <h2 id="gp">GlobalPlatform basics</h2>
+    <p>GlobalPlatform is the card-management protocol you use to install your applet on the chip in production. Three concepts you have to internalise:</p>
+    <ul>
+      <li><strong>Issuer Security Domain (ISD).</strong> The privileged applet that owns the card. Holds the master GP keys. Installs and removes applets.</li>
+      <li><strong>Supplementary Security Domain (SSD).</strong> A delegated domain installed under the ISD. Useful when multiple parties install applets on the same card; each gets its own SSD.</li>
+      <li><strong>Keysets.</strong> Per-domain key sets (KENC, KMAC, KDEK in SCP02 / SCP03). The personalisation line uses these to authenticate to the card before installing.</li>
+    </ul>
+    <p>An enterprise issuance line typically holds its own SSD keyset, separate from the chip vendor&rsquo;s ISD. This means the chip vendor can&rsquo;t install applets without your involvement, and you can&rsquo;t install applets at the ISD level without the chip vendor&rsquo;s.</p>
+
+    <h2 id="related">Related reading</h2>
+    <ul>
+      <li><a href="/blog/apdu-from-first-principles/">APDU From First Principles</a></li>
+      <li><a href="/blog/credential-lifecycle-management/">Designing Secure Credential Lifecycle Management</a></li>
+      <li><a href="/blog/secure-element-vs-tpm-vs-hsm/">Secure Element vs TPM vs HSM</a></li>
+      <li><a href="/technologies/javacard/">Technology: JavaCard</a></li>
+      <li><a href="/products/javacard-applets/">Product: AmbiSecure JavaCard applets</a></li>
+      <li><a href="/services/javacard-development/">Service: JavaCard development</a></li>
+      <li><a href="/solutions/javacard-deployment/">Solution: JavaCard deployment</a></li>
+      <li><a href="/case-studies/passwordless-workforce/">Case study: Passwordless workforce</a></li>
+    </ul>
+
+    <h2 id="tools">Companion tools</h2>
+    <ul>
+      <li><a href="/resources/tools/apdu-parser/">APDU Parser</a></li>
+      <li><a href="/resources/tools/atr-parser/">ATR Parser</a></li>
+      <li><a href="/resources/tools/sw-lookup/">SW1/SW2 lookup</a></li>
+      <li><a href="/resources/tools/iso7816-ref/">ISO/IEC 7816 quick reference</a></li>
+    </ul>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Designing a custom applet for an enterprise programme?</h2>
+        <p>We&rsquo;ve shipped FIDO, PIV, payment, transit, and bespoke enterprise applets. First call is engineering; first deliverable is a one-page applet design.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Talk to engineering</a><a href="/engagement-models/" class="btn btn-outline" style="margin-left:8px;">Engagement models</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Engage</h4><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

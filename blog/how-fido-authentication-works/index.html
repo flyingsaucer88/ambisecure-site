@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>How FIDO Authentication Works | AmbiSecure</title>
+<meta name="description" content="A clear, non-academic explanation of how FIDO2 / WebAuthn actually works &mdash; registration, authentication, origin binding, what the device does, what the server does. Written for people who want to understand the system before they deploy it." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/how-fido-authentication-works/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="How FIDO Authentication Works" />
+<meta property="og:description" content="A clear, non-academic explanation of how FIDO2 / WebAuthn actually works &mdash; registration, authentication, origin binding, what the device does, what the server does. Written for people who want to understand the system before they deploy it." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/how-fido-authentication-works/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="article:published_time" content="2026-05-11" />
+<meta property="article:author" content="AmbiSecure Engineering" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "How FIDO Authentication Works",
+     "item": "https://ambisecure.ambimat.com/blog/how-fido-authentication-works/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "How FIDO Authentication Works",
+   "description": "A clear, non-academic explanation of how FIDO2 / WebAuthn actually works &mdash; registration, authentication, origin binding, what the device does, what the server does. Written for people who want to understand the system before they deploy it.",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
+   "datePublished": "2026-05-11",
+   "dateModified": "2026-05-11",
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/how-fido-authentication-works/",
+   "keywords": "FIDO, FIDO2, WebAuthn, CTAP2, registration, authentication, public key cryptography, origin binding"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">How FIDO Authentication Works</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>FIDO &middot; Explainer</span>
+      <span>Refreshed 2026-05</span>
+      <span>Published 2026-05-11</span>
+      <span>Updated 2026-05-11</span>
+      <span>11 min read</span>
+    </div>
+    <h1>How FIDO Authentication Works</h1>
+    <p class="dek">An explanation of how FIDO2 / WebAuthn actually works &mdash; what happens on your device, what happens on the server, and why the design is phishing-resistant by construction. Written for people who want to understand the system, not get lost in the spec.</p>
+
+    <p>The short version: FIDO replaces passwords with a public-key signature. The signature is generated inside a hardware authenticator (a smart card, a USB key, a phone&rsquo;s secure element) using a private key that never leaves the device. The server verifies the signature against the public key it stored at registration. That&rsquo;s it.</p>
+
+    <p>The long version explains why each design decision is there.</p>
+
+    <h2 id="actors">The three actors</h2>
+    <ol>
+      <li><strong>You.</strong> The person signing in.</li>
+      <li><strong>Your authenticator.</strong> The hardware that holds the private key. Could be a security key, a smart card, a phone&rsquo;s secure enclave, or a TPM in your laptop.</li>
+      <li><strong>The relying party (RP).</strong> The website or service you&rsquo;re signing in to.</li>
+    </ol>
+    <p>FIDO&rsquo;s job is to let the RP verify that <em>you, with your specific authenticator</em>, are present, without anyone else being able to impersonate either side.</p>
+
+    <h2 id="registration">Registration: one-time</h2>
+    <p>When you sign up for a service with FIDO, the following happens:</p>
+    <ol>
+      <li>The RP generates a random <strong>challenge</strong> and sends it to your browser, along with the RP&rsquo;s origin (e.g. <code>example.com</code>) and your user ID.</li>
+      <li>Your browser passes the challenge + origin to your authenticator.</li>
+      <li>Your authenticator <strong>generates a brand-new keypair</strong> &mdash; a private key that stays inside the authenticator, and a public key it&rsquo;s about to share.</li>
+      <li>Your authenticator returns the public key + a signature over (challenge, origin, public key) using its <em>attestation</em> key &mdash; a separate identity that says "this keypair was generated on certified hardware".</li>
+      <li>The RP verifies the attestation signature and stores the public key + a credential ID under your user account.</li>
+    </ol>
+    <p>You&rsquo;ve now registered. The RP has your public key. Nobody else has your private key &mdash; not even the RP.</p>
+
+    <h2 id="auth">Authentication: every login</h2>
+    <p>When you come back to sign in:</p>
+    <ol>
+      <li>The RP generates another fresh challenge and sends it to your browser, with the credential ID it stored at registration.</li>
+      <li>Your browser passes the challenge + origin + credential ID to your authenticator.</li>
+      <li>Your authenticator <strong>looks up the matching private key</strong>, requires you to prove you&rsquo;re present (PIN, biometric, button press), and signs (challenge, origin) with the private key.</li>
+      <li>The signature is returned to the RP.</li>
+      <li>The RP verifies the signature using the public key it stored at registration. Match ? signed in.</li>
+    </ol>
+
+    <h2 id="origin-binding">Origin binding (the key insight)</h2>
+    <p>The signature is over the origin (<code>example.com</code>), not just the challenge. So:</p>
+    <ul>
+      <li>You visit a phishing site at <code>examp1e.com</code>.</li>
+      <li>The phishing site presents a login page that looks identical.</li>
+      <li>The browser receives an authentication request and asks your authenticator to sign with the origin <code>examp1e.com</code>.</li>
+      <li>Your authenticator looks up "which credential is registered for <code>examp1e.com</code>?" and finds nothing &mdash; your real credential is registered for <code>example.com</code>.</li>
+      <li>Authentication silently fails.</li>
+    </ul>
+    <p>The user doesn&rsquo;t need to spot the typosquatted domain. The browser doesn&rsquo;t need to detect it. The authenticator simply doesn&rsquo;t have a credential bound to the wrong origin. <strong>That</strong> is why FIDO is phishing-resistant by construction.</p>
+
+    <h2 id="user-verification">User verification (UV)</h2>
+    <p>Before signing, the authenticator confirms you&rsquo;re present. Three flavours:</p>
+    <ul>
+      <li><strong>User presence</strong> &mdash; a touch on the key&rsquo;s capacitive button. Confirms <em>someone</em> is there.</li>
+      <li><strong>User verification</strong> &mdash; a PIN or biometric. Confirms <em>this specific user</em> is there.</li>
+      <li><strong>None</strong> &mdash; rare; only acceptable for silent re-authentication of an already-verified session.</li>
+    </ul>
+    <p>An enterprise deployment usually requires UV (PIN or biometric) for every login. Consumer flows often accept UP (touch only) on the assumption that the user&rsquo;s holding the device.</p>
+
+    <h2 id="attestation">Attestation &mdash; the "what hardware is this?" question</h2>
+    <p>At registration, the authenticator can include an <em>attestation statement</em> &mdash; a signed declaration from the manufacturer that this is genuinely a model XYZ authenticator. The RP can verify the attestation against the FIDO Metadata Service (MDS) and decide whether to accept registrations from this device class.</p>
+    <p>For an enterprise rollout, attestation lets you enforce "only AmbiSecure-issued credentials register against employee accounts". Without it, an employee could register a personal key against their corporate account, with no way for the RP to tell.</p>
+    <p>For the byte-level mechanics, see <a href="/blog/understanding-webauthn-attestation-objects/">Understanding WebAuthn Attestation Objects</a>.</p>
+
+    <h2 id="passkeys-vs">Passkeys, security keys, smart cards &mdash; same protocol, different storage</h2>
+    <p>FIDO2 / WebAuthn is the protocol. The credential can live in many places:</p>
+    <ul>
+      <li><strong>A USB security key</strong>: device-bound; lose the key, lose the credential.</li>
+      <li><strong>A smart card</strong>: device-bound; can also carry badge artwork, transit applet, etc.</li>
+      <li><strong>A phone or laptop&rsquo;s secure enclave</strong>: platform authenticator; usually device-bound.</li>
+      <li><strong>A passkey synced through a cloud account</strong> (iCloud Keychain, Google Password Manager, 1Password, etc.): account-bound; recoverable on a new device.</li>
+    </ul>
+    <p>The protocol behaviour is the same. The deployment tradeoffs are different. See <a href="/blog/smart-cards-vs-fido-tokens-vs-passkeys/">Smart Cards vs FIDO Tokens vs Passkeys</a> for the matrix.</p>
+
+    <h2 id="what-it-replaces">What FIDO replaces</h2>
+    <table>
+      <thead><tr><th>Was</th><th>Becomes</th></tr></thead>
+      <tbody>
+        <tr><td>Password</td><td>Public-key signature</td></tr>
+        <tr><td>SMS one-time code</td><td>Authenticator-held signature (not transmittable, not phishable)</td></tr>
+        <tr><td>TOTP app</td><td>Authenticator-held signature (origin-bound)</td></tr>
+        <tr><td>"Approve push" prompt</td><td>Explicit UV on the authenticator</td></tr>
+        <tr><td>Recovery email</td><td>In-person re-issuance or sealed backup credential</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="ctap">A quick note on CTAP2</h2>
+    <p>The browser doesn&rsquo;t talk to your USB key directly. It talks via <strong>CTAP2</strong> (Client to Authenticator Protocol). CTAP2 sits between WebAuthn (browser ? RP) and the authenticator hardware. You usually don&rsquo;t need to think about it &mdash; the browser and the platform handle it &mdash; but when you&rsquo;re debugging a registration that doesn&rsquo;t work, "CTAP2 error" in the console is what you&rsquo;ll see.</p>
+
+    <h2 id="see-also">See also</h2>
+    <ul>
+      <li><a href="/blog/fido-supported-services/">Where Your AmbiSecure FIDO Key Works</a></li>
+      <li><a href="/blog/implementing-fido2-developer-guide/">Implementing FIDO2 &mdash; A Complete Developer Guide</a></li>
+      <li><a href="/blog/understanding-webauthn-attestation-objects/">Understanding WebAuthn Attestation Objects</a></li>
+      <li><a href="/blog/passkeys-vs-traditional-mfa/">Passkeys vs Traditional MFA</a></li>
+      <li><a href="/blog/platform-vs-roaming-authenticators/">Platform vs Roaming Authenticators</a></li>
+      <li><a href="/blog/smart-cards-vs-fido-tokens-vs-passkeys/">Smart Cards vs FIDO Tokens vs Passkeys</a></li>
+      <li><a href="/technologies/fido/">Technology: FIDO</a></li>
+      <li><a href="/technologies/webauthn/">Technology: WebAuthn</a></li>
+      <li><a href="/technologies/ctap2/">Technology: CTAP2</a></li>
+    </ul>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Want a deeper architectural overview before deploying?</h2>
+        <p>The first call is engineering. We&rsquo;ll walk a sample registration / authentication flow against your IdP and your application stack.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Talk to engineering</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Engage</h4><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>

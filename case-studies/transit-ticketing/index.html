@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Closed-loop transit ticketing &mdash; AmbiSecure case study</title>
+<meta name="description" content="DESFire EV2 + SAM-backed validator architecture for a metro operator's 700+ gate closed-loop ticketing fleet." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/case-studies/transit-ticketing/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Closed-loop transit ticketing &mdash; AmbiSecure case study" />
+<meta property="og:description" content="DESFire EV2 + SAM-backed validator architecture for a metro operator's 700+ gate closed-loop ticketing fleet." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/case-studies/transit-ticketing/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta property="article:published_time" content="2026-05-11" />
+<meta property="article:author" content="AmbiSecure Engineering" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Case studies",
+     "item": "https://ambisecure.ambimat.com/case-studies/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Transit ticketing",
+     "item": "https://ambisecure.ambimat.com/case-studies/transit-ticketing/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Sub-300 ms validators, offline trust, and a backend that can be down",
+   "description": "Case study: metro operator deploying DESFire EV2 + SAM-backed validators across a 700+ gate fleet.",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
+   "datePublished": "2026-05-11",
+   "dateModified": "2026-05-11",
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/case-studies/transit-ticketing/",
+   "keywords": "DESFire EV2, SAM, transit ticketing, offline authentication, validator architecture"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/case-studies/">Case studies</a><span class="sep">/</span><span class="current">Transit ticketing</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>Case study</span>
+      <span>Transit &middot; DESFire &middot; SAM</span>
+      <span>Published 2026-05-11</span>
+      <span>Updated 2026-05-11</span>
+      <span>13 min read</span>
+    </div>
+
+    <span class="eyebrow">Case study &middot; Closed-loop transit ticketing</span>
+    <h1>Sub-300 ms validators, offline trust, and a backend that can be down.</h1>
+    <p class="dek">A metropolitan transit operator rolling out closed-loop DESFire EV2 ticketing across 700+ validator gates and onboard buses, with a hard requirement that fare collection continue uninterrupted during backend outages of up to several hours.</p>
+
+    <h2 id="challenge">The challenge</h2>
+    <p>The operator was replacing a previous generation of magnetic-stripe tickets with contactless smart cards. The procurement brief was specific:</p>
+    <ul>
+      <li><strong>Sub-300 ms tap-and-go.</strong> Anything slower and the gate becomes the morning-rush bottleneck.</li>
+      <li><strong>Offline trust.</strong> If the central server is unreachable, fare validation must continue using only what the validator and the card know between themselves.</li>
+      <li><strong>Auditable revenue.</strong> Every tap, online or offline, must be reconcilable against a single source of truth once connectivity returns.</li>
+      <li><strong>Resistance to cloning and replay.</strong> A successful clone of a single card cannot become a long-lived attack against the system.</li>
+    </ul>
+    <p>The previous generation had been compromised by a card-cloning attack a decade earlier. The procurement team wanted hardware-rooted trust this time, not a software whitelist.</p>
+
+    <h2 id="architecture">Architecture overview</h2>
+    <p>The deployment is a textbook SAM-backed DESFire architecture, sized for a real metropolitan fleet:</p>
+
+    <div class="arch-row">
+      <div class="arch-cell"><span class="arch-tag">CARD</span><h4>DESFire EV2 (closed-loop)</h4><p>Per-card diversified keys derived from a master key held inside the SAM. AES-128 mutual authentication. Encrypted, MAC&rsquo;d value-file fare purse.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">VALIDATOR</span><h4>Reader + SAM module</h4><p>Each validator contains a SAM (Secure Access Module) that holds the master keys. The reader CPU never sees a master key in cleartext. SAM is the only authority that can derive a per-card diversified key.</p></div>
+      <div class="arch-cell"><span class="arch-tag">EDGE</span><h4>Local tap journal</h4><p>Every tap is logged locally with a monotonically-increasing sequence + SAM-signed MAC. Survives backend outages; reconciles on reconnection.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">BACKEND</span><h4>Reconciliation &amp; revocation</h4><p>Hot list of revoked cards is pushed to validators on connectivity. Used for cards reported lost / cloned / disputed.</p></div>
+    </div>
+
+    <p>The design points the operator cared about:</p>
+    <ol>
+      <li>The validator can&rsquo;t leak the master key because the validator never has it &mdash; the SAM does.</li>
+      <li>The card can&rsquo;t be cloned in a way that produces working fare value because the SAM-derived per-card key is required to spend the purse, and a cloned card&rsquo;s UID would either collide with the original (rejected) or be unrecognised by the SAM (also rejected).</li>
+      <li>The backend can be unreachable and the validator still does the right thing.</li>
+    </ol>
+
+    <h2 id="standards">Standards involved</h2>
+    <ul>
+      <li><strong>ISO/IEC 14443 Type A</strong> &mdash; contactless interface.</li>
+      <li><strong>ISO/IEC 7816-4</strong> &mdash; APDU command structure.</li>
+      <li><strong>NXP MIFARE DESFire EV2</strong> &mdash; the card platform. (See <a href="/blog/desfire-ev1-vs-ev2-vs-ev3/">DESFire EV1 vs EV2 vs EV3</a>.)</li>
+      <li><strong>AV2 SAM</strong> &mdash; the secure access module class. (See <a href="/technologies/sam/">Technology: SAM</a>.)</li>
+      <li><strong>EN 1545</strong> &mdash; transit fare-product data model, optional but referenced.</li>
+    </ul>
+
+    <h2 id="constraints">Deployment constraints</h2>
+    <ul>
+      <li><strong>Validator BoM.</strong> Each validator is mechanical hardware in the field, so the SAM has to be embedded at manufacture time and replaceable in field-service windows only.</li>
+      <li><strong>Key custody.</strong> Master keys are generated in an HSM at the operator&rsquo;s data centre, loaded into SAMs at the personalisation line under M-of-N control, and never leave that boundary in cleartext.</li>
+      <li><strong>Tap throughput.</strong> A morning-rush gate cycle is roughly 30&ndash;40 taps per minute per validator. Anything that adds more than ~50 ms to the tap budget is unacceptable.</li>
+      <li><strong>Card population.</strong> The deployment is sized for millions of cards in circulation. Per-card key derivation has to scale.</li>
+    </ul>
+
+    <h2 id="trust">Trust model</h2>
+    <p>The threats the architecture addresses, in order of priority:</p>
+    <table>
+      <thead><tr><th>Threat</th><th>Mitigation</th></tr></thead>
+      <tbody>
+        <tr><td>Card cloning</td><td>SAM-derived diversified keys + EV2 anti-cloning challenge. A cloned UID + read-out value file is rejected at the next tap.</td></tr>
+        <tr><td>Validator compromise</td><td>Validator never holds the master key. Even a fully-rooted validator cannot mint a valid card or modify a tap-journal MAC without the SAM&rsquo;s consent.</td></tr>
+        <tr><td>Backend outage misuse</td><td>Sequence-number monotonic check at the validator. A card cannot replay an older balance.</td></tr>
+        <tr><td>Insider key extraction</td><td>HSM-backed master-key custody + M-of-N personalisation. No single operator can extract enough to compromise the population.</td></tr>
+        <tr><td>Replay of taps to backend</td><td>Sequence numbers + SAM-signed MACs on every tap journal entry. Backend rejects replays.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="approach">Implementation approach</h2>
+    <p>Delivery was three tracks:</p>
+    <ol>
+      <li><strong>Card programme.</strong> Master keys generated, SAMs personalised, blank DESFire EV2 stock issued under operator artwork. Per-card AES-128 keys diversified using UID + master-key derivation.</li>
+      <li><strong>Validator firmware.</strong> Reader-side application implementing the EV2 mutual-auth + spend flow. Local tap journal with monotonic sequence + SAM-MAC.</li>
+      <li><strong>Backend reconciliation.</strong> Tap-journal ingestion service, hot-list management, revenue-side ledger reconciliation against the SAM-signed tap stream.</li>
+    </ol>
+
+    <h3 id="tap-flow">A single tap, instrumented</h3>
+<pre><code><span class="c">// Validator-side tap flow (simplified)</span>
+1. RF: ISO/IEC 14443-3 anticollision  -&gt; UID
+2. SELECT DESFire application AID
+3. APDU: AuthenticateAES &lt;keyno&gt;        -&gt; SAM derives per-card key from UID
+4. SAM:  Authenticate with derived key   -&gt; mutual session keys + IV
+5. Read purse value file (encrypted, MAC'd)
+6. SAM:  Authorise debit (offline policy + revocation hotlist)
+7. APDU: Debit purse, commit, MAC
+8. Local tap journal: append (UID, ts, debit, seq++, SAM-MAC)
+9. Gate opens.
+
+Budget (50% percentile): ~190 ms reader-to-gate.
+Worst case (cold SAM session): ~260 ms.
+</code></pre>
+    <p>The cold-SAM session is the worst case in practice. Once the SAM has cached the derived key for a brief window, subsequent taps from the same card are inside 150 ms. The window is short enough that a stolen card whose user has been added to the hot-list still gets caught.</p>
+
+    <h2 id="ops">Operational considerations</h2>
+    <ul>
+      <li><strong>Hot-list size.</strong> A hot-list of every lost/cloned card grows monotonically. The customer chose a tiered approach: full hotlist on backend, short-window hot-deny list on validators, plus the SAM-side authentication check which catches any cloned card regardless of hot-list membership.</li>
+      <li><strong>SAM replacement.</strong> A failed SAM in the field is a service ticket, not an outage. The validator falls back to a deny-by-default policy until the SAM is replaced.</li>
+      <li><strong>Key rotation.</strong> The master key never rotates in the field. A future card generation will roll to a new master under a planned multi-year migration. The architecture supports running two SAM keysets simultaneously during a transition.</li>
+      <li><strong>Audit trail.</strong> Every tap, online or offline, generates a SAM-signed tap-journal entry. Revenue audits reconcile against this stream rather than against the central server&rsquo;s view of "what taps did we see".</li>
+    </ul>
+
+    <h2 id="integration">Integration flow</h2>
+    <p>The validator&rsquo;s view of the world:</p>
+    <ol>
+      <li><strong>Card presented.</strong> Anticollision returns a UID.</li>
+      <li><strong>SAM consulted.</strong> The validator asks the SAM "what is the per-card key for this UID?" The SAM derives it from the master and a key-derivation function.</li>
+      <li><strong>Mutual auth.</strong> Standard DESFire AES-128 mutual auth between the validator and the card, using the SAM-derived per-card key. If anything fails, the gate stays closed.</li>
+      <li><strong>Spend.</strong> Encrypted, MAC&rsquo;d debit of the purse value file.</li>
+      <li><strong>Journal.</strong> Append-only local journal, every entry MAC&rsquo;d by the SAM. The validator&rsquo;s own MCU has no way to forge journal entries.</li>
+      <li><strong>Sync.</strong> When connectivity returns, the journal is uploaded; the backend verifies SAM MACs; revenue reconciliation proceeds.</li>
+    </ol>
+
+    <h2 id="lessons">Lessons learned</h2>
+    <ol>
+      <li><strong>The SAM is the architecture, not an accessory.</strong> Once you understand that the master key never leaves the SAM and that the validator is fundamentally a SAM-and-radio sandwich, the whole system makes more sense. The validator firmware is the thinnest layer of the trust stack.</li>
+      <li><strong>Offline policy is more important than online policy.</strong> Backends fail. SAMs don&rsquo;t. The architecture has to do the right thing when the backend is unreachable, because that&rsquo;s when it will be attacked.</li>
+      <li><strong>SAM-MAC&rsquo;d journals are worth their weight in audit.</strong> A revenue auditor with a SAM-signed tap journal has fewer questions than one with a backend log.</li>
+      <li><strong>Hot-list strategy needs three tiers, not one.</strong> Real-time deny on validators is brittle. Periodic deny lists are too slow. The SAM-derived per-card authentication is the only one that actually catches cloned cards. Use all three.</li>
+    </ol>
+
+    <h2 id="related">Related products and services</h2>
+    <ul>
+      <li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing solution</a></li>
+      <li><a href="/technologies/desfire/">Technology: DESFire EV2/EV3</a></li>
+      <li><a href="/technologies/sam/">Technology: SAM</a></li>
+      <li><a href="/solutions/transit-ticketing/">Transit ticketing overview</a></li>
+      <li><a href="/solutions/offline-authentication/">Offline authentication architecture</a></li>
+    </ul>
+
+    <h2 id="resources">Related references &amp; reading</h2>
+    <ul>
+      <li><a href="/blog/desfire-ev1-vs-ev2-vs-ev3/">DESFire EV1 vs EV2 vs EV3</a></li>
+      <li><a href="/blog/why-sams-matter-in-closed-loop-transit/">Why SAMs Matter in Closed-Loop Transit</a></li>
+      <li><a href="/blog/designing-low-latency-secure-transit-validators/">Designing Low-Latency Secure Transit Validators</a></li>
+      <li><a href="/blog/apdu-from-first-principles/">APDU From First Principles</a></li>
+      <li><a href="/technologies/card-reader-sam-flow/">Reference: card &harr; reader &harr; SAM flow</a></li>
+      <li><a href="/resources/tools/apdu-parser/">Tool: APDU Parser</a></li>
+      <li><a href="/resources/tools/atr-parser/">Tool: ATR Parser</a></li>
+    </ul>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Designing a transit, access-control, or closed-loop deployment?</h2>
+        <p>Talk to engineers who have shipped the SAM-derived-key validator pattern. We&rsquo;ll bring an architecture sketch to the first call.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary">Start a conversation</a><a href="/engagement-models/" class="btn btn-outline" style="margin-left:8px;">Engagement models</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Engage</h4><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Company</h4><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a><a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+</body>
+</html>
