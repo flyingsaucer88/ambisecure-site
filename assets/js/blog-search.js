@@ -1,29 +1,77 @@
 /**
- * AmbiSecure blog search — Phase 11.
+ * AmbiSecure blog search — Phase 12.
  *
- * Client-side. No backend, no third-party SaaS.
- * Loads /assets/data/blog-search-index.json on demand. Filters in memory.
+ * Client-side, vanilla JS. Loads /assets/data/blog-search-index.json once
+ * on demand. CSP-clean (script-src 'self', connect-src 'self').
  *
- * Markup contract:
+ * Phase 12 enhancements:
+ *   - Synonym + acronym expansion (FIDO ↔ WebAuthn, RP → relying party, ...).
+ *   - Light stemming (drop trailing s/es/ing/-ed for tokens > 4 chars).
+ *   - Weighted scoring (title >> summary > tag > category).
+ *   - Grouped results: Cornerstone / Modern / Archive.
+ *   - Empty-state guidance with "popular searches" and "related tags".
+ *   - Pre-applied filters from query string (?q, ?category, ?tag, ?type).
+ *
+ * Markup contract (unchanged):
  *   <input type="search" data-blog-search>
- *   <ul    data-blog-search-results></ul>
- *
- * Optional filters (driven by query string or attributes):
- *   ?q=...            initial query
- *   ?category=...     pre-applies a category filter
- *   ?tag=...          pre-applies a tag filter
- *   ?type=modern|archive
- *
- * CSP: parse-time only. One fetch to /assets/data/blog-search-index.json
- * which is same-origin (script-src 'self', connect-src 'self').
+ *   <ul    data-blog-search-results>
  */
 (function () {
   'use strict';
 
   var INDEX_URL = "/assets/data/blog-search-index.json";
 
-  function $(sel, root) { return (root || document).querySelector(sel); }
-  function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
+  // --- Synonyms / acronyms ------------------------------------------------
+  // Bidirectional expansion. Each line: every token expands to every other.
+  var SYNONYM_GROUPS = [
+    ["fido", "webauthn", "ctap2"],
+    ["passkey", "passkeys"],
+    ["secure-element", "se"],
+    ["smart-card", "smartcard", "card"],
+    ["mfa", "2fa", "multi-factor"],
+    ["totp", "otp", "one-time-password"],
+    ["desfire", "mifare"],
+    ["sam", "secure-access-module"],
+    ["hsm", "hardware-security-module"],
+    ["tpm", "trusted-platform-module"],
+    ["rp", "relying-party"],
+    ["scp02", "scp"],
+    ["scp03", "scp"],
+    ["aaguid", "authenticator-aaguid"],
+    ["x509", "x-509", "certificate"],
+    ["pki", "certificate-authority", "ca"],
+    ["est", "rfc7030", "rfc-7030"],
+    ["ocsp", "revocation"],
+    ["crl", "revocation"],
+    ["nfc", "iso14443", "iso-14443", "contactless"],
+    ["apdu", "iso7816", "iso-7816"],
+    ["onepass", "one-pass"],
+    ["biokey", "bio-key", "biometric"],
+    ["fingerprint", "biometric"],
+    ["transit", "metro", "ticketing"]
+  ];
+
+  var SYNONYM_MAP = (function () {
+    var m = Object.create(null);
+    SYNONYM_GROUPS.forEach(function (g) {
+      g.forEach(function (t) {
+        m[t] = m[t] || [];
+        g.forEach(function (s) { if (s !== t) m[t].push(s); });
+      });
+    });
+    return m;
+  })();
+
+  // --- Popular searches (curated; small) ---------------------------------
+  var POPULAR = [
+    "fido", "desfire", "javacard", "passkey", "attestation",
+    "sam", "scp03", "secure element", "transit", "pki"
+  ];
+
+  // --- Utility ------------------------------------------------------------
+
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
 
   function parseQuery() {
     var out = {};
@@ -39,10 +87,35 @@
   }
 
   function tokenize(text) {
-    return text.toLowerCase().split(/[^a-z0-9-]+/).filter(function (t) { return t && t.length > 1; });
+    return text.toLowerCase().split(/[^a-z0-9-]+/).filter(function (t) {
+      return t && t.length > 1;
+    });
   }
 
-  function scoreEntry(entry, queryTokens, filters) {
+  function stem(t) {
+    if (t.length <= 4) return t;
+    if (t.endsWith("ies")) return t.slice(0, -3) + "y";
+    if (t.endsWith("es")) return t.slice(0, -2);
+    if (t.endsWith("s")) return t.slice(0, -1);
+    if (t.endsWith("ing")) return t.slice(0, -3);
+    if (t.endsWith("ed")) return t.slice(0, -2);
+    return t;
+  }
+
+  function expandQuery(tokens) {
+    var out = new Set();
+    tokens.forEach(function (t) {
+      out.add(t);
+      out.add(stem(t));
+      var syns = SYNONYM_MAP[t] || SYNONYM_MAP[stem(t)];
+      if (syns) syns.forEach(function (s) { out.add(s); });
+    });
+    return Array.from(out);
+  }
+
+  // --- Scoring ------------------------------------------------------------
+
+  function scoreEntry(entry, qTokens, expanded, filters) {
     if (filters.category) {
       var cats = (entry.categories || []).map(function (c) { return c.toLowerCase(); });
       if (cats.indexOf(filters.category.toLowerCase()) === -1) return -1;
@@ -54,81 +127,184 @@
     if (filters.type) {
       if ((entry.type || "modern") !== filters.type) return -1;
     }
-    if (!queryTokens.length) return 1; // pure-filter mode
+    if (!qTokens.length) return 1;
 
     var titleTok = tokenize(entry.title);
     var summaryTok = tokenize(entry.summary);
     var indexed = entry.tokens || [];
+
     var score = 0;
-    queryTokens.forEach(function (qt) {
-      // Exact token hit in title: heavy weight.
-      if (titleTok.indexOf(qt) !== -1) score += 8;
-      // Exact token hit in summary: medium.
-      else if (summaryTok.indexOf(qt) !== -1) score += 4;
-      // Token hit in precomputed index (categories/tags/etc.): light.
-      else if (indexed.indexOf(qt) !== -1) score += 2;
+    qTokens.forEach(function (qt) {
+      var qtStem = stem(qt);
+      // Exact title hit: heavy.
+      if (titleTok.indexOf(qt) !== -1 || titleTok.indexOf(qtStem) !== -1) score += 10;
+      // Exact summary hit: medium.
+      else if (summaryTok.indexOf(qt) !== -1 || summaryTok.indexOf(qtStem) !== -1) score += 5;
+      // Token hit in precomputed (categories + tags): light.
+      else if (indexed.indexOf(qt) !== -1 || indexed.indexOf(qtStem) !== -1) score += 3;
       else {
-        // Prefix match anywhere — half score.
-        var found = false;
-        for (var i = 0; i < indexed.length; i++) {
-          if (indexed[i].indexOf(qt) === 0) { score += 1; found = true; break; }
+        // Title prefix: medium-light.
+        var titleMatch = false;
+        for (var i = 0; i < titleTok.length; i++) {
+          if (titleTok[i].indexOf(qt) === 0) { score += 2; titleMatch = true; break; }
         }
-        if (!found && entry.title.toLowerCase().indexOf(qt) !== -1) score += 1;
+        if (!titleMatch) {
+          // Any prefix in indexed tokens.
+          for (var j = 0; j < indexed.length; j++) {
+            if (indexed[j].indexOf(qt) === 0) { score += 1; break; }
+          }
+        }
       }
     });
+
+    // Synonym / expansion bonus (smaller than direct hits).
+    expanded.forEach(function (et) {
+      if (qTokens.indexOf(et) !== -1) return; // already counted
+      if (indexed.indexOf(et) !== -1 ||
+          titleTok.indexOf(et) !== -1 ||
+          summaryTok.indexOf(et) !== -1) {
+        score += 1;
+      }
+    });
+
+    // Slight nudge for "modern" content; archive remains visible but lower.
+    if (entry.type === "archive") score = Math.max(0, score - 0.5);
     return score;
   }
 
-  function renderResults(list, entries, query) {
+  // --- Rendering ----------------------------------------------------------
+
+  function emptyState(list, query, allEntries) {
     list.innerHTML = "";
-    if (!entries.length) {
+    var msg = document.createElement("li");
+    msg.className = "blog-search-empty";
+    msg.textContent = query
+      ? "No matches for “" + query + "”. Try one of the popular searches below."
+      : "Type to search across " + (allEntries.length || "all") +
+        " engineering posts — cornerstone, modern, and archive.";
+    list.appendChild(msg);
+
+    var popularWrap = document.createElement("li");
+    popularWrap.className = "blog-search-meta-section";
+    var popH = document.createElement("h4");
+    popH.textContent = "Popular searches";
+    popularWrap.appendChild(popH);
+    var popList = document.createElement("ul");
+    popList.className = "blog-search-popular";
+    POPULAR.forEach(function (term) {
       var li = document.createElement("li");
-      li.className = "blog-search-empty";
-      li.textContent = query
-        ? "No matches for “" + query + "”."
-        : "Type to search across " + (window.AS_BLOG_SEARCH_COUNT || "all") + " engineering posts.";
-      list.appendChild(li);
+      var a = document.createElement("a");
+      a.href = "/search/?q=" + encodeURIComponent(term);
+      a.textContent = term;
+      a.className = "blog-search-popular-link";
+      li.appendChild(a);
+      popList.appendChild(li);
+    });
+    popularWrap.appendChild(popList);
+    list.appendChild(popularWrap);
+
+    // Surface a few tags.
+    var tags = new Set();
+    allEntries.forEach(function (e) {
+      (e.tags || []).forEach(function (t) { tags.add(t); });
+    });
+    if (tags.size) {
+      var tagWrap = document.createElement("li");
+      tagWrap.className = "blog-search-meta-section";
+      var tagH = document.createElement("h4");
+      tagH.textContent = "Or browse by tag";
+      tagWrap.appendChild(tagH);
+      var tagList = document.createElement("ul");
+      tagList.className = "blog-search-popular";
+      Array.from(tags).sort().slice(0, 16).forEach(function (t) {
+        var slug = t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = "/tags/" + slug + "/";
+        a.textContent = t;
+        a.className = "blog-search-popular-link";
+        li.appendChild(a);
+        tagList.appendChild(li);
+      });
+      tagWrap.appendChild(tagList);
+      list.appendChild(tagWrap);
+    }
+  }
+
+  function renderHit(e) {
+    var li = document.createElement("li");
+    li.className = "blog-search-hit";
+
+    var meta = document.createElement("div");
+    meta.className = "blog-search-hit-meta";
+    meta.textContent = e.date + " · " + (e.type === "archive" ? "archive" : "modern");
+    li.appendChild(meta);
+
+    var a = document.createElement("a");
+    a.href = e.url;
+    a.className = "blog-search-hit-title";
+    a.textContent = e.title;
+    li.appendChild(a);
+
+    if (e.summary) {
+      var p = document.createElement("p");
+      p.className = "blog-search-hit-summary";
+      p.textContent = e.summary;
+      li.appendChild(p);
+    }
+
+    if ((e.tags || []).length) {
+      var tagWrap = document.createElement("div");
+      tagWrap.className = "blog-search-hit-tags";
+      e.tags.forEach(function (t) {
+        var slug = t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+        var tagLink = document.createElement("a");
+        tagLink.href = "/tags/" + slug + "/";
+        tagLink.className = "blog-search-hit-tag";
+        tagLink.textContent = t;
+        tagWrap.appendChild(tagLink);
+      });
+      li.appendChild(tagWrap);
+    }
+    return li;
+  }
+
+  function renderGroup(list, label, entries) {
+    if (!entries.length) return;
+    var header = document.createElement("li");
+    header.className = "blog-search-group-header";
+    header.textContent = label + " · " + entries.length;
+    list.appendChild(header);
+    entries.forEach(function (e) { list.appendChild(renderHit(e)); });
+  }
+
+  function renderResults(list, scored, query, allEntries) {
+    list.innerHTML = "";
+    if (!scored.length) {
+      emptyState(list, query, allEntries);
       return;
     }
-    entries.forEach(function (e) {
-      var li = document.createElement("li");
-      li.className = "blog-search-hit";
-
-      var meta = document.createElement("div");
-      meta.className = "blog-search-hit-meta";
-      meta.textContent = e.date + " · " + (e.type === "archive" ? "archive" : "modern");
-      li.appendChild(meta);
-
-      var a = document.createElement("a");
-      a.href = e.url;
-      a.className = "blog-search-hit-title";
-      a.textContent = e.title;
-      li.appendChild(a);
-
-      if (e.summary) {
-        var p = document.createElement("p");
-        p.className = "blog-search-hit-summary";
-        p.textContent = e.summary;
-        li.appendChild(p);
-      }
-
-      if ((e.tags || []).length) {
-        var tagWrap = document.createElement("div");
-        tagWrap.className = "blog-search-hit-tags";
-        e.tags.forEach(function (t) {
-          var tagSlug = t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
-          var tagLink = document.createElement("a");
-          tagLink.href = "/tags/" + tagSlug + "/";
-          tagLink.className = "blog-search-hit-tag";
-          tagLink.textContent = t;
-          tagWrap.appendChild(tagLink);
-        });
-        li.appendChild(tagWrap);
-      }
-
-      list.appendChild(li);
+    // Group by type: cornerstone (high score modern), modern, archive.
+    var cornerstoneCut = scored[0] && scored[0].s >= 8 ? 8 : null;
+    var cornerstones = [];
+    var modern = [];
+    var archive = [];
+    scored.forEach(function (x) {
+      if (x.e.type === "archive") archive.push(x.e);
+      else if (cornerstoneCut !== null && x.s >= cornerstoneCut) cornerstones.push(x.e);
+      else modern.push(x.e);
     });
+    // Avoid having a "Cornerstone" group with everything in it.
+    if (cornerstones.length > 5) {
+      modern = cornerstones.concat(modern);
+      cornerstones = [];
+    }
+    renderGroup(list, "Cornerstone matches", cornerstones);
+    renderGroup(list, "Modern engineering", modern);
+    renderGroup(list, "Historical archive", archive);
   }
+
+  // --- Search controller --------------------------------------------------
 
   function setUpSearch(input, list) {
     var entries = null;
@@ -156,18 +332,20 @@
         tag: query.tag || list.getAttribute("data-default-tag") || null,
         type: query.type || null
       };
-      var queryTokens = tokenize(q);
+      var qTokens = tokenize(q);
+      var expanded = expandQuery(qTokens);
+
       ensureIndex().then(function (all) {
         var scored = [];
         all.forEach(function (e) {
-          var s = scoreEntry(e, queryTokens, filters);
-          if (s >= (queryTokens.length ? 1 : 1)) scored.push({ e: e, s: s });
+          var s = scoreEntry(e, qTokens, expanded, filters);
+          if (s >= 1) scored.push({ e: e, s: s });
         });
         scored.sort(function (a, b) {
           if (b.s !== a.s) return b.s - a.s;
           return (b.e.date || "").localeCompare(a.e.date || "");
         });
-        renderResults(list, scored.map(function (x) { return x.e; }), q);
+        renderResults(list, scored, q, all);
       });
     }
 

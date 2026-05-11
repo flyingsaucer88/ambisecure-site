@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 11 consolidation)
+**Last updated:** 2026-05-11 (Phase 12 — audit suite + per-section OG + matured search/vitals)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -97,9 +97,16 @@ Fonts: Montserrat (display), Source Sans 3 (body), JetBrains Mono (code).
 │   ├── data/           blogs.json (source of truth), blog-search-index.json
 │   └── video/          Self-hosted bio MP4 (879 KB)
 ├── tools/              Operator scripts:
-│   ├── regen-blog-pool.py
-│   ├── lint-htaccess.py
-│   └── gen-og-image.py
+│   ├── regen-blog-pool.py     Regenerate blog-pool.js + blog-search-index.json
+│   ├── lint-htaccess.py       Chains / loops / duplicates / self-redirects
+│   ├── gen-og-image.py        Single OG card (manual one-off)
+│   ├── gen-og-batch.py        Per-section OG generator + meta-tag wiring
+│   ├── og-templates.json      Per-section OG template config
+│   ├── audit-content.py       Titles / descriptions / OG / schema / H1 / alts
+│   ├── audit-seo.py           Sitemap / canonical / orphan / href / htaccess
+│   ├── audit-media.py         Oversize / missing-WebP / dead-weight
+│   ├── audit-freshness.py     Blog last_reviewed / freshness audit
+│   └── audit-all.sh           Run every audit in one go
 ├── legacysitedata/     Frozen scrape of the legacy WordPress site (gitignored MP4s)
 ├── docs/               THIS DOC + OPEN_ITEMS_AND_FUTURE_BACKLOG.md (only these two)
 ├── .lighthouserc.json  Lighthouse CI config
@@ -222,9 +229,16 @@ Both deltas need to be applied in `.htaccess` AND in any `<meta http-equiv="Cont
 
 `assets/js/web-vitals.js` collects LCP, CLS, INP (or FID fallback), TTFB via native PerformanceObserver. Reports through `AS_ANALYTICS.report()` — never directly. Honours the same DNT + opt-out checks as analytics. Loaded on every page via the same nav.js bootstrap as analytics.
 
+Phase 12 enhancements:
+
+- **Page-group derivation**: every reported metric carries a `pageGroup` derived from `window.location.pathname` (`home`, `blog-post`, `case-study`, `product`, `tool`, etc.). Use it to aggregate vitals per content type in the analytics provider.
+- **Batched flush**: metrics buffer through the page lifecycle and flush once on `pagehide` / `visibilitychange:hidden`. Avoids per-metric round trips.
+- **Debug mode**: set `localStorage["as-vitals-debug"] = "1"` *or* append `?as_vitals_debug=1` to any URL. Prints `console.table()` of the buffered metrics on flush and does **not** forward them to the provider — safe to leave on during development.
+- **Public API**: `window.AS_VITALS.mark(name, value)` lets page-specific code record a custom metric (e.g. tool-completion time) that flows through the same opt-out / DNT pipeline.
+
 When the operator turns analytics on, Web Vitals automatically reports through the active provider:
 
-- Plausible: `plausible("WebVital", { props: { metric, value, path }})`.
+- Plausible: `plausible("WebVital", { props: { metric, value, path, pageGroup }})`.
 - GA4: `gtag("event", metric, { value, page_path, metric_id })`.
 
 ---
@@ -268,14 +282,26 @@ Phase 9 sections (Core pillars, Videos teaser, Where AmbiSecure Fits) and Phase 
 ### 6.2 Adding or editing a post
 
 1. Author the HTML at `/blog/<slug>/index.html`. Match the existing blog template (head meta, JSON-LD Article, breadcrumb, footer).
-2. Add an entry to `assets/data/blogs.json` with title, url, date, summary, categories, tags, and `type: "modern"`.
+2. Add an entry to `assets/data/blogs.json` with title, url, date, summary, categories, tags, `type: "modern"`, `last_reviewed: "<date>"`, `freshness: "current" | "evergreen"`.
 3. Run `python3 tools/regen-blog-pool.py`. This regenerates:
    - `assets/js/blog-pool.js` (homepage daily spotlight)
    - `assets/data/blog-search-index.json` (client-side blog search)
 4. Add a card in `blog/index.html` if the post should appear on page 1 (the latest-engineering grid).
 5. Add a `<url>` line to `sitemap.xml`.
-6. If any tags are new, regenerate `/tags/` via `/tmp/phase11/gen_pages.py` (or copy an existing per-tag page and reuse the pattern).
-7. Run the QA checks in §15 before committing.
+6. If any tags are new, regenerate `/tags/` via the Phase 11 generator pattern (or copy an existing per-tag page and reuse).
+7. Run `bash tools/audit-all.sh` before committing.
+
+### 6.3 Lifecycle metadata (Phase 12)
+
+Each entry in `blogs.json` carries:
+
+- `last_reviewed`: ISO date. When an operator confirms the post is still accurate, bump this date.
+- `freshness`:
+  - `"evergreen"` — protocol primers (APDU, FIDO basics, SE vs TPM vs HSM, cornerstones).
+  - `"current"` — modern engineering posts. Audited as overdue if last reviewed >18 months ago.
+  - `"stale-review"` — archive content (pre-2026). Reviewed informationally only; no CI failure for age.
+
+The `audit-freshness` check fails CI if any entry is missing these fields. It does not fail on age — that's intentional, operator-side judgment.
 
 ### 6.3 Categories vs tags
 
@@ -401,9 +427,12 @@ Most of the 138 `Redirect 301` rules cover the legacy WordPress URL scheme (`/le
 
 ### 11.2 Generating new images
 
-- **OG cards**: `python3 tools/gen-og-image.py --title "..." --subtitle "..." --out assets/img/og/<name>.png`. If `rsvg-convert` is installed, PNG is rendered; otherwise SVG is saved and the operator runs the render step.
+- **OG cards (per-section, Phase 12)**: `python3 tools/gen-og-batch.py --wire`. Reads `tools/og-templates.json`, generates an SVG + PNG for every declared section, then walks every HTML page and rewrites `<meta property="og:image">` to point at the section-matching card. Re-run any time a section's eyebrow/title/subtitle changes.
+- **Single OG card**: `python3 tools/gen-og-image.py --title "..." --subtitle "..." --out assets/img/og/<name>.png` (for one-off custom cards).
 - **WebP from PNG**: `cwebp -q 85 in.png -o out.webp`. (Note: macOS `sips` cannot write WebP — `cwebp` is required.)
 - **Video poster**: `ffmpeg -i in.mp4 -ss 1 -frames:v 1 -y poster.jpg`.
+
+PNG rendering of SVG OG cards falls back as: `rsvg-convert` → `qlmanage + sips` (1200×1200 then crop to 1200×630). If neither is available, only SVG is written and the operator runs the render step manually.
 
 ### 11.3 Periodic optimisation
 
@@ -433,15 +462,27 @@ The config exercises 8 representative pages (homepage, blog, product, case study
 
 ### 12.2 GitHub Actions
 
-`.github/workflows/lighthouse.yml` runs three jobs on every push to `main` and every PR:
+`.github/workflows/lighthouse.yml` runs seven jobs on every push to `main` and every PR:
 
-1. `lighthouse` — full LHCI run.
+1. `lighthouse` — full LHCI run (advisory, `continue-on-error: true`).
 2. `htaccess-lint` — `python3 tools/lint-htaccess.py`.
 3. `sitemap-validate` — `xmllint --noout sitemap.xml` + URL-count sanity check.
+4. `audit-content` — `python3 tools/audit-content.py` (titles, descriptions, OG, schema, alts).
+5. `audit-seo` — `python3 tools/audit-seo.py` (sitemap, canonical, orphans, hrefs, htaccess targets).
+6. `audit-media` — `python3 tools/audit-media.py` (oversize, missing-WebP, dead-weight, missing references).
+7. `audit-freshness` — `python3 tools/audit-freshness.py --strict` (blog `last_reviewed` / `freshness` metadata).
 
-CI is advisory, not blocking — `lhci autorun` runs with `continue-on-error: true` so a transient regression doesn't block a merge. Treat the LHCI report artifact as the source of truth.
+Treat audits 2–7 as blocking and Lighthouse as advisory.
 
-### 12.3 Manual sanity checks
+### 12.3 Local one-shot audit
+
+```bash
+bash tools/audit-all.sh
+```
+
+Runs every audit in one go (mirror of the CI suite). Exit 0 = clean.
+
+### 12.4 Manual sanity checks
 
 After every commit that touches the homepage, `index.html`, `main.css`, or a long-form blog post:
 
@@ -486,9 +527,9 @@ If they cannot, this doc is incomplete — fix it before adding more features.
 
 Before every commit:
 
-- [ ] `xmllint --noout sitemap.xml`
-- [ ] `python3 tools/lint-htaccess.py` (if `.htaccess` changed)
+- [ ] `bash tools/audit-all.sh` — single command that runs every audit. Exit 0 = clean.
 - [ ] `python3 tools/regen-blog-pool.py` (if `blogs.json` changed)
+- [ ] `python3 tools/gen-og-batch.py --wire` (if a section's eyebrow/title/subtitle changed)
 - [ ] Visual sanity check of `/` in a browser (banner, spotlight, no console errors)
 - [ ] Verify no new `https://fonts.googleapis.com` link slipped into a hand-edited page (we are fully self-hosted)
 - [ ] Verify any new HTML page has the `/privacy/` footer link
@@ -496,10 +537,10 @@ Before every commit:
 
 ### Quarterly review
 
-- [ ] Audit `assets/img/` for un-WebP'd PNGs > 200 KB.
-- [ ] Re-run `tools/lint-htaccess.py` against the full ruleset.
-- [ ] Audit sitemap against on-disk pages (`/tmp/phase11/audit_sitemap.py` pattern).
+- [ ] Run `bash tools/audit-all.sh` and resolve every reported issue.
+- [ ] Bump `last_reviewed` on `current` blog entries you've spot-checked.
 - [ ] Review `OPEN_ITEMS_AND_FUTURE_BACKLOG.md` for items whose operational trigger has fired.
+- [ ] Inspect `audit-freshness` output for archive posts that should be retired or refreshed.
 
 ---
 

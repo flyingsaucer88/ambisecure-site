@@ -1,30 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="AmbiSecure — Hardware-rooted security">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#3A3F40"/>
-      <stop offset="100%" stop-color="#1F2425"/>
-    </linearGradient>
-    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#E3222A"/>
-      <stop offset="100%" stop-color="#E3222A" stop-opacity="0.6"/>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3A3F40" />
+      <stop offset="100%" stop-color="#1F2425" />
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <!-- Accent bar -->
-  <rect x="0" y="0" width="1200" height="6" fill="url(#accent)"/>
-  <!-- Brand mark block -->
-  <rect x="80" y="80" width="84" height="84" fill="#E3222A" rx="4"/>
-  <text x="122" y="138" fill="white" font-family="Montserrat, Helvetica, Arial, sans-serif" font-size="42" font-weight="700" text-anchor="middle">AS</text>
-  <!-- Wordmark -->
-  <text x="190" y="118" fill="white" font-family="Montserrat, Helvetica, Arial, sans-serif" font-size="38" font-weight="700">Ambi<tspan fill="#E3222A">Secure</tspan></text>
-  <text x="190" y="150" fill="#9EA4A6" font-family="'Source Sans 3', Helvetica, Arial, sans-serif" font-size="20" font-weight="500">Hardware-rooted security</text>
-  <!-- Headline -->
-  <text x="80" y="320" fill="white" font-family="Montserrat, Helvetica, Arial, sans-serif" font-size="62" font-weight="700">FIDO authenticators.</text>
-  <text x="80" y="395" fill="white" font-family="Montserrat, Helvetica, Arial, sans-serif" font-size="62" font-weight="700">JavaCard applets.</text>
-  <text x="80" y="470" fill="#E3222A" font-family="Montserrat, Helvetica, Arial, sans-serif" font-size="62" font-weight="700">Secure elements.</text>
-  <!-- Tagline -->
-  <text x="80" y="540" fill="#9EA4A6" font-family="'Source Sans 3', Helvetica, Arial, sans-serif" font-size="24" font-weight="400">Engineered by Ambimat Electronics &#183; Ahmedabad, India</text>
-  <!-- URL band -->
-  <rect x="0" y="580" width="1200" height="50" fill="#E3222A"/>
-  <text x="600" y="613" fill="white" font-family="'JetBrains Mono', Menlo, monospace" font-size="20" font-weight="500" text-anchor="middle">ambisecure.ambimat.com</text>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect x="0" y="0" width="12" height="630" fill="#E3222A" />
+  <rect x="1180" y="618" width="20" height="12" fill="#0E8C9C" />
+
+  <text x="80" y="125" fill="#0E8C9C"
+        font-family="Source Sans 3, Helvetica, Arial, sans-serif"
+        font-size="22" font-weight="600"
+        letter-spacing="3.5">AMBISECURE</text>
+
+  <text x="80" y="230" fill="#FFFFFF" font-family="Montserrat, sans-serif" font-size="64" font-weight="700">Hardware-rooted security for</text>
+  <text x="80" y="300" fill="#FFFFFF" font-family="Montserrat, sans-serif" font-size="64" font-weight="700">connected systems</text>
+
+  <text x="80" y="480" fill="#C9CFD0"
+        font-family="Source Sans 3, Helvetica, sans-serif"
+        font-size="24" font-weight="400">FIDO authenticators, JavaCard applets, secure-element engineering, IoT</text>
+  <text x="80" y="512" fill="#C9CFD0"
+        font-family="Source Sans 3, Helvetica, sans-serif"
+        font-size="24" font-weight="400">transit, trust.</text>
+
+  <g transform="translate(1040, 70)">
+    <rect x="0" y="0" width="80" height="80" fill="#E3222A" rx="6" ry="6" />
+    <text x="40" y="58" fill="#FFFFFF" text-anchor="middle"
+          font-family="Montserrat, sans-serif" font-size="38" font-weight="700">AS</text>
+  </g>
+  <text x="1120" y="170" fill="#FFFFFF" text-anchor="end"
+        font-family="Montserrat, sans-serif" font-size="20" font-weight="600">AmbiSecure</text>
+  <text x="1120" y="195" fill="#888E90" text-anchor="end"
+        font-family="JetBrains Mono, monospace" font-size="12">hardware-rooted security</text>
+
+  <text x="80" y="600" fill="#888E90"
+        font-family="JetBrains Mono, monospace" font-size="12">ambisecure.ambimat.com</text>
 </svg>

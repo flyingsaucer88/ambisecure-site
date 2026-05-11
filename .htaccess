@@ -66,7 +66,7 @@ Redirect 301 /security/disclosure /trust/
 Redirect 301 /partner /partners/
 Redirect 301 /partner-program /partners/
 Redirect 301 /reseller /partners/
-Redirect 301 /faqs /support/faqs/
+Redirect 301 /faqs /support/
 
 # Solution-slug aliases (legacy / interlinked references)
 Redirect 301 /solutions/iot-root-of-trust /solutions/secure-element-integration/
@@ -102,8 +102,8 @@ Redirect 301 /resources/tools/cap-inspector /resources/tools/javacard-cap/
 Redirect 301 /resources/tools/scp03-helper /resources/tools/cmac-length/
 Redirect 301 /resources/tools/webauthn-attestation-decoder /resources/tools/cose-key/
 Redirect 301 /resources/tools/cose-key-decoder /resources/tools/cose-key/
-Redirect 301 /resources/tools/iccid-decoder /resources/tools/
-Redirect 301 /resources/tools/euicc-eid-decoder /resources/tools/
+Redirect 301 /resources/tools/iccid-decoder /resources/
+Redirect 301 /resources/tools/euicc-eid-decoder /resources/
 
 # Pending blog slugs -> blog index (until written)
 Redirect 301 /blog/javacard-from-first-principles /blog/
@@ -126,7 +126,7 @@ Redirect 301 /use-cases/pki-credential-issuance /services/javacard-development/
 Redirect 301 /use-cases /solutions/
 Redirect 301 /learn/ambisecure-fido-supported-services /blog/fido-supported-services/
 Redirect 301 /learn/how-it-work /blog/how-fido-authentication-works/
-Redirect 301 /how-to-use-the-ambisecure-fido-card /support/guides/use-fido-card/
+Redirect 301 /how-to-use-the-ambisecure-fido-card /videos/setup-ambisecure-card-desktop/
 
 # Blog
 Redirect 301 /blogs /blog/
@@ -197,9 +197,9 @@ Redirect 301 /blog/category/fido /blog/categories/fido/
 Redirect 301 /blog/category/iot-security /blog/categories/iot-security/
 
 # Brochure PDFs (preserve external backlinks pointing at /wp-content/uploads/)
-Redirect 301 /wp-content/uploads/2023/09/Brochure-3.pdf /assets/downloads/onepass-usb-key.pdf
-Redirect 301 /wp-content/uploads/2023/09/Brochure-4.pdf /assets/downloads/onepass-card.pdf
-Redirect 301 /wp-content/uploads/2023/09/Brochure-5.pdf /assets/downloads/onepass-bio-card.pdf
+Redirect 301 /wp-content/uploads/2023/09/Brochure-3.pdf /brochures/onepass/
+Redirect 301 /wp-content/uploads/2023/09/Brochure-4.pdf /brochures/onepass/
+Redirect 301 /wp-content/uploads/2023/09/Brochure-5.pdf /brochures/onepass/
 
 # Anchored redirects for empty-dir / missing-target paths (regex-bounded so they
 # don't capture sub-paths and avoid Apache prefix-suffix concatenation).

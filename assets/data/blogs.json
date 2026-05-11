@@ -18,7 +18,9 @@
     "Attestation",
     "Recovery",
     "Comparison"
-   ]
+   ],
+   "last_reviewed": "2026-05-11",
+   "freshness": "evergreen"
   },
   {
    "title": "Secure Element vs TPM vs HSM \u2014 Where Each Fits",
@@ -36,7 +38,9 @@
     "HSM",
     "FIPS 140",
     "Common Criteria"
-   ]
+   ],
+   "last_reviewed": "2026-05-11",
+   "freshness": "evergreen"
   },
   {
    "title": "Designing Secure Credential Lifecycle Management",
@@ -54,7 +58,9 @@
     "Recovery",
     "Revocation",
     "Audit"
-   ]
+   ],
+   "last_reviewed": "2026-05-11",
+   "freshness": "evergreen"
   },
   {
    "title": "Why Transit Validators Need Offline Trust Architecture",
@@ -72,7 +78,9 @@
     "SAM",
     "Validators",
     "Offline Trust"
-   ]
+   ],
+   "last_reviewed": "2026-05-11",
+   "freshness": "evergreen"
   },
   {
    "title": "JavaCard Applet Development for Enterprise Identity",
@@ -91,7 +99,9 @@
     "SCP03",
     "GlobalPlatform",
     "Personalisation"
-   ]
+   ],
+   "last_reviewed": "2026-05-11",
+   "freshness": "evergreen"
   },
   {
    "title": "PKI Credential Issuance for Workforce and Government Identity",
@@ -111,7 +121,9 @@
     "Key Ceremony",
     "RA",
     "CA"
-   ]
+   ],
+   "last_reviewed": "2026-05-11",
+   "freshness": "evergreen"
   },
   {
    "title": "How FIDO Authentication Works",
@@ -127,7 +139,9 @@
     "CTAP2",
     "Origin Binding",
     "Explainer"
-   ]
+   ],
+   "last_reviewed": "2026-05-11",
+   "freshness": "evergreen"
   },
   {
    "title": "Where Your AmbiSecure FIDO Key Works",
@@ -143,7 +157,9 @@
     "FIDO Coverage",
     "WebAuthn",
     "Practical"
-   ]
+   ],
+   "last_reviewed": "2026-05-11",
+   "freshness": "current"
   },
   {
    "title": "Cyber Security Threats \u2014 What Actually Matters in 2026",
@@ -160,7 +176,9 @@
     "MFA Bypass",
     "SIM Swap",
     "Credential Stuffing"
-   ]
+   ],
+   "last_reviewed": "2026-05-11",
+   "freshness": "current"
   },
   {
    "title": "Implementing FIDO2 Authentication \u2014 A Complete Developer Guide",
@@ -177,7 +195,9 @@
     "WebAuthn",
     "Implementation",
     "Developer Guide"
-   ]
+   ],
+   "last_reviewed": "2026-01-20",
+   "freshness": "current"
   },
   {
    "title": "Designing Enterprise Passwordless Systems",
@@ -195,7 +215,9 @@
     "Passwordless",
     "AAL3",
     "IdP"
-   ]
+   ],
+   "last_reviewed": "2026-01-15",
+   "freshness": "current"
   },
   {
    "title": "Passkeys vs Traditional MFA",
@@ -211,7 +233,9 @@
    "tags": [
     "Passkeys",
     "MFA Comparison"
-   ]
+   ],
+   "last_reviewed": "2026-01-10",
+   "freshness": "current"
   },
   {
    "title": "Platform vs Roaming Authenticators",
@@ -226,7 +250,9 @@
    "tags": [
     "Platform Authenticator",
     "Roaming Authenticator"
-   ]
+   ],
+   "last_reviewed": "2026-01-05",
+   "freshness": "evergreen"
   },
   {
    "title": "Understanding WebAuthn Attestation Objects",
@@ -244,7 +270,9 @@
     "AAGUID",
     "COSE",
     "MDS"
-   ]
+   ],
+   "last_reviewed": "2025-12-28",
+   "freshness": "evergreen"
   },
   {
    "title": "Why Hardware-Backed Identity Matters",
@@ -260,7 +288,9 @@
    "tags": [
     "Hardware Identity",
     "Threat Model"
-   ]
+   ],
+   "last_reviewed": "2025-12-20",
+   "freshness": "evergreen"
   },
   {
    "title": "APDU From First Principles",
@@ -276,7 +306,9 @@
     "APDU",
     "ISO 7816",
     "SW1 SW2"
-   ]
+   ],
+   "last_reviewed": "2025-12-12",
+   "freshness": "evergreen"
   },
   {
    "title": "DESFire EV1 vs EV2 vs EV3",
@@ -294,7 +326,9 @@
     "EV1",
     "EV2",
     "EV3"
-   ]
+   ],
+   "last_reviewed": "2025-12-05",
+   "freshness": "evergreen"
   },
   {
    "title": "Designing Low-Latency Secure Transit Validators",
@@ -311,7 +345,9 @@
     "Transit",
     "Validators",
     "Latency"
-   ]
+   ],
+   "last_reviewed": "2025-11-28",
+   "freshness": "current"
   },
   {
    "title": "Why SAMs Matter in Closed-Loop Transit",
@@ -328,7 +364,9 @@
     "SAM",
     "Closed Loop",
     "Transit"
-   ]
+   ],
+   "last_reviewed": "2025-11-20",
+   "freshness": "evergreen"
   },
   {
    "title": "Top 3 Benefits of MFA",
@@ -342,7 +380,9 @@
    "type": "modern",
    "tags": [
     "MFA Basics"
-   ]
+   ],
+   "last_reviewed": "2025-11-15",
+   "freshness": "current"
   },
   {
    "title": "Why Use Multi-Factor Authentication",
@@ -356,7 +396,9 @@
    "type": "modern",
    "tags": [
     "MFA Basics"
-   ]
+   ],
+   "last_reviewed": "2025-11-10",
+   "freshness": "current"
   },
   {
    "title": "Common Misconceptions about Two-Factor Authentication",
@@ -371,7 +413,9 @@
    "tags": [
     "Cyber Security",
     "MFA"
-   ]
+   ],
+   "last_reviewed": "2021-08-19",
+   "freshness": "stale-review"
   },
   {
    "title": "Single Sign-On Vs. Multi-Factor Authentication",
@@ -386,7 +430,9 @@
    "tags": [
     "Identity",
     "MFA"
-   ]
+   ],
+   "last_reviewed": "2021-08-19",
+   "freshness": "stale-review"
   },
   {
    "title": "Multi-factor Authentication in Government Sector",
@@ -401,7 +447,9 @@
    "tags": [
     "Government Identity",
     "MFA"
-   ]
+   ],
+   "last_reviewed": "2021-08-19",
+   "freshness": "stale-review"
   },
   {
    "title": "Cyber Attacks in India \u2013 Part 3",
@@ -414,7 +462,9 @@
    "type": "archive",
    "tags": [
     "Cyber Security"
-   ]
+   ],
+   "last_reviewed": "2021-08-05",
+   "freshness": "stale-review"
   },
   {
    "title": "Cyber Attacks in India \u2013 Part 2",
@@ -427,7 +477,9 @@
    "type": "archive",
    "tags": [
     "Cyber Security"
-   ]
+   ],
+   "last_reviewed": "2021-07-28",
+   "freshness": "stale-review"
   },
   {
    "title": "Cyber Attacks in India",
@@ -440,7 +492,9 @@
    "type": "archive",
    "tags": [
     "Cyber Security"
-   ]
+   ],
+   "last_reviewed": "2021-07-28",
+   "freshness": "stale-review"
   },
   {
    "title": "Enterprise Security Threats",
@@ -455,7 +509,9 @@
    "tags": [
     "Cyber Security",
     "Enterprise"
-   ]
+   ],
+   "last_reviewed": "2021-07-06",
+   "freshness": "stale-review"
   },
   {
    "title": "What is Passwordless Authentication?",
@@ -470,7 +526,9 @@
    "tags": [
     "FIDO",
     "Passwordless"
-   ]
+   ],
+   "last_reviewed": "2021-06-01",
+   "freshness": "stale-review"
   },
   {
    "title": "Is Passwordless the future?",
@@ -483,7 +541,9 @@
    "type": "archive",
    "tags": [
     "Passwordless"
-   ]
+   ],
+   "last_reviewed": "2021-06-01",
+   "freshness": "stale-review"
   },
   {
    "title": "SMS-based OTP Authentication and Its Disadvantages",
@@ -498,7 +558,9 @@
    "tags": [
     "Cyber Security",
     "MFA"
-   ]
+   ],
+   "last_reviewed": "2021-06-01",
+   "freshness": "stale-review"
   },
   {
    "title": "Taking security future for Government",
@@ -513,7 +575,9 @@
    "tags": [
     "Government Identity",
     "MFA"
-   ]
+   ],
+   "last_reviewed": "2021-03-25",
+   "freshness": "stale-review"
   },
   {
    "title": "E-passport and How will chip-based e-Passports work",
@@ -530,7 +594,9 @@
     "Government Identity",
     "Smart Cards",
     "ePassport"
-   ]
+   ],
+   "last_reviewed": "2021-01-28",
+   "freshness": "stale-review"
   },
   {
    "title": "E-passport and Its Application",
@@ -547,7 +613,9 @@
     "Government Identity",
     "Smart Cards",
     "ePassport"
-   ]
+   ],
+   "last_reviewed": "2021-01-28",
+   "freshness": "stale-review"
   },
   {
    "title": "An Introduction to Java Card Technology",
@@ -562,7 +630,9 @@
    "tags": [
     "JavaCard",
     "Smart Cards"
-   ]
+   ],
+   "last_reviewed": "2020-12-15",
+   "freshness": "stale-review"
   },
   {
    "title": "Fast Identity Online (FIDO)",
@@ -577,7 +647,9 @@
    "tags": [
     "FIDO",
     "Passwordless"
-   ]
+   ],
+   "last_reviewed": "2020-12-15",
+   "freshness": "stale-review"
   },
   {
    "title": "Understanding EMV certification In Public Transportation",
@@ -592,7 +664,9 @@
    "tags": [
     "Smart Cards",
     "Transit"
-   ]
+   ],
+   "last_reviewed": "2020-08-28",
+   "freshness": "stale-review"
   },
   {
    "title": "Workplace Security \u2014 How Biometrics Is the Key to the New Normal",
@@ -607,7 +681,9 @@
    "tags": [
     "Biometrics",
     "Enterprise"
-   ]
+   ],
+   "last_reviewed": "2020-07-30",
+   "freshness": "stale-review"
   },
   {
    "title": "Consumer Biometrics in the Data Privacy Age",
@@ -622,7 +698,9 @@
    "tags": [
     "Biometrics",
     "Privacy"
-   ]
+   ],
+   "last_reviewed": "2020-06-29",
+   "freshness": "stale-review"
   },
   {
    "title": "Securing your IIoT infrastructure",
@@ -635,7 +713,9 @@
    "type": "archive",
    "tags": [
     "IoT"
-   ]
+   ],
+   "last_reviewed": "2020-06-08",
+   "freshness": "stale-review"
   },
   {
    "title": "Public Transport Ticketing System (Part-3)",
@@ -648,7 +728,9 @@
    "type": "archive",
    "tags": [
     "Transit"
-   ]
+   ],
+   "last_reviewed": "2020-05-26",
+   "freshness": "stale-review"
   },
   {
    "title": "Public Transport Ticketing System (Part-2)",
@@ -661,7 +743,9 @@
    "type": "archive",
    "tags": [
     "Transit"
-   ]
+   ],
+   "last_reviewed": "2020-05-18",
+   "freshness": "stale-review"
   },
   {
    "title": "Public Transport Ticketing System (Part-1)",
@@ -674,7 +758,9 @@
    "type": "archive",
    "tags": [
     "Transit"
-   ]
+   ],
+   "last_reviewed": "2020-05-12",
+   "freshness": "stale-review"
   },
   {
    "title": "Challenges to IoT Security (Part 2)",
@@ -687,7 +773,9 @@
    "type": "archive",
    "tags": [
     "IoT"
-   ]
+   ],
+   "last_reviewed": "2020-04-27",
+   "freshness": "stale-review"
   },
   {
    "title": "Challenges to IoT Security (Part 1)",
@@ -700,7 +788,9 @@
    "type": "archive",
    "tags": [
     "IoT"
-   ]
+   ],
+   "last_reviewed": "2020-04-20",
+   "freshness": "stale-review"
   }
  ]
 }

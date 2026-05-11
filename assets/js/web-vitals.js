@@ -1,27 +1,31 @@
 /**
- * AmbiSecure Web Vitals beacon — Phase 11.
+ * AmbiSecure Web Vitals beacon — Phase 12 (matured).
  *
  * Lightweight, privacy-conscious, CSP-clean (script-src 'self').
  * No external libraries; uses native PerformanceObserver only.
  *
  * Collects:
- *   - LCP (Largest Contentful Paint)
- *   - CLS (Cumulative Layout Shift)
- *   - INP (Interaction to Next Paint) — best-effort fallback to FID
- *   - TTFB (Time to First Byte)
+ *   - LCP, CLS, INP (FID fallback), TTFB.
+ *
+ * Phase 12 additions:
+ *   - Page-group derivation from window.location.pathname (e.g. "blog",
+ *     "case-studies", "products", "tools", "video", etc.) so the metrics
+ *     can be aggregated by section in the analytics layer.
+ *   - Event batching: collect all metrics through the page lifecycle and
+ *     flush them once on pagehide / visibilitychange:hidden.
+ *   - Debug mode: enable by setting localStorage["as-vitals-debug"] = "1"
+ *     or appending ?as_vitals_debug=1 to the URL — prints a console.table.
  *
  * Reporting:
- *   - Only runs if window.AS_ANALYTICS && AS_ANALYTICS.enabled.
- *   - Respects the analytics opt-out (localStorage["as_analytics_opt"] === "out").
- *   - Honours Do-Not-Track.
- *   - Hands metrics to window.AS_ANALYTICS.report({ name, value, id }) — never
- *     calls out directly. The analytics module decides whether to send.
+ *   - Runs only when AS_ANALYTICS exposes report() AND no opt-out / DNT is set.
+ *   - In debug mode, runs regardless of analytics state but never forwards.
  *
  * Privacy:
- *   - No URL parameters captured.
+ *   - No URL query string captured.
  *   - No referrer.
  *   - No user-identifier.
- *   - Page path is captured only as window.location.pathname (no query string).
+ *   - Path captured as window.location.pathname only.
+ *   - pageGroup is derived from the path, not from any user attribute.
  */
 (function () {
   "use strict";
@@ -29,37 +33,114 @@
   if (typeof window === "undefined") return;
   if (!window.PerformanceObserver) return;
 
-  // Honour DNT and the opt-out preference.
+  // ---- Debug mode ---------------------------------------------------------
+  var DEBUG = false;
   try {
-    if (navigator.doNotTrack === "1" || window.doNotTrack === "1") return;
-    if (localStorage.getItem("as-analytics-opt-out") === "1") return;
-  } catch (e) {
-    // If localStorage is denied, fall through — DNT alone gates us.
+    DEBUG = localStorage.getItem("as-vitals-debug") === "1" ||
+            (window.location.search || "").indexOf("as_vitals_debug=1") !== -1;
+  } catch (e) {}
+
+  // ---- DNT / opt-out gating ----------------------------------------------
+  if (!DEBUG) {
+    try {
+      if (navigator.doNotTrack === "1" || window.doNotTrack === "1") return;
+      if (localStorage.getItem("as-analytics-opt-out") === "1") return;
+    } catch (e) {}
   }
 
-  var reported = Object.create(null);
-  function report(name, value, extra) {
-    if (reported[name] && name !== "CLS") return; // CLS accumulates; others fire once
-    reported[name] = true;
-    var payload = {
+  // ---- Page-group derivation ---------------------------------------------
+  function deriveGroup(path) {
+    if (!path || path === "/") return "home";
+    var parts = path.split("/").filter(Boolean);
+    if (!parts.length) return "home";
+    var top = parts[0];
+    var groupMap = {
+      blog: parts[1] === "archive" ? "blog-archive" :
+            parts[1] === "categories" ? "blog-categories" :
+            parts[1] === "page" ? "blog-pagination" :
+            (parts.length >= 2 ? "blog-post" : "blog-index"),
+      "case-studies": parts.length >= 2 ? "case-study" : "case-studies-index",
+      brochures: parts.length >= 2 ? "brochure" : "brochures-index",
+      products: parts.length >= 2 ? "product" : "products-index",
+      services: parts.length >= 2 ? "service" : "services-index",
+      solutions: parts.length >= 2 ? "solution" : "solutions-index",
+      technologies: parts.length >= 2 ? "technology" : "technologies-index",
+      industries: parts.length >= 2 ? "industry" : "industries-index",
+      videos: parts.length >= 2 ? "video" : "videos-index",
+      resources: parts.length >= 2 ? "tool" : "resources-index",
+      references: parts.length >= 2 ? "reference" : "references-index",
+      tags: parts.length >= 2 ? "tag" : "tags-index",
+      "engagement-models": "engagement",
+      about: "about",
+      contact: "contact",
+      support: "support",
+      trust: "trust",
+      partners: "partners",
+      search: "search",
+      privacy: "privacy"
+    };
+    return groupMap[top] || ("misc-" + top);
+  }
+
+  var PATH = window.location.pathname || "/";
+  var PAGE_GROUP = deriveGroup(PATH);
+
+  // ---- Buffered metrics --------------------------------------------------
+  var buffer = [];
+  var seen = Object.create(null);
+
+  function enqueue(name, value, extra) {
+    // For CLS we keep updating; for others we record once.
+    if (seen[name] && name !== "CLS") return;
+    seen[name] = true;
+    buffer.push({
       name: name,
       value: Math.round(value * 1000) / 1000,
-      path: window.location.pathname,
-      ts: Date.now()
-    };
-    if (extra) payload.extra = extra;
-    try {
-      if (window.AS_ANALYTICS && typeof window.AS_ANALYTICS.report === "function") {
-        window.AS_ANALYTICS.report(payload);
-      } else {
-        // Buffer until analytics module loads.
-        window.AS_WEB_VITALS_BUFFER = window.AS_WEB_VITALS_BUFFER || [];
-        window.AS_WEB_VITALS_BUFFER.push(payload);
-      }
-    } catch (e) { /* swallow */ }
+      pageGroup: PAGE_GROUP,
+      path: PATH,
+      ts: Date.now(),
+      extra: extra || null
+    });
   }
 
-  // ---- LCP ----
+  function updateCLS(newValue) {
+    for (var i = 0; i < buffer.length; i++) {
+      if (buffer[i].name === "CLS") {
+        buffer[i].value = Math.round(newValue * 1000) / 1000;
+        buffer[i].ts = Date.now();
+        return;
+      }
+    }
+    enqueue("CLS", newValue);
+  }
+
+  // ---- Flush ------------------------------------------------------------
+  var flushed = false;
+  function flush() {
+    if (flushed) return;
+    flushed = true;
+    if (!buffer.length) return;
+    if (DEBUG && typeof console !== "undefined" && console.table) {
+      try { console.table(buffer); } catch (e) {}
+    }
+    if (DEBUG) return; // debug never forwards
+    try {
+      if (window.AS_ANALYTICS && typeof window.AS_ANALYTICS.report === "function") {
+        buffer.forEach(function (m) { window.AS_ANALYTICS.report(m); });
+      } else {
+        // Analytics not loaded yet — buffer for the analytics loader to pick up.
+        window.AS_WEB_VITALS_BUFFER = window.AS_WEB_VITALS_BUFFER || [];
+        Array.prototype.push.apply(window.AS_WEB_VITALS_BUFFER, buffer);
+      }
+    } catch (e) {}
+  }
+
+  addEventListener("pagehide", flush, { once: true });
+  addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") flush();
+  }, { once: false });
+
+  // ---- LCP ---------------------------------------------------------------
   try {
     var lcpValue = 0;
     var lcpObs = new PerformanceObserver(function (list) {
@@ -68,21 +149,16 @@
       if (last) lcpValue = last.startTime;
     });
     lcpObs.observe({ type: "largest-contentful-paint", buffered: true });
-    // Report on visibility change or pagehide — whichever comes first.
-    var lcpDone = false;
-    var finalizeLcp = function () {
-      if (lcpDone || !lcpValue) return;
-      lcpDone = true;
-      report("LCP", lcpValue);
+    addEventListener("pagehide", function () {
+      if (lcpValue) enqueue("LCP", lcpValue);
       try { lcpObs.disconnect(); } catch (e) {}
-    };
+    }, { once: true });
     addEventListener("visibilitychange", function () {
-      if (document.visibilityState === "hidden") finalizeLcp();
+      if (document.visibilityState === "hidden" && lcpValue) enqueue("LCP", lcpValue);
     }, { once: false });
-    addEventListener("pagehide", finalizeLcp, { once: true });
   } catch (e) {}
 
-  // ---- CLS ----
+  // ---- CLS ---------------------------------------------------------------
   try {
     var clsValue = 0;
     var sessionValue = 0;
@@ -105,16 +181,14 @@
         }
         if (sessionValue > clsValue) {
           clsValue = sessionValue;
+          updateCLS(clsValue);
         }
       });
     });
     clsObs.observe({ type: "layout-shift", buffered: true });
-    addEventListener("pagehide", function () {
-      if (clsValue >= 0) report("CLS", clsValue);
-    }, { once: true });
   } catch (e) {}
 
-  // ---- INP (best-effort) / FID fallback ----
+  // ---- INP (long-event observer) / FID fallback --------------------------
   try {
     var inpValue = 0;
     var entryTypes = PerformanceObserver.supportedEntryTypes || [];
@@ -124,27 +198,44 @@
           if (entry.duration > inpValue) inpValue = entry.duration;
         });
       });
-      try { inpObs.observe({ type: "event", buffered: true, durationThreshold: 16 }); }
-      catch (e) { inpObs.observe({ type: "event", buffered: true }); }
+      try {
+        inpObs.observe({ type: "event", buffered: true, durationThreshold: 16 });
+      } catch (e) {
+        inpObs.observe({ type: "event", buffered: true });
+      }
       addEventListener("pagehide", function () {
-        if (inpValue) report("INP", inpValue);
+        if (inpValue) enqueue("INP", inpValue);
       }, { once: true });
     } else if (entryTypes.indexOf("first-input") !== -1) {
       var fidObs = new PerformanceObserver(function (list) {
         list.getEntries().forEach(function (entry) {
-          report("FID", entry.processingStart - entry.startTime);
-          fidObs.disconnect();
+          enqueue("FID", entry.processingStart - entry.startTime);
+          try { fidObs.disconnect(); } catch (e) {}
         });
       });
       fidObs.observe({ type: "first-input", buffered: true });
     }
   } catch (e) {}
 
-  // ---- TTFB ----
+  // ---- TTFB --------------------------------------------------------------
   try {
     var nav = performance.getEntriesByType("navigation")[0];
     if (nav && typeof nav.responseStart === "number") {
-      report("TTFB", nav.responseStart);
+      enqueue("TTFB", nav.responseStart);
     }
   } catch (e) {}
+
+  // ---- Public surface for adhoc use cases --------------------------------
+  // Allow page-specific code to record a custom metric:
+  //   window.AS_VITALS.mark("Tool Load", 123);
+  window.AS_VITALS = {
+    mark: function (name, value, extra) {
+      if (typeof name === "string" && typeof value === "number") {
+        enqueue(name, value, extra || null);
+      }
+    },
+    flush: flush,
+    debug: function () { return DEBUG; },
+    pageGroup: function () { return PAGE_GROUP; }
+  };
 })();

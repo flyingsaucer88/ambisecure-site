@@ -61,3 +61,41 @@ jobs:
           count=$(grep -c "<loc>" sitemap.xml)
           echo "sitemap.xml contains $count URLs"
           test "$count" -ge 200 || (echo "FAIL: fewer than 200 URLs in sitemap" && exit 1)
+
+  audit-content:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.x" }
+      - name: Audit content metadata
+        run: python3 tools/audit-content.py
+
+  audit-seo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.x" }
+      - name: Install xmllint
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+      - name: SEO + structural audit
+        run: python3 tools/audit-seo.py
+
+  audit-media:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.x" }
+      - name: Media governance audit
+        run: python3 tools/audit-media.py
+
+  audit-freshness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.x" }
+      - name: Content freshness audit (informational)
+        run: python3 tools/audit-freshness.py --strict

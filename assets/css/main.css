@@ -2645,3 +2645,52 @@ section.brochure {
   color: var(--brand-grey, #616A6C);
   margin: 14px 0 0 0;
 }
+
+/* ===== Phase 12 — Search groups, popular searches ===== */
+.blog-search-group-header {
+  list-style: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--secure-cyan, #0E8C9C);
+  padding: 18px 4px 6px;
+  margin: 8px 0 4px;
+  border-bottom: 1px dashed var(--rule, #E1E3E4);
+}
+.blog-search-meta-section {
+  list-style: none;
+  padding: 16px 4px;
+  margin: 8px 0 0;
+}
+.blog-search-meta-section h4 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--brand-grey, #616A6C);
+  margin: 0 0 10px 0;
+}
+.blog-search-popular {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.blog-search-popular-link {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  text-decoration: none;
+  color: var(--brand-dark, #3A3F40);
+  background: white;
+  border: 1px solid var(--rule, #E1E3E4);
+  border-radius: 999px;
+  padding: 5px 14px;
+}
+.blog-search-popular-link:hover {
+  color: var(--brand-red, #E3222A);
+  border-color: var(--brand-red, #E3222A);
+}

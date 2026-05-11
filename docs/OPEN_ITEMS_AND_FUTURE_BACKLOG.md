@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 11 consolidation)
+**Last updated:** 2026-05-11 (Phase 12 — audit suite + matured automation)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
@@ -62,7 +62,7 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 | Service worker / offline cache | Static site is already cacheable; SW is over-engineering today | M | Lighthouse asks for installability score | PWA installability |
 | Brotli pre-compression on disk | LiteSpeed compresses on the fly | S | Move off LiteSpeed | Cold-cache TTFB |
 | Per-route CSS splitting | Single 60 KB CSS is fine | M | CSS exceeds 200 KB | Initial paint |
-| Per-page OG image generation pipeline | Phase 11 ships the `tools/gen-og-image.py` helper; not yet wired into a CI step | S | Site-wide OG audit shows many pages using the default OG | Social-share differentiation |
+| Per-blog-post OG cards (one per post, not per section) | Phase 12 ships 22 per-section OG cards via `tools/gen-og-batch.py`; per-post variants would push the OG image count to ~50+ | S | A post-share volume signal showing per-post OG matters | Sharper per-share social previews |
 
 ---
 
@@ -71,9 +71,10 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 | Item | Why deferred | Complexity | Trigger | Value |
 |------|--------------|:----------:|---------|-------|
 | Lighthouse CI auto-blocking on regression | Phase 11 workflow is advisory (`continue-on-error: true`) | S | One real regression that the advisory CI catches | Performance guardrails |
-| Automated WebP regeneration when a PNG > 200 KB is added | Today this is a manual quarterly review | S | Operator chooses to invest the script time | Reduces drift |
-| Automated sitemap regeneration from on-disk page set | Sitemap is hand-curated; the Phase 11 audit script reports stale entries | M | Sitemap entry count > 500 | Removes manual error class |
-| Pre-commit hook (`pre-commit` or `lefthook`) running `lint-htaccess.py`, `xmllint`, JSON-LD parse | Easy; needs developer-machine alignment | S | Multiple engineers on the repo | Catches regressions earlier than CI |
+| Automated WebP regeneration when a PNG > 200 KB is added | Today the `audit-media` check surfaces it; regeneration is still manual | S | Operator chooses to invest the script time | Reduces drift |
+| Automated sitemap regeneration from on-disk page set | Sitemap is hand-curated; `audit-seo` catches drift but doesn't fix it | M | Sitemap entry count > 500 | Removes manual error class |
+| Pre-commit hook (`pre-commit` or `lefthook`) running `tools/audit-all.sh` | Today operators run it manually | S | Multiple engineers on the repo | Catches regressions earlier than CI |
+| `audit-freshness` operator-side reminder dashboard | Today it's a CI report; could be a one-page operator view | S | Engineering team wants a single "what to review" page | Drives quarterly content review |
 
 ---
 
