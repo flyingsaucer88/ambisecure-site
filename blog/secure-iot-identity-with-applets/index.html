@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Building Secure IoT Identity with Security Applets</title>
+<meta name="description" content="Five JavaCard applets for IoT device identity: provisioning, attestation, mTLS, signed firmware, key rotation. Architecture on a CC EAL5+ secure element." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/secure-iot-identity-with-applets/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Building Secure IoT Identity with Security Applets" />
+<meta property="og:description" content="Five JavaCard applets for IoT device identity: provisioning, attestation, mTLS, signed firmware, key rotation. Architecture on a CC EAL5+ secure element." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/secure-iot-identity-with-applets/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css" />
+<link rel="stylesheet" href="/assets/css/main.css" />
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why does the secure element verify firmware signatures instead of the host MCU?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because an attacker who compromises the host MCU can lie about signature verification. Moving the verification inside the secure element means an attacker must also compromise the SE's burned-in issuance public key &mdash; which is a different and considerably harder problem."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How often should IoT device keys rotate?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Operator policy. Monthly for high-assurance industrial control. Annually for consumer IoT. Never (or only on incident) for the long tail of disposable sensors. The rotation applet handles the cryptography; the cadence is a business decision."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does an IoT attestation chain actually look like?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Device attestation signature \u2192 per-batch attestation CA \u2192 AmbiSecure issuance CA \u2192 HSM key ceremony record. The auditor walks that chain backwards from a deployed device to prove the credential came off the certified line. The whole chain is verifiable at any future point."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Building Secure IoT Identity with Security Applets",
+     "item": "https://ambisecure.ambimat.com/blog/secure-iot-identity-with-applets/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Building Secure IoT Identity with Security Applets",
+   "datePublished": "2026-05-11",
+   "dateModified": "2026-05-11",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   },
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/secure-iot-identity-with-applets/",
+   "keywords": "IoT identity, secure element, attestation, mTLS, signed firmware, key rotation, JavaCard, provisioning"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Building Secure IoT Identity with Security Applets</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>IoT</span><span>Cornerstone</span><span>Published 2026-05-11</span><span>Updated 2026-05-11</span><span>13 min read</span>
+    </div>
+
+    <h1>Building Secure IoT Identity with Security Applets.</h1>
+    <p class="dek">Hardware-backed IoT identity isn&rsquo;t one applet, it&rsquo;s five. Provisioning, attestation, mTLS, signed firmware, key rotation &mdash; on a Common Criteria EAL5+ secure element the host MCU never sees the private key on.</p>
+
+    <h2>The IoT identity problem, restated</h2>
+    <p>An IoT device is a credential bearer that lives outside an administrator's reach for years. It boots at a factory line. It is shipped to a customer site. It connects to a cloud or fleet platform. It runs for five to fifteen years. It will, eventually, be compromised &mdash; an attacker physically present, a malicious firmware update, a stolen unit reverse-engineered to extract a key. The identity architecture has to assume all of these and still be defensible.</p>
+    <p>The single most consequential decision is where the device's private key lives. If it lives in flash on the host MCU, the key is extractable by anyone with the device in hand. If it lives in a hardware secure element with a certified boundary, extraction becomes a different problem &mdash; one with cost-per-extraction in the thousands or tens of thousands of dollars per key, depending on the certification class. That is the threshold a serious IoT identity programme has to clear.</p>
+    <p>This post walks through how <a href="/products/iot-security-applets/">IoT security applets</a> on a hardware secure element solve the credential-lifecycle problem from first boot through revocation.</p>
+
+    <h2>The applet layer, briefly</h2>
+    <p>A secure element on its own is silicon. It runs whatever applet you load onto it. The applet layer is where the device's identity workflow gets expressed: provisioning, attestation, mutual TLS, signed firmware update, key rotation. A well-designed IoT identity programme assembles the right set of applets and loads them on a CC EAL5+ secure element over GlobalPlatform SCP03. The host MCU then talks to the secure element over a thin bus (ISO 7816, I2C, SPI) and never sees the private key.</p>
+    <p>Five applets cover the IoT identity lifecycle:</p>
+
+    <h2>1. The provisioning applet</h2>
+    <p>First boot. The device leaves the factory with a Master Key already injected during personalisation. The provisioning applet's job is to derive per-device identity keys from the Master Key and the device's unique identifier (UID), then lock the security domain so the operation cannot be repeated without an authorised admin ceremony.</p>
+    <p>The flow:</p>
+    <ol>
+      <li>Personalisation line injects the Master Key into the secure element's secure domain over SCP03.</li>
+      <li>Device powers on at the customer site.</li>
+      <li>The provisioning applet computes <code>identity_key = KDF(master_key, UID, "identity-v1")</code>.</li>
+      <li>The applet stores the identity key in a non-extractable slot, exports the public key for the fleet platform to ingest, and sets a "provisioned" flag.</li>
+      <li>The "provisioned" flag refuses further provisioning until an admin re-key ceremony.</li>
+    </ol>
+    <p>The point of this dance: extraction of one device's key tells the attacker nothing about any other device's key, because each is derived from the unique UID. Compromise of one device is bounded by that one device.</p>
+
+    <h2>2. The attestation applet</h2>
+    <p>Once provisioned, the device needs to prove to a fleet platform that it is, in fact, the hardware that was provisioned. This is attestation. The applet emits a signed quote covering:</p>
+    <ul>
+      <li>The device's UID.</li>
+      <li>The device's identity public key.</li>
+      <li>A nonce supplied by the verifier (replay protection).</li>
+      <li>A signature from the attestation key, which is itself signed by the per-batch attestation CA.</li>
+    </ul>
+    <p>The verifier (cloud-side or on-prem) walks the chain: the attestation signature is valid; the attestation CA is the AmbiSecure issuance CA; the device is therefore the hardware that came off the line. The verifier can now trust the identity public key for mutual TLS, encrypted command channels, signed telemetry, anything.</p>
+    <p>This is structurally identical to FIDO2 attestation (<a href="/blog/understanding-webauthn-attestation-objects/">WebAuthn attestation</a>) and to TPM attestation. The pattern repeats because the problem repeats: prove the hardware is what it claims to be.</p>
+
+    <h2>3. The mTLS credential applet</h2>
+    <p>For day-to-day operations the device authenticates to its fleet platform via mutual TLS. The mTLS credential applet holds the X.509 client certificate and the matching private key. The host MCU's TLS stack delegates the private-key operations (sign the handshake's CertificateVerify) to the applet over APDU.</p>
+    <p>What the host MCU sees: a thin shim that returns "here is the signed CertificateVerify." What the host MCU does not see: the private key. An attacker with control of the host MCU can still force handshakes using the applet, but cannot exfiltrate the credential for use elsewhere. Compromise containment is the goal.</p>
+
+    <h2>4. The signed-firmware applet</h2>
+    <p>Firmware updates are the highest-risk operational surface in IoT. A malicious firmware update gives the attacker permanent control; nothing else comes close in blast radius.</p>
+    <p>The signed-firmware applet verifies update signatures inside the secure element, not on the host MCU. The flow:</p>
+    <ol>
+      <li>Fleet platform serves a firmware image plus a detached signature.</li>
+      <li>Host MCU streams the firmware image and the signature to the applet.</li>
+      <li>The applet computes the firmware hash and verifies the signature against an issuance public key burned into the applet at personalisation.</li>
+      <li>The applet returns "valid" or "invalid." The host MCU only applies the update on "valid."</li>
+    </ol>
+    <p>An attacker who compromises the host MCU still cannot accept a tampered update; the signature verification is inside the secure element. To pass a tampered update, the attacker must compromise the issuance signing key &mdash; which lives in an HSM at the operator&rsquo;s manufacturing site, not on the device.</p>
+
+    <h2>5. The key-rotation applet</h2>
+    <p>Long-running devices need credential rotation. Static keys are static threat surfaces. The key-rotation applet handles per-device key rolls on a schedule the operator sets:</p>
+    <ul>
+      <li>Generate a fresh identity keypair inside the secure element.</li>
+      <li>Sign the new public key with the previous identity key (the proof-of-continuity).</li>
+      <li>Push the signed transition to the fleet platform.</li>
+      <li>Mark the previous key as retired but retain it for forensic decrypt of historical telemetry encrypted to that key, until the operator's retention window expires.</li>
+    </ul>
+    <p>Rotation cadence is operator policy: monthly for high-assurance industrial control; annually for consumer IoT; never (or only on incident) for the long-tail of disposable sensors.</p>
+
+    <h2>Where the host MCU sits</h2>
+    <p>The host MCU runs the device's application. It does network I/O, business logic, sensor I/O, the user-facing surface. It does not hold private keys. The relationship to the secure element is asymmetric: the MCU calls the SE, the SE refuses operations the MCU is not authorised to perform.</p>
+    <p>From an integration perspective, this is a thin shim library (~3 KB ROM on a Cortex-M) that:</p>
+    <ul>
+      <li>Wraps APDU construction for the five applets.</li>
+      <li>Exposes a credential-lookup API to the host's TLS / mTLS stack.</li>
+      <li>Exposes a firmware-verify API to the host's bootloader.</li>
+      <li>Handles SE bus errors gracefully (retry, fail-safe to "no credential available").</li>
+    </ul>
+    <p>The shim is the only host-side code that touches the SE. Everything else in the device's firmware is unchanged.</p>
+
+    <h2>Standards posture</h2>
+    <p>The applets use ECC P-256 / P-384 for new deployments and RSA 2048 / 3072 for legacy fleets that have existing CA infrastructure. Hashing is SHA-256 / SHA-384. Personalisation is GlobalPlatform SCP03 (AES-128). The secure element itself is Common Criteria EAL5+.</p>
+    <p>For a regulated fleet (industrial IoT, automotive, medical devices), the standards posture matters at audit time. The traceability is: <a href="/references/x509-extensions/">X.509 certificate</a> ↔ attestation chain ↔ per-batch CA ↔ AmbiSecure issuance CA ↔ HSM key ceremony record. The auditor can walk that chain from a deployed device back to a key ceremony with a documented quorum.</p>
+
+    <h2>What an attacker still has</h2>
+    <p>Hardware-backed IoT identity is not a complete defence; it is a credential-protection layer. An attacker who physically captures a device can still:</p>
+    <ul>
+      <li>Use the device&rsquo;s credentials for as long as the operator doesn&rsquo;t revoke them. Detection is the operator's job; revocation is the operator's job.</li>
+      <li>Reverse-engineer the host MCU's logic and discover application-layer vulnerabilities (the SE protects keys, not code).</li>
+      <li>Perform side-channel and fault-injection attacks against the SE at considerable cost &mdash; the CC EAL5+ certification means "considerable cost," not "impossible."</li>
+    </ul>
+    <p>The threat model the SE addresses is "attacker extracts the credential and uses it elsewhere." The threat model it does not address is "attacker uses the captured device itself." For that, the operator's revocation pipeline has to be fast enough &mdash; minutes, not days &mdash; from "device reported missing" to "device's credential is no longer accepted."</p>
+
+    <h2>The bottom line</h2>
+    <p>A serious IoT identity programme runs five applets on a CC EAL5+ secure element: provisioning, attestation, mTLS, signed update, key rotation. The host MCU stays light; the SE stays load-bearing. The credential lifecycle &mdash; from factory injection through field rotation to revocation &mdash; lives inside an auditable chain. None of this is novel; the standards have been stable for a decade. What changes is the depth and discipline with which the applet layer is implemented. That is where AmbiSecure ships.</p>
+
+    <hr />
+    <h2>Companion reading</h2>
+    <ul>
+      <li><a href="/products/iot-security-applets/">IoT Security Applets (product)</a></li>
+      <li><a href="/products/iot-security-chipset/">IoT Security Chipset (product)</a></li>
+      <li><a href="/solutions/secure-element-integration/">Secure-element integration (solution)</a></li>
+      <li><a href="/technologies/secure-elements/">Secure elements (technology)</a></li>
+      <li><a href="/blog/apdu-from-first-principles/">APDU from first principles</a></li>
+      <li><a href="/blog/understanding-webauthn-attestation-objects/">WebAuthn attestation objects</a></li>
+    </ul>
+  </article>
+</section>
+</main>
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/fido2-nano-sim-applet/">FIDO2 Nano SIM Applet</a></li><li><a href="/products/piv-nano-sim-applet/">PIV Nano SIM Applet</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Develop</h4><ul><li><a href="/services/fido-validation-server/">FIDO Validation Server</a></li><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/government-identity/">Government identity</a></li></ul></div>
+    <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span></div>
+</div></footer>
+<script src="/assets/js/nav.js" defer></script>
+<script src="/assets/js/web-vitals.js" defer></script>
+</body>
+</html>

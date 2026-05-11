@@ -10,7 +10,7 @@
 <meta property="og:title" content="AmbiSecure FIDO Validation Server" />
 <meta property="og:description" content="FIDO passwordless authentication platform. JS API + REST. Origin-bound, transparent billing." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/services/fido-validation-server/" />
-<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/services.png" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/fido-validation-server.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -190,6 +190,67 @@
 <section>
   <div class="section-container">
     <div class="section-head left">
+      <span class="eyebrow">Where it fits</span>
+      <h2 class="section-title">Where the Validation Server sits in the FIDO trust chain.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">A FIDO deployment has three actors &mdash; authenticator, relying party, validation server. The server is the load-bearing piece in the middle: it owns policy, verifies attestation, and produces the cryptographic decision the relying party trusts.</p>
+    </div>
+    <div class="arch">
+      <div class="arch-node"><span class="arch-tag">01</span><h4>Authenticator</h4><p>OnePass Card, FIDO2 Nano SIM, USB key, or platform authenticator. Holds the private key.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">02</span><h4>Browser / OS</h4><p>WebAuthn client talks to the authenticator over CTAP2.1. Origin-bound by construction.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node accent"><span class="arch-tag">03</span><h4>Validation Server</h4><p>Verifies attestation, applies tenant policy, persists credentials. The cryptographic decision lives here.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">04</span><h4>Relying party</h4><p>The application doing the sign-in. Trusts the server's decision; never touches a key.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Attestation trust chain</span>
+      <h2 class="section-title">The cryptographic chain that backs every credential.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">Every registration produces an attestation statement. The Validation Server walks this chain on every accepted credential.</p>
+    </div>
+    <div class="arch">
+      <div class="arch-node"><span class="arch-tag">01</span><h4>Authenticator key</h4><p>Per-credential keypair generated inside the secure boundary.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">02</span><h4>Attestation key</h4><p>Per-batch authenticator-issuer key. Signs the registration attestation.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">03</span><h4>Attestation CA</h4><p>The vendor / programme CA that signed the attestation key.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node accent"><span class="arch-tag">04</span><h4>MDS BLOB</h4><p>FIDO Metadata Service entry binding AAGUID to certification, transports, advisories.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">05</span><h4>Tenant policy</h4><p>Allow-listed AAGUIDs + UV / attestation conveyance requirements. The policy gate.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="onboarding">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Enterprise onboarding</span>
+      <h2 class="section-title">From contract to first credential, four steps.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">Onboarding is operator-driven, not self-serve. The validation server is a managed engagement; this is the canonical sequence.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">1. Scoping conversation</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Tenant scope (one relying party? a portfolio?), target authenticators (OnePass Card, SIM-resident, third-party security keys), deployment shape (hosted / operator-hosted / hybrid), residency requirements, expected credential volume.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">2. Tenant provisioning</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Tenant identifier issued. API keys for dev / staging / production. Initial AAGUID allow-list + UV / attestation conveyance policy configured. RP-ID + allowed origins locked in.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">3. Integration</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Relying party wires its sign-in surface to the four registration / authentication endpoints. The JS shim talks to the browser&rsquo;s WebAuthn API; the backend talks to the validation server. Sandbox tenant available for testing before production credentials.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">4. Production cutover</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Production API keys issued. First user enrols. Admin console exposes credential enumeration, usage metering, audit log. Operator-side governance (rotation cadence, alert thresholds) applied.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Standards interoperability</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">The server speaks unmodified <a href="/technologies/webauthn/">WebAuthn</a> and <a href="/technologies/ctap2/">CTAP2.1</a>. Any compliant authenticator that passes the tenant&rsquo;s AAGUID policy registers and authenticates. There is no vendor lock-in at the authenticator layer.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Existing IdP integration</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">SAML or OIDC for operator-admin login. SCIM for tenant-side user provisioning where the operator wants automated lifecycle. The server is the WebAuthn ceremony engine; identity-data ownership stays in the operator&rsquo;s existing IdP.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
       <span class="eyebrow">Connected reading</span>
       <h2 class="section-title">Where this fits in the bigger picture.</h2>
       <span class="section-line"></span>
@@ -199,7 +260,7 @@
       <a href="/products/fido2-nano-sim-applet/" class="card"><h3>Product: FIDO2 Nano SIM Applet</h3><p>SIM-resident FIDO2 authenticator the server verifies natively.</p><div class="card-meta">View product &rarr;</div></a>
       <a href="/solutions/passwordless-mfa/" class="card"><h3>Solution: Passwordless MFA</h3><p>Why the validation server is the deployable end of the FIDO story.</p><div class="card-meta">View solution &rarr;</div></a>
       <a href="/technologies/webauthn/" class="card"><h3>Technology: WebAuthn</h3><p>How the JS API and REST endpoints map to the spec.</p><div class="card-meta">View technology &rarr;</div></a>
-      <a href="/references/aaguids/" class="card"><h3>Reference: AAGUIDs</h3><p>The authenticator-model identifiers the server&rsquo;s policy engine matches against.</p><div class="card-meta">View reference &rarr;</div></a>
+      <a href="/blog/sim-based-fido2-authenticators/" class="card"><h3>Blog: SIM-resident FIDO2</h3><p>End-to-end deployment story for SIM-shaped authenticators against this server.</p><div class="card-meta">Read article &rarr;</div></a>
       <a href="/blog/understanding-webauthn-attestation-objects/" class="card"><h3>Blog: Attestation objects</h3><p>The format the server verifies on every registration.</p><div class="card-meta">Read article &rarr;</div></a>
     </div>
   </div>

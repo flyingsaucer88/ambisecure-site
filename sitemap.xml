@@ -133,6 +133,11 @@
 
   <!-- Phase 4: cornerstone blogs -->
   <url><loc>https://ambisecure.ambimat.com/blog/understanding-webauthn-attestation-objects/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/sim-based-fido2-authenticators/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/piv-vs-usb-tokens-vs-embedded/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/designing-email-document-signing-platforms/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/secure-iot-identity-with-applets/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/engineering-epassport-issuance-platforms/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/passkeys-vs-traditional-mfa/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/why-hardware-backed-identity-matters/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/designing-enterprise-passwordless-systems/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>

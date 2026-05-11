@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 15 — product/service expansion + homepage ecosystem map)
+**Last updated:** 2026-05-11 (Phase 16 — cornerstone blogs + per-product OG cards + FIDO server trust-chain)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
@@ -39,8 +39,6 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 | Customer-named case studies with logo permission | Today everything is anonymised | M | Customer sign-off + legal review | Authority + trust |
 | Pricing tier publishing | Today `/engagement-models/` describes shapes, not prices | S | Procurement decision to publish | Reduces inbound qualification friction |
 | Tech-talk video series | Existing video set is product walkthroughs, not technical deep-dives | L | Production budget + speaker availability | Brand authority on engineering blog topics |
-| Cornerstone blog for each Phase 15 product (SIM-resident applets, Secure Mail Suite, ePassport platform) | The product pages are SEO-targeted; companion blog posts would close the topic cluster | M | After the product pages have 30 days of organic traffic, write the cornerstone that surfaces best | Topic-cluster authority |
-| Per-product OG card for the 6 Phase 15 pages | Currently they share `products.png` / `services.png` section OGs | XS | Operator decides per-product OG matters for share appearance | Sharper LinkedIn/Twitter previews |
 
 ---
 
@@ -87,7 +85,7 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 | `developer.ambimat.com` subdomain split | No current trigger; navigation isn't crowded yet | L | Resources/references surface exceeds ~100 tools each | Domain-of-concerns separation, faster mental model |
 | External docs platform (Mintlify/Docusaurus) for the technologies section | Static HTML is fine at current scale | L | Tech docs grow to need search + versioning | Better docs UX |
 | Multilingual content | Audience is English-first today | XL | India or Latam expansion brief | Regional reach |
-| Public-API or developer portal for the FIDO Validation Server | Page describes the SaaS architecture; actual developer onboarding / sandbox flow is operator-driven today | L | Productisation decision to open up self-serve sandbox | Developer adoption |
+| Public-API or developer portal for the FIDO Validation Server | Page now documents the four-step enterprise onboarding (Phase 16); actual self-serve developer sandbox is still operator-driven | L | Productisation decision to open up self-serve sandbox + API key issuance | Developer adoption |
 
 ---
 

@@ -2,6 +2,63 @@
 // Source of truth: assets/data/blogs.json. Re-run that script after edits.
 window.AS_BLOG_POOL = [
  {
+  "title": "SIM-Based FIDO2 Authenticators for Enterprise Identity",
+  "url": "/blog/sim-based-fido2-authenticators/",
+  "date": "2026-05-11",
+  "summary": "How SIM-resident FIDO2 applets work as roaming or embedded authenticators. Telecom and identity convergence; deployment economics for enterprise rollouts.",
+  "categories": [
+   "FIDO",
+   "Telecom Identity",
+   "Enterprise Identity"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "PIV Smart Cards vs USB Tokens vs Embedded Secure Elements",
+  "url": "/blog/piv-vs-usb-tokens-vs-embedded/",
+  "date": "2026-05-11",
+  "summary": "Workforce identity credential matrix. Lifecycle, physical-logical convergence, certificate workflows, deployment realities for three hardware-backed classes.",
+  "categories": [
+   "PKI",
+   "Smart Cards",
+   "Enterprise Identity"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "Designing Secure Email and Document Signing Platforms",
+  "url": "/blog/designing-email-document-signing-platforms/",
+  "date": "2026-05-11",
+  "summary": "Architecture for S/MIME email signing, PDF/PKCS#7 document signing, hardware-backed credentials, Long-Term Validation, and the trust-list problem.",
+  "categories": [
+   "PKI",
+   "Enterprise Identity"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "Building Secure IoT Identity with Security Applets",
+  "url": "/blog/secure-iot-identity-with-applets/",
+  "date": "2026-05-11",
+  "summary": "Five JavaCard applets for IoT device identity on a CC EAL5+ secure element: provisioning, attestation, mTLS, signed firmware, key rotation.",
+  "categories": [
+   "IoT",
+   "JavaCard"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "Engineering ePassport Issuance and Identity Platforms",
+  "url": "/blog/engineering-epassport-issuance-platforms/",
+  "date": "2026-05-11",
+  "summary": "Architecture of an ICAO 9303 ePassport platform. CSCA/DSC PKI, LDS generation, SOd signing, enrolment frontend, personalisation backbone, inspection-system reference.",
+  "categories": [
+   "Government Identity",
+   "PKI"
+  ],
+  "type": "modern"
+ },
+ {
   "title": "How to Choose Between Smart Cards, FIDO Tokens and Passkeys",
   "url": "/blog/smart-cards-vs-fido-tokens-vs-passkeys/",
   "date": "2026-05-11",

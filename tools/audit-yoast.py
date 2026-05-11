@@ -69,7 +69,7 @@ BANDS = {
     "case-study":   dict(word=(900, 2000),  desc=(110, 170), title=(30, 70)),
     "brochure":     dict(word=(300, 800),   desc=(110, 170), title=(30, 70)),
     "product":      dict(word=(200, 900),   desc=(100, 170), title=(25, 70)),
-    "service":      dict(word=(200, 1100),  desc=(100, 170), title=(25, 70)),
+    "service":      dict(word=(200, 1500),  desc=(100, 170), title=(25, 70)),
     "solution":     dict(word=(200, 1100),  desc=(100, 170), title=(25, 70)),
     "technology":   dict(word=(200, 1300),  desc=(100, 170), title=(25, 70)),
     # Reference + tool pages are JS-driven UI shells; static body is intentionally small.

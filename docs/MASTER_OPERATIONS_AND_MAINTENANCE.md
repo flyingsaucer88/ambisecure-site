@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 15 — identity platform expansion: 6 new product/service pages, FIDO Validation Server SaaS architecture, homepage ecosystem map)
+**Last updated:** 2026-05-11 (Phase 16 — platform maturity: cornerstone blogs, per-product OG cards, FIDO Validation Server trust-chain visuals + enterprise onboarding)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -17,11 +17,11 @@ If you are reading this for the first time, start at §1 (Platform) → §3 (Dep
 | Hosting | Hostinger LiteSpeed (production). |
 | Domain | `https://ambisecure.ambimat.com/` |
 | Ecosystem | Sub-property of Ambimat Electronics (`ambimat.com`); sister to `esim.ambimat.com`. |
-| HTML pages on disk | ~298 |
-| Sitemap canonical URLs | 248 (deduped in Phase 15) |
+| HTML pages on disk | ~303 |
+| Sitemap canonical URLs | 253 |
 | Practical utility tools | 54 |
 | Searchable reference databases | 12 |
-| Modern blog entries | 21 |
+| Modern blog entries | 26 (+5 Phase 16 cornerstones) |
 | Historical archive entries | 24 |
 | Case studies | 3 |
 | Brochures | 7 (1 landing + 6 platform overviews) |
@@ -495,6 +495,14 @@ The marketing surface at `/services/fido-validation-server/` documents the FIDO 
 
 What the page says (and what the implementation backs):
 
+Phase 16 additions to the same page:
+
+- **Trust-chain visual** &mdash; five-step diagram (authenticator → browser → validation server → relying party) showing where the server sits in the FIDO ceremony.
+- **Attestation trust-chain visual** &mdash; authenticator key → attestation key → attestation CA → MDS BLOB → tenant policy. Shows what the server walks on every accepted credential.
+- **Enterprise onboarding** &mdash; four-step canonical sequence (scoping → tenant provisioning → integration → production cutover) plus a standards-interoperability and existing-IdP-integration note. The validation server is a managed engagement; this section makes the onboarding shape explicit without promising self-serve sandbox availability.
+
+Original Phase 15 content:
+
 - **Multi-tenant** &mdash; every credential, challenge, audit record scoped to a tenant identifier. Cross-tenant queries refused at persistence layer.
 - **API key per environment** &mdash; separate keys for dev / staging / production. Hashed at rest; cleartext shown once at issuance.
 - **Per-tenant policy** &mdash; allowed AAGUIDs, required UV, required attestation conveyance.
@@ -543,7 +551,7 @@ Most of the 138 `Redirect 301` rules cover the legacy WordPress URL scheme (`/le
 
 ### 11.2 Generating new images
 
-- **OG cards (per-section, Phase 12)**: `python3 tools/gen-og-batch.py --wire`. Reads `tools/og-templates.json`, generates an SVG + PNG for every declared section, then walks every HTML page and rewrites `<meta property="og:image">` to point at the section-matching card. Re-run any time a section's eyebrow/title/subtitle changes.
+- **OG cards (per-section + per-product, Phase 12 + Phase 16)**: `python3 tools/gen-og-batch.py --wire`. Reads `tools/og-templates.json`, generates an SVG + PNG for every declared section, then walks every HTML page and rewrites `<meta property="og:image">` to point at the matching card. First-match-wins in template order, so put narrow prefixes (e.g. `/products/fido2-nano-sim-applet/`) BEFORE broader ones (e.g. `/products/`). Re-run any time a section's eyebrow/title/subtitle changes. After generating new PNGs, also run `cwebp -q 85 <png> -o <webp>` so the audit-media WebP-sibling check passes. Phase 16 added seven per-page OG cards (the six new product/service pages from Phase 15 plus the FIDO Validation Server).
 - **Single OG card**: `python3 tools/gen-og-image.py --title "..." --subtitle "..." --out assets/img/og/<name>.png` (for one-off custom cards).
 - **WebP from PNG**: `cwebp -q 85 in.png -o out.webp`. (Note: macOS `sips` cannot write WebP — `cwebp` is required.)
 - **Video poster**: `ffmpeg -i in.mp4 -ss 1 -frames:v 1 -y poster.jpg`.
