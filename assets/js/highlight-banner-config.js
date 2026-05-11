@@ -19,6 +19,16 @@ window.AS_HOMEPAGE_BANNERS = [
     secondaryCta: { label: "Request a pilot", url: "/contact/" }
   },
   {
+    id: "videos-launch-2026",
+    enabled: true,
+    eyebrow: "NEW · Videos",
+    title: "Walkthroughs and product demos under 90 seconds.",
+    body: "FIDO setup on Gmail and Facebook, multi-application card use cases, and product loops. Click-to-play YouTube so nothing loads until you press Play.",
+    accent: "cyan",
+    primaryCta: { label: "Browse videos", url: "/videos/" },
+    secondaryCta: { label: "Talk to engineering", url: "/contact/" }
+  },
+  {
     id: "fido-validation-server",
     enabled: true,
     eyebrow: "SERVICE · FIDO Validation Server",

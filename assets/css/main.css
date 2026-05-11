@@ -2132,3 +2132,193 @@ footer.site-footer a:hover { color: var(--brand-red); }
   .proc-table { font-size: 13px; }
   .proc-table th, .proc-table td { padding: 10px 12px; }
 }
+
+/* =========================================================
+   PHASE 9: Video platform
+   YouTube facade, video grid, video cards, and inline player.
+   ========================================================= */
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+  margin-top: 12px;
+}
+
+.video-card {
+  background: var(--soft, #F4F5F6);
+  border: 1px solid var(--rule, #E1E3E4);
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.video-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  border-color: var(--brand-red, #E3222A);
+}
+
+.video-card-body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.video-card-body h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink, #3A3F40);
+  margin: 0 0 4px 0;
+  line-height: 1.35;
+}
+.video-card-meta {
+  display: flex;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: var(--brand-grey, #616A6C);
+  letter-spacing: .3px;
+  text-transform: uppercase;
+}
+.video-card-desc {
+  font-size: 14px;
+  color: var(--brand-grey, #616A6C);
+  line-height: 1.6;
+  margin: 0;
+}
+.video-card-cta {
+  font-size: 13px;
+  color: var(--brand-red, #E3222A);
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 6px;
+}
+.video-card-cta:hover { text-decoration: underline; }
+
+/* YouTube facade (click-to-play) */
+.yt-facade {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  background: #000;
+  overflow: hidden;
+  cursor: pointer;
+}
+.yt-facade-poster {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity .2s ease, transform .25s ease;
+}
+.yt-facade:hover .yt-facade-poster {
+  opacity: .85;
+  transform: scale(1.02);
+}
+.yt-facade-play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: rgba(227, 34, 42, 0.92);
+  color: white;
+  border: 0;
+  font-size: 24px;
+  line-height: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 6px;
+  transition: background .2s ease, transform .2s ease;
+}
+.yt-facade-play:hover {
+  background: rgba(227, 34, 42, 1);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+.yt-facade-play:focus-visible {
+  outline: 3px solid white;
+  outline-offset: 2px;
+}
+
+/* Self-hosted inline video */
+.video-self-hosted {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: #000;
+}
+
+/* Video group header (used on /videos/ landing) */
+.video-group {
+  margin-top: 48px;
+}
+.video-group:first-of-type { margin-top: 12px; }
+.video-group-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.video-group-header h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink, #3A3F40);
+  margin: 0;
+}
+.video-group-header .count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--brand-grey, #616A6C);
+  letter-spacing: .4px;
+}
+
+@media (max-width: 720px) {
+  .video-grid { grid-template-columns: 1fr; gap: 20px; }
+  .video-group-header h2 { font-size: 19px; }
+  .yt-facade-play { width: 56px; height: 56px; font-size: 20px; }
+}
+
+/* =========================================================
+   PHASE 9: Pillars row on home page
+   ========================================================= */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+}
+.pillar-card {
+  background: white;
+  border: 1px solid var(--rule, #E1E3E4);
+  border-left: 4px solid var(--brand-red, #E3222A);
+  border-radius: 6px;
+  padding: 16px 18px;
+  text-decoration: none;
+  color: var(--ink, #3A3F40);
+  transition: border-color .2s ease, transform .2s ease;
+}
+.pillar-card:hover {
+  transform: translateY(-2px);
+  border-left-color: var(--secure-cyan, #0E8C9C);
+}
+.pillar-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+}
+.pillar-card p {
+  font-size: 13px;
+  color: var(--brand-grey, #616A6C);
+  line-height: 1.55;
+  margin: 0;
+}

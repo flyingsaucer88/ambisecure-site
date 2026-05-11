@@ -19,3 +19,18 @@ Thumbs.db
 node_modules/
 dist/
 build/
+
+# Legacy scraped video binaries are source archives, not production assets.
+# Keep them on disk for reference; never commit them (they exceed GitHub's
+# 100 MB file-size limit and have no role in the deployed site).
+legacysitedata/videos/**/*.mp4
+legacysitedata/videos/**/*.mov
+legacysitedata/videos/**/*.mkv
+legacysitedata/videos/**/*.avi
+legacysitedata/videos/**/*.webm
+
+# Keep metadata sidecars and human-authored docs in the legacy archive
+!legacysitedata/videos/**/*.info.json
+!legacysitedata/videos/**/*.description
+!legacysitedata/videos/**/*.md
+!legacysitedata/video_inventory.md

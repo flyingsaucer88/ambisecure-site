@@ -265,4 +265,14 @@
   <url><loc>https://ambisecure.ambimat.com/blog/categories/transit/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/categories/webauthn/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 
+  <!-- Phase 9: Video platform -->
+  <url><loc>https://ambisecure.ambimat.com/videos/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/videos/setup-ambisecure-card-desktop/</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/videos/setup-ambisecure-card-facebook/</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/videos/setup-ambisecure-card-gmail/</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/videos/setup-ambisecure-card-mobile-facebook/</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/videos/setup-ambisecure-card-mobile-gmail/</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/videos/ambisecure-card-use-cases/</loc><changefreq>yearly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/videos/biokey-product-loop/</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+
 </urlset>
