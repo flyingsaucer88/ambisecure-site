@@ -76,3 +76,62 @@
     return;
   }
 })();
+
+/**
+ * Lightweight runtime API surface.
+ *
+ * Other modules (e.g. /assets/js/web-vitals.js) hand metrics to
+ * AS_ANALYTICS.report({ name, value, path, ts }). The function:
+ *   - Honours the same opt-out / DNT checks as the loader.
+ *   - Forwards to the active provider in a CSP-clean way:
+ *       Plausible: window.plausible("WebVital", { props: { ... } })
+ *       GA4:       window.gtag("event", name, { value, page_path })
+ *   - Falls through silently when provider === "none".
+ *
+ * Also flushes any window.AS_WEB_VITALS_BUFFER queued before this file ran.
+ */
+(function () {
+  'use strict';
+  var cfg = window.AS_ANALYTICS;
+  if (!cfg) return;
+
+  function isOptedOut() {
+    if (cfg.respectDoNotTrack) {
+      var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      if (dnt === "1" || dnt === "yes") return true;
+    }
+    try {
+      if (cfg.optOutLocalStorageKey &&
+          window.localStorage &&
+          window.localStorage.getItem(cfg.optOutLocalStorageKey) === "1") {
+        return true;
+      }
+    } catch (_) {}
+    return false;
+  }
+
+  cfg.report = function (payload) {
+    if (!payload || cfg.provider === "none") return;
+    if (isOptedOut()) return;
+    var name = String(payload.name || "metric");
+    var value = Number(payload.value || 0);
+    var path = payload.path || (window.location && window.location.pathname);
+
+    try {
+      if (cfg.provider === "plausible" && typeof window.plausible === "function") {
+        window.plausible("WebVital", { props: { metric: name, value: value, path: path } });
+      } else if (cfg.provider === "ga4" && typeof window.gtag === "function") {
+        window.gtag("event", name, { value: value, page_path: path, metric_id: name });
+      }
+    } catch (_) { /* swallow */ }
+  };
+
+  // Flush any buffered metrics that arrived before analytics finished loading.
+  try {
+    var buf = window.AS_WEB_VITALS_BUFFER;
+    if (Array.isArray(buf) && buf.length) {
+      buf.forEach(function (p) { cfg.report(p); });
+      window.AS_WEB_VITALS_BUFFER = [];
+    }
+  } catch (_) {}
+})();

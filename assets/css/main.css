@@ -2463,3 +2463,185 @@ section.brochure {
     color: #555;
   }
 }
+
+/* ===== Phase 11 — Search, tags, analytics prefs ===== */
+
+/* Visually-hidden util for accessible labels */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Search */
+.search-shell {
+  max-width: 720px;
+  margin: 0 auto 16px;
+}
+.search-shell input[type="search"] {
+  width: 100%;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 16px;
+  padding: 14px 18px;
+  border: 1.5px solid var(--rule, #E1E3E4);
+  border-radius: 6px;
+  outline: none;
+  background: white;
+  transition: border-color .2s ease;
+}
+.search-shell input[type="search"]:focus {
+  border-color: var(--secure-cyan, #0E8C9C);
+}
+.search-hint {
+  font-size: 13px;
+  color: var(--brand-grey, #616A6C);
+  margin: 10px 0 0;
+}
+.blog-search-results {
+  list-style: none;
+  padding: 0;
+  margin: 30px auto 0;
+  max-width: 900px;
+  display: grid;
+  gap: 16px;
+}
+.blog-search-hit {
+  background: white;
+  border: 1px solid var(--rule, #E1E3E4);
+  border-left: 4px solid var(--brand-red, #E3222A);
+  border-radius: 6px;
+  padding: 16px 20px;
+  transition: border-color .2s ease;
+}
+.blog-search-hit:hover {
+  border-left-color: var(--secure-cyan, #0E8C9C);
+}
+.blog-search-hit-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--brand-grey, #616A6C);
+  margin-bottom: 4px;
+}
+.blog-search-hit-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--brand-dark, #3A3F40);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 6px;
+}
+.blog-search-hit-title:hover {
+  color: var(--brand-red, #E3222A);
+}
+.blog-search-hit-summary {
+  color: var(--brand-grey, #616A6C);
+  font-size: 14px;
+  margin: 0 0 8px 0;
+  line-height: 1.55;
+}
+.blog-search-hit-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.blog-search-hit-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  text-decoration: none;
+  color: var(--brand-grey, #616A6C);
+  background: #FAFAFA;
+  border: 1px solid var(--rule, #E1E3E4);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.blog-search-hit-tag:hover {
+  color: var(--brand-red, #E3222A);
+  border-color: var(--brand-red, #E3222A);
+}
+.blog-search-empty {
+  text-align: center;
+  color: var(--brand-grey, #616A6C);
+  font-style: italic;
+  padding: 24px 0;
+}
+
+/* Tag cloud */
+.tag-cloud {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+}
+.tag-card {
+  display: block;
+  padding: 14px 16px;
+  background: white;
+  border: 1px solid var(--rule, #E1E3E4);
+  border-left: 4px solid var(--brand-red, #E3222A);
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--ink, #3A3F40);
+  transition: border-color .2s ease, transform .2s ease;
+}
+.tag-card:hover {
+  transform: translateY(-2px);
+  border-left-color: var(--secure-cyan, #0E8C9C);
+}
+.tag-card h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  margin: 0 0 2px 0;
+}
+.tag-card p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--brand-grey, #616A6C);
+  margin: 0;
+}
+
+/* Analytics prefs */
+.analytics-prefs {
+  background: white;
+  border: 1px solid var(--rule, #E1E3E4);
+  border-radius: 6px;
+  padding: 22px 26px;
+  max-width: 720px;
+}
+.analytics-prefs h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+.analytics-prefs-status {
+  font-size: 14.5px;
+  color: var(--brand-dark, #3A3F40);
+  margin: 0 0 8px 0;
+}
+.analytics-prefs-dnt {
+  font-size: 13px;
+  color: var(--secure-cyan, #0E8C9C);
+  margin: 0 0 12px 0;
+}
+.analytics-prefs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+.analytics-prefs-row button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.analytics-prefs-note {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  color: var(--brand-grey, #616A6C);
+  margin: 14px 0 0 0;
+}
