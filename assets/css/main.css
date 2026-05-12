@@ -188,23 +188,29 @@ a { color: inherit; }
   text-decoration: none;
   color: var(--ink);
 }
+/* PHASE 23 — Use the official AmbiSecure logo (assets/img/ambisecure-logo.webp).
+   The crest carries its own internal "AMBI SECURE" wordmark, so the adjacent
+   .brand-text wordmark is hidden site-wide (no per-page markup sweep needed). */
 .brand-mark {
-  height: 40px;
-  width: 40px;
-  background: #fff url('/assets/img/logo-mark-icon.svg') center/82% no-repeat;
-  border: 1px solid var(--line, #E1E3E4);
-  border-radius: 50%;
+  height: 52px;
+  width: 52px;
+  background: transparent url('/assets/img/ambisecure-logo.webp') center/contain no-repeat;
+  border: 0;
+  border-radius: 0;
   font-size: 0;
   color: transparent;
   position: relative;
   flex-shrink: 0;
-  box-shadow: 0 1px 2px rgba(58,63,64,0.06);
+  box-shadow: none;
 }
 .footer-brand .brand-mark {
-  background-color: #fff;
-  border-color: rgba(255,255,255,0.18);
+  height: 72px;
+  width: 72px;
+  background-color: transparent;
+  border: 0;
 }
-.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-text { display: none; }
+.brand-text-legacy { display: flex; flex-direction: column; line-height: 1.15; }
 .brand-line {
   font-weight: 700;
   font-size: 15px;
@@ -333,14 +339,14 @@ a { color: inherit; }
    HERO
    ========================================================= */
 .hero {
-  min-height: 78vh;
+  min-height: 86vh;
   background:
-    radial-gradient(ellipse at 80% 0%, rgba(227,34,42,0.04), transparent 55%),
+    radial-gradient(ellipse at 80% 0%, rgba(227,34,42,0.05), transparent 55%),
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
     #ffffff;
   background-size: auto, 60px 60px, 60px 60px, auto;
-  padding: 80px 80px 120px;
+  padding: 96px 80px 128px;
   display: flex;
   align-items: center;
   position: relative;
@@ -371,6 +377,13 @@ a { color: inherit; }
 .hero-left { flex: 1.05; }
 .hero-right { flex: 0.95; display: flex; justify-content: center; }
 
+.hero-logo {
+  width: 96px;
+  height: 96px;
+  display: block;
+  margin: 0 0 24px 0;
+  filter: drop-shadow(0 6px 18px rgba(58,63,64,0.14));
+}
 .hero-tag {
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
@@ -386,35 +399,38 @@ a { color: inherit; }
 .hero-tag::before { content: ''; width: 22px; height: 2px; background: var(--brand-red); }
 
 .hero-title {
-  font-size: var(--fs-hero);
+  font-size: 54px;
   font-weight: 700;
   line-height: 1.08;
   color: var(--ink);
   margin-bottom: 22px;
-  letter-spacing: -0.8px;
+  letter-spacing: -1px;
 }
 .hero-title .accent { color: var(--brand-red); }
 
 .hero-desc {
-  font-size: 17.5px;
+  font-size: 18px;
   line-height: 1.7;
   color: var(--brand-grey);
-  max-width: 580px;
-  margin-bottom: 32px;
+  max-width: 620px;
+  margin-bottom: 34px;
 }
 
 .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
 
 .hero-creds {
-  margin-top: 28px;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule, #E1E3E4);
   display: flex;
-  gap: 22px;
+  gap: 22px 26px;
   flex-wrap: wrap;
-  font-size: 12.5px;
-  color: var(--brand-grey);
+  font-size: 13px;
+  color: var(--ink);
   font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-  letter-spacing: 0.2px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
 }
 .hero-creds span { display: inline-flex; align-items: center; gap: 8px; }
 .hero-creds span::before {
@@ -422,6 +438,7 @@ a { color: inherit; }
   width: 6px; height: 6px;
   background: var(--brand-red);
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 /* Hero visual — secure-element illustration (SVG asset) */
@@ -1221,7 +1238,10 @@ footer.site-footer a:hover { color: var(--brand-red); }
 
   section { padding: 70px 24px; }
   .hero { padding: 60px 24px 90px; min-height: 0; }
-  .hero-title { font-size: 36px; }
+  .hero-title { font-size: 38px; line-height: 1.12; letter-spacing: -0.6px; }
+  .hero-logo { width: 80px; height: 80px; margin-bottom: 18px; }
+  .hero-desc { font-size: 16.5px; }
+  .hero-creds { font-size: 12px; gap: 16px 18px; }
   .section-title { font-size: 28px; }
 
   .grid-3, .grid-2 { grid-template-columns: 1fr; }

@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 22 — homepage hierarchy + About strip, rotating highlight-banner carousel, GA4 consent governance hardening)
+**Last updated:** 2026-05-12 (Phase 23 — official AmbiSecure logo wired in, hero banner strengthened, legacy placeholder marks retired)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -738,13 +738,18 @@ All 254 production pages carry an identical navbar and footer brand block:
 
 The brand mark uses the `--brand-red: #E3222A` token; the accent on "Secure" uses the same. The Ambimat ecosystem bar at the very top of each page lists the sister properties (`ambimat.com`, `esim.ambimat.com`, `/blog/`) — keep these in sync if Ambimat group identity changes.
 
-### 17.5 Brand assets
+### 17.5 Brand assets (Phase 23 — official logo)
+
+The **single canonical AmbiSecure logo** is the user-provided crest in `Logos/` (96×96 source, with internal "AMBI SECURE" wordmark). It is installed at three URLs:
+
+- `assets/img/ambisecure-logo.webp` — **5.2 KB, used by `.brand-mark` CSS for the navbar + footer on every page.** Webp for size; modern browsers all support it.
+- `assets/img/ambisecure-logo.png` — 12 KB PNG, identical artwork, used as the `Organization.logo` URL in Schema.org JSON-LD on the homepage. Raster + universally fetchable for Google Knowledge Graph.
+- `assets/img/og/ambisecure-logo-og.jpg` — 512×512 JPG variant for OG/social-share contexts that want the badge specifically (rather than the 1200×630 default OG card).
+
+The crest carries its own internal wordmark, so `.brand-text` (the adjacent "Ambi**Secure** / Hardware-rooted security" markup) is **hidden site-wide via `display: none`** to avoid duplication. Do not re-enable it; if textual fallback is needed, the logo image's `alt="AmbiSecure"` does the job. The Phase 19/21 placeholder marks (`logo-mark-icon.svg`, `logo.svg`, the old `logo-mark.*` family) were retired in Phase 23 — do not re-introduce them.
 
 - `assets/img/favicon.svg` — 64×64 circular crest aligned with the AmbiSecure logo. Used as the browser tab icon and for OG fallbacks where a section card does not exist.
 - `assets/img/favicon-32.png`, `assets/img/favicon-64.png`, `assets/img/apple-touch-icon.png` — raster fallbacks. The apple-touch-icon ships on every page via the `<link rel="apple-touch-icon">`.
-- `assets/img/logo-mark-icon.svg` — **Phase 21 navbar/footer mark.** Icon-only variant of the crest: just the red A-stripes + three orbiting icons, no internal wordmark. The `.brand-mark` CSS rule renders this SVG at 40×40 inside a 1px-bordered white circle so the wordmark next to it (`<span class="brand-line">Ambi<span class="accent">Secure</span></span>`) carries the legible brand text. The full-crest PNG/WEBP would duplicate the wordmark at the navbar's 40×40 size — which is what Phase 19 shipped and Phase 21 corrected.
-- `assets/img/logo-mark.png`, `assets/img/logo-mark.webp`, `assets/img/logo-mark-og.jpg` — full crest (icon + AMBI SECURE wordmark together) from `Logos/`. Used for OG cards, the source archive, and any marketing surface that wants the badge with its self-contained wordmark.
-- `assets/img/logo.svg` — 220×64 horizontal lockup with the mark + "AmbiSecure" wordmark + "HARDWARE-ROOTED SECURITY" tagline. Still used in printable brochures.
 - `assets/img/hero-secure-element.svg` — ISO/IEC 7816 contact-pad illustration on the homepage hero (Phase 19, replaces the CSS-only `hero-visual` schematic).
 - `assets/img/product-*.svg` and `assets/img/service-*.svg` — per-product / per-service hero illustrations (Phase 19). Each `<div class="feature-visual feature-visual-img">` wraps one of these SVGs.
 - `assets/img/certifications/cert-*.png|.webp` — conformance-mark badges on `/about/certifications/` (Phase 19; renamed from the previous `legacy-badge-*` filenames).
