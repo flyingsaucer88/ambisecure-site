@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 24 — flagship hero crest, real-logo favicons, 5-min HTML TTL, OG+twitter:image coverage at 263/263)
+**Last updated:** 2026-05-12 (Phase 25 — circular crest clip kills white-square halo, hero badge restored above eyebrow, hero to 100vh / 150-190px padding, footer brand-mark on white-circle pedestal)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -1211,3 +1211,26 @@ Companion hero specs (`.hero`, `.hero-title`, `.hero-desc`, `.hero-creds`):
 - `.hero-desc` 19px, max-width 640px
 - `.hero-creds` strip — 7 domains (FIDO · PIV · PKI · JavaCard · Secure Elements · ePassport · IoT Security), uppercase, red bullet, separated from the description by a 1px top border
 - Mobile (`max-width: 880px`): title 40px, crest `max-width: 320px`, padding `60px 24px 90px`
+
+---
+
+## 36. Hero medallion + circular clip (Phase 25)
+
+The official AmbiSecure crest from `Logos/` is a circular medallion stored as a square JPG/PNG/WebP with white padding around the circle (JPG has no alpha; PNG/WebP variants are 96×96 and don't upscale cleanly). To present it as a clean medallion at hero size without showing the surrounding white square corners, the visible assets are masked with `border-radius: 50%` in CSS.
+
+- `.hero-crest` (right-side hero visual) — 540 px max-width, masked to circle, drop-shadow 0/18/44/0.18
+- `.hero-logo` (small medallion above eyebrow, hero-left) — 96 px, masked to circle, drop-shadow 0/8/20/0.16
+- `.footer-brand .brand-mark` — 84 px, **white-circle pedestal** (`background-color: #fff` + `border-radius: 50%` + box-shadow) so the gray crest border doesn't blend with the dark footer; image at `background-size: 86%` inside the circle so the white shows as a subtle halo around the medallion.
+
+If a future logo update ships with a pre-clipped transparent-corner PNG, the CSS `border-radius` becomes a no-op (harmless) and the assets can be swapped in place.
+
+---
+
+## 37. Hero height as flagship banner (Phase 25)
+
+- `min-height: 100vh` — the hero always fills the first viewport on load.
+- `padding: 150px 80px 190px` — pushes total height past 1100px on standard laptops; combined with the 100vh minimum, the hero never reads as a "small strip".
+- `.hero-title` 66px desktop / 40px mobile, letter-spacing −1.6px desktop.
+- Mobile (`max-width: 880px`): `padding: 70px 24px 100px`, `min-height: 0` so the hero collapses to content height on small screens.
+
+Doubling the hero from its Phase 22 size (78 vh → 100 vh with deeper padding) was an explicit user requirement; do not pull these numbers back without a clear reason.

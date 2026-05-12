@@ -203,11 +203,19 @@ a { color: inherit; }
   flex-shrink: 0;
   box-shadow: none;
 }
+/* Phase 25: footer brand-mark sits on a dark footer, so the logo gets its
+   own white circle so the gray ring doesn't blend in. The image is composed
+   onto the white background via background-image + background-color. */
 .footer-brand .brand-mark {
-  height: 72px;
-  width: 72px;
-  background-color: transparent;
+  height: 84px;
+  width: 84px;
+  background-color: #ffffff;
+  background-size: 86%;
+  background-position: center;
+  background-repeat: no-repeat;
   border: 0;
+  border-radius: 50%;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
 }
 .brand-text { display: none; }
 .brand-text-legacy { display: flex; flex-direction: column; line-height: 1.15; }
@@ -339,14 +347,17 @@ a { color: inherit; }
    HERO
    ========================================================= */
 .hero {
-  min-height: 92vh;
+  /* Phase 25: flagship banner. min-height ensures the hero always fills the
+     viewport on first scroll; tall padding pushes total height to ~1100px+
+     on standard laptops so the banner reads as the dominant page surface. */
+  min-height: 100vh;
   background:
-    radial-gradient(ellipse at 82% -10%, rgba(227,34,42,0.08), transparent 55%),
+    radial-gradient(ellipse at 82% -10%, rgba(227,34,42,0.09), transparent 58%),
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
     #ffffff;
   background-size: auto, 60px 60px, 60px 60px, auto;
-  padding: 110px 80px 140px;
+  padding: 150px 80px 190px;
   display: flex;
   align-items: center;
   position: relative;
@@ -378,21 +389,27 @@ a { color: inherit; }
 .hero-right { flex: 0.95; display: flex; justify-content: center; }
 
 /* Hero-crest: the official AmbiSecure circular crest used as the hero's
-   right-side flagship visual. The crest carries the "AMBI SECURE" wordmark
-   internally, so the hero is unmistakably branded without competing badges. */
+   right-side flagship visual. The source asset is a JPG with white square
+   padding around the circular crest — border-radius:50% masks those corners
+   so only the medallion is visible (no white square halo). */
 .hero-crest {
   width: 100%;
-  max-width: 520px;
+  max-width: 540px;
   height: auto;
-  filter: drop-shadow(0 14px 38px rgba(58,63,64,0.16));
+  border-radius: 50%;
+  background: transparent;
+  filter: drop-shadow(0 18px 44px rgba(58,63,64,0.18));
 }
-/* Legacy hero-logo class kept for any callers that still reference it. */
+/* Hero-logo: small medallion above the eyebrow on hero-left. Same circular
+   clip + drop-shadow as the crest for visual coherence. */
 .hero-logo {
   width: 96px;
   height: 96px;
   display: block;
-  margin: 0 0 24px 0;
-  filter: drop-shadow(0 6px 18px rgba(58,63,64,0.14));
+  margin: 0 0 26px 0;
+  border-radius: 50%;
+  background: transparent;
+  filter: drop-shadow(0 8px 20px rgba(58,63,64,0.16));
 }
 .hero-tag {
   font-family: 'Montserrat', sans-serif;
@@ -409,12 +426,12 @@ a { color: inherit; }
 .hero-tag::before { content: ''; width: 22px; height: 2px; background: var(--brand-red); }
 
 .hero-title {
-  font-size: 62px;
+  font-size: 66px;
   font-weight: 700;
-  line-height: 1.05;
+  line-height: 1.04;
   color: var(--ink);
-  margin-bottom: 26px;
-  letter-spacing: -1.4px;
+  margin-bottom: 28px;
+  letter-spacing: -1.6px;
 }
 .hero-title .accent { color: var(--brand-red); }
 
@@ -1247,12 +1264,13 @@ footer.site-footer a:hover { color: var(--brand-red); }
   .breadcrumb { padding: 16px 24px 0; }
 
   section { padding: 70px 24px; }
-  .hero { padding: 60px 24px 90px; min-height: 0; }
+  .hero { padding: 70px 24px 100px; min-height: 0; }
   .hero-title { font-size: 40px; line-height: 1.12; letter-spacing: -0.6px; }
-  .hero-logo { width: 80px; height: 80px; margin-bottom: 18px; }
+  .hero-logo { width: 76px; height: 76px; margin-bottom: 18px; }
   .hero-crest { max-width: 320px; }
   .hero-desc { font-size: 16.5px; }
   .hero-creds { font-size: 12px; gap: 16px 18px; }
+  .footer-brand .brand-mark { height: 72px; width: 72px; }
   .section-title { font-size: 28px; }
 
   .grid-3, .grid-2 { grid-template-columns: 1fr; }
