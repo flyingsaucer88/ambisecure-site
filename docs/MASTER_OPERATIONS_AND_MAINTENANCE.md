@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 21 — grid system defaulted to centred-last-row, brand-mark icon-only variant, FIDO demo interstitial, command-palette search redesign)
+**Last updated:** 2026-05-12 (Phase 22 — homepage hierarchy + About strip, rotating highlight-banner carousel, GA4 consent governance hardening)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -257,9 +257,19 @@ When the operator turns analytics on, Web Vitals automatically reports through t
 
 `index.html` is hand-edited. It has three rotating surfaces driven by config files:
 
-### 5.1 Banner system
+### 5.1 Banner system — rotating carousel (Phase 22)
 
-Edit `assets/js/highlight-banner-config.js` only. Each entry has `id`, `enabled`, `eyebrow`, `title`, `body`, `accent` (red/cyan/dark), `primaryCta`, optional `secondaryCta`. First enabled entry with a matching time window wins. Reorder the array to change priority.
+Edit `assets/js/highlight-banner-config.js` only. Each entry has `id`, `enabled`, `eyebrow`, `title`, `body`, `accent` (`red` / `cyan` / `dark`), `primaryCta`, optional `secondaryCta`, optional `startsAt` / `endsAt` (ISO timestamps).
+
+`highlight-banner.js` (Phase 22) renders **every enabled, in-window entry as a carousel slide**, not just the first one:
+
+- Auto-advances every 8 seconds.
+- Pauses on hover, focus-within, or when the tab is hidden (`visibilitychange`).
+- Prev / next buttons + per-slot dot indicators when there are 2+ slides.
+- Respects `prefers-reduced-motion`: auto-advance is disabled, manual controls remain.
+- Static fallback markup inside `.hp-banner-slot` is shown if JS is disabled (first slide only). The JS overwrites the slot on init.
+
+To prioritise a slide, move it earlier in the `AS_HOMEPAGE_BANNERS` array. To take a slide out of rotation without deleting it, set `enabled: false`. To time-box a campaign, use `startsAt` and `endsAt`.
 
 ### 5.2 Blog spotlight
 
@@ -267,7 +277,9 @@ Edit `assets/js/highlight-banner-config.js` only. Each entry has `id`, `enabled`
 
 ### 5.3 Static homepage sections
 
-Phase 9 sections (Core pillars, Videos teaser, Where AmbiSecure Fits) and Phase 10 sections (Commercial surfaces) are hard-coded in `index.html`. To change them, edit the HTML.
+The homepage carries fifteen hand-edited sections in a deliberate order (see §30 for the full hierarchy). Phase 9 sections (Core pillars, Videos teaser, Where AmbiSecure Fits) and Phase 10 sections (Commercial surfaces) are hard-coded. The Phase 22 About strip (Who / What / Who-helps / How) sits immediately below the hero. To change any of them, edit the HTML.
+
+The original Phase 5 "Start here" panel and the Phase 13 "A decade of engineering writing" archive teaser were retired in Phase 22 — both overlapped with existing surfaces ("Solutions" + "Where AmbiSecure ships today" cover the buyer entry-points; the engineering archive is still one click away from the blog landing and the nav).
 
 ### 5.4 Ecosystem map (Phase 15)
 
@@ -1073,3 +1085,49 @@ If a new top-level URL prefix is introduced, extend `TYPE_TABLE` in `tools/build
 
 The Phase 20 version stacked type-coloured badges next to titles, which read as cluttered when many results were of the same type (e.g. searching "fido" returns 8 products + 4 services + 6 blogs and the badge column became visually noisy). Phase 21 collapses the badge into the group header — one label per group, not per row. That mirrors the Stripe-docs / Linear / Vercel patterns the brief called out.
 
+## 30. Homepage hierarchy (Phase 22)
+
+Phase 22 fixed the homepage's commercial clarity problem: visitors had to scroll past four sections before they could answer *who AmbiSecure is*, *what AmbiSecure builds*, *who AmbiSecure helps*, and *how AmbiSecure helps*. The new ordering surfaces all four answers in the first two sections, then layers in capability proof, navigation, and conversion paths.
+
+### 30.1 The canonical order
+
+| # | Section | Purpose | Lives at |
+|---|---------|---------|----------|
+| 1 | Hero | Tagline + value prop + primary CTAs | `<section class="hero">` |
+| 2 | About strip (Phase 22) | **Who / What / Who-helps / How** in four compact cards | `<section aria-labelledby="who-heading">` |
+| 3 | Highlight banner | Rotating carousel of featured campaigns | `<section aria-labelledby="banner-heading">` (slot driven by `highlight-banner-config.js`) |
+| 4 | Core pillars | Seven engineering domains | `<section aria-labelledby="pillars-heading">` |
+| 5 | Six surfaces | Capability proof — what we ship | `<section aria-labelledby="capabilities-heading">` |
+| 6 | Trust chain | Architectural depth — silicon → application | `<section aria-labelledby="trust-heading">` |
+| 7 | Solutions | Problem-shaped views | `<section aria-labelledby="solutions-heading">` |
+| 8 | Ecosystem map | Eight-way navigation | `<section aria-labelledby="ecosystem-heading">` |
+| 9 | Resources toolbox | Free utility tools | `<section aria-labelledby="resources-heading">` |
+| 10 | Where AmbiSecure ships today | Industries / use-case strip | `<section aria-labelledby="explore-heading">` |
+| 11 | Why AmbiSecure | 40+ year credibility paragraph | `<section aria-labelledby="why-heading">` |
+| 12 | Featured technical reads | Blog spotlight (rotates daily) | `<section aria-labelledby="blog-heading">` |
+| 13 | Videos | Three video teaser | `<section aria-labelledby="videos-heading">` |
+| 14 | From wafer to user | Architecture flow + trust/cert/partner cards | `<section aria-labelledby="fit-heading">` |
+| 15 | Three places to go | Case studies / brochures / engagement models | `<section aria-labelledby="commercial-heading">` |
+| 16 | Contact callout | "Talk to engineers, not BDRs" | trailing `<section>` |
+
+### 30.2 About strip content rules
+
+The About strip carries four cards in a fixed order — **Who / What / Who-helps / How** — and **no other order is acceptable**. The cards answer the four questions a visitor wants resolved within the first viewport. If a card body becomes outdated (new geography served, new offering category, new engagement shape), edit the `<p>` text in place; do not add a fifth card. The grid relies on the four-card width — additions break the layout under 1080px.
+
+CSS class: `.who-grid > .who-card`. Lives in `assets/css/main.css` under the `/* PHASE 22 — HOMEPAGE ABOUT STRIP */` block.
+
+### 30.3 Reduction conventions
+
+When the homepage runs over 16 sections again, the rule is the same as Phase 22: prefer **reorder** + **trim duplicate** over add. If two sections lead to the same destination (e.g. the dropped "Start here" + "Solutions" both fed `/solutions/`), keep the one with the deeper content. The nav and footer already provide multi-axis discovery; the homepage is not a sitemap.
+
+### 30.4 Where the About strip is NOT
+
+Note that the long-form "Why AmbiSecure" section at slot 11 carries the credibility paragraph (40+ years, in-house JavaCard/FIDO/personalisation expertise, vendor relationships). The Phase 22 About strip at slot 2 is the **short-form** orientation surface — purposely four short cards, not paragraphs. Keep both. They serve different reading depths.
+
+---
+
+## 31. Keyra references (Phase 22)
+
+**Status: zero references.** Site-wide grep on 2026-05-12 confirmed no occurrences of `Keyra` / `keyra` / `KEYRA` in any HTML, JS, CSS, JSON, Markdown, or XML file under the project root (excluding `.git/`, `dist/`, `legacysitedata/`, `node_modules/`). The Phase 22 brief asked for Keyra removal; nothing existed to remove. The verification step is recorded here so future operators do not re-litigate.
+
+If Keyra references appear in future content drafts, **do not commit them**. AmbiSecure positioning is the security business unit of Ambimat Electronics; Keyra is a separate project and does not belong on this site.

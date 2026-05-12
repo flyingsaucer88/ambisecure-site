@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 21 — grid system default, brand-mark icon variant, FIDO demo interstitial, search redesign)
+**Last updated:** 2026-05-12 (Phase 22 — homepage About strip, rotating highlight-banner carousel, GA4 consent governance hardening)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 

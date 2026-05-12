@@ -47,7 +47,20 @@
       function gtag() { window.dataLayer.push(arguments); }
       window.gtag = gtag;
       gtag("js", new Date());
-      gtag("config", id, { anonymize_ip: !!cfg.ga4.anonymizeIp });
+      // Privacy-first GA4 config: deny ad/personalization signals, anonymize IP,
+      // and run consent-mode in denied state for ad_storage so GA4 never sets
+      // advertising cookies even if the operator later flips other categories.
+      gtag("consent", "default", {
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied",
+        analytics_storage: "granted"
+      });
+      gtag("config", id, {
+        anonymize_ip: !!cfg.ga4.anonymizeIp,
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false
+      });
     }, { once: true });
     return;
   }
