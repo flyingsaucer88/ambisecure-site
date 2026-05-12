@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 25 — circular crest clip, hero badge restored, hero to 100vh, footer brand-mark on white-circle pedestal)
+**Last updated:** 2026-05-12 (Phase 26 — cookie banner polished, pre-commit gates audit-all, dist verified clean of debug/secret artefacts)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
@@ -63,9 +63,7 @@ Phase 20 wired the consent banner + opt-in gate. The remaining items wait on a p
 
 ## 5. CI + automation
 
-| Item | Why deferred | Decision owner | Trigger | Next action |
-|------|--------------|----------------|---------|-------------|
-| Expand `.githooks/pre-commit` to also run `tools/audit-all.sh` | Audit suite is ~6s — too slow to gate every commit. | Engineering | Audit suite drops below 2s, OR a regression slips through to CI that the hook would catch. | Append `bash tools/audit-all.sh` to `.githooks/pre-commit`. |
+_None currently deferred — the Phase 26 pre-commit hook now runs `tools/audit-all.sh` on every commit (~1.8s, under budget)._
 
 ---
 

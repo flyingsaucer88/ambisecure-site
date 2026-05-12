@@ -30,4 +30,15 @@ if git diff --cached --name-only | grep -q '^assets/data/blogs.json$'; then
     fi
 fi
 
+# 4. Full audit suite. audit-all clocks at ~1.8s — under the 2s pre-commit
+#    budget — so it gates every commit. Bypass with `git commit --no-verify`
+#    only if the audit catches a known-acceptable issue.
+if [ -f tools/audit-all.sh ]; then
+    if ! bash tools/audit-all.sh >/dev/null 2>&1; then
+        echo "FAIL: tools/audit-all.sh reported issues. Re-run for details:"
+        echo "      bash tools/audit-all.sh"
+        exit 1
+    fi
+fi
+
 exit 0

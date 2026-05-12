@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 25 — circular crest clip kills white-square halo, hero badge restored above eyebrow, hero to 100vh / 150-190px padding, footer brand-mark on white-circle pedestal)
+**Last updated:** 2026-05-12 (Phase 26 — end-of-day stabilization: cookie banner polished, pre-commit gates audit-all, dist verified clean of debug/secret artefacts)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -1234,3 +1234,59 @@ If a future logo update ships with a pre-clipped transparent-corner PNG, the CSS
 - Mobile (`max-width: 880px`): `padding: 70px 24px 100px`, `min-height: 0` so the hero collapses to content height on small screens.
 
 Doubling the hero from its Phase 22 size (78 vh → 100 vh with deeper padding) was an explicit user requirement; do not pull these numbers back without a clear reason.
+
+---
+
+## 38. Pre-commit hook scope (Phase 26 update)
+
+`.githooks/pre-commit` now runs four checks:
+
+1. `scripts/check-last-reviewed.py --check` — modern-blog `last_reviewed` must be bumped when blog HTML is staged.
+2. `tools/lint-htaccess.py` — quick `.htaccess` validation.
+3. `blogs.json` ↔ `blog-pool.js` consistency warning.
+4. **(Phase 26 new)** `tools/audit-all.sh` — full audit suite (sitemap, content, SEO, yoast, htaccess, broken-links, circular-links, media). Clocks at ~1.8s. Blocks the commit on any failure.
+
+Operators must enable the hook directory once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Bypass with `git commit --no-verify` only when the audit catches a known-acceptable issue (and document why in the commit message).
+
+---
+
+## 39. Cookie banner polish (Phase 26)
+
+The Phase 20 consent banner was re-skinned in Phase 26 for a more enterprise feel without breaking the existing JS API:
+
+- Left-edge red accent strip (4 px) via `.as-consent::before` — keeps it branded without coloring the whole surface.
+- Layered drop-shadow + subtle border for depth on light backgrounds.
+- 220ms entrance animation (`@keyframes as-consent-rise`); honours `prefers-reduced-motion`.
+- Primary "Allow analytics" button now carries a soft red glow (`box-shadow: 0 4px 12px rgba(227, 34, 42, 0.22)`).
+- Active-press feedback on both buttons.
+- Reworked mobile breakpoint at 640 px so banner fits cleanly on small screens.
+
+The underlying `assets/js/cookie-consent.js` is unchanged — same `as-consent` / `as-analytics-opt-out` localStorage keys, same `AS_CONSENT.reset()` API for the `/privacy/` page.
+
+---
+
+## 40. Dist integrity audit (Phase 26)
+
+Before every Hostinger upload, `dist/ambisecure-hostinger/` and the ZIP must be free of:
+
+- `.env`, `.env.*`, credentials files
+- `.map` source maps
+- `.DS_Store`, `.bak`, `.swp` editor cruft
+- `node_modules/`, `.git/`, `legacysitedata/`, `Logos/`, `_internal/`, `dist/`, `docs/` directories
+- JS files containing `sourceMappingURL`, `debugger;` markers
+
+Audit pass on the Phase 26 ZIP returned **zero hits** on all of the above. The only intentional hidden file inside `dist/ambisecure-hostinger/` is `.htaccess`.
+
+Re-run the audit before every upload with:
+
+```bash
+unzip -l dist/ambisecure-hostinger.zip | awk '{print $4}' | grep -E '\.env$|\.env\.|\.map$|\.bak$|\.swp$|\.DS_Store$|node_modules|\.git/|/legacysitedata/|/Logos/|/_internal/|/dist/|/docs/'
+```
+
+A non-empty output means abort the upload and clean the dist first.
