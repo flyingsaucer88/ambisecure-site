@@ -3,7 +3,34 @@
 
   var INDEX_URL = '/assets/data/search-index.json';
   var indexPromise = null;
-  var modal = null, input = null, list = null, hint = null, opened = false;
+  var modal = null, input = null, list = null, footerCount = null, footerHint = null, opened = false;
+
+  var GROUPS = [
+    { slug: 'product',   label: 'Products' },
+    { slug: 'service',   label: 'Services' },
+    { slug: 'solution',  label: 'Solutions' },
+    { slug: 'tech',      label: 'Technologies' },
+    { slug: 'industry',  label: 'Industries' },
+    { slug: 'timeline',  label: 'Timelines' },
+    { slug: 'ref',       label: 'References' },
+    { slug: 'tool',      label: 'Tools' },
+    { slug: 'blog',      label: 'Blog' },
+    { slug: 'archive',   label: 'Archive' },
+    { slug: 'category',  label: 'Categories' },
+    { slug: 'tag',       label: 'Tags' },
+    { slug: 'case',      label: 'Case studies' },
+    { slug: 'video',     label: 'Videos' },
+    { slug: 'brochure',  label: 'Brochures' },
+    { slug: 'engage',    label: 'Engagement' },
+    { slug: 'about',     label: 'Company' },
+    { slug: 'res',       label: 'Resources' },
+    { slug: 'partners',  label: 'Partners' },
+    { slug: 'support',   label: 'Support' },
+    { slug: 'contact',   label: 'Contact' },
+    { slug: 'trust',     label: 'Trust' },
+    { slug: 'privacy',   label: 'Privacy' },
+    { slug: 'page',      label: 'Other' },
+  ];
 
   function loadIndex() {
     if (indexPromise) return indexPromise;
@@ -14,41 +41,58 @@
     return indexPromise;
   }
 
+  function searchIconSVG() {
+    return '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+  }
+  function arrowIconSVG() {
+    return '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+  }
+
   function ensureModal() {
     if (modal) return modal;
     modal = document.createElement('div');
-    modal.className = 'as-search-modal';
+    modal.className = 'as-search';
     modal.setAttribute('role', 'dialog');
     modal.setAttribute('aria-modal', 'true');
     modal.setAttribute('aria-label', 'Site search');
     modal.innerHTML =
       '<div class="as-search-backdrop" data-close="1"></div>' +
-      '<div class="as-search-panel">' +
-      '  <div class="as-search-row">' +
-      '    <span class="as-search-icon" aria-hidden="true">' + searchIconSVG() + '</span>' +
-      '    <input class="as-search-input" type="search" placeholder="Search products, references, blogs, timelines…" autocomplete="off" spellcheck="false" aria-label="Search the site" />' +
+      '<div class="as-search-panel" role="combobox" aria-expanded="true" aria-haspopup="listbox" aria-owns="as-search-list">' +
+      '  <div class="as-search-input-row">' +
+      '    <span class="as-search-input-icon" aria-hidden="true">' + searchIconSVG() + '</span>' +
+      '    <input class="as-search-input" type="search" placeholder="Search products, services, references, blogs, timelines…" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" aria-label="Search the site" aria-controls="as-search-list" />' +
       '    <kbd class="as-search-kbd" aria-hidden="true">esc</kbd>' +
       '  </div>' +
-      '  <ul class="as-search-results" role="listbox" aria-label="Search results"></ul>' +
-      '  <div class="as-search-hint">' +
-      '    <span>↑ ↓ to move &middot; ↵ to open &middot; esc to close</span>' +
-      '    <span class="as-search-count"></span>' +
+      '  <div class="as-search-results" id="as-search-list" role="listbox" tabindex="-1"></div>' +
+      '  <div class="as-search-footer">' +
+      '    <div class="as-search-hints">' +
+      '      <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>' +
+      '      <span><kbd>↵</kbd> open</span>' +
+      '      <span><kbd>esc</kbd> close</span>' +
+      '    </div>' +
+      '    <div class="as-search-count" aria-live="polite"></div>' +
       '  </div>' +
       '</div>';
     document.body.appendChild(modal);
     input = modal.querySelector('.as-search-input');
     list = modal.querySelector('.as-search-results');
-    hint = modal.querySelector('.as-search-count');
-    modal.addEventListener('click', function (e) {
-      if (e.target.dataset.close === '1') closeModal();
+    footerCount = modal.querySelector('.as-search-count');
+    modal.addEventListener('mousedown', function (e) {
+      if (e.target.dataset && e.target.dataset.close === '1') closeModal();
     });
     input.addEventListener('input', onQuery);
     input.addEventListener('keydown', onKey);
+    list.addEventListener('mouseover', function (e) {
+      var li = e.target.closest('.as-search-item');
+      if (li) setActive(li);
+    });
+    list.addEventListener('click', function (e) {
+      var li = e.target.closest('.as-search-item');
+      if (!li) return;
+      var url = li.dataset.url;
+      if (url) { e.preventDefault(); window.location.href = url; }
+    });
     return modal;
-  }
-
-  function searchIconSVG() {
-    return '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
   }
 
   function openModal() {
@@ -66,7 +110,6 @@
     opened = false;
     document.body.classList.remove('as-search-open');
     if (modal) modal.classList.remove('is-open');
-    if (input) input.value = '';
   }
 
   function normalize(s) {
@@ -88,15 +131,14 @@
     for (var i = 0; i < tokens.length; i++) {
       var tok = tokens[i];
       if (!tok) continue;
-      if (t.indexOf(tok) === 0) s += 50;
-      else if (t.indexOf(' ' + tok) > -1) s += 20;
-      else if (t.indexOf(tok) > -1) s += 12;
-      if (e === tok) s += 18;
-      else if (e.indexOf(tok) > -1) s += 6;
-      if (u.indexOf(tok) > -1) s += 4;
-      if (d.indexOf(tok) > -1) s += 3;
+      if (t.indexOf(tok) === 0) s += 60;
+      else if (t.indexOf(' ' + tok) > -1) s += 28;
+      else if (t.indexOf(tok) > -1) s += 14;
+      if (e === tok) s += 22;
+      else if (e.indexOf(tok) > -1) s += 8;
+      if (u.indexOf(tok) > -1) s += 5;
+      if (d.indexOf(tok) > -1) s += 4;
       if (s === 0) {
-
         var words = t.split(' ');
         for (var w = 0; w < words.length; w++) {
           if (words[w].length > 3 && tok.length > 3 && words[w].indexOf(tok.slice(0, 4)) === 0) {
@@ -108,93 +150,134 @@
     return s;
   }
 
+  function highlight(text, q) {
+    if (!q) return escapeHTML(text);
+    var tokens = q.split(' ').filter(Boolean);
+    if (!tokens.length) return escapeHTML(text);
+    var safe = escapeHTML(text);
+    tokens.forEach(function (tok) {
+      if (tok.length < 2) return;
+      var re = new RegExp('(' + tok.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+      safe = safe.replace(re, '<mark>$1</mark>');
+    });
+    return safe;
+  }
+
+  function groupRanked(ranked) {
+    var byGroup = {};
+    ranked.forEach(function (r) {
+      var s = r.p.s;
+      if (!byGroup[s]) byGroup[s] = [];
+      byGroup[s].push(r);
+    });
+    var out = [];
+    for (var i = 0; i < GROUPS.length; i++) {
+      var g = GROUPS[i];
+      if (byGroup[g.slug]) {
+        out.push({ group: g, results: byGroup[g.slug] });
+        delete byGroup[g.slug];
+      }
+    }
+    Object.keys(byGroup).forEach(function (slug) {
+      out.push({ group: { slug: slug, label: slug }, results: byGroup[slug] });
+    });
+    return out;
+  }
+
   function renderResults(q) {
-    q = normalize(q);
+    var nq = normalize(q);
     loadIndex().then(function (pages) {
       var ranked = [];
-      if (!q) {
-        ranked = pages.slice(0, 12).map(function (p) { return { p: p, s: 1 }; });
+      if (!nq) {
+        ranked = pages.slice(0, 16).map(function (p) { return { p: p, s: 1 }; });
       } else {
         for (var i = 0; i < pages.length; i++) {
-          var v = score(pages[i], q);
+          var v = score(pages[i], nq);
           if (v > 0) ranked.push({ p: pages[i], s: v });
         }
         ranked.sort(function (a, b) { return b.s - a.s; });
-        ranked = ranked.slice(0, 24);
+        ranked = ranked.slice(0, 32);
       }
+
       list.innerHTML = '';
       if (ranked.length === 0) {
-        list.innerHTML = '<li class="as-search-empty">No matches. Try a standards name (FIDO, PIV, ASN.1) or a tool name (APDU, X.509, CBOR).</li>';
-        hint.textContent = '';
+        list.innerHTML = '<div class="as-search-empty"><strong>No matches.</strong><span>Try a standard (FIDO, PIV, ASN.1, ICAO) or a tool (APDU parser, X.509 viewer, CBOR).</span></div>';
+        footerCount.textContent = '';
         return;
       }
-      ranked.forEach(function (r, i) {
-        var li = document.createElement('li');
-        li.className = 'as-search-result';
-        li.setAttribute('role', 'option');
-        if (i === 0) li.classList.add('is-active');
-        li.dataset.url = r.p.u;
-        var typeBadge = '<span class="as-search-badge as-badge-' + r.p.s + '">' + escapeHTML(r.p.l) + '</span>';
-        var desc = r.p.d ? '<div class="as-search-desc">' + escapeHTML(r.p.d) + '</div>' : '';
-        li.innerHTML =
-          '<a href="' + escapeAttr(r.p.u) + '" class="as-search-link">' +
-          '  <div class="as-search-line">' + typeBadge + '<span class="as-search-title">' + escapeHTML(r.p.t) + '</span></div>' +
-          desc +
-          '  <span class="as-search-url">' + escapeHTML(r.p.u) + '</span>' +
-          '</a>';
-        list.appendChild(li);
+
+      var groups = groupRanked(ranked);
+      var idx = 0;
+      groups.forEach(function (g) {
+        var header = document.createElement('div');
+        header.className = 'as-search-group';
+        header.textContent = g.group.label;
+        list.appendChild(header);
+        g.results.forEach(function (r) {
+          var li = document.createElement('a');
+          li.className = 'as-search-item';
+          li.setAttribute('role', 'option');
+          li.setAttribute('href', r.p.u);
+          li.dataset.url = r.p.u;
+          if (idx === 0) li.classList.add('is-active');
+          idx++;
+          var titleH = highlight(r.p.t, nq);
+          var descH = r.p.d ? '<div class="as-item-desc">' + highlight(r.p.d, nq) + '</div>' : '';
+          li.innerHTML =
+            '<div class="as-item-main">' +
+            '  <div class="as-item-title">' + titleH + '</div>' +
+            descH +
+            '  <div class="as-item-url">' + escapeHTML(r.p.u) + '</div>' +
+            '</div>' +
+            '<span class="as-item-arrow" aria-hidden="true">' + arrowIconSVG() + '</span>';
+          list.appendChild(li);
+        });
       });
-      hint.textContent = q ? (ranked.length + ' match' + (ranked.length === 1 ? '' : 'es')) : 'Showing top entries';
+
+      var n = ranked.length;
+      footerCount.textContent = nq
+        ? n + ' result' + (n === 1 ? '' : 's')
+        : 'Top entries · type to filter';
     });
   }
 
-  function onQuery() {
-    renderResults(input.value);
-  }
+  function onQuery() { renderResults(input.value); }
 
-  function activeItem() {
-    return list.querySelector('.as-search-result.is-active');
-  }
+  function activeItem() { return list.querySelector('.as-search-item.is-active'); }
+  function allItems() { return list.querySelectorAll('.as-search-item'); }
   function setActive(item) {
     var prev = activeItem();
     if (prev) prev.classList.remove('is-active');
-    if (item) item.classList.add('is-active');
-    if (item && item.scrollIntoView) item.scrollIntoView({ block: 'nearest' });
+    if (item) {
+      item.classList.add('is-active');
+      if (item.scrollIntoView) item.scrollIntoView({ block: 'nearest' });
+    }
   }
+  function nextItem(dir) {
+    var items = allItems();
+    if (!items.length) return null;
+    var cur = activeItem();
+    var idx = -1;
+    for (var i = 0; i < items.length; i++) if (items[i] === cur) { idx = i; break; }
+    idx = (idx + dir + items.length) % items.length;
+    return items[idx];
+  }
+
   function onKey(e) {
     if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      var a = activeItem();
-      var next = a && a.nextElementSibling;
-      if (next) setActive(next);
-      return;
-    }
-    if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      var a2 = activeItem();
-      var prev = a2 && a2.previousElementSibling;
-      if (prev) setActive(prev);
-      return;
-    }
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(nextItem(+1)); return; }
+    if (e.key === 'ArrowUp')   { e.preventDefault(); setActive(nextItem(-1)); return; }
     if (e.key === 'Enter') {
-      var a3 = activeItem();
-      if (a3) {
-        var url = a3.dataset.url;
-        if (url) {
-          e.preventDefault();
-          window.location.href = url;
-        }
-      }
+      var a = activeItem();
+      if (a && a.dataset.url) { e.preventDefault(); window.location.href = a.dataset.url; }
     }
   }
 
   function escapeHTML(s) {
-    return String(s || '')
+    return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
-  function escapeAttr(s) { return escapeHTML(s); }
 
   function bindGlobalShortcut() {
     document.addEventListener('keydown', function (e) {
@@ -203,7 +286,6 @@
         e.preventDefault();
         if (opened) closeModal(); else openModal();
       }
-
       if (e.key === '/' && !opened) {
         var t = e.target;
         var tag = t && t.tagName;
@@ -229,14 +311,7 @@
     });
   }
 
-  function ready(fn) {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', fn);
-    } else { fn(); }
-  }
-
   function checkUrlQuery() {
-
     try {
       var params = new URLSearchParams(window.location.search);
       var q = params.get('q');
@@ -249,6 +324,12 @@
         }
       }
     } catch (_) {}
+  }
+
+  function ready(fn) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', fn);
+    } else { fn(); }
   }
 
   ready(function () {

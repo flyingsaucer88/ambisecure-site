@@ -317,6 +317,9 @@
   <url><loc>https://ambisecure.ambimat.com/tags/hardware/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/pki/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
 
+  <!-- Phase 21: FIDO Validation Server demo access posture -->
+  <url><loc>https://ambisecure.ambimat.com/services/fido-validation-server/demo/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
+
   <!-- Phase 19: Standards evolution timelines -->
   <url><loc>https://ambisecure.ambimat.com/resources/timelines/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
   <url><loc>https://ambisecure.ambimat.com/resources/timelines/fido/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>

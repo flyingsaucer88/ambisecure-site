@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 20 — site-wide search, consent banner, AI discoverability, ASN.1 depth, FIDO demo bundle, blog TOC, CSP tightening, freshness dashboard)
+**Last updated:** 2026-05-12 (Phase 21 — grid system default, brand-mark icon variant, FIDO demo interstitial, search redesign)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
@@ -77,7 +77,7 @@ Phase 20 wired the consent banner + opt-in gate. The remaining items wait on a p
 | External docs platform (Mintlify / Docusaurus) for `/technologies/` | Static HTML is fine at current scale. Adds a build system and a deploy target for marginal docs UX gain today. | Architecture / operator | Tech docs grow to need search + versioning (more than ~30 distinct technology surfaces). | Decide on platform; migrate `/technologies/` content; set up redirects from old paths. |
 | Multilingual content | English-first audience today. Localisation cost is high (translation + dual asset trees). | Business / operator | Operator decides to expand into a non-English-primary market. | Add `lang` query param or per-language subpath; provide translations for the homepage + top 10 product pages first; extend later. |
 | Public-API / self-serve developer portal for the FIDO Validation Server | Phase 16 documented the four-step **enterprise** onboarding. A self-serve sandbox needs productisation: sign-up flow, rate limiting, abuse prevention, billing pipeline. | Product / business | Productisation decision to open up self-serve sandbox + API key issuance. | Stand up `developer.ambisecure.ambimat.com`; add sign-up UI; integrate billing; document the sandbox-tenant policy. |
-| `fido.ambisecure.ambimat.com` live deployment | Phase 19 wired the "Request demo" CTA to this URL. Phase 20 produced a deployment-ready bundle at `dist/fido-demo/` plus the operator playbook in MASTER_OPS §25. DNS / TLS / runtime are still operator decisions. | Operator + ops | Operator decides hosting shape (Hostinger VPS / Render / Fly / Cloud Run) and provisions DNS. | Run `bash tools/build-fido-demo.sh`; follow `dist/fido-demo/DEPLOYMENT.md` end-to-end; verify the no-source-leak checklist before flipping CTAs from staging copy to live. |
+| `fido.ambisecure.ambimat.com` live deployment | Phase 21 routed both "Request demo" CTAs to the interstitial at `/services/fido-validation-server/demo/` (MASTER_OPS §28) — the user-facing surface is no longer broken while the runtime is being provisioned. Phase 20 produced the deployment-ready bundle at `dist/fido-demo/` plus the playbook in MASTER_OPS §25. DNS / TLS / runtime are still operator decisions. | Operator + ops | Operator decides hosting shape (Hostinger Node.js web app / VPS / Render / Fly) and provisions DNS. | Run `bash tools/build-fido-demo.sh`; follow `dist/fido-demo/DEPLOYMENT.md`; run the no-source-leak smoke test; then swap the two `<a href="/services/fido-validation-server/demo/">` references on the FIDO service page back to the live URL. |
 
 ---
 

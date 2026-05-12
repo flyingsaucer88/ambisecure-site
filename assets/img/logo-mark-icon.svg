@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AmbiSecure mark">
+  <!-- Outer ring -->
+  <circle cx="32" cy="32" r="30" fill="#fff" stroke="#B0B4B6" stroke-width="2"/>
+
+  <!-- Red triangle / A formed by parallel stripes -->
+  <g fill="#E3222A">
+    <!-- main triangle (stripes) -->
+    <path d="M32 12 L48 50 L42 50 L32 22 Z"/>
+    <path d="M32 12 L16 50 L22 50 L32 22 Z"/>
+    <!-- inner stripes for the layered "A" feel -->
+    <path d="M28 24 L18.5 47 L23 47 L31 28 Z"/>
+    <path d="M36 24 L45.5 47 L41 47 L33 28 Z"/>
+  </g>
+
+  <!-- Small icon nodes orbiting the upper-right of the A -->
+  <!-- Lock icon -->
+  <g transform="translate(38, 18)">
+    <circle r="6" fill="#fff" stroke="#E3222A" stroke-width="1.6"/>
+    <rect x="-2.2" y="-1.5" width="4.4" height="4" rx="0.6" fill="#E3222A"/>
+    <path d="M-1.4 -1.5 v-1.6 a1.4 1.4 0 0 1 2.8 0 v1.6" fill="none" stroke="#E3222A" stroke-width="0.8"/>
+  </g>
+
+  <!-- Wifi / Wireless icon -->
+  <g transform="translate(46, 26)">
+    <circle r="5.5" fill="#fff" stroke="#E3222A" stroke-width="1.4"/>
+    <g fill="none" stroke="#E3222A" stroke-width="0.9" stroke-linecap="round">
+      <path d="M-3 0 q3 -3 6 0"/>
+      <path d="M-2 1.5 q2 -2 4 0"/>
+    </g>
+    <circle cx="0" cy="2.8" r="0.7" fill="#E3222A"/>
+  </g>
+
+  <!-- Connected / robot icon -->
+  <g transform="translate(42, 38)">
+    <circle r="5.5" fill="#fff" stroke="#E3222A" stroke-width="1.4"/>
+    <circle cx="-1.6" cy="-0.8" r="0.9" fill="#E3222A"/>
+    <circle cx="1.6"  cy="-0.8" r="0.9" fill="#E3222A"/>
+    <path d="M-2.4 1.6 q2.4 1.8 4.8 0" fill="none" stroke="#E3222A" stroke-width="0.9" stroke-linecap="round"/>
+  </g>
+</svg>

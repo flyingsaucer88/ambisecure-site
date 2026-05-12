@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 20 — site-wide search, cookie consent + analytics gate, AI discoverability, ASN.1 reference depth, FIDO demo deployment package, blog TOC, CSP tightening, freshness dashboard)
+**Last updated:** 2026-05-12 (Phase 21 — grid system defaulted to centred-last-row, brand-mark icon-only variant, FIDO demo interstitial, command-palette search redesign)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -728,9 +728,10 @@ The brand mark uses the `--brand-red: #E3222A` token; the accent on "Secure" use
 
 ### 17.5 Brand assets
 
-- `assets/img/favicon.svg` — 64×64 circular crest aligned with the AmbiSecure logo (Phase 19). Used as the browser tab icon and for OG fallbacks where a section card does not exist.
-- `assets/img/favicon-32.png`, `assets/img/favicon-64.png`, `assets/img/apple-touch-icon.png` — raster fallbacks. The apple-touch-icon ships on every page via the `<link rel="apple-touch-icon">` added in Phase 19.
-- `assets/img/logo-mark.png`, `assets/img/logo-mark.webp`, `assets/img/logo-mark-og.jpg` — canonical AmbiSecure circular crest from `Logos/`. The CSS `.brand-mark` rule (Phase 19) renders this WEBP inline on every page's navbar/footer, replacing the previous `AS` text mark.
+- `assets/img/favicon.svg` — 64×64 circular crest aligned with the AmbiSecure logo. Used as the browser tab icon and for OG fallbacks where a section card does not exist.
+- `assets/img/favicon-32.png`, `assets/img/favicon-64.png`, `assets/img/apple-touch-icon.png` — raster fallbacks. The apple-touch-icon ships on every page via the `<link rel="apple-touch-icon">`.
+- `assets/img/logo-mark-icon.svg` — **Phase 21 navbar/footer mark.** Icon-only variant of the crest: just the red A-stripes + three orbiting icons, no internal wordmark. The `.brand-mark` CSS rule renders this SVG at 40×40 inside a 1px-bordered white circle so the wordmark next to it (`<span class="brand-line">Ambi<span class="accent">Secure</span></span>`) carries the legible brand text. The full-crest PNG/WEBP would duplicate the wordmark at the navbar's 40×40 size — which is what Phase 19 shipped and Phase 21 corrected.
+- `assets/img/logo-mark.png`, `assets/img/logo-mark.webp`, `assets/img/logo-mark-og.jpg` — full crest (icon + AMBI SECURE wordmark together) from `Logos/`. Used for OG cards, the source archive, and any marketing surface that wants the badge with its self-contained wordmark.
 - `assets/img/logo.svg` — 220×64 horizontal lockup with the mark + "AmbiSecure" wordmark + "HARDWARE-ROOTED SECURITY" tagline. Still used in printable brochures.
 - `assets/img/hero-secure-element.svg` — ISO/IEC 7816 contact-pad illustration on the homepage hero (Phase 19, replaces the CSS-only `hero-visual` schematic).
 - `assets/img/product-*.svg` and `assets/img/service-*.svg` — per-product / per-service hero illustrations (Phase 19). Each `<div class="feature-visual feature-visual-img">` wraps one of these SVGs.
@@ -749,23 +750,42 @@ When updating the navbar or the ecosystem bar, keep parity with the sister sites
 
 ---
 
-## 18. Tile/grid governance (Phase 19)
+## 18. Tile/grid governance (Phase 21 update)
 
 The site has one **global tile rule**: a row of clickable tiles never exceeds **four** per row, and if the final row is incomplete it is **centred**.
 
 ### 18.1 Mechanics
 
-- `.grid-2`, `.grid-3`, `.grid-4` are fixed CSS-grid utilities — use these when item count is a clean multiple of N.
-- `.is-centered` modifier (Phase 19) flips any `.grid-N` to a centred flexbox so an incomplete final row sits visually centred. Use it on any grid whose child count produces orphans (e.g. `class="grid-3 is-centered"` on 5-, 7-, 11-card lists).
-- `.pillars-grid` (homepage "Seven domains") is hard-coded to a 4-up flex layout with centred last row — that is the canonical 4+3 case.
+Phase 21 made centred-last-row the **default** for `.grid-N` — no opt-in modifier required:
+
+- `.grid-2`, `.grid-3`, `.grid-4` are **flex-wrap** containers with `justify-content: center` and `align-items: stretch`. Each child gets `flex: 1 1 calc((100% - (N-1)*gap) / N)` with a matching `max-width`. Full rows look identical to the previous CSS-Grid layout; orphans in the last row sit centred automatically.
+- `.is-centered` is retained as a no-op alias for back-compat — any HTML still carrying it renders the same way as without it.
+- `.pillars-grid` (homepage "Seven domains") is hard-capped at 4 per row via the same flex-wrap pattern with `min-width: 220px` floor and mobile fallback to 2-up then 1-up.
+- `.fido-grid` and `.ref-grid-landing` are now flex-wrap, capped at 4 and 3 per row respectively. Previously they used CSS-Grid `auto-fit` which let them stretch to 5+ columns on very wide viewports.
+- `.resource-grid` (only used on `/resources/`) is flex-wrap, capped at 3 per row, defined inline in that page's `<style>` block.
 
 ### 18.2 Authoring rule
 
-When adding cards to an existing grid, count the resulting child total. If `count > 4` and `count % cols != 0`, add `is-centered` to the grid wrapper. Don't introduce alternative grid utilities — the `.grid-N` + `.is-centered` pattern is the only one we maintain.
+Pick the grid that matches the natural column count of your content (2 / 3 / 4). The centred-last-row behaviour applies automatically — no class to remember:
+
+| Item count | `.grid-3` shape | `.grid-4` shape |
+|------------|----------------|----------------|
+| 5 | 3 + 2 centred | not recommended (use grid-3) |
+| 6 | 3 + 3 | not recommended (use grid-3) |
+| 7 | 3 + 3 + 1 centred | 4 + 3 centred |
+| 8 | 3 + 3 + 2 centred | 4 + 4 |
+| 9 | 3 + 3 + 3 | 4 + 4 + 1 centred (use grid-3 instead) |
+| 10 | 3 + 3 + 3 + 1 centred | 4 + 4 + 2 centred |
+
+For 7 or 10 items, prefer `.grid-4` (gives 4+3 or 4+4+2 — fewer rows, balanced last row). For 5, 8, or 9 items prefer `.grid-3`. The `.pillars-grid` 7-card homepage row is the canonical 4+3 example.
 
 ### 18.3 Audit
 
-There is no separate CI audit for grid balance — the rule is enforced by code review against this section. The `audit-circular-links` audit catches the related class of bugs (cards that link nowhere).
+There is no separate CI audit for grid balance — the rule is enforced by code review against this section. Verify visually after adding content. The `audit-circular-links` audit catches the related class of bugs (cards that link nowhere).
+
+### 18.4 What changed from Phase 19
+
+Phase 19 introduced `.is-centered` as an opt-in modifier applied only to flagged grids (9 pages). Phase 21 made the centred-last-row behaviour the default for every `.grid-N` site-wide, so authoring a new grid no longer requires remembering the modifier. The previous CSS-Grid columns were also replaced with flex-wrap so a child width is enforced per item rather than per track — this is what makes the last-row centring work without JS.
 
 ---
 
@@ -1007,4 +1027,49 @@ The Content-Security-Policy in `.htaccess` was tightened in Phase 20:
 | `font-src`  | `'self' https://fonts.gstatic.com` | `'self'` |
 
 Fonts are fully self-hosted (`assets/fonts/*.woff2`); the Google Fonts allow-list was defensive but unused. The `'unsafe-inline'` on `style-src` remains until residual inline `style=` attributes are class-extracted (tracked in OPEN_ITEMS).
+
+---
+
+## 28. FIDO demo handling — current posture (Phase 21)
+
+The runtime at `fido.ambisecure.ambimat.com` is **not** live yet. Phase 21 wired both "Request demo" CTAs on `/services/fido-validation-server/` to a dedicated interstitial at `/services/fido-validation-server/demo/` instead of the unresolvable subdomain.
+
+### 28.1 What the interstitial does
+
+- Frames the demo as "provisioning in progress" rather than broken.
+- Explains what reviewers will see (registration + authentication ceremony, attestation verification, per-tenant policy).
+- Offers a structured mailto with subject `FIDO Validation Server — demo access request` and a pre-filled body capturing tenant scope, target authenticators, and integration stack.
+- Surfaces the read-now reading list: service page, FIDO timeline, WebAuthn timeline, cornerstone blog posts, COSE algorithms reference.
+
+### 28.2 When the live runtime ships
+
+Swap the two `<a href="/services/fido-validation-server/demo/">` references on `/services/fido-validation-server/index.html` back to `https://fido.ambisecure.ambimat.com/` (or whatever production hostname the operator picks), and either keep the interstitial as a public access-request surface or 301 it to `/services/fido-validation-server/`.
+
+### 28.3 Why interstitial-first
+
+A broken DNS / 404 / "this site can't be reached" page from the unresolvable subdomain reads as abandoned. A controlled interstitial reads as deliberate. Per the Phase 21 brief: "The experience must feel: intentional, enterprise-grade, controlled."
+
+---
+
+## 29. Site-wide search redesign (Phase 21)
+
+The Phase 20 search modal worked functionally but read as generic. Phase 21 redesigned it as a command-palette overlay with these properties:
+
+- **Single-card surface** — title, one-line description, URL, and a forward chevron per row. No badge column; the group label carries the type signal instead.
+- **Grouped results** — results bucket into Products / Services / Solutions / Technologies / Industries / Timelines / References / Tools / Blog / Archive / etc. Group order matches a fixed taxonomy (see `GROUPS` in `assets/js/site-search.js`).
+- **Match highlighting** — query tokens render with `<mark>` highlight on title and description.
+- **Refined chrome** — blurred backdrop (`backdrop-filter: blur(6px)`), entrance animation (`as-rise` cubic-bezier), rounded `border-radius: 14px`, soft `box-shadow`, monospace kbd hints in the footer.
+- **Same shortcuts** — `⌘K` / `Ctrl+K` toggles, bare `/` opens, `↑` / `↓` / `Enter` / `Esc` for keyboard nav. Hover and active states share styling so mouse and keyboard feel symmetric.
+- **Same data source** — still reads `/assets/data/search-index.json` (262 pages, 73 KB). No index regeneration is needed when the UI changes.
+
+### 29.1 What to edit
+
+- `assets/js/site-search.js` — controller, ranking, grouping.
+- `assets/css/main.css` `/* PHASE 21 — SITE-WIDE SEARCH (command-palette) */` block — visual styling.
+
+If a new top-level URL prefix is introduced, extend `TYPE_TABLE` in `tools/build-search-index.py` and `GROUPS` in `site-search.js` to give it a group label and a position in the ordering.
+
+### 29.2 Why not just keep the Phase 20 design
+
+The Phase 20 version stacked type-coloured badges next to titles, which read as cluttered when many results were of the same type (e.g. searching "fido" returns 8 products + 4 services + 6 blogs and the badge column became visually noisy). Phase 21 collapses the badge into the group header — one label per group, not per row. That mirrors the Stripe-docs / Linear / Vercel patterns the brief called out.
 
