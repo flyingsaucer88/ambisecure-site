@@ -23,10 +23,6 @@
 
       try {
 
-
-
-
-
         var uidBytes = new Uint8Array(uid.length / 2);
         for (var i = 0; i < uidBytes.length; i++) uidBytes[i] = parseInt(uid.substr(i * 2, 2), 16);
         var keyBytes = new Uint8Array(16);

@@ -3,8 +3,6 @@
 
   var INDEX_URL = "/assets/data/blog-search-index.json";
 
-
-
   var SYNONYM_GROUPS = [
     ["fido", "webauthn", "ctap2"],
     ["passkey", "passkeys"],
@@ -44,13 +42,10 @@
     return m;
   })();
 
-
   var POPULAR = [
     "fido", "desfire", "javacard", "passkey", "attestation",
     "sam", "scp03", "secure element", "transit", "pki"
   ];
-
-
 
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
@@ -95,8 +90,6 @@
     return Array.from(out);
   }
 
-
-
   function scoreEntry(entry, qTokens, expanded, filters) {
     if (filters.category) {
       var cats = (entry.categories || []).map(function (c) { return c.toLowerCase(); });
@@ -139,7 +132,6 @@
       }
     });
 
-
     expanded.forEach(function (et) {
       if (qTokens.indexOf(et) !== -1) return;
       if (indexed.indexOf(et) !== -1 ||
@@ -149,12 +141,9 @@
       }
     });
 
-
     if (entry.type === "archive") score = Math.max(0, score - 0.5);
     return score;
   }
-
-
 
   function emptyState(list, query, allEntries) {
     list.innerHTML = "";
@@ -184,7 +173,6 @@
     });
     popularWrap.appendChild(popList);
     list.appendChild(popularWrap);
-
 
     var tags = new Set();
     allEntries.forEach(function (e) {
@@ -285,8 +273,6 @@
     renderGroup(list, "Modern engineering", modern);
     renderGroup(list, "Engineering archive", archive);
   }
-
-
 
   function setUpSearch(input, list) {
     var entries = null;

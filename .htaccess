@@ -233,8 +233,11 @@ ErrorDocument 404 /404.html
   Header set Referrer-Policy "strict-origin-when-cross-origin"
   Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-  # CSP — same as eSIM site, keeps fonts working.
-  Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://i.ytimg.com; connect-src 'self'; frame-src https://www.youtube-nocookie.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:; object-src 'none'; media-src 'self'; upgrade-insecure-requests"
+  # CSP — Phase 20: tightened. Fonts are fully self-hosted; the previous
+  # fonts.googleapis.com / fonts.gstatic.com allow-list was defensive but
+  # unused. 'unsafe-inline' for style-src remains until the residual inline
+  # `style=` attributes are class-extracted (tracked in OPEN_ITEMS).
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://i.ytimg.com; connect-src 'self'; frame-src https://www.youtube-nocookie.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:; object-src 'none'; media-src 'self'; upgrade-insecure-requests"
 </IfModule>
 
 # Compression

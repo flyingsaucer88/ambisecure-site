@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-
   var MFG = {
     0x00: '(reserved)',
     0x02: 'STMicroelectronics',

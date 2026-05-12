@@ -56,7 +56,6 @@
       var mt = ib >> 5;
       var ai = ib & 0x1F;
 
-
       if (ai === 31 && (mt === 2 || mt === 3 || mt === 4 || mt === 5 || mt === 7)) {
         if (mt === 7) return { type: 'break' };
         if (mt === 2 || mt === 3) {
@@ -147,7 +146,6 @@
     return s;
   }
 
-
   function stringify(item, indent) {
     indent = indent || 0;
     var pad = '';
@@ -176,7 +174,6 @@
       default: return '<unknown>';
     }
   }
-
 
   function findInMap(mapItem, key) {
     if (!mapItem || mapItem.type !== 'map') return null;

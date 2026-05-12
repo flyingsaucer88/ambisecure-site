@@ -67,7 +67,6 @@
           }
         }
 
-
         var i = 0;
         while (i < b.length) {
           var tag = b[i]; var tagOff = i; i += 1;

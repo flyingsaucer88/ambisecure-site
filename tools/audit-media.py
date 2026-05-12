@@ -39,7 +39,9 @@ def rel(p): return os.path.relpath(p, ROOT)
 
 def iter_html():
     for dirpath, _, files in os.walk(ROOT):
-        if any(s in dirpath for s in ("/legacysitedata/", "/.git/", "/node_modules/", "/.lighthouseci/", "/dist/")):
+        if any(s in dirpath for s in ("/legacysitedata/", "/.git/", "/node_modules/", "/.lighthouseci/", "/dist/", "/_internal/")):
+            continue
+        if dirpath.endswith(("/_internal", os.sep + "_internal")):
             continue
         for name in files:
             if name.endswith((".html", ".css", ".js", ".json")):

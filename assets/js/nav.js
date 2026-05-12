@@ -1,21 +1,13 @@
 (function () {
   'use strict';
 
+  (function loadAnalyticsConfig() {
 
-  (function loadAnalytics() {
-    var configScript = document.createElement('script');
-    configScript.src = '/assets/js/analytics-config.js';
-    configScript.async = false;
-    configScript.defer = true;
-    configScript.onload = function () {
-      var loader = document.createElement('script');
-      loader.src = '/assets/js/analytics.js';
-      loader.async = false;
-      loader.defer = true;
-      document.head.appendChild(loader);
-    };
-    configScript.onerror = function () {  };
-    document.head.appendChild(configScript);
+    var s = document.createElement('script');
+    s.src = '/assets/js/analytics-config.js';
+    s.async = false;
+    s.defer = true;
+    document.head.appendChild(s);
   })();
 
   document.addEventListener('DOMContentLoaded', function () {
@@ -33,7 +25,6 @@
         });
       });
     }
-
 
     var path = window.location.pathname;
     var section = path.split('/').filter(Boolean)[0] || '';

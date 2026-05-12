@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-
   var TAGS = {
     '4F': 'AID (Application Identifier)',
     '50': 'Application Label',

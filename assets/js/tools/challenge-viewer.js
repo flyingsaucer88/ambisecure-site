@@ -43,7 +43,6 @@
           'Low entropy — DO NOT use predictable challenges. WebAuthn challenges must be cryptographically random.';
         html += row('entropy', '<span class="tech-badge ' + entBadge + '">' + H.toFixed(2) + ' bits/byte</span>', entNote);
 
-
         var ascii = '';
         var allPrintable = true;
         for (var i = 0; i < b.length; i++) {

@@ -26,7 +26,6 @@
       html += '</div>';
       html += row('Outer ContentInfo', AS.escHTML(AmbiSecureASN1.oidName(contentTypeOid) || contentTypeOid));
 
-
       var safeBags = [];
       try {
         var ci = authSafe.children[1].children[0];

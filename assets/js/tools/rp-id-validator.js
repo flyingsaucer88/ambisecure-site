@@ -47,7 +47,6 @@
       ok = false; reasons.push('RP ID is NOT a registrable suffix of origin host. The browser will reject this ceremony.');
     }
 
-
     var TLD_LIKE = /\.(com|net|org|edu|gov|io|co|me|app|dev|test|local)$/;
     if (rp === 'com' || rp === 'co.uk' || rp === 'co.in' || /^[a-z]{2,3}$/.test(rp)) {
       ok = false; reasons.push('RP ID looks like a public suffix. The Public Suffix List forbids registering at this level.');

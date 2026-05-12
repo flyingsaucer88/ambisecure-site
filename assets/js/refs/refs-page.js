@@ -97,7 +97,6 @@
     buildTagFilter();
     render();
 
-
     try {
       var anchor = (location.hash || '').replace(/^#/, '');
       if (anchor) setTimeout(function () {

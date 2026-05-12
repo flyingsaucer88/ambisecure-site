@@ -32,13 +32,11 @@
         iframe.style.height = '100%';
         iframe.style.border = '0';
 
-
         while (facade.firstChild) facade.removeChild(facade.firstChild);
         facade.appendChild(iframe);
       }
 
       btn.addEventListener('click', activate);
-
 
     });
   });

@@ -40,7 +40,6 @@
         html += row('hex', '<span class="mono">' + AmbiSecureB64URL.bytesToHex(b) + '</span>');
         html += row('base64url', '<span class="mono">' + AmbiSecureB64URL.encode(b) + '</span>');
 
-
         var lenNote;
         if (b.length === 16) lenNote = 'Likely a 16-byte synthetic ID (rare).';
         else if (b.length >= 32 && b.length <= 64) lenNote = 'Common length range — typical for resident credentials and short discoverable creds.';
@@ -50,14 +49,12 @@
         else lenNote = 'Length is unusual.';
         html += row('length', String(b.length) + ' bytes', lenNote);
 
-
         var H = shannonEntropy(b);
         var Hpct = (H / 8 * 100).toFixed(1) + '%';
         var entropyNote = H > 7.0 ? 'High entropy — looks random / encrypted.' :
           H > 5.5 ? 'Moderate entropy — may include structured prefixes.' :
           'Low entropy — likely contains structured / repeated data.';
         html += row('shannon entropy', H.toFixed(2) + ' bits/byte (' + Hpct + ' of ideal)', entropyNote);
-
 
         if (b.length >= 16) {
           var prefix = b.slice(0, 16);

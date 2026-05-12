@@ -83,7 +83,6 @@
           html += row('credentialId', '<span class="mono">' + bytesPreview(credId, 80) + '</span>',
             credLen + ' bytes. Opaque to the RP — store and present back on assertion.');
 
-
           var pubKeyBytes = b.slice(i);
           try {
             var dec = AmbiSecureCBOR.decode(pubKeyBytes);
@@ -113,7 +112,6 @@
           }
         }
 
-
         if (flags & FLAG.BE) {
           html += '<div class="note" style="margin-top:12px; padding:10px 14px; background:var(--secure-cyan-soft); border-left:3px solid var(--secure-cyan); border-radius:3px;"><strong>BE flag set:</strong> the credential is backup-eligible. If <strong>BS</strong> is also set, the credential is currently backed up (e.g. iCloud Keychain, Google Password Manager). For high-assurance enterprise use, you may want to require <strong>BE=0</strong> (device-bound).</div>';
         }
@@ -127,7 +125,6 @@
       go();
     });
     if (clearBtn) clearBtn.addEventListener('click', function () { input.value=''; go(); input.focus(); });
-
 
     try {
       var q = new URLSearchParams(window.location.search);

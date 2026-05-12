@@ -1,5 +1,10 @@
 User-agent: *
 Allow: /
 Disallow: /assets/raw/
+Disallow: /_internal/
 
 Sitemap: https://ambisecure.ambimat.com/sitemap.xml
+
+# LLM-friendly content overviews (https://llmstxt.org convention)
+# https://ambisecure.ambimat.com/llms.txt        — short site overview
+# https://ambisecure.ambimat.com/llms-full.txt   — full indexable-page list with summaries

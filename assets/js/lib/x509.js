@@ -4,7 +4,6 @@
   if (!root.AmbiSecureASN1) throw new Error('AmbiSecureX509 requires AmbiSecureASN1');
   var A = root.AmbiSecureASN1;
 
-
   function decodePEM(text) {
     var out = [];
     var re = /-----BEGIN ([A-Z0-9 ]+)-----([\s\S]*?)-----END \1-----/g;
@@ -69,7 +68,6 @@
     return out;
   }
 
-
   function rdnToString(rdnSeq) {
     if (!rdnSeq || !rdnSeq.children) return '';
     var parts = [];
@@ -98,7 +96,6 @@
   }
   function escapeRDN(s) { return String(s).replace(/([,+"\\<>;=#])/g, '\\$1'); }
 
-
   function decodeValidity(node) {
     if (!node || !node.children || node.children.length < 2) return null;
     return {
@@ -106,7 +103,6 @@
       notAfter: A.decodeValue(node.children[1])
     };
   }
-
 
   function decodeAlgId(node) {
     if (!node || !node.children || !node.children.length) return null;
@@ -124,7 +120,6 @@
     }
     return { oid: oid, name: A.oidName(oid), parameters: paramsHuman };
   }
-
 
   function decodeSPKI(node) {
     if (!node || !node.children || node.children.length < 2) return null;
@@ -150,7 +145,6 @@
     }
     return info;
   }
-
 
   function decodeExtensions(extsNode) {
 
@@ -292,7 +286,6 @@
     return s;
   }
 
-
   function parseCertificate(der) {
     var top = A.parse(der)[0];
     if (!top || !top.children) throw new Error('Not a SEQUENCE.');
@@ -300,7 +293,6 @@
     var sigAlg = top.children[1];
     var sigValue = top.children[2];
     if (!tbs || !tbs.children) throw new Error('Missing tbsCertificate.');
-
 
     var idx = 0, version = 1;
     if (tbs.children[0].tagClass === 2 && tbs.children[0].tagNumber === 0) {
@@ -335,7 +327,6 @@
     };
   }
 
-
   function parseCSR(der) {
     var top = A.parse(der)[0];
     if (!top || !top.children) throw new Error('Not a SEQUENCE.');
@@ -368,7 +359,6 @@
     };
   }
 
-
   function fingerprint(der, algo) {
     if (!root.crypto || !root.crypto.subtle) return Promise.reject(new Error('Web Crypto unavailable.'));
     var algMap = { 'sha-1': 'SHA-1', 'sha-256': 'SHA-256', 'sha-384': 'SHA-384', 'sha-512': 'SHA-512' };
@@ -377,7 +367,6 @@
       return A.bytesToHex(new Uint8Array(h), ':');
     });
   }
-
 
   function autoDecode(input) {
     if (input instanceof Uint8Array) return [{ label: 'DER', der: input }];

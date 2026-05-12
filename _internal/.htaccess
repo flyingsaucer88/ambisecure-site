@@ -1,0 +1,10 @@
+# Operator-only dashboards. Public visitors get 403.
+# Remove this stanza if you want the page to be world-readable.
+<RequireAll>
+  Require all denied
+</RequireAll>
+
+# Even if the above is removed, do not index.
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "noindex, nofollow, noarchive"
+</IfModule>

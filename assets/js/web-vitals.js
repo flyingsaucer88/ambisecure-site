@@ -4,13 +4,11 @@
   if (typeof window === "undefined") return;
   if (!window.PerformanceObserver) return;
 
-
   var DEBUG = false;
   try {
     DEBUG = localStorage.getItem("as-vitals-debug") === "1" ||
             (window.location.search || "").indexOf("as_vitals_debug=1") !== -1;
   } catch (e) {}
-
 
   if (!DEBUG) {
     try {
@@ -18,7 +16,6 @@
       if (localStorage.getItem("as-analytics-opt-out") === "1") return;
     } catch (e) {}
   }
-
 
   function deriveGroup(path) {
     if (!path || path === "/") return "home";
@@ -56,7 +53,6 @@
   var PATH = window.location.pathname || "/";
   var PAGE_GROUP = deriveGroup(PATH);
 
-
   var buffer = [];
   var seen = Object.create(null);
 
@@ -85,7 +81,6 @@
     enqueue("CLS", newValue);
   }
 
-
   var flushed = false;
   function flush() {
     if (flushed) return;
@@ -111,7 +106,6 @@
     if (document.visibilityState === "hidden") flush();
   }, { once: false });
 
-
   try {
     var lcpValue = 0;
     var lcpObs = new PerformanceObserver(function (list) {
@@ -128,7 +122,6 @@
       if (document.visibilityState === "hidden" && lcpValue) enqueue("LCP", lcpValue);
     }, { once: false });
   } catch (e) {}
-
 
   try {
     var clsValue = 0;
@@ -159,7 +152,6 @@
     clsObs.observe({ type: "layout-shift", buffered: true });
   } catch (e) {}
 
-
   try {
     var inpValue = 0;
     var entryTypes = PerformanceObserver.supportedEntryTypes || [];
@@ -188,16 +180,12 @@
     }
   } catch (e) {}
 
-
   try {
     var nav = performance.getEntriesByType("navigation")[0];
     if (nav && typeof nav.responseStart === "number") {
       enqueue("TTFB", nav.responseStart);
     }
   } catch (e) {}
-
-
-
 
   window.AS_VITALS = {
     mark: function (name, value, extra) {

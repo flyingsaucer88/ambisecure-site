@@ -3,11 +3,9 @@
   var pool = window.AS_BLOG_POOL;
   if (pool.length === 0) return;
 
-
   var now = new Date();
   var utcMidnight = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
   var seed = Math.floor(utcMidnight / 86400000);
-
 
   function picker(s, len) {
     var i = ((s % len) + len) % len;
@@ -66,10 +64,8 @@
     nodes.forEach(function (n) { n.innerHTML = html; });
   }
 
-
   var modern = pool.filter(function (p) { return p.type === "modern"; });
   var archive = pool.filter(function (p) { return p.type === "archive"; });
-
 
   var featured = pickN(pool, 3, seed);
   var modernPicks = pickN(modern, 3, seed + 7);

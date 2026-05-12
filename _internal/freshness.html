@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Internal · Blog freshness dashboard</title>
+<style>
+  body { font-family: 'Source Sans 3', sans-serif; color: #3A3F40; margin: 32px 40px; max-width: 1100px; }
+  h1 { font-family: 'Montserrat', sans-serif; font-size: 28px; margin: 0 0 6px; }
+  .meta { color: #616A6C; font-size: 13.5px; margin-bottom: 24px; }
+  h2 { font-family: 'Montserrat', sans-serif; font-size: 18px; margin: 28px 0 10px; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 28px; }
+  th, td { padding: 8px 10px; text-align: left; font-size: 14px; border-bottom: 1px solid #E1E3E4; }
+  th { background: #F4F5F6; font-family: 'Montserrat', sans-serif; font-size: 12px; letter-spacing: 0.6px; text-transform: uppercase; color: #616A6C; }
+  td.num { text-align: right; font-family: 'JetBrains Mono', monospace; }
+  td.ok { text-align: center; color: #0A5562; padding: 20px; font-style: italic; }
+  a { color: #E3222A; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .pill { display: inline-block; background: #FCEEEE; color: #E3222A; font-family: 'JetBrains Mono', monospace; font-size: 11px; padding: 2px 8px; border-radius: 3px; letter-spacing: 0.4px; margin-right: 6px; }
+  .note { background: #FFF7E5; border-left: 3px solid #C49A4F; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 13.5px; line-height: 1.6; margin: 18px 0; }
+</style>
+</head>
+<body>
+<h1>Blog freshness dashboard</h1>
+<p class="meta">Internal review surface. Rendered 2026-05-12 by <code>tools/render-freshness-page.py</code>. <strong>50</strong> posts indexed · <span class="pill">0 modern overdue</span> <span class="pill">24 archive overdue</span> <span class="pill">0 missing metadata</span></p>
+
+<div class="note">
+<strong>How to use this page.</strong> Each row is a post whose <code>last_reviewed</code> stamp is older than the policy threshold (18 months for <em>current</em> posts, 24 months for <em>archive</em> / <em>stale-review</em> posts). Re-review, update <code>last_reviewed</code> in <code>assets/data/blogs.json</code>, and commit. The pre-commit hook will refuse a touched-blog commit without that bump.
+</div>
+
+<h2>Modern posts overdue (0)</h2>
+<table>
+  <thead><tr><th>URL</th><th>Last reviewed</th><th>Days</th></tr></thead>
+  <tbody>
+<tr><td colspan="3" class="ok">No modern posts overdue. ✓</td></tr>
+  </tbody>
+</table>
+
+<h2>Archive posts overdue (24)</h2>
+<table>
+  <thead><tr><th>URL</th><th>Last reviewed</th><th>Days</th></tr></thead>
+  <tbody>
+<tr><td><a href="/blog/archive/iot-security-challenges-part-1/" target="_blank" rel="noopener">/blog/archive/iot-security-challenges-part-1/</a></td><td>2020-04-20</td><td class="num">2213</td></tr>
+<tr><td><a href="/blog/archive/iot-security-challenges-part-2/" target="_blank" rel="noopener">/blog/archive/iot-security-challenges-part-2/</a></td><td>2020-04-27</td><td class="num">2206</td></tr>
+<tr><td><a href="/blog/archive/public-transport-ticketing-part-1/" target="_blank" rel="noopener">/blog/archive/public-transport-ticketing-part-1/</a></td><td>2020-05-12</td><td class="num">2191</td></tr>
+<tr><td><a href="/blog/archive/public-transport-ticketing-part-2/" target="_blank" rel="noopener">/blog/archive/public-transport-ticketing-part-2/</a></td><td>2020-05-18</td><td class="num">2185</td></tr>
+<tr><td><a href="/blog/archive/public-transport-ticketing-part-3/" target="_blank" rel="noopener">/blog/archive/public-transport-ticketing-part-3/</a></td><td>2020-05-26</td><td class="num">2177</td></tr>
+<tr><td><a href="/blog/archive/securing-iiot-infrastructure/" target="_blank" rel="noopener">/blog/archive/securing-iiot-infrastructure/</a></td><td>2020-06-08</td><td class="num">2164</td></tr>
+<tr><td><a href="/blog/archive/consumer-biometrics-and-privacy/" target="_blank" rel="noopener">/blog/archive/consumer-biometrics-and-privacy/</a></td><td>2020-06-29</td><td class="num">2143</td></tr>
+<tr><td><a href="/blog/archive/workplace-biometrics/" target="_blank" rel="noopener">/blog/archive/workplace-biometrics/</a></td><td>2020-07-30</td><td class="num">2112</td></tr>
+<tr><td><a href="/blog/archive/emv-certification-in-public-transport/" target="_blank" rel="noopener">/blog/archive/emv-certification-in-public-transport/</a></td><td>2020-08-28</td><td class="num">2083</td></tr>
+<tr><td><a href="/blog/archive/introduction-to-java-card/" target="_blank" rel="noopener">/blog/archive/introduction-to-java-card/</a></td><td>2020-12-15</td><td class="num">1974</td></tr>
+<tr><td><a href="/blog/archive/fast-identity-online/" target="_blank" rel="noopener">/blog/archive/fast-identity-online/</a></td><td>2020-12-15</td><td class="num">1974</td></tr>
+<tr><td><a href="/blog/archive/how-chip-based-epassports-work/" target="_blank" rel="noopener">/blog/archive/how-chip-based-epassports-work/</a></td><td>2021-01-28</td><td class="num">1930</td></tr>
+<tr><td><a href="/blog/archive/epassport-applications/" target="_blank" rel="noopener">/blog/archive/epassport-applications/</a></td><td>2021-01-28</td><td class="num">1930</td></tr>
+<tr><td><a href="/blog/archive/security-future-for-government/" target="_blank" rel="noopener">/blog/archive/security-future-for-government/</a></td><td>2021-03-25</td><td class="num">1874</td></tr>
+<tr><td><a href="/blog/archive/what-is-passwordless-authentication/" target="_blank" rel="noopener">/blog/archive/what-is-passwordless-authentication/</a></td><td>2021-06-01</td><td class="num">1806</td></tr>
+<tr><td><a href="/blog/archive/is-passwordless-the-future/" target="_blank" rel="noopener">/blog/archive/is-passwordless-the-future/</a></td><td>2021-06-01</td><td class="num">1806</td></tr>
+<tr><td><a href="/blog/archive/sms-otp-disadvantages/" target="_blank" rel="noopener">/blog/archive/sms-otp-disadvantages/</a></td><td>2021-06-01</td><td class="num">1806</td></tr>
+<tr><td><a href="/blog/archive/enterprise-security-threats/" target="_blank" rel="noopener">/blog/archive/enterprise-security-threats/</a></td><td>2021-07-06</td><td class="num">1771</td></tr>
+<tr><td><a href="/blog/archive/cyber-attacks-in-india-part-2/" target="_blank" rel="noopener">/blog/archive/cyber-attacks-in-india-part-2/</a></td><td>2021-07-28</td><td class="num">1749</td></tr>
+<tr><td><a href="/blog/archive/cyber-attacks-in-india-part-1/" target="_blank" rel="noopener">/blog/archive/cyber-attacks-in-india-part-1/</a></td><td>2021-07-28</td><td class="num">1749</td></tr>
+<tr><td><a href="/blog/archive/cyber-attacks-in-india-part-3/" target="_blank" rel="noopener">/blog/archive/cyber-attacks-in-india-part-3/</a></td><td>2021-08-05</td><td class="num">1741</td></tr>
+<tr><td><a href="/blog/archive/common-misconceptions-about-2fa/" target="_blank" rel="noopener">/blog/archive/common-misconceptions-about-2fa/</a></td><td>2021-08-19</td><td class="num">1727</td></tr>
+<tr><td><a href="/blog/archive/single-sign-on-vs-mfa/" target="_blank" rel="noopener">/blog/archive/single-sign-on-vs-mfa/</a></td><td>2021-08-19</td><td class="num">1727</td></tr>
+<tr><td><a href="/blog/archive/mfa-in-government/" target="_blank" rel="noopener">/blog/archive/mfa-in-government/</a></td><td>2021-08-19</td><td class="num">1727</td></tr>
+  </tbody>
+</table>
+
+
+
+<p class="meta">Regenerate: <code>python3 tools/render-freshness-page.py</code></p>
+</body>
+</html>

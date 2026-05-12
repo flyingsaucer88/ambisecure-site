@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-
   var SW = [
     {hex:'00', name:'OPERATION_OK', tone:'ok', desc:'Successful operation.'},
     {hex:'0C', name:'NO_CHANGES', tone:'ok', desc:'No changes done to backup files; transaction does not need committing.'},

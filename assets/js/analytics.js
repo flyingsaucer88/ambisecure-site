@@ -3,12 +3,10 @@
   var cfg = window.AS_ANALYTICS;
   if (!cfg || cfg.provider === "none") return;
 
-
   if (cfg.respectDoNotTrack) {
     var dnt = navigator.doNotTrack || window.doNotTrack || (navigator.msDoNotTrack);
     if (dnt === "1" || dnt === "yes") return;
   }
-
 
   try {
     if (cfg.optOutLocalStorageKey &&
@@ -36,16 +34,12 @@
       "data-domain": cfg.plausible.domain
     });
 
-
-
     return;
   }
 
   if (cfg.provider === "ga4") {
     if (!cfg.ga4 || !cfg.ga4.measurementId || cfg.ga4.measurementId.indexOf("G-") !== 0) return;
     var id = cfg.ga4.measurementId;
-
-
 
     var loader = injectScript("https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id));
     loader.addEventListener("load", function () {
@@ -94,7 +88,6 @@
       }
     } catch (_) {  }
   };
-
 
   try {
     var buf = window.AS_WEB_VITALS_BUFFER;

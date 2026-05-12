@@ -1,7 +1,6 @@
 (function (root) {
   'use strict';
 
-
   function toBytes(input) {
     if (input instanceof Uint8Array) return input;
     if (Array.isArray(input)) return new Uint8Array(input);
@@ -32,7 +31,6 @@
     return true;
   }
 
-
   function oidToString(bytes) {
     if (!bytes || !bytes.length) return '';
     var first = bytes[0];
@@ -44,7 +42,6 @@
     }
     return parts.join('.');
   }
-
 
   var OID = {
 
@@ -142,7 +139,6 @@
 
   function oidName(oid) { return OID[oid] || null; }
 
-
   var CLASS = ['Universal', 'Application', 'Context-specific', 'Private'];
   var UNIVERSAL = {
     1: 'BOOLEAN', 2: 'INTEGER', 3: 'BIT STRING', 4: 'OCTET STRING', 5: 'NULL',
@@ -152,7 +148,6 @@
     23: 'UTCTime', 24: 'GeneralizedTime', 26: 'VisibleString', 27: 'GeneralString',
     28: 'UniversalString', 30: 'BMPString'
   };
-
 
   function parse(input) {
     var bytes = toBytes(input);
@@ -223,7 +218,6 @@
     }
     return node;
   }
-
 
   function decodeValue(node) {
     if (node.constructed) return null;

@@ -54,7 +54,6 @@
         var fmt = fmtItem.value;
         html += row('fmt', '<strong>' + AS.escHTML(fmt) + '</strong>', FMT_NOTES[fmt] || 'Unknown attestation format.');
 
-
         if (attStmt.type === 'map') {
           if (attStmt.value.length === 0) {
             html += row('attStmt', '<em>(empty)</em>', 'Empty attStmt is normal when fmt = "none".');
@@ -90,7 +89,6 @@
           }
         }
 
-
         if (authData.type === 'bytes') {
           var ab = authData.value;
           html += row('authData', '<span class="tech-badge tech-badge--info">' + ab.length + ' bytes</span>',
@@ -116,7 +114,6 @@
           }
         }
 
-
         html += '<div class="note" style="margin-top:18px; padding:12px 16px; background:var(--secure-cyan-soft); border-left:3px solid var(--secure-cyan); border-radius:3px;">' +
           '<strong>Verification checklist (registration ceremony):</strong>' +
           '<ol style="margin:8px 0 0 20px; font-size:13px; line-height:1.65;">' +
@@ -133,7 +130,6 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-
 
       var hex = 'a363666d74646e6f6e656761747453746d74a06861757468446174615825' +
         '49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97630500000000';

@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-
   var INS_DICT = {
     0x04: 'DEACTIVATE FILE',
     0x0C: 'ERASE RECORD',
@@ -62,7 +61,6 @@
     0xF0: 'SET STATUS (GP)',
     0xF2: 'GET STATUS (GP)'
   };
-
 
   var SW = {
     '9000': 'Normal — no further qualification.',
@@ -167,7 +165,6 @@
 
   function parseAPDU(bytes, mode) {
     var fields = [];
-
 
     if (mode === 'response' || (bytes.length === 2 && (bytes[0] >= 0x60 && bytes[0] <= 0x9F))) {
       return parseResponse(bytes);

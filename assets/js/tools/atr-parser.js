@@ -12,12 +12,10 @@
   }
   function hex(b, w) { var x = b.toString(16).toUpperCase(); while (w && x.length < w) x = '0' + x; return x; }
 
-
   function parseATR(bytes) {
     var fields = [];
     var i = 0;
     if (bytes.length < 2) throw new Error('ATR must be at least 2 bytes (TS + T0).');
-
 
     var TS = bytes[i++];
     var conv = TS === 0x3B ? 'Direct' : (TS === 0x3F ? 'Inverse' : 'Unknown (expected 0x3B or 0x3F)');
@@ -82,9 +80,6 @@
         var lastTd = T_protocols[T_protocols.length - 1];
         Tprev = lastTd;
 
-
-
-
         var tdLabel = 'TD' + idx;
         var tdField = null;
         for (var j = fields.length - 1; j >= 0; j--) { if (fields[j].label === tdLabel) { tdField = fields[j]; break; } }
@@ -96,7 +91,6 @@
       idx++;
       if (idx > 8) throw new Error('Interface byte loop runaway.');
     }
-
 
     if (i + K > bytes.length) throw new Error('Declared ' + K + ' historical bytes but only ' + (bytes.length - i) + ' remain.');
     if (K > 0) {
@@ -113,7 +107,6 @@
     } else {
       fields.push({ label: 'Historical', value: '(none)', note: 'K = 0, no historical bytes present.', tone: 'info' });
     }
-
 
     var nonT0 = T_protocols.some(function (t) { return t !== 0; });
     if (nonT0 || i < bytes.length) {

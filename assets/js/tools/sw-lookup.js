@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-
   var SW = [
     ['9000', 'Normal — no further qualification.', 'OK', 'iso'],
     ['61XX', 'Normal — bytes available; SW2 = number of bytes.', 'OK', 'iso'],

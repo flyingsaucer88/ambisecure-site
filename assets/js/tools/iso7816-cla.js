@@ -17,13 +17,11 @@
     var b1 = (cla & 0x02) >> 1;
     var b0 = (cla & 0x01);
 
-
     if (cla === 0xFF) {
       out.type = 'reserved (PPS / proprietary)';
       out.note = '0xFF is reserved by ISO/IEC 7816-3 for the Protocol Parameter Selection (PPS) sequence and must not be used as a normal CLA.';
       return out;
     }
-
 
     if (b7 === 0) {
 
@@ -69,7 +67,6 @@
         d.fields.forEach(function (f) {
           html += row(f.name, '<span class="mono">' + f.value + '</span>', '<strong>' + f.bits + '</strong> &middot; ' + f.note);
         });
-
 
         var common = {
           0x00: 'Standard ISO interindustry, channel 0, no SM, no chaining.',

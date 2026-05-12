@@ -1,7 +1,6 @@
 (function () {
   'use strict';
 
-
   var TAG_DICT = {
     '4F': 'Application Identifier (AID)',
     '50': 'Application Label',

@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 19 — branding refinement, visual assets, tile/grid governance, standards timelines)
+**Last updated:** 2026-05-12 (Phase 20 — site-wide search, consent banner, AI discoverability, ASN.1 depth, FIDO demo bundle, blog TOC, CSP tightening, freshness dashboard)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
@@ -19,12 +19,13 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 
 ## 1. Analytics depth (post-launch instrumentation)
 
+Phase 20 wired the consent banner + opt-in gate. The remaining items wait on a provider decision.
+
 | Item | Why deferred | Decision owner | Trigger | Next action |
 |------|--------------|----------------|---------|-------------|
-| Flip analytics provider on (Plausible-first) | Operator must choose hosted vs self-hosted Plausible. Pricing + privacy posture decision. | Business / operator | Provider chosen | Edit `assets/js/analytics-config.js` `provider:` field; apply matching CSP delta in `.htaccess`. |
+| Flip analytics provider on (Plausible-first) | Operator must choose hosted vs self-hosted Plausible. Pricing + privacy posture decision. | Business / operator | Provider chosen | Edit `assets/js/analytics-config.js` `provider:` field; for GA4 only, apply the CSP delta noted in MASTER_OPS §23.3. |
 | Surface Web Vitals dashboard in operator portal | Provider must be on to feed it. | Operator | Provider on | Add Plausible / GA4 dashboard panel filtering on `vitals_*` custom events. |
 | Per-page conversion-event tagging (Contact Click, Brochure Download, Case Study Read) | Tagging without traffic data is guessing. | Operator + product | Provider on + 30 days of traffic | Add `data-analytics-event` attributes to CTAs; wire to `AS_ANALYTICS.report()`. |
-| Hook Web Vitals beacon into Plausible custom-event API | Beacon shape already wired in `analytics.js`. | Operator | Provider on | Set `provider: "plausible"`; vitals automatically flow through `report()`. |
 
 ---
 
@@ -43,10 +44,8 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 
 | Item | Why deferred | Decision owner | Trigger | Next action |
 |------|--------------|----------------|---------|-------------|
-| Per-category pagination | No category currently exceeds 24 entries. | Operator (data-driven) | A single category passes 24 entries (today's largest is FIDO at 13). | Apply the same `/blog/page/N/` pattern to `/blog/categories/<cat>/page/N/`. |
-| In-page table-of-contents on long-form posts | Cornerstone posts are 13–20 min reads but no user signal yet that TOC is missing. | Operator | A reader feedback signal or an analytics signal that the long posts have a high drop rate after 30%. | Add a small `assets/js/blog-toc.js` that scans H2/H3 in `<main>` and renders a fixed-position TOC on viewports >= 1100px. |
+| Per-category pagination | No category currently exceeds 24 entries (largest is FIDO at 13). | Operator (data-driven) | A single category passes 24 entries. | Apply the same `/blog/page/N/` pattern to `/blog/categories/<cat>/page/N/`. |
 | Dark mode | Brand palette is light-first by design. | Operator / brand | Operator decision to invest in a dual palette. | Add `prefers-color-scheme` CSS variables + a manual toggle to nav. |
-| Per-section search beyond the blog | Resources/tools/references are reachable via navigation. | Operator | A specific user complaint or a drop in tool-page traffic. | Extend `assets/js/blog-search.js` index format to cover resources/references; expose at `/search/?scope=...`. |
 
 ---
 
@@ -55,7 +54,6 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 | Item | Why deferred | Decision owner | Trigger | Next action |
 |------|--------------|----------------|---------|-------------|
 | Remove `style-src 'unsafe-inline'` from CSP | Some hand-edited card grids still use inline `style=` for the date row. Removing requires a sweep + class extraction. | Engineering | Security review push, or a CSP audit failure | Convert remaining inline styles to utility classes in `assets/css/main.css`; drop `'unsafe-inline'` from CSP in `.htaccess` and per-page meta. |
-| Tighten CSP: remove unused Google Fonts whitelist | CSP currently allows `fonts.googleapis.com` and `fonts.gstatic.com` though the site is fully self-hosted. Defensive but unused — security hygiene says drop it. | Engineering | Security audit | Remove the `fonts.googleapis.com` / `fonts.gstatic.com` allow-list from the CSP `style-src` / `font-src` directives in `.htaccess`. |
 | Service worker / offline cache | Static site already caches well via LiteSpeed + browser. SW adds installability but is over-engineering at current scale. | Operator | Lighthouse PWA-installability becomes a requirement | Add `service-worker.js` + manifest; cache the asset shell; do not cache the HTML pages (sitemap drift problem). |
 | Brotli pre-compression on disk | LiteSpeed compresses on the fly. Pre-compression matters only on cold cache + slower origins. | Operator | Move off LiteSpeed | `find . -name '*.html' -o -name '*.css' -o -name '*.js' \| xargs -I {} brotli -k {}` as part of the package build. |
 | Per-route CSS splitting | Single 60 KB CSS is well under the budget. | Engineering | `main.css` exceeds 200 KB | Split per top-level section; lazy-load via media queries / link rel preload. |
@@ -68,7 +66,6 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 | Item | Why deferred | Decision owner | Trigger | Next action |
 |------|--------------|----------------|---------|-------------|
 | Expand `.githooks/pre-commit` to also run `tools/audit-all.sh` | Audit suite is ~6s — too slow to gate every commit. | Engineering | Audit suite drops below 2s, OR a regression slips through to CI that the hook would catch. | Append `bash tools/audit-all.sh` to `.githooks/pre-commit`. |
-| `audit-freshness` operator-side reminder dashboard (single HTML page that summarises stale blogs) | Today the freshness report is CI-only. A one-page operator view would drive quarterly review better. | Operator | Engineering team explicitly asks for a single "what to review" surface. | Add `tools/render-freshness-page.py` that emits `/_internal/freshness.html`; gate behind `.htaccess` if it should be operator-only. |
 
 ---
 
@@ -80,7 +77,7 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 | External docs platform (Mintlify / Docusaurus) for `/technologies/` | Static HTML is fine at current scale. Adds a build system and a deploy target for marginal docs UX gain today. | Architecture / operator | Tech docs grow to need search + versioning (more than ~30 distinct technology surfaces). | Decide on platform; migrate `/technologies/` content; set up redirects from old paths. |
 | Multilingual content | English-first audience today. Localisation cost is high (translation + dual asset trees). | Business / operator | Operator decides to expand into a non-English-primary market. | Add `lang` query param or per-language subpath; provide translations for the homepage + top 10 product pages first; extend later. |
 | Public-API / self-serve developer portal for the FIDO Validation Server | Phase 16 documented the four-step **enterprise** onboarding. A self-serve sandbox needs productisation: sign-up flow, rate limiting, abuse prevention, billing pipeline. | Product / business | Productisation decision to open up self-serve sandbox + API key issuance. | Stand up `developer.ambisecure.ambimat.com`; add sign-up UI; integrate billing; document the sandbox-tenant policy. |
-| `fido.ambisecure.ambimat.com` live deployment | Phase 19 wired the "Request demo" CTA to this URL on the assumption operator will stand up the FIDO Validation Server runtime there. The DNS, TLS cert, and deployment posture (operator-hosted vs hosted SaaS, see §9b in MASTER_OPS) are not yet in place. | Operator + ops | Operator decides on hosting shape (hosted SaaS vs operator-hosted) and stands up the runtime. | Provision DNS (A or CNAME) for `fido.ambisecure.ambimat.com`; issue TLS via Hostinger / Let's Encrypt; deploy validation-server container; confirm no source-tree or admin paths are publicly reachable; smoke-test the demo flow. |
+| `fido.ambisecure.ambimat.com` live deployment | Phase 19 wired the "Request demo" CTA to this URL. Phase 20 produced a deployment-ready bundle at `dist/fido-demo/` plus the operator playbook in MASTER_OPS §25. DNS / TLS / runtime are still operator decisions. | Operator + ops | Operator decides hosting shape (Hostinger VPS / Render / Fly / Cloud Run) and provisions DNS. | Run `bash tools/build-fido-demo.sh`; follow `dist/fido-demo/DEPLOYMENT.md` end-to-end; verify the no-source-leak checklist before flipping CTAs from staging copy to live. |
 
 ---
 
@@ -90,15 +87,15 @@ Recorded here to prevent re-litigation. Each item was considered and rejected; t
 
 | Item | Why not |
 |------|---------|
-| Algolia or other hosted search SaaS | Phase 11 client-side search is sufficient; no need for an external dep + cost |
-| `lunr` or `flexsearch` JS dependency | Same — the precomputed token index is small and fast enough |
+| Algolia or other hosted search SaaS | Phase 20 site-wide modal search is sufficient; no need for an external dep + cost |
+| `lunr` or `flexsearch` JS dependency | Same — the in-browser scored filter on the 73 KB index is fast enough |
 | Generating PDFs of brochures | Print-to-PDF from the browser works; binary PDFs would bloat the repo |
 | Customer logo wall on homepage | No permission-cleared logo set; would be fabrication |
 | Customer-named metrics ("reduced phishing by 92%") | No real measurements to back numbers |
-| Cookie banner | No advertising cookies, no marketing cookies. Banner would be noise |
 | Server-side rendering / Next.js / framework migration | Static is the right answer at this scale |
 | Real-time chat widget | Engineering is the first call; a BDR-chat surface defeats the brand |
 | Self-hosted Plausible | If operator wants to avoid the hosted plan, the Plausible Docker image works fine on the existing Hostinger VPS plan |
+| Body-text indexing in site search | Title + meta description is enough; full-text would balloon the index and risk leaking draft body content |
 
 ---
 

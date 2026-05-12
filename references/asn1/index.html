@@ -66,26 +66,87 @@
 <body>
 <a href="#main" class="skip-link">Skip to main content</a>
 <div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
-<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd>⌘K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
 <nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">ASN.1 Universal Tags</span></nav>
 
 <main id="main">
 <header class="tool-header" style="padding-bottom:18px;">
-  <span class="eyebrow">ASN.1 / DER</span>
+  <span class="eyebrow">ASN.1 / X.680</span>
   <h1>ASN.1 Universal Tags</h1>
-  <p>ASN.1 universal-class tag identifiers from ITU-T X.680. Used in DER-encoded X.509, PKCS, CMS, FIDO attestation x5c chains, EMV PKI.</p>
+  <p>Universal-class tag identifiers from ITU-T X.680 &mdash; the encoding floor underneath every DER-encoded X.509 certificate, PKCS structure, CMS envelope, FIDO attestation <code>x5c</code> chain, and EMV PKI artefact you will ever parse.</p>
 </header>
-<div class="ref-shell">
-  <div class="ref-search-bar">
-    <input id="ref-search" type="search" placeholder="Search this reference…" autocomplete="off" />
-    <span class="ref-count" id="ref-count"></span>
+
+<section class="tool-reference" style="padding-top:0;">
+  <h2>BER &middot; DER &middot; CER &mdash; the encoding rules</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>BER (Basic Encoding Rules)</h3>
+      <p>X.690 §8. The permissive parent. A single ASN.1 value may have multiple BER encodings &mdash; indefinite length, primitive or constructed, varying contents bytes. Use BER when you read, never when you write.</p>
+    </div>
+    <div class="ref-card">
+      <h3>DER (Distinguished Encoding Rules)</h3>
+      <p>X.690 §10. The canonical subset of BER. Every value has exactly one encoding: definite length, primitive when allowed, smallest representation. Used by X.509, PKCS, CMS, WebAuthn attestation. Always write DER.</p>
+    </div>
+    <div class="ref-card">
+      <h3>CER (Canonical Encoding Rules)</h3>
+      <p>X.690 §9. A second canonical subset, optimised for streaming over very long values via indefinite-length constructed encoding. Rare outside specific telecom contexts; the modern world is DER.</p>
+    </div>
   </div>
-  <div class="ref-tag-filter" id="ref-tag-filter"></div>
-  <div class="ref-table-wrap" id="ref-output"></div>
-</div>
+</section>
+
 <section class="tool-reference">
-  <h2>About this reference</h2>
-  <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>ITU-T X.680 §8 (universal class).</p></div><div class="ref-card"><h3>Companion tool</h3><p><a href="/resources/tools/asn1-tree-explorer/">ASN.1 tree explorer</a> &middot; <a href="/resources/tools/asn1-parser/">ASN.1 parser</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Attestation objects (uses ASN.1)</a></p></div></div>
+  <h2>Tag classes</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Universal (00)</h3><p>Defined in X.680. The 16 universal-class tags below carry built-in types &mdash; <code>INTEGER</code>, <code>OCTET STRING</code>, <code>SEQUENCE</code>, etc.</p></div>
+    <div class="ref-card"><h3>Application (01)</h3><p>Application-specific tags scoped to a particular protocol or PDU set. EMV uses these heavily.</p></div>
+    <div class="ref-card"><h3>Context-specific (10)</h3><p>The most common non-universal class. Disambiguates fields inside a containing structure. <code>[0]</code>, <code>[1]</code>, <code>[2]</code> &hellip; tags inside X.509 extensions are context-specific.</p></div>
+    <div class="ref-card"><h3>Private (11)</h3><p>Reserved for enterprise / vendor use. Rarely encountered in interoperable protocols.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>The 16 universal tags</h2>
+  <p style="font-size:14.5px;color:var(--brand-grey);margin:8px 0 18px;">Filter below by form &mdash; <em>Primitive</em> (value carried directly in the contents octets) vs <em>Constructed</em> (value is a sequence of TLV children). The <code>SEQUENCE</code> and <code>SET</code> tags are always constructed; <code>BIT STRING</code> and <code>OCTET STRING</code> may be either, but DER mandates primitive when length fits.</p>
+  <div class="ref-shell">
+    <div class="ref-search-bar">
+      <input id="ref-search" type="search" placeholder="Search by tag number, name, or detail…" autocomplete="off" />
+      <span class="ref-count" id="ref-count"></span>
+    </div>
+    <div class="ref-tag-filter" id="ref-tag-filter"></div>
+    <div class="ref-table-wrap" id="ref-output"></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Companion ASN.1 tooling</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Walk a structure</h3><p><a href="/resources/tools/asn1-tree-explorer/">ASN.1 Tree Explorer</a> &mdash; collapsible tree walker for any DER blob.<br /><a href="/resources/tools/asn1-parser/">ASN.1 Parser</a> &mdash; flat TLV walker with OID lookup.</p></div>
+    <div class="ref-card"><h3>Certificate-level</h3><p><a href="/resources/tools/x509-viewer/">X.509 Viewer</a> &middot; <a href="/resources/tools/cert-chain/">Chain Viewer</a> &middot; <a href="/resources/tools/csr-decoder/">PKCS#10 CSR Decoder</a> &middot; <a href="/resources/tools/pfx-inspector/">PFX / PKCS#12 Inspector</a></p></div>
+    <div class="ref-card"><h3>Encoding-level</h3><p><a href="/resources/tools/ber-length/">BER Length</a> &middot; <a href="/resources/tools/tlv-parser/">TLV Parser</a> &middot; <a href="/resources/tools/pem-der/">PEM &harr; DER</a> &middot; <a href="/resources/tools/base64-cert/">Base64 Cert Decoder</a></p></div>
+    <div class="ref-card"><h3>FIDO attestation</h3><p><a href="/resources/tools/attestation-decoder/">Attestation Object Decoder</a> &middot; <a href="/resources/tools/cose-key/">COSE Key</a> &middot; <a href="/references/webauthn-cose/">COSE Algorithms reference</a></p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Where ASN.1 shows up</h2>
+  <ul style="line-height:1.85;font-size:15px;color:var(--ink);margin-left:18px;">
+    <li><strong>X.509 v3 certificates</strong> &mdash; the entire certificate is a DER-encoded <code>SEQUENCE</code>. Walk one with the <a href="/resources/tools/x509-viewer/">X.509 viewer</a>.</li>
+    <li><strong>PKCS#10 CSRs</strong> &mdash; certificate signing requests. RFC 2986. Decode with <a href="/resources/tools/csr-decoder/">CSR Decoder</a>.</li>
+    <li><strong>PKCS#7 / CMS</strong> &mdash; signed-data and enveloped-data wrappers, also used inside PAdES PDF signatures.</li>
+    <li><strong>PKCS#12 / PFX</strong> &mdash; bundle of cert + key. Mostly DER inside DER. <a href="/resources/tools/pfx-inspector/">PFX Inspector</a>.</li>
+    <li><strong>FIDO / WebAuthn attestation x5c chains</strong> &mdash; the attestation cert chain is DER. See <a href="/blog/understanding-webauthn-attestation-objects/">Understanding WebAuthn attestation</a>.</li>
+    <li><strong>EMV PKI</strong> &mdash; CA public keys, ICC public keys, and PIN-encipherment certificates are ASN.1-encoded.</li>
+    <li><strong>JavaCard CAP files</strong> &mdash; not ASN.1, but the on-card verifier checks the structural shape the same way. <a href="/references/javacard-cap/">CAP Components reference</a>.</li>
+  </ul>
+</section>
+
+<section class="tool-reference">
+  <h2>Further reading</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Specifications</h3><p>ITU-T X.680 (syntax) &middot; X.690 (BER/DER/CER) &middot; X.691 (PER) &middot; X.693 (XER)</p></div>
+    <div class="ref-card"><h3>Blog</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Understanding WebAuthn attestation objects</a> &middot; <a href="/blog/apdu-from-first-principles/">APDU from first principles</a></p></div>
+    <div class="ref-card"><h3>Timelines</h3><p><a href="/resources/timelines/smart-cards/">Smart-card evolution</a> &middot; <a href="/resources/timelines/webauthn-passkey/">WebAuthn / passkey evolution</a></p></div>
+  </div>
 </section>
 </main>
 
@@ -101,6 +162,8 @@
 </div></footer>
 <script src="/assets/js/nav.js" defer></script>
 <script src="/assets/js/web-vitals.js" defer></script>
+<script src="/assets/js/site-search.js" defer></script>
+<script src="/assets/js/cookie-consent.js" defer></script>
 <script>window.AS_REF = {"slug": "asn1", "idCol": "id", "columns": [{"field": "id", "label": "Tag #", "cls": "ref-key", "width": "70px"}, {"field": "name", "label": "Name", "width": "220px"}, {"field": "tag", "label": "Form", "cls": "ref-meta", "width": "110px"}, {"field": "detail", "label": "Detail", "cls": "ref-detail"}], "rows": [{"id": "1", "name": "BOOLEAN", "detail": "TRUE = 0xFF; FALSE = 0x00.", "tag": "Primitive"}, {"id": "2", "name": "INTEGER", "detail": "Two's-complement big-endian.", "tag": "Primitive"}, {"id": "3", "name": "BIT STRING", "detail": "First octet is the count of unused bits in the last octet.", "tag": "Primitive"}, {"id": "4", "name": "OCTET STRING", "detail": "", "tag": "Primitive"}, {"id": "5", "name": "NULL", "detail": "Length is always zero.", "tag": "Primitive"}, {"id": "6", "name": "OBJECT IDENTIFIER", "detail": "Variable-length packed encoding.", "tag": "Primitive"}, {"id": "10", "name": "ENUMERATED", "detail": "", "tag": "Primitive"}, {"id": "12", "name": "UTF8String", "detail": "", "tag": "Primitive"}, {"id": "16", "name": "SEQUENCE / SEQUENCE OF", "detail": "Constructed.", "tag": "Constructed"}, {"id": "17", "name": "SET / SET OF", "detail": "Constructed.", "tag": "Constructed"}, {"id": "19", "name": "PrintableString", "detail": "A-Z, a-z, 0-9, and a small set of punctuation.", "tag": "Primitive"}, {"id": "20", "name": "T61String / TeletexString", "detail": "", "tag": "Primitive"}, {"id": "22", "name": "IA5String", "detail": "ASCII subset.", "tag": "Primitive"}, {"id": "23", "name": "UTCTime", "detail": "YYMMDDHHMMSSZ.", "tag": "Primitive"}, {"id": "24", "name": "GeneralizedTime", "detail": "YYYYMMDDHHMMSSZ.", "tag": "Primitive"}, {"id": "30", "name": "BMPString", "detail": "UCS-2.", "tag": "Primitive"}]};</script>
 <script src="/assets/js/refs/refs-page.js" defer></script>
 </body>

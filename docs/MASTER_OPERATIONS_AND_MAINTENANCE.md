@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 19 — branding, visual assets, tile/grid governance, JS hardening, standards timelines)
+**Last updated:** 2026-05-12 (Phase 20 — site-wide search, cookie consent + analytics gate, AI discoverability, ASN.1 reference depth, FIDO demo deployment package, blog TOC, CSP tightening, freshness dashboard)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -821,4 +821,190 @@ All 68 `assets/js/**/*.js` files are passed through `tools/harden-js.py` before 
 It does **not** mangle identifiers, rename functions, or alter logic. The source-of-truth is git history — to debug or extend a tool, `git log -p assets/js/<tool>.js` shows the un-stripped version. Running `python3 tools/harden-js.py` is idempotent (a second run produces no diff).
 
 The hardener is **not** wired into the build script. It ran once as part of Phase 19 and the stripped output is committed. When adding a new JS file or making non-trivial edits to an existing one, run `python3 tools/harden-js.py` before committing so the shipped surface remains free of comments and console statements.
+
+---
+
+## 22. Site-wide search (Phase 20)
+
+A modal search overlay is wired into the navbar of every page via the `as-search-trigger` button (look for the icon labelled "Search ⌘K" next to "Contact").
+
+### 22.1 How it works
+
+- `assets/data/search-index.json` — flat JSON listing every indexable page with title, description, type, URL. Regenerate with `python3 tools/build-search-index.py`.
+- `assets/js/site-search.js` — modal UI, ranked filtering, keyboard navigation (↑ / ↓ / Enter / Esc).
+- Opens on `Cmd/Ctrl+K`, a bare `/` keypress outside text inputs, or a click on any element with class `as-search-trigger`.
+- Reads `?q=` from the URL on page load — used by the WebSite `SearchAction` JSON-LD on the homepage so Google can wire its sitelinks search box.
+- The index loads lazily (fetched on first open). 73 KB JSON, served same-origin only.
+
+### 22.2 Regenerate after content changes
+
+```bash
+python3 tools/build-search-index.py
+python3 tools/build-llms-full.py    # rebuild the LLM-friendly mirror at the same time
+```
+
+Both scripts walk every `*.html` and `*/index.html` and derive title / description / type from the file's `<title>` and `<meta name="description">`. If you add a new top-level URL prefix, extend the `TYPE_TABLE` in `tools/build-search-index.py`.
+
+### 22.3 What the search does NOT do
+
+- No full-text body indexing. Title + meta description only — keeps the index under 80 KB and the privacy posture clean (no draft body content leaked).
+- No external service. Pure same-origin fetch + in-browser filtering.
+- No autocomplete persistence. Each open is a fresh query.
+
+---
+
+## 23. Cookie consent + analytics governance (Phase 20)
+
+The site uses a **consent-on-load** model. Analytics is opt-in; no tracking script loads until the visitor accepts.
+
+### 23.1 Flow
+
+1. `assets/js/nav.js` loads only `analytics-config.js` (defines `window.AS_ANALYTICS`).
+2. `assets/js/cookie-consent.js` reads `localStorage["as-consent"]`:
+   - `granted` → loads `analytics.js`, which dispatches to the configured provider.
+   - `denied` → sets `as-analytics-opt-out=1`, never loads `analytics.js`.
+   - unset and DNT off → renders the banner.
+   - unset and DNT on → treated as implicit decline.
+3. The banner is dismissed by either button. Preference persists in localStorage.
+
+### 23.2 Re-opening the banner
+
+`/privacy/` has a "Re-open the consent banner" button that calls `AS_CONSENT.reset()`. Visitors can also clear `localStorage` and refresh.
+
+### 23.3 When the operator turns analytics on
+
+1. Set `provider` in `assets/js/analytics-config.js` (`"plausible"` or `"ga4"`).
+2. For Plausible: confirm `plausible.domain` matches the production hostname.
+3. For GA4: replace `G-XXXXXXXXXX` with the real measurement ID.
+4. No CSP delta needed for Plausible (the script is `'self'`-allowlisted via inline injection); for GA4, add `https://www.googletagmanager.com` to `script-src` and `https://www.google-analytics.com` to `connect-src` in `.htaccess`.
+5. Visitors who previously accepted will start emitting events immediately; previously-declined visitors stay opted out.
+
+### 23.4 What we never collect
+
+- No advertising cookies, no marketing pixels, no cross-site profiling.
+- No PII collection (no email, no name, no IP-derived identity).
+- No keystroke logging on tool inputs (the /resources/tools/ surface is purely client-side).
+- No session replay.
+
+---
+
+## 24. AI-engine discoverability (Phase 20)
+
+Two new top-level files advertise the site to LLM crawlers under the [llmstxt.org](https://llmstxt.org) convention:
+
+- `/llms.txt` — short hand-curated overview (products, services, technologies, timelines, references, contact). Hand-edited; bump when a new product/service surface ships.
+- `/llms-full.txt` — full indexable-page list with summaries, grouped by type. Generated by `tools/build-llms-full.py` from the same search index.
+
+Both files are listed in `robots.txt`. They are NOT indexed in the HTML sitemap (sitemap stays a list of HTML pages only).
+
+Additional AI-friendly hooks:
+
+- Homepage JSON-LD now includes a `WebSite` schema with a `SearchAction` pointing at `https://ambisecure.ambimat.com/?q={search_term_string}`. The `?q=` param is read by `site-search.js` on load and pre-fills the modal.
+- Every reference page carries `TechArticle` JSON-LD (existing).
+- Every product page carries `Product`/`Service` JSON-LD (existing).
+- Standards-evolution timelines under `/resources/timelines/` carry `CollectionPage` + `ItemList` JSON-LD with chronological positions.
+
+### 24.1 Regenerate llms-full.txt after content changes
+
+```bash
+python3 tools/build-search-index.py
+python3 tools/build-llms-full.py
+```
+
+### 24.2 What we don't do
+
+- No keyword-stuffing.
+- No AI-bait pages. The same pages users see are what crawlers see.
+- No cloaking, no UA-sniffing, no AI-only content.
+
+---
+
+## 25. FIDO Validation Server demo deployment (Phase 20)
+
+The "Request demo" CTA on `/services/fido-validation-server/` points at `https://fido.ambisecure.ambimat.com/`. The runtime there is **not** Hostinger-shared-compatible — it needs Node 20+ + DynamoDB.
+
+### 25.1 Bundle build
+
+```bash
+bash tools/build-fido-demo.sh
+```
+
+Produces `dist/fido-demo/`:
+
+```
+frontend/        Static UI shell (Hostinger-uploadable). admin/ + sap/ stripped.
+backend.tar.gz   Node.js validation server source, no .env, no node_modules.
+DEPLOYMENT.md    Operator notes — env vars, CORS, no-source-leak checklist.
+```
+
+The bundle is **gitignored** (`dist/` is) and never lands in `ambisecure.ambimat.com` public_html.
+
+### 25.2 Two-origin architecture
+
+```
+   ambisecure.ambimat.com           fido.ambisecure.ambimat.com
+   marketing site (Hostinger)  ←CORS→  validation server runtime (VPS / Render / Fly)
+```
+
+The `frontend/` shell can be uploaded to `fido.ambisecure.ambimat.com` as the static face of the demo, with the Node.js backend reverse-proxied behind it. See `dist/fido-demo/DEPLOYMENT.md` for the full operator playbook including env-var schema, CORS allow-list, and the curl-based no-source-leak smoke test.
+
+### 25.3 No-source-leak guardrails on the live demo
+
+Before flipping the demo on, run the curl checklist in `dist/fido-demo/DEPLOYMENT.md`. The deployment is considered safe to announce only when:
+
+- `/.git/`, `/.env`, `/package.json`, `/src/`, `/db.js`, `/admin/`, `/sap/` all return 404 / 403.
+- No stack traces leak on any handler (all routes wrap errors).
+- `SESSION_SECRET` is set from env, not the in-source `secret123` literal.
+- TLS is enforced (HSTS on, http→https redirect at the proxy).
+
+### 25.4 Rolling back
+
+If the demo needs to be pulled, swap the CTA href in `services/fido-validation-server/index.html` from `https://fido.ambisecure.ambimat.com/` back to `/contact/`, push, and stop the backend service. The bundle is reusable for re-deployment.
+
+---
+
+## 26. In-page TOC + freshness dashboard (Phase 20)
+
+### 26.1 Blog TOC
+
+Modern cornerstone blog posts (≥4 H2/H3 headings) get a fixed-position table of contents on viewports ≥ 1180 px. Implementation:
+
+- `assets/js/blog-toc.js` — scans the post for headings, slugifies IDs if missing, builds the `<aside class="blog-toc">`. Uses an IntersectionObserver to highlight the current section.
+- `assets/css/main.css` — `.blog-toc` + `.blog-toc-item` styles. Mobile hides the TOC entirely.
+- Wired into 26 modern posts in `/blog/` via `<script src="/assets/js/blog-toc.js" defer></script>` next to web-vitals.
+
+### 26.2 Operator freshness dashboard
+
+`/_internal/freshness.html` is an operator-only HTML view of overdue blog posts. Regenerate:
+
+```bash
+python3 tools/render-freshness-page.py
+```
+
+Reads `assets/data/blogs.json` directly; groups posts into "modern overdue" (current + >18 months) and "archive overdue" (archive + >24 months). The `_internal/` directory is:
+
+- excluded from sitemap.xml
+- disallowed in robots.txt
+- deny-all'd via `_internal/.htaccess`
+- excluded from the Hostinger package build
+- noindex'd via `X-Robots-Tag` header
+
+Operator runs it locally or pulls it from `dist/` when reviewing freshness. **Not** intended to be reachable from the public site.
+
+### 26.3 Quarterly cadence
+
+Run the dashboard every quarter (or after a batch of blog reviews). Each row links straight to the post; refresh the content, bump `last_reviewed` in `assets/data/blogs.json`, commit. The pre-commit hook in `.githooks/pre-commit` enforces the `last_reviewed` bump on any touched blog file.
+
+---
+
+## 27. CSP posture (Phase 20)
+
+The Content-Security-Policy in `.htaccess` was tightened in Phase 20:
+
+| Directive | Before | After |
+|-----------|--------|-------|
+| `style-src` | `'self' 'unsafe-inline' https://fonts.googleapis.com` | `'self' 'unsafe-inline'` |
+| `font-src`  | `'self' https://fonts.gstatic.com` | `'self'` |
+
+Fonts are fully self-hosted (`assets/fonts/*.woff2`); the Google Fonts allow-list was defensive but unused. The `'unsafe-inline'` on `style-src` remains until residual inline `style=` attributes are class-extracted (tracked in OPEN_ITEMS).
 

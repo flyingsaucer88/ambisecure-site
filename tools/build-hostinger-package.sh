@@ -38,6 +38,8 @@ rsync -a \
   --exclude='/legacysitedata/' \
   --exclude='/node_modules/' \
   --exclude='/dist/' \
+  --exclude='/_internal/' \
+  --exclude='/Logos/' \
   --exclude='/.lighthouserc.json' \
   --exclude='/package.json' \
   --exclude='/package-lock.json' \

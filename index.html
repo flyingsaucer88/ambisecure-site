@@ -63,7 +63,12 @@
       "@id": "https://ambisecure.ambimat.com/#site",
       "url": "https://ambisecure.ambimat.com/",
       "name": "AmbiSecure",
-      "publisher": { "@id": "https://ambisecure.ambimat.com/#org" }
+      "publisher": { "@id": "https://ambisecure.ambimat.com/#org" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": { "@type": "EntryPoint", "urlTemplate": "https://ambisecure.ambimat.com/?q={search_term_string}" },
+        "query-input": "required name=search_term_string"
+      }
     }
   ]
 }
@@ -107,7 +112,7 @@
     </ul>
   </nav>
   <div class="nav-actions">
-    <a href="/contact/" class="nav-btn">Contact</a>
+    <button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd>⌘K</kbd></button><a href="/contact/" class="nav-btn">Contact</a>
     <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -405,6 +410,7 @@
     </div>
     <div class="featured-strip-row" style="margin-top:24px;">
       <a href="/references/"><span class="fs-tag">REFS</span><span class="fs-label">Searchable reference databases &rarr;</span></a>
+      <a href="/resources/timelines/"><span class="fs-tag">TIMELINE</span><span class="fs-label">Standards evolution timelines &rarr;</span></a>
       <a href="/resources/webauthn/"><span class="fs-tag">DOCS</span><span class="fs-label">WebAuthn engineering reference &rarr;</span></a>
       <a href="/blog/"><span class="fs-tag">BLOG</span><span class="fs-label">Engineering blog &rarr;</span></a>
     </div>
@@ -784,6 +790,8 @@
 
 <script src="/assets/js/nav.js" defer></script>
 <script src="/assets/js/web-vitals.js" defer></script>
+<script src="/assets/js/site-search.js" defer></script>
+<script src="/assets/js/cookie-consent.js" defer></script>
 <script src="/assets/js/blog-pool.js" defer></script>
 <script src="/assets/js/blog-spotlight.js" defer></script>
 <script src="/assets/js/highlight-banner-config.js" defer></script>

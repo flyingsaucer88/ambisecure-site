@@ -74,11 +74,9 @@
             'Legacy field — generally absent in modern browsers.');
         }
 
-
         html += '<details style="margin-top:14px;"><summary style="cursor:pointer; font-family:Montserrat,sans-serif; font-size:12px; color:var(--brand-grey);">Show full JSON</summary>' +
           '<pre style="margin-top:8px; padding:14px; background:var(--code-bg); color:var(--code-fg); border-radius:6px; font-size:12.5px; overflow-x:auto;">' +
           AS.escHTML(JSON.stringify(obj, null, 2)) + '</pre></details>';
-
 
         try {
           var h = await sha256Hex(bytes);
