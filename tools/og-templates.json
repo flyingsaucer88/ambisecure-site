@@ -2,7 +2,7 @@
   "_doc": "Per-section OG template config. Edit values, then run tools/gen-og-batch.py.",
   "_doc2": "URL-path prefix wins. First match in declared order wins. The 'default' entry catches everything else.",
   "templates": [
-    { "section": "blog-archive",    "match": "/blog/archive/", "eyebrow": "Historical archive", "title": "AmbiSecure engineering archive", "subtitle": "Pre-2026 posts, preserved and cross-linked to current coverage." },
+    { "section": "blog-archive",    "match": "/blog/archive/", "eyebrow": "Engineering archive", "title": "AmbiSecure engineering archive", "subtitle": "Pre-2026 posts, preserved and cross-linked to current coverage." },
     { "section": "blog",            "match": "/blog/",         "eyebrow": "Engineering blog",   "title": "AmbiSecure engineering blog", "subtitle": "Practical, code-first writing on hardware-rooted security." },
     { "section": "case-studies",    "match": "/case-studies/", "eyebrow": "Case studies",       "title": "AmbiSecure case studies",      "subtitle": "Anonymised architecture write-ups from real deployments." },
     { "section": "brochures",       "match": "/brochures/",    "eyebrow": "Brochures",          "title": "AmbiSecure brochures",         "subtitle": "Printable platform overviews. OnePass, FIDO, transit, JavaCard, PKI, IoT." },
@@ -23,7 +23,7 @@
     { "section": "resources",       "match": "/resources/",    "eyebrow": "Resources",          "title": "AmbiSecure utility tools",     "subtitle": "54 practical tools for FIDO, JavaCard, DESFire, and PKI engineers." },
     { "section": "references",      "match": "/references/",   "eyebrow": "References",        "title": "AmbiSecure reference databases", "subtitle": "Twelve searchable databases for smart-card, FIDO, NFC, PKI engineers." },
     { "section": "tags",            "match": "/tags/",         "eyebrow": "Tags",               "title": "Browse the blog by tag",       "subtitle": "Finer-grained than categories. Click any tag to see its posts." },
-    { "section": "search",          "match": "/search/",       "eyebrow": "Search",             "title": "Search the engineering blog",   "subtitle": "Client-side search across every modern post and the historical archive." },
+    { "section": "search",          "match": "/search/",       "eyebrow": "Search",             "title": "Search the engineering blog",   "subtitle": "Client-side search across every modern post and the engineering archive." },
     { "section": "privacy",         "match": "/privacy/",      "eyebrow": "Privacy",            "title": "AmbiSecure privacy preferences", "subtitle": "Opt out of analytics. Review what we collect. Honour DNT by default." },
     { "section": "trust",           "match": "/trust/",        "eyebrow": "Trust",              "title": "AmbiSecure trust center",       "subtitle": "Vulnerability disclosure, security model, certifications." },
     { "section": "partners",        "match": "/partners/",     "eyebrow": "Partners",           "title": "AmbiSecure partner programme",   "subtitle": "Resellers, OEMs, system integrators, MSSPs, consultancies." },

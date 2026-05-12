@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-label="AmbiSecure digital signature token — PKCS#11 hardware signing token">
+  <defs>
+    <linearGradient id="tk-body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1F2425"/>
+      <stop offset="100%" stop-color="#000"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="520" height="360" fill="#fff"/>
+
+  <!-- token body -->
+  <g transform="translate(40,120)">
+    <rect x="0" y="0" width="380" height="120" rx="60" fill="url(#tk-body)"/>
+    <rect x="0" y="0" width="380" height="14" rx="60" fill="rgba(255,255,255,0.06)"/>
+    <!-- LED ring -->
+    <circle cx="320" cy="60" r="20" fill="none" stroke="#E3222A" stroke-width="3"/>
+    <circle cx="320" cy="60" r="10" fill="#E3222A" opacity="0.85"/>
+    <!-- emboss -->
+    <g font-family="Montserrat, sans-serif" font-weight="700">
+      <text x="40" y="56" font-size="22" fill="#fff">Ambi<tspan fill="#E3222A">Secure</tspan></text>
+      <text x="40" y="78" font-family="JetBrains Mono, monospace" font-size="10" letter-spacing="1.6" fill="#9aa0a3">DIGITAL · SIGNATURE · TOKEN</text>
+      <text x="40" y="96" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1.4" fill="#9aa0a3">PKCS#11 · PKCS#15 · eIDAS-compatible</text>
+    </g>
+  </g>
+  <!-- USB-C connector -->
+  <g transform="translate(420,148)">
+    <rect x="0" y="0" width="60" height="64" rx="14" fill="#9aa0a3"/>
+    <rect x="6" y="20" width="48" height="24" rx="12" fill="#fff" stroke="#3A3F40" stroke-width="1"/>
+    <text x="30" y="84" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#616A6C">USB-C</text>
+  </g>
+  <g font-family="JetBrains Mono, monospace" font-size="10" fill="#8C9092" letter-spacing="1.4">
+    <text x="40" y="288">RSA 2048/3072/4096 · ECDSA P-256/P-384 · AES-256</text>
+    <text x="40" y="304">CC EAL5+ · ISO/IEC 7816 · PKCS#11 v3.0 · PKCS#15</text>
+  </g>
+</svg>

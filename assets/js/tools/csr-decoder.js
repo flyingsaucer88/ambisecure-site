@@ -1,4 +1,3 @@
-/* AmbiSecure — PKCS#10 CSR decoder. Client-side. */
 (function () {
   'use strict';
   function init() {

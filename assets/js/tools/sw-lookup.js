@@ -1,8 +1,7 @@
-/* AmbiSecure — SW1/SW2 status word lookup. Searchable by hex or phrase. */
 (function () {
   'use strict';
 
-  /* SW dictionary — ISO 7816-4, EMV, GlobalPlatform, FIDO common words. */
+
   var SW = [
     ['9000', 'Normal — no further qualification.', 'OK', 'iso'],
     ['61XX', 'Normal — bytes available; SW2 = number of bytes.', 'OK', 'iso'],
@@ -50,13 +49,13 @@
     ['6D00', 'Instruction code not supported or invalid.', 'ERR', 'iso'],
     ['6E00', 'Class not supported.', 'ERR', 'iso'],
     ['6F00', 'No precise diagnosis.', 'ERR', 'iso'],
-    /* GlobalPlatform */
+
     ['9484', 'Algorithm not supported (GP).', 'ERR', 'gp'],
     ['9485', 'Invalid key check value (GP).', 'ERR', 'gp'],
     ['6310', 'More data available (GP).', 'WARN', 'gp'],
-    /* EMV */
+
     ['9100', 'EMV: returning normally with proprietary data.', 'OK', 'emv'],
-    /* FIDO common */
+
     ['6985', 'FIDO: condition of use not satisfied — usually user-presence not detected.', 'ERR', 'fido'],
     ['6F00', 'FIDO: no precise diagnosis (often a CTAP error from the authenticator).', 'ERR', 'fido']
   ];
@@ -79,7 +78,7 @@
 
     function go() {
       var q = input.value.trim().toUpperCase().replace(/[^0-9A-FX]/g, function(c){
-        // permit non-hex chars when query is text — but we'll handle that with a separate text branch below
+
         return c;
       });
       var rawText = input.value.trim();
@@ -87,7 +86,7 @@
       if (rawText && /^[0-9A-Fa-fXx\s]+$/.test(rawText)) {
         var clean = rawText.replace(/[\s]/g, '').toUpperCase();
         if (clean.length === 2) {
-          /* match SW1 — show all SW1XX rules */
+
           matches = SW.filter(function(e){ return e[0].substr(0,2) === clean; });
         } else if (clean.length === 4) {
           matches = SW.filter(function(e){

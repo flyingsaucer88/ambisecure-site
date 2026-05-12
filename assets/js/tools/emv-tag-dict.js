@@ -1,6 +1,3 @@
-/* AmbiSecure — EMV tag dictionary explorer.
-   Filterable directory of EMV (book 3 + 4 + 7-816) tags. Pasted hex tags
-   are looked up; partial substring matches search names. */
 (function () {
   'use strict';
 

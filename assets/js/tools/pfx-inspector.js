@@ -1,9 +1,3 @@
-/* AmbiSecure — PFX / PKCS#12 structural inspector.
-   Reads the outer ASN.1 structure of a .pfx / .p12 file:
-   identifies bag types, encryption schemes, certificate bags (unencrypted), etc.
-   Does NOT decrypt password-protected blobs in this implementation —
-   that is documented as a limitation and a future enhancement.
-   File never leaves the browser. */
 (function () {
   'use strict';
   function init() {
@@ -20,7 +14,7 @@
     function inspect(der) {
       var top = AmbiSecureASN1.parse(der)[0];
       if (!top || !top.children) throw new Error('Not a SEQUENCE.');
-      /* PFX ::= SEQUENCE { version INTEGER, authSafe ContentInfo, macData MacData OPTIONAL } */
+
       var version = AmbiSecureASN1.decodeValue(top.children[0]);
       var authSafe = top.children[1];
       var macData = top.children[2] || null;
@@ -32,10 +26,10 @@
       html += '</div>';
       html += row('Outer ContentInfo', AS.escHTML(AmbiSecureASN1.oidName(contentTypeOid) || contentTypeOid));
 
-      /* Walk the AuthenticatedSafe — typically pkcs7-data containing a SEQUENCE OF ContentInfo */
+
       var safeBags = [];
       try {
-        var ci = authSafe.children[1].children[0]; // [0] EXPLICIT → OCTET STRING
+        var ci = authSafe.children[1].children[0];
         var inner = AmbiSecureASN1.parse(ci.value)[0];
         if (inner && inner.children) {
           inner.children.forEach(function (contentInfo) {
@@ -43,17 +37,17 @@
             var typeOid = AmbiSecureASN1.decodeValue(contentInfo.children[0]);
             var content = contentInfo.children[1];
             if (typeOid === '1.2.840.113549.1.7.1') {
-              /* data — usually contains a SafeContents */
+
               try {
                 var inner2 = AmbiSecureASN1.parse(content.children[0].value)[0];
                 if (inner2 && inner2.children) inner2.children.forEach(function (b) { safeBags.push(decodeBag(b, false)); });
               } catch (e) { safeBags.push({ error: 'Could not parse data bag: ' + e.message }); }
             } else if (typeOid === '1.2.840.113549.1.7.6') {
-              /* encryptedData — password-encrypted SafeContents */
+
               safeBags.push({ encrypted: true, oid: typeOid, name: AmbiSecureASN1.oidName(typeOid) || typeOid });
               try {
-                var ed = content.children[0]; // [0] EXPLICIT → EncryptedData SEQUENCE
-                var encrypted = ed.children[1]; // EncryptedContentInfo
+                var ed = content.children[0];
+                var encrypted = ed.children[1];
                 if (encrypted && encrypted.children && encrypted.children[1]) {
                   var algId = encrypted.children[1];
                   var alg = AmbiSecureX509.decodeAlgId(algId);
@@ -88,7 +82,7 @@
 
       if (macData) {
         try {
-          var mac = macData.children[0]; // DigestInfo
+          var mac = macData.children[0];
           var algNode = mac.children[0];
           var alg = AmbiSecureX509.decodeAlgId(algNode);
           html += row('MAC algorithm', AS.escHTML(alg.name || alg.oid));
@@ -103,7 +97,7 @@
         var name = AmbiSecureASN1.oidName(bagId) || bagId;
         var bag = { bagType: name, oid: bagId };
         if (bagId === '1.2.840.113549.1.12.10.1.3') {
-          /* certBag */
+
           try {
             var certBag = bagNode.children[1].children[0];
             var certType = AmbiSecureASN1.decodeValue(certBag.children[0]);
@@ -117,7 +111,7 @@
         } else if (bagId === '1.2.840.113549.1.12.10.1.1') {
           bag.summary = 'Unshrouded private key';
         }
-        /* Friendly attributes */
+
         if (bagNode.children[2] && bagNode.children[2].children) {
           var fn = '';
           bagNode.children[2].children.forEach(function (attr) {
@@ -148,10 +142,10 @@
     if (clearBtn) clearBtn.addEventListener('click', function () { input.value=''; go(); input.focus(); });
     AS.bindDrop(dropPanel, function (f) {
       if (f.error) { AS.renderError(output, f.error); return; }
-      /* The text-mode read won't help for binary PFX. Suggest the file picker. */
+
       AS.renderPlaceholder(output, 'Use the “Choose file” button for binary .pfx / .p12 files.');
     });
-    /* Use binary file picker for .pfx files */
+
     AS.bindFilePickerBinary(filePicker, function (f) {
       if (f.error) { AS.renderError(output, f.error); return; }
       try { output.innerHTML = inspect(f.bytes); }

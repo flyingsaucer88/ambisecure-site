@@ -1,6 +1,3 @@
-/* AmbiSecure — Passkey flow visualiser.
-   Step-by-step interactive walkthrough of WebAuthn registration and
-   authentication ceremonies. Annotation only — no live ceremony runs. */
 (function () {
   'use strict';
 

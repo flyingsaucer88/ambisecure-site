@@ -1,7 +1,3 @@
-/* AmbiSecure — ISO/IEC 14443 frame explorer.
-   Decodes ISO 14443-3 (anti-collision) and 14443-4 (T=CL) frame fields.
-   Frame types supported: REQA/WUPA, ATQA, anti-coll/select (CL1/2/3),
-   SAK, RATS, ATS (existing tool), I-block, R-block, S-block. */
 (function () {
   'use strict';
 

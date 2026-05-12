@@ -1,7 +1,6 @@
-/* AmbiSecure — APDU Status Dictionary (full reference, browseable). */
 (function () {
   'use strict';
-  /* Reuses the same backing dictionary as sw-lookup but presented as a full table. */
+
   var SW = [
     {hex:'9000', tone:'ok',  desc:'Normal — no further qualification.', src:'iso'},
     {hex:'61XX', tone:'ok',  desc:'Bytes available; SW2 = number of bytes.', src:'iso'},

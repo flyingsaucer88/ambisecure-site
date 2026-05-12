@@ -1,10 +1,7 @@
-/* AmbiSecure — BER-TLV Parser
-   Parses BER-TLV per ISO/IEC 8825-1 + EMV Book 3 conventions.
-   All parsing is local. */
 (function () {
   'use strict';
 
-  /* Common EMV tag dictionary (subset — enough to be useful) */
+
   var TAG_DICT = {
     '4F': 'Application Identifier (AID)',
     '50': 'Application Label',
@@ -103,7 +100,7 @@
     var constructed = (first & 0x20) !== 0;
     var lower = first & 0x1F;
     if (lower === 0x1F) {
-      // multi-byte tag
+
       var more;
       do {
         if (i >= bytes.length) throw new Error('Truncated multi-byte tag.');
@@ -119,7 +116,7 @@
     if (i >= bytes.length) throw new Error('Truncated length at offset ' + i + '.');
     var first = bytes[i++];
     if (first < 0x80) return { len: first, next: i, indef: false };
-    if (first === 0x80) return { len: -1, next: i, indef: true }; // indefinite (BER only)
+    if (first === 0x80) return { len: -1, next: i, indef: true };
     var n = first & 0x7F;
     if (n === 0) throw new Error('Invalid length form (0x80 with n=0).');
     if (i + n > bytes.length) throw new Error('Truncated long-form length.');
@@ -194,7 +191,7 @@
     var totalBytes = 0;
     nodes.forEach(function recur(n) {
       totalBytes += (n.tag.length / 2);
-      // length-of-length is hard to know post-hoc; we just count tag+value here.
+
       totalBytes += n.value.length;
       if (n.children) n.children.forEach(recur);
     });
@@ -234,7 +231,7 @@
 
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // Real EMV FCI from a Visa AID SELECT response (without 9000 SW)
+
       input.value = '6F 1E 84 07 A0 00 00 00 03 10 10 A5 13 50 0A 56 49 53 41 20 44 45 42 49 54 87 01 02 9F 38 03 9F 1A 02';
       go();
     });

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-label="JavaCard development service — applet engineering from specification to CAP file">
+  <rect x="0" y="0" width="520" height="360" fill="#fff"/>
+  <rect x="20" y="20" width="480" height="320" rx="10" fill="#FAFAFB" stroke="#E1E3E4"/>
+
+  <!-- pipeline stages -->
+  <g font-family="JetBrains Mono, monospace">
+    <!-- stage 1 -->
+    <g transform="translate(40,80)">
+      <rect width="100" height="84" rx="6" fill="#fff" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#E3222A"/>
+      <text x="50" y="32" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" fill="#3A3F40">Spec</text>
+      <text x="50" y="52" text-anchor="middle" font-size="9" fill="#8C9092" letter-spacing="1">ISO 7816-4</text>
+      <text x="50" y="66" text-anchor="middle" font-size="9" fill="#8C9092" letter-spacing="1">APDU contract</text>
+    </g>
+    <!-- arrow -->
+    <line x1="148" y1="122" x2="172" y2="122" stroke="#3A3F40" stroke-width="1.6"/>
+    <polygon points="172,122 164,118 164,126" fill="#3A3F40"/>
+
+    <!-- stage 2 -->
+    <g transform="translate(180,80)">
+      <rect width="100" height="84" rx="6" fill="#fff" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#E3222A"/>
+      <text x="50" y="32" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" fill="#3A3F40">Applet</text>
+      <text x="50" y="52" text-anchor="middle" font-size="9" fill="#8C9092" letter-spacing="1">JC 3.x source</text>
+      <text x="50" y="66" text-anchor="middle" font-size="9" fill="#8C9092" letter-spacing="1">unit tests</text>
+    </g>
+    <line x1="288" y1="122" x2="312" y2="122" stroke="#3A3F40" stroke-width="1.6"/>
+    <polygon points="312,122 304,118 304,126" fill="#3A3F40"/>
+
+    <!-- stage 3 -->
+    <g transform="translate(320,80)">
+      <rect width="100" height="84" rx="6" fill="#fff" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#E3222A"/>
+      <text x="50" y="32" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="700" font-size="13" fill="#3A3F40">CAP</text>
+      <text x="50" y="52" text-anchor="middle" font-size="9" fill="#8C9092" letter-spacing="1">12 components</text>
+      <text x="50" y="66" text-anchor="middle" font-size="9" fill="#8C9092" letter-spacing="1">signed</text>
+    </g>
+
+    <!-- stage 4 (full width) -->
+    <g transform="translate(40, 200)">
+      <rect width="380" height="84" rx="6" fill="#1A1D1E"/>
+      <text x="190" y="34" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="700" font-size="14" fill="#fff">Load · Personalise · Audit</text>
+      <text x="190" y="56" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#9aa0a3" letter-spacing="1.4">SCP03 · per-issuer keysets · per-card credential injection</text>
+      <text x="190" y="70" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#9aa0a3" letter-spacing="1.4">audit-trail CSV · sealed manifest</text>
+    </g>
+  </g>
+
+  <g font-family="JetBrains Mono, monospace" fill="#3A3F40" font-size="9" letter-spacing="1.4">
+    <text x="40" y="316" opacity="0.7">JavaCard 3.x · GlobalPlatform 2.3.1 · JCVM firewall · CC EAL5+</text>
+  </g>
+</svg>

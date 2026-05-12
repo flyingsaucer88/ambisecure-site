@@ -1,4 +1,3 @@
-/* AmbiSecure — HEX ↔ Byte-array (multiple programmer formats) */
 (function () {
   'use strict';
   function init() {

@@ -1,46 +1,17 @@
-/**
- * AmbiSecure Web Vitals beacon — Phase 12 (matured).
- *
- * Lightweight, privacy-conscious, CSP-clean (script-src 'self').
- * No external libraries; uses native PerformanceObserver only.
- *
- * Collects:
- *   - LCP, CLS, INP (FID fallback), TTFB.
- *
- * Phase 12 additions:
- *   - Page-group derivation from window.location.pathname (e.g. "blog",
- *     "case-studies", "products", "tools", "video", etc.) so the metrics
- *     can be aggregated by section in the analytics layer.
- *   - Event batching: collect all metrics through the page lifecycle and
- *     flush them once on pagehide / visibilitychange:hidden.
- *   - Debug mode: enable by setting localStorage["as-vitals-debug"] = "1"
- *     or appending ?as_vitals_debug=1 to the URL — prints a console.table.
- *
- * Reporting:
- *   - Runs only when AS_ANALYTICS exposes report() AND no opt-out / DNT is set.
- *   - In debug mode, runs regardless of analytics state but never forwards.
- *
- * Privacy:
- *   - No URL query string captured.
- *   - No referrer.
- *   - No user-identifier.
- *   - Path captured as window.location.pathname only.
- *   - pageGroup is derived from the path, not from any user attribute.
- */
 (function () {
   "use strict";
 
   if (typeof window === "undefined") return;
   if (!window.PerformanceObserver) return;
 
-  // ---- Debug mode ---------------------------------------------------------
+
   var DEBUG = false;
   try {
     DEBUG = localStorage.getItem("as-vitals-debug") === "1" ||
             (window.location.search || "").indexOf("as_vitals_debug=1") !== -1;
   } catch (e) {}
 
-  // ---- DNT / opt-out gating ----------------------------------------------
+
   if (!DEBUG) {
     try {
       if (navigator.doNotTrack === "1" || window.doNotTrack === "1") return;
@@ -48,7 +19,7 @@
     } catch (e) {}
   }
 
-  // ---- Page-group derivation ---------------------------------------------
+
   function deriveGroup(path) {
     if (!path || path === "/") return "home";
     var parts = path.split("/").filter(Boolean);
@@ -85,12 +56,12 @@
   var PATH = window.location.pathname || "/";
   var PAGE_GROUP = deriveGroup(PATH);
 
-  // ---- Buffered metrics --------------------------------------------------
+
   var buffer = [];
   var seen = Object.create(null);
 
   function enqueue(name, value, extra) {
-    // For CLS we keep updating; for others we record once.
+
     if (seen[name] && name !== "CLS") return;
     seen[name] = true;
     buffer.push({
@@ -114,7 +85,7 @@
     enqueue("CLS", newValue);
   }
 
-  // ---- Flush ------------------------------------------------------------
+
   var flushed = false;
   function flush() {
     if (flushed) return;
@@ -123,12 +94,12 @@
     if (DEBUG && typeof console !== "undefined" && console.table) {
       try { console.table(buffer); } catch (e) {}
     }
-    if (DEBUG) return; // debug never forwards
+    if (DEBUG) return;
     try {
       if (window.AS_ANALYTICS && typeof window.AS_ANALYTICS.report === "function") {
         buffer.forEach(function (m) { window.AS_ANALYTICS.report(m); });
       } else {
-        // Analytics not loaded yet — buffer for the analytics loader to pick up.
+
         window.AS_WEB_VITALS_BUFFER = window.AS_WEB_VITALS_BUFFER || [];
         Array.prototype.push.apply(window.AS_WEB_VITALS_BUFFER, buffer);
       }
@@ -140,7 +111,7 @@
     if (document.visibilityState === "hidden") flush();
   }, { once: false });
 
-  // ---- LCP ---------------------------------------------------------------
+
   try {
     var lcpValue = 0;
     var lcpObs = new PerformanceObserver(function (list) {
@@ -158,7 +129,7 @@
     }, { once: false });
   } catch (e) {}
 
-  // ---- CLS ---------------------------------------------------------------
+
   try {
     var clsValue = 0;
     var sessionValue = 0;
@@ -188,7 +159,7 @@
     clsObs.observe({ type: "layout-shift", buffered: true });
   } catch (e) {}
 
-  // ---- INP (long-event observer) / FID fallback --------------------------
+
   try {
     var inpValue = 0;
     var entryTypes = PerformanceObserver.supportedEntryTypes || [];
@@ -217,7 +188,7 @@
     }
   } catch (e) {}
 
-  // ---- TTFB --------------------------------------------------------------
+
   try {
     var nav = performance.getEntriesByType("navigation")[0];
     if (nav && typeof nav.responseStart === "number") {
@@ -225,9 +196,9 @@
     }
   } catch (e) {}
 
-  // ---- Public surface for adhoc use cases --------------------------------
-  // Allow page-specific code to record a custom metric:
-  //   window.AS_VITALS.mark("Tool Load", 123);
+
+
+
   window.AS_VITALS = {
     mark: function (name, value, extra) {
       if (typeof name === "string" && typeof value === "number") {

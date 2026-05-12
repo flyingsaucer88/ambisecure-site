@@ -1,4 +1,3 @@
-/* AmbiSecure — ASCII ↔ HEX */
 (function () {
   'use strict';
   function init() {

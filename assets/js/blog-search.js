@@ -1,28 +1,10 @@
-/**
- * AmbiSecure blog search — Phase 12.
- *
- * Client-side, vanilla JS. Loads /assets/data/blog-search-index.json once
- * on demand. CSP-clean (script-src 'self', connect-src 'self').
- *
- * Phase 12 enhancements:
- *   - Synonym + acronym expansion (FIDO ↔ WebAuthn, RP → relying party, ...).
- *   - Light stemming (drop trailing s/es/ing/-ed for tokens > 4 chars).
- *   - Weighted scoring (title >> summary > tag > category).
- *   - Grouped results: Cornerstone / Modern / Archive.
- *   - Empty-state guidance with "popular searches" and "related tags".
- *   - Pre-applied filters from query string (?q, ?category, ?tag, ?type).
- *
- * Markup contract (unchanged):
- *   <input type="search" data-blog-search>
- *   <ul    data-blog-search-results>
- */
 (function () {
   'use strict';
 
   var INDEX_URL = "/assets/data/blog-search-index.json";
 
-  // --- Synonyms / acronyms ------------------------------------------------
-  // Bidirectional expansion. Each line: every token expands to every other.
+
+
   var SYNONYM_GROUPS = [
     ["fido", "webauthn", "ctap2"],
     ["passkey", "passkeys"],
@@ -62,13 +44,13 @@
     return m;
   })();
 
-  // --- Popular searches (curated; small) ---------------------------------
+
   var POPULAR = [
     "fido", "desfire", "javacard", "passkey", "attestation",
     "sam", "scp03", "secure element", "transit", "pki"
   ];
 
-  // --- Utility ------------------------------------------------------------
+
 
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
@@ -113,7 +95,7 @@
     return Array.from(out);
   }
 
-  // --- Scoring ------------------------------------------------------------
+
 
   function scoreEntry(entry, qTokens, expanded, filters) {
     if (filters.category) {
@@ -136,20 +118,20 @@
     var score = 0;
     qTokens.forEach(function (qt) {
       var qtStem = stem(qt);
-      // Exact title hit: heavy.
+
       if (titleTok.indexOf(qt) !== -1 || titleTok.indexOf(qtStem) !== -1) score += 10;
-      // Exact summary hit: medium.
+
       else if (summaryTok.indexOf(qt) !== -1 || summaryTok.indexOf(qtStem) !== -1) score += 5;
-      // Token hit in precomputed (categories + tags): light.
+
       else if (indexed.indexOf(qt) !== -1 || indexed.indexOf(qtStem) !== -1) score += 3;
       else {
-        // Title prefix: medium-light.
+
         var titleMatch = false;
         for (var i = 0; i < titleTok.length; i++) {
           if (titleTok[i].indexOf(qt) === 0) { score += 2; titleMatch = true; break; }
         }
         if (!titleMatch) {
-          // Any prefix in indexed tokens.
+
           for (var j = 0; j < indexed.length; j++) {
             if (indexed[j].indexOf(qt) === 0) { score += 1; break; }
           }
@@ -157,9 +139,9 @@
       }
     });
 
-    // Synonym / expansion bonus (smaller than direct hits).
+
     expanded.forEach(function (et) {
-      if (qTokens.indexOf(et) !== -1) return; // already counted
+      if (qTokens.indexOf(et) !== -1) return;
       if (indexed.indexOf(et) !== -1 ||
           titleTok.indexOf(et) !== -1 ||
           summaryTok.indexOf(et) !== -1) {
@@ -167,12 +149,12 @@
       }
     });
 
-    // Slight nudge for "modern" content; archive remains visible but lower.
+
     if (entry.type === "archive") score = Math.max(0, score - 0.5);
     return score;
   }
 
-  // --- Rendering ----------------------------------------------------------
+
 
   function emptyState(list, query, allEntries) {
     list.innerHTML = "";
@@ -203,7 +185,7 @@
     popularWrap.appendChild(popList);
     list.appendChild(popularWrap);
 
-    // Surface a few tags.
+
     var tags = new Set();
     allEntries.forEach(function (e) {
       (e.tags || []).forEach(function (t) { tags.add(t); });
@@ -284,7 +266,7 @@
       emptyState(list, query, allEntries);
       return;
     }
-    // Group by type: cornerstone (high score modern), modern, archive.
+
     var cornerstoneCut = scored[0] && scored[0].s >= 8 ? 8 : null;
     var cornerstones = [];
     var modern = [];
@@ -294,17 +276,17 @@
       else if (cornerstoneCut !== null && x.s >= cornerstoneCut) cornerstones.push(x.e);
       else modern.push(x.e);
     });
-    // Avoid having a "Cornerstone" group with everything in it.
+
     if (cornerstones.length > 5) {
       modern = cornerstones.concat(modern);
       cornerstones = [];
     }
     renderGroup(list, "Cornerstone matches", cornerstones);
     renderGroup(list, "Modern engineering", modern);
-    renderGroup(list, "Historical archive", archive);
+    renderGroup(list, "Engineering archive", archive);
   }
 
-  // --- Search controller --------------------------------------------------
+
 
   function setUpSearch(input, list) {
     var entries = null;

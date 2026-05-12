@@ -1,7 +1,3 @@
-/* AmbiSecure — ASN.1 Tree Explorer (DER walker with collapsible nodes).
-   Companion to the existing ASN.1 parser; this version emphasises the
-   tree-explorer experience with collapsible SEQUENCE/SET, OID lookup,
-   and per-node hex preview. Uses the shared assets/js/lib/asn1.js. */
 (function () {
   'use strict';
 
@@ -27,7 +23,7 @@
     var label = node.typeName;
     var preview = '';
     if (node.tagClass === 0 && node.tagNumber === 0x06) {
-      // OID
+
       try {
         var oid = AmbiSecureASN1.oidToString(node.value);
         var name = AmbiSecureASN1.oidName(oid);
@@ -108,7 +104,7 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // SEQUENCE { OID 1.2.840.10045.2.1, OID 1.2.840.10045.3.1.7 } — ECDSA / P-256 SPKI head
+
       input.value = '30 13 06 07 2A 86 48 CE 3D 02 01 06 08 2A 86 48 CE 3D 03 01 07';
       go();
     });

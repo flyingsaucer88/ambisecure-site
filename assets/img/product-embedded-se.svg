@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-label="Embedded secure element — QFN package with bond wires on a PCB">
+  <defs>
+    <linearGradient id="pcb-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0E5E48"/>
+      <stop offset="100%" stop-color="#063022"/>
+    </linearGradient>
+    <linearGradient id="chip-pkg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#444A4B"/>
+      <stop offset="100%" stop-color="#1A1D1E"/>
+    </linearGradient>
+    <pattern id="silkscreen" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.06)"/>
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="520" height="360" fill="#fff"/>
+
+  <!-- PCB board -->
+  <rect x="40" y="50" width="440" height="260" rx="10" fill="url(#pcb-bg)"/>
+  <rect x="40" y="50" width="440" height="260" rx="10" fill="url(#silkscreen)"/>
+
+  <!-- traces -->
+  <g stroke="#C49A4F" stroke-width="2.4" fill="none" opacity="0.85">
+    <path d="M 60 90 L 180 90 L 200 110 L 240 110"/>
+    <path d="M 60 130 L 200 130 L 220 150 L 240 150"/>
+    <path d="M 60 250 L 200 250 L 220 230 L 240 230"/>
+    <path d="M 60 290 L 200 290 L 220 270 L 240 270"/>
+    <path d="M 460 90 L 340 90 L 320 110 L 280 110"/>
+    <path d="M 460 130 L 320 130 L 300 150 L 280 150"/>
+    <path d="M 460 250 L 320 250 L 300 230 L 280 230"/>
+    <path d="M 460 290 L 320 290 L 300 270 L 280 270"/>
+  </g>
+
+  <!-- chip package -->
+  <g transform="translate(190,130)">
+    <rect x="0" y="0" width="140" height="120" rx="6" fill="url(#chip-pkg)" stroke="#000" stroke-width="1"/>
+    <!-- top-left pin1 dot -->
+    <circle cx="14" cy="14" r="3" fill="#E3222A"/>
+    <!-- die outline -->
+    <rect x="22" y="22" width="96" height="76" rx="2" fill="#222729" stroke="#3A3F40" stroke-width="1"/>
+    <!-- die markings -->
+    <g font-family="JetBrains Mono, monospace" fill="#C49A4F" opacity="0.7">
+      <text x="70" y="50" text-anchor="middle" font-size="10" letter-spacing="1.2">AMBISECURE</text>
+      <text x="70" y="64" text-anchor="middle" font-size="8" letter-spacing="1">AS-SE32</text>
+      <text x="70" y="78" text-anchor="middle" font-size="7" letter-spacing="1">CC EAL5+</text>
+      <text x="70" y="90" text-anchor="middle" font-size="7" letter-spacing="1">SCP03 · GP 2.3.1</text>
+    </g>
+    <!-- pads -->
+    <g fill="#C49A4F">
+      <rect x="0" y="36" width="6" height="8"/>
+      <rect x="0" y="56" width="6" height="8"/>
+      <rect x="0" y="76" width="6" height="8"/>
+      <rect x="134" y="36" width="6" height="8"/>
+      <rect x="134" y="56" width="6" height="8"/>
+      <rect x="134" y="76" width="6" height="8"/>
+      <rect x="36" y="0" width="8" height="6"/>
+      <rect x="66" y="0" width="8" height="6"/>
+      <rect x="96" y="0" width="8" height="6"/>
+      <rect x="36" y="114" width="8" height="6"/>
+      <rect x="66" y="114" width="8" height="6"/>
+      <rect x="96" y="114" width="8" height="6"/>
+    </g>
+  </g>
+
+  <!-- companion passives -->
+  <g fill="#C49A4F">
+    <rect x="100" y="80" width="14" height="8" rx="1"/>
+    <rect x="100" y="270" width="14" height="8" rx="1"/>
+    <rect x="406" y="80" width="14" height="8" rx="1"/>
+    <rect x="406" y="270" width="14" height="8" rx="1"/>
+  </g>
+
+  <!-- caption -->
+  <g font-family="JetBrains Mono, monospace" fill="#C49A4F" font-size="10" letter-spacing="1.4">
+    <text x="60" y="330" opacity="0.8">EMBEDDED SECURE ELEMENT · QFN-32 · I²C / SPI / ISO 7816 T=0/T=1</text>
+  </g>
+</svg>

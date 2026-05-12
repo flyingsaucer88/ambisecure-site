@@ -1,5 +1,3 @@
-/* AmbiSecure — base64url converter (WebAuthn / JOSE / CTAP2 friendly).
-   Bidirectional: base64url <-> hex/text/standard-base64. */
 (function () {
   'use strict';
 

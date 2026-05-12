@@ -1,6 +1,3 @@
-/* AmbiSecure — NDEF Record decoder (NFC Forum Type 4 friendly).
-   Walks an NDEF message into individual records and decodes the well-known types:
-   URI (T 'U'), Text (T 'T'), Smart Poster (T 'Sp'), Android AAR (TNF 4). */
 (function () {
   'use strict';
 
@@ -132,7 +129,7 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // sample: SR, MB+ME, TNF=01 (well-known), TYPE='U', payload= prefix 0x04 + "ambisecure.ambimat.com"
+
       input.value = 'D1 01 17 55 04 61 6D 62 69 73 65 63 75 72 65 2E 61 6D 62 69 6D 61 74 2E 63 6F 6D';
       go();
     });

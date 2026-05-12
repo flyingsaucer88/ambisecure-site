@@ -1,11 +1,7 @@
-/* AmbiSecure shared lib — ASN.1 BER/DER parser
-   Pure-vanilla. No dependencies. ES2015+.
-   Exposes window.AmbiSecureASN1 with: parse(bytes), oidName(oid), oidToString(bytes), bytesToHex(b)
-   All parsing is local. */
 (function (root) {
   'use strict';
 
-  /* ---- helpers ---- */
+
   function toBytes(input) {
     if (input instanceof Uint8Array) return input;
     if (Array.isArray(input)) return new Uint8Array(input);
@@ -36,7 +32,7 @@
     return true;
   }
 
-  /* ---- OID encoding ---- */
+
   function oidToString(bytes) {
     if (!bytes || !bytes.length) return '';
     var first = bytes[0];
@@ -49,9 +45,9 @@
     return parts.join('.');
   }
 
-  /* ---- OID dictionary (subset useful for X.509) ---- */
+
   var OID = {
-    /* RDN attribute types */
+
     '2.5.4.3':  'commonName (CN)',
     '2.5.4.6':  'countryName (C)',
     '2.5.4.7':  'localityName (L)',
@@ -70,13 +66,13 @@
     '0.9.2342.19200300.100.1.1':  'userId (UID)',
     '0.9.2342.19200300.100.1.25': 'domainComponent (DC)',
     '1.2.840.113549.1.9.1':       'emailAddress',
-    /* Public key algorithms */
+
     '1.2.840.113549.1.1.1':  'rsaEncryption',
     '1.2.840.10045.2.1':     'ecPublicKey',
     '1.2.840.10040.4.1':     'dsa',
     '1.3.101.112':           'Ed25519',
     '1.3.101.113':           'Ed448',
-    /* Signature algorithms */
+
     '1.2.840.113549.1.1.5':  'sha1WithRSAEncryption',
     '1.2.840.113549.1.1.11': 'sha256WithRSAEncryption',
     '1.2.840.113549.1.1.12': 'sha384WithRSAEncryption',
@@ -86,19 +82,19 @@
     '1.2.840.10045.4.3.2':   'ecdsa-with-SHA256',
     '1.2.840.10045.4.3.3':   'ecdsa-with-SHA384',
     '1.2.840.10045.4.3.4':   'ecdsa-with-SHA512',
-    /* Named curves */
+
     '1.2.840.10045.3.1.7':   'P-256 (secp256r1, prime256v1)',
     '1.3.132.0.34':          'P-384 (secp384r1)',
     '1.3.132.0.35':          'P-521 (secp521r1)',
     '1.3.132.0.10':          'secp256k1',
     '1.3.36.3.3.2.8.1.1.7':  'brainpoolP256r1',
     '1.3.36.3.3.2.8.1.1.11': 'brainpoolP384r1',
-    /* Hash */
+
     '1.3.14.3.2.26':         'sha1',
     '2.16.840.1.101.3.4.2.1':'sha256',
     '2.16.840.1.101.3.4.2.2':'sha384',
     '2.16.840.1.101.3.4.2.3':'sha512',
-    /* X.509 extensions */
+
     '2.5.29.14': 'subjectKeyIdentifier',
     '2.5.29.15': 'keyUsage',
     '2.5.29.17': 'subjectAltName',
@@ -118,7 +114,7 @@
     '1.3.6.1.5.5.7.3.9':  'OCSPSigning',
     '1.3.6.1.5.5.7.48.1': 'OCSP',
     '1.3.6.1.5.5.7.48.2': 'caIssuers',
-    /* PKCS#7 / PKCS#12 */
+
     '1.2.840.113549.1.7.1':  'pkcs7-data',
     '1.2.840.113549.1.7.2':  'pkcs7-signedData',
     '1.2.840.113549.1.7.3':  'pkcs7-envelopedData',
@@ -131,7 +127,7 @@
     '1.2.840.113549.1.9.20':      'friendlyName',
     '1.2.840.113549.1.9.21':      'localKeyID',
     '1.2.840.113549.1.9.22.1':    'x509Certificate',
-    /* PBE */
+
     '1.2.840.113549.1.5.13':   'PBES2',
     '1.2.840.113549.1.5.12':   'PBKDF2',
     '1.2.840.113549.3.7':      'des-EDE3-CBC',
@@ -139,14 +135,14 @@
     '2.16.840.1.101.3.4.1.2':  'aes128-CBC',
     '1.2.840.113549.1.12.1.3': 'pbeWithSHA1And3-KeyTripleDES-CBC',
     '1.2.840.113549.1.12.1.6': 'pbeWithSHA1And40BitRC2-CBC',
-    /* CSR attrs */
+
     '1.2.840.113549.1.9.14':   'extensionRequest',
     '1.2.840.113549.1.9.7':    'challengePassword'
   };
 
   function oidName(oid) { return OID[oid] || null; }
 
-  /* ---- tag class / type names ---- */
+
   var CLASS = ['Universal', 'Application', 'Context-specific', 'Private'];
   var UNIVERSAL = {
     1: 'BOOLEAN', 2: 'INTEGER', 3: 'BIT STRING', 4: 'OCTET STRING', 5: 'NULL',
@@ -157,7 +153,7 @@
     28: 'UniversalString', 30: 'BMPString'
   };
 
-  /* ---- core parser ---- */
+
   function parse(input) {
     var bytes = toBytes(input);
     var stream = { b: bytes, i: 0 };
@@ -185,7 +181,7 @@
         tagNum = (tagNum * 128) + (more & 0x7F);
       } while (more & 0x80);
     }
-    /* length */
+
     if (s.i >= s.b.length) throw new Error('Truncated length at offset ' + s.i + '.');
     var l0 = s.b[s.i++];
     var len = 0, indef = false;
@@ -228,10 +224,10 @@
     return node;
   }
 
-  /* ---- value decoders for primitive types ---- */
+
   function decodeValue(node) {
     if (node.constructed) return null;
-    if (node.tagClass !== 0) return null; // only universal types
+    if (node.tagClass !== 0) return null;
     var v = node.value;
     switch (node.tagNumber) {
       case 1: return v.length ? v[0] !== 0 : false;
@@ -254,7 +250,7 @@
       for (var i = 0; i < v.length; i++) n = (n * 256) + v[i];
       return n;
     }
-    return '0x' + bytesToHex(v); // big int as hex
+    return '0x' + bytesToHex(v);
   }
   function decodeBitString(v) {
     if (!v.length) return { unusedBits: 0, bytes: new Uint8Array(0) };

@@ -191,29 +191,12 @@ a { color: inherit; }
 .brand-mark {
   height: 40px;
   width: 40px;
-  display: grid;
-  place-items: center;
-  background: var(--brand-red);
-  color: #fff;
-  border-radius: 6px;
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.5px;
+  background: #fff url('/assets/img/logo-mark.webp') center/contain no-repeat;
+  border-radius: 50%;
+  font-size: 0;
+  color: transparent;
   position: relative;
   flex-shrink: 0;
-}
-.brand-mark::before {
-  /* tiny "secure notch" lower-right — quiet identity mark */
-  content: '';
-  position: absolute;
-  right: -2px;
-  bottom: -2px;
-  width: 10px;
-  height: 10px;
-  background: var(--brand-dark);
-  border: 2px solid #fff;
-  border-radius: 50%;
 }
 .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
 .brand-line {
@@ -397,57 +380,13 @@ a { color: inherit; }
   border-radius: 50%;
 }
 
-/* Hero visual — secure-element schematic (CSS-only, no asset needed) */
-.hero-visual {
-  width: 460px;
-  max-width: 100%;
-  aspect-ratio: 1 / 1;
-  background:
-    radial-gradient(circle at 50% 50%, rgba(227,34,42,0.05), transparent 65%),
-    radial-gradient(circle at 1px 1px, rgba(58,63,64,0.10) 1px, transparent 0) 0 0/14px 14px,
-    #fff;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  position: relative;
-  overflow: hidden;
-}
-.hero-visual::before, .hero-visual::after {
-  content: '';
-  position: absolute;
-}
-.hero-visual::before {
-  /* large central "chip" */
-  inset: 30%;
-  background: var(--brand-dark);
-  border-radius: 8px;
-  box-shadow: 0 30px 60px rgba(58,63,64,0.18);
-}
-.hero-visual::after {
-  /* subtle red trace top-right */
-  top: 18%;
-  right: 12%;
-  width: 38%;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, var(--brand-red));
-  border-radius: 2px;
-}
-.hero-visual .label {
-  position: absolute;
-  inset: 30%;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 14px;
-  letter-spacing: 1.4px;
-  font-weight: 500;
-}
-.hero-visual .pin {
-  position: absolute;
-  width: 8px; height: 8px;
-  background: var(--brand-red);
-  border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(227,34,42,0.10);
+/* Hero visual — secure-element illustration (SVG asset) */
+.hero-visual-img {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 18px 40px rgba(58,63,64,0.14));
 }
 
 /* =========================================================
@@ -534,6 +473,84 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+
+/* Phase 19 — drop-in modifier: any grid-N becomes a centred flex wrap.
+   Use when an incomplete final row would otherwise sit left-aligned.
+   Behaves identically to the fixed grid on full rows, but centres orphans. */
+.grid-2.is-centered, .grid-3.is-centered, .grid-4.is-centered {
+  display: flex; flex-wrap: wrap; justify-content: center;
+}
+.grid-2.is-centered > * { flex: 1 1 calc((100% - 28px) / 2); max-width: calc((100% - 28px) / 2); }
+.grid-3.is-centered > * { flex: 1 1 calc((100% - 48px) / 3); max-width: calc((100% - 48px) / 3); }
+.grid-4.is-centered > * { flex: 1 1 calc((100% - 66px) / 4); max-width: calc((100% - 66px) / 4); }
+
+/* Phase 19 — standards evolution timeline */
+.timeline {
+  position: relative;
+  margin: 32px 0 48px;
+  padding-left: 40px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--brand-red) 0%, var(--brand-red) 50%, #C8CACC 100%);
+  opacity: 0.6;
+}
+.timeline-entry {
+  position: relative;
+  padding: 0 0 28px 24px;
+}
+.timeline-entry::before {
+  content: '';
+  position: absolute;
+  left: -34px;
+  top: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--brand-red);
+  box-shadow: 0 0 0 4px #fff, 0 0 0 5px rgba(227,34,42,0.18);
+}
+.timeline-entry .tl-year {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  color: var(--brand-grey);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.timeline-entry h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0 0 6px;
+  letter-spacing: -0.1px;
+}
+.timeline-entry p {
+  font-size: 14px;
+  color: var(--brand-grey);
+  line-height: 1.65;
+  margin: 0;
+}
+.timeline-entry .tl-refs {
+  margin-top: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  color: var(--secure-cyan-dark);
+}
+.timeline-entry .tl-refs a {
+  color: var(--secure-cyan-dark);
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+.timeline-entry .tl-refs a:hover { color: var(--brand-red); border-bottom-color: var(--brand-red); }
 
 .card {
   background: #fff;
@@ -642,6 +659,21 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
   pointer-events: none;
 }
 .feature-visual > * { position: relative; }
+.feature-visual.feature-visual-img {
+  padding: 0;
+  background: transparent;
+  border: none;
+  min-height: 0;
+}
+.feature-visual.feature-visual-img::before { content: none; }
+.feature-visual.feature-visual-img img {
+  width: 100%;
+  height: auto;
+  max-width: 520px;
+  display: block;
+  border-radius: 12px;
+  filter: drop-shadow(0 14px 30px rgba(58,63,64,0.12));
+}
 
 /* =========================================================
    STATS
@@ -2291,10 +2323,28 @@ footer.site-footer a:hover { color: var(--brand-red); }
    PHASE 9: Pillars row on home page
    ========================================================= */
 .pillars-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 14px;
   margin-top: 22px;
+}
+.pillars-grid > .pillar-card {
+  flex: 1 1 calc((100% - 42px) / 4);
+  max-width: calc((100% - 42px) / 4);
+  min-width: 220px;
+}
+@media (max-width: 880px) {
+  .pillars-grid > .pillar-card {
+    flex: 1 1 calc((100% - 14px) / 2);
+    max-width: calc((100% - 14px) / 2);
+  }
+}
+@media (max-width: 540px) {
+  .pillars-grid > .pillar-card {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
 }
 .pillar-card {
   background: white;

@@ -1,13 +1,3 @@
-/* AmbiSecure — Secure Messaging field visualizer (ISO 7816-4).
-   Decodes BER-TLV data objects inside an SM-wrapped APDU command/response
-   per ISO 7816-4 Annex A. Most common DOs:
-     0x87 - encrypted data with padding indicator
-     0x86 - encrypted data without padding indicator
-     0x97 - Le (length expected)
-     0x99 - status word (in response)
-     0x8E - cryptographic checksum / MAC
-     0x84 - cryptogram (legacy)
-   Also surfaces the SM-specific CLA bit pattern. */
 (function () {
   'use strict';
 
@@ -77,11 +67,11 @@
           }
         }
 
-        // Walk BER-TLV
+
         var i = 0;
         while (i < b.length) {
           var tag = b[i]; var tagOff = i; i += 1;
-          // Multi-byte tags (b4..b0 = 0x1F means more)
+
           while (b[i - 1] && (b[i - 1] & 0x1F) === 0x1F && i < b.length) {
             tag = (tag << 8) | b[i]; i += 1;
             if (!(b[i - 1] & 0x80)) break;

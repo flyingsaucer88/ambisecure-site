@@ -1,6 +1,3 @@
-/* AmbiSecure — ATS (Answer To Select) parser.
-   ISO/IEC 14443-4 §5.2.1 — the response to a RATS command.
-   Decodes TL, T0, TA(1), TB(1), TC(1), and historical bytes. */
 (function () {
   'use strict';
 
@@ -31,7 +28,7 @@
         if (b.length < 2) throw new Error('ATS is at least 2 bytes (TL + T0).');
         var TL = b[0];
         if (TL !== b.length) {
-          // tolerate but warn
+
           var warn = ' <span class="tech-badge tech-badge--warn">TL=' + TL + ' but message length=' + b.length + '</span>';
         } else {
           var warn = ' <span class="tech-badge tech-badge--ok">TL matches</span>';
@@ -84,7 +81,7 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // typical DESFire ATS
+
       input.value = '06 75 77 81 02 80';
       go();
     });

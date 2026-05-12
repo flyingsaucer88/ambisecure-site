@@ -1,6 +1,3 @@
-/* AmbiSecure — DESFire GetKeySettings response interpreter.
-   NXP DESFire EV1/EV2/EV3. Decodes the 2-byte response from
-   GetKeySettings (0x45): keySettings byte + numKeys/cryptoType byte. */
 (function () {
   'use strict';
 
@@ -74,7 +71,7 @@
       } catch (e) { AS.renderError(output, e.message); }
     }
     input.addEventListener('input', go);
-    if (sample) sample.addEventListener('click', function () { input.value = '0F 83'; go(); }); // F1: master changeable, all free, AES, 3 keys
+    if (sample) sample.addEventListener('click', function () { input.value = '0F 83'; go(); });
     if (clearBtn) clearBtn.addEventListener('click', function () { input.value=''; go(); input.focus(); });
     go();
   }

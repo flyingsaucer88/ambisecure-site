@@ -1,12 +1,9 @@
-/* AmbiSecure — CBOR (RFC 8949) decoder.
-   Accepts hex or base64url. Renders a structural tree using the same
-   tlv-tree primitives the ASN.1 / TLV tools use. */
 (function () {
   'use strict';
 
   function inputToBytes(raw) {
     var s = String(raw).trim();
-    // base64url-y or contains URL-safe characters
+
     if (/[A-Za-z]/.test(s) && /^[A-Za-z0-9_\-=\s]+$/.test(s) && !/^[0-9A-Fa-f\s]+$/.test(s)) {
       return AmbiSecureB64URL.decode(s);
     }
@@ -37,7 +34,7 @@
   function nodeHtml(item, depth, opts) {
     if (!item) return '<div class="node">(null)</div>';
     var pad = depth || 0;
-    var indent = ''; // CSS handles indentation per .node nest
+    var indent = '';
     var isConstructed = (item.type === 'array' || item.type === 'map' || item.type === 'tag');
     var cls = 'node' + (isConstructed ? ' constructed' : '');
 
@@ -117,7 +114,7 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // sample CBOR map { 1: -7, 3: -7, -1: 1, -2: bytes(32), -3: bytes(32) } — COSE_Key (truncated example)
+
       input.value = 'a40102032620012158200102030405060708090a0b0c0d0e0f10111213141516171819ffffffffffffffff';
       go();
     });

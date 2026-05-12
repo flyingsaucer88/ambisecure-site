@@ -1,6 +1,3 @@
-/* AmbiSecure — COSE_Key (RFC 8152 §7) inspector.
-   Reads a CBOR-encoded COSE_Key map and decodes the kty/alg/crv/x/y/n/e
-   fields. Used for inspecting WebAuthn credentialPublicKey blobs. */
 (function () {
   'use strict';
 
@@ -74,7 +71,7 @@
         else if (kid && kid.type === 'text') html += row('kid (2)', '"' + AS.escHTML(kid.value) + '"');
 
         if (ktyV === 2) {
-          // EC2
+
           var crv = AmbiSecureCBOR.findInMap(m, -1);
           var x = AmbiSecureCBOR.findInMap(m, -2);
           var y = AmbiSecureCBOR.findInMap(m, -3);
@@ -84,7 +81,7 @@
           if (y && y.type === 'bytes') html += row('y (-3)', bytesPreview(y.value), y.value.length + '-byte y-coordinate.');
           html += '<div class="note" style="margin-top:14px;">For ES256 / P-256 you should see kty=2, alg=-7, crv=1, and 32-byte x and y. The public key is the concatenation of <code>04 || x || y</code> (uncompressed point).</div>';
         } else if (ktyV === 1) {
-          // OKP (Ed25519)
+
           var crv = AmbiSecureCBOR.findInMap(m, -1);
           var x = AmbiSecureCBOR.findInMap(m, -2);
           var crvV = (crv && (crv.type === 'uint' || crv.type === 'nint')) ? crv.value : null;
@@ -92,7 +89,7 @@
           if (x && x.type === 'bytes') html += row('x (-2)', bytesPreview(x.value), x.value.length + '-byte public key.');
           html += '<div class="note" style="margin-top:14px;">For EdDSA / Ed25519 you should see kty=1, alg=-8, crv=6, and a 32-byte x.</div>';
         } else if (ktyV === 3) {
-          // RSA
+
           var n = AmbiSecureCBOR.findInMap(m, -1);
           var e = AmbiSecureCBOR.findInMap(m, -2);
           if (n && n.type === 'bytes') html += row('n (-1)', bytesPreview(n.value), 'RSA modulus (' + (n.value.length * 8) + ' bits).');
@@ -103,7 +100,7 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // a4 01 02 03 26 20 01 21 58 20 (32 bytes of x) 22 58 20 (32 bytes of y)
+
       input.value = 'a401020326200121582051a8d4e8f1c2b3a4051a8d4e8f1c2b3a4051a8d4e8f1c2b3a4051a8d4e8f1c2b3a4225820e1d2c3b4a5061f17283940516273849aabcdef00112233445566778899aabbcc';
       go();
     });

@@ -1,9 +1,3 @@
-/* AmbiSecure — minimal CBOR (RFC 8949) decoder.
-   Pure-vanilla. Used by the WebAuthn attestation decoder, COSE key inspector,
-   and CTAP2 message decoders. Decodes integers, byte/text strings, arrays,
-   maps, tags, and the simple values (false, true, null, undefined, halves
-   are not supported precisely — close enough for inspection). Encoding is
-   not implemented; this is a one-direction tool. */
 (function (root) {
   'use strict';
 
@@ -21,7 +15,7 @@
       if (ai === 25) { var v = view.getUint16(idx); idx += 2; return v; }
       if (ai === 26) { var v = view.getUint32(idx); idx += 4; return v; }
       if (ai === 27) {
-        // 64-bit unsigned. JS number safe up to 2^53; throw if larger.
+
         var hi = view.getUint32(idx);
         var lo = view.getUint32(idx + 4);
         idx += 8;
@@ -40,7 +34,7 @@
 
     function readFloat(ai) {
       if (ai === 25) {
-        // half-precision float — approximate
+
         var u = view.getUint16(idx); idx += 2;
         var sign = (u & 0x8000) ? -1 : 1;
         var exp = (u & 0x7C00) >> 10;
@@ -62,7 +56,7 @@
       var mt = ib >> 5;
       var ai = ib & 0x1F;
 
-      // Indefinite-length payloads
+
       if (ai === 31 && (mt === 2 || mt === 3 || mt === 4 || mt === 5 || mt === 7)) {
         if (mt === 7) return { type: 'break' };
         if (mt === 2 || mt === 3) {
@@ -153,7 +147,7 @@
     return s;
   }
 
-  // Pretty-print a decoded CBOR item as JSON-ish text. Used by the inspector.
+
   function stringify(item, indent) {
     indent = indent || 0;
     var pad = '';
@@ -183,7 +177,7 @@
     }
   }
 
-  // Find a value in a CBOR map by key (number or string).
+
   function findInMap(mapItem, key) {
     if (!mapItem || mapItem.type !== 'map') return null;
     for (var i = 0; i < mapItem.value.length; i++) {

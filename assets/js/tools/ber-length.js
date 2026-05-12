@@ -1,7 +1,3 @@
-/* AmbiSecure — BER length-field visualizer.
-   ITU-T X.690 §8.1.3. Decode short-form (≤127), long-form (1..126 length
-   octets), and indefinite-form (0x80) length encodings. Encode any
-   non-negative integer back into BER. */
 (function () {
   'use strict';
 
@@ -61,7 +57,7 @@
         html += '<div style="margin: 18px 0 14px;"><span class="tech-badge tech-badge--ok">ENCODE</span></div>';
         html += row('Length value', String(encRes.value));
         html += row('BER octets', '<span class="mono">' + bytesToHex(encRes.bytes) + '</span>', encRes.bytes.length === 1 ? 'Short-form (single octet).' : 'Long-form: 0x' + encRes.bytes[0].toString(16).toUpperCase() + ' (0x80 | ' + (encRes.bytes.length - 1) + ') followed by big-endian length.');
-        // DGI long form note
+
         if (encRes.value < 0xFF) {
           html += '<div class="note" style="margin-top:10px;">For DGI long form (used in some EMV personalisation specs): always encode as <code>FF || 2-byte BE length</code>, even for small values. Different from BER long-form, which uses minimum-length encoding.</div>';
         }

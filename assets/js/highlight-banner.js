@@ -1,31 +1,3 @@
-/**
- * Homepage highlight / banner system.
- *
- * Pulls a JS-defined configuration (window.AS_HOMEPAGE_BANNERS) and renders
- * the first ENABLED entry into any element with class .hp-banner-slot.
- * Designed so editors can rotate banners by editing one file
- * (/assets/js/highlight-banner-config.js) without touching templates.
- *
- * Banner shape:
- *   {
- *     id:          "string",
- *     enabled:     true,
- *     eyebrow:     "FEATURED · OnePass platform",
- *     title:       "Hardware-rooted identity, ready for procurement.",
- *     body:        "Short body copy.",
- *     accent:      "red" | "cyan" | "dark",
- *     primaryCta:  { label: "View OnePass", url: "/products/onepass-card/" },
- *     secondaryCta:{ label: "Talk to engineering", url: "/contact/" }, // optional
- *     startsAt:    "2026-01-01T00:00:00Z", // optional, banner activates at this time
- *     endsAt:      "2026-12-31T23:59:59Z", // optional, banner expires after this
- *   }
- *
- * Pick rule:
- *   - First entry where enabled===true AND now is within startsAt..endsAt (if set).
- *   - If multiple match, the FIRST one wins. Reorder the array to change.
- *
- * Zero network calls. Zero localStorage. CSP-safe.
- */
 (function () {
   var slots = document.querySelectorAll(".hp-banner-slot");
   if (!slots.length) return;
@@ -42,7 +14,7 @@
     break;
   }
   if (!pick) {
-    // No active banner: hide the slot so it doesn't leave empty space.
+
     slots.forEach(function (s) { s.style.display = "none"; });
     return;
   }

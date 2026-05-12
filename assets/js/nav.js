@@ -1,15 +1,7 @@
-/* AmbiSecure — main nav (mobile toggle + active link) + per-page analytics
-   loader. Vanilla, no deps. nav.js is included from every page; adding the
-   analytics bootstrap here means new pages get analytics automatically without
-   touching the template. */
 (function () {
   'use strict';
 
-  /* Analytics bootstrap.
-     Loads /assets/js/analytics-config.js (defines window.AS_ANALYTICS) then
-     /assets/js/analytics.js (loader). If the config file ships with
-     `provider: "none"` (the default) the loader is a no-op and no third-party
-     network calls happen. To enable a provider, edit analytics-config.js only. */
+
   (function loadAnalytics() {
     var configScript = document.createElement('script');
     configScript.src = '/assets/js/analytics-config.js';
@@ -22,7 +14,7 @@
       loader.defer = true;
       document.head.appendChild(loader);
     };
-    configScript.onerror = function () { /* analytics config missing — silently skip */ };
+    configScript.onerror = function () {  };
     document.head.appendChild(configScript);
   })();
 
@@ -42,7 +34,7 @@
       });
     }
 
-    /* mark current section in main nav based on path */
+
     var path = window.location.pathname;
     var section = path.split('/').filter(Boolean)[0] || '';
     document.querySelectorAll('.nav-links a').forEach(function (a) {

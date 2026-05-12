@@ -1,4 +1,3 @@
-/* AmbiSecure — Certificate chain viewer. Decodes a multi-cert PEM, renders each, links by issuer→subject. */
 (function () {
   'use strict';
   function init() {
@@ -22,7 +21,7 @@
         var html = '';
         html += '<div style="margin-bottom:14px;"><span class="tech-badge tech-badge--ok">' + certs.length + ' CERTIFICATE' + (certs.length === 1 ? '' : 'S') + '</span></div>';
 
-        /* render the chain */
+
         certs.forEach(function (c, i) {
           if (c.error) {
             html += '<div class="parsed-row"><span class="label">#' + (i + 1) + '</span><div class="value"><span class="tech-badge tech-badge--err">PARSE ERROR</span> ' + AS.escHTML(c.error) + '</div></div>';

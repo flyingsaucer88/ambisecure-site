@@ -1,4 +1,3 @@
-/* AmbiSecure — X.509 Certificate viewer. Client-side. */
 (function () {
   'use strict';
   function init() {

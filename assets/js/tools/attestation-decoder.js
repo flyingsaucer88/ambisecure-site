@@ -1,7 +1,3 @@
-/* AmbiSecure — WebAuthn attestation object decoder.
-   The attestationObject is a CBOR map { fmt, attStmt, authData }.
-   This tool surfaces fmt, walks attStmt, and links into the
-   authenticatorData parser for authData. */
 (function () {
   'use strict';
 
@@ -58,7 +54,7 @@
         var fmt = fmtItem.value;
         html += row('fmt', '<strong>' + AS.escHTML(fmt) + '</strong>', FMT_NOTES[fmt] || 'Unknown attestation format.');
 
-        // attStmt walk
+
         if (attStmt.type === 'map') {
           if (attStmt.value.length === 0) {
             html += row('attStmt', '<em>(empty)</em>', 'Empty attStmt is normal when fmt = "none".');
@@ -94,12 +90,12 @@
           }
         }
 
-        // authData
+
         if (authData.type === 'bytes') {
           var ab = authData.value;
           html += row('authData', '<span class="tech-badge tech-badge--info">' + ab.length + ' bytes</span>',
             'Open the <a href="/resources/tools/authdata-parser/?h=' + AmbiSecureB64URL.bytesToHex(ab) + '" style="color:var(--brand-red);font-weight:600;">authenticatorData parser</a> to walk rpIdHash / flags / counter / AAGUID / credentialId / publicKey.');
-          // Quick flags summary inline
+
           if (ab.length >= 37) {
             var flags = ab[32];
             var bits = [];
@@ -109,7 +105,7 @@
             html += row('authData.flags', '0x' + flags.toString(16).toUpperCase().padStart(2, '0'), bits.join(' &middot; ') || '(none set)');
             var counter = ((ab[33] << 24) | (ab[34] << 16) | (ab[35] << 8) | ab[36]) >>> 0;
             html += row('authData.signCount', String(counter));
-            // AAGUID if present
+
             if ((flags & 0x40) && ab.length >= 53) {
               var aaguid = AmbiSecureAAGUID.format(ab.slice(37, 53));
               var hit = AmbiSecureAAGUID.lookup(aaguid);
@@ -120,7 +116,7 @@
           }
         }
 
-        // Validation guidance
+
         html += '<div class="note" style="margin-top:18px; padding:12px 16px; background:var(--secure-cyan-soft); border-left:3px solid var(--secure-cyan); border-radius:3px;">' +
           '<strong>Verification checklist (registration ceremony):</strong>' +
           '<ol style="margin:8px 0 0 20px; font-size:13px; line-height:1.65;">' +
@@ -137,8 +133,8 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // Minimal "fmt: none" attestation for demo
-      // a3 63 66 6d 74 64 6e 6f 6e 65   67 61 74 74 53 74 6d 74 a0   68 61 75 74 68 44 61 74 61 58 25 ... 37 bytes
+
+
       var hex = 'a363666d74646e6f6e656761747453746d74a06861757468446174615825' +
         '49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97630500000000';
       input.value = hex;

@@ -1,5 +1,3 @@
-/* AmbiSecure — base64url helpers (RFC 4648 §5).
-   base64url is the form WebAuthn / JOSE / CTAP2 use everywhere. */
 (function (root) {
   'use strict';
 

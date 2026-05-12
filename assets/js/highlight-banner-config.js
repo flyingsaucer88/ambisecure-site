@@ -1,12 +1,3 @@
-/**
- * Homepage banner configuration.
- *
- * To rotate banners: edit this file only. No deploy step needed beyond a
- * normal file upload. First enabled banner whose start/end window matches
- * "now" wins; reorder the array to change priority.
- *
- * Banner shape documented in /assets/js/highlight-banner.js.
- */
 window.AS_HOMEPAGE_BANNERS = [
   {
     id: "case-studies-launch-2026",

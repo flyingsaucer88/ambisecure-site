@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-label="JavaCard applet matrix — twelve applets co-resident on one CC EAL5+ secure element">
+  <defs>
+    <linearGradient id="asTile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"  stop-color="#FBFBFC"/>
+      <stop offset="100%" stop-color="#EDEFF1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="520" height="360" fill="#fff"/>
+
+  <!-- frame -->
+  <rect x="20" y="20" width="480" height="320" rx="10" fill="#FAFAFB" stroke="#E1E3E4" stroke-width="1"/>
+
+  <!-- title -->
+  <g font-family="JetBrains Mono, monospace" fill="#3A3F40">
+    <text x="40" y="50" font-size="11" letter-spacing="1.6">AID-SELECTABLE APPLET MATRIX · CC EAL5+ · JCVM</text>
+  </g>
+
+  <!-- applet tiles (3 rows × 4 cols) -->
+  <g font-family="Montserrat, sans-serif" font-weight="700" font-size="12" fill="#3A3F40">
+    <!-- row 1 -->
+    <g transform="translate(40, 70)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#E3222A"/>
+      <text x="12" y="28">FIDO2</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">A0000006472F0001</text>
+    </g>
+    <g transform="translate(150, 70)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#E3222A"/>
+      <text x="12" y="28">PIV</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">A000000308000010</text>
+    </g>
+    <g transform="translate(260, 70)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#E3222A"/>
+      <text x="12" y="28">OpenPGP</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">D2760001240102</text>
+    </g>
+    <g transform="translate(370, 70)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#E3222A"/>
+      <text x="12" y="28">Door Access</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">F0414D44524F4F52</text>
+    </g>
+    <!-- row 2 -->
+    <g transform="translate(40, 150)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#3A3F40"/>
+      <text x="12" y="28">OIDC</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">A000000647204F49</text>
+    </g>
+    <g transform="translate(150, 150)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#3A3F40"/>
+      <text x="12" y="28">NDEF</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">D2760000850101</text>
+    </g>
+    <g transform="translate(260, 150)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#3A3F40"/>
+      <text x="12" y="28">X.509 Store</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">A000000647203509</text>
+    </g>
+    <g transform="translate(370, 150)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#3A3F40"/>
+      <text x="12" y="28">SCP02</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">A000000151000000</text>
+    </g>
+    <!-- row 3 -->
+    <g transform="translate(40, 230)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#0E8C9C"/>
+      <text x="12" y="28">BIO-FIDO</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">A0000006472F4249</text>
+    </g>
+    <g transform="translate(150, 230)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#0E8C9C"/>
+      <text x="12" y="28">BIO-PIV</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">A000000308000042</text>
+    </g>
+    <g transform="translate(260, 230)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#0E8C9C"/>
+      <text x="12" y="28">Secure Notes</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">A0414D424E4F5453</text>
+    </g>
+    <g transform="translate(370, 230)">
+      <rect width="100" height="70" rx="6" fill="url(#asTile)" stroke="#D8DADC"/>
+      <rect x="0" y="0" width="100" height="4" fill="#0E8C9C"/>
+      <text x="12" y="28">IoT Security</text>
+      <text x="12" y="48" font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1">F0414D49544F5430</text>
+    </g>
+  </g>
+
+  <!-- footer -->
+  <g font-family="JetBrains Mono, monospace" fill="#3A3F40">
+    <text x="40" y="324" font-size="9" letter-spacing="1.4" opacity="0.7">JCVM FIREWALL · ISO/IEC 7816-3/4 · SCP03 · OWNER-AUTHENTICATED</text>
+  </g>
+</svg>

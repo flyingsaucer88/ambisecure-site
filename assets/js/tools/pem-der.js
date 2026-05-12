@@ -1,4 +1,3 @@
-/* AmbiSecure — PEM ↔ DER converter. Client-side only. */
 (function () {
   'use strict';
   function init() {
@@ -35,7 +34,7 @@
             AS.escHTML(AmbiSecureASN1.bytesToHex(first.der, ' ').replace(/((?:[0-9A-F]{2} ){16})/g, '$1\n')) +
             '</div></div>';
         } else {
-          /* DER -> PEM. Accept hex or bare base64. */
+
           var bytes;
           if (/^[0-9a-f\s,;:_-]+$/i.test(raw)) bytes = AmbiSecureASN1.hexToBytes(raw);
           else bytes = AmbiSecureX509.base64Decode(raw.replace(/[\s]/g,''));

@@ -1,7 +1,3 @@
-/* AmbiSecure — authenticatorData parser.
-   §6.1 of the WebAuthn spec. authenticatorData = rpIdHash(32) || flags(1) ||
-   signCount(4) || [attestedCredentialData] || [extensions(CBOR)].
-   attestedCredentialData = aaguid(16) || credIdLen(2) || credId || COSE_Key. */
 (function () {
   'use strict';
 
@@ -27,12 +23,12 @@
   }
 
   var FLAG = {
-    UP: 0x01,  // User Present
-    UV: 0x04,  // User Verified
-    BE: 0x08,  // Backup Eligibility (passkey-syncable)
-    BS: 0x10,  // Backup State
-    AT: 0x40,  // Attested Credential Data included
-    ED: 0x80   // Extensions data included
+    UP: 0x01,
+    UV: 0x04,
+    BE: 0x08,
+    BS: 0x10,
+    AT: 0x40,
+    ED: 0x80
   };
 
   function init() {
@@ -87,7 +83,7 @@
           html += row('credentialId', '<span class="mono">' + bytesPreview(credId, 80) + '</span>',
             credLen + ' bytes. Opaque to the RP — store and present back on assertion.');
 
-          // The remainder of attestedCredentialData is a COSE_Key (CBOR map).
+
           var pubKeyBytes = b.slice(i);
           try {
             var dec = AmbiSecureCBOR.decode(pubKeyBytes);
@@ -95,7 +91,7 @@
             var consumed = dec.consumed;
             html += row('credentialPublicKey', '<span class="tech-badge tech-badge--info">COSE_Key (' + consumed + ' bytes)</span>',
               'Use the COSE Key Inspector to decode kty, alg, crv, x, y. The leading bytes are: <span class="mono">' + AmbiSecureB64URL.bytesToHex(pubKeyBytes.slice(0, Math.min(48, consumed))) + (consumed > 48 ? '…' : '') + '</span>');
-            // Provide a "send to COSE inspector" note
+
             try {
               var coseHex = AmbiSecureB64URL.bytesToHex(pubKeyBytes.slice(0, consumed));
               html += '<div class="note" style="margin-top:6px;">Open the <a href="/resources/tools/cose-key/?h=' + coseHex + '" style="color:var(--brand-red); font-weight:600;">COSE Key Inspector</a> with this blob.</div>';
@@ -117,7 +113,7 @@
           }
         }
 
-        // BE/BS guidance
+
         if (flags & FLAG.BE) {
           html += '<div class="note" style="margin-top:12px; padding:10px 14px; background:var(--secure-cyan-soft); border-left:3px solid var(--secure-cyan); border-radius:3px;"><strong>BE flag set:</strong> the credential is backup-eligible. If <strong>BS</strong> is also set, the credential is currently backed up (e.g. iCloud Keychain, Google Password Manager). For high-assurance enterprise use, you may want to require <strong>BE=0</strong> (device-bound).</div>';
         }
@@ -126,17 +122,17 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // 32 bytes rpIdHash, 0x45 flags (UP+UV+AT), counter 0, AAGUID 0xcb..a8, credId 16 bytes, COSE_Key (small)
+
       input.value = '49960de5880e8c687434170f6476605b8fe4aeb9a28632c7995cf3ba831d97634500000000cb69481e8ff7403993ec0a2729a154a80010aabbccddeeff00112233445566778899a401020326200121582000000000000000000000000000000000000000000000000000000000000000002258200000000000000000000000000000000000000000000000000000000000000000';
       go();
     });
     if (clearBtn) clearBtn.addEventListener('click', function () { input.value=''; go(); input.focus(); });
 
-    // Allow ?h=... query for prefilling from authData parser etc.
+
     try {
       var q = new URLSearchParams(window.location.search);
       if (q.get('h')) { input.value = q.get('h'); go(); }
-    } catch (e) { /* noop */ }
+    } catch (e) {  }
     go();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();

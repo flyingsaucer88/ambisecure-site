@@ -1,9 +1,3 @@
-/* AmbiSecure — JavaCard CAP file structure explorer.
-   The CAP file is a ZIP / JAR containing a fixed set of *.cap component
-   files (Header, Directory, Applet, Import, ConstantPool, Class, Method,
-   StaticField, RefLocation, Export, Descriptor, Debug). This tool decodes
-   the magic bytes and component shape inside a single component file or
-   the listing of components in a CAP package. */
 (function () {
   'use strict';
 
@@ -116,7 +110,7 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // Header.cap with magic, version 3.0, flags 0x06, package AID of length 8
+
       input.value = '01 00 14 DE CA FF ED 00 03 06 08 A0 00 00 00 62 03 01 0C 01';
       go();
     });

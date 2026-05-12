@@ -1,6 +1,3 @@
-/* AmbiSecure — WebAuthn challenge viewer.
-   Decodes a base64url challenge, reports length and entropy, and warns
-   about common mistakes (under-length, ASCII-only, predictable). */
 (function () {
   'use strict';
 
@@ -46,7 +43,7 @@
           'Low entropy — DO NOT use predictable challenges. WebAuthn challenges must be cryptographically random.';
         html += row('entropy', '<span class="tech-badge ' + entBadge + '">' + H.toFixed(2) + ' bits/byte</span>', entNote);
 
-        // Common pitfalls
+
         var ascii = '';
         var allPrintable = true;
         for (var i = 0; i < b.length; i++) {
@@ -65,7 +62,7 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // 32 random bytes (visually realistic challenge)
+
       var b = new Uint8Array(32);
       if (crypto && crypto.getRandomValues) crypto.getRandomValues(b);
       else for (var i = 0; i < 32; i++) b[i] = Math.floor(Math.random() * 256);

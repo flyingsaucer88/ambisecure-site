@@ -1,11 +1,7 @@
-/* AmbiSecure — TLV Tree Visualizer (BER-TLV with EMV tag dictionary).
-   Walks BER-TLV bytes and renders a collapsible tree, with EMV tag-name
-   lookup. Companion to the existing TLV parser; this version focuses on
-   visual hierarchy with collapsible nodes. */
 (function () {
   'use strict';
 
-  // Compact EMV/ISO 7816-4 tag dictionary (subset)
+
   var TAGS = {
     '4F': 'AID (Application Identifier)',
     '50': 'Application Label',

@@ -1,5 +1,3 @@
-/* AmbiSecure tools — small shared UI helpers used by multiple tools.
-   Loaded before any tool script. */
 (function (root) {
   'use strict';
   function $(id) { return document.getElementById(id); }

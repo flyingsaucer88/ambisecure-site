@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-label="Tool-chain development — engineering console with build, sign, load, personalise stages">
+  <rect x="0" y="0" width="520" height="360" fill="#fff"/>
+  <rect x="20" y="20" width="480" height="320" rx="10" fill="#0F1314"/>
+
+  <!-- terminal header -->
+  <rect x="20" y="20" width="480" height="32" rx="10" fill="#1A1D1E"/>
+  <circle cx="38" cy="36" r="5" fill="#E3222A"/>
+  <circle cx="56" cy="36" r="5" fill="#C49A4F"/>
+  <circle cx="74" cy="36" r="5" fill="#0E8C9C"/>
+  <text x="100" y="40" font-family="JetBrains Mono, monospace" font-size="11" fill="#9aa0a3" letter-spacing="1">~/ambisecure/toolchain</text>
+
+  <!-- terminal body -->
+  <g font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="0.4">
+    <text x="40" y="80"  fill="#9aa0a3">$ as-cli build --target jcop3 --applet fido2</text>
+    <text x="40" y="100" fill="#0E8C9C">  → compiling JC source · 312 classes</text>
+    <text x="40" y="120" fill="#0E8C9C">  → linking CAP · package AID A0000006472F0001</text>
+    <text x="40" y="140" fill="#C49A4F">  ✓ CAP signed · 14.2 KiB</text>
+
+    <text x="40" y="172" fill="#9aa0a3">$ as-cli load --reader 0 --scp03 --keyset 0xFF</text>
+    <text x="40" y="192" fill="#0E8C9C">  → establishing SCP03 secure channel</text>
+    <text x="40" y="212" fill="#0E8C9C">  → loading 28 components · 100%</text>
+    <text x="40" y="232" fill="#C49A4F">  ✓ applet installed · selectable</text>
+
+    <text x="40" y="264" fill="#9aa0a3">$ as-cli personalise --batch q2-2026.json</text>
+    <text x="40" y="284" fill="#0E8C9C">  → injecting per-card keysets · n=10000</text>
+    <text x="40" y="304" fill="#C49A4F">  ✓ batch sealed · CSV manifest written</text>
+
+    <!-- prompt -->
+    <text x="40" y="324" fill="#E3222A">$</text>
+    <rect x="50" y="316" width="8" height="11" fill="#E3222A">
+      <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+</svg>

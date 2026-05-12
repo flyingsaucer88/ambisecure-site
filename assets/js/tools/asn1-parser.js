@@ -1,4 +1,3 @@
-/* AmbiSecure — ASN.1 BER/DER tree parser. Client-side. */
 (function () {
   'use strict';
   function init() {

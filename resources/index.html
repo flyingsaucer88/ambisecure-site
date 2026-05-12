@@ -22,6 +22,8 @@
 <link rel="stylesheet" href="/assets/css/fonts.css" />
 <link rel="stylesheet" href="/assets/css/main.css" />
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+<meta name="theme-color" content="#E3222A" />
 <style>
   .resource-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   @media (max-width: 880px) { .resource-grid { grid-template-columns: 1fr; } }
@@ -78,9 +80,9 @@
   <div class="section-container">
     <div class="featured-strip-row">
       <a href="/references/"><span class="fs-tag">REFS</span><span class="fs-label">12 searchable reference databases &rarr;</span></a>
+      <a href="/resources/timelines/"><span class="fs-tag">TIMELINE</span><span class="fs-label">Standards evolution timelines &rarr;</span></a>
       <a href="/resources/webauthn/"><span class="fs-tag">DOCS</span><span class="fs-label">WebAuthn engineering reference &rarr;</span></a>
       <a href="/resources/tools/passkey-flow-viz/"><span class="fs-tag">VIZ</span><span class="fs-label">Passkey flow visualizer &rarr;</span></a>
-      <a href="/resources/tools/apdu-script-validator/"><span class="fs-tag">SCRIPT</span><span class="fs-label">APDU script validator &rarr;</span></a>
     </div>
   </div>
 </section>
@@ -220,8 +222,7 @@
     <h2 class="section-title" style="margin-bottom: 10px;">Everything runs in your browser.</h2>
     <span class="section-line"></span>
     <p class="section-desc" style="font-size: 15px; max-width: 620px; margin: 0 auto;">
-      No input is sent to a server. No accounts, no logging, no analytics on tool inputs.
-      The whole site is static HTML &mdash; you can verify with a network inspector.
+      Every tool runs entirely inside your browser. No inputs leave the page, no accounts, no logging, no analytics on tool inputs &mdash; privacy-first by design.
     </p>
     <p style="margin-top: 24px;">
       <a href="/contact/" class="btn btn-outline">Suggest a tool</a>

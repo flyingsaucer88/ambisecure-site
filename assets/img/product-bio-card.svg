@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-label="AmbiSecure OnePass Bio Card — FIDO2 smart card with on-card fingerprint sensor">
+  <defs>
+    <linearGradient id="bio-body" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="#FBFBFC"/>
+      <stop offset="55%" stop-color="#EEEFF1"/>
+      <stop offset="100%" stop-color="#DDE0E2"/>
+    </linearGradient>
+    <radialGradient id="bio-sensor" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"  stop-color="#3A3F40"/>
+      <stop offset="60%" stop-color="#1A1D1E"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+  </defs>
+  <rect x="0" y="0" width="520" height="360" fill="#fff"/>
+
+  <!-- shadow -->
+  <rect x="48" y="62" width="424" height="266" rx="20" ry="20" fill="rgba(58,63,64,0.18)" transform="translate(0,8)"/>
+
+  <!-- card body -->
+  <rect x="40" y="50" width="424" height="266" rx="18" ry="18" fill="url(#bio-body)" stroke="#D8DADC" stroke-width="1"/>
+
+  <!-- red stripe -->
+  <rect x="40" y="50" width="14" height="266" fill="#E3222A"/>
+
+  <!-- wordmark -->
+  <g font-family="Montserrat, sans-serif" font-weight="700">
+    <text x="78" y="98" font-size="22" fill="#3A3F40">Ambi<tspan fill="#E3222A">Secure</tspan></text>
+    <text x="78" y="118" font-family="Source Sans 3, sans-serif" font-size="11" letter-spacing="2" fill="#8C9092">ONEPASS · BIO CARD</text>
+  </g>
+
+  <!-- ISO 7816 contact pad -->
+  <g transform="translate(80, 168)">
+    <rect x="0" y="0" width="80" height="100" rx="6" fill="#C49A4F" stroke="#8E6A2F" stroke-width="0.8"/>
+    <rect x="38" y="6" width="2" height="88" fill="#EEEFF1"/>
+    <rect x="6" y="28" width="68" height="2" fill="#EEEFF1"/>
+    <rect x="6" y="52" width="68" height="2" fill="#EEEFF1"/>
+    <rect x="6" y="76" width="68" height="2" fill="#EEEFF1"/>
+  </g>
+
+  <!-- Fingerprint sensor area -->
+  <g transform="translate(280, 168)">
+    <rect x="0" y="0" width="140" height="100" rx="14" fill="url(#bio-sensor)"/>
+    <!-- fingerprint pattern -->
+    <g stroke="#E3222A" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.85">
+      <path d="M70 22 q -28 4 -28 28 q 0 22 18 30"/>
+      <path d="M70 28 q -22 4 -22 24 q 0 18 14 26"/>
+      <path d="M70 34 q -16 4 -16 20 q 0 14 10 22"/>
+      <path d="M70 40 q -10 4 -10 16 q 0 10 8 16"/>
+      <path d="M70 46 q -4 4 -4 10"/>
+      <path d="M70 22 q 28 4 28 28 q 0 22 -18 30"/>
+      <path d="M70 28 q 22 4 22 24 q 0 18 -14 26"/>
+      <path d="M70 34 q 16 4 16 20 q 0 14 -10 22"/>
+      <path d="M70 40 q 10 4 10 16 q 0 10 -8 16"/>
+    </g>
+    <text x="70" y="92" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#9aa0a3" letter-spacing="1.4">MATCH ON CARD</text>
+  </g>
+
+  <!-- contactless arc -->
+  <g transform="translate(370, 90)" stroke="#3A3F40" fill="none" stroke-width="2.4" stroke-linecap="round">
+    <path d="M 0 16 q 8 -10 16 0"/>
+    <path d="M -6 22 q 14 -16 28 0"/>
+    <path d="M -12 28 q 20 -22 40 0"/>
+    <circle cx="8" cy="14" r="1.8" fill="#3A3F40"/>
+  </g>
+
+  <!-- spec line -->
+  <g font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1.2">
+    <text x="78" y="290">FIDO2 · BIO-FIDO · BIO-PIV · NFC · USB</text>
+    <text x="78" y="304">CC EAL5+ · ISO/IEC 7816 · ID-1</text>
+  </g>
+</svg>

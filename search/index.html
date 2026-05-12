@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Search the AmbiSecure engineering blog</title>
-<meta name="description" content="Client-side blog search across every modern post and the historical archive. No backend, no third-party tracking." />
+<meta name="description" content="Client-side blog search across every modern post and the engineering archive. No backend, no third-party tracking." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/search/" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Search the AmbiSecure engineering blog" />
-<meta property="og:description" content="Client-side blog search across every modern post and the historical archive. No backend, no third-party tracking." />
+<meta property="og:description" content="Client-side blog search across every modern post and the engineering archive. No backend, no third-party tracking." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/search/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/search.png" />
 <meta property="og:image:type" content="image/png" />
@@ -22,6 +22,8 @@
 <link rel="stylesheet" href="/assets/css/fonts.css" />
 <link rel="stylesheet" href="/assets/css/main.css" />
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png" />
+<meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -68,7 +70,7 @@
   <div class="prose">
     <span class="eyebrow">Blog search</span>
     <h1>Search the engineering blog.</h1>
-    <p class="dek">All 45 posts &mdash; modern engineering + historical archive &mdash; in one searchable index. Type a topic, a protocol, or a tag. Client-side; nothing leaves your browser.</p>
+    <p class="dek">All 45 posts &mdash; modern engineering + engineering archive &mdash; in one searchable index. Type a topic, a protocol, or a tag. Client-side; nothing leaves your browser.</p>
   </div>
 </section>
 
@@ -84,7 +86,7 @@
              spellcheck="false"
              data-blog-search />
       <p class="search-hint">Tip: search matches titles, summaries, categories, and tags. Filter by category or tag via <a href="/blog/categories/">/blog/categories/</a> and <a href="/tags/">/tags/</a>.</p>
-      <p class="search-hint">The index covers the full AmbiSecure engineering corpus &mdash; cornerstone posts on FIDO, JavaCard, DESFire, SAM-backed transit, PKI, and credential lifecycle, plus the historical archive of pre-2026 writing migrated from the legacy site. Acronym synonyms (FIDO &harr; WebAuthn, SE &harr; secure element, RP &harr; relying party, SCP02 &harr; SCP03) and light stemming are applied at query time, so a search for "passkey" finds "passkeys" and "attestation" finds "attestations". Results are grouped into Cornerstone, Modern engineering, and Historical archive, with the most-recent first within each group. No queries leave your browser; the search index is fetched once on first use and cached.</p>
+      <p class="search-hint">The index covers the full AmbiSecure engineering corpus &mdash; cornerstone posts on FIDO, JavaCard, DESFire, SAM-backed transit, PKI, and credential lifecycle, plus the engineering archive of pre-2026 writing migrated from the legacy site. Acronym synonyms (FIDO &harr; WebAuthn, SE &harr; secure element, RP &harr; relying party, SCP02 &harr; SCP03) and light stemming are applied at query time, so a search for "passkey" finds "passkeys" and "attestation" finds "attestations". Results are grouped into Cornerstone, Modern engineering, and Engineering archive, with the most-recent first within each group. No queries leave your browser; the search index is fetched once on first use and cached.</p>
     </div>
     <ul class="blog-search-results" data-blog-search-results></ul>
   </div>

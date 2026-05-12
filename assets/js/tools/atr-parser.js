@@ -1,6 +1,3 @@
-/* AmbiSecure — ATR Parser
-   Decodes ISO/IEC 7816-3 Answer-To-Reset bytes.
-   All parsing is local. No network. */
 (function () {
   'use strict';
 
@@ -15,14 +12,13 @@
   }
   function hex(b, w) { var x = b.toString(16).toUpperCase(); while (w && x.length < w) x = '0' + x; return x; }
 
-  /* Parse ATR per ISO/IEC 7816-3.
-     Returns { ok, fields[], raw, error? } */
+
   function parseATR(bytes) {
     var fields = [];
     var i = 0;
     if (bytes.length < 2) throw new Error('ATR must be at least 2 bytes (TS + T0).');
 
-    // TS — initial character
+
     var TS = bytes[i++];
     var conv = TS === 0x3B ? 'Direct' : (TS === 0x3F ? 'Inverse' : 'Unknown (expected 0x3B or 0x3F)');
     fields.push({
@@ -45,7 +41,7 @@
 
     var T_protocols = [];
     var Y = Y1;
-    var idx = 1; // first set is TA1..TD1
+    var idx = 1;
     var Tprev = -1;
 
     while (Y !== 0) {
@@ -81,14 +77,14 @@
           fields.push({ label: label, value: '0x' + hex(b, 2), note: note, tone: tone });
         }
       }
-      if (Y & 0x08) { // TDi present — next Y comes from its high nibble; Tprev from its low nibble
-        // we already consumed TDi above and pushed nextT — pull it back out
+      if (Y & 0x08) {
+
         var lastTd = T_protocols[T_protocols.length - 1];
         Tprev = lastTd;
-        // Y for next set = high nibble of TDi (last 4 bits of last byte we took as TD)
-        // We need the actual TD byte; recompute:
-        // The TDi byte was the byte we just processed when bit==3.
-        // Pull it from the most recent field whose label starts TD<idx>:
+
+
+
+
         var tdLabel = 'TD' + idx;
         var tdField = null;
         for (var j = fields.length - 1; j >= 0; j--) { if (fields[j].label === tdLabel) { tdField = fields[j]; break; } }
@@ -101,7 +97,7 @@
       if (idx > 8) throw new Error('Interface byte loop runaway.');
     }
 
-    // Historical bytes
+
     if (i + K > bytes.length) throw new Error('Declared ' + K + ' historical bytes but only ' + (bytes.length - i) + ' remain.');
     if (K > 0) {
       var hist = bytes.slice(i, i + K);
@@ -118,13 +114,13 @@
       fields.push({ label: 'Historical', value: '(none)', note: 'K = 0, no historical bytes present.', tone: 'info' });
     }
 
-    // Optional TCK — present if any non-T=0 protocol was indicated
+
     var nonT0 = T_protocols.some(function (t) { return t !== 0; });
     if (nonT0 || i < bytes.length) {
       if (i < bytes.length) {
         var TCK = bytes[i++];
         var xor = 0;
-        for (var k = 1; k < bytes.length - 1; k++) xor ^= bytes[k]; // XOR T0..last-before-TCK
+        for (var k = 1; k < bytes.length - 1; k++) xor ^= bytes[k];
         var matches = (xor === TCK);
         fields.push({
           label: 'TCK',

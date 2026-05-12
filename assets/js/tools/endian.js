@@ -1,4 +1,3 @@
-/* AmbiSecure — Endian converter */
 (function () {
   'use strict';
   function init() {

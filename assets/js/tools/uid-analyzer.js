@@ -1,11 +1,7 @@
-/* AmbiSecure — UID analyzer.
-   Inspects an ISO/IEC 14443 Type A UID (4 / 7 / 10 byte).
-   Identifies cascade level, manufacturer ID for known prefixes, and the random-vs-fixed indicator. */
 (function () {
   'use strict';
 
-  /* IC manufacturer IDs from ISO/IEC 7816-6 / ISO/IEC 14443.
-     Subset that matters in NFC card decks. */
+
   var MFG = {
     0x00: '(reserved)',
     0x02: 'STMicroelectronics',

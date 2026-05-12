@@ -1,5 +1,3 @@
-/* AmbiSecure — Length-field encoder
-   Encodes an integer length in: BER long-form, DGI long-form, 1-byte, 2-byte BE/LE. */
 (function () {
   'use strict';
   function init() {

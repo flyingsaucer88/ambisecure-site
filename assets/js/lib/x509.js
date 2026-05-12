@@ -1,13 +1,10 @@
-/* AmbiSecure shared lib — X.509 / PKCS#10 / PEM decoders
-   Pure-vanilla. Depends on AmbiSecureASN1.
-   All parsing is local. */
 (function (root) {
   'use strict';
 
   if (!root.AmbiSecureASN1) throw new Error('AmbiSecureX509 requires AmbiSecureASN1');
   var A = root.AmbiSecureASN1;
 
-  /* ---- PEM <-> DER ---- */
+
   function decodePEM(text) {
     var out = [];
     var re = /-----BEGIN ([A-Z0-9 ]+)-----([\s\S]*?)-----END \1-----/g;
@@ -40,7 +37,7 @@
       for (var i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
       return out;
     }
-    /* manual fallback */
+
     var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
     var pad = (s.match(/=*$/)[0] || '').length;
     var len = (s.length / 4) * 3 - pad;
@@ -72,16 +69,16 @@
     return out;
   }
 
-  /* ---- Distinguished Name to RFC 4514 string ---- */
+
   function rdnToString(rdnSeq) {
     if (!rdnSeq || !rdnSeq.children) return '';
     var parts = [];
     for (var i = 0; i < rdnSeq.children.length; i++) {
-      var rdn = rdnSeq.children[i]; // SET
+      var rdn = rdnSeq.children[i];
       if (!rdn.children) continue;
       var atvParts = [];
       for (var j = 0; j < rdn.children.length; j++) {
-        var atv = rdn.children[j]; // SEQUENCE { type OID, value ANY }
+        var atv = rdn.children[j];
         if (!atv.children || atv.children.length < 2) continue;
         var oid = A.decodeValue(atv.children[0]);
         var name = A.oidName(oid);
@@ -101,7 +98,7 @@
   }
   function escapeRDN(s) { return String(s).replace(/([,+"\\<>;=#])/g, '\\$1'); }
 
-  /* ---- Validity ---- */
+
   function decodeValidity(node) {
     if (!node || !node.children || node.children.length < 2) return null;
     return {
@@ -110,7 +107,7 @@
     };
   }
 
-  /* ---- Algorithm Identifier ---- */
+
   function decodeAlgId(node) {
     if (!node || !node.children || !node.children.length) return null;
     var oid = A.decodeValue(node.children[0]);
@@ -128,7 +125,7 @@
     return { oid: oid, name: A.oidName(oid), parameters: paramsHuman };
   }
 
-  /* ---- SubjectPublicKeyInfo ---- */
+
   function decodeSPKI(node) {
     if (!node || !node.children || node.children.length < 2) return null;
     var alg = decodeAlgId(node.children[0]);
@@ -141,7 +138,7 @@
         if (inner && inner.children && inner.children.length >= 2) {
           var nNode = inner.children[0];
           var modulus = nNode.value;
-          // strip optional leading zero
+
           if (modulus.length && modulus[0] === 0x00) modulus = modulus.subarray(1);
           info.rsa = {
             modulusBits: modulus.length * 8,
@@ -149,20 +146,20 @@
             exponent: A.decodeValue(inner.children[1])
           };
         }
-      } catch (e) { /* ignore */ }
+      } catch (e) {  }
     }
     return info;
   }
 
-  /* ---- Extensions ---- */
+
   function decodeExtensions(extsNode) {
-    /* extsNode is the [3] EXPLICIT containing a SEQUENCE OF Extension */
+
     if (!extsNode) return [];
     var seq = extsNode.children && extsNode.children[0] ? extsNode.children[0] : extsNode;
     if (!seq.children) return [];
     var out = [];
     for (var i = 0; i < seq.children.length; i++) {
-      var ext = seq.children[i]; // SEQUENCE { OID, BOOLEAN critical OPTIONAL, OCTET STRING extnValue }
+      var ext = seq.children[i];
       if (!ext.children || ext.children.length < 2) continue;
       var oid = A.decodeValue(ext.children[0]);
       var idx = 1, critical = false;
@@ -266,7 +263,7 @@
     return parts.join(', ');
   }
   function humanCRLDP(n) {
-    /* shallow walk for visible URIs */
+
     var uris = [];
     walkForType6(n, uris);
     return uris.map(function(u){return 'URI:' + u;}).join(', ');
@@ -295,7 +292,7 @@
     return s;
   }
 
-  /* ---- X.509 Certificate ---- */
+
   function parseCertificate(der) {
     var top = A.parse(der)[0];
     if (!top || !top.children) throw new Error('Not a SEQUENCE.');
@@ -304,7 +301,7 @@
     var sigValue = top.children[2];
     if (!tbs || !tbs.children) throw new Error('Missing tbsCertificate.');
 
-    /* Optional EXPLICIT [0] version */
+
     var idx = 0, version = 1;
     if (tbs.children[0].tagClass === 2 && tbs.children[0].tagNumber === 0) {
       var v = A.decodeValue(tbs.children[0].children ? tbs.children[0].children[0] : tbs.children[0]);
@@ -318,7 +315,7 @@
     var subject = tbs.children[idx++];
     var spki = tbs.children[idx++];
     var extsNode = null;
-    /* Iterate remaining for [3] extensions */
+
     for (var k = idx; k < tbs.children.length; k++) {
       var c = tbs.children[k];
       if (c.tagClass === 2 && c.tagNumber === 3) extsNode = c;
@@ -338,18 +335,18 @@
     };
   }
 
-  /* ---- PKCS#10 CSR ---- */
+
   function parseCSR(der) {
     var top = A.parse(der)[0];
     if (!top || !top.children) throw new Error('Not a SEQUENCE.');
-    var info = top.children[0];      // CertificationRequestInfo
+    var info = top.children[0];
     var sigAlg = top.children[1];
     var sigValue = top.children[2];
     if (!info || !info.children) throw new Error('Missing CertificationRequestInfo.');
     var version = A.decodeValue(info.children[0]);
     var subject = info.children[1];
     var spki = info.children[2];
-    var attrs = info.children[3]; // [0] IMPLICIT Attributes
+    var attrs = info.children[3];
     var extensions = [];
     if (attrs && attrs.children) {
       for (var i = 0; i < attrs.children.length; i++) {
@@ -371,7 +368,7 @@
     };
   }
 
-  /* ---- Fingerprint via Web Crypto ---- */
+
   function fingerprint(der, algo) {
     if (!root.crypto || !root.crypto.subtle) return Promise.reject(new Error('Web Crypto unavailable.'));
     var algMap = { 'sha-1': 'SHA-1', 'sha-256': 'SHA-256', 'sha-384': 'SHA-384', 'sha-512': 'SHA-512' };
@@ -381,14 +378,14 @@
     });
   }
 
-  /* ---- detect: is this DER, or PEM, or hex? Returns {label, der} pairs ---- */
+
   function autoDecode(input) {
     if (input instanceof Uint8Array) return [{ label: 'DER', der: input }];
     var s = String(input).trim();
     if (s.indexOf('-----BEGIN') !== -1) return decodePEM(s);
-    /* try hex */
+
     if (/^[0-9a-f\s,;:_-]+$/i.test(s)) return [{ label: 'HEX', der: A.hexToBytes(s) }];
-    /* assume bare base64 */
+
     return [{ label: 'BASE64', der: base64Decode(s) }];
   }
 

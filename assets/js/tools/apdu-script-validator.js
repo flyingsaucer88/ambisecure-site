@@ -1,9 +1,3 @@
-/* AmbiSecure — APDU script validator (validation-only).
-   Multi-line APDU script. For each line:
-     - Strips comments after '#' or ';'
-     - Decodes CLA/INS/P1/P2 + Lc/Le per ISO 7816-4 case 1-4 (short / extended)
-     - Reports per-line VALID / INVALID with reason
-   No execution. No simulator. Static check only. */
 (function () {
   'use strict';
 
@@ -24,13 +18,13 @@
       return { case: 1, cla: cla, ins: ins, p1: p1, p2: p2, lc: 0, data: [], le: null, total: 4 };
     }
     if (rest.length === 1) {
-      // Case 2 short: just Le (one byte; 0x00 means 256)
+
       var leB = rest[0];
       return { case: 2, cla: cla, ins: ins, p1: p1, p2: p2, lc: 0, data: [], le: leB === 0 ? 256 : leB, leBytes: 1, total: 5 };
     }
     var first = rest[0];
     if (first !== 0 && first !== 0x00) {
-      // Short Lc
+
       var lc = first;
       if (rest.length < 1 + lc) throw new Error('Short Lc=' + lc + ' but only ' + (rest.length - 1) + ' data bytes.');
       var data = rest.slice(1, 1 + lc);
@@ -42,7 +36,7 @@
       }
       throw new Error('Short Lc consumes data but ' + trail.length + ' trailing bytes (expected 0 or 1 Le).');
     }
-    // Extended length: rest[0] === 0; rest[1..2] = Lc-extended, then data, then optional 2-byte Le
+
     if (rest.length === 3) {
       var leExt = (rest[1] << 8) | rest[2]; if (leExt === 0) leExt = 65536;
       return { case: 2, extended: true, cla: cla, ins: ins, p1: p1, p2: p2, lc: 0, data: [], le: leExt, leBytes: 3, total: 7 };

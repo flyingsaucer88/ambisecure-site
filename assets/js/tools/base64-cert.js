@@ -1,4 +1,3 @@
-/* AmbiSecure — Base64 certificate decoder. Detects + extracts cert from a PEM, header-less base64, or hex. */
 (function () {
   'use strict';
   function init() {

@@ -1,7 +1,3 @@
-/* AmbiSecure — Searchable reference page renderer.
-   Each reference page declares window.AS_REF = { columns, rows, slug, idCol }.
-   This file installs the search box, optional category filter, copy buttons,
-   anchor-link deep-linking, and the table rendering. */
 (function () {
   'use strict';
 
@@ -101,7 +97,7 @@
     buildTagFilter();
     render();
 
-    // Auto-scroll to anchored row
+
     try {
       var anchor = (location.hash || '').replace(/^#/, '');
       if (anchor) setTimeout(function () {

@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 18 — circular-link audit + branding consistency pass)
+**Last updated:** 2026-05-12 (Phase 19 — branding, visual assets, tile/grid governance, JS hardening, standards timelines)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -22,7 +22,7 @@ If you are reading this for the first time, start at §1 (Platform) → §3 (Dep
 | Practical utility tools | 54 |
 | Searchable reference databases | 12 |
 | Modern blog entries | 26 (+5 Phase 16 cornerstones) |
-| Historical archive entries | 24 |
+| Engineering archive entries | 24 |
 | Case studies | 3 |
 | Brochures | 7 (1 landing + 6 platform overviews) |
 | Videos | 8 (7 hosted + 1 archived elsewhere) |
@@ -77,7 +77,7 @@ Fonts: Montserrat (display), Source Sans 3 (body), JetBrains Mono (code).
 ├── contact/            Contact form (static)
 ├── blog/               21 modern engineering posts
 │   ├── categories/     19 category landings
-│   ├── archive/        24 historical archive posts
+│   ├── archive/        24 engineering archive posts
 │   └── page/2/         Pagination scaffold
 ├── case-studies/       1 landing + 3 anonymised studies (Phase 10)
 ├── brochures/          1 landing + 6 platform overviews (Phase 10)
@@ -415,7 +415,7 @@ The full `audit-all.sh` suite is too slow (~6s) for every commit; it stays in CI
 `/blog/archive/` is closed-set: 24 pre-2026 posts migrated from the legacy WordPress site. Editorial conventions for any future archive admission:
 
 1. Source has to be authored on `ambisecure.ambimat.com` (or its legacy `ambimat.com/security/...` prefix). Ambimat-corporate and eSIM posts redirect externally — they are not migrated.
-2. Posts older than 2026 carry a "Historical archive" eyebrow.
+2. Posts older than 2026 carry a "Engineering archive" eyebrow.
 3. Each archive post links forward to its modern equivalent where one exists.
 4. Archive posts are tagged `"type": "archive"` in `blogs.json`. They appear in spotlight rotation but with an `archive` badge.
 
@@ -728,8 +728,13 @@ The brand mark uses the `--brand-red: #E3222A` token; the accent on "Secure" use
 
 ### 17.5 Brand assets
 
-- `assets/img/favicon.svg` — 64×64 red rounded square with "AS" wordmark and the small accent circle. Used as the browser tab icon and for OG fallbacks where a section card does not exist.
-- `assets/img/logo.svg` — 220×64 horizontal lockup with the AS mark + "AmbiSecure" wordmark + "HARDWARE-ROOTED SECURITY" tagline. Used in printable brochures.
+- `assets/img/favicon.svg` — 64×64 circular crest aligned with the AmbiSecure logo (Phase 19). Used as the browser tab icon and for OG fallbacks where a section card does not exist.
+- `assets/img/favicon-32.png`, `assets/img/favicon-64.png`, `assets/img/apple-touch-icon.png` — raster fallbacks. The apple-touch-icon ships on every page via the `<link rel="apple-touch-icon">` added in Phase 19.
+- `assets/img/logo-mark.png`, `assets/img/logo-mark.webp`, `assets/img/logo-mark-og.jpg` — canonical AmbiSecure circular crest from `Logos/`. The CSS `.brand-mark` rule (Phase 19) renders this WEBP inline on every page's navbar/footer, replacing the previous `AS` text mark.
+- `assets/img/logo.svg` — 220×64 horizontal lockup with the mark + "AmbiSecure" wordmark + "HARDWARE-ROOTED SECURITY" tagline. Still used in printable brochures.
+- `assets/img/hero-secure-element.svg` — ISO/IEC 7816 contact-pad illustration on the homepage hero (Phase 19, replaces the CSS-only `hero-visual` schematic).
+- `assets/img/product-*.svg` and `assets/img/service-*.svg` — per-product / per-service hero illustrations (Phase 19). Each `<div class="feature-visual feature-visual-img">` wraps one of these SVGs.
+- `assets/img/certifications/cert-*.png|.webp` — conformance-mark badges on `/about/certifications/` (Phase 19; renamed from the previous `legacy-badge-*` filenames).
 - `assets/img/og/*.svg + *.png + *.webp` — per-section + per-product OG cards (Phase 12 + 15 + 16). All 1200×630. Regenerate via `python3 tools/gen-og-batch.py --wire` if any section title/eyebrow/subtitle changes in `tools/og-templates.json`.
 
 ### 17.6 Cross-property visual identity (Ambimat group)
@@ -737,7 +742,83 @@ The brand mark uses the `--brand-red: #E3222A` token; the accent on "Secure" use
 The AmbiSecure site sits between `ambimat.com` (parent corporate site) and `esim.ambimat.com` (sister property). All three share:
 
 - The red `#E3222A` brand accent
-- The "AS" / "AM" / "eS" 48 × 48 rounded brand-mark pattern
+- A circular brand crest in the navbar mark slot
 - The ecosystem bar at the top of every page linking sister properties
 
 When updating the navbar or the ecosystem bar, keep parity with the sister sites; don't introduce visual treatments that wouldn't read as "Ambimat-group".
+
+---
+
+## 18. Tile/grid governance (Phase 19)
+
+The site has one **global tile rule**: a row of clickable tiles never exceeds **four** per row, and if the final row is incomplete it is **centred**.
+
+### 18.1 Mechanics
+
+- `.grid-2`, `.grid-3`, `.grid-4` are fixed CSS-grid utilities — use these when item count is a clean multiple of N.
+- `.is-centered` modifier (Phase 19) flips any `.grid-N` to a centred flexbox so an incomplete final row sits visually centred. Use it on any grid whose child count produces orphans (e.g. `class="grid-3 is-centered"` on 5-, 7-, 11-card lists).
+- `.pillars-grid` (homepage "Seven domains") is hard-coded to a 4-up flex layout with centred last row — that is the canonical 4+3 case.
+
+### 18.2 Authoring rule
+
+When adding cards to an existing grid, count the resulting child total. If `count > 4` and `count % cols != 0`, add `is-centered` to the grid wrapper. Don't introduce alternative grid utilities — the `.grid-N` + `.is-centered` pattern is the only one we maintain.
+
+### 18.3 Audit
+
+There is no separate CI audit for grid balance — the rule is enforced by code review against this section. The `audit-circular-links` audit catches the related class of bugs (cards that link nowhere).
+
+---
+
+## 19. Placeholder governance (Phase 19)
+
+A "placeholder" is anywhere we ship a visible-but-empty box, generic stock illustration, or non-representative artwork. The site's policy is:
+
+- **Hero / feature visuals on product, service, and homepage** — must use a purpose-drawn SVG illustration (the `assets/img/product-*.svg`, `assets/img/service-*.svg`, `assets/img/hero-*.svg` family).
+- **"Coming soon" tiles** — use `.soon-tile` (Phase 18) so the tile is visually present but non-clickable. See §17.1.
+- **Tool empty-states** — the inline `<div class="placeholder">Paste …</div>` pattern inside `.tool-output` is acceptable; it is the canonical empty state for `resources/tools/*`, not a layout placeholder.
+
+The current placeholder inventory is **zero** for hero / feature visuals; all 22 product/service hero blocks ship with named SVG illustrations (Phase 19 wave).
+
+---
+
+## 20. Standards evolution timelines (Phase 19)
+
+`/resources/timelines/` hosts seven chronological timelines:
+
+| Slug | Topic |
+|------|-------|
+| `fido` | FIDO 1.0 → passkeys |
+| `piv` | FIPS 201 → derived credentials |
+| `epassport` | BAC → PACE-CAM |
+| `otp-sms` | S/Key → SMS deprecation |
+| `smart-cards` | Moreno patent → multi-applet SEs |
+| `webauthn-passkey` | CredMan API → synced passkeys |
+| `secure-elements` | SIM → IoT trust chip |
+
+### 20.1 Regenerate
+
+```bash
+python3 tools/build_timelines.py
+```
+
+Each timeline page renders from the `TIMELINES` data structure in `tools/build_timelines.py` — one chronological list of `(year, head, body, refs)` tuples per topic, plus a `related` list of cross-links. The script also rebuilds the `/resources/timelines/` index page. Add a new timeline by appending to the list and re-running the script.
+
+### 20.2 Visual treatment
+
+The `.timeline` / `.timeline-entry` CSS lives in `assets/css/main.css` (Phase 19). A single red-to-grey vertical line runs down the left edge with year+title pairs on the right. No JS — pure CSS.
+
+---
+
+## 21. Production JS hardening (Phase 19)
+
+All 68 `assets/js/**/*.js` files are passed through `tools/harden-js.py` before they ship. The hardener:
+
+- strips line and block comments (including licence comments)
+- removes `console.log/debug/info/warn/error/trace/table` statements
+- removes `// TODO / FIXME / XXX / HACK` lines
+- collapses 3+ blank lines down to 1
+
+It does **not** mangle identifiers, rename functions, or alter logic. The source-of-truth is git history — to debug or extend a tool, `git log -p assets/js/<tool>.js` shows the un-stripped version. Running `python3 tools/harden-js.py` is idempotent (a second run produces no diff).
+
+The hardener is **not** wired into the build script. It ran once as part of Phase 19 and the stripped output is committed. When adding a new JS file or making non-trivial edits to an existing one, run `python3 tools/harden-js.py` before committing so the shipped surface remains free of comments and console statements.
+

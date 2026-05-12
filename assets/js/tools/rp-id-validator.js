@@ -1,7 +1,3 @@
-/* AmbiSecure — RP ID / origin validator.
-   Rules from WebAuthn §5.1.3 (RP ID is a registrable domain suffix of the
-   origin's effective domain, or equal to it). This tool walks a list of
-   origin/rpId pairs and tells you which combinations a UA would accept. */
 (function () {
   'use strict';
 
@@ -51,7 +47,7 @@
       ok = false; reasons.push('RP ID is NOT a registrable suffix of origin host. The browser will reject this ceremony.');
     }
 
-    // PSL warnings
+
     var TLD_LIKE = /\.(com|net|org|edu|gov|io|co|me|app|dev|test|local)$/;
     if (rp === 'com' || rp === 'co.uk' || rp === 'co.in' || /^[a-z]{2,3}$/.test(rp)) {
       ok = false; reasons.push('RP ID looks like a public suffix. The Public Suffix List forbids registering at this level.');

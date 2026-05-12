@@ -1,4 +1,3 @@
-/* AmbiSecure — UTF-8 inspector */
 (function () {
   'use strict';
   function init() {

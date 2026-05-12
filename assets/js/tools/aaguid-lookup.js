@@ -1,5 +1,3 @@
-/* AmbiSecure — AAGUID lookup.
-   Hand-curated offline directory. See assets/js/lib/aaguid-dict.js. */
 (function () {
   'use strict';
 

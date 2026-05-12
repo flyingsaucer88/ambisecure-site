@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-11 (Phase 18 — circular-link audit + branding consistency pass)
+**Last updated:** 2026-05-12 (Phase 19 — branding refinement, visual assets, tile/grid governance, standards timelines)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
@@ -80,6 +80,7 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 | External docs platform (Mintlify / Docusaurus) for `/technologies/` | Static HTML is fine at current scale. Adds a build system and a deploy target for marginal docs UX gain today. | Architecture / operator | Tech docs grow to need search + versioning (more than ~30 distinct technology surfaces). | Decide on platform; migrate `/technologies/` content; set up redirects from old paths. |
 | Multilingual content | English-first audience today. Localisation cost is high (translation + dual asset trees). | Business / operator | Operator decides to expand into a non-English-primary market. | Add `lang` query param or per-language subpath; provide translations for the homepage + top 10 product pages first; extend later. |
 | Public-API / self-serve developer portal for the FIDO Validation Server | Phase 16 documented the four-step **enterprise** onboarding. A self-serve sandbox needs productisation: sign-up flow, rate limiting, abuse prevention, billing pipeline. | Product / business | Productisation decision to open up self-serve sandbox + API key issuance. | Stand up `developer.ambisecure.ambimat.com`; add sign-up UI; integrate billing; document the sandbox-tenant policy. |
+| `fido.ambisecure.ambimat.com` live deployment | Phase 19 wired the "Request demo" CTA to this URL on the assumption operator will stand up the FIDO Validation Server runtime there. The DNS, TLS cert, and deployment posture (operator-hosted vs hosted SaaS, see §9b in MASTER_OPS) are not yet in place. | Operator + ops | Operator decides on hosting shape (hosted SaaS vs operator-hosted) and stands up the runtime. | Provision DNS (A or CNAME) for `fido.ambisecure.ambimat.com`; issue TLS via Hostinger / Let's Encrypt; deploy validation-server container; confirm no source-tree or admin paths are publicly reachable; smoke-test the demo flow. |
 
 ---
 

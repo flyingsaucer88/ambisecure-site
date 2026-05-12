@@ -1,6 +1,3 @@
-/* AmbiSecure — DESFire Access-Rights decoder.
-   Decodes the 16-bit access-rights word into the four key references:
-   Read · Write · Read+Write · ChangeAccessRights. */
 (function () {
   'use strict';
   function init() {

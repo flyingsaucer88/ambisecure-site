@@ -1,6 +1,3 @@
-/* AmbiSecure — CMAC length calculator.
-   Helper for engineers wiring SCP03, EMV CDA, DESFire EV2/3 secure messaging.
-   Computes: number of CMAC blocks, padded length, output truncation. */
 (function () {
   'use strict';
 
@@ -53,7 +50,7 @@
         html += row('Truncated output', truncOut + ' bytes',
           'CMAC outputs are commonly truncated. SCP03 uses 8-byte C-MAC for command MAC; DESFire EV2/3 truncates to 8 bytes for CMAC over data; EMV CDA / dynamic auth uses 4-8 byte chunks.');
 
-        // Useful presets cheatsheet
+
         html += '<div class="note" style="margin-top:14px; padding:10px 14px; background:var(--brand-soft); border-radius:4px;">' +
           '<strong>Common deployment truncations</strong><br/>' +
           'SCP03 C-MAC / R-MAC: 8 bytes &middot; ' +

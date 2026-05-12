@@ -1,19 +1,3 @@
-/**
- * AmbiSecure analytics preferences — Phase 11.
- *
- * Lightweight, accessible opt-out / opt-in widget. Renders inside any
- * element with [data-analytics-prefs]. No external dependencies.
- *
- * Storage key: localStorage["as-analytics-opt-out"]
- *   "1"  -> opted out (analytics + web-vitals stay silent)
- *   "0"  -> explicit opt-in (no implicit state)
- *   null -> default (analytics runs if provider != "none" and DNT is off)
- *
- * Honours navigator.doNotTrack as a "preferred" hint (shown in the UI).
- *
- * CSP: parse-time only. No external network calls. Safe with
- * script-src 'self'.
- */
 (function () {
   'use strict';
 
@@ -36,7 +20,7 @@
     var p = readPref();
     if (p === "1") return "opted-out";
     if (p === "0") return "opted-in";
-    if (isDntOn()) return "opted-out";  // DNT respected by default
+    if (isDntOn()) return "opted-out";
     return "default";
   }
 

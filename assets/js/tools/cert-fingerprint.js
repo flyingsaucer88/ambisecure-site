@@ -1,4 +1,3 @@
-/* AmbiSecure — Certificate fingerprint generator (Web Crypto). Client-side. */
 (function () {
   'use strict';
   function init() {

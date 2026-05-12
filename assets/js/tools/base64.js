@@ -1,4 +1,3 @@
-/* AmbiSecure — Base64 encoder/decoder */
 (function () {
   'use strict';
   function init() {

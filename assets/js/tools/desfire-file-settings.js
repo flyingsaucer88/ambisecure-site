@@ -1,6 +1,3 @@
-/* AmbiSecure — DESFire GetFileSettings response parser.
-   NXP DESFire EV1/EV2/EV3. Decodes file type, comm settings, access rights,
-   and per-type fields. Reference only — no key material. */
 (function () {
   'use strict';
 
@@ -35,7 +32,7 @@
   }
 
   function decodeAccessRights(ar) {
-    // 16-bit word, MSB first: ReadKey | WriteKey | ReadWriteKey | ChangeAR
+
     function nib(name, val) {
       if (val === 0xE) return name + '=Free access';
       if (val === 0xF) return name + '=Denied';
@@ -111,7 +108,7 @@
     }
     input.addEventListener('input', go);
     if (sample) sample.addEventListener('click', function () {
-      // type=0x00, comm=0x03, AR=0xE012 (read free, write key 0, R/W key 1, chg key 2), size=128
+
       input.value = '00 03 E0 12 80 00 00';
       go();
     });

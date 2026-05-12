@@ -1,10 +1,7 @@
-/* AmbiSecure — DESFire status decoder. Looks up DESFire response status bytes. */
 (function () {
   'use strict';
 
-  /* DESFire status word dictionary — public, well-documented in the
-     NXP application notes and ISO/IEC 14443-4 framing.
-     This is a reference table, not exploit material. */
+
   var SW = [
     {hex:'00', name:'OPERATION_OK', tone:'ok', desc:'Successful operation.'},
     {hex:'0C', name:'NO_CHANGES', tone:'ok', desc:'No changes done to backup files; transaction does not need committing.'},

@@ -317,4 +317,14 @@
   <url><loc>https://ambisecure.ambimat.com/tags/hardware/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/pki/</loc><changefreq>monthly</changefreq><priority>0.55</priority></url>
 
+  <!-- Phase 19: Standards evolution timelines -->
+  <url><loc>https://ambisecure.ambimat.com/resources/timelines/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/timelines/fido/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/timelines/piv/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/timelines/epassport/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/timelines/otp-sms/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/timelines/smart-cards/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/timelines/webauthn-passkey/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/timelines/secure-elements/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
+
 </urlset>

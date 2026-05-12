@@ -1,5 +1,3 @@
-/* AmbiSecure — DESFire EV2/EV3 Transaction MAC field visualizer.
-   Field-only educational view. No key compute. */
 (function () {
   'use strict';
 

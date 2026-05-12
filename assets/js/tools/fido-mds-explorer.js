@@ -1,8 +1,3 @@
-/* AmbiSecure — FIDO Metadata Explorer.
-   Browse the curated AAGUID directory in metadata-style cards: vendor,
-   model, transports, posture (BE=0 in our shipping definition).
-   Production should fetch the FIDO MDS BLOB; this is a useful stand-in
-   for offline browsing during integration. */
 (function () {
   'use strict';
 
@@ -33,7 +28,7 @@
         output.innerHTML = '<div class="placeholder">No authenticators match.</div>';
         return;
       }
-      // Group by vendor
+
       var byVendor = {};
       filtered.forEach(function (e) { (byVendor[e.vendor] = byVendor[e.vendor] || []).push(e); });
       var html = '';

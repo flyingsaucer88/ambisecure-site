@@ -1,11 +1,7 @@
-/* AmbiSecure — APDU Parser
-   Decodes ISO/IEC 7816-4 command and response APDUs.
-   Supports Case 1-4, short and extended length.
-   All parsing is local. */
 (function () {
   'use strict';
 
-  /* Common INS dictionary (CLA-agnostic, ISO + GP + EMV common ones) */
+
   var INS_DICT = {
     0x04: 'DEACTIVATE FILE',
     0x0C: 'ERASE RECORD',
@@ -57,7 +53,7 @@
     0xE8: 'TERMINATE EF',
     0xF2: 'STATUS',
     0xFE: 'TERMINATE CARD USAGE',
-    /* GlobalPlatform */
+
     0x50: 'INITIALIZE UPDATE (GP)',
     0x80: 'GP variants — see CLA',
     0xE4: 'DELETE (GP)',
@@ -67,7 +63,7 @@
     0xF2: 'GET STATUS (GP)'
   };
 
-  /* Common SW1/SW2 status words */
+
   var SW = {
     '9000': 'Normal — no further qualification.',
     '6100': 'Normal, with bytes available (SW2 = number of bytes).',
@@ -172,7 +168,7 @@
   function parseAPDU(bytes, mode) {
     var fields = [];
 
-    /* Detect: if mode is 'response' or starts with status-only short input, parse as response */
+
     if (mode === 'response' || (bytes.length === 2 && (bytes[0] >= 0x60 && bytes[0] <= 0x9F))) {
       return parseResponse(bytes);
     }
@@ -195,20 +191,20 @@
     var Lc = null, data = null, Le = null, caseName = null, extended = false;
 
     if (i === bytes.length) {
-      // Case 1: header only
+
       caseName = 'Case 1';
     } else if (i + 1 === bytes.length) {
-      // Case 2 short: Le only
+
       Le = bytes[i] === 0 ? 256 : bytes[i];
       caseName = 'Case 2 (short)';
     } else {
-      // Has data and/or extended Le
+
       var lenByte = bytes[i];
       if (lenByte === 0x00 && (bytes.length - i) >= 3) {
-        // Extended length: 00 LcHi LcLo data Le?Le?
+
         extended = true;
         if (bytes.length - i === 3) {
-          // Case 2 extended (no data, just Le): 00 LeHi LeLo
+
           Le = (bytes[i + 1] << 8) | bytes[i + 2];
           if (Le === 0) Le = 65536;
           caseName = 'Case 2 (extended)';
@@ -279,7 +275,7 @@
     var swKey = hex(SW1, 2) + hex(SW2, 2);
     var swMeaning = SW[swKey];
     if (!swMeaning) {
-      // try wildcard SW1xx
+
       var wildcard = hex(SW1, 2) + '00';
       if (SW[wildcard]) swMeaning = SW[wildcard] + ' (SW2 = 0x' + hex(SW2, 2) + ')';
     }

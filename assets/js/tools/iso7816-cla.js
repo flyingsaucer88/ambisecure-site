@@ -1,6 +1,3 @@
-/* AmbiSecure — ISO/IEC 7816-4 CLA byte decoder.
-   Walks the bit-fields of CLA: command chaining, secure messaging,
-   logical channel, type (interindustry / proprietary). */
 (function () {
   'use strict';
 
@@ -20,16 +17,16 @@
     var b1 = (cla & 0x02) >> 1;
     var b0 = (cla & 0x01);
 
-    // First, classify
+
     if (cla === 0xFF) {
       out.type = 'reserved (PPS / proprietary)';
       out.note = '0xFF is reserved by ISO/IEC 7816-3 for the Protocol Parameter Selection (PPS) sequence and must not be used as a normal CLA.';
       return out;
     }
 
-    // Bits 8..6 of CLA (b7..b5) classify the structure.
+
     if (b7 === 0) {
-      // First interindustry class (00, 0X, 1X, 2X, 3X with b7=0, b6=0)
+
       if (b6 === 0) {
         out.type = 'interindustry — first interindustry values (X.b6=0)';
         out.fields.push({ name: 'Logical channel', bits: 'b1..b0 (low 2 bits)', value: cla & 0x03, note: 'Channel 0–3.' });
@@ -73,7 +70,7 @@
           html += row(f.name, '<span class="mono">' + f.value + '</span>', '<strong>' + f.bits + '</strong> &middot; ' + f.note);
         });
 
-        // Common-value cribsheet
+
         var common = {
           0x00: 'Standard ISO interindustry, channel 0, no SM, no chaining.',
           0x0C: 'ISO interindustry, channel 0, SM with authenticated header, no chaining.',

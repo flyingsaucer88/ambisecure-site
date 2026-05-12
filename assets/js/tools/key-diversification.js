@@ -1,9 +1,3 @@
-/* AmbiSecure — key diversification visualizer (educational).
-   Demonstrates the AES-CMAC-based diversification algorithm published by
-   NXP in AN10922 / AV2: derive a per-card K_card from a master K_app and
-   the card's unique AID/UID. PURELY EDUCATIONAL — uses placeholder keys,
-   does NOT compute the production diversified value, and is NOT designed
-   to be used in production. */
 (function () {
   'use strict';
 
@@ -28,11 +22,11 @@
       if (master.length !== 32) { AS.renderError(output, 'AES-128 master key must be 16 bytes (32 hex characters). NEVER paste a real key here — this tool is an illustration only.'); return; }
 
       try {
-        // NXP AN10922 / AV2 AES diversification (educational version):
-        // d = 01 || UID || padding to 16/32 bytes  (DiversInput)
-        // K_div = AES-CMAC(K_master, d)
-        // We compute a single SHA-256 here as a placeholder (not the real CMAC) so users
-        // understand the SHAPE of the derivation without producing a usable cloned key.
+
+
+
+
+
         var uidBytes = new Uint8Array(uid.length / 2);
         for (var i = 0; i < uidBytes.length; i++) uidBytes[i] = parseInt(uid.substr(i * 2, 2), 16);
         var keyBytes = new Uint8Array(16);

@@ -1,8 +1,3 @@
-/* AmbiSecure — clientDataJSON decoder.
-   The base64url-encoded clientDataJSON sent in WebAuthn assertions and
-   attestations. Validates the type, decodes the challenge, surfaces the
-   origin and crossOrigin, and shows the SHA-256 (which the authenticator
-   actually signs over). */
 (function () {
   'use strict';
 
@@ -33,7 +28,7 @@
         var bytes;
         var jsonText;
         if (raw.charAt(0) === '{') {
-          // Raw JSON path
+
           jsonText = raw;
           if (typeof TextEncoder !== 'undefined') bytes = new TextEncoder().encode(jsonText);
           else { bytes = new Uint8Array(jsonText.length); for (var i = 0; i < jsonText.length; i++) bytes[i] = jsonText.charCodeAt(i); }
@@ -79,17 +74,17 @@
             'Legacy field — generally absent in modern browsers.');
         }
 
-        // Show the full JSON
+
         html += '<details style="margin-top:14px;"><summary style="cursor:pointer; font-family:Montserrat,sans-serif; font-size:12px; color:var(--brand-grey);">Show full JSON</summary>' +
           '<pre style="margin-top:8px; padding:14px; background:var(--code-bg); color:var(--code-fg); border-radius:6px; font-size:12.5px; overflow-x:auto;">' +
           AS.escHTML(JSON.stringify(obj, null, 2)) + '</pre></details>';
 
-        // SHA-256 of the raw clientDataJSON bytes — this is what the authenticator signs.
+
         try {
           var h = await sha256Hex(bytes);
           if (h) html += row('SHA-256(clientDataJSON)', '<span class="mono">' + h + '</span>',
             'This 32-byte digest is the second half of the data the authenticator signs (after authenticatorData). Useful for cross-checking your verification path.');
-        } catch (e) { /* noop */ }
+        } catch (e) {  }
 
         output.innerHTML = html;
       } catch (e) { AS.renderError(output, e.message); }

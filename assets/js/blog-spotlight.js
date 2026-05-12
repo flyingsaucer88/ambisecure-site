@@ -1,30 +1,14 @@
-/**
- * Homepage daily blog spotlight rotation.
- *
- * Picks N blogs from window.AS_BLOG_POOL using a deterministic seed derived
- * from today's UTC date. The same set is shown to every visitor for a full
- * UTC day, then rotates at 00:00 UTC the next morning.
- *
- * Requirements:
- *   - /assets/js/blog-pool.js must load first (defines window.AS_BLOG_POOL)
- *   - Mount points (any of these classes will receive content):
- *       .hp-spotlight-featured  -> 3 mixed-era featured posts
- *       .hp-spotlight-modern    -> 3 modern-only posts
- *       .hp-spotlight-archive   -> 1 historical-archive spotlight
- *
- * Zero network calls. Zero localStorage. Zero CSP impact.
- */
 (function () {
   if (!window.AS_BLOG_POOL || !Array.isArray(window.AS_BLOG_POOL)) return;
   var pool = window.AS_BLOG_POOL;
   if (pool.length === 0) return;
 
-  // Deterministic daily seed: days since unix epoch, in UTC.
+
   var now = new Date();
   var utcMidnight = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
   var seed = Math.floor(utcMidnight / 86400000);
 
-  // Linear-congruential-ish pseudo-random offset generator.
+
   function picker(s, len) {
     var i = ((s % len) + len) % len;
     return function () {
@@ -82,11 +66,11 @@
     nodes.forEach(function (n) { n.innerHTML = html; });
   }
 
-  // Filter pools
+
   var modern = pool.filter(function (p) { return p.type === "modern"; });
   var archive = pool.filter(function (p) { return p.type === "archive"; });
 
-  // Pick — different seed nudges per slot so they don't collide.
+
   var featured = pickN(pool, 3, seed);
   var modernPicks = pickN(modern, 3, seed + 7);
   var archivePicks = pickN(archive, 1, seed + 13);
