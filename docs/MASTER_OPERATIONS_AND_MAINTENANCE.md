@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 23 — official AmbiSecure logo wired in, hero banner strengthened, legacy placeholder marks retired)
+**Last updated:** 2026-05-12 (Phase 24 — flagship hero crest, real-logo favicons, 5-min HTML TTL, OG+twitter:image coverage at 263/263)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -1136,3 +1136,78 @@ Note that the long-form "Why AmbiSecure" section at slot 11 carries the credibil
 **Status: zero references.** Site-wide grep on 2026-05-12 confirmed no occurrences of `Keyra` / `keyra` / `KEYRA` in any HTML, JS, CSS, JSON, Markdown, or XML file under the project root (excluding `.git/`, `dist/`, `legacysitedata/`, `node_modules/`). The Phase 22 brief asked for Keyra removal; nothing existed to remove. The verification step is recorded here so future operators do not re-litigate.
 
 If Keyra references appear in future content drafts, **do not commit them**. AmbiSecure positioning is the security business unit of Ambimat Electronics; Keyra is a separate project and does not belong on this site.
+## 32. Favicon governance (Phase 24)
+
+The favicon set is generated from the same `Logos/ambisecure_logo_og.jpg` (512×512) source as the main brand. Every page links four raster sizes plus the SVG:
+
+| File | Size | Source | Purpose |
+|---|---|---|---|
+| `assets/img/favicon.svg` | vector | hand-coded | Browser tabs that prefer SVG. Simplified to red A + white circle (no internal wordmark — illegible at 16/32 px). |
+| `assets/img/favicon-32.png` | 32×32 | `sips -Z 32 Logos/ambisecure_logo_og.jpg` | Standard browser tab. |
+| `assets/img/favicon-64.png` | 64×64 | same | High-DPI tab + bookmarks bar. |
+| `assets/img/favicon-192.png` | 192×192 | same | Android home-screen + PWA manifest. |
+| `assets/img/favicon-512.png` | 512×512 | same | PWA install splash + Android adaptive icon. |
+| `assets/img/apple-touch-icon.png` | 180×180 | same | iOS home-screen. |
+
+All five raster sizes are referenced in the `<head>` of every HTML page via the favicon block:
+
+```html
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+```
+
+To regenerate after a logo change:
+
+```bash
+sips -s format png Logos/ambisecure_logo_og.jpg --out /tmp/master.png
+for sz in 32 64 192 512; do
+  sips -Z $sz /tmp/master.png -s format png --out assets/img/favicon-$sz.png
+done
+sips -Z 180 /tmp/master.png -s format png --out assets/img/apple-touch-icon.png
+```
+
+`sips` writes JPEG bytes into `.png` files unless you go through a PNG intermediate — always convert to `/tmp/master.png` first.
+
+---
+
+## 33. Cache TTL strategy (Phase 24)
+
+`.htaccess` `<IfModule mod_expires.c>` block:
+
+| Type | TTL | Why |
+|---|---|---|
+| `text/html` | **5 minutes** (Phase 24) | Short during active iteration so re-deploys appear quickly. Bump back to 1 hour once homepage + section pages stabilise. |
+| `text/css` | 7 days | Hand-edited cache-bust `?v=N` on all CSS references defeats stale CSS regardless of this TTL (see §34). |
+| `application/javascript` | 7 days | Same `?v=N` cache-bust applies. |
+| `image/svg+xml`, `image/webp`, `image/png`, `image/jpeg` | 30 days | Images rarely change; aggressive cache helps perf. |
+| `application/pdf` | 30 days | Brochures rarely change. |
+
+When you change the HTML TTL, edit `.htaccess` line ~227 and re-upload.
+
+### 34. Cache-bust convention (Phase 22+)
+
+Every reference to a CSS or JS file site-wide carries a `?v=<N>` query string. The Phase 24 version is `23`. Bump it whenever you publish a meaningful CSS or JS change that browsers must refetch. The sweep script is open-coded; the canonical pattern is `/assets/css/main.css?v=23` and `/assets/js/<file>.js?v=23` across all HTML files.
+
+To bump, run the sweep at `tools/` / inline Python (no dedicated CLI yet); search for `?v=23` and replace with `?v=24`. The next deploy then forces every browser to refetch.
+
+---
+
+## 35. Hero crest as flagship visual (Phase 24)
+
+The homepage hero's right-side visual is the **official AmbiSecure crest** from `assets/img/og/ambisecure-logo-og.jpg` (512×512), rendered at `max-width: 520px` via `.hero-crest`. This is intentionally the brand badge itself, not an abstract illustration:
+
+- The crest carries its own internal "AMBI SECURE" wordmark at this size, so the brand is unmistakable.
+- The three orbiting icons (smart-home / lock / industrial) communicate the three audience verticals (consumer / enterprise IT / industrial-IoT).
+- The previous `hero-secure-element.svg` is no longer the hero visual but remains available for future product-specific heroes.
+
+Companion hero specs (`.hero`, `.hero-title`, `.hero-desc`, `.hero-creds`):
+
+- `min-height: 92vh` (was 86vh in Phase 22; was 78vh originally)
+- `padding: 110px 80px 140px` desktop
+- `.hero-title` 62px, line-height 1.05, letter-spacing -1.4px
+- `.hero-desc` 19px, max-width 640px
+- `.hero-creds` strip — 7 domains (FIDO · PIV · PKI · JavaCard · Secure Elements · ePassport · IoT Security), uppercase, red bullet, separated from the description by a 1px top border
+- Mobile (`max-width: 880px`): title 40px, crest `max-width: 320px`, padding `60px 24px 90px`

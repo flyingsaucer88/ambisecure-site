@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AmbiSecure">
-  <circle cx="32" cy="32" r="30" fill="#fff" stroke="#9aa0a3" stroke-width="2"/>
-  <path d="M32 14 L48 50 L42 50 L32 26 L22 50 L16 50 Z" fill="#E3222A"/>
-  <path d="M24 38 L40 38 L42 42 L22 42 Z" fill="#fff"/>
-  <path d="M26 36 L38 36 L39.5 39 L24.5 39 Z" fill="#E3222A"/>
+  <!-- Outer ring matching the AmbiSecure crest -->
+  <circle cx="32" cy="32" r="30" fill="#FFFFFF" stroke="#9AA0A3" stroke-width="2"/>
+  <!-- Solid red "A" mark.
+       Below 64px the full crest's internal "AMBI SECURE" wordmark and three
+       orbiting icons are illegible, so the favicon shows just the A. The full
+       crest is used at favicon-180 / apple-touch-icon and above. -->
+  <path d="M32 12 L50 52 L43 52 L39 44 L25 44 L21 52 L14 52 Z M27 38 L37 38 L32 26 Z" fill="#E3222A" fill-rule="evenodd"/>
 </svg>

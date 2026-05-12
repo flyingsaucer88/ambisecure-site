@@ -339,14 +339,14 @@ a { color: inherit; }
    HERO
    ========================================================= */
 .hero {
-  min-height: 86vh;
+  min-height: 92vh;
   background:
-    radial-gradient(ellipse at 80% 0%, rgba(227,34,42,0.05), transparent 55%),
+    radial-gradient(ellipse at 82% -10%, rgba(227,34,42,0.08), transparent 55%),
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
     #ffffff;
   background-size: auto, 60px 60px, 60px 60px, auto;
-  padding: 96px 80px 128px;
+  padding: 110px 80px 140px;
   display: flex;
   align-items: center;
   position: relative;
@@ -377,6 +377,16 @@ a { color: inherit; }
 .hero-left { flex: 1.05; }
 .hero-right { flex: 0.95; display: flex; justify-content: center; }
 
+/* Hero-crest: the official AmbiSecure circular crest used as the hero's
+   right-side flagship visual. The crest carries the "AMBI SECURE" wordmark
+   internally, so the hero is unmistakably branded without competing badges. */
+.hero-crest {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  filter: drop-shadow(0 14px 38px rgba(58,63,64,0.16));
+}
+/* Legacy hero-logo class kept for any callers that still reference it. */
 .hero-logo {
   width: 96px;
   height: 96px;
@@ -399,21 +409,21 @@ a { color: inherit; }
 .hero-tag::before { content: ''; width: 22px; height: 2px; background: var(--brand-red); }
 
 .hero-title {
-  font-size: 54px;
+  font-size: 62px;
   font-weight: 700;
-  line-height: 1.08;
+  line-height: 1.05;
   color: var(--ink);
-  margin-bottom: 22px;
-  letter-spacing: -1px;
+  margin-bottom: 26px;
+  letter-spacing: -1.4px;
 }
 .hero-title .accent { color: var(--brand-red); }
 
 .hero-desc {
-  font-size: 18px;
+  font-size: 19px;
   line-height: 1.7;
   color: var(--brand-grey);
-  max-width: 620px;
-  margin-bottom: 34px;
+  max-width: 640px;
+  margin-bottom: 38px;
 }
 
 .hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; }
@@ -1238,8 +1248,9 @@ footer.site-footer a:hover { color: var(--brand-red); }
 
   section { padding: 70px 24px; }
   .hero { padding: 60px 24px 90px; min-height: 0; }
-  .hero-title { font-size: 38px; line-height: 1.12; letter-spacing: -0.6px; }
+  .hero-title { font-size: 40px; line-height: 1.12; letter-spacing: -0.6px; }
   .hero-logo { width: 80px; height: 80px; margin-bottom: 18px; }
+  .hero-crest { max-width: 320px; }
   .hero-desc { font-size: 16.5px; }
   .hero-creds { font-size: 12px; gap: 16px 18px; }
   .section-title { font-size: 28px; }

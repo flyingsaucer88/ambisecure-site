@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 23 — official AmbiSecure logo wired in, hero banner strengthened, legacy placeholder marks retired)
+**Last updated:** 2026-05-12 (Phase 24 — flagship hero crest, real-logo favicons, 5-min HTML TTL, OG+twitter:image coverage at 263/263)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
