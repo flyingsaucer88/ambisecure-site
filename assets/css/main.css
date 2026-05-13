@@ -503,6 +503,20 @@ a { color: inherit; }
 .btn-ghost { background: transparent; color: var(--brand-dark); border-color: var(--line); }
 .btn-ghost:hover { border-color: var(--brand-red); color: var(--brand-red); }
 .btn-small { padding: 10px 18px; font-size: 12.5px; }
+/* Tertiary text-only CTA: same typographic rhythm as .btn but no fill or
+   border. Use for low-emphasis hero/section actions like "Browse
+   resources →" alongside a filled primary and outlined secondary. */
+.btn-text {
+  background: transparent;
+  color: var(--ink, #3A3F40);
+  border-color: transparent;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+.btn-text:hover {
+  background: transparent;
+  color: var(--brand-red, #E3222A);
+}
 
 /* =========================================================
    SECTIONS
@@ -1241,7 +1255,10 @@ footer.site-footer a:hover { color: var(--brand-red); }
 @media (max-width: 1080px) {
   .hero-container { flex-direction: column; gap: 50px; }
   .hero-right { width: 100%; max-width: 480px; }
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  /* .grid-* use flex (not grid) so we resize via flex-basis on the children
+     instead of grid-template-columns. At this breakpoint .grid-4 wraps to
+     two-up; .grid-3 already wraps naturally via its basis. */
+  .grid-4 > * { flex: 1 1 calc((100% - 22px) / 2); max-width: calc((100% - 22px) / 2); }
 }
 
 @media (max-width: 880px) {
@@ -1273,8 +1290,8 @@ footer.site-footer a:hover { color: var(--brand-red); }
   .footer-brand .brand-mark { height: 72px; width: 72px; }
   .section-title { font-size: 28px; }
 
-  .grid-3, .grid-2 { grid-template-columns: 1fr; }
-  .grid-4 { grid-template-columns: 1fr; }
+  /* .grid-* use flex — stack to one column on mobile via flex-basis. */
+  .grid-2 > *, .grid-3 > *, .grid-4 > * { flex: 1 1 100%; max-width: 100%; }
 
   .feature-row { grid-template-columns: 1fr; gap: 30px; }
   .feature-row.reverse > :first-child { order: 0; }
@@ -2743,6 +2760,67 @@ section.brochure {
   font-style: italic;
   padding: 24px 0;
 }
+
+/* Sitewide search page — grouped results */
+.sitewide-search-results {
+  list-style: none;
+  padding: 0;
+  margin: 30px auto 0;
+  max-width: 920px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.sitewide-search-group {
+  margin-top: 14px;
+}
+.sitewide-search-group:first-child { margin-top: 0; }
+.sitewide-search-group-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--brand-red, #E3222A);
+  display: inline-block;
+  padding: 8px 0 4px;
+  border-bottom: 1px solid var(--rule, #E1E3E4);
+  width: 100%;
+}
+.sitewide-search-item a {
+  display: block;
+  padding: 12px 14px;
+  border: 1px solid var(--rule, #E1E3E4);
+  border-left: 4px solid var(--brand-red, #E3222A);
+  border-radius: 6px;
+  background: #fff;
+  text-decoration: none;
+  transition: border-color .15s ease;
+}
+.sitewide-search-item a:hover {
+  border-left-color: var(--secure-cyan, #0E8C9C);
+}
+.sitewide-search-title {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ink, #3A3F40);
+  margin-bottom: 4px;
+}
+.sitewide-search-desc {
+  display: block;
+  font-size: 13.5px;
+  color: var(--brand-grey, #616A6C);
+  line-height: 1.55;
+}
+.sitewide-search-empty {
+  list-style: none;
+  text-align: center;
+  color: var(--brand-grey, #616A6C);
+  padding: 24px 0;
+  font-size: 14.5px;
+}
+.sitewide-search-empty strong { color: var(--ink, #3A3F40); }
 
 /* Tag cloud */
 .tag-cloud {

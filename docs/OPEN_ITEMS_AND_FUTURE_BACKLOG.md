@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-13 (Phase 28 &mdash; hero spacing tightened, banner switched to deterministic daily rotation across the Ambimat ecosystem, site-wide SIM-&rarr;-MFF2/nano-card terminology fix)
+**Last updated:** 2026-05-13 (Codex production-candidate QA pass &mdash; robots.txt simplified to spec, flex-grid mobile bug fixed, FIDO demo reframed as request-based, contact-form mail-client UX disclosed, `/search/` switched to the sitewide index, OG/Twitter images aligned across 254 pages, archive tone modernised, footer build markers removed, hero CTAs re-ranked, sitewide-search page added)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 

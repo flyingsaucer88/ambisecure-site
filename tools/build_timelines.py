@@ -234,7 +234,7 @@ NAV = """<!doctype html>
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.png" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/assets/css/fonts.css" />
@@ -420,7 +420,7 @@ def build_index():
 <meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.png" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/assets/css/fonts.css" />

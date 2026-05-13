@@ -179,6 +179,9 @@ def rewrite_meta_tags(templates):
     META_RE = re.compile(
         r'(<meta property="og:image" content=")(https://ambisecure\.ambimat\.com[^"]*)("\s*/?>)'
     )
+    TW_RE = re.compile(
+        r'(<meta name="twitter:image" content=")(https://ambisecure\.ambimat\.com[^"]*)("\s*/?>)'
+    )
 
     for dirpath, _, files in os.walk(ROOT):
         if "/legacysitedata/" in dirpath or "/.git/" in dirpath or "/node_modules/" in dirpath:
@@ -218,6 +221,8 @@ def rewrite_meta_tags(templates):
                 untouched += 1
                 continue
             new_html = META_RE.sub(r"\g<1>" + new_og + r"\g<3>", html, count=1)
+            # Keep twitter:image in lockstep with og:image so card previews match.
+            new_html = TW_RE.sub(r"\g<1>" + new_og + r"\g<3>", new_html, count=1)
             with open(path, "w") as f:
                 f.write(new_html)
             section_pages += 1
