@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-13 (Editorial normalisation pass &mdash; archive opening paragraphs rewritten with engineering-led anchors, templated "This article addresses…" / "The blog of this week…" framings removed across 22 archive pages, 17 empty related-card excerpts filled, SIM/MFF2/JavaCard/ePassport/FIDO2 terminology normalised, all audits passing)
+**Last updated:** 2026-05-13 (Full sitewide SIM / nano-card / MFF2 terminology audit &mdash; 88 telecom-implying phrasings rewritten across 26 surfaces including product pages, blog cards, OG/Twitter/JSON-LD metadata, blogs.json, search-index.json, blog-search-index.json, blog-pool.js, llms.txt, llms-full.txt, og-templates.json, and timeline pages; product display names retitled "PIV Nano SIM Applet" &rarr; "PIV Nano-Card Applet" with URL slugs preserved; the legacy "SIM-Based FIDO2 Authenticators…" blog post renamed to "Embedded Secure-Element FIDO2 Authenticators…"; "telecom-integrated identity" framing replaced with "OEM and embedded identity"; three residual hits intentionally retained (eSIM Initiative card on `/industries/`, hero-visual-config.js comment quoting banned wording on purpose, transit-validator blog's "SAM in a 4FF SIM-form FRU" engineering reference); all audits passing)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 

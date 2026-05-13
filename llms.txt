@@ -19,8 +19,8 @@ This file follows the emerging [llms.txt convention](https://llmstxt.org) for LL
 - [IoT Security Applets](https://ambisecure.ambimat.com/products/iot-security-applets/): JavaCard applets for IoT device identity, attestation, signed firmware.
 - [IoT Solution](https://ambisecure.ambimat.com/products/iot-solution/): end-to-end IoT trust platform — chipset, key manager, attestation pipeline.
 - [JavaCard Applet Platform](https://ambisecure.ambimat.com/products/javacard-applets/): twelve applets co-resident on one CC EAL5+ secure element, AID-selectable.
-- [FIDO2 Nano SIM Applet](https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/): FIDO2 / CTAP2 applet on a nano-SIM (4FF) secure element.
-- [PIV Nano SIM Applet](https://ambisecure.ambimat.com/products/piv-nano-sim-applet/): NIST SP 800-73 PIV applet on a nano-SIM secure element.
+- [FIDO2 Nano-Card Applet](https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/): FIDO2 / CTAP2 applet on a nano-card (4FF) secure element.
+- [PIV Nano-Card Applet](https://ambisecure.ambimat.com/products/piv-nano-sim-applet/): NIST SP 800-73 PIV applet on a nano-card secure element.
 - [eSIM Solution](https://ambisecure.ambimat.com/products/esim-solution/): SGP.22 / SGP.32 eUICC platform with OpenID Connect applet option.
 
 ## Services

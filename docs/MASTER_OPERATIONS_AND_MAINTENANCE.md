@@ -1489,3 +1489,66 @@ patterns = [
 ```
 
 A run of this verifier across `blog/**/*.html` and `tags/**/*.html` after the pass returned zero hits.
+
+## 48. Full sitewide SIM / nano-card / MFF2 terminology audit (Phase 33)
+
+Earlier passes (§44) fixed body prose. Codex flagged that blog cards, OG/Twitter/JSON-LD metadata, derived data files, and the displayed product names still leaked telecom-SIM framing. This pass closes those gaps.
+
+**Scope of the audit:** every `*.html`, `*.json`, `*.js`, `*.txt` in the source tree except `dist/`, `docs/`, `_internal/`, `.git/`, and three intentional exceptions documented below.
+
+**Initial offending hits (pre-pass): 61 across 19 files**, in 9 pattern classes (`SIM applet`, `SIM-based applet`, `SIM-based authenticator`, `SIM authenticator`, `SIM-resident applet`, `Nano SIM applet`, `nano-SIM applet`, `on a nano-SIM`, `SIM-form`).
+
+**Plus additional metadata gaps discovered during the pass:** display product names ("PIV Nano SIM Applet" / "FIDO2 Nano SIM Applet"), the blog post title "SIM-Based FIDO2 Authenticators for Enterprise Identity", "telecom-integrated identity" framing on three product/blog pages, and the legacy "telecom-grade identity programmes" footer line on three PIV product pages.
+
+**Surgical replacements (preserving URL slugs and proper-noun citations):**
+
+| Old | New |
+|---|---|
+| `PIV Nano SIM Applet` (display) | `PIV Nano-Card Applet` |
+| `FIDO2 Nano SIM Applet` (display) | `FIDO2 Nano-Card Applet` |
+| `SIM-Based FIDO2 Authenticators for Enterprise Identity` | `Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity` |
+| `PIV applet on a nano SIM` | `PIV applet on a nano-card secure element` |
+| `applet on a nano-SIM secure element` | `applet on a nano-card secure element` |
+| `FIDO2 / CTAP2 applet on a nano SIM (4FF) secure element` | `FIDO2 / CTAP2 applet on a nano-card (4FF) secure element` |
+| `Why a PIV applet on a SIM` | `Why a PIV applet on a nano-card` |
+| `PIV semantics, SIM form factor` | `PIV semantics, nano-card form factor` |
+| `4FF SIM form factor for telecom identity` | `4FF nano-card form factor — for embedded identity programmes` |
+| `4FF SIM form factor — for telecom-grade identity programmes` | `4FF nano-card form factor — for embedded identity programmes` |
+| `card form, embedded form, USB form, or nano-SIM form` | `card form, embedded MFF2 form, USB form, or nano-card form` |
+| `nano SIM authenticator` | `nano-card authenticator` |
+| `on-SIM authenticator` | `embedded secure-element authenticator` |
+| `Telecom and identity convergence` | `Enterprise FIDO and secure-element convergence` |
+| `telecom-integrated identity` (programme framing) | `OEM and embedded identity` |
+| `telecom-grade identity programmes` | `embedded identity programmes` |
+
+**Files touched (26 in total):** the two `/products/*-nano-sim-applet/` pages; `/products/index.html`, `/products/secure-mail-suite/`, `/products/piv-card/`, `/products/piv-bio-card/`, `/products/piv-usb-key/`, `/products/iot-security-applets/`, `/products/pkcs-signature-suite/`; `/technologies/fido2/`; `/solutions/government-identity/`; `/resources/timelines/piv/`, `/resources/timelines/secure-elements/`; the cornerstone blog `blog/sim-based-fido2-authenticators/`; `blog/archive/mfa-in-government/`; `blog/index.html` (cornerstone card); `services/fido-validation-server/demo/`; `tools/og-templates.json`; and the four derived data files (`assets/data/blogs.json` source-of-truth, `assets/data/search-index.json`, `assets/data/blog-search-index.json`, `assets/js/blog-pool.js`, `llms.txt`, `llms-full.txt`) regenerated from the corrected source via `tools/regen-blog-pool.py`, `tools/build-search-index.py`, and `tools/build-llms-full.py`.
+
+**Three intentional exceptions** (verifier knows to skip):
+
+1. `industries/index.html` — the `Telecom — eSIM Initiative` card on the industries page legitimately describes eSIM applets in the telecom-SIM context, because it links to the dedicated eSIM Initiative sister site at `esim.ambimat.com`. That sister property is the actual telecom-SIM ecosystem.
+2. `assets/js/hero-visual-config.js` — the file-level docstring quotes "SIM-resident applets" inside a banned-wording governance comment. That's documentation, not user-facing copy.
+3. `blog/designing-low-latency-secure-transit-validators/index.html` — "SAM in a 4FF SIM-form FRU" refers to the physical socket-form hardware module that SAMs ship in (transit validators historically socket a SAM in a 4FF / SIM-card-shaped FRU). Engineering reference, not a telecom-applet implication.
+
+**Verifier (run pre-commit):**
+
+```python
+patterns = [
+    r'SIM[-\s]?resident applet[s]?',
+    r'\bSIM applet[s]?\b',
+    r'\bSIM[-\s]based applet[s]?\b',
+    r'\bSIM[-\s]based authenticator[s]?\b',
+    r'\bSIM authenticator[s]?\b',
+    r'\bSIM[-\s]Based\b',
+    r'[Nn]ano SIM applet[s]?',
+    r'[Nn]ano[-\s]SIM applet[s]?',
+    r'\bon (?:a |an )?nano[-\s]SIM\b',
+    r'\bon (?:a |an )?SIM(?![- ]card)\b',
+    r'(?i)telecom[-\s]integrated',
+    r'\btelecom-grade identity\b',
+    r'Telecom and identity convergence',
+]
+```
+
+Across all `*.html / *.json / *.js / *.txt` outside `dist/`, `docs/`, `_internal/`, `.git/` and the three intentional-context files: **0 residual hits**.
+
+**SEO preservation:** all canonical URLs unchanged. All URL slugs (`/blog/sim-based-fido2-authenticators/`, `/products/piv-nano-sim-applet/`, `/products/fido2-nano-sim-applet/`) preserved for SEO equity. Internal link targets unchanged. Sitemap unchanged. The displayed blog and product titles changed (which propagates into `<title>`, `og:title`, `twitter:title`, JSON-LD `name`, breadcrumb final segment, H1, related-card titles) — but those are *display* surfaces, not URL or identifier surfaces.

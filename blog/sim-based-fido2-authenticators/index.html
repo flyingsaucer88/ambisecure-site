@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>SIM-Based FIDO2 Authenticators for Enterprise Identity</title>
-<meta name="description" content="How embedded secure-element FIDO2 applets work as roaming or embedded authenticators. Telecom and identity convergence, threat model gains, deployment economics for enterprise rollouts." />
+<title>Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity</title>
+<meta name="description" content="How embedded secure-element FIDO2 applets work as roaming or embedded authenticators. How nano-card and MFF2 secure elements act as roaming or embedded FIDO2 authenticators, the threat-model gains, and the enterprise deployment economics." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/blog/sim-based-fido2-authenticators/" />
 <meta property="og:type" content="article" />
-<meta property="og:title" content="SIM-Based FIDO2 Authenticators for Enterprise Identity" />
-<meta property="og:description" content="How embedded secure-element FIDO2 applets work as roaming or embedded authenticators. Telecom and identity convergence, threat model gains, deployment economics for enterprise rollouts." />
+<meta property="og:title" content="Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity" />
+<meta property="og:description" content="How embedded secure-element FIDO2 applets work as roaming or embedded authenticators. How nano-card and MFF2 secure elements act as roaming or embedded FIDO2 authenticators, the threat-model gains, and the enterprise deployment economics." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/blog/sim-based-fido2-authenticators/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
 <meta property="og:image:type" content="image/png" />
@@ -87,14 +87,14 @@
     {
      "@type": "ListItem",
      "position": 3,
-     "name": "SIM-Based FIDO2 Authenticators for Enterprise Identity",
+     "name": "Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity",
      "item": "https://ambisecure.ambimat.com/blog/sim-based-fido2-authenticators/"
     }
    ]
   },
   {
    "@type": "Article",
-   "headline": "SIM-Based FIDO2 Authenticators for Enterprise Identity",
+   "headline": "Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity",
    "datePublished": "2026-05-11",
    "dateModified": "2026-05-11",
    "author": {
@@ -116,7 +116,7 @@
 <a href="#main" class="skip-link">Skip to main content</a>
 <div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
 <header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd>⌘K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
-<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">SIM-Based FIDO2 Authenticators for Enterprise Identity</span></nav>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity</span></nav>
 
 <main id="main">
 
@@ -126,7 +126,7 @@
       <span>FIDO</span><span>Cornerstone</span><span>Published 2026-05-11</span><span>Updated 2026-05-11</span><span>13 min read</span>
     </div>
 
-    <h1>SIM-Based FIDO2 Authenticators for Enterprise Identity.</h1>
+    <h1>Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity.</h1>
     <p class="dek">An enterprise FIDO2 credential that lives inside the same secure element that already runs the network applet. One piece of silicon, one personalisation line, one revocation surface.</p>
 
     <h2>The shape of the problem</h2>
@@ -160,7 +160,7 @@
     <p>End-to-end, the registration ceremony on a embedded secure-element FIDO2 authenticator looks like this:</p>
     <ol>
       <li>The relying party (running the <a href="/services/fido-validation-server/">FIDO Validation Server</a>) emits a <code>PublicKeyCredentialCreationOptions</code> challenge scoped to the tenant.</li>
-      <li>The host device's WebAuthn client passes the challenge to the on-SIM authenticator over CTAP2.1.</li>
+      <li>The host device's WebAuthn client passes the challenge to the embedded secure-element authenticator over CTAP2.1.</li>
       <li>The applet generates an ECC P-256 keypair, scoped to the relying-party origin, inside the secure element. The private key is non-extractable.</li>
       <li>The applet returns an attestation statement signed by the per-batch attestation key. The attestation includes an AAGUID identifying the applet model + firmware.</li>
       <li>The validation server verifies the attestation, checks the AAGUID against the FIDO Metadata Service, applies the tenant's AAGUID allow-list, and persists the credential.</li>
@@ -198,7 +198,7 @@
     <hr />
     <h2>Companion reading</h2>
     <ul>
-      <li><a href="/products/fido2-nano-sim-applet/">FIDO2 Nano SIM Applet (product)</a></li>
+      <li><a href="/products/fido2-nano-sim-applet/">FIDO2 Nano-Card Applet (product)</a></li>
       <li><a href="/services/fido-validation-server/">FIDO Validation Server (service)</a></li>
       <li><a href="/solutions/workforce-identity/">Workforce identity (solution)</a></li>
       <li><a href="/blog/platform-vs-roaming-authenticators/">Platform vs roaming authenticators</a></li>
@@ -210,7 +210,7 @@
 <footer class="site-footer"><div class="footer-inner">
   <div class="footer-grid">
     <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
-    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/fido2-nano-sim-applet/">FIDO2 Nano SIM Applet</a></li><li><a href="/products/piv-nano-sim-applet/">PIV Nano SIM Applet</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h4>Products</h4><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/fido2-nano-sim-applet/">FIDO2 Nano-Card Applet</a></li><li><a href="/products/piv-nano-sim-applet/">PIV Nano-Card Applet</a></li><li><a href="/products/">All products</a></li></ul></div>
     <div><h4>Develop</h4><ul><li><a href="/services/fido-validation-server/">FIDO Validation Server</a></li><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
     <div><h4>Solutions</h4><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/government-identity/">Government identity</a></li></ul></div>
     <div><h4>Contact</h4><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
