@@ -40,7 +40,7 @@
      "name": "What is a embedded secure-element FIDO2 authenticator?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "A FIDO2 applet running inside the secure element of a nano SIM (4FF) or eUICC. The credential is hardware-backed, origin-bound by the FIDO2 protocol, and stored in a Common Criteria EAL5+ chip the operator already controls."
+      "text": "A FIDO2 applet running inside a CC EAL5+ secure element packaged as a removable nano-card (4FF) or a solderable MFF2 module. The credential is hardware-backed, origin-bound by the FIDO2 protocol, and stored under the issuer's GlobalPlatform security domain — not on the device's general-purpose enclave."
      }
     },
     {
@@ -48,7 +48,7 @@
      "name": "Can a embedded secure-element FIDO2 applet work as a roaming authenticator?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Yes. A removable nano SIM can be carried between devices and behaves as a roaming authenticator over the host device's contact reader. An eUICC variant solders the same applet into a single device as a platform authenticator."
+      "text": "Yes. A removable nano-card can be carried between devices and behaves as a roaming authenticator over the host device's contact reader. A solderable MFF2 variant fixes the same applet into a single device as a platform authenticator."
      }
     },
     {
@@ -56,7 +56,7 @@
      "name": "Why use a embedded secure-element authenticator instead of a USB security key?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Because the SIM is already in the device. There is no new physical part to ship, no second item to lose, and the credential's trust root is operator-controlled instead of platform-vendor-controlled. For enterprise rollouts on operator-issued devices, this collapses authenticator-hardware cost to zero."
+      "text": "Because the secure element is already on the product's BOM — either as a removable nano-card or as a solderable MFF2 module — and is provisioned under the issuer's keys, not the device-vendor's. There is no extra physical part to ship, no second item to lose, and the credential's trust root sits inside an issuer-controlled secure element. For OEM and enterprise rollouts on devices that already carry a secure element, this collapses authenticator-hardware cost to zero."
      }
     },
     {
@@ -106,7 +106,7 @@
     "name": "AmbiSecure"
    },
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/sim-based-fido2-authenticators/",
-   "keywords": "FIDO2, nano SIM, eUICC, roaming authenticator, embedded authenticator, enterprise identity, telecom identity, WebAuthn"
+   "keywords": "FIDO2, nano-card secure element, MFF2 solderable secure element, roaming authenticator, embedded authenticator, enterprise identity, OEM identity, WebAuthn"
   }
  ]
 }
@@ -127,73 +127,73 @@
     </div>
 
     <h1>Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity.</h1>
-    <p class="dek">An enterprise FIDO2 credential that lives inside the same secure element that already runs the network applet. One piece of silicon, one personalisation line, one revocation surface.</p>
+    <p class="dek">An enterprise FIDO2 credential that lives inside a CC EAL5+ secure element packaged as a removable nano-card (4FF) or a solderable MFF2 module &mdash; loaded under the issuer's keys, not the device-vendor's. One piece of silicon, one personalisation line, one revocation surface.</p>
 
     <h2>The shape of the problem</h2>
-    <p>An enterprise rolling out phishing-resistant authentication faces a recurring procurement choice: USB security keys for every employee, smart cards on the badge line, or platform authenticators baked into the device. Each path has its operational tax. USB keys get lost. Smart cards need a personalisation line. Platform authenticators bind the credential to a device the user might replace twice in three years. What if the FIDO2 credential lived in something the user already carries, that the device already trusts, and that the operator can reissue without a new physical part?</p>
-    <p>That is the case for a <a href="/products/fido2-nano-sim-applet/">embedded secure-element FIDO2 authenticator</a>: a FIDO2 applet running inside the secure element of a nano SIM (4FF) or an eUICC. The SIM is already in the device. The secure element is already certified. The trust boundary already exists. Repurposing it as a phishing-resistant authenticator is a software question, not a BOM question.</p>
+    <p>An enterprise rolling out phishing-resistant authentication faces a recurring procurement choice: USB security keys for every employee, smart cards on the badge line, or platform authenticators baked into the device. Each path has its operational tax. USB keys get lost. Smart cards need a personalisation line. Platform authenticators bind the credential to a device the user might replace twice in three years. What if the FIDO2 credential lived inside a secure element the product already carries on its BOM, loaded under the issuer's keys, and reissuable by the same personalisation line that issues every other secure-element credential?</p>
+    <p>That is the case for an <a href="/products/fido2-nano-sim-applet/">embedded secure-element FIDO2 authenticator</a>: a FIDO2 applet running on a CC EAL5+ chip packaged as either a removable nano-card (ISO/IEC 7810 4FF) or a solderable MFF2 module. The secure element is already certified. The personalisation pipeline already exists. The trust boundary already exists. Repurposing it as a phishing-resistant authenticator is a software question, not a BOM question.</p>
 
-    <h2>What "embedded secure-element" actually means</h2>
-    <p>A nano SIM is, at the silicon level, a smart card. The plastic-and-pads form factor is just a way of mounting a Common Criteria EAL5+ secure element into a phone, tablet, or industrial endpoint. The same secure element runs the telecom applets (USIM, ISIM, the operator's optional applets) under the same GlobalPlatform security domain that an OEM applet would run under.</p>
+    <h2>What "embedded secure-element" actually means here</h2>
+    <p>The silicon inside a 4FF card and inside an MFF2 module is the same CC EAL5+ secure element. The plastic-and-pads of the nano-card and the soldered footprint of the MFF2 module are simply two integration choices for the same chip. Both packages run JavaCard 3.x on top of GlobalPlatform 2.3.1; both load applets under the issuer's SCP03 keys; both behave the same to a FIDO2 verifier upstream.</p>
     <p>A FIDO2 applet on this surface looks, to the host device, exactly like an external FIDO2 authenticator. It speaks CTAP2.1 over the contact (ISO/IEC 7816 T=0/T=1) interface. The applet generates and stores ECC P-256 keypairs inside the secure element; the private key never crosses the chip boundary, even to the device's own operating system. Registration and authentication ceremonies are origin-bound by the FIDO2 protocol itself.</p>
     <p>Operationally, the applet has two modes:</p>
     <ul>
-      <li><strong>Roaming</strong>. The SIM is removable. The user can pop it into a phone, an SD-card reader, or a USB SIM dongle and authenticate to whichever device is on hand. This is the model that maps cleanly to existing roaming-authenticator semantics in WebAuthn.</li>
-      <li><strong>Embedded (eUICC)</strong>. The SIM is soldered. The applet behaves as a platform authenticator scoped to that device. This is the model for fleet-issued laptops, ruggedised industrial devices, or any endpoint where SIM swap is an attack surface the operator wants to eliminate.</li>
+      <li><strong>Roaming (removable nano-card)</strong>. The secure element is mounted in a 4FF card and is removable. The user can carry it between a phone, an SD-card reader, or a USB nano-card dongle and authenticate to whichever device is on hand. This maps cleanly to existing roaming-authenticator semantics in WebAuthn.</li>
+      <li><strong>Embedded (solderable MFF2)</strong>. The same secure element ships as an MFF2 module soldered to the host PCB. The applet behaves as a platform authenticator scoped to that device. This is the model for fleet-issued laptops, ruggedised industrial endpoints, and connected products where physical removal is an attack surface the OEM wants to eliminate.</li>
     </ul>
 
-    <h2>Why telecom + identity convergence matters</h2>
-    <p>For a network operator or an OEM that ships connected devices, every device already needs a secure element. The traditional split is: USIM for network, separate authenticator hardware for identity. embedded secure-element FIDO2 collapses that into one piece of silicon. The operator gets:</p>
+    <h2>Why a single secure-element surface matters</h2>
+    <p>For an OEM that ships connected products, every device already carries a secure element for at least one purpose &mdash; key storage, signed update, device identity. The traditional split is: one secure element for the embedded baseline, separate authenticator hardware for user identity. Embedded secure-element FIDO2 collapses that into one piece of silicon under one issuer's keys. The OEM (or the enterprise running its own issuance) gets:</p>
     <ul>
       <li>One certified secure element to validate, not two.</li>
       <li>One personalisation line, not two.</li>
-      <li>One revocation surface (when the SIM is lost, both network credentials and identity credentials revoke together).</li>
-      <li>A FIDO2 authenticator that doesn't require the user to carry anything new.</li>
+      <li>One revocation surface (lost device or returned hardware revokes both device-identity and user-identity credentials together).</li>
+      <li>A FIDO2 authenticator that does not require the user to carry anything new.</li>
     </ul>
-    <p>For an enterprise relying on operator-issued devices, the gain is different: workforce identity that travels with the SIM, not the phone hardware. A user upgrading from one device to the next moves their SIM (or, with eSIM/eUICC, downloads a fresh profile); their FIDO2 credentials and their network access move together.</p>
+    <p>For an enterprise that already issues hardware to its workforce, the gain is different: workforce identity that travels with the secure-element card rather than the device. A user upgrading from one device to the next moves the removable nano-card; their FIDO2 credentials move with it. Where the secure element is soldered (MFF2), the credential stays with the device and is reissued at hardware-refresh time through the same personalisation pipeline that loads every other applet.</p>
 
     <h2>The threat model gain</h2>
-    <p>Platform authenticators on consumer phones rely on the phone vendor's secure enclave. That is fine for most threat models, but the credential is then bound to the vendor's lifecycle: a vendor breach, a forced OS update, or a lost device with the credential synced through the vendor's cloud all become operational concerns. embedded secure-element FIDO2 changes the trust root: the credential lives on a CC EAL5+ chip whose attestation chain runs through an issuance CA the operator controls, not the device vendor.</p>
-    <p>For an enterprise that wants a phishing-resistant credential <em>and</em> wants the credential's trust root to be inside its own custody rather than the platform vendor's, embedded secure-element FIDO2 is the only widely deployable option. The next-cheapest alternative is a dedicated USB security key with an issuance line: more hardware to ship, more cards to replace, more help-desk tickets when one goes missing.</p>
+    <p>Platform authenticators on consumer phones rely on the phone vendor's secure enclave. That is fine for most threat models, but the credential is then bound to the vendor's lifecycle: a vendor breach, a forced OS update, or a lost device with the credential synced through the vendor's cloud all become operational concerns. Embedded secure-element FIDO2 changes the trust root: the credential lives on a CC EAL5+ chip whose attestation chain runs through an issuance CA the issuing organisation controls, not the device vendor.</p>
+    <p>For an enterprise or OEM that wants a phishing-resistant credential <em>and</em> wants the credential's trust root inside its own custody rather than the platform vendor's, embedded secure-element FIDO2 is the only widely deployable option. The next-cheapest alternative is a dedicated USB security key with its own issuance line: more hardware to ship, more cards to replace, more help-desk tickets when one goes missing.</p>
 
     <h2>How the credential flows in production</h2>
     <p>End-to-end, the registration ceremony on a embedded secure-element FIDO2 authenticator looks like this:</p>
     <ol>
       <li>The relying party (running the <a href="/services/fido-validation-server/">FIDO Validation Server</a>) emits a <code>PublicKeyCredentialCreationOptions</code> challenge scoped to the tenant.</li>
-      <li>The host device's WebAuthn client passes the challenge to the embedded secure-element authenticator over CTAP2.1.</li>
+      <li>The host device's WebAuthn client passes the challenge to the nano-card or MFF2 secure-element authenticator over CTAP2.1.</li>
       <li>The applet generates an ECC P-256 keypair, scoped to the relying-party origin, inside the secure element. The private key is non-extractable.</li>
       <li>The applet returns an attestation statement signed by the per-batch attestation key. The attestation includes an AAGUID identifying the applet model + firmware.</li>
       <li>The validation server verifies the attestation, checks the AAGUID against the FIDO Metadata Service, applies the tenant's AAGUID allow-list, and persists the credential.</li>
     </ol>
-    <p>Authentication is the same flow with smaller cryptography: a challenge, a signed assertion, an MDS-free verification. The credential never leaves the SIM; the validation server never sees more than a public key and a signed counter.</p>
+    <p>Authentication is the same flow with smaller cryptography: a challenge, a signed assertion, an MDS-free verification. The credential never leaves the secure element; the validation server never sees more than a public key and a signed counter.</p>
 
     <h2>Where this fits in an enterprise rollout</h2>
-    <p>The right deployment shape for embedded secure-element FIDO2 depends on what you already ship:</p>
+    <p>The right deployment shape for embedded secure-element FIDO2 depends on what the issuing organisation already ships:</p>
     <ul>
-      <li><strong>Telecom operator</strong>. Standard SIM issuance line, plus a FIDO applet at applet-load time. The applet is one of N on the same secure element. AAGUID and attestation cert get injected during personalisation.</li>
-      <li><strong>OEM with embedded SE</strong>. eUICC variant. The applet ships on the device at manufacture. Customers see a platform authenticator they did not have to install.</li>
-      <li><strong>Enterprise with managed devices</strong>. Provision an enterprise SIM with the FIDO applet plus the operator's network profile. Workforce identity travels with the SIM; help-desk recovery is "issue a new SIM" rather than "issue a new device + a new security key + a new badge."</li>
+      <li><strong>OEM with a soldered MFF2 footprint</strong>. The applet ships on the device at manufacture. The end user sees a platform authenticator they did not have to install or pair. AAGUID and attestation cert get injected during the standard personalisation pass.</li>
+      <li><strong>Enterprise running its own personalisation line</strong>. Issue nano-cards loaded with the FIDO applet under the enterprise's SCP03 keys. Workforce identity travels with the card; help-desk recovery is "issue a new nano-card" rather than "issue a new device + a new security key + a new badge."</li>
+      <li><strong>Identity programme migrating from contact smart cards</strong>. The same applet that runs on an ID-1 contact card runs on the nano-card and on the MFF2 module. Issuers can mix form factors per population segment without changing the relying-party-side configuration.</li>
     </ul>
 
     <h2>Standards posture</h2>
     <p>The applet is designed against FIDO2 over <a href="/technologies/ctap2/">CTAP2.1</a> with <a href="/technologies/webauthn/">WebAuthn</a> as the relying-party-side API. Cryptography is ECC P-256 with SHA-256, the FIDO Alliance recommended baseline. Personalisation runs over GlobalPlatform SCP03. AAGUID values are managed through the FIDO Metadata Service so verifiers can apply policy by authenticator class.</p>
-    <p>For a workforce rollout, the typical posture is to require <code>attestation=direct</code>, restrict to a small AAGUID allow-list (the operator's SIM-applet plus a couple of fallback hardware keys for recovery), require user verification (PIN or biometric on the host device), and disable resident credentials except for explicit username-less flows.</p>
+    <p>For a workforce rollout, the typical posture is to require <code>attestation=direct</code>, restrict to a small AAGUID allow-list (the issuer's nano-card or MFF2 applet plus a couple of fallback hardware keys for recovery), require user verification (PIN or biometric on the host device), and disable resident credentials except for explicit username-less flows.</p>
 
     <h2>What this is not</h2>
-    <p>embedded secure-element FIDO2 is not a replacement for every authenticator class. It is the right answer where:</p>
+    <p>Embedded secure-element FIDO2 is not a replacement for every authenticator class. It is the right answer where:</p>
     <ul>
-      <li>The user already has a SIM-shaped credential the operator controls.</li>
-      <li>The credential needs to outlast the device.</li>
-      <li>The trust root needs to be operator-controlled, not platform-vendor-controlled.</li>
+      <li>The product or workforce population already needs a secure element on the BOM &mdash; for device identity, signed update, or smart-card credentials.</li>
+      <li>The credential needs to outlast the device, or be issued under issuer-controlled keys rather than the platform vendor's.</li>
+      <li>The trust root needs to live inside an issuer-controlled certified secure element rather than a consumer device's general-purpose enclave.</li>
     </ul>
-    <p>It is the wrong answer where the user has no device, the operator wants a passport-style identity card, or the policy requires a separate physical token for high-risk admin paths. In those cases, the workforce-identity rollout pairs embedded secure-element FIDO2 (daily sign-in) with a dedicated security key (admin escalation). The validation server handles both classes through the same AAGUID-based policy.</p>
+    <p>It is the wrong answer where the user has no device, where the deployment requires a passport-style ID-1 identity card, or where policy mandates a separate physical token for high-risk admin paths. In those cases, the workforce-identity rollout pairs embedded secure-element FIDO2 (daily sign-in) with a dedicated security key (admin escalation). The validation server handles both classes through the same AAGUID-based policy.</p>
 
     <h2>The deployment economics</h2>
-    <p>Compared with issuing 5,000 dedicated USB security keys at roughly $40&ndash;60 each (per-key cost plus shipping plus help-desk burden for the first wave), a SIM-applet rollout is a one-time applet-load cost on existing SIM issuance. There is no new physical part. There is no second device to track. The recovery flow is the same as the operator's existing SIM-replacement workflow.</p>
-    <p>The corresponding cost is integration: the validation server needs to be aware of the nano-card applet's AAGUID, the operator's MDS entry has to be registered, and the relying-party identity stack needs to issue WebAuthn challenges through a backend that speaks the FIDO Validation Server's API. That integration work is one-time. The savings are recurring.</p>
+    <p>Compared with issuing 5,000 dedicated USB security keys at roughly $40&ndash;60 each (per-key cost plus shipping plus help-desk burden for the first wave), a nano-card or MFF2 applet rollout is a one-time applet-load cost on a secure element the product or programme is already issuing. There is no new physical part. There is no second device to track. The recovery flow is the same as the issuer's existing secure-element replacement workflow.</p>
+    <p>The corresponding cost is integration: the validation server needs to be aware of the nano-card or MFF2 applet's AAGUID, the issuer's MDS entry has to be registered, and the relying-party identity stack needs to issue WebAuthn challenges through a backend that speaks the FIDO Validation Server's API. That integration work is one-time. The savings are recurring.</p>
 
     <h2>The bottom line</h2>
-    <p>A embedded secure-element FIDO2 authenticator is a serious enterprise identity primitive, not a curiosity. It collapses the per-user authenticator hardware count to zero, places the credential's trust root inside an operator-controlled certified secure element, and slots into existing CTAP2.1 + WebAuthn relying-party stacks without modification. For an enterprise that is already shipping SIMs, this is the cheapest path to phishing-resistant workforce identity that actually scales.</p>
+    <p>An embedded secure-element FIDO2 authenticator is a serious enterprise identity primitive, not a curiosity. It collapses the per-user authenticator hardware count to zero, places the credential's trust root inside an issuer-controlled certified secure element, and slots into existing CTAP2.1 + WebAuthn relying-party stacks without modification. For an OEM or enterprise that already ships secure elements on its products, this is the cheapest path to phishing-resistant workforce or device identity that actually scales.</p>
 
     <hr />
     <h2>Companion reading</h2>

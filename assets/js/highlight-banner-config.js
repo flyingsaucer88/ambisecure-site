@@ -131,7 +131,7 @@ window.AS_HOMEPAGE_BANNERS = [
     enabled: true,
     eyebrow: "ECOSYSTEM · eSIM Initiative",
     title: "Bridge from SMS OTP to hardware-rooted MFA.",
-    body: "When an operator wants to retire SMS OTP without re-issuing every SIM, the eSIM Initiative covers the migration path — same eUICC, new applet, phishing-resistant credentials.",
+    body: "When a telco wants to retire SMS OTP without re-issuing every SIM, the eSIM Initiative covers the migration path — same eUICC, new applet, phishing-resistant credentials. eSIM Initiative is the dedicated telecom platform; AmbiSecure ships the non-telecom nano-card / MFF2 applet portfolio.",
     accent: "cyan",
     primaryCta: { label: "eSIM Initiative", url: "https://esim.ambimat.com/" },
     secondaryCta: { label: "Why hardware-rooted identity matters", url: "/blog/why-hardware-backed-identity-matters/" }

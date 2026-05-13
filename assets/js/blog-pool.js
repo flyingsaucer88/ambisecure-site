@@ -5,7 +5,7 @@ window.AS_BLOG_POOL = [
   "title": "Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity",
   "url": "/blog/sim-based-fido2-authenticators/",
   "date": "2026-05-11",
-  "summary": "How nano-card and MFF2 secure-element FIDO2 applets work as roaming or embedded authenticators. Enterprise FIDO and secure-element convergence; deployment economics for production rollouts.",
+  "summary": "A FIDO2 applet running inside a CC EAL5+ secure element packaged as a removable nano-card (4FF) or a solderable MFF2 module. Loaded under the issuer's keys, not the device-vendor's. One piece of silicon, one personalisation line, one revocation surface.",
   "categories": [
    "FIDO",
    "Telecom Identity",
@@ -303,7 +303,7 @@ window.AS_BLOG_POOL = [
   "title": "Common Misconceptions about Two-Factor Authentication",
   "url": "/blog/archive/common-misconceptions-about-2fa/",
   "date": "2021-08-19",
-  "summary": "This week's blog addresses misconceptions surrounding two-factor authentication. \"Cyber threats and attacks have proven how susceptible our online information c",
+  "summary": "Unpacks the most common misconceptions about two-factor authentication \u2014 what 2FA actually defends against, where SMS-based codes fall short, and why hardware-rooted second factors hold up under credential-theft attacks.",
   "categories": [
    "MFA",
    "Cybersecurity"
@@ -314,7 +314,7 @@ window.AS_BLOG_POOL = [
   "title": "Single Sign-On Vs. Multi-Factor Authentication",
   "url": "/blog/archive/single-sign-on-vs-mfa/",
   "date": "2021-08-19",
-  "summary": "Dear Readers,",
+  "summary": "Compares single sign-on with multi-factor authentication \u2014 when each model fits, where they overlap, and how SSO + MFA combine for enterprise identity.",
   "categories": [
    "MFA",
    "Identity"
@@ -325,7 +325,7 @@ window.AS_BLOG_POOL = [
   "title": "Multi-factor Authentication in Government Sector",
   "url": "/blog/archive/mfa-in-government/",
   "date": "2021-08-19",
-  "summary": "Dear Readers,",
+  "summary": "Why government identity programmes are adopting multi-factor authentication, how MFA holds up against phishing and credential theft, and where hardware-rooted authenticators sit in the stack.",
   "categories": [
    "MFA",
    "Government Identity"
@@ -336,7 +336,7 @@ window.AS_BLOG_POOL = [
   "title": "Cyber Attacks in India \u2013 Part 3",
   "url": "/blog/archive/cyber-attacks-in-india-part-3/",
   "date": "2021-08-05",
-  "summary": "This post follows an earlier article on Online Security in India. The authors analyze major cyber attacks in India across three articles, with this being the th",
+  "summary": "Part three of a three-part analysis of major cyber attacks in India \u2014 closing the series with systemic gaps in incident response, identity hygiene, and hardware-rooted authentication adoption.",
   "categories": [
    "Cyber Threats"
   ],
@@ -346,7 +346,7 @@ window.AS_BLOG_POOL = [
   "title": "Cyber Attacks in India \u2013 Part 2",
   "url": "/blog/archive/cyber-attacks-in-india-part-2/",
   "date": "2021-07-28",
-  "summary": "This article follows an earlier post on online security in India \u2014 part two of a three-part series analyzing major cyber attacks in the country. AmbiSecure aims",
+  "summary": "Part two of a three-part analysis of major cyber attacks in India \u2014 the attack patterns, the identity weaknesses they exploited, and what enterprise authentication posture would have stopped them.",
   "categories": [
    "Cyber Threats"
   ],
@@ -356,7 +356,7 @@ window.AS_BLOG_POOL = [
   "title": "Cyber Attacks in India",
   "url": "/blog/archive/cyber-attacks-in-india-part-1/",
   "date": "2021-07-28",
-  "summary": "Dear Readers, This is our attempt to analyze Online security in India by looking at some of the biggest Cyber Attacks in India. This is the first of three artic",
+  "summary": "Part one of a three-part analysis of major cyber attacks in India and what they reveal about systemic gaps in online identity, authentication, and incident response.",
   "categories": [
    "Cyber Threats"
   ],
@@ -366,7 +366,7 @@ window.AS_BLOG_POOL = [
   "title": "Enterprise Security Threats",
   "url": "/blog/archive/enterprise-security-threats/",
   "date": "2021-07-06",
-  "summary": "This week's blog is about Enterprise Security Threats. As enterprise organizations adopt new technologies for their business, they also expand their digital att",
+  "summary": "A field overview of enterprise security threats in the cloud era \u2014 how the digital attack surface expands as organisations adopt new platforms, and where hardware-rooted identity narrows it.",
   "categories": [
    "Cyber Threats",
    "Enterprise MFA"
@@ -377,7 +377,7 @@ window.AS_BLOG_POOL = [
   "title": "What is Passwordless Authentication?",
   "url": "/blog/archive/what-is-passwordless-authentication/",
   "date": "2021-06-01",
-  "summary": "Dear Readers,",
+  "summary": "A primer on passwordless authentication \u2014 what it actually means, how FIDO and biometrics replace shared secrets, and why hardware-bound credentials sit at the centre of the model.",
   "categories": [
    "Passwordless",
    "FIDO"
@@ -388,7 +388,7 @@ window.AS_BLOG_POOL = [
   "title": "Is Passwordless the future?",
   "url": "/blog/archive/is-passwordless-the-future/",
   "date": "2021-06-01",
-  "summary": "Dear Readers,",
+  "summary": "Examines whether passwordless authentication can scale beyond pilots \u2014 the standards, attack-surface trade-offs, and operational realities that decide its trajectory.",
   "categories": [
    "Passwordless"
   ],
@@ -398,7 +398,7 @@ window.AS_BLOG_POOL = [
   "title": "SMS-based OTP Authentication and Its Disadvantages",
   "url": "/blog/archive/sms-otp-disadvantages/",
   "date": "2021-06-01",
-  "summary": "Dear Readers,",
+  "summary": "Why SMS-based one-time passwords are no longer a defensible second factor \u2014 SIM-swap attacks, SS7 weaknesses, phishing-prone OTP relay, and the hardware-rooted alternatives.",
   "categories": [
    "MFA",
    "Cyber Threats"
@@ -409,7 +409,7 @@ window.AS_BLOG_POOL = [
   "title": "Taking security future for Government",
   "url": "/blog/archive/security-future-for-government/",
   "date": "2021-03-25",
-  "summary": "Dear Readers, this week's blog addresses Multi-Factor Authentication (MFA). Organizations increasingly prioritize smooth user experiences while governments impl",
+  "summary": "How governments are moving from password-only access to multi-factor authentication for citizen and employee identity \u2014 and where hardware-rooted credentials reshape the threat model.",
   "categories": [
    "Government Identity",
    "MFA"
@@ -420,7 +420,7 @@ window.AS_BLOG_POOL = [
   "title": "E-passport and How will chip-based e-Passports work",
   "url": "/blog/archive/how-chip-based-epassports-work/",
   "date": "2021-01-28",
-  "summary": "The author asks \"how a biometric passport is expected to enable technological advancement?\" and identifies it as an important application of e-passport technolo",
+  "summary": "How chip-based ePassports work in practice \u2014 the BAC / PACE access protocols, the CSCA / DSC / PKD trust chain, and the role of the secure element inside the document.",
   "categories": [
    "Smart Cards",
    "Government Identity",
@@ -432,7 +432,7 @@ window.AS_BLOG_POOL = [
   "title": "E-passport and Its Application",
   "url": "/blog/archive/epassport-applications/",
   "date": "2021-01-28",
-  "summary": "Dear Readers, this week's blog asks: how is a biometric passport expected to enable technological advancement? How is it secure for all stakeholders?",
+  "summary": "How biometric passports work in practice \u2014 chip-based identity, border-control architecture, and the standards stack that keeps the issuer chain trustworthy.",
   "categories": [
    "Smart Cards",
    "Government Identity",
@@ -455,7 +455,7 @@ window.AS_BLOG_POOL = [
   "title": "Fast Identity Online (FIDO)",
   "url": "/blog/archive/fast-identity-online/",
   "date": "2020-12-15",
-  "summary": "The post introduces FIDO (Fast Identity Online) Universal Second Factor technology, emphasizing how it addresses cybersecurity concerns. Traditional authenticat",
+  "summary": "A primer on FIDO (Fast Identity Online) and the Universal Second Factor model \u2014 how FIDO replaces shared secrets with hardware-bound credentials and why it changes the phishing-resistance baseline.",
   "categories": [
    "FIDO",
    "Passwordless"
@@ -466,7 +466,7 @@ window.AS_BLOG_POOL = [
   "title": "Understanding EMV certification In Public Transportation",
   "url": "/blog/archive/emv-certification-in-public-transport/",
   "date": "2020-08-28",
-  "summary": "The post addresses questions about EMV transit certifications, including applicable certifications, roles of different parties, requirements, timelines, and com",
+  "summary": "A practical look at EMV certification in public transport \u2014 which certifications apply, the roles of acquirer, scheme, terminal vendor, and transit authority, and the typical timeline from prototype to revenue service.",
   "categories": [
    "Transit",
    "Smart Cards"
@@ -477,7 +477,7 @@ window.AS_BLOG_POOL = [
   "title": "Workplace Security \u2014 How Biometrics Is the Key to the New Normal",
   "url": "/blog/archive/workplace-biometrics/",
   "date": "2020-07-30",
-  "summary": "The post examines how biometric systems can protect various devices and access points while layering additional security onto existing authentication methods",
+  "summary": "How workplace biometrics layer additional security onto existing authentication methods \u2014 face / fingerprint / palm, the privacy controls that keep them defensible, and where they sit alongside FIDO and MFA.",
   "categories": [
    "Biometrics",
    "Enterprise MFA"
@@ -488,7 +488,7 @@ window.AS_BLOG_POOL = [
   "title": "Consumer Biometrics in the Data Privacy Age",
   "url": "/blog/archive/consumer-biometrics-and-privacy/",
   "date": "2020-06-29",
-  "summary": "The article discusses how organizations can implement biometric technologies while protecting individual privacy. Data protection policies like GDPR have made p",
+  "summary": "How organisations can deploy biometric authentication while still meeting modern privacy expectations \u2014 match-on-device versus match-on-server, template storage, and the regulatory shape of consumer biometric data.",
   "categories": [
    "Biometrics",
    "Privacy"
@@ -499,7 +499,7 @@ window.AS_BLOG_POOL = [
   "title": "Securing your IIoT infrastructure",
   "url": "/blog/archive/securing-iiot-infrastructure/",
   "date": "2020-06-08",
-  "summary": "IoT devices have greater penetration in manufacturing, healthcare, and business than consumer markets, and this trend is expected to continue",
+  "summary": "Why industrial IoT infrastructure remains a high-value target \u2014 the markets driving adoption, the trust gaps in legacy OT, and how hardware-rooted device identity tightens them.",
   "categories": [
    "IoT Security"
   ],
@@ -509,7 +509,7 @@ window.AS_BLOG_POOL = [
   "title": "Public Transport Ticketing System (Part-3)",
   "url": "/blog/archive/public-transport-ticketing-part-3/",
   "date": "2020-05-26",
-  "summary": "The post serves as a continuation of an earlier piece on public transport ticketing systems. It analyzes automated fare collection systems across various countr",
+  "summary": "Part three of the AFC series \u2014 comparative notes across the analysed countries, what was common in mature ticketing architectures, and where hardware-rooted secure access modules sit in the stack.",
   "categories": [
    "Transit"
   ],
@@ -519,7 +519,7 @@ window.AS_BLOG_POOL = [
   "title": "Public Transport Ticketing System (Part-2)",
   "url": "/blog/archive/public-transport-ticketing-part-2/",
   "date": "2020-05-18",
-  "summary": "This article analyzes automated fare collection systems across multiple countries, building on a previous post. Ambimat Electronics, with over 4 decades of expe",
+  "summary": "Part two of the AFC series \u2014 how Ambimat Electronics has approached automated fare collection: validators, SAM-backed offline trust, and revenue assurance.",
   "categories": [
    "Transit"
   ],
@@ -529,7 +529,7 @@ window.AS_BLOG_POOL = [
   "title": "Public Transport Ticketing System (Part-1)",
   "url": "/blog/archive/public-transport-ticketing-part-1/",
   "date": "2020-05-12",
-  "summary": "This is the first of three articles analyzing automated fare collection systems across countries representing advanced economies, Asian nations, and global regi",
+  "summary": "First of three articles on automated fare collection \u2014 a comparative look at ticketing architectures across advanced economies and large transit networks in Asia.",
   "categories": [
    "Transit"
   ],
@@ -539,7 +539,7 @@ window.AS_BLOG_POOL = [
   "title": "Challenges to IoT Security (Part 2)",
   "url": "/blog/archive/iot-security-challenges-part-2/",
   "date": "2020-04-27",
-  "summary": "The post is a follow-up to an earlier IoT security article. Ambimat Electronics, an ODM with over 40 years of experience, addresses neglected IoT security conce",
+  "summary": "Second of a two-part look at IoT security \u2014 practical mitigations: hardware root of trust, signed firmware update, attestation, and device identity carried in a secure element.",
   "categories": [
    "IoT Security"
   ],
@@ -549,7 +549,7 @@ window.AS_BLOG_POOL = [
   "title": "Challenges to IoT Security (Part 1)",
   "url": "/blog/archive/iot-security-challenges-part-1/",
   "date": "2020-04-20",
-  "summary": "Security professionals historically focused on protecting mobile devices and computers. Today, over a billion IoT devices communicate with enterprises, creating",
+  "summary": "First of a two-part look at IoT security \u2014 how billions of devices communicate with enterprise systems, where the resulting attack surface sits, and the trust anchors that contain it.",
   "categories": [
    "IoT Security"
   ],

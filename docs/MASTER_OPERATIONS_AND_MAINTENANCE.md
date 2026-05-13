@@ -1552,3 +1552,48 @@ patterns = [
 Across all `*.html / *.json / *.js / *.txt` outside `dist/`, `docs/`, `_internal/`, `.git/` and the three intentional-context files: **0 residual hits**.
 
 **SEO preservation:** all canonical URLs unchanged. All URL slugs (`/blog/sim-based-fido2-authenticators/`, `/products/piv-nano-sim-applet/`, `/products/fido2-nano-sim-applet/`) preserved for SEO equity. Internal link targets unchanged. Sitemap unchanged. The displayed blog and product titles changed (which propagates into `<title>`, `og:title`, `twitter:title`, JSON-LD `name`, breadcrumb final segment, H1, related-card titles) — but those are *display* surfaces, not URL or identifier surfaces.
+
+## 49. Final editorial + search-index cleanup (Phase 34)
+
+Codex's final-acceptance review surfaced three remaining items (robots.txt explicitly out of scope for this phase):
+
+1. **Cornerstone `sim-based-fido2-authenticators` blog still leaked operator framing.** Earlier sweeps fixed surface-level phrasing but the article body, FAQPage JSON-LD, dek, and `keywords` were still built around "the operator controls the trust root" / "telecom operator deployment model" / "operator-issued devices" / "operator-controlled certified secure element". This is the entire structural premise of the legacy 2021-era piece and it directly conflicts with the Phase 28 / 31 / 33 positioning.
+2. **`faqs/index.html`** had one Q&A that mixed AmbiSecure's nano-card/MFF2 product positioning with eSIM Initiative subscriber framing in the same answer.
+3. **`blogs.json`** still carried legacy "Dear Readers" / "This week's blog" / "The post introduces" summaries for 24 archive entries — invisible on rendered pages (the HTML had been rewritten) but visible in `blog-pool.js` (homepage rotation) and `blog-search-index.json` (search results).
+
+**Deep reframe of the cornerstone blog (~30 paragraph-level rewrites, technical content preserved):**
+
+| Old framing | New framing |
+|---|---|
+| "the operator can reissue without a new physical part" | "the issuer's keys, reissuable by the same personalisation line that issues every other secure-element credential" |
+| "the secure element of a nano SIM (4FF) or an eUICC" | "a CC EAL5+ chip packaged as either a removable nano-card (ISO/IEC 7810 4FF) or a solderable MFF2 module" |
+| "the telecom applets (USIM, ISIM, the operator's optional applets)" | "JavaCard 3.x on top of GlobalPlatform 2.3.1; both load applets under the issuer's SCP03 keys" |
+| "Why telecom + identity convergence matters" (H2) | "Why a single secure-element surface matters" (H2) |
+| "For a network operator or an OEM" | "For an OEM that ships connected products" |
+| "operator-controlled" attestation chain | "issuer-controlled" attestation chain via the issuance CA |
+| "Telecom operator. Standard SIM issuance line" (deployment list) | "OEM with a soldered MFF2 footprint" + "Enterprise running its own personalisation line" + "Identity programme migrating from contact smart cards" |
+| "the operator wants a passport-style identity card" | "the deployment requires a passport-style ID-1 identity card" |
+| "the operator's MDS entry" | "the issuer's MDS entry" |
+| "places the credential's trust root inside an operator-controlled certified secure element" | "places the credential's trust root inside an issuer-controlled certified secure element" |
+| "For an enterprise that is already shipping SIMs" | "For an OEM or enterprise that already ships secure elements on its products" |
+
+The URL slug `/blog/sim-based-fido2-authenticators/` is preserved for SEO equity — only display, prose, and metadata changed. The blog post H1 was already renamed in Phase 33; this pass deepens the body to match.
+
+**`blogs.json` source-of-truth re-sync.** 24 archive entries got their `summary` field replaced with the canonical engineering-tone text that the rendered HTML, dek, and meta-description already use. This finally makes the four blog-related surfaces consistent: rendered archive page, blog/category/tag index card, homepage daily-spotlight rotation (`blog-pool.js`), and on-page blog search (`blog-search-index.json`).
+
+**`faqs/index.html` answer reframed** to clearly separate AmbiSecure's nano-card/MFF2 product positioning ("on CC EAL5+ secure elements packaged as removable nano-cards … and solderable MFF2 modules — for embedded identity, OEM device authentication, and enterprise rollouts") from the eSIM Initiative sister site ("Telecom-grade eSIM / eUICC and SGP.22 / SGP.32 RSP lifecycle work is covered separately on the dedicated eSIM Initiative platform").
+
+**Homepage banner config tweak** — the `esim-otp-bridge` entry on `assets/js/highlight-banner-config.js` had body text "When an operator wants to retire SMS OTP without re-issuing every SIM…". A reader who didn't notice the `ECOSYSTEM · eSIM Initiative` eyebrow could read that as AmbiSecure positioning. Reworded to "When a telco wants to retire SMS OTP…" with a closing line "eSIM Initiative is the dedicated telecom platform; AmbiSecure ships the non-telecom nano-card / MFF2 applet portfolio."
+
+**Final verifier** (16 patterns: Dear Readers, This week's blog, The blog of this week, The post introduces/addresses/discusses/examines/is-a-follow-up/serves-as-a-continuation, operator-controlled, operator-issued, carrier-controlled, carrier-issued, telecom-grade identity, telecom-integrated, SIM-based, SIM-resident, SIM applet, SIM authenticator, nano SIM applet, Telecom and identity convergence, on the SIM) — across every `*.html / *.json / *.js / *.txt` outside `dist/`, `docs/`, `_internal/`, `.git/`, and the four intentional-context files:
+
+**0 residual hits across 0 files.**
+
+Documented intentional exceptions (verifier skips):
+
+1. `industries/index.html` — eSIM Initiative card legitimately describes the telecom-SIM sister site.
+2. `assets/js/hero-visual-config.js` — file-level governance comment quotes banned wording on purpose.
+3. `assets/js/highlight-banner-config.js` — file-level governance comment + the (now-clarified) eSIM Initiative banner entries.
+4. `blog/designing-low-latency-secure-transit-validators/` — "SAM in a 4FF SIM-form FRU" is the physical-socket name for transit-validator SAMs.
+
+`robots.txt` was explicitly out of scope for this pass and was not touched (operator instruction).

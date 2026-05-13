@@ -83,7 +83,7 @@ ASN.1 parser & tree explorer · APDU parser & script validator · ATR parser · 
 
 ## Engineering blog
 
-- 26 modern cornerstones (2026): WebAuthn attestation, passkeys, MFA, JavaCard applet development, secure element vs TPM vs HSM, DESFire EV1/2/3, transit validators, IoT identity, ePassport issuance, SIM-based FIDO2, PIV vs USB vs embedded SE, secure mail / PAdES, and more.
+- 26 modern cornerstones (2026): WebAuthn attestation, passkeys, MFA, JavaCard applet development, secure element vs TPM vs HSM, DESFire EV1/2/3, transit validators, IoT identity, ePassport issuance, embedded secure-element FIDO2, PIV vs USB vs embedded SE, secure mail / PAdES, and more.
 - 24 earlier engineering pieces (2017–2025) at [/blog/archive/](https://ambisecure.ambimat.com/blog/archive/), kept for engineering reference and cross-linked forward to current coverage.
 
 ## Case studies (anonymised)
