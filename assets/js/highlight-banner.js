@@ -52,14 +52,13 @@
       tertiaryCta = '<a href="' + esc(p.tertiaryCta.url) + '" class="btn btn-outline">' + esc(p.tertiaryCta.label) + '</a>';
     }
     return ''
-      + '<article class="deb-slide hp-banner-slide is-active" data-accent="' + esc(p.accent || 'red') + '" data-id="' + esc(p.id || '') + '" style="--banner-accent:' + accent + ';">'
-      +   '<div class="deb-badge"><span class="deb-badge-dot" aria-hidden="true"></span>AmbiSecure ecosystem &middot; rotates daily</div>'
-      +   '<div class="deb-body hp-banner-body">'
-      +     '<div class="deb-eyebrow hp-banner-eyebrow">' + esc(p.eyebrow || 'Featured') + '</div>'
-      +     '<h2 class="deb-title hp-banner-title">' + esc(p.title) + '</h2>'
-      +     '<p class="deb-text hp-banner-text">' + esc(p.body) + '</p>'
+      + '<article class="hp-banner-slide is-active" data-accent="' + esc(p.accent || 'red') + '" data-id="' + esc(p.id || '') + '" style="--banner-accent:' + accent + ';">'
+      +   '<div class="hp-banner-body">'
+      +     '<div class="hp-banner-eyebrow">' + esc(p.eyebrow || 'Featured') + '</div>'
+      +     '<h2 class="hp-banner-title">' + esc(p.title) + '</h2>'
+      +     '<p class="hp-banner-text">' + esc(p.body) + '</p>'
       +   '</div>'
-      +   '<div class="deb-ctas hp-banner-ctas">'
+      +   '<div class="hp-banner-ctas">'
       +     '<a href="' + esc(p.primaryCta.url) + '" class="btn btn-primary">' + esc(p.primaryCta.label) + '</a>'
       +     secondaryCta
       +     tertiaryCta
@@ -67,11 +66,10 @@
       + '</article>';
   }
 
-  // Mount each slot with the rendered slide. Outer wrapper (.daily-ecosystem-banner)
-  // already carries the prominent visual treatment from main.css.
-  slots.forEach(function (slot) {
-    var shell = slot.closest('.deb-shell');
-    if (shell) shell.setAttribute('data-accent', pick.accent || 'red');
-    slot.innerHTML = renderSlide(pick);
-  });
+  var html =
+    '<div class="hp-banner" data-count="1" data-rotation="daily" aria-roledescription="featured highlight" aria-label="Featured highlight (rotates daily)">' +
+      '<div class="hp-banner-track">' + renderSlide(pick) + '</div>' +
+    '</div>';
+
+  slots.forEach(function (slot) { slot.innerHTML = html; });
 })();

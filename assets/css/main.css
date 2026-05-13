@@ -347,17 +347,17 @@ a { color: inherit; }
    HERO
    ========================================================= */
 .hero {
-  /* Phase 28: keep the flagship banner presence but pull top padding in so
-     the logo sits closer to the navbar — relies on min-height for vertical
-     dominance rather than dead whitespace above the content. */
-  min-height: 92vh;
+  /* Phase 30: tighten the whitespace above the small AmbiSecure logo and
+     between the logo, eyebrow, and headline. Keep min-height prominent so
+     the hero still dominates the first viewport without dead space. */
+  min-height: 88vh;
   background:
     radial-gradient(ellipse at 82% -10%, rgba(227,34,42,0.09), transparent 58%),
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
     #ffffff;
   background-size: auto, 60px 60px, 60px 60px, auto;
-  padding: 84px 80px 120px;
+  padding: 56px 80px 96px;
   display: flex;
   align-items: center;
   position: relative;
@@ -403,10 +403,10 @@ a { color: inherit; }
 /* Hero-logo: small medallion above the eyebrow on hero-left. Same circular
    clip + drop-shadow as the crest for visual coherence. */
 .hero-logo {
-  width: 88px;
-  height: 88px;
+  width: 80px;
+  height: 80px;
   display: block;
-  margin: 0 0 14px 0;
+  margin: 0 0 10px 0;
   border-radius: 50%;
   background: transparent;
   filter: drop-shadow(0 6px 16px rgba(58,63,64,0.14));
@@ -416,7 +416,7 @@ a { color: inherit; }
   font-size: 12px;
   letter-spacing: 2.6px;
   color: var(--brand-red);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   text-transform: uppercase;
   font-weight: 700;
   display: inline-flex;
@@ -3465,143 +3465,150 @@ body.as-search-open { overflow: hidden; }
 }
 
 /* ============================================================
-   PHASE 29 — DAILY ECOSYSTEM BANNER (full-bleed, top-of-page)
-   Prominent, premium-feeling band that rotates one ecosystem
-   story per UTC day. Sits between navbar and hero.
+   PHASE 30 — HERO RIGHT-SIDE VISUAL (daily rotation)
+   Rotates only the visual block on the right of the hero.
+   The H1, eyebrow, CTAs, and rest of the page stay stable.
    ============================================================ */
-.daily-ecosystem-banner {
+.hero-right[data-hero-visual] {
+  flex: 0.95;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.hero-visual {
+  --hv-accent: var(--brand-red, #E3222A);
+  width: 100%;
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+.hero-visual[data-accent="cyan"]  { --hv-accent: var(--secure-cyan, #0E8C9C); }
+.hero-visual[data-accent="dark"]  { --hv-accent: var(--ink, #3A3F40); }
+.hero-visual-medallion {
   position: relative;
   width: 100%;
-  padding: 28px max(24px, 4vw) 32px;
-  background:
-    radial-gradient(1200px 320px at 12% 20%, rgba(227, 34, 42, 0.10) 0%, rgba(227, 34, 42, 0) 70%),
-    radial-gradient(900px 280px at 92% 90%, rgba(14, 140, 156, 0.08) 0%, rgba(14, 140, 156, 0) 75%),
-    linear-gradient(180deg, #FAFBFC 0%, #F4F6F8 100%);
-  border-top: 1px solid var(--rule, #E1E3E4);
-  border-bottom: 1px solid var(--rule, #E1E3E4);
-  box-shadow: inset 0 -1px 0 rgba(58, 63, 64, 0.04);
-  overflow: hidden;
-}
-.daily-ecosystem-banner::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--brand-red, #E3222A) 0%, var(--brand-red, #E3222A) 38%, var(--secure-cyan, #0E8C9C) 100%);
-  opacity: 0.9;
-}
-.daily-ecosystem-banner .deb-shell {
-  max-width: 1240px;
-  margin: 0 auto;
-  position: relative;
-  background: #FFFFFF;
-  border: 1px solid var(--rule, #E1E3E4);
-  border-radius: 14px;
-  box-shadow:
-    0 1px 2px rgba(58, 63, 64, 0.04),
-    0 18px 48px -22px rgba(58, 63, 64, 0.22);
-  overflow: hidden;
-}
-.daily-ecosystem-banner .deb-shell::before {
-  content: "";
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 6px;
-  background: var(--banner-accent, var(--brand-red, #E3222A));
-}
-.daily-ecosystem-banner .deb-inner {
-  padding: 30px 36px 32px 42px;
-}
-.daily-ecosystem-banner .deb-slide,
-.daily-ecosystem-banner .hp-banner-slide {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 28px 40px;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: flex;
   align-items: center;
-  border-left: none !important;
-  margin-left: 0 !important;
-  padding: 0 !important;
+  justify-content: center;
+  background:
+    radial-gradient(closest-side, rgba(255, 255, 255, 0) 62%, color-mix(in srgb, var(--hv-accent) 14%, transparent) 68%, transparent 72%),
+    radial-gradient(closest-side, rgba(255, 255, 255, 0) 72%, color-mix(in srgb, var(--hv-accent) 6%, transparent) 78%, transparent 84%);
+  isolation: isolate;
+  transition: background 320ms ease;
 }
-.daily-ecosystem-banner .deb-badge {
-  grid-column: 1 / -1;
+.hero-visual-medallion::before {
+  /* Subtle outer accent ring keyed off the theme color. */
+  content: "";
+  position: absolute;
+  inset: 4%;
+  border-radius: 50%;
+  border: 1px dashed color-mix(in srgb, var(--hv-accent) 28%, transparent);
+  pointer-events: none;
+}
+.hero-visual-crest {
+  width: 86%;
+  max-width: 420px;
+  height: auto;
+  border-radius: 50%;
+  filter: drop-shadow(0 18px 44px rgba(58, 63, 64, 0.18));
+  position: relative;
+  z-index: 1;
+}
+.hero-visual-badge {
+  position: absolute;
+  right: 4%;
+  bottom: 6%;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--hv-accent);
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--hv-accent) 26%, var(--rule, #E1E3E4));
+  box-shadow:
+    0 1px 2px rgba(58, 63, 64, 0.06),
+    0 12px 28px -14px color-mix(in srgb, var(--hv-accent) 60%, transparent);
+  z-index: 2;
+}
+.hero-visual-badge svg { display: block; }
+.hero-visual-meta {
+  width: 100%;
+  max-width: 460px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 8px;
+}
+.hero-visual-eyebrow {
   font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 1.3px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
   color: var(--brand-grey, #616A6C);
-  margin: 0 0 -4px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
-.daily-ecosystem-banner .deb-badge-dot {
+.hero-visual-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--banner-accent, var(--brand-red, #E3222A));
-  box-shadow: 0 0 0 4px rgba(227, 34, 42, 0.12);
+  background: var(--hv-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--hv-accent) 14%, transparent);
 }
-.daily-ecosystem-banner .deb-body,
-.daily-ecosystem-banner .hp-banner-body {
-  min-width: 0;
-  flex: initial;
-}
-.daily-ecosystem-banner .deb-eyebrow,
-.daily-ecosystem-banner .hp-banner-eyebrow {
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1.4px;
-  color: var(--banner-accent, var(--brand-red, #E3222A));
-  text-transform: uppercase;
-  margin: 0 0 10px 0;
-}
-.daily-ecosystem-banner .deb-title,
-.daily-ecosystem-banner .hp-banner-title {
+.hero-visual-label {
   font-family: 'Montserrat', sans-serif;
-  font-size: clamp(26px, 2.6vw, 34px);
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 700;
   color: var(--ink, #3A3F40);
-  margin: 0 0 12px 0;
-  line-height: 1.18;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
 }
-.daily-ecosystem-banner .deb-text,
-.daily-ecosystem-banner .hp-banner-text {
+.hero-visual-caption {
   margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
   color: var(--brand-grey, #616A6C);
-  font-size: 16.5px;
-  line-height: 1.6;
-  max-width: 64ch;
+  max-width: 44ch;
 }
-.daily-ecosystem-banner .deb-ctas,
-.daily-ecosystem-banner .hp-banner-ctas {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 10px;
-  min-width: 220px;
+.hero-visual-cta {
+  margin-top: 4px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--hv-accent);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid color-mix(in srgb, var(--hv-accent) 35%, transparent);
+  padding-bottom: 2px;
+  transition: color 150ms ease, border-color 150ms ease;
 }
-.daily-ecosystem-banner .deb-ctas .btn,
-.daily-ecosystem-banner .hp-banner-ctas .btn {
-  text-align: center;
-  white-space: nowrap;
+.hero-visual-cta:hover {
+  color: var(--ink, #3A3F40);
+  border-bottom-color: var(--ink, #3A3F40);
 }
-@media (max-width: 880px) {
-  .daily-ecosystem-banner { padding: 22px 16px 26px; }
-  .daily-ecosystem-banner .deb-inner { padding: 24px 22px 26px 26px; }
-  .daily-ecosystem-banner .deb-slide,
-  .daily-ecosystem-banner .hp-banner-slide {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 18px;
-  }
-  .daily-ecosystem-banner .deb-ctas,
-  .daily-ecosystem-banner .hp-banner-ctas {
-    flex-direction: row;
-    flex-wrap: wrap;
-    min-width: 0;
-  }
+@media (max-width: 980px) {
+  .hero-visual-medallion { max-width: 380px; }
+  .hero-visual-badge { width: 50px; height: 50px; }
+  .hero-visual-label { font-size: 18px; }
+}
+@media (max-width: 720px) {
+  .hero-right[data-hero-visual] { padding-top: 12px; }
+  .hero-visual { gap: 18px; }
+  .hero-visual-medallion { max-width: 320px; }
 }
 
 /* ============================================================
