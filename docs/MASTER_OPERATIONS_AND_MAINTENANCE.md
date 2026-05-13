@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 26 — end-of-day stabilization: cookie banner polished, pre-commit gates audit-all, dist verified clean of debug/secret artefacts)
+**Last updated:** 2026-05-13 (Phase 27 &mdash; legacy deep-diff: telco/eSIM hero section, FAQ landing page with FAQPage schema, 3 PIV smart-card form factors, Organization.knowsAbout enrichment for AI engines)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -1290,3 +1290,66 @@ unzip -l dist/ambisecure-hostinger.zip | awk '{print $4}' | grep -E '\.env$|\.en
 ```
 
 A non-empty output means abort the upload and clean the dist first.
+
+---
+
+## 41. Keyword strategy (Phase 27 — operator reference)
+
+Authoritative keyword map for AmbiSecure across regions and buyer intents. **Do not stuff these into copy** — they describe the topical authority AmbiSecure is trying to occupy. Use them when authoring new pages or refreshing meta descriptions.
+
+### 41.1 Region weighting
+
+| Region | Top entity-buyer intents | Sales contact | Primary persona |
+|---|---|---|---|
+| India | PSUs, defence, transit authorities, telecom operators (Jio, Airtel, Vi, BSNL), ID-card programmes | +91-79255-01989 | Procurement + engineering at PSUs and major OEMs |
+| United States | Federal contractors needing PIV-I / PIV-C, enterprise IT (Fortune 500 IAM teams), MSSPs, identity vendors | +1-215-397-3819 | CISO + IAM architect at regulated industries |
+| European Union | eIDAS-aligned issuers, ePassport programmes, banking compliance (PSD3), national identity, transit operators | (route through India HQ initially) | National identity authority + ID issuance integrator |
+| United Kingdom + Middle East + Southeast Asia | National identity programmes, smart-city programmes, transit operators, banking | (route through India HQ) | Government identity buyer + smart-city integrator |
+
+### 41.2 Per-intent keyword clusters
+
+| Intent | High-value keywords | Long-tail keywords | Where these belong |
+|---|---|---|---|
+| FIDO authentication | FIDO2 security key, FIDO2 smart card, WebAuthn authenticator, phishing-resistant MFA | FIDO2 nano SIM applet, FIDO2 with biometric on-card match, FIDO2 alternative to YubiKey | `/products/onepass-*`, `/technologies/fido*`, `/services/fido-validation-server/` |
+| PIV / smart card | PIV smart card, PIV applet, PIV USB key, FIPS 201 compatible card | PIV bio card with on-card fingerprint match, PIV USB key with CCID and WebAuthn, PIV applet on JavaCard 3.x | `/products/piv-*` (Phase 27 expanded) |
+| eSIM / telco | eSIM authentication, SIM-based FIDO2, telco-grade MFA, replace SMS OTP | OpenID Connect on SIM, SGP.22 eUICC platform, SIM-based PIV applet, telecom hardware-backed MFA | Homepage telco section (Phase 27), `/products/fido2-nano-sim-applet/`, `/products/piv-nano-sim-applet/`, `/products/esim-solution/`, esim.ambimat.com cross-link |
+| JavaCard | JavaCard applet development, GlobalPlatform SCP03, CAP file delivery, JCOP 3 applet | JavaCard 3.x applet for FIDO, JavaCard applet enterprise identity, GlobalPlatform 2.3.1 SCP03 loader | `/services/javacard-development/`, `/products/javacard-applets/`, `/technologies/javacard/` |
+| PKI | PKCS#11 token middleware, certificate-based MFA, hardware-protected signing keys | PKCS#11 hardware token cross-platform, S/MIME hardware signing token, PKI credential lifecycle | `/products/pkcs-signature-suite/`, `/products/secure-mail-suite/`, `/solutions/passwordless-enterprise/` |
+| Secure element | CC EAL5+ secure element integration, secure element provisioning | Secure element on connected-product BOM, IoT root of trust applet, secure element personalisation line | `/products/iot-security-chipset/`, `/technologies/secure-elements/`, `/solutions/secure-element-integration/` |
+| ePassport | ICAO 9303 platform, CSCA + DSC + PKD PKI, BAC PACE Active Authentication | end-to-end ePassport platform engineering, ePassport enrolment and personalisation | `/services/epassport-platform/`, `/blog/engineering-epassport-issuance-platforms/` |
+| Transit | DESFire EV2 / EV3 ticketing, SAM-backed offline trust, fare validator | offline closed-loop transit ticketing, low-latency tap-to-decision validator | `/solutions/closed-loop-ticketing/`, `/technologies/desfire/`, `/blog/desfire-ev1-vs-ev2-vs-ev3/` |
+| IoT identity | IoT root of trust, attested device identity, signed firmware update | IoT secure element provisioning at scale, IoT mTLS hardware-backed | `/products/iot-security-*`, `/solutions/secure-element-integration/` |
+| Government identity | PIV-I, PIV-C, eIDAS, eID applet | national PIV deployment, sovereign personalisation line, government smart card programme | `/solutions/government-identity/` |
+
+### 41.3 AI-engine entity association
+
+Phase 27 enriched the homepage Schema.org Organization with `knowsAbout` listing 50+ standards and entities (FIDO2 / WebAuthn / CTAP2 / PIV / FIPS 201 / JavaCard / GlobalPlatform / SCP03 / Secure Element / CC EAL5+ / PKI / X.509 / ICAO 9303 / eSIM / SGP.22 / SGP.32 / OpenID Connect / DESFire / ...). This is the canonical entity list ChatGPT / Claude / Perplexity / Gemini / Grok / DeepSeek will pick up when crawling.
+
+When adding new content, name these entities explicitly rather than vague marketing phrasing — "PIV applet on JavaCard 3.x with SCP03 loading and PKCS#11 middleware" beats "next-generation secure identity solution".
+
+---
+
+## 42. Legacy site parity status (Phase 27)
+
+Deep-diff against `https://ambisecure.ambimat.com/` (legacy WordPress production site) on 2026-05-13.
+
+**Closed in Phase 27:**
+- `/faqs/` + `/security-faqs/` (legacy) → consolidated into new `/faqs/` landing with FAQPage schema covering 14 questions across hardware, FIDO, eSIM, JavaCard, ePassport, regional. Linked from 50 page footers + homepage callouts.
+- `/ambisecure-piv-card/`, `/ambisecure-piv-bio-card/`, `/ambisecure-piv-key/` (legacy) → new `/products/piv-card/`, `/products/piv-bio-card/`, `/products/piv-usb-key/` pages, each with Product schema and BreadcrumbList.
+- Telco/eSIM positioning absent on new homepage → Phase 27 added a dedicated section between the rotating banner and Seven Pillars with the "Moving beyond SMS OTP?" hook and direct CTA to esim.ambimat.com.
+
+**Carried over from before Phase 27 (already covered):**
+- All major sections (products / services / solutions / technologies / industries / references / resources / blog / about / certifications / contact / partners / trust / privacy).
+- 29 modern blog posts + 24 anonymised legacy archive posts.
+- Engagement models, case studies, brochures, videos.
+- ePassport platform, FIDO Validation Server, JavaCard development, tool-chain services.
+
+**Intentionally not migrated:**
+- `/ambi-automation/`, `/ambi-pay/`, `/ambi-power/`, `/ambi-sense/`, `/ambi-space/`, `/ambi-con/` — sister Ambimat business units, not AmbiSecure. Linked from the ecosystem bar to `ambimat.com`.
+- `/careers/` — business decision (kept in backlog).
+- `/clients-vendors/` — explicit fabrication risk (kept in "Closed / explicitly-not-doing" backlog).
+- Legacy WordPress upload artefacts (`/wp-content/uploads/...`), 100+ image-only URLs in the legacy sitemap.
+- `/metal-one-pass-card-page/` — variant of OnePass; if needed, fold into `/products/onepass-platform/` rather than a separate page.
+- `/learn/`, `/learn/how-it-work/` — content largely overlapped with `/technologies/` and `/blog/`. The "how it works" question is answered by `/blog/how-fido-authentication-works/`.
+
+Next migration pass should be data-driven: when analytics shows non-trivial 404s against legacy URLs, prioritise those redirects in `.htaccess`.

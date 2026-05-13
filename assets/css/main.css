@@ -3463,3 +3463,82 @@ body.as-search-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .hp-banner-slide { transition: none; }
 }
+
+/* ============================================================
+   PHASE 27 — TELCO / eSIM POSITIONING SECTION (homepage)
+   ============================================================ */
+.as-telco-section { padding-top: 48px; padding-bottom: 48px; }
+.as-telco-card {
+  background: linear-gradient(135deg, rgba(14, 140, 156, 0.05) 0%, rgba(58, 63, 64, 0.02) 60%, transparent 100%);
+  border: 1px solid var(--rule, #E1E3E4);
+  border-left: 4px solid var(--secure-cyan, #0E8C9C);
+  border-radius: 12px;
+  padding: 34px 36px;
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.as-telco-body { flex: 1 1 480px; min-width: 0; }
+.as-telco-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  color: var(--secure-cyan, #0E8C9C);
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.as-telco-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--ink, #3A3F40);
+  margin: 0 0 12px 0;
+  line-height: 1.18;
+  letter-spacing: -0.5px;
+}
+.as-telco-desc {
+  font-size: 15.5px;
+  color: var(--brand-grey, #616A6C);
+  line-height: 1.65;
+  margin: 0 0 14px 0;
+}
+.as-telco-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 22px;
+  font-size: 13.5px;
+  color: var(--ink);
+}
+.as-telco-points li {
+  position: relative;
+  padding-left: 18px;
+}
+.as-telco-points li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 9px;
+  width: 8px; height: 8px;
+  background: var(--secure-cyan, #0E8C9C);
+  border-radius: 50%;
+}
+.as-telco-ctas {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: stretch;
+}
+.as-telco-ctas .btn { text-align: center; }
+@media (max-width: 880px) {
+  .as-telco-card { padding: 26px 22px; gap: 22px; }
+  .as-telco-title { font-size: 24px; }
+  .as-telco-points { grid-template-columns: 1fr; }
+  .as-telco-ctas { flex-direction: row; flex-wrap: wrap; }
+  .as-telco-ctas .btn { flex: 1 1 calc(50% - 10px); min-width: 0; }
+}

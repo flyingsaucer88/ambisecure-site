@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-12 (Phase 26 — cookie banner polished, pre-commit gates audit-all, dist verified clean of debug/secret artefacts)
+**Last updated:** 2026-05-13 (Phase 27 &mdash; legacy deep-diff: telco/eSIM hero section, FAQ landing page with FAQPage schema, 3 PIV smart-card form factors, Organization.knowsAbout enrichment for AI engines)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 

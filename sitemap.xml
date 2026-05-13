@@ -330,4 +330,10 @@
   <url><loc>https://ambisecure.ambimat.com/resources/timelines/webauthn-passkey/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
   <url><loc>https://ambisecure.ambimat.com/resources/timelines/secure-elements/</loc><changefreq>monthly</changefreq><priority>0.70</priority></url>
 
+  <!-- Phase 27: FAQ landing + PIV smart-card / USB / bio-card form factors -->
+  <url><loc>https://ambisecure.ambimat.com/faqs/</loc><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/piv-card/</loc><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/piv-bio-card/</loc><changefreq>monthly</changefreq><priority>0.80</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/products/piv-usb-key/</loc><changefreq>monthly</changefreq><priority>0.80</priority></url>
+
 </urlset>
