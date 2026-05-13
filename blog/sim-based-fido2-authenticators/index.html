@@ -190,7 +190,7 @@
 
     <h2>The deployment economics</h2>
     <p>Compared with issuing 5,000 dedicated USB security keys at roughly $40&ndash;60 each (per-key cost plus shipping plus help-desk burden for the first wave), a SIM-applet rollout is a one-time applet-load cost on existing SIM issuance. There is no new physical part. There is no second device to track. The recovery flow is the same as the operator's existing SIM-replacement workflow.</p>
-    <p>The corresponding cost is integration: the validation server needs to be aware of the SIM applet's AAGUID, the operator's MDS entry has to be registered, and the relying-party identity stack needs to issue WebAuthn challenges through a backend that speaks the FIDO Validation Server's API. That integration work is one-time. The savings are recurring.</p>
+    <p>The corresponding cost is integration: the validation server needs to be aware of the nano-card applet's AAGUID, the operator's MDS entry has to be registered, and the relying-party identity stack needs to issue WebAuthn challenges through a backend that speaks the FIDO Validation Server's API. That integration work is one-time. The savings are recurring.</p>
 
     <h2>The bottom line</h2>
     <p>A embedded secure-element FIDO2 authenticator is a serious enterprise identity primitive, not a curiosity. It collapses the per-user authenticator hardware count to zero, places the credential's trust root inside an operator-controlled certified secure element, and slots into existing CTAP2.1 + WebAuthn relying-party stacks without modification. For an enterprise that is already shipping SIMs, this is the cheapest path to phishing-resistant workforce identity that actually scales.</p>

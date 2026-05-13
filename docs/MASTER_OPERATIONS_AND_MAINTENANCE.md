@@ -1448,3 +1448,44 @@ Independent QA audit of the live preview surfaced ten actionable findings; each 
 - **Footer build markers** — `<!-- AMBISECURE_DEPLOY_MARKER ... -->` and the `.footer-build` `Site build: phaseNN ...` span were both stripped from `index.html`. Deploy provenance is tracked via the git log only.
 - **Hero CTA hierarchy** — three equal-weight outline CTAs collapsed to a 1-2-3 hierarchy: primary "Talk to engineering", outline "Explore products", text-only "Browse resources →". New `.btn-text` utility added next to `.btn-outline` / `.btn-ghost` so this stays reusable.
 - **Audit / cache governance** — `tools/audit-circular-links.py` caught a self-link I had introduced on `/contact/` and the build failed there; fixed before commit. Cache-bust bumped `v=30 → v=31` across 267 HTML files. All audits pass.
+
+## 47. Editorial normalisation across the blog corpus (Phase 32)
+
+Sitewide pass to make every blog feel authored by the same engineering organisation. The corpus reviewed: 26 modern blogs, 24 archive blogs, 19 category index pages, 23 tag index pages, plus the blog root, archive root, page-2 index, and the homepage rotation pool — 96 surfaces in total.
+
+What was removed (zero residual hits in the verifier):
+
+- "Dear Readers" / "Dear Reader" — already cleaned in Phase 30; verified clean.
+- "The blog of this week" / "this week's blog" — 22 archive pages rewritten.
+- "The post introduces / addresses / discusses / examines / is a follow-up / serves as a continuation" — every instance replaced with a content-first opener.
+- "This article covers / addresses / analyses / follows" — 4 archive pages rewritten; the templated restatement of the H1 is gone.
+- Empty `<p></p>` and empty related-card excerpts — 17 cards filled from the canonical-excerpt map, 5 empty body paragraphs stripped.
+
+Per-slug opening paragraphs were rewritten manually (not regex-generated) so every archive page now opens with a substantive engineering statement rather than a templated label. The dek (subtitle), `meta name="description"`, `og:description`, and `twitter:description` for each archive page also carry the same engineering-tone summary, kept in lockstep with the card excerpts on the archive / tag / category indexes and the related-articles rails.
+
+Terminology normalisation (preserves Oracle proper-noun citations and ISO form-factor names):
+
+- `Java Card` (with space) — left as-is only where it refers to Oracle's "Java Card Runtime Environment (JCRE)" or "Java Card converter" tool name. The remaining body prose uses "JavaCard" consistently.
+- `e-passport` / `E-passport` / `E-Passport` → `ePassport` everywhere in body prose. URLs / slugs unchanged.
+- `FIDO 2` (with space) → `FIDO2`, except where it represents a version label like `FIDO 2.0`.
+- `Nano SIM applet` / `nano SIM applet` / `SIM applet` (body, alt text, related-card titles) → `nano-card applet` / `nano-card authenticator` / `nano-card secure element`. URL slugs (`piv-nano-sim-applet`, `fido2-nano-sim-applet`) preserved for SEO equity. Three remaining "SIM applet" hits are legitimate: the `industries/` eSIM Initiative card (genuine telecom-SIM context) and two "nano-SIM applet" form-factor references on the PIV timeline (where "nano-SIM" is the ISO/IEC 7810 4FF size, not the telecom-SIM concept).
+- `webauthn` lowercase only kept inside `<code>` examples (`type === "webauthn.create"` is the literal WebAuthn spec string).
+
+Verifier (run after each pass):
+
+```python
+patterns = [
+    r"Dear (?:Readers|Reader)",
+    r"This week(?:'s|&#x27;s| ?'s) blog|The blog of this week",
+    r"The post (?:introduces|addresses|discusses|examines|is a follow-up|serves as a continuation)",
+    r"This article (?:covers|addresses|analyzes|analyses|follows)",
+    r"Hope (?:you|we) (?:enjoyed|like)",
+    r"Stay tuned", r"Welcome back", r"Hello everyone",
+    r"In today'?s evolving",
+    r"\bFIDO 2(?!\.\d)\b",
+    r"\be-passport\b",
+    r"\bSIM applet\b",      # excluding industries/eSIM card + nano-SIM form-factor
+]
+```
+
+A run of this verifier across `blog/**/*.html` and `tags/**/*.html` after the pass returned zero hits.
