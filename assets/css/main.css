@@ -3465,6 +3465,146 @@ body.as-search-open { overflow: hidden; }
 }
 
 /* ============================================================
+   PHASE 29 — DAILY ECOSYSTEM BANNER (full-bleed, top-of-page)
+   Prominent, premium-feeling band that rotates one ecosystem
+   story per UTC day. Sits between navbar and hero.
+   ============================================================ */
+.daily-ecosystem-banner {
+  position: relative;
+  width: 100%;
+  padding: 28px max(24px, 4vw) 32px;
+  background:
+    radial-gradient(1200px 320px at 12% 20%, rgba(227, 34, 42, 0.10) 0%, rgba(227, 34, 42, 0) 70%),
+    radial-gradient(900px 280px at 92% 90%, rgba(14, 140, 156, 0.08) 0%, rgba(14, 140, 156, 0) 75%),
+    linear-gradient(180deg, #FAFBFC 0%, #F4F6F8 100%);
+  border-top: 1px solid var(--rule, #E1E3E4);
+  border-bottom: 1px solid var(--rule, #E1E3E4);
+  box-shadow: inset 0 -1px 0 rgba(58, 63, 64, 0.04);
+  overflow: hidden;
+}
+.daily-ecosystem-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--brand-red, #E3222A) 0%, var(--brand-red, #E3222A) 38%, var(--secure-cyan, #0E8C9C) 100%);
+  opacity: 0.9;
+}
+.daily-ecosystem-banner .deb-shell {
+  max-width: 1240px;
+  margin: 0 auto;
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid var(--rule, #E1E3E4);
+  border-radius: 14px;
+  box-shadow:
+    0 1px 2px rgba(58, 63, 64, 0.04),
+    0 18px 48px -22px rgba(58, 63, 64, 0.22);
+  overflow: hidden;
+}
+.daily-ecosystem-banner .deb-shell::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  background: var(--banner-accent, var(--brand-red, #E3222A));
+}
+.daily-ecosystem-banner .deb-inner {
+  padding: 30px 36px 32px 42px;
+}
+.daily-ecosystem-banner .deb-slide,
+.daily-ecosystem-banner .hp-banner-slide {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px 40px;
+  align-items: center;
+  border-left: none !important;
+  margin-left: 0 !important;
+  padding: 0 !important;
+}
+.daily-ecosystem-banner .deb-badge {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.3px;
+  text-transform: uppercase;
+  color: var(--brand-grey, #616A6C);
+  margin: 0 0 -4px 0;
+}
+.daily-ecosystem-banner .deb-badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--banner-accent, var(--brand-red, #E3222A));
+  box-shadow: 0 0 0 4px rgba(227, 34, 42, 0.12);
+}
+.daily-ecosystem-banner .deb-body,
+.daily-ecosystem-banner .hp-banner-body {
+  min-width: 0;
+  flex: initial;
+}
+.daily-ecosystem-banner .deb-eyebrow,
+.daily-ecosystem-banner .hp-banner-eyebrow {
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.4px;
+  color: var(--banner-accent, var(--brand-red, #E3222A));
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+}
+.daily-ecosystem-banner .deb-title,
+.daily-ecosystem-banner .hp-banner-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(26px, 2.6vw, 34px);
+  font-weight: 800;
+  color: var(--ink, #3A3F40);
+  margin: 0 0 12px 0;
+  line-height: 1.18;
+  letter-spacing: -0.4px;
+}
+.daily-ecosystem-banner .deb-text,
+.daily-ecosystem-banner .hp-banner-text {
+  margin: 0;
+  color: var(--brand-grey, #616A6C);
+  font-size: 16.5px;
+  line-height: 1.6;
+  max-width: 64ch;
+}
+.daily-ecosystem-banner .deb-ctas,
+.daily-ecosystem-banner .hp-banner-ctas {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  min-width: 220px;
+}
+.daily-ecosystem-banner .deb-ctas .btn,
+.daily-ecosystem-banner .hp-banner-ctas .btn {
+  text-align: center;
+  white-space: nowrap;
+}
+@media (max-width: 880px) {
+  .daily-ecosystem-banner { padding: 22px 16px 26px; }
+  .daily-ecosystem-banner .deb-inner { padding: 24px 22px 26px 26px; }
+  .daily-ecosystem-banner .deb-slide,
+  .daily-ecosystem-banner .hp-banner-slide {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .daily-ecosystem-banner .deb-ctas,
+  .daily-ecosystem-banner .hp-banner-ctas {
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 0;
+  }
+}
+
+/* ============================================================
    PHASE 27 — TELCO / eSIM POSITIONING SECTION (homepage)
    ============================================================ */
 .as-telco-section { padding-top: 48px; padding-bottom: 48px; }

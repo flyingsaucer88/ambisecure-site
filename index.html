@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- AMBISECURE_DEPLOY_MARKER: phase28-hero-spacing-daily-rotation-mff2-20260513-1040 -->
+<!-- AMBISECURE_DEPLOY_MARKER: phase29-visible-daily-ecosystem-banner-20260513-1130 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -25,8 +25,8 @@
 
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=28" />
-<link rel="stylesheet" href="/assets/css/main.css?v=28" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=29" />
+<link rel="stylesheet" href="/assets/css/main.css?v=29" />
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
@@ -151,6 +151,28 @@
 
 <main id="main">
 
+<!-- ============== DAILY ECOSYSTEM BANNER (Phase 29) — prominent, top-of-page, rotates daily ============== -->
+<section class="daily-ecosystem-banner" data-daily-ecosystem-banner aria-labelledby="ecosystem-banner-heading">
+  <h2 id="ecosystem-banner-heading" class="visually-hidden" style="position:absolute;left:-10000px;">Featured ecosystem highlight</h2>
+  <div class="deb-shell" data-accent="red">
+    <div class="deb-inner hp-banner-slot" aria-live="polite">
+      <!-- Static fallback for JS-off; the daily-rotation script replaces this slot in place. -->
+      <article class="deb-slide is-active" data-id="ambisecure-onepass">
+        <div class="deb-badge"><span class="deb-badge-dot" aria-hidden="true"></span>AmbiSecure ecosystem &middot; rotates daily</div>
+        <div class="deb-body">
+          <div class="deb-eyebrow">FEATURED &middot; OnePass platform</div>
+          <h2 class="deb-title">One identity card. Phishing-resistant. Procurement-ready.</h2>
+          <p class="deb-text">Replace badges and security keys with a single FIDO2 smart card that ships under your issuer keys, brand artwork, and audit hooks &mdash; one of fourteen featured stories rotating across AmbiSecure, the eSIM Initiative, and Ambimat Electronics.</p>
+        </div>
+        <div class="deb-ctas">
+          <a href="/products/onepass-platform/" class="btn btn-primary deb-cta-primary">Explore OnePass</a>
+          <a href="/contact/" class="btn btn-outline deb-cta-secondary">Request a pilot</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ============== HERO ============== -->
 <section class="hero" aria-labelledby="hero-heading">
   <div class="hero-container">
@@ -216,31 +238,6 @@
         <h3>Turnkey, from wafer to validation.</h3>
         <p>Silicon selection, applet engineering, personalisation lines, form-factor delivery, validation servers &mdash; scoped as architecture review, pilot, or production rollout.</p>
       </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============== HIGHLIGHT BANNER (Phase 22) — rotating carousel ============== -->
-<section aria-labelledby="banner-heading" style="padding-top:8px;padding-bottom:24px;">
-  <div class="section-container">
-    <h2 id="banner-heading" class="visually-hidden" style="position:absolute;left:-10000px;">Featured highlights</h2>
-    <div class="hp-banner-slot" aria-live="polite">
-      <!-- Static fallback for JS-off; carousel JS replaces this when active -->
-      <div class="hp-banner" style="border-left-color:var(--brand-red,#E3222A);">
-        <div class="hp-banner-track">
-          <article class="hp-banner-slide is-active" style="--banner-accent:var(--brand-red,#E3222A);">
-            <div class="hp-banner-body">
-              <div class="hp-banner-eyebrow">FEATURED &middot; OnePass platform</div>
-              <h2 class="hp-banner-title">One identity card. Phishing-resistant. Procurement-ready.</h2>
-              <p class="hp-banner-text">Replace badges and security keys with a single FIDO2 smart card that ships under your issuer keys, brand artwork, and audit hooks.</p>
-            </div>
-            <div class="hp-banner-ctas">
-              <a href="/products/onepass-platform/" class="btn btn-primary">Explore OnePass</a>
-              <a href="/contact/" class="btn btn-outline">Request a pilot</a>
-            </div>
-          </article>
-        </div>
-      </div>
     </div>
   </div>
 </section>
@@ -826,7 +823,7 @@
       </div>
     </div>
     <div class="footer-base">
-      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><span class="footer-build" style="opacity:0.55;margin-left:10px;font-size:11px;letter-spacing:0.3px;"> &middot; Site build: phase28-hero-spacing-daily-rotation-mff2 &mdash; 2026-05-13 10:40</span>
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><span class="footer-build" style="opacity:0.55;margin-left:10px;font-size:11px;letter-spacing:0.3px;"> &middot; Site build: phase29-visible-daily-ecosystem-banner &mdash; 2026-05-13 11:30</span>
       <div class="footer-social" aria-label="Social links">
         <a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a>
         <a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a>
@@ -836,14 +833,14 @@
   </div>
 </footer>
 
-<script src="/assets/js/nav.js?v=28" defer></script>
-<script src="/assets/js/web-vitals.js?v=28" defer></script>
-<script src="/assets/js/site-search.js?v=28" defer></script>
-<script src="/assets/js/cookie-consent.js?v=28" defer></script>
-<script src="/assets/js/blog-pool.js?v=28" defer></script>
-<script src="/assets/js/blog-spotlight.js?v=28" defer></script>
-<script src="/assets/js/highlight-banner-config.js?v=28" defer></script>
-<script src="/assets/js/highlight-banner.js?v=28" defer></script>
-<script src="/assets/js/video-facade.js?v=28" defer></script>
+<script src="/assets/js/nav.js?v=29" defer></script>
+<script src="/assets/js/web-vitals.js?v=29" defer></script>
+<script src="/assets/js/site-search.js?v=29" defer></script>
+<script src="/assets/js/cookie-consent.js?v=29" defer></script>
+<script src="/assets/js/blog-pool.js?v=29" defer></script>
+<script src="/assets/js/blog-spotlight.js?v=29" defer></script>
+<script src="/assets/js/highlight-banner-config.js?v=29" defer></script>
+<script src="/assets/js/highlight-banner.js?v=29" defer></script>
+<script src="/assets/js/video-facade.js?v=29" defer></script>
 </body>
 </html>
