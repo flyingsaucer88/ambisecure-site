@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=27" />
-<link rel="stylesheet" href="/assets/css/main.css?v=27" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=28" />
+<link rel="stylesheet" href="/assets/css/main.css?v=28" />
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
@@ -162,7 +162,7 @@
       <li><strong>The user needs a badge for physical access</strong> → PIV smart card. One credential, two surfaces, identity-card semantics.</li>
       <li><strong>The user is laptop-first, no badge needed, cross-OS signing required</strong> → USB token. Use the <a href="/products/pkcs-signature-suite/">PKCS Signature Suite</a> if signing applications matter; use a FIDO2 token if WebAuthn is the only requirement.</li>
       <li><strong>The user is on a managed device, the operator owns the device-management channel, and the credential can die with the device</strong> → Embedded SE. TPM-backed passkey or PIV-on-eUICC.</li>
-      <li><strong>The user moves between devices and the operator wants the credential to outlive any single device</strong> → Roaming form factor. Either a smart card or a removable SIM-resident FIDO2 applet.</li>
+      <li><strong>The user moves between devices and the operator wants the credential to outlive any single device</strong> → Roaming form factor. Either a smart card or a removable embedded secure-element FIDO2 applet.</li>
     </ul>
 
     <h2>The hybrid pattern that actually ships</h2>
@@ -193,7 +193,7 @@
     <p>Skipping any of these turns the hardware credential into a very expensive single point of failure.</p>
 
     <h2>The bottom line</h2>
-    <p>PIV smart card for physical-logical convergence. USB token for laptop-first signing workflows. Embedded SE for managed-device, zero-hardware deployments. Roaming SIM-resident applets for the operator who already ships SIMs. The right answer for a workforce is usually two of these, not one &mdash; expressed in the validation server's AAGUID policy and in the issuance CA's certificate-class scope.</p>
+    <p>PIV smart card for physical-logical convergence. USB token for laptop-first signing workflows. Embedded SE for managed-device, zero-hardware deployments. Roaming secure-element applets for the operator who already ships SIMs. The right answer for a workforce is usually two of these, not one &mdash; expressed in the validation server's AAGUID policy and in the issuance CA's certificate-class scope.</p>
 
     <hr />
     <h2>Companion reading</h2>
@@ -218,10 +218,10 @@
   </div>
   <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span></div>
 </div></footer>
-<script src="/assets/js/nav.js?v=27" defer></script>
-<script src="/assets/js/web-vitals.js?v=27" defer></script>
-<script src="/assets/js/blog-toc.js?v=27" defer></script>
-<script src="/assets/js/site-search.js?v=27" defer></script>
-<script src="/assets/js/cookie-consent.js?v=27" defer></script>
+<script src="/assets/js/nav.js?v=28" defer></script>
+<script src="/assets/js/web-vitals.js?v=28" defer></script>
+<script src="/assets/js/blog-toc.js?v=28" defer></script>
+<script src="/assets/js/site-search.js?v=28" defer></script>
+<script src="/assets/js/cookie-consent.js?v=28" defer></script>
 </body>
 </html>

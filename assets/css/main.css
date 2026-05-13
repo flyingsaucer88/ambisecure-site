@@ -347,17 +347,17 @@ a { color: inherit; }
    HERO
    ========================================================= */
 .hero {
-  /* Phase 25: flagship banner. min-height ensures the hero always fills the
-     viewport on first scroll; tall padding pushes total height to ~1100px+
-     on standard laptops so the banner reads as the dominant page surface. */
-  min-height: 100vh;
+  /* Phase 28: keep the flagship banner presence but pull top padding in so
+     the logo sits closer to the navbar — relies on min-height for vertical
+     dominance rather than dead whitespace above the content. */
+  min-height: 92vh;
   background:
     radial-gradient(ellipse at 82% -10%, rgba(227,34,42,0.09), transparent 58%),
     linear-gradient(var(--grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid-line) 1px, transparent 1px),
     #ffffff;
   background-size: auto, 60px 60px, 60px 60px, auto;
-  padding: 150px 80px 190px;
+  padding: 84px 80px 120px;
   display: flex;
   align-items: center;
   position: relative;
@@ -403,20 +403,20 @@ a { color: inherit; }
 /* Hero-logo: small medallion above the eyebrow on hero-left. Same circular
    clip + drop-shadow as the crest for visual coherence. */
 .hero-logo {
-  width: 96px;
-  height: 96px;
+  width: 88px;
+  height: 88px;
   display: block;
-  margin: 0 0 26px 0;
+  margin: 0 0 14px 0;
   border-radius: 50%;
   background: transparent;
-  filter: drop-shadow(0 8px 20px rgba(58,63,64,0.16));
+  filter: drop-shadow(0 6px 16px rgba(58,63,64,0.14));
 }
 .hero-tag {
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
   letter-spacing: 2.6px;
   color: var(--brand-red);
-  margin-bottom: 18px;
+  margin-bottom: 14px;
   text-transform: uppercase;
   font-weight: 700;
   display: inline-flex;

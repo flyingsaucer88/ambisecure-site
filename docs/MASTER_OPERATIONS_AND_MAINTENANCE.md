@@ -1,7 +1,7 @@
 # MASTER OPERATIONS AND MAINTENANCE — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-13 (Phase 27 &mdash; legacy deep-diff: telco/eSIM hero section, FAQ landing page with FAQPage schema, 3 PIV smart-card form factors, Organization.knowsAbout enrichment for AI engines)
+**Last updated:** 2026-05-13 (Phase 28 &mdash; hero spacing tightened, banner switched to deterministic daily rotation across the Ambimat ecosystem, site-wide SIM-&rarr;-MFF2/nano-card terminology fix)
 
 This is the single operational document for the AmbiSecure static site. It supersedes every per-phase document that used to live in `docs/`. Open items and future work live in [`OPEN_ITEMS_AND_FUTURE_BACKLOG.md`](OPEN_ITEMS_AND_FUTURE_BACKLOG.md).
 
@@ -1353,3 +1353,83 @@ Deep-diff against `https://ambisecure.ambimat.com/` (legacy WordPress production
 - `/learn/`, `/learn/how-it-work/` — content largely overlapped with `/technologies/` and `/blog/`. The "how it works" question is answered by `/blog/how-fido-authentication-works/`.
 
 Next migration pass should be data-driven: when analytics shows non-trivial 404s against legacy URLs, prioritise those redirects in `.htaccess`.
+
+---
+
+## 43. Daily rotating homepage banner (Phase 28)
+
+`assets/js/highlight-banner.js` was rewritten in Phase 28 from an auto-advance carousel (Phase 22) to a **deterministic daily rotation**:
+
+```js
+function dayIndex() { return Math.floor(Date.now() / 86400000); }   // UTC days since epoch
+var pick = active[dayIndex() % active.length];
+```
+
+Behaviour:
+
+- Every visitor on the same UTC day sees the **same** banner — predictable for screenshots, support, sales calls.
+- The banner advances automatically at UTC midnight. No server, no API, no localStorage, no cron.
+- Time-boxed entries (`startsAt` / `endsAt`) are honoured before the daily pick.
+- Disabled entries (`enabled: false`) are skipped.
+- Static fallback markup inside `.hp-banner-slot` is shown if JS is disabled.
+
+**Ecosystem coverage in the pool** (`assets/js/highlight-banner-config.js`, 13 entries as of Phase 28):
+
+| Group | Entries |
+|---|---|
+| AmbiSecure capability | OnePass platform, PIV across form factors, JavaCard development, FIDO Validation Server, MFF2 secure elements, ePassport platform, IoT identity, Case studies, Engineering FAQs |
+| eSIM Initiative (esim.ambimat.com) | eUICC platform engineering, SMS-OTP → hardware MFA bridge |
+| Ambimat Electronics (ambimat.com) | 45 years of embedded engineering, in-house hardware capability |
+
+The Phase 22 carousel CSS (prev/next buttons, dot indicators, auto-advance, hover pause) is dead code from Phase 28's perspective but harmless; remove it in a future CSS cleanup.
+
+---
+
+## 44. SIM / MFF2 terminology governance (Phase 28)
+
+### Why this exists
+
+The Phase 27 telco section and several blog/product pages described AmbiSecure applets as "SIM-resident", "SIM-based", or "FIDO2 on a nano SIM". Most readers parse "SIM" as **telecom-issued subscriber SIM** — which AmbiSecure applets are **not**. They run on the same CC EAL5+ secure-element silicon that *also* comes in SIM-card-shaped packaging; the silicon is the value, the package is an integration convenience.
+
+### Correct positioning
+
+The applets are available in two integration-convenient form factors:
+
+1. **Nano-card (4FF) form factor** — convenient handling, removable, drop-in for sockets, can be issued like a SIM but is not a subscriber SIM.
+2. **MFF2 solderable form factor** — the same silicon, solder-down packaging for embedded integration into OEM product boards (no carrier involvement, no removable carrier).
+
+Frame both as packaging choices for the same applet. Cross-reference [esim.ambimat.com](https://esim.ambimat.com/) for the actual telecom-grade eUICC / SGP.22 / SGP.32 platform — that sister site is where telco-issued credentials live.
+
+### Preferred phrasing
+
+- "Available in convenient nano-card and solderable MFF2 form factors"
+- "Deployable as a removable nano-card or as an MFF2 module soldered into your product"
+- "Hardware-backed identity on CC EAL5+ silicon — nano-card and MFF2 packages"
+- "Designed for embedded integration into IoT and identity products"
+
+### Phrasing to avoid
+
+- "SIM-resident applet" / "SIM-based applet" / "applet on a SIM" — implies telecom-issued
+- "Telco-grade authentication" used to describe AmbiSecure SE applets (use only for the eSIM Initiative platform)
+- "Subscriber-controlled" / "carrier-loaded" / "operator-provisioned" in AmbiSecure copy
+- The unqualified word "SIM" without "nano-card form factor" or similar disambiguation
+
+### Sweep performed in Phase 28
+
+14 pages were patched via a regex sweep: replacements covered "SIM-resident applets" → "secure-element applets", "SIM-based authentication" → "secure-element authentication", "telco-grade authentication" → "hardware-rooted authentication", and the "on a nano SIM" marketing phrase → "in a nano-card / MFF2 secure element". The product URL slugs (`/products/fido2-nano-sim-applet/`, `/products/piv-nano-sim-applet/`) were preserved as SEO equity; their bodies and meta descriptions were rewritten to lead with MFF2 + nano-card positioning.
+
+When authoring new copy, follow this convention. The Phase 28 daily rotation pool in `highlight-banner-config.js` is the canonical phrasing reference.
+
+---
+
+## 45. Homepage hero spacing (Phase 28)
+
+The hero retains its visual dominance via `min-height: 92vh` (was 100vh in Phase 25) but pulls inner padding inward so content sits closer to the navbar:
+
+- `padding: 84px 80px 120px` (was `150 / 190`).
+- `.hero-logo` 88×88 (was 96×96), `margin-bottom: 14px` (was 26px).
+- `.hero-tag` `margin-bottom: 14px` (was 18px).
+
+Net effect on a 1440×900 display: the AmbiSecure logo and the eyebrow now sit ~65 px higher; the headline begins ~30 px earlier. Hero still fills the first viewport but with no awkward whitespace.
+
+Mobile responsive block (`max-width: 880px`) unchanged.

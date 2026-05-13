@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- AMBISECURE_DEPLOY_MARKER: phase27-legacy-parity-faq-piv-telco-seo-20260513-0915 -->
+<!-- AMBISECURE_DEPLOY_MARKER: phase28-hero-spacing-daily-rotation-mff2-20260513-1040 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -25,8 +25,8 @@
 
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=27" />
-<link rel="stylesheet" href="/assets/css/main.css?v=27" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=28" />
+<link rel="stylesheet" href="/assets/css/main.css?v=28" />
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
@@ -46,7 +46,7 @@
       "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
       "url": "https://ambisecure.ambimat.com/",
       "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
-      "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and SIM-based authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+      "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
       "foundingDate": "2017",
       "parentOrganization": { "@type": "Organization", "name": "Ambimat Electronics", "url": "https://ambimat.com/", "foundingDate": "1981" },
       "knowsAbout": [
@@ -56,7 +56,7 @@
         "Secure Element", "CC EAL5+", "Hardware Root of Trust", "Attestation",
         "PKI", "X.509", "PKCS#11", "PKCS#15", "S/MIME", "Digital Signature", "Certificate Authority",
         "ePassport", "ICAO 9303", "BAC", "PACE", "Active Authentication", "CSCA", "PKD", "LDS",
-        "eSIM", "eUICC", "SGP.22", "SGP.32", "RSP", "OpenID Connect", "SIM-based Authentication",
+        "eSIM", "eUICC", "SGP.22", "SGP.32", "RSP", "OpenID Connect", "secure-element-based Authentication",
         "IoT Security", "IoT Identity", "Signed Firmware Update", "Key Provisioning",
         "DESFire", "DESFire EV2", "DESFire EV3", "SAM", "Transit Ticketing",
         "Phishing-resistant MFA", "Passwordless Authentication", "Hardware-backed MFA",
@@ -245,30 +245,31 @@
   </div>
 </section>
 
-<!-- ============== TELCO / eSIM POSITIONING (Phase 27) ============== -->
-<section class="alt as-telco-section" aria-labelledby="telco-heading" style="padding-top:48px;padding-bottom:48px;">
+<!-- ============== FORM FACTOR FLEXIBILITY (Phase 28 — repositioned) ============== -->
+<section class="alt as-telco-section" aria-labelledby="forms-heading" style="padding-top:48px;padding-bottom:48px;">
   <div class="section-container">
     <div class="as-telco-card">
       <div class="as-telco-body">
-        <span class="as-telco-eyebrow">Telco-grade identity &middot; eSIM &middot; SIM-based FIDO2</span>
-        <h2 id="telco-heading" class="as-telco-title">Moving beyond SMS OTP?</h2>
+        <span class="as-telco-eyebrow">Integration flexibility &middot; nano-card &middot; MFF2 solderable</span>
+        <h2 id="forms-heading" class="as-telco-title">Same applets. Card or solderable. Your choice of integration.</h2>
         <p class="as-telco-desc">
-          Build telecom-grade, hardware-backed authentication and eSIM identity systems &mdash; FIDO2,
-          PIV and OpenID Connect applets running on SIM/eUICC secure elements. Phishing-resistant by
-          construction, SGP.22 / SGP.32 lifecycle support, and migration paths from SMS OTP to
-          credentials your subscribers carry on the SIM they already own.
+          FIDO2, PIV, OpenID Connect, and IoT-identity applets ship on the same CC EAL5+ secure-element
+          silicon in two integration-convenient packages: a <strong>nano-card form factor</strong> for
+          issuance and handling, and a <strong>solderable MFF2 module</strong> for embedding directly
+          into connected-product boards. Same applet code, same certifications, same personalisation
+          pipeline &mdash; pick the package that fits your manufacturing flow.
         </p>
         <ul class="as-telco-points">
-          <li>SIM-based FIDO2 + PIV applets on CC EAL5+ silicon</li>
-          <li>OpenID Connect on SIM for telecom identity providers</li>
-          <li>SGP.22 + SGP.32 eUICC platform, RSP, profile lifecycle</li>
-          <li>Bridge from SMS OTP to hardware-rooted MFA without re-issuing SIMs</li>
+          <li>FIDO2 / PIV / OIDC applets on CC EAL5+ silicon</li>
+          <li>Nano-card package for removable handling</li>
+          <li>MFF2 solderable for embedded OEM integration</li>
+          <li>SGP.22 / SGP.32 RSP supported via the eSIM Initiative sister platform</li>
         </ul>
       </div>
       <div class="as-telco-ctas">
-        <a href="https://esim.ambimat.com/" class="btn btn-primary" rel="noopener">Explore eSIM Initiative</a>
-        <a href="/products/fido2-nano-sim-applet/" class="btn btn-outline">FIDO2 on a nano SIM</a>
-        <a href="/products/piv-nano-sim-applet/" class="btn btn-outline">PIV on a nano SIM</a>
+        <a href="/products/iot-security-chipset/" class="btn btn-primary">IoT secure-element chipset</a>
+        <a href="/products/javacard-applets/" class="btn btn-outline">JavaCard applet portfolio</a>
+        <a href="https://esim.ambimat.com/" class="btn btn-outline" rel="noopener">eSIM Initiative (sister site)</a>
       </div>
     </div>
   </div>
@@ -441,7 +442,7 @@
       <a href="/products/" class="card">
         <div class="card-icon">PROD</div>
         <h3>By product</h3>
-        <p>Cards, USB keys, biometric tokens, SIM-resident applets, IoT applets, signature suites &mdash; all the hardware AmbiSecure ships.</p>
+        <p>Cards, USB keys, biometric tokens, secure-element applets, IoT applets, signature suites &mdash; all the hardware AmbiSecure ships.</p>
         <div class="card-meta">12 products &rarr;</div>
       </a>
       <a href="/services/" class="card">
@@ -551,8 +552,8 @@
     <div class="featured-strip-row">
       <a href="/solutions/passwordless-enterprise/"><span class="fs-tag">IDENT</span><span class="fs-label">Passwordless enterprise</span></a>
       <a href="/solutions/phishing-resistant-authentication/"><span class="fs-tag">IDENT</span><span class="fs-label">Phishing-resistant MFA</span></a>
-      <a href="/products/fido2-nano-sim-applet/"><span class="fs-tag">TELECOM</span><span class="fs-label">FIDO2 on a nano SIM</span></a>
-      <a href="/products/piv-nano-sim-applet/"><span class="fs-tag">GOV</span><span class="fs-label">PIV on a nano SIM</span></a>
+      <a href="/products/fido2-nano-sim-applet/"><span class="fs-tag">EMBED</span><span class="fs-label">FIDO2 in a nano-card / MFF2 secure element</span></a>
+      <a href="/products/piv-nano-sim-applet/"><span class="fs-tag">GOV</span><span class="fs-label">PIV in a nano-card / MFF2 secure element</span></a>
       <a href="/services/epassport-platform/"><span class="fs-tag">GOV</span><span class="fs-label">ePassport platform engineering</span></a>
       <a href="/products/secure-mail-suite/"><span class="fs-tag">PKI</span><span class="fs-label">Email + document signing</span></a>
       <a href="/products/pkcs-signature-suite/"><span class="fs-tag">PKI</span><span class="fs-label">PKCS signature suite</span></a>
@@ -825,7 +826,7 @@
       </div>
     </div>
     <div class="footer-base">
-      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><span class="footer-build" style="opacity:0.55;margin-left:10px;font-size:11px;letter-spacing:0.3px;"> &middot; Site build: phase27-legacy-parity-faq-piv-telco-seo &mdash; 2026-05-13 09:15</span>
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><span class="footer-build" style="opacity:0.55;margin-left:10px;font-size:11px;letter-spacing:0.3px;"> &middot; Site build: phase28-hero-spacing-daily-rotation-mff2 &mdash; 2026-05-13 10:40</span>
       <div class="footer-social" aria-label="Social links">
         <a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a>
         <a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a>
@@ -835,14 +836,14 @@
   </div>
 </footer>
 
-<script src="/assets/js/nav.js?v=27" defer></script>
-<script src="/assets/js/web-vitals.js?v=27" defer></script>
-<script src="/assets/js/site-search.js?v=27" defer></script>
-<script src="/assets/js/cookie-consent.js?v=27" defer></script>
-<script src="/assets/js/blog-pool.js?v=27" defer></script>
-<script src="/assets/js/blog-spotlight.js?v=27" defer></script>
-<script src="/assets/js/highlight-banner-config.js?v=27" defer></script>
-<script src="/assets/js/highlight-banner.js?v=27" defer></script>
-<script src="/assets/js/video-facade.js?v=27" defer></script>
+<script src="/assets/js/nav.js?v=28" defer></script>
+<script src="/assets/js/web-vitals.js?v=28" defer></script>
+<script src="/assets/js/site-search.js?v=28" defer></script>
+<script src="/assets/js/cookie-consent.js?v=28" defer></script>
+<script src="/assets/js/blog-pool.js?v=28" defer></script>
+<script src="/assets/js/blog-spotlight.js?v=28" defer></script>
+<script src="/assets/js/highlight-banner-config.js?v=28" defer></script>
+<script src="/assets/js/highlight-banner.js?v=28" defer></script>
+<script src="/assets/js/video-facade.js?v=28" defer></script>
 </body>
 </html>

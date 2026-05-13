@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-13 (Phase 27 &mdash; legacy deep-diff: telco/eSIM hero section, FAQ landing page with FAQPage schema, 3 PIV smart-card form factors, Organization.knowsAbout enrichment for AI engines)
+**Last updated:** 2026-05-13 (Phase 28 &mdash; hero spacing tightened, banner switched to deterministic daily rotation across the Ambimat ecosystem, site-wide SIM-&rarr;-MFF2/nano-card terminology fix)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 

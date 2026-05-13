@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AmbiSecure FIDO2 Nano SIM Applet &mdash; SIM-resident authenticator</title>
-<meta name="description" content="FIDO2/WebAuthn applet in a nano SIM (4FF) form factor. Hardware-backed credentials on a CC EAL5+ secure element. Roaming or embedded authenticator." />
+<title>AmbiSecure FIDO2 Nano SIM Applet &mdash; embedded secure-element authenticator</title>
+<meta name="description" content="FIDO2 / CTAP2 applet on a CC EAL5+ secure element, available in a convenient nano-card (4FF) form factor and an MFF2 solderable module for embedded integration. Hardware-backed credentials, ECC P-256, ISO/IEC 7816 contact + 14443 contactless interfaces." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/" />
 <meta property="og:type" content="product" />
 <meta property="og:title" content="AmbiSecure FIDO2 Nano SIM Applet" />
-<meta property="og:description" content="FIDO2 applet on a nano SIM secure element. Hardware-backed credentials for telecom-integrated and embedded identity." />
+<meta property="og:description" content="FIDO2 applet on a CC EAL5+ secure element — nano-card and MFF2 solderable packages for OEM integration. ECC P-256, ISO 7816 + 14443." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/fido2-nano-sim-applet.png" />
 <meta property="og:image:type" content="image/png" />
@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=27" />
-<link rel="stylesheet" href="/assets/css/main.css?v=27" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=28" />
+<link rel="stylesheet" href="/assets/css/main.css?v=28" />
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
@@ -122,7 +122,7 @@
 <section class="alt">
   <div class="section-container">
     <div class="section-head left">
-      <span class="eyebrow">Why a SIM-resident authenticator</span>
+      <span class="eyebrow">Why a embedded secure-element authenticator</span>
       <h2 class="section-title">The trust boundary already lives in the device. Re-use it.</h2>
       <span class="section-line"></span>
     </div>
@@ -145,7 +145,7 @@
       <span class="eyebrow">Lifecycle</span>
       <h2 class="section-title">From silicon to credential.</h2>
       <span class="section-line"></span>
-      <p class="section-desc" style="margin:0;">A SIM-resident FIDO2 authenticator is only as trustworthy as the line that personalised it. Here is the canonical flow.</p>
+      <p class="section-desc" style="margin:0;">A embedded secure-element FIDO2 authenticator is only as trustworthy as the line that personalised it. Here is the canonical flow.</p>
     </div>
     <div class="arch"><div class="arch-node"><span class="arch-tag">01</span><h4>Chip</h4><p>Common Criteria EAL5+ secure element from a partner vendor.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">02</span><h4>Applet load</h4><p>FIDO2 applet loaded over GlobalPlatform SCP03 in a controlled facility.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node accent"><span class="arch-tag">03</span><h4>Personalise</h4><p>AAGUID injected, attestation certificate provisioned, secure-domain locked.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">04</span><h4>Provision</h4><p>Telecom profile or OEM device-identity profile written alongside, sharing the same SE.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">05</span><h4>Issue</h4><p>Shipped to the operator / OEM line as a finished SIM.</p></div></div>
   </div>
@@ -157,13 +157,13 @@
       <h2 class="section-title">Where this fits in the bigger picture.</h2>
       <span class="section-line"></span>
     </div>
-    <div class="grid-3"><a href="/technologies/fido2/" class="card"><h3>Technology: FIDO2</h3><p>How FIDO2 / CTAP2 makes credentials origin-bound and how the nano SIM authenticator plugs in.</p><div class="card-meta">View technology &rarr;</div></a><a href="/services/fido-validation-server/" class="card"><h3>Service: FIDO Validation Server</h3><p>The relying-party side &mdash; verify SIM-resident FIDO2 credentials in production.</p><div class="card-meta">View service &rarr;</div></a><a href="/solutions/phishing-resistant-authentication/" class="card"><h3>Solution: Phishing-resistant authentication</h3><p>Where a nano SIM authenticator fits in an enterprise rollout.</p><div class="card-meta">View solution &rarr;</div></a><a href="/blog/sim-based-fido2-authenticators/" class="card"><h3>Blog: SIM-resident FIDO2</h3><p>End-to-end cornerstone read &mdash; roaming vs embedded, threat model, enterprise rollout economics.</p><div class="card-meta">Read article &rarr;</div></a><a href="/blog/platform-vs-roaming-authenticators/" class="card"><h3>Blog: Platform vs roaming</h3><p>The categorical distinction the nano-SIM applet straddles.</p><div class="card-meta">Read article &rarr;</div></a><a href="/solutions/workforce-identity/" class="card"><h3>Solution: Workforce identity</h3><p>Issuance, recovery, off-boarding on SIM-resident credentials.</p><div class="card-meta">View solution &rarr;</div></a></div>
+    <div class="grid-3"><a href="/technologies/fido2/" class="card"><h3>Technology: FIDO2</h3><p>How FIDO2 / CTAP2 makes credentials origin-bound and how the nano SIM authenticator plugs in.</p><div class="card-meta">View technology &rarr;</div></a><a href="/services/fido-validation-server/" class="card"><h3>Service: FIDO Validation Server</h3><p>The relying-party side &mdash; verify embedded secure-element FIDO2 credentials in production.</p><div class="card-meta">View service &rarr;</div></a><a href="/solutions/phishing-resistant-authentication/" class="card"><h3>Solution: Phishing-resistant authentication</h3><p>Where a nano SIM authenticator fits in an enterprise rollout.</p><div class="card-meta">View solution &rarr;</div></a><a href="/blog/sim-based-fido2-authenticators/" class="card"><h3>Blog: embedded secure-element FIDO2</h3><p>End-to-end cornerstone read &mdash; roaming vs embedded, threat model, enterprise rollout economics.</p><div class="card-meta">Read article &rarr;</div></a><a href="/blog/platform-vs-roaming-authenticators/" class="card"><h3>Blog: Platform vs roaming</h3><p>The categorical distinction the nano-SIM applet straddles.</p><div class="card-meta">Read article &rarr;</div></a><a href="/solutions/workforce-identity/" class="card"><h3>Solution: Workforce identity</h3><p>Issuance, recovery, off-boarding on secure-element credentials.</p><div class="card-meta">View solution &rarr;</div></a></div>
   </div>
 </section>
 <section class="alt">
   <div class="section-container">
     <div class="callout">
-      <div><h2>Pilot a SIM-resident FIDO2 authenticator.</h2><p>Tell us your target form factor (removable nano SIM, soldered eUICC), expected volume, and target host platforms. We can ship engineering samples in 6&ndash;8 weeks.</p></div>
+      <div><h2>Pilot a embedded secure-element FIDO2 authenticator.</h2><p>Tell us your target form factor (removable nano SIM, soldered eUICC), expected volume, and target host platforms. We can ship engineering samples in 6&ndash;8 weeks.</p></div>
       <div><a href="/contact/" class="btn btn-primary">Request a pilot</a></div>
     </div>
   </div>
@@ -218,9 +218,9 @@
   </div>
 </footer>
 
-<script src="/assets/js/nav.js?v=27" defer></script>
-<script src="/assets/js/web-vitals.js?v=27" defer></script>
-<script src="/assets/js/site-search.js?v=27" defer></script>
-<script src="/assets/js/cookie-consent.js?v=27" defer></script>
+<script src="/assets/js/nav.js?v=28" defer></script>
+<script src="/assets/js/web-vitals.js?v=28" defer></script>
+<script src="/assets/js/site-search.js?v=28" defer></script>
+<script src="/assets/js/cookie-consent.js?v=28" defer></script>
 </body>
 </html>

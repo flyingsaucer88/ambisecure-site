@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.jpg" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=27" />
-<link rel="stylesheet" href="/assets/css/main.css?v=27" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=28" />
+<link rel="stylesheet" href="/assets/css/main.css?v=28" />
 <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
@@ -238,7 +238,7 @@
       <p class="section-desc" style="margin:0;">Onboarding is operator-driven, not self-serve. The validation server is a managed engagement; this is the canonical sequence.</p>
     </div>
     <div class="grid-3">
-      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">1. Scoping conversation</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Tenant scope (one relying party? a portfolio?), target authenticators (OnePass Card, SIM-resident, third-party security keys), deployment shape (hosted / operator-hosted / hybrid), residency requirements, expected credential volume.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">1. Scoping conversation</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Tenant scope (one relying party? a portfolio?), target authenticators (OnePass Card, embedded secure-element, third-party security keys), deployment shape (hosted / operator-hosted / hybrid), residency requirements, expected credential volume.</p></div>
       <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">2. Tenant provisioning</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Tenant identifier issued. API keys for dev / staging / production. Initial AAGUID allow-list + UV / attestation conveyance policy configured. RP-ID + allowed origins locked in.</p></div>
       <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">3. Integration</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Relying party wires its sign-in surface to the four registration / authentication endpoints. The JS shim talks to the browser&rsquo;s WebAuthn API; the backend talks to the validation server. Sandbox tenant available for testing before production credentials.</p></div>
       <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">4. Production cutover</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Production API keys issued. First user enrols. Admin console exposes credential enumeration, usage metering, audit log. Operator-side governance (rotation cadence, alert thresholds) applied.</p></div>
@@ -257,10 +257,10 @@
     </div>
     <div class="grid-3">
       <a href="/products/onepass-card/" class="card"><h3>Product: OnePass Card</h3><p>A FIDO2 authenticator the validation server is purpose-built to verify.</p><div class="card-meta">View product &rarr;</div></a>
-      <a href="/products/fido2-nano-sim-applet/" class="card"><h3>Product: FIDO2 Nano SIM Applet</h3><p>SIM-resident FIDO2 authenticator the server verifies natively.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/fido2-nano-sim-applet/" class="card"><h3>Product: FIDO2 Nano SIM Applet</h3><p>embedded secure-element FIDO2 authenticator the server verifies natively.</p><div class="card-meta">View product &rarr;</div></a>
       <a href="/solutions/passwordless-mfa/" class="card"><h3>Solution: Passwordless MFA</h3><p>Why the validation server is the deployable end of the FIDO story.</p><div class="card-meta">View solution &rarr;</div></a>
       <a href="/technologies/webauthn/" class="card"><h3>Technology: WebAuthn</h3><p>How the JS API and REST endpoints map to the spec.</p><div class="card-meta">View technology &rarr;</div></a>
-      <a href="/blog/sim-based-fido2-authenticators/" class="card"><h3>Blog: SIM-resident FIDO2</h3><p>End-to-end deployment story for SIM-shaped authenticators against this server.</p><div class="card-meta">Read article &rarr;</div></a>
+      <a href="/blog/sim-based-fido2-authenticators/" class="card"><h3>Blog: embedded secure-element FIDO2</h3><p>End-to-end deployment story for SIM-shaped authenticators against this server.</p><div class="card-meta">Read article &rarr;</div></a>
       <a href="/blog/understanding-webauthn-attestation-objects/" class="card"><h3>Blog: Attestation objects</h3><p>The format the server verifies on every registration.</p><div class="card-meta">Read article &rarr;</div></a>
     </div>
   </div>
@@ -318,9 +318,9 @@
     </div>
   </div>
 </footer>
-<script src="/assets/js/nav.js?v=27" defer></script>
-<script src="/assets/js/web-vitals.js?v=27" defer></script>
-<script src="/assets/js/site-search.js?v=27" defer></script>
-<script src="/assets/js/cookie-consent.js?v=27" defer></script>
+<script src="/assets/js/nav.js?v=28" defer></script>
+<script src="/assets/js/web-vitals.js?v=28" defer></script>
+<script src="/assets/js/site-search.js?v=28" defer></script>
+<script src="/assets/js/cookie-consent.js?v=28" defer></script>
 </body>
 </html>
