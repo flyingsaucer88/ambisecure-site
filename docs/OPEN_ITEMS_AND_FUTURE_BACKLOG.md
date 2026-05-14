@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-14 (Final branding consistency + embedded SE positioning &mdash; Codex-flagged telecom-SIM phrasing closed on the two nano-card product pages and the FVS service page: "Nano SIM" chip labels, "eUICC variant" footer mentions, "finished SIM" shipping note, "Operators and OEMs" framing, "boundary that protects telecom credentials" framing, "Telecom + identity convergence" card title all reframed as nano-card / MFF2 / OEM / embedded-identity wording; 5 remaining "a embedded" / "A embedded" grammar artefacts fixed; `site.webmanifest` added at site root with name / short_name / icons (192/512/180) / theme_color #E3222A / background_color #FFFFFF; manifest `<link>` injected on all 267 pages immediately after apple-touch-icon; `.htaccess` extended with `application/manifest+json .webmanifest` MIME type + 7-day cache; build-hostinger-package.sh includes site.webmanifest in the required-file check; derived indexes (search-index.json, llms-full.txt) regenerated from cleaned source; verifier returns 0 residual hits across 13 telecom/grammar patterns)
+**Last updated:** 2026-05-14 (GA4 analytics activated &mdash; new property `AmbiSecure` (ID 452298800), Measurement ID `G-TYMHB8NB56` wired into `analytics-config.js` with `provider: "ga4"`; CSP allow-list extended in `.htaccess` to permit gtag.js + g/collect endpoints; privacy posture configured per MASTER_OPS §50.7 (Google signals OFF, user-provided data collection OFF, reporting identity = Device-based, event-data retention = 14 months, email + URL-query-param redaction ON with 28 PII-shaped param keys); legacy WordPress-era properties `Ambisecure` (452298800-old) and `ambimat.com/ GA4 - MonsterInsights` (363908960) moved to Trash; production smoke test confirmed live hit lands on Realtime within 30 seconds from Safari. Final branding consistency + embedded SE positioning earlier same day &mdash; Codex-flagged telecom-SIM phrasing closed on the two nano-card product pages and the FVS service page: "Nano SIM" chip labels, "eUICC variant" footer mentions, "finished SIM" shipping note, "Operators and OEMs" framing, "boundary that protects telecom credentials" framing, "Telecom + identity convergence" card title all reframed as nano-card / MFF2 / OEM / embedded-identity wording; 5 remaining "a embedded" / "A embedded" grammar artefacts fixed; `site.webmanifest` added at site root with name / short_name / icons (192/512/180) / theme_color #E3222A / background_color #FFFFFF; manifest `<link>` injected on all 267 pages immediately after apple-touch-icon; `.htaccess` extended with `application/manifest+json .webmanifest` MIME type + 7-day cache; build-hostinger-package.sh includes site.webmanifest in the required-file check; derived indexes (search-index.json, llms-full.txt) regenerated from cleaned source; verifier returns 0 residual hits across 13 telecom/grammar patterns)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
@@ -19,13 +19,18 @@ When an item ships, delete its row. When an item stops being relevant, delete it
 
 ## 1. Analytics depth (post-launch instrumentation)
 
-Phase 20 wired the consent banner + opt-in gate. The remaining items wait on a provider decision.
+GA4 went live 2026-05-14 (`G-TYMHB8NB56`, consent-gated, privacy-posture configured per MASTER_OPS §50.7). The remaining items wait on either dashboard work or traffic accumulation.
 
 | Item | Why deferred | Decision owner | Trigger | Next action |
 |------|--------------|----------------|---------|-------------|
-| Flip analytics provider on (GA4-first) | Operator needs the real `G-XXXXXXXXXX` measurement ID provisioned. Plausible remains as an alternative path. | Business / operator | Real GA4 measurement ID provisioned | Follow the full operator runbook in MASTER_OPS §50.7 (decommission legacy property → create new property → privacy-posture config → wire ID → verify). Two-line code edit in `assets/js/analytics-config.js` once the new `G-...` ID is in hand. |
-| Surface Web Vitals dashboard in operator portal | Provider must be on to feed it. | Operator | Provider on | Add Plausible / GA4 dashboard panel filtering on `vitals_*` custom events. |
-| Per-page conversion-event tagging (Contact Click, Brochure Download, Case Study Read) | Tagging without traffic data is guessing. | Operator + product | Provider on + 30 days of traffic | Add `data-analytics-event` attributes to CTAs; wire to `AS_ANALYTICS.report()`. |
+| Surface Web Vitals dashboard in operator portal | Provider is now on; dashboard panel still needs to be built. | Operator | — | Add a GA4 Explorations / Looker Studio panel filtering on `vitals_*` custom events. |
+| Per-page conversion-event tagging (Contact Click, Brochure Download, Case Study Read) | Tagging without traffic data is guessing. | Operator + product | 30 days of traffic accumulated | Add `data-analytics-event` attributes to CTAs; wire to `AS_ANALYTICS.report()`. The event-tracking layer in `analytics.js` is already in place — only the per-CTA attributes are missing. |
+
+**Optional, when you're ready:**
+
+- **Link Google Search Console to the new property** — GA4 Admin → Product Links → Search Console links → Link. Unlocks the Search Console reports under Acquisition within ~48h. Requires Search Console verification on `ambisecure.ambimat.com` first, if not done already.
+- **Per-CTA conversion tagging** (the same item as the table row above, restated as actionable) — add `data-analytics-event="..."` to specific CTAs like "Talk to engineering", "Download brochure", etc. The event-tracking layer in [assets/js/analytics.js](../assets/js/analytics.js) is already wired; just needs attributes on the anchors. Wait for ~30 days of baseline traffic first to know which CTAs matter most.
+- **Operator note** — DNT can be re-enabled in personal browsers without affecting site analytics. The site's privacy posture matches DNT-respect end-to-end; real visitors who don't have DNT enabled (the majority) will continue to flow into GA4.
 
 ---
 
