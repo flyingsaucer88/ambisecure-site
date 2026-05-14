@@ -26,6 +26,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
@@ -104,14 +105,14 @@
   <div class="section-container">
     <div class="feature-row">
       <div>
-        <span class="eyebrow">PIV Applet / Nano SIM</span>
+        <span class="eyebrow">PIV Applet / nano-card</span>
         <h1 style="font-family:'Montserrat',sans-serif; font-size: 42px; font-weight:700; line-height:1.12; letter-spacing:-0.6px; color:var(--ink); margin-bottom:18px;">
           AmbiSecure <span style="color:var(--brand-red);">PIV Nano-Card Applet</span>
         </h1>
         <p style="font-size:17.5px; color:var(--brand-grey); line-height:1.65; margin-bottom:22px;">
           A PIV-compatible JavaCard applet on a nano-card (4FF) secure element. Four certificate slots, on-card key generation, RSA + ECC. Designed against the NIST SP 800-73 / FIPS 201 surface so workforce-identity stacks that expect PIV semantics &mdash; PKINIT, smart-card logon, certificate-based VPN &mdash; can run unchanged on a nano-card form factor.
         </p>
-        <div class="chip-row"><span class="chip">PIV</span><span class="chip">FIPS 201 surface</span><span class="chip">RSA 2048/3072</span><span class="chip">ECC P-256/384</span><span class="chip">Nano SIM (4FF)</span></div>
+        <div class="chip-row"><span class="chip">PIV</span><span class="chip">FIPS 201 surface</span><span class="chip">RSA 2048/3072</span><span class="chip">ECC P-256/384</span><span class="chip">nano-card (4FF)</span></div>
         <div class="hero-cta-row" style="margin-top:24px;"><a href="/contact/" class="btn btn-primary">Request datasheet</a></div>
       </div>
       <div class="feature-visual feature-visual-img"><img src="/assets/img/product-applet-stack.svg" alt="AmbiSecure PIV nano-card applet — NIST SP 800-73 PIV on a nano-card secure element" width="520" height="360" loading="lazy" decoding="async" /></div>
@@ -135,7 +136,7 @@
       <h2 class="section-title">What is in the applet.</h2>
       <span class="section-line"></span>
     </div>
-    <table class="spec-table"><tr><th>Form factor</th><td>ISO/IEC 7810 4FF nano SIM, 12.3 &times; 8.8 &times; 0.67 mm. eUICC variant for soldered deployments.</td></tr><tr><th>Interfaces</th><td>ISO/IEC 7816 contact (T=0 / T=1) via a contact reader bay; NFC where the host supports it.</td></tr><tr><th>Standard surface</th><td>NIST SP 800-73-4 PIV applet command set. Targets the FIPS 201-3 functional profile; not yet submitted for FIPS / CC evaluation.</td></tr><tr><th>Keys per slot</th><td>PIV Authentication, Card Authentication, Digital Signature, Key Management &mdash; RSA 2048 or 3072, ECC P-256 or P-384.</td></tr><tr><th>Crypto operations</th><td>Sign, verify, decrypt, key generation, PIN policy, key-history retention.</td></tr><tr><th>Operating system</th><td>JavaCard 3.x on a Common Criteria EAL5+ secure element.</td></tr><tr><th>Issuance</th><td>Loaded over GlobalPlatform SCP03. Issuance CA can be customer-operated or run through AmbiSecure personalisation.</td></tr><tr><th>Companion applets</th><td>FIDO2 nano-card applet, OpenPGP applet, DESFire applet can co-reside on the same chip variant subject to memory budget.</td></tr></table>
+    <table class="spec-table"><tr><th>Form factor</th><td>ISO/IEC 7810 4FF nano-card form factor, 12.3 &times; 8.8 &times; 0.67 mm. Solderable MFF2 module available for embedded deployments.</td></tr><tr><th>Interfaces</th><td>ISO/IEC 7816 contact (T=0 / T=1) via a contact reader bay; NFC where the host supports it.</td></tr><tr><th>Standard surface</th><td>NIST SP 800-73-4 PIV applet command set. Targets the FIPS 201-3 functional profile; not yet submitted for FIPS / CC evaluation.</td></tr><tr><th>Keys per slot</th><td>PIV Authentication, Card Authentication, Digital Signature, Key Management &mdash; RSA 2048 or 3072, ECC P-256 or P-384.</td></tr><tr><th>Crypto operations</th><td>Sign, verify, decrypt, key generation, PIN policy, key-history retention.</td></tr><tr><th>Operating system</th><td>JavaCard 3.x on a Common Criteria EAL5+ secure element.</td></tr><tr><th>Issuance</th><td>Loaded over GlobalPlatform SCP03. Issuance CA can be customer-operated or run through AmbiSecure personalisation.</td></tr><tr><th>Companion applets</th><td>FIDO2 nano-card applet, OpenPGP applet, DESFire applet can co-reside on the same chip variant subject to memory budget.</td></tr></table>
   </div>
 </section>
 <section class="alt">
@@ -162,7 +163,7 @@
 <section class="alt">
   <div class="section-container">
     <div class="callout">
-      <div><h2>Pilot a PIV applet in nano SIM.</h2><p>Tell us your target issuance CA, certificate policy, and slot configuration. We can ship engineering samples and an issuance reference flow in 6&ndash;8 weeks.</p></div>
+      <div><h2>Pilot an embedded secure-element PIV applet.</h2><p>Tell us your target issuance CA, certificate policy, and slot configuration. We can ship engineering samples and an issuance reference flow in 6&ndash;8 weeks.</p></div>
       <div><a href="/contact/" class="btn btn-primary">Request a pilot</a></div>
     </div>
   </div>

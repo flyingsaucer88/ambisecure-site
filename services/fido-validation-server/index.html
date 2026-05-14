@@ -26,6 +26,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
@@ -195,7 +196,7 @@
       <p class="section-desc" style="margin:0;">A FIDO deployment has three actors &mdash; authenticator, relying party, validation server. The server is the load-bearing piece in the middle: it owns policy, verifies attestation, and produces the cryptographic decision the relying party trusts.</p>
     </div>
     <div class="arch">
-      <div class="arch-node"><span class="arch-tag">01</span><h4>Authenticator</h4><p>OnePass Card, FIDO2 Nano SIM, USB key, or platform authenticator. Holds the private key.</p></div>
+      <div class="arch-node"><span class="arch-tag">01</span><h4>Authenticator</h4><p>OnePass Card, FIDO2 nano-card, USB key, or platform authenticator. Holds the private key.</p></div>
       <div class="arch-arrow">&rarr;</div>
       <div class="arch-node"><span class="arch-tag">02</span><h4>Browser / OS</h4><p>WebAuthn client talks to the authenticator over CTAP2.1. Origin-bound by construction.</p></div>
       <div class="arch-arrow">&rarr;</div>

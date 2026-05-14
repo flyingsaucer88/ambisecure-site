@@ -1710,3 +1710,65 @@ Not for GA4 ingestion. This is the editorial keyword map the site already optimi
 - "ePassport CSCA DSC PKD trust chain" → `/services/epassport-platform/`
 
 Long-tail intent matching is achieved via the existing Schema.org `Organization.knowsAbout` array (50+ entities), per-page JSON-LD `BlogPosting` / `Product` / `WebPage` descriptions, and `dek` subtitles. The site does not keyword-stuff the body copy.
+
+## 51. Final branding and embedded SE positioning (Phase 36)
+
+Closes the last Codex production-review findings. Phase 35 had renamed the displayed product names and fixed the favicon-link layer, but the per-product *body copy* on `/products/fido2-nano-sim-applet/` and `/products/piv-nano-sim-applet/` still leaked the telecom framing: chip labels, the "Telecom + identity convergence" card, the "Operators and OEMs" pitch, the "finished SIM" shipping note, and the "soldered (eUICC variant)" footnote.
+
+**Telecom phrasing cleared (24 surgical replacements across 6 files):**
+
+| Old | New |
+|---|---|
+| `<span class="chip">Nano SIM (4FF)</span>` | `<span class="chip">nano-card (4FF)</span>` |
+| `<span class="chip">Nano SIM</span>` / `<span class="chip">eUICC variant</span>` | `<span class="chip">nano-card</span>` / `<span class="chip">MFF2 solderable</span>` |
+| eyebrow `FIDO2 Applet / Nano SIM` / `PIV Applet / Nano SIM` | `FIDO2 Applet / nano-card` / `PIV Applet / nano-card` |
+| `the same boundary that already protects telecom credentials` | `the same boundary used to protect any high-trust applet on the same secure element` |
+| `soldered (eUICC variant) as an always-present platform authenticator` | `soldered as an MFF2 module for an always-present platform authenticator` |
+| card title `Telecom + identity convergence` | `Single secure-element surface` |
+| `Operators and OEMs can ship a single piece of silicon that handles network access AND phishing-resistant authentication for the workforce or subscriber base.` | `OEMs and enterprises can issue a single piece of silicon that handles device identity and phishing-resistant user authentication on the same secure element — no second part on the BOM.` |
+| spec-table `ISO/IEC 7810 4FF nano SIM, ... eUICC variant for embedded deployments` | `ISO/IEC 7810 4FF nano-card form factor, ... Solderable MFF2 module available for embedded OEM deployments` |
+| `Production volumes by the reel for telecom/OEM.` | `Production volumes by the reel for OEM and embedded-identity customers.` |
+| arch step `Telecom profile or OEM device-identity profile written alongside, sharing the same SE.` | `Device-identity profile or other JavaCard applet written alongside, sharing the same secure element.` |
+| arch step `Shipped to the operator / OEM line as a finished SIM.` | `Shipped to the OEM or issuer line as a finished nano-card (or MFF2 reel for embedded customers).` |
+| pilot block `Pilot a embedded secure-element FIDO2 authenticator. Tell us your target form factor (removable nano SIM, soldered eUICC), expected volume, and target host platforms.` | `Pilot an embedded secure-element FIDO2 authenticator. Tell us your target form factor (removable nano-card, solderable MFF2 module), expected volume, and target host platforms.` |
+| pilot block `Pilot a PIV applet in nano SIM.` | `Pilot an embedded secure-element PIV applet.` |
+| FVS arch step `OnePass Card, FIDO2 Nano SIM, USB key, or platform authenticator.` | `OnePass Card, FIDO2 nano-card, USB key, or platform authenticator.` |
+| og-templates.json `FIDO2 / Nano SIM` / `PIV / Nano SIM` / `inside a 4FF SIM secure element` | `FIDO2 / nano-card` / `PIV / nano-card` / `inside a 4FF nano-card secure element` |
+
+Five remaining `a embedded` / `A embedded` grammar artefacts (article + product page openers, FAQPage JSON-LD names, section descriptions) were corrected to `an embedded` / `An embedded`. URL slugs preserved.
+
+**Web app manifest** added at site root: [site.webmanifest](../site.webmanifest):
+
+```json
+{
+  "name": "AmbiSecure",
+  "short_name": "AmbiSecure",
+  "description": "AmbiSecure builds hardware-rooted identity systems …",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "theme_color": "#E3222A",
+  "background_color": "#FFFFFF",
+  "icons": [
+    { "src": "/assets/img/favicon-192.png",   "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/favicon-512.png",   "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}
+```
+
+Three glue changes for the manifest:
+
+1. `<link rel="manifest" href="/site.webmanifest" />` injected on **all 267 HTML pages** immediately after the apple-touch-icon line.
+2. `.htaccess` extended with `AddType application/manifest+json .webmanifest` (PWA-spec MIME type) and `ExpiresByType application/manifest+json "access plus 7 days"`.
+3. `tools/build-hostinger-package.sh` required-file check now includes `site.webmanifest` so a missing manifest causes the build to fail loudly rather than silently shipping a broken ZIP.
+
+The manifest uses `display: "browser"` rather than `standalone` because AmbiSecure is a documentation / commercial site, not an app — we don't want browsers to suppress chrome on the user's behalf.
+
+**Favicon brand consistency** (re-verified — no change required this phase):
+
+- `favicon-32.png` / `-64.png` / `-192.png` / `-512.png` / `apple-touch-icon.png` are all derived from the official `Logos/ambisecure_logo.png` master via `sips` (Phase 24). Visual inspection of each: red striped triangular A, AMBI SECURE wordmark, three icon orbits, grey ring on white — i.e. the real crest, not a fabricated mark.
+- `favicon.svg` was deleted in Phase 35; the SVG `<link>` was stripped from every page in the same pass. Browsers now fall back to the PNG icons.
+- Codex's complaint that the favicon still appears as a simplified A is reflective of the live state (the operator hasn't yet uploaded the Phase 35 ZIP — `curl https://ambisecure.ambimat.com/assets/img/favicon.svg` still returns HTTP 200 against the legacy SVG). Once the Phase 35+36 ZIP is uploaded, the SVG is gone and the PNG crest serves. No further work required on this side.
+
+**Verifier (13 patterns: SIM-resident, telecom SIM, operator-controlled, operator-issued, operator trust, telecom profile, finished SIM, carrier-issued, carrier-controlled, eUICC variant, Operators and OEMs, Nano SIM / nano SIM, `a embedded`)** returns **0 residual hits** across every `*.html / *.json / *.js / *.txt` outside `dist/`, `docs/`, `_internal/`, `.git/`, and the four intentional-context files.

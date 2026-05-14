@@ -26,6 +26,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
@@ -104,14 +105,14 @@
   <div class="section-container">
     <div class="feature-row">
       <div>
-        <span class="eyebrow">FIDO2 Applet / Nano SIM</span>
+        <span class="eyebrow">FIDO2 Applet / nano-card</span>
         <h1 style="font-family:'Montserrat',sans-serif; font-size: 42px; font-weight:700; line-height:1.12; letter-spacing:-0.6px; color:var(--ink); margin-bottom:18px;">
           AmbiSecure <span style="color:var(--brand-red);">FIDO2 Nano-Card Applet</span>
         </h1>
         <p style="font-size:17.5px; color:var(--brand-grey); line-height:1.65; margin-bottom:22px;">
           A FIDO2/CTAP2 applet that runs inside a nano-card (4FF) secure element or a solderable MFF2 module. The same trust boundary used in a phone or smart card, repurposed as a phishing-resistant authenticator &mdash; for OEM device identity, embedded systems, and identity programmes where adding a separate token is not an option.
         </p>
-        <div class="chip-row"><span class="chip">FIDO2</span><span class="chip">CTAP2</span><span class="chip">Nano SIM (4FF)</span><span class="chip">ECC P-256</span><span class="chip">Hardware-backed</span></div>
+        <div class="chip-row"><span class="chip">FIDO2</span><span class="chip">CTAP2</span><span class="chip">nano-card (4FF)</span><span class="chip">ECC P-256</span><span class="chip">Hardware-backed</span></div>
         <div class="hero-cta-row" style="margin-top:24px;"><a href="/contact/" class="btn btn-primary">Request datasheet</a></div>
       </div>
       <div class="feature-visual feature-visual-img"><img src="/assets/img/product-applet-stack.svg" alt="AmbiSecure FIDO2 nano-card applet — FIDO2 over a nano-SIM secure element" width="520" height="360" loading="lazy" decoding="async" /></div>
@@ -121,11 +122,11 @@
 <section class="alt">
   <div class="section-container">
     <div class="section-head left">
-      <span class="eyebrow">Why a embedded secure-element authenticator</span>
+      <span class="eyebrow">Why an embedded secure-element authenticator</span>
       <h2 class="section-title">The trust boundary already lives in the device. Re-use it.</h2>
       <span class="section-line"></span>
     </div>
-    <div class="grid-3"><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Hardware boundary, no extra chip</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">FIDO2 keys stay inside the SIM's secure element &mdash; the same boundary that already protects telecom credentials. No new physical part, no new BOM line.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Roaming or embedded</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Removable in a SIM tray for cross-device roaming, or soldered (eUICC variant) as an always-present platform authenticator. Same applet, two operating models.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Origin-bound by protocol</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">FIDO2 binds every credential to the relying-party origin at the protocol layer. Phishing pages on look-alike domains cannot trigger a valid signature.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Telecom + identity convergence</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Operators and OEMs can ship a single piece of silicon that handles network access AND phishing-resistant authentication for the workforce or subscriber base.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Resident credentials</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Up to a dozen discoverable credentials per applet instance, depending on chip variant. Username-less FIDO2 flows work out of the box.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Standards-aligned</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Implements FIDO2 over CTAP2.1 with ECC P-256, signed authenticator data, and a per-instance AAGUID. Attestation runs through the FIDO Metadata Service path.</p></div></div>
+    <div class="grid-3"><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Hardware boundary, no extra chip</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">FIDO2 keys stay inside the SIM's secure element &mdash; the same boundary used to protect any high-trust applet on the same secure element. No new physical part, no new BOM line.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Roaming or embedded</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Removable in a SIM tray for cross-device roaming, or soldered as an MFF2 module for an always-present platform authenticator. Same applet, two integration models.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Origin-bound by protocol</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">FIDO2 binds every credential to the relying-party origin at the protocol layer. Phishing pages on look-alike domains cannot trigger a valid signature.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Single secure-element surface</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">OEMs and enterprises can issue a single piece of silicon that handles device identity and phishing-resistant user authentication on the same secure element — no second part on the BOM.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Resident credentials</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Up to a dozen discoverable credentials per applet instance, depending on chip variant. Username-less FIDO2 flows work out of the box.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Standards-aligned</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Implements FIDO2 over CTAP2.1 with ECC P-256, signed authenticator data, and a per-instance AAGUID. Attestation runs through the FIDO Metadata Service path.</p></div></div>
   </div>
 </section>
 <section>
@@ -135,7 +136,7 @@
       <h2 class="section-title">What is in the applet.</h2>
       <span class="section-line"></span>
     </div>
-    <table class="spec-table"><tr><th>Form factor</th><td>ISO/IEC 7810 4FF nano SIM, 12.3 &times; 8.8 &times; 0.67 mm. Optional eUICC variant for embedded deployments.</td></tr><tr><th>Interfaces</th><td>ISO/IEC 7816 contact (T=0 / T=1). NFC (ISO/IEC 14443 Type A) when paired with an NFC-equipped host device.</td></tr><tr><th>Protocols</th><td>FIDO2 (CTAP2.1); FIDO U2F (CTAP1) fallback.</td></tr><tr><th>Cryptography</th><td>ECC P-256 (FIDO2); SHA-256; on-applet key generation; signed attestation.</td></tr><tr><th>Resident credentials</th><td>Up to 12 discoverable credentials per applet (chip-variant dependent).</td></tr><tr><th>Operating system</th><td>JavaCard 3.x on a Common Criteria EAL5+ secure element from a partner vendor.</td></tr><tr><th>Personalisation</th><td>Loaded via GlobalPlatform SCP03. AAGUID injected at personalisation. Compatible with our Multi-Card Applet Loading Tool.</td></tr><tr><th>Attestation</th><td>Per-batch attestation certificate chain signed by an AmbiSecure issuance CA; ready for the FIDO Metadata Service entry.</td></tr><tr><th>Volumes</th><td>Engineering samples on request. Production volumes by the reel for telecom/OEM.</td></tr></table>
+    <table class="spec-table"><tr><th>Form factor</th><td>ISO/IEC 7810 4FF nano-card form factor, 12.3 &times; 8.8 &times; 0.67 mm. Solderable MFF2 module available for embedded OEM deployments.</td></tr><tr><th>Interfaces</th><td>ISO/IEC 7816 contact (T=0 / T=1). NFC (ISO/IEC 14443 Type A) when paired with an NFC-equipped host device.</td></tr><tr><th>Protocols</th><td>FIDO2 (CTAP2.1); FIDO U2F (CTAP1) fallback.</td></tr><tr><th>Cryptography</th><td>ECC P-256 (FIDO2); SHA-256; on-applet key generation; signed attestation.</td></tr><tr><th>Resident credentials</th><td>Up to 12 discoverable credentials per applet (chip-variant dependent).</td></tr><tr><th>Operating system</th><td>JavaCard 3.x on a Common Criteria EAL5+ secure element from a partner vendor.</td></tr><tr><th>Personalisation</th><td>Loaded via GlobalPlatform SCP03. AAGUID injected at personalisation. Compatible with our Multi-Card Applet Loading Tool.</td></tr><tr><th>Attestation</th><td>Per-batch attestation certificate chain signed by an AmbiSecure issuance CA; ready for the FIDO Metadata Service entry.</td></tr><tr><th>Volumes</th><td>Engineering samples on request. Production volumes by the reel for OEM and embedded-identity customers.</td></tr></table>
   </div>
 </section>
 <section class="alt">
@@ -144,9 +145,9 @@
       <span class="eyebrow">Lifecycle</span>
       <h2 class="section-title">From silicon to credential.</h2>
       <span class="section-line"></span>
-      <p class="section-desc" style="margin:0;">A embedded secure-element FIDO2 authenticator is only as trustworthy as the line that personalised it. Here is the canonical flow.</p>
+      <p class="section-desc" style="margin:0;">An embedded secure-element FIDO2 authenticator is only as trustworthy as the line that personalised it. Here is the canonical flow.</p>
     </div>
-    <div class="arch"><div class="arch-node"><span class="arch-tag">01</span><h4>Chip</h4><p>Common Criteria EAL5+ secure element from a partner vendor.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">02</span><h4>Applet load</h4><p>FIDO2 applet loaded over GlobalPlatform SCP03 in a controlled facility.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node accent"><span class="arch-tag">03</span><h4>Personalise</h4><p>AAGUID injected, attestation certificate provisioned, secure-domain locked.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">04</span><h4>Provision</h4><p>Telecom profile or OEM device-identity profile written alongside, sharing the same SE.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">05</span><h4>Issue</h4><p>Shipped to the operator / OEM line as a finished SIM.</p></div></div>
+    <div class="arch"><div class="arch-node"><span class="arch-tag">01</span><h4>Chip</h4><p>Common Criteria EAL5+ secure element from a partner vendor.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">02</span><h4>Applet load</h4><p>FIDO2 applet loaded over GlobalPlatform SCP03 in a controlled facility.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node accent"><span class="arch-tag">03</span><h4>Personalise</h4><p>AAGUID injected, attestation certificate provisioned, secure-domain locked.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">04</span><h4>Provision</h4><p>Device-identity profile or other JavaCard applet written alongside, sharing the same secure element.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">05</span><h4>Issue</h4><p>Shipped to the OEM or issuer line as a finished nano-card (or MFF2 reel for embedded customers).</p></div></div>
   </div>
 </section>
 <section>
@@ -162,7 +163,7 @@
 <section class="alt">
   <div class="section-container">
     <div class="callout">
-      <div><h2>Pilot a embedded secure-element FIDO2 authenticator.</h2><p>Tell us your target form factor (removable nano SIM, soldered eUICC), expected volume, and target host platforms. We can ship engineering samples in 6&ndash;8 weeks.</p></div>
+      <div><h2>Pilot an embedded secure-element FIDO2 authenticator.</h2><p>Tell us your target form factor (removable nano-card, solderable MFF2 module), expected volume, and target host platforms. We can ship engineering samples in 6&ndash;8 weeks.</p></div>
       <div><a href="/contact/" class="btn btn-primary">Request a pilot</a></div>
     </div>
   </div>

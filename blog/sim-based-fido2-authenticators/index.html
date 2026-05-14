@@ -26,6 +26,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
 <link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
@@ -36,7 +37,7 @@
    "mainEntity": [
     {
      "@type": "Question",
-     "name": "What is a embedded secure-element FIDO2 authenticator?",
+     "name": "What is an embedded secure-element FIDO2 authenticator?",
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "A FIDO2 applet running inside a CC EAL5+ secure element packaged as a removable nano-card (4FF) or a solderable MFF2 module. The credential is hardware-backed, origin-bound by the FIDO2 protocol, and stored under the issuer's GlobalPlatform security domain — not on the device's general-purpose enclave."
@@ -44,7 +45,7 @@
     },
     {
      "@type": "Question",
-     "name": "Can a embedded secure-element FIDO2 applet work as a roaming authenticator?",
+     "name": "Can an embedded secure-element FIDO2 applet work as a roaming authenticator?",
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "Yes. A removable nano-card can be carried between devices and behaves as a roaming authenticator over the host device's contact reader. A solderable MFF2 variant fixes the same applet into a single device as a platform authenticator."
@@ -52,7 +53,7 @@
     },
     {
      "@type": "Question",
-     "name": "Why use a embedded secure-element authenticator instead of a USB security key?",
+     "name": "Why use an embedded secure-element authenticator instead of a USB security key?",
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "Because the secure element is already on the product's BOM — either as a removable nano-card or as a solderable MFF2 module — and is provisioned under the issuer's keys, not the device-vendor's. There is no extra physical part to ship, no second item to lose, and the credential's trust root sits inside an issuer-controlled secure element. For OEM and enterprise rollouts on devices that already carry a secure element, this collapses authenticator-hardware cost to zero."
@@ -156,7 +157,7 @@
     <p>For an enterprise or OEM that wants a phishing-resistant credential <em>and</em> wants the credential's trust root inside its own custody rather than the platform vendor's, embedded secure-element FIDO2 is the only widely deployable option. The next-cheapest alternative is a dedicated USB security key with its own issuance line: more hardware to ship, more cards to replace, more help-desk tickets when one goes missing.</p>
 
     <h2>How the credential flows in production</h2>
-    <p>End-to-end, the registration ceremony on a embedded secure-element FIDO2 authenticator looks like this:</p>
+    <p>End-to-end, the registration ceremony on an embedded secure-element FIDO2 authenticator looks like this:</p>
     <ol>
       <li>The relying party (running the <a href="/services/fido-validation-server/">FIDO Validation Server</a>) emits a <code>PublicKeyCredentialCreationOptions</code> challenge scoped to the tenant.</li>
       <li>The host device's WebAuthn client passes the challenge to the nano-card or MFF2 secure-element authenticator over CTAP2.1.</li>

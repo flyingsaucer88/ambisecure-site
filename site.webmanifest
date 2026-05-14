@@ -1,0 +1,17 @@
+{
+  "name": "AmbiSecure",
+  "short_name": "AmbiSecure",
+  "description": "AmbiSecure builds hardware-rooted identity systems — FIDO authenticators, PIV smart cards, JavaCard applets, ePassport platforms, IoT trust anchors. The security business unit of Ambimat Electronics.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "lang": "en",
+  "dir": "ltr",
+  "background_color": "#FFFFFF",
+  "theme_color": "#E3222A",
+  "icons": [
+    { "src": "/assets/img/favicon-192.png",   "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/favicon-512.png",   "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ]
+}

@@ -68,7 +68,7 @@ printf "  Total size:   %s\n" "$(du -sh "${OUT}" | cut -f1)"
 # Required files at the root.
 echo
 echo "Required-file check:"
-for f in index.html 404.html sitemap.xml robots.txt .htaccess; do
+for f in index.html 404.html sitemap.xml robots.txt .htaccess site.webmanifest; do
     if [[ -f "${OUT}/${f}" ]]; then
         printf "  ✓ %s\n" "${f}"
     else
