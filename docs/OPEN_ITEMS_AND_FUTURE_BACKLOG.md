@@ -23,7 +23,7 @@ Phase 20 wired the consent banner + opt-in gate. The remaining items wait on a p
 
 | Item | Why deferred | Decision owner | Trigger | Next action |
 |------|--------------|----------------|---------|-------------|
-| Flip analytics provider on (GA4-first) | Operator needs the real `G-XXXXXXXXXX` measurement ID provisioned. Plausible remains as an alternative path. | Business / operator | Real GA4 measurement ID provisioned | Edit `assets/js/analytics-config.js`: set `provider: "ga4"` and replace the `G-XXXXXXXXXX` placeholder. The consent→analytics chain (loaders verified end-to-end in Phase 35 / MASTER_OPS §50) will start firing automatically. For Plausible instead, set `provider: "plausible"` and apply the CSP delta noted in MASTER_OPS §23.3. |
+| Flip analytics provider on (GA4-first) | Operator needs the real `G-XXXXXXXXXX` measurement ID provisioned. Plausible remains as an alternative path. | Business / operator | Real GA4 measurement ID provisioned | Follow the full operator runbook in MASTER_OPS §50.7 (decommission legacy property → create new property → privacy-posture config → wire ID → verify). Two-line code edit in `assets/js/analytics-config.js` once the new `G-...` ID is in hand. |
 | Surface Web Vitals dashboard in operator portal | Provider must be on to feed it. | Operator | Provider on | Add Plausible / GA4 dashboard panel filtering on `vitals_*` custom events. |
 | Per-page conversion-event tagging (Contact Click, Brochure Download, Case Study Read) | Tagging without traffic data is guessing. | Operator + product | Provider on + 30 days of traffic | Add `data-analytics-event` attributes to CTAs; wire to `AS_ANALYTICS.report()`. |
 

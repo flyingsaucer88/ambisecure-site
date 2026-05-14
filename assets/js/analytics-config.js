@@ -21,7 +21,7 @@
  */
 window.AS_ANALYTICS = {
 
-  provider: "none",
+  provider: "ga4",
 
   plausible: {
     domain: "ambisecure.ambimat.com",
@@ -29,7 +29,7 @@ window.AS_ANALYTICS = {
   },
 
   ga4: {
-    measurementId: "G-XXXXXXXXXX",
+    measurementId: "G-TYMHB8NB56",
     anonymizeIp: true
   },
 

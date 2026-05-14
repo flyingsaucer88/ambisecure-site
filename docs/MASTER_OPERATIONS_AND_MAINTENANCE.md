@@ -1711,6 +1711,80 @@ Not for GA4 ingestion. This is the editorial keyword map the site already optimi
 
 Long-tail intent matching is achieved via the existing Schema.org `Organization.knowsAbout` array (50+ entities), per-page JSON-LD `BlogPosting` / `Product` / `WebPage` descriptions, and `dek` subtitles. The site does not keyword-stuff the body copy.
 
+### 50.7 GA4 property setup runbook (operator)
+
+End-to-end procedure for retiring the legacy GA4 property attached to the WordPress era and standing up a fresh property for the new static site. Run once; the steps reference UI paths in the GA4 admin as of 2026-Q2.
+
+**A. Decommission the legacy property**
+
+Pick one of two paths.
+
+*Hard delete (recommended — no dual-tagging risk, 35-day trash window before irrecoverable purge):*
+
+1. https://analytics.google.com → gear icon (**Admin**, bottom-left).
+2. **Property** column → property dropdown at top → select the old AmbiSecure / Ambimat property. Confirm via **Property Settings → Property details** (the creation date should match the WordPress era).
+3. Export anything worth keeping: **Reports → Library** → any saved report → **Share → Download file** (CSV/PDF). Post-delete this is unrecoverable.
+4. **Admin → Property → Property Settings → Move to Trash Can**. Requires Editor on property + Owner on account.
+5. **Admin → Account → Trash Can** — verify the property appears with a 35-day countdown. Do not restore.
+
+*Stop the flow but retain history:*
+
+1. **Admin → Property → Data Streams →** select the legacy stream → **Stop collecting data**, or delete the stream outright.
+2. Rename the property to "AmbiSecure (legacy WordPress — archived)" so it cannot be confused with the new one.
+
+Either path: also remove the old measurement ID from anywhere it might still be referenced — WordPress plugins (if the legacy site still exists anywhere), GTM containers, Search Console linkage, Google Ads linkage. Grep any old site backup for `G-` and `UA-`.
+
+**B. Create the new GA4 property + Web data stream**
+
+1. **Admin → Property column → + Create → Property**.
+2. Name = `AmbiSecure`; time zone = Asia/Kolkata (or operating zone); currency = billing currency.
+3. Industry = *Technology* (or *Computers & Electronics*); size as appropriate.
+4. Business objectives = *Generate leads* + *Examine user behavior*. Skip e-commerce options.
+5. Accept GA4 ToS for the region.
+6. Platform = **Web**. URL = `https://ambisecure.ambimat.com`. Stream name = `AmbiSecure production`.
+7. Enhanced measurement = ON (the site sends its own scroll/search events but GA4 dedupes by event-name + parameters; duplicates are harmless. Toggle off scroll + site_search here if cleaner reports matter more than redundancy).
+8. Copy the **Measurement ID** (`G-XXXXXXXXXXX`) from the stream details panel.
+
+**C. Privacy-posture configuration (do once, immediately after property creation)**
+
+These GA4 defaults do not match the site's stated privacy posture. Change them:
+
+1. **Admin → Property → Data Settings → Data Retention** → set **Event data retention** to **14 months** (free-tier max). Keep **Reset user data on new activity** ON.
+2. **Admin → Property → Data Collection and Modification → Data Collection** → **Google signals = OFF** (Google signals enables cross-device tracking via ad cookies; incompatible with the no-advertising-cookies posture).
+3. Same screen → **Granular location and device data collection = OFF** globally.
+4. **Admin → Property → Data Collection and Modification → Data Redaction** → enable **Redact email-like strings** and **Redact URL query parameters** (add any param names that could carry PII, e.g. `email`, `token`, `auth`, `code`).
+5. **Admin → Property → Property Settings → Reporting Identity = Device-based** (not Blended / Observed). Prevents identity stitching via Google signals.
+
+**D. Wire the new ID into the site**
+
+Edit [assets/js/analytics-config.js](../assets/js/analytics-config.js):
+
+- Line 24: `provider: "none"` → `provider: "ga4"`
+- Line 32: `measurementId: "G-XXXXXXXXXX"` → real ID copied in step B8
+
+Rebuild + deploy:
+
+```
+bash tools/build-hostinger-package.sh
+```
+
+Upload `dist/ambisecure-hostinger.zip` to Hostinger File Manager and extract inside `public_html`.
+
+**E. Verify the new tag fires (production)**
+
+1. Open https://ambisecure.ambimat.com in a fresh incognito window.
+2. Accept the cookie-consent banner. No analytics request fires until then.
+3. DevTools → Network → filter `collect?v=2`. Expect a hit on page load.
+4. GA4 → **Admin → DebugView**. Add `?debug_mode=1` to any URL (or install the Google Analytics Debugger extension). Events should appear within ~10s.
+5. GA4 → **Reports → Realtime**. Incognito session shows as 1 active user.
+6. Consent-gate negative test: DevTools → Application → Local Storage → `as-consent = denied`, reload. Confirm NO `collect` request.
+7. DNT negative test: enable "Send Do Not Track" in the browser → reload → confirm no `collect` request even with consent granted.
+
+**F. Optional linkages**
+
+- **Link Search Console**: Admin → Property → Product Links → Search Console links → Link. Pick the Search Console property for `ambisecure.ambimat.com`. Unlocks the SC reports under Acquisition within ~48h.
+- **Do not** link Google Ads, do not enable Google signals, do not turn on personalised-advertising features, do not add Measurement Protocol API secrets unless a specific server-side need exists.
+
 ## 51. Final branding and embedded SE positioning (Phase 36)
 
 Closes the last Codex production-review findings. Phase 35 had renamed the displayed product names and fixed the favicon-link layer, but the per-product *body copy* on `/products/fido2-nano-sim-applet/` and `/products/piv-nano-sim-applet/` still leaked the telecom framing: chip labels, the "Telecom + identity convergence" card, the "Operators and OEMs" pitch, the "finished SIM" shipping note, and the "soldered (eUICC variant)" footnote.
