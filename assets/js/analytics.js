@@ -109,4 +109,87 @@
       window.AS_WEB_VITALS_BUFFER = [];
     }
   } catch (_) {}
+
+  // ----------------------------------------------------------------------
+  // Event-tracking helpers. Privacy-first: no PII, no payload exfiltration.
+  // Each helper routes through cfg.report() which already honours DNT,
+  // analytics opt-out, and provider="none".
+  //
+  // Documented event names (see docs/MASTER_OPS §50):
+  //   request_demo, contact_engineering, product_interest, service_interest,
+  //   search_query, tool_usage, timeline_view, video_play,
+  //   download_brochure, scroll_depth
+  //
+  // Tagging convention on the HTML side:
+  //   <a data-analytics-event="contact_engineering" ...>
+  //   <button data-analytics-event="request_demo" ...>
+  // ----------------------------------------------------------------------
+  window.ASTrack = function (name, value) {
+    if (!name) return;
+    cfg.report({ name: String(name), value: Number(value || 1) });
+  };
+
+  // Click-tag listener: fires when any element carrying
+  // data-analytics-event="<name>" is clicked. Single delegated listener.
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    while (t && t !== document) {
+      if (t.dataset && t.dataset.analyticsEvent) {
+        window.ASTrack(t.dataset.analyticsEvent, t.dataset.analyticsValue);
+        return;
+      }
+      t = t.parentNode;
+    }
+  }, { passive: true });
+
+  // Search-query event: fires when the sitewide search page input has been
+  // idle for 600ms and the query is at least 3 chars long. We never send
+  // the query value itself — only the event marker.
+  (function () {
+    var input = document.querySelector('[data-sitewide-search]') ||
+                document.querySelector('.as-search-input');
+    if (!input) return;
+    var timer = null, last = '';
+    input.addEventListener('input', function () {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(function () {
+        var q = (input.value || '').trim();
+        if (q.length >= 3 && q !== last) {
+          last = q;
+          window.ASTrack('search_query', q.length);
+        }
+      }, 600);
+    }, { passive: true });
+  })();
+
+  // Scroll-depth event: fires once per page at 25 / 50 / 75 / 100 percent
+  // of document height. Throttled with rAF.
+  (function () {
+    var fired = {};
+    var ticking = false;
+    function check() {
+      ticking = false;
+      var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight) - window.innerHeight;
+      if (h <= 0) return;
+      var pct = Math.round((window.scrollY / h) * 100);
+      [25, 50, 75, 100].forEach(function (bucket) {
+        if (!fired[bucket] && pct >= bucket) {
+          fired[bucket] = true;
+          window.ASTrack('scroll_depth', bucket);
+        }
+      });
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { window.requestAnimationFrame(check); ticking = true; }
+    }, { passive: true });
+  })();
+
+  // Page-typed events: tool / timeline / case-study impressions fire once
+  // on load so the operator can see which content types pull traffic.
+  (function () {
+    var p = window.location && window.location.pathname || '';
+    if (/^\/resources\/tools\/[^/]+\/$/.test(p))     window.ASTrack('tool_usage', 1);
+    else if (/^\/resources\/timelines\/[^/]+\/$/.test(p)) window.ASTrack('timeline_view', 1);
+    else if (/^\/case-studies\/[^/]+\/$/.test(p))    window.ASTrack('case_study_view', 1);
+  })();
 })();

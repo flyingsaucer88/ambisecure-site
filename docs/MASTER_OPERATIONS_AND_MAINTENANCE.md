@@ -1597,3 +1597,116 @@ Documented intentional exceptions (verifier skips):
 4. `blog/designing-low-latency-secure-transit-validators/` — "SAM in a 4FF SIM-form FRU" is the physical-socket name for transit-validator SAMs.
 
 `robots.txt` was explicitly out of scope for this pass and was not touched (operator instruction).
+
+## 50. Analytics migration, logo consistency, keyword strategy, event mapping (Phase 35)
+
+End-to-end pass to (a) make the browser title-block icon match the official crest, (b) wire the GA4-ready analytics chain that previous phases scaffolded, (c) document the keyword inventory and event mapping the operator needs to populate analytics dashboards once a real GA4 ID is provisioned. No new documentation files were created — everything lives in this section.
+
+### 50.1 Logo consistency
+
+The simplified `favicon.svg` (a flat-fill red "A" inside a grey ring) was being preferred by modern browsers over the PNG icons that actually carry the official AmbiSecure crest. **The SVG `<link rel="icon">` was removed from all 267 HTML pages and `assets/img/favicon.svg` was deleted.** Browsers now fall back to the PNG icon set, which is byte-identical to `Logos/ambisecure_logo.png` (sha256 match verified). The full icon stack:
+
+| Surface | File | Source |
+|---|---|---|
+| Browser tab (16/32 px) | `favicon-32.png` | derived from `Logos/ambisecure_logo.png` |
+| High-DPI browser tab (64 px) | `favicon-64.png` | derived from `Logos/ambisecure_logo.png` |
+| Android home-screen (192 px) | `favicon-192.png` | derived from `Logos/ambisecure_logo.png` |
+| PWA / large favicon (512 px) | `favicon-512.png` | derived from `Logos/ambisecure_logo.png` |
+| iOS Safari home-screen (180 px) | `apple-touch-icon.png` | derived from `Logos/ambisecure_logo.png` |
+| Schema.org `Organization.logo` | `/assets/img/ambisecure-logo.png` | byte-identical to `Logos/ambisecure_logo.png` |
+| Hero crest medallion | `/assets/img/og/ambisecure-logo-og.jpg` | high-res 512×512 of the same crest |
+| Per-page OG / Twitter cards | `/assets/img/og/<section>.png` | section-specific 1200×630 marketing cards (intentionally not the bare crest — social previews want branded cards with text) |
+
+**Governance rule:** do not generate, vectorize, or AI-approximate the crest. Always use the PNG / WebP assets in `Logos/` or `assets/img/`. (See feedback memory `feedback-logo-assets`.)
+
+### 50.2 Analytics chain wiring
+
+The infrastructure was already in place from Phases 20 / 26:
+
+- `assets/js/analytics-config.js` — provider/consent config (`provider: "none"` default; `ga4.measurementId: "G-XXXXXXXXXX"` placeholder; `respectDoNotTrack: true`; `optOutLocalStorageKey: "as-analytics-opt-out"`).
+- `assets/js/cookie-consent.js` — first-run banner with `Allow analytics` / `Decline`, DNT-aware, written from a privacy-first angle ("does not store personal data, profile users, or share data with advertisers").
+- `assets/js/analytics.js` — dynamically loaded by `cookie-consent.js` after Accept; injects GA4 with consent-mode defaults set to deny `ad_storage`, `ad_user_data`, `ad_personalization` and `allow_google_signals: false`.
+
+**Bug fixed in this pass:** `analytics-config.js` was never actually loaded on any page, so `window.AS_ANALYTICS` was undefined and `cookie-consent.js → loadAnalyticsIfConfigured()` always silently returned. A `<script src="/assets/js/analytics-config.js?v=31" defer></script>` line is now injected on every page immediately before `cookie-consent.js`. The chain now works end-to-end: when the operator flips `provider: "ga4"` and sets a real measurement ID, accepting the consent banner injects `analytics.js` which loads GA4.
+
+**To activate analytics in production:** edit `assets/js/analytics-config.js`, replace `G-XXXXXXXXXX` with the real measurement ID, and flip `provider: "ga4"`. No other code change is required.
+
+**Legacy WordPress remnants:** verified zero. Sitewide grep for `googletagmanager`, `google-analytics`, `gtag` outside `assets/js/analytics.js`, `UA-NNNNNNNN`, `GTM-XXXXXXX`, `G-XXXXXXXX` returns no matches. Live `curl https://ambisecure.ambimat.com/` returns zero hits for `wp-content / wp-includes / wp-json / wp-admin / wp_enqueue / jquery-migrate`.
+
+### 50.3 Event-tracking layer
+
+`analytics.js` was extended with a small, privacy-first event-tracking layer that routes through the existing `cfg.report()` gate (DNT-aware, opt-out-aware, provider-gated):
+
+1. **`window.ASTrack(name, value)`** — global helper. Other scripts can fire arbitrary events.
+2. **Click delegation** — any element carrying `data-analytics-event="<name>"` (and optionally `data-analytics-value="<value>"`) fires that event when clicked. Single delegated listener on `document`.
+3. **Search-query event** — fires after the sitewide search input has been idle 600ms with a query ≥3 chars. **The query value is never sent — only the length, as the event value.**
+4. **Scroll-depth event** — fires once per page at 25 / 50 / 75 / 100 percent of document height. rAF-throttled.
+5. **Page-typed impression events** — fire once on load: `tool_usage` on `/resources/tools/<slug>/`, `timeline_view` on `/resources/timelines/<slug>/`, `case_study_view` on `/case-studies/<slug>/`.
+
+### 50.4 Event mapping (operator reference)
+
+| Event name | Surface / trigger | Funnel stage | Purpose |
+|---|---|---|---|
+| `contact_engineering` | Hero "Talk to engineering" (homepage), contact-form submit | Decision | Track direct-contact intent |
+| `request_demo` | "Request a pilot" (homepage banner), FIDO Validation Server demo CTA | Decision | Track demo-evaluation intent |
+| `product_interest` | "Explore products" (homepage), "Explore OnePass" (banner) — with `data-analytics-value` carrying the slug | Consideration | Track which product family draws clicks |
+| `service_interest` | Service-page primary CTA → /contact/ | Consideration | Track which service family draws clicks |
+| `search_query` | Sitewide search input idle ≥600ms / ≥3 chars (value = query length, not text) | Discovery | Detect whether visitors find what they need via search |
+| `tool_usage` | Load of `/resources/tools/<slug>/` | Discovery | Identify which dev tools (ATR/APDU/TLV parsers, X.509 viewer, attestation decoder) pull engineers |
+| `timeline_view` | Load of `/resources/timelines/<slug>/` | Discovery | Identify which evolution timelines (FIDO, PIV, WebAuthn-passkey, secure-elements, OTP-SMS, ePassport) are read |
+| `case_study_view` | Load of `/case-studies/<slug>/` | Decision | Track which anonymised studies persuade |
+| `download_brochure` | Tagged brochure-PDF anchors | Decision | Track which brochures get pulled |
+| `scroll_depth` | 25 / 50 / 75 / 100 % on any page | Engagement | Read-completion proxy |
+| `video_play` | Reserved for future YouTube-facade integration (see `assets/js/video-facade.js`) | Engagement | Track video engagement (not yet wired) |
+
+CTAs already tagged in this pass: homepage hero (`contact_engineering`, `product_interest`), homepage feature banner (`product_interest`, `request_demo`), FIDO service page primary demo CTA (`request_demo`), FIDO demo page email CTA (`request_demo`), contact-form submit (`contact_engineering`), three service-page primary `/contact/` CTAs (`service_interest`). Additional CTAs can be tagged at any time by appending `data-analytics-event="<name>"` to the anchor / button — no JS changes required.
+
+### 50.5 Cookie consent
+
+Banner copy reviewed and confirmed professional:
+
+> **Privacy-first analytics.** AmbiSecure does not store personal data, profile users, or share data with advertisers. We use lightweight, aggregate analytics to understand which engineering content is useful. Decline if you prefer — the site works either way.
+
+Two actions: `Decline` (sets `as-consent=denied` + `as-analytics-opt-out=1` in localStorage) and `Allow analytics` (sets `as-consent=granted` + clears opt-out + dynamically loads `analytics.js`). DNT short-circuits the chain before any analytics request fires. No PII claim made.
+
+### 50.6 Keyword inventory (operator reference)
+
+Not for GA4 ingestion. This is the editorial keyword map the site already optimises for via on-page H1 / dek / OG / JSON-LD content. It's documented here so the operator can wire Search Console reports to the correct URLs once GSC verification completes.
+
+**Primary clusters → canonical landing URLs:**
+
+| Keyword cluster | Canonical landing | Funnel stage | Notes |
+|---|---|---|---|
+| FIDO2 / WebAuthn / CTAP2 / passkeys | `/technologies/fido2/`, `/technologies/webauthn/`, `/technologies/ctap2/`, `/technologies/passkeys/` | Awareness → Consideration | Cornerstone tech pages |
+| PIV / FIPS 201 / smart card | `/technologies/`, `/products/piv-card/`, `/products/piv-bio-card/`, `/products/piv-usb-key/` | Consideration | Includes the per-form-factor PIV trilogy |
+| JavaCard / GlobalPlatform / applet development | `/technologies/javacard/`, `/products/javacard-applets/`, `/services/javacard-development/` | Consideration | Engineering-service entry point |
+| Secure elements / CC EAL5+ / hardware root of trust | `/technologies/secure-elements/`, `/resources/timelines/secure-elements/` | Awareness | Used in both blog cornerstones + product pages |
+| PKI / X.509 / PKCS#11 / certificate lifecycle | `/products/digital-signature-token/`, `/products/pkcs-signature-suite/`, `/blog/pki-credential-issuance-workforce-government/` | Consideration | |
+| ePassport / ICAO 9303 / CSCA-DSC-PKD | `/services/epassport-platform/`, `/blog/archive/how-chip-based-epassports-work/`, `/resources/timelines/...` | Decision (govt) | Government-identity entry point |
+| IoT security / device identity / signed update | `/products/iot-security-chipset/`, `/products/iot-security-applets/`, `/solutions/secure-element-integration/` | Decision (OEM) | |
+| MFA / phishing-resistant / NIST SP 800-63 | `/solutions/phishing-resistant-authentication/`, `/blog/passkeys-vs-traditional-mfa/`, `/blog/cyber-security-threats-overview/` | Awareness | |
+| Identity management / workforce identity / passwordless | `/solutions/workforce-identity/`, `/blog/designing-enterprise-passwordless-systems/`, `/products/onepass-platform/` | Decision (enterprise) | |
+| DESFire / transit / SAM-backed offline trust | `/technologies/desfire/`, `/blog/desfire-ev1-vs-ev2-vs-ev3/`, `/blog/transit-validators-offline-trust-architecture/` | Decision (transit) | |
+
+**Secondary (product + service + tool):**
+
+`OnePass`, `OnePass Card`, `OnePass Bio Card`, `OnePass USB Key`, `BioKey`, `Tappable`, `Digital Signature Token`, `PKCS Signature Suite`, `Secure Mail Suite`, `FIDO Validation Server`, `ATR parser`, `APDU parser`, `TLV parser`, `X.509 viewer`, `attestation decoder`, `authenticatorData parser`, `COSE algorithms reference`, `WebAuthn extensions reference`, `nano-card`, `MFF2 solderable`, `eSIM Initiative`.
+
+**Standards / acronym signals:**
+
+`ISO/IEC 7816`, `ISO/IEC 14443`, `ISO/IEC 7810`, `NIST SP 800-73-4`, `NIST SP 800-63-4`, `FIPS 201-3`, `OMB M-22-09`, `GlobalPlatform 2.3.1`, `SCP03`, `CAP file`, `AAGUID`, `MDS`, `ICAO 9303`, `BAC`, `PACE`, `CSCA`, `DSC`, `PKD`, `LDS`, `SGP.22`, `SGP.32`, `eUICC`, `RSP`.
+
+**Long-tail / intent-shaped queries** (the H1, dek, JSON-LD descriptions of the corresponding pages already match these intents — no further keyword stuffing required):
+
+- "passwordless authentication enterprise rollout" → `/blog/designing-enterprise-passwordless-systems/`
+- "FIDO2 nano-card secure element OEM" → `/blog/sim-based-fido2-authenticators/`
+- "DESFire EV1 vs EV2 vs EV3 comparison" → `/blog/desfire-ev1-vs-ev2-vs-ev3/`
+- "SAM-backed offline transit validator architecture" → `/blog/why-sams-matter-in-closed-loop-transit/`
+- "secure element vs TPM vs HSM" → `/blog/secure-element-vs-tpm-vs-hsm/`
+- "JavaCard applet development for enterprise identity" → `/blog/javacard-applet-development-enterprise-identity/`
+- "WebAuthn attestation object decoding" → `/blog/understanding-webauthn-attestation-objects/` (+ tool `/resources/tools/attestation-decoder/`)
+- "PIV vs USB security key vs embedded secure element" → `/blog/piv-vs-usb-tokens-vs-embedded/`
+- "phishing-resistant MFA NIST SP 800-63-4" → `/solutions/phishing-resistant-authentication/`
+- "ePassport CSCA DSC PKD trust chain" → `/services/epassport-platform/`
+
+Long-tail intent matching is achieved via the existing Schema.org `Organization.knowsAbout` array (50+ entities), per-page JSON-LD `BlogPosting` / `Product` / `WebPage` descriptions, and `dek` subtitles. The site does not keyword-stuff the body copy.

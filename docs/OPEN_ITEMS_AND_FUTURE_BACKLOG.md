@@ -1,7 +1,7 @@
 # OPEN ITEMS AND FUTURE BACKLOG — AmbiSecure site
 
 **Owner:** AmbiSecure engineering
-**Last updated:** 2026-05-13 (Final editorial + search-index cleanup &mdash; the cornerstone `sim-based-fido2-authenticators` blog deep-rewritten to remove operator/carrier/telecom-issuer framing throughout the article body, FAQPage JSON-LD, dek, and `keywords`; `faqs/index.html` eSIM answer reframed to separate the nano-card/MFF2 product positioning from the eSIM Initiative sister site; `resources/timelines/secure-elements/` historical dek softened from "carrier-controlled SIM cards" to "early SIM-card form factors"; `blogs.json` source-of-truth cleaned of every "Dear Readers" / "This week's blog" / "The post introduces" residual that had been propagating into `blog-pool.js` and `blog-search-index.json`; 24 archive entries in `blogs.json` re-synced with the canonical engineering-tone summaries; all six derived data files (search-index.json, blog-search-index.json, blogs.json, blog-pool.js, llms.txt, llms-full.txt) verifier-clean; robots.txt untouched per operator instruction)
+**Last updated:** 2026-05-14 (Analytics migration + logo consistency + keyword strategy &mdash; favicon.svg removed sitewide so PNG icons derived from the real `Logos/ambisecure_logo.png` crest serve as the browser tab icon; `analytics-config.js` loader injected on all 266 pages to fix the broken consent→analytics chain; event-tracking layer added to `analytics.js` (data-analytics-event click delegation + search_query + scroll_depth + tool/timeline/case-study impression events); 10 event names documented; keyword inventory + intent-clusters + canonical landing URLs documented in MASTER_OPS §50; no new doc files created)
 
 Companion to [`MASTER_OPERATIONS_AND_MAINTENANCE.md`](MASTER_OPERATIONS_AND_MAINTENANCE.md).
 
@@ -23,7 +23,7 @@ Phase 20 wired the consent banner + opt-in gate. The remaining items wait on a p
 
 | Item | Why deferred | Decision owner | Trigger | Next action |
 |------|--------------|----------------|---------|-------------|
-| Flip analytics provider on (Plausible-first) | Operator must choose hosted vs self-hosted Plausible. Pricing + privacy posture decision. | Business / operator | Provider chosen | Edit `assets/js/analytics-config.js` `provider:` field; for GA4 only, apply the CSP delta noted in MASTER_OPS §23.3. |
+| Flip analytics provider on (GA4-first) | Operator needs the real `G-XXXXXXXXXX` measurement ID provisioned. Plausible remains as an alternative path. | Business / operator | Real GA4 measurement ID provisioned | Edit `assets/js/analytics-config.js`: set `provider: "ga4"` and replace the `G-XXXXXXXXXX` placeholder. The consent→analytics chain (loaders verified end-to-end in Phase 35 / MASTER_OPS §50) will start firing automatically. For Plausible instead, set `provider: "plausible"` and apply the CSP delta noted in MASTER_OPS §23.3. |
 | Surface Web Vitals dashboard in operator portal | Provider must be on to feed it. | Operator | Provider on | Add Plausible / GA4 dashboard panel filtering on `vitals_*` custom events. |
 | Per-page conversion-event tagging (Contact Click, Brochure Download, Case Study Read) | Tagging without traffic data is guessing. | Operator + product | Provider on + 30 days of traffic | Add `data-analytics-event` attributes to CTAs; wire to `AS_ANALYTICS.report()`. |
 

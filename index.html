@@ -26,7 +26,6 @@
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
 <link rel="stylesheet" href="/assets/css/main.css?v=31" />
-<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -166,8 +165,8 @@
         Forty years of shipping embedded systems.
       </p>
       <div class="hero-cta-row">
-        <a href="/contact/" class="btn btn-primary">Talk to engineering</a>
-        <a href="/products/" class="btn btn-outline">Explore products</a>
+        <a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a>
+        <a href="/products/" class="btn btn-outline" data-analytics-event="product_interest">Explore products</a>
         <a href="/resources/" class="btn btn-text">Browse resources <span aria-hidden="true">&rarr;</span></a>
       </div>
       <div class="hero-creds" aria-label="Security domains AmbiSecure covers">
@@ -251,8 +250,8 @@
               <p class="hp-banner-text">Replace badges and security keys with a single FIDO2 smart card that ships under your issuer keys, brand artwork, and audit hooks.</p>
             </div>
             <div class="hp-banner-ctas">
-              <a href="/products/onepass-platform/" class="btn btn-primary">Explore OnePass</a>
-              <a href="/contact/" class="btn btn-outline">Request a pilot</a>
+              <a href="/products/onepass-platform/" class="btn btn-primary" data-analytics-event="product_interest" data-analytics-value="onepass">Explore OnePass</a>
+              <a href="/contact/" class="btn btn-outline" data-analytics-event="request_demo">Request a pilot</a>
             </div>
           </article>
         </div>
@@ -855,6 +854,7 @@
 <script src="/assets/js/nav.js?v=31" defer></script>
 <script src="/assets/js/web-vitals.js?v=31" defer></script>
 <script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
 <script src="/assets/js/cookie-consent.js?v=31" defer></script>
 <script src="/assets/js/blog-pool.js?v=31" defer></script>
 <script src="/assets/js/blog-spotlight.js?v=31" defer></script>

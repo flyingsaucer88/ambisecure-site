@@ -21,7 +21,6 @@
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
 <link rel="stylesheet" href="/assets/css/main.css?v=31" />
-<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -111,7 +110,7 @@
         <textarea id="cf-message" name="message" required placeholder="Tell us what you're building &mdash; form factor, target volume, certification needs, timeline."></textarea>
       </div>
       <div class="form-row full">
-        <button type="submit" class="btn btn-primary" style="margin-top: 8px;">Open in mail client</button>
+        <button type="submit" class="btn btn-primary" data-analytics-event="contact_engineering" style="margin-top: 8px;">Open in mail client</button>
         <p style="font-size: 12.5px; color: var(--brand-grey); margin-top: 12px; font-family: 'Source Sans 3', sans-serif; line-height: 1.55;"><strong style="color:var(--ink);">How submission works:</strong> this form opens your default mail client with the message pre-filled, addressed to <a href="mailto:support@ambimat.com">support@ambimat.com</a>. Nothing is submitted to a third-party endpoint, and no data leaves your browser until you press <em>Send</em> in your mail client. Prefer not to use a mail client? Email us directly at <a href="mailto:support@ambimat.com">support@ambimat.com</a>, call <a href="tel:+917925501989">+91 79255 01989</a> (IN) / <a href="tel:+12153973819">+1 215 397 3819</a> (US), or use the contact cards above.</p>
         <p style="font-size: 12px; color: var(--muted-2); margin-top: 8px; font-family: 'Montserrat', sans-serif; letter-spacing: 0.3px;">By submitting, you agree we may use the information you provide to respond to your enquiry.</p>
       </div>
@@ -160,6 +159,7 @@
 <script src="/assets/js/nav.js?v=31" defer></script>
 <script src="/assets/js/web-vitals.js?v=31" defer></script>
 <script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
 <script src="/assets/js/cookie-consent.js?v=31" defer></script>
 </body>
 </html>
