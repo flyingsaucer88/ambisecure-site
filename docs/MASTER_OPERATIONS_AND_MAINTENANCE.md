@@ -1762,6 +1762,8 @@ Edit [assets/js/analytics-config.js](../assets/js/analytics-config.js):
 - Line 24: `provider: "none"` → `provider: "ga4"`
 - Line 32: `measurementId: "G-XXXXXXXXXX"` → real ID copied in step B8
 
+CSP is already configured with the GA4 allow-list in `.htaccess` (see the `Content-Security-Policy` header — `script-src` permits `https://www.googletagmanager.com`; `connect-src` permits `https://www.google-analytics.com` and its `*.google-analytics.com` / `*.analytics.google.com` regional endpoints; `img-src` permits the GA4 pixel-beacon origin). No CSP change required when flipping the provider.
+
 Rebuild + deploy:
 
 ```
@@ -1772,13 +1774,16 @@ Upload `dist/ambisecure-hostinger.zip` to Hostinger File Manager and extract ins
 
 **E. Verify the new tag fires (production)**
 
-1. Open https://ambisecure.ambimat.com in a fresh incognito window.
+Test from a browser without DNT/GPC/tracker-blocker interference. Firefox's *private windows* unconditionally send `navigator.doNotTrack === "1"` regardless of the global UI setting — which means cookie-consent.js correctly suppresses the banner *and* analytics.js bails out on its own DNT check. Safari (regular window, no privacy-blocker extensions) is the easiest reliable test path. Chrome works too if no privacy-blocker extension is installed.
+
+1. Open https://ambisecure.ambimat.com in a regular Safari or Chrome window.
 2. Accept the cookie-consent banner. No analytics request fires until then.
-3. DevTools → Network → filter `collect?v=2`. Expect a hit on page load.
-4. GA4 → **Admin → DebugView**. Add `?debug_mode=1` to any URL (or install the Google Analytics Debugger extension). Events should appear within ~10s.
-5. GA4 → **Reports → Realtime**. Incognito session shows as 1 active user.
+3. DevTools → Network → expect a request to `www.googletagmanager.com/gtag/js?id=G-…` and one to `www.google-analytics.com/g/collect?…tid=G-…`.
+4. GA4 → **Reports → Realtime → Users in last 30 minutes**. Live session appears within ~30 seconds. Authoritative test — independent of any Network-tab visibility quirks.
+5. Optional: GA4 → **Admin → DebugView** with `?debug_mode=1` on the URL for event-level visibility within ~10 seconds.
 6. Consent-gate negative test: DevTools → Application → Local Storage → `as-consent = denied`, reload. Confirm NO `collect` request.
 7. DNT negative test: enable "Send Do Not Track" in the browser → reload → confirm no `collect` request even with consent granted.
+8. Browser-extension negative test: install a tracker-blocker (e.g. AdGuard) → reload → confirm collect request is suppressed at the browser extension layer. This isn't a site issue; it's the correct user-controlled opt-out path.
 
 **F. Optional linkages**
 
