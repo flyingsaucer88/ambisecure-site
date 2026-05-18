@@ -1851,3 +1851,100 @@ The manifest uses `display: "browser"` rather than `standalone` because AmbiSecu
 - Codex's complaint that the favicon still appears as a simplified A is reflective of the live state (the operator hasn't yet uploaded the Phase 35 ZIP — `curl https://ambisecure.ambimat.com/assets/img/favicon.svg` still returns HTTP 200 against the legacy SVG). Once the Phase 35+36 ZIP is uploaded, the SVG is gone and the PNG crest serves. No further work required on this side.
 
 **Verifier (13 patterns: SIM-resident, telecom SIM, operator-controlled, operator-issued, operator trust, telecom profile, finished SIM, carrier-issued, carrier-controlled, eUICC variant, Operators and OEMs, Nano SIM / nano SIM, `a embedded`)** returns **0 residual hits** across every `*.html / *.json / *.js / *.txt` outside `dist/`, `docs/`, `_internal/`, `.git/`, and the four intentional-context files.
+
+## 52. CTA hierarchy + sitewide analytics-event coverage (Phase 38)
+
+First wedge of the demand-generation phase. Goal: make every meaningful CTA on the site emit a typed analytics event so the GA4 property can begin reporting on conversion-intent surfaces without waiting for further content work. Strict Option-A authenticity rule — refactor existing CTAs only, no fabricated copy, no fabricated capabilities.
+
+### 52.1 Scope ground truth
+
+The site arrived at Phase 38 already 90% of the way there editorially:
+
+- **0 instances** of `>Learn more<`, `>Read more<`, `>Find out more<` on the site.
+- **3 generic-CTA stragglers** only: `about/index.html` ("Contact us"), `support/index.html` ("Contact us" — inline prose link inside FAQ answer), `case-studies/index.html` ("Get in touch").
+- **267 instances of `>Contact<`** in the global nav — intentional: the top-bar nav chip is meant to be terse and was left untouched.
+- **Existing CTA verbs already in use**: Talk to engineering / Talk to engineers / Talk to our security team / Start a conversation / Start a pilot / Request a pilot / Request datasheet / Request a quote / Request integration brief / Request architecture brief / Request applet matrix / Request RSP brief / Request build / Request demo access / Discuss your deployment / Download brochure. All intent-specific, all kept.
+
+What was missing was the *analytics-event attribute layer* on those CTAs. Only **7 pages** carried `data-analytics-event=` attributes after Phase 35 (the homepage hero, the feature banner, the FIDO Validation Server pages, the contact form, three primary service-page CTAs). The remaining 89 pages with intent-specific CTAs were emitting no events.
+
+### 52.2 Stragglers fixed (3 pages, hand edits)
+
+| Page | Old text | New text | Event tag |
+|---|---|---|---|
+| `about/index.html` | `>Contact us<` (primary button) | `>Talk to engineering<` | `contact_engineering` |
+| `support/index.html` | `>Contact us<` (inline FAQ prose link) | `>Ask engineering<` | `contact_engineering` |
+| `case-studies/index.html` | `>Get in touch<` (primary button) | `>Start a conversation<` | `contact_engineering` |
+
+`Ask engineering` was chosen over `Talk to engineering` for `support/` because the link sits mid-sentence in body prose — the imperative reads naturally there in a way that `Talk to` would not.
+
+### 52.3 Analytics-tag tool: `tools/tag-ctas.py`
+
+Idempotent, regex-based, reusable. Walks every `*.html` outside the deploy excludes (`dist/`, `tools/`, `scripts/`, `docs/`, `_internal/`, `legacysitedata/`, `node_modules/`, `Logos/`, `.git/`, `.github/`, `.claude/`, `.lighthouseci/`). For each `<a>...</a>` whose inner text matches a known CTA verb:
+
+1. If `data-analytics-event=` is already present → skip.
+2. Else inject the appropriate event name and write the file.
+
+The verb→event map lives at the top of the script and aligns with the §50.4 vocabulary:
+
+| CTA inner text (lowercased) | Event |
+|---|---|
+| `talk to engineering / engineers / our security team / us` | `contact_engineering` |
+| `start a conversation / the conversation / a partner conversation` | `contact_engineering` |
+| `ask engineering` | `contact_engineering` |
+| `request a pilot / start a pilot` | `request_demo` |
+| `request datasheet / a quote / engagement / integration brief / architecture brief / applet matrix / rsp brief / build / demo access` | `request_demo` |
+| `discuss your deployment` | `service_interest` |
+| `download brochure` | `download_brochure` |
+
+Run modes:
+
+```bash
+python3 tools/tag-ctas.py --dry-run   # report what would change
+python3 tools/tag-ctas.py             # apply
+```
+
+Adding a new CTA verb in future: append one entry to `VERB_TO_EVENT` at the top of the script, run it, audits. Done.
+
+**Re-run policy:** safe to re-run after any editorial pass that adds new CTAs. Idempotent → only new untagged anchors get touched.
+
+### 52.4 Phase 38 application result
+
+```
+Files changed:    89
+Events added:    111
+
+  contact_engineering   66
+  request_demo          41
+  service_interest       2
+  download_brochure      2
+```
+
+### 52.5 Sitewide analytics-event coverage after Phase 38
+
+| Surface | Before | After | Delta |
+|---|---:|---:|---:|
+| Pages with at least one `data-analytics-event` | 7 | 97 | +90 |
+| `contact_engineering` occurrences | 1 | 71 | +70 |
+| `request_demo` occurrences | 1 | 45 | +44 |
+| `service_interest` occurrences | 3 | 8 | +5 |
+| `product_interest` occurrences | 2 | 2 | 0 |
+| `download_brochure` occurrences | 0 | 2 | +2 |
+| Total event tags | 7 | 128 | +121 |
+
+These hook directly into the click-delegation listener already present in `assets/js/analytics.js` (Phase 35). Once GA4 is receiving traffic, every tagged anchor emits a typed GA4 event the moment a visitor clicks. No further JS wiring is required.
+
+### 52.6 What Phase 38 deliberately did NOT do
+
+To keep the wedge small and reviewable:
+
+- **Did not touch the global nav `Contact` chip** — 267 instances, all in the navigation, all already short and clear. The nav chip's job is to be a constant escape hatch, not a conversion CTA.
+- **Did not change CTA copy** beyond the 3 generic stragglers. The existing verb set ("Talk to engineering" / "Request a pilot" / etc.) is already on-brand; rewriting it across 89 pages would be churn without value.
+- **Did not add new landing pages, FAQs, or "In practice" mini-sections** — those are Phase 39+ wedges that require the content-authenticity discussion to finish first.
+- **Did not change the `data-analytics-value` attribute or any per-event metadata** — the click delegation in `analytics.js` already reads it where present; the existing tagged anchors that carry values (e.g. product slug on the homepage feature banner) were left alone.
+- **Did not modify the contact form itself** — form-hardening (inquiry-classification dropdown, honeypot, time-based anti-spam, structured mailto routing) is the natural Phase 39 wedge.
+
+### 52.7 What this unlocks
+
+- **Phase 39 (lead-capture hardening)** can read GA4's funnel data to know which CTAs are the highest-intent surfaces and prioritise form routing accordingly.
+- **Phase 40+ (high-intent landing pages)** will inherit the same event vocabulary — when a new landing page ships, its primary CTA only needs `data-analytics-event="..."` on the anchor; the tracking pipeline is already complete.
+- **The operator's GA4 dashboard** can now build conversion-funnel reports without any further site-side work. Suggested first GA4 explorations: "Pages → contact_engineering events", "request_demo by source/medium", "scroll_depth correlated with contact_engineering on /technologies/* pages".
