@@ -58,6 +58,12 @@ jobs:
           password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           protocol: ftps
           port: 21
+          # Hostinger's FTPS server presents a shared *.hstgr.io cert
+          # that doesn't match our connection hostname / IP. The TLS
+          # handshake still encrypts the channel; we skip the hostname-
+          # to-cert binding check that would otherwise reject the cert.
+          # See MASTER_OPS §53.7 ("TLS hostname mismatch") for context.
+          security: loose
           # local-dir must end with a slash so the action treats it
           # as "copy contents of this dir" not "copy this dir itself".
           local-dir: ./dist/ambisecure-hostinger/
