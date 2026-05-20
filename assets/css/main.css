@@ -41,7 +41,7 @@
   --ink: #1A1D1E;
   --ink-2: var(--brand-dark);
   --muted: var(--brand-grey);
-  --muted-2: #8a9295;
+  --muted-2: #5a6063;
   --line: #e2e2e4;
   --dark: var(--brand-dark);
   --accent: var(--brand-red);
@@ -82,7 +82,7 @@ h1, h2, h3, h4, h5, h6,
 .logo, .nav-links a, .btn, .nav-btn,
 .section-title, .hero-title, .eyebrow,
 .brand-line, .ecosystem-label,
-.footer h4, .stat-num {
+.footer h3, .stat-num {
   font-family: 'Montserrat', 'Segoe UI', sans-serif;
   letter-spacing: -0.1px;
 }
@@ -677,17 +677,19 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
   content: '';
   position: absolute;
   left: 0; top: 0;
-  width: 0;
+  width: 36px;
   height: 3px;
   background: var(--brand-red);
-  transition: width .25s ease;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
 }
 .card:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(58,63,64,0.08);
   border-color: #d8d8da;
 }
-.card:hover::before { width: 36px; }
+.card:hover::before { transform: scaleX(1); }
 
 .card h3 {
   font-size: 18px;
@@ -722,6 +724,14 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
   color: var(--brand-red);
   font-weight: 600;
   letter-spacing: 0.3px;
+}
+/* Card-meta tag spans use inline opacity:0.55 sitewide. That drops effective
+   contrast below WCAG AA on white. Override to opaque brand-grey so axe
+   color-contrast passes; the tag pills stay visually subordinate to the
+   red "Read article →" lead-in via colour rather than opacity. */
+.card-meta span[style*="opacity"] {
+  opacity: 1 !important;
+  color: var(--brand-grey);
 }
 
 .card-soft {
@@ -1121,17 +1131,19 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
   content: '';
   position: absolute;
   left: 0; top: 0;
-  width: 0;
+  width: 36px;
   height: 3px;
   background: var(--brand-red);
-  transition: width .25s ease;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
 }
 .blog-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 40px rgba(58,63,64,0.08);
   border-color: #d8d8da;
 }
-.blog-card:hover::before { width: 36px; }
+.blog-card:hover::before { transform: scaleX(1); }
 .blog-card .chip { background: rgba(227,34,42,0.08); color: var(--brand-red-dark); align-self: flex-start; margin-bottom: 14px; }
 .blog-card h3 { font-size: 18px; line-height: 1.3; margin-bottom: 10px; color: var(--ink); font-family: 'Montserrat', sans-serif; }
 .blog-card p { font-size: 14.5px; color: var(--brand-grey); line-height: 1.65; margin-bottom: 16px; flex: 1; }
@@ -1207,7 +1219,7 @@ footer.site-footer {
   padding-bottom: 50px;
   border-bottom: 1px solid #4a5051;
 }
-footer.site-footer h4 {
+footer.site-footer h3 {
   font-size: 13px;
   letter-spacing: 1.4px;
   text-transform: uppercase;

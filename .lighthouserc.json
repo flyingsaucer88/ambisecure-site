@@ -27,7 +27,15 @@
 
         "uses-text-compression":    "off",
         "csp-xss":                  "off",
-        "errors-in-console":        "off"
+        "errors-in-console":        "off",
+
+        "unminified-css":           "warn",
+        "unused-css-rules":         "warn",
+        "total-byte-weight":        "warn",
+        "uses-responsive-images":   "warn",
+        "modern-image-formats":     "warn",
+        "render-blocking-resources":"warn",
+        "server-response-time":     "warn"
       }
     },
     "upload": {

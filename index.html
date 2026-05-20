@@ -141,7 +141,7 @@
     </ul>
   </nav>
   <div class="nav-actions">
-    <button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd>⌘K</kbd></button><a href="/contact/" class="nav-btn">Contact</a>
+    <button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">⌘K</kbd></button><a href="/contact/" class="nav-btn">Contact</a>
     <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -674,7 +674,7 @@
           <div class="video-card-meta"><span>1:27</span><span>Product overview</span></div>
           <h3>AmbiSecure card &mdash; all use cases</h3>
           <p class="video-card-desc">FIDO, PIV, door access, NDEF, and OpenPGP roles on a single multi-application card.</p>
-          <a class="video-card-cta" href="/videos/ambisecure-card-use-cases/">View page &rarr;</a>
+          <a class="video-card-cta" href="/videos/ambisecure-card-use-cases/" aria-label="View AmbiSecure card use cases video page">View page &rarr;</a>
         </div>
       </article>
       <article class="video-card">
@@ -686,18 +686,19 @@
           <div class="video-card-meta"><span>1:21</span><span>FIDO setup</span></div>
           <h3>Set up the AmbiSecure card on Gmail</h3>
           <p class="video-card-desc">Adding the card as a FIDO security key on a Google account, on desktop.</p>
-          <a class="video-card-cta" href="/videos/setup-ambisecure-card-gmail/">View page &rarr;</a>
+          <a class="video-card-cta" href="/videos/setup-ambisecure-card-gmail/" aria-label="View Gmail setup video page">View page &rarr;</a>
         </div>
       </article>
       <article class="video-card">
         <video class="video-self-hosted" controls preload="none" poster="/assets/img/videos/biokey-loop-poster.jpg" playsinline muted>
           <source src="/assets/video/biokey-loop.mp4" type="video/mp4" />
+          <track kind="captions" src="/assets/video/biokey-loop.vtt" srclang="en" label="English captions" default />
         </video>
         <div class="video-card-body">
           <div class="video-card-meta"><span>0:05</span><span>Product demo</span></div>
           <h3>AmbiSecure BioKey &mdash; product loop</h3>
           <p class="video-card-desc">Short hero loop showing the biometric USB security key.</p>
-          <a class="video-card-cta" href="/videos/biokey-product-loop/">View page &rarr;</a>
+          <a class="video-card-cta" href="/videos/biokey-product-loop/" aria-label="View BioKey product loop video page">View page &rarr;</a>
         </div>
       </article>
     </div>
@@ -788,7 +789,7 @@
         </div>
       </div>
       <div>
-        <h4>Products</h4>
+        <h3>Products</h3>
         <ul>
           <li><a href="/products/onepass-card/">OnePass Card</a></li>
           <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
@@ -799,7 +800,7 @@
         </ul>
       </div>
       <div>
-        <h4>Develop</h4>
+        <h3>Develop</h3>
         <ul>
           <li><a href="/resources/">Utility tools</a></li>
           <li><a href="/resources/tools/atr-parser/">ATR parser</a></li>
@@ -809,7 +810,7 @@
         </ul>
       </div>
       <div>
-        <h4>Engage</h4>
+        <h3>Engage</h3>
         <ul>
           <li><a href="/engagement-models/">Engagement models</a></li>
           <li><a href="/case-studies/">Case studies</a></li>
@@ -820,7 +821,7 @@
         </ul>
       </div>
       <div>
-        <h4>Company</h4>
+        <h3>Company</h3>
         <ul>
           <li><a href="/about/">About</a></li>
           <li><a href="/about/certifications/">Certifications</a></li>
@@ -832,7 +833,7 @@
         </ul>
       </div>
       <div>
-        <h4>Contact</h4>
+        <h3>Contact</h3>
         <ul>
           <li>Ahmedabad, Gujarat 380015<br />India</li>
           <li>India: +91 79255 01989</li>
@@ -844,9 +845,9 @@
     <div class="footer-base">
       <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
       <div class="footer-social" aria-label="Social links">
-        <a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn">in</a>
-        <a href="https://twitter.com/ambimat" aria-label="Twitter">tw</a>
-        <a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook">fb</a>
+        <a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a>
+        <a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a>
+        <a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a>
       </div>
     </div>
   </div>
