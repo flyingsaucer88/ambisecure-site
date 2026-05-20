@@ -1963,7 +1963,7 @@ hPanel offers a "Git" feature that pulls a configured repo on push (via webhook)
 
 A dedicated FTP account `u675763961.githubdeploy` was created via hPanel → Files → FTP Accounts → "Create a new FTP account". Scope:
 
-- **Hostname**: `ftp.ambisecure.ambimat.com` (DNS, not raw IP — cleaner for TLS cert validation)
+- **Server**: `193.203.185.149` (raw IP — see 53.7 for why we don't use `ftp.ambisecure.ambimat.com`)
 - **Port**: 21 (FTPS — explicit TLS on port 21)
 - **Directory**: `/home/u675763961/domains/ambisecure.ambimat.com/public_html` (account is jailed to this path; cannot read or write outside it)
 - **Purpose-specific name** so it's obvious what's using it, and so rotating/deleting it doesn't affect any other FTP user
@@ -1974,7 +1974,7 @@ Original site-wide FTP account `u675763961.ambisecure.ambimat.com` was left unto
 
 | Secret name | Value |
 |---|---|
-| `HOSTINGER_FTP_SERVER` | `ftp.ambisecure.ambimat.com` |
+| `HOSTINGER_FTP_SERVER` | `193.203.185.149` (raw IP — `ftp.ambisecure.ambimat.com` is NXDOMAIN; see 53.7) |
 | `HOSTINGER_FTP_USERNAME` | `u675763961.githubdeploy` |
 | `HOSTINGER_FTP_PASSWORD` | (32-char random; stored in operator's password manager) |
 
@@ -1989,11 +1989,20 @@ Triggers:
 Concurrency:
 - `group: deploy-main`, `cancel-in-progress: true` — a new push cancels any in-flight deploy. Only the latest commit on main matters.
 
+Job-level: `timeout-minutes: 30` — covers the worst-case first-time full mirror (~760 files / ~17 MB, sequential FTPS to Hostinger Mumbai). First deploy took 18m 29s; subsequent deploys finish in 1–2 min thanks to the state file (below).
+
 Steps:
 1. `actions/checkout@v4`
-2. `bash tools/build-hostinger-package.sh` — produces `dist/ambisecure-hostinger/`
-3. `bash tools/audit-all.sh` — hard gate. Audit failure cancels the deploy.
-4. `SamKirkland/FTP-Deploy-Action@v4.3.5` — FTPS mirror of `dist/ambisecure-hostinger/` → `./` (relative to the jailed FTP user's home, which IS `public_html`).
+2. `sudo apt-get update && sudo apt-get install -y libxml2-utils` — installs xmllint, which `tools/audit-seo.py` needs to validate `sitemap.xml`. macOS ships it via Xcode CLI tools; `ubuntu-latest` does not. Without it, audit-all fails before the deploy can run.
+3. `bash tools/build-hostinger-package.sh` — produces `dist/ambisecure-hostinger/`.
+4. `bash tools/audit-all.sh` — hard gate. Audit failure cancels the deploy.
+5. `SamKirkland/FTP-Deploy-Action@v4.3.5` — FTPS mirror of `dist/ambisecure-hostinger/` → `./` (relative to the jailed FTP user's home, which IS `public_html`). Key config:
+   - `protocol: ftps`, `port: 21`
+   - `security: loose` — Hostinger's FTPS server presents a `*.hstgr.io` shared wildcard cert that doesn't match our domain or raw IP. TLS still encrypts the channel; this only skips the hostname-to-cert binding check (see 53.7).
+   - `local-dir: ./dist/ambisecure-hostinger/` (trailing slash required — without it the action nests one extra directory)
+   - `server-dir: ./`
+   - `state-name: .github-deploy-state.json`
+   - `timeout: 60000` (60s per command — Hostinger's FTPS can be sluggish under load)
 
 State file: the action persists `.github-deploy-state.json` on the FTP server. Subsequent deploys upload only the diff (typically a few KB instead of the full 17 MB tree). First deploy uploads everything.
 
@@ -2002,7 +2011,7 @@ State file: the action persists `.github-deploy-state.json` on the FTP server. S
 ```
 git commit
 git push origin main
-# … wait ~2 minutes …
+# … first deploy: ~18 min · subsequent deploys: ~1-2 min …
 curl -sI https://ambisecure.ambimat.com/   # verify
 ```
 
@@ -2023,15 +2032,24 @@ Watch a deploy in progress:
 
 ### 53.7 Failure modes and recovery
 
+Includes every failure actually hit during the Phase 39 rollout (deploys #1–#3 each failed for a different root cause before #4 succeeded). Each is now permanently fixed in `.github/workflows/deploy.yml`, but documented here so we recognise the symptom if it recurs after a future change.
+
 | Symptom | Diagnosis | Fix |
 |---|---|---|
+| **`xmllint: command not found`** (deploy #1, fixed in 6e6d43d) | `tools/audit-seo.py` shells out to xmllint to validate `sitemap.xml`. macOS ships it via Xcode CLI tools; `ubuntu-latest` does not. | Workflow installs `libxml2-utils` before the audit step. Don't remove that step. |
+| **`ENOTFOUND ftp.ambisecure.ambimat.com`** (deploy #2, fixed in 51268cb) | hPanel's "FTP Hostname" label is a UI label, not a published DNS record. `dig +short ftp.ambisecure.ambimat.com` returns nothing (NXDOMAIN). | Use raw IP `193.203.185.149` in `HOSTINGER_FTP_SERVER`. Get it via `dig +short ambisecure.ambimat.com` if it ever changes. |
+| **TLS handshake fails / cert mismatch** (deploy #2 sub-symptom) | Hostinger FTPS presents a `*.hstgr.io` Sectigo-issued shared wildcard cert — doesn't match our domain or the raw IP we connect to. | `security: loose` in the FTP-Deploy-Action config. TLS encryption stays on; only the hostname-cert binding check is skipped. Don't remove this. |
+| **Job timeout mid-upload** (deploy #3, fixed in fe26b19) | Default 15 min wasn't enough for the first full mirror over sequential FTPS. | `timeout-minutes: 30` at the job level. This is just first-deploy headroom; subsequent deploys finish in 1–2 min via the state file. |
 | Action fails at `tools/audit-all.sh` | A page violates a project audit | Read the action log; fix the page locally; re-commit. Prior live version is unchanged. |
-| Action fails at FTPS step with auth error | Credentials wrong or password rotated without updating GitHub Secret | Reset password in hPanel → update `HOSTINGER_FTP_PASSWORD` secret → re-run workflow via Run-workflow button. |
-| Action fails at FTPS step with TLS error | Cert validation against IP rather than hostname | Confirm `HOSTINGER_FTP_SERVER` is set to `ftp.ambisecure.ambimat.com` not the raw IP. |
+| Action fails at FTPS step with `530` auth error | Credentials wrong or password rotated without updating GitHub Secret | Reset password in hPanel → update `HOSTINGER_FTP_PASSWORD` secret → re-run workflow via Run-workflow button. |
 | Live site shows old content after successful deploy | LiteSpeed cache or browser cache | Force-reload (Cmd+Shift+R / Ctrl+F5); or hPanel → Performance → LiteSpeed Cache → Purge All. |
-| File missing on live site that was present in repo | First-deploy state-file edge case, OR build script excluded it | Check `dist/ambisecure-hostinger/` locally after `bash tools/build-hostinger-package.sh`. If file is missing there, fix the build script's exclude list. |
+| File missing on live site that was present in repo | First-deploy state-file edge case, OR build script excluded it | Check `dist/ambisecure-hostinger/` locally after `bash tools/build-hostinger-package.sh`. If file is missing there, fix the build script's exclude list. If it's in `dist/` but not on the server, delete `.github-deploy-state.json` from `public_html` via the fallback FTP account and re-run the workflow to force a full mirror. |
 | Need to rollback to a previous commit | Continuous deploy means HEAD is live | `git revert <bad-commit>` and push — within 2 minutes the previous version is mirrored back to public_html. |
 
 ### 53.8 Upgrade path to SSH/rsync (future)
 
 If/when the AmbiSecure hosting plan moves to Business or Cloud (SSH included), replace the `SamKirkland/FTP-Deploy-Action` step with `easingthemes/ssh-deploy@v5`. Same secrets surface (server / username / password→ssh-key). Faster (rsync diff) and more secure (SSH instead of FTPS). No other workflow changes needed.
+
+### 53.9 Reusing this setup on other repos
+
+The same pattern (dedicated FTP account → 3 secrets → workflow YAML → diff-only deploys) applies to every other Ambimat-ecosystem repo deployed to Hostinger. The repo-agnostic walkthrough — including all four failure modes from 53.7, the annotated workflow template, and a copy-paste checklist — is at [docs/HOSTINGER_GITHUB_AUTODEPLOY_PLAYBOOK.md](HOSTINGER_GITHUB_AUTODEPLOY_PLAYBOOK.md). Following it end-to-end takes ~20 min per new repo.
