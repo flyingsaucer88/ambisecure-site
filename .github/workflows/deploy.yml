@@ -24,7 +24,11 @@ jobs:
   deploy:
     name: Build and deploy to Hostinger public_html
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # 30 min covers the first-time full upload (~760 files, ~17 MB, single
+    # connection, sequential). Subsequent runs use the persisted state file
+    # to upload only diffs and complete in under 2 min — the 30 min ceiling
+    # is just first-deploy headroom.
+    timeout-minutes: 30
     permissions:
       contents: read
 
