@@ -1563,6 +1563,8 @@ Codex's final-acceptance review surfaced three remaining items (robots.txt expli
 
 **Deep reframe of the cornerstone blog (~30 paragraph-level rewrites, technical content preserved):**
 
+
+
 | Old framing | New framing |
 |---|---|
 | "the operator can reissue without a new physical part" | "the issuer's keys, reissuable by the same personalisation line that issues every other secure-element credential" |
