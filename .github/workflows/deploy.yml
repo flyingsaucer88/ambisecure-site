@@ -32,6 +32,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Install audit dependencies
+        # xmllint (libxml2-utils) is used by tools/audit-all.sh + audit-seo.py
+        # to validate sitemap.xml. macOS ships with it; ubuntu-latest does not.
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+
       - name: Build deployable tree
         # Produces dist/ambisecure-hostinger/ — the exact tree that
         # should land in public_html. Excludes tools/, docs/, dist/,
@@ -72,8 +77,8 @@ jobs:
             **/.DS_Store
             **/.git*
 
-      - name: Summary
-        if: always()
+      - name: Success summary
+        if: success()
         run: |
-          echo "::notice title=Deploy::Deployed dist/ambisecure-hostinger/ → public_html via FTPS to ${{ secrets.HOSTINGER_FTP_SERVER }}"
-          echo "Verify: curl -sI https://ambisecure.ambimat.com/ | head -3"
+          echo "::notice title=Deploy succeeded::Mirrored dist/ambisecure-hostinger/ → public_html via FTPS to ${{ secrets.HOSTINGER_FTP_SERVER }}"
+          echo "Verify with: curl -sI https://ambisecure.ambimat.com/ | head -3"
