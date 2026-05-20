@@ -1948,3 +1948,88 @@ To keep the wedge small and reviewable:
 - **Phase 39 (lead-capture hardening)** can read GA4's funnel data to know which CTAs are the highest-intent surfaces and prioritise form routing accordingly.
 - **Phase 40+ (high-intent landing pages)** will inherit the same event vocabulary — when a new landing page ships, its primary CTA only needs `data-analytics-event="..."` on the anchor; the tracking pipeline is already complete.
 - **The operator's GA4 dashboard** can now build conversion-funnel reports without any further site-side work. Suggested first GA4 explorations: "Pages → contact_engineering events", "request_demo by source/medium", "scroll_depth correlated with contact_engineering on /technologies/* pages".
+
+## 53. Auto-deploy from GitHub to Hostinger (Phase 39 — infrastructure wedge)
+
+Replaces the manual ZIP-upload workflow with continuous deployment. Push to `main` → GitHub Actions runs the build script → FTPS-mirrors `dist/ambisecure-hostinger/` into `public_html`. ~2-minute deploy time end-to-end.
+
+### 53.1 Why not Hostinger's built-in "pull from Git"
+
+hPanel offers a "Git" feature that pulls a configured repo on push (via webhook). It pulls the **whole repo as-is** — no build step. That would leak `tools/`, `docs/`, `dist/`, `Logos/`, `_internal/`, `legacysitedata/`, `scripts/`, `.githooks/` into the live site root. Restructuring the repo to put the deployable tree under its own subdirectory would have worked but would invalidate every relative path in every page and audit. Cheaper to run the existing build script in CI.
+
+### 53.2 Deploy account (Hostinger side)
+
+A dedicated FTP account `u675763961.githubdeploy` was created via hPanel → Files → FTP Accounts → "Create a new FTP account". Scope:
+
+- **Hostname**: `ftp.ambisecure.ambimat.com` (DNS, not raw IP — cleaner for TLS cert validation)
+- **Port**: 21 (FTPS — explicit TLS on port 21)
+- **Directory**: `/home/u675763961/domains/ambisecure.ambimat.com/public_html` (account is jailed to this path; cannot read or write outside it)
+- **Purpose-specific name** so it's obvious what's using it, and so rotating/deleting it doesn't affect any other FTP user
+
+Original site-wide FTP account `u675763961.ambisecure.ambimat.com` was left untouched as a fallback. If the deploy ever goes wrong and we need manual ZIP upload, that account still works.
+
+### 53.3 GitHub Secrets
+
+| Secret name | Value |
+|---|---|
+| `HOSTINGER_FTP_SERVER` | `ftp.ambisecure.ambimat.com` |
+| `HOSTINGER_FTP_USERNAME` | `u675763961.githubdeploy` |
+| `HOSTINGER_FTP_PASSWORD` | (32-char random; stored in operator's password manager) |
+
+Rotation: change in hPanel → update in GitHub → push to trigger a deploy with the new credential. Old password is invalidated server-side immediately on change.
+
+### 53.4 Workflow — `.github/workflows/deploy.yml`
+
+Triggers:
+- `push` to `main` (excluding `docs/**`, `.claude/**`, `**/*.md` — doc-only commits skip the build)
+- `workflow_dispatch` (manual button in the GitHub Actions UI — escape hatch for forced re-deploys)
+
+Concurrency:
+- `group: deploy-main`, `cancel-in-progress: true` — a new push cancels any in-flight deploy. Only the latest commit on main matters.
+
+Steps:
+1. `actions/checkout@v4`
+2. `bash tools/build-hostinger-package.sh` — produces `dist/ambisecure-hostinger/`
+3. `bash tools/audit-all.sh` — hard gate. Audit failure cancels the deploy.
+4. `SamKirkland/FTP-Deploy-Action@v4.3.5` — FTPS mirror of `dist/ambisecure-hostinger/` → `./` (relative to the jailed FTP user's home, which IS `public_html`).
+
+State file: the action persists `.github-deploy-state.json` on the FTP server. Subsequent deploys upload only the diff (typically a few KB instead of the full 17 MB tree). First deploy uploads everything.
+
+### 53.5 Operator workflow after Phase 39
+
+```
+git commit
+git push origin main
+# … wait ~2 minutes …
+curl -sI https://ambisecure.ambimat.com/   # verify
+```
+
+Force a re-deploy without a new commit:
+- https://github.com/flyingsaucer88/ambisecure-site/actions → "Deploy to Hostinger" → **Run workflow** → main branch → Run.
+
+Watch a deploy in progress:
+- The Actions tab shows real-time logs. Failed deploys keep the previous version live — Hostinger never sees a half-uploaded state because the action mirrors atomically per file.
+
+### 53.6 Safety properties
+
+- **Pre-commit hook** (existing, see §38) runs audits locally on every commit — bad code blocked before push.
+- **CI audit step** in the workflow runs the same audits server-side — bad code blocked before deploy even if local hook was bypassed.
+- **Scoped FTP credential** — github-deploy user can only touch `public_html`. Account-level files, databases, email config are unreachable from CI.
+- **No deploy on doc-only commits** — `paths-ignore` keeps the build out of the loop when only `docs/` or `*.md` changed.
+- **Concurrency cancellation** — rapid pushes don't pile up; only the latest commit deploys.
+- **Manual escape hatch** — `workflow_dispatch` lets the operator re-deploy without any new commit if they need to push a known-good state back live.
+
+### 53.7 Failure modes and recovery
+
+| Symptom | Diagnosis | Fix |
+|---|---|---|
+| Action fails at `tools/audit-all.sh` | A page violates a project audit | Read the action log; fix the page locally; re-commit. Prior live version is unchanged. |
+| Action fails at FTPS step with auth error | Credentials wrong or password rotated without updating GitHub Secret | Reset password in hPanel → update `HOSTINGER_FTP_PASSWORD` secret → re-run workflow via Run-workflow button. |
+| Action fails at FTPS step with TLS error | Cert validation against IP rather than hostname | Confirm `HOSTINGER_FTP_SERVER` is set to `ftp.ambisecure.ambimat.com` not the raw IP. |
+| Live site shows old content after successful deploy | LiteSpeed cache or browser cache | Force-reload (Cmd+Shift+R / Ctrl+F5); or hPanel → Performance → LiteSpeed Cache → Purge All. |
+| File missing on live site that was present in repo | First-deploy state-file edge case, OR build script excluded it | Check `dist/ambisecure-hostinger/` locally after `bash tools/build-hostinger-package.sh`. If file is missing there, fix the build script's exclude list. |
+| Need to rollback to a previous commit | Continuous deploy means HEAD is live | `git revert <bad-commit>` and push — within 2 minutes the previous version is mirrored back to public_html. |
+
+### 53.8 Upgrade path to SSH/rsync (future)
+
+If/when the AmbiSecure hosting plan moves to Business or Cloud (SSH included), replace the `SamKirkland/FTP-Deploy-Action` step with `easingthemes/ssh-deploy@v5`. Same secrets surface (server / username / password→ssh-key). Faster (rsync diff) and more secure (SSH instead of FTPS). No other workflow changes needed.

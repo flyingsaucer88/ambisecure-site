@@ -1,0 +1,79 @@
+name: Deploy to Hostinger
+
+# Triggers:
+#   - push to main → continuous deployment
+#   - workflow_dispatch → manual button in the GitHub Actions UI (escape hatch)
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      # Don't waste CI minutes on doc-only commits.
+      - 'docs/**'
+      - '.claude/**'
+      - 'README.md'
+      - '**/*.md'
+  workflow_dispatch:
+
+# If a new push lands while a deploy is in flight, cancel the old one —
+# only the latest commit on main matters.
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy to Hostinger public_html
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Build deployable tree
+        # Produces dist/ambisecure-hostinger/ — the exact tree that
+        # should land in public_html. Excludes tools/, docs/, dist/,
+        # Logos/, scripts/, _internal/, legacysitedata/, .git*, etc.
+        run: bash tools/build-hostinger-package.sh
+
+      - name: Run site audits (safety net)
+        # Hard gate. If any audit fails, the deploy never starts.
+        # Pre-commit hook should have caught this locally, but a hostile
+        # network push could bypass that — this is the belt to the
+        # local suspenders.
+        run: bash tools/audit-all.sh
+
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          # local-dir must end with a slash so the action treats it
+          # as "copy contents of this dir" not "copy this dir itself".
+          local-dir: ./dist/ambisecure-hostinger/
+          # The github-deploy FTP account lands directly inside
+          # public_html (its scope was set during account creation),
+          # so we mirror to "./" — the FTP user's home.
+          server-dir: ./
+          # Persisted on the FTP server; lets subsequent deploys upload
+          # only the diff instead of the full 17 MB tree.
+          state-name: .github-deploy-state.json
+          # 60s per command — Hostinger's FTP can be sluggish under load.
+          timeout: 60000
+          log-level: standard
+          # The build script already excludes everything we don't want
+          # to ship; no further excludes needed.
+          exclude: |
+            **/.DS_Store
+            **/.git*
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "::notice title=Deploy::Deployed dist/ambisecure-hostinger/ → public_html via FTPS to ${{ secrets.HOSTINGER_FTP_SERVER }}"
+          echo "Verify: curl -sI https://ambisecure.ambimat.com/ | head -3"
