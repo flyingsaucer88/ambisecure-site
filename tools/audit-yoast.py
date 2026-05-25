@@ -146,6 +146,9 @@ LI_RE = re.compile(r"<li[^>]*>(.*?)</li>", re.DOTALL | re.IGNORECASE)
 A_RE = re.compile(r'<a\s+[^>]*href="([^"]+)"[^>]*>(.*?)</a>', re.DOTALL | re.IGNORECASE)
 TITLE_RE = re.compile(r"<title>([^<]+)</title>", re.IGNORECASE)
 DESC_RE = re.compile(r'<meta name="description" content="([^"]+)"', re.IGNORECASE)
+META_REFRESH_RE = re.compile(r'<meta\s+http-equiv="refresh"', re.IGNORECASE)
+WORD_MAX_OVERRIDE_RE = re.compile(r'<meta\s+name="audit-yoast-word-max"\s+content="(\d+)"', re.IGNORECASE)
+WORD_MIN_OVERRIDE_RE = re.compile(r'<meta\s+name="audit-yoast-word-min"\s+content="(\d+)"', re.IGNORECASE)
 
 def main_text(html):
     h = HEAD_RE.sub("", html)
@@ -234,6 +237,10 @@ def audit_page(path):
     rel = os.path.relpath(path, ROOT)
     with open(path) as f:
         html = f.read()
+    # HTTP-redirect stubs (meta http-equiv="refresh") are intentionally tiny —
+    # exclude them from content auditing.
+    if META_REFRESH_RE.search(html):
+        return None
     body = main_text(html)
     words = text_words(body)
     wc = len(words)
@@ -282,9 +289,14 @@ def audit_page(path):
     repeats = top_repeats(words)
     faq_issues = faq_schema_issues(html)
 
+    word_max_override = WORD_MAX_OVERRIDE_RE.search(html)
+    word_min_override = WORD_MIN_OVERRIDE_RE.search(html)
+
     return {
         "path": rel,
         "type": classify(rel),
+        "word_max_override": int(word_max_override.group(1)) if word_max_override else None,
+        "word_min_override": int(word_min_override.group(1)) if word_min_override else None,
         "word_count": wc,
         "title": title,
         "title_len": len(title),
@@ -313,6 +325,10 @@ def score(row):
     warnings = []
     bands = BANDS.get(row["type"], BANDS["other"])
     wlo, whi = bands["word"]
+    if row.get("word_min_override") is not None:
+        wlo = row["word_min_override"]
+    if row.get("word_max_override") is not None:
+        whi = row["word_max_override"]
     if row["word_count"] < wlo:
         issues.append(f"word count {row['word_count']} below {wlo}")
     if row["word_count"] > whi:
@@ -383,7 +399,9 @@ def main():
             rel = os.path.relpath(path, ROOT)
             if rel in EXEMPT:
                 continue
-            rows.append(audit_page(path))
+            r = audit_page(path)
+            if r is not None:
+                rows.append(r)
     if args.only:
         rows = [r for r in rows if r["type"] == args.only]
 

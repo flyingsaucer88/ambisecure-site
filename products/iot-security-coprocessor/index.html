@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AmbiSEC Module &mdash; IoT Security Co-Processor | Dual-Domain Hardware-Rooted IoT Security | AmbiSecure</title>
+<meta name="description" content="AmbiSEC Module is a dual-domain IoT security co-processor: MCU domain runs the application, the cryptographic security domain holds keys, signs, verifies, anti-replays, and authenticates secure OTA. Keys never reach application firmware. TEC 31318 coverage." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/products/iot-security-coprocessor/" />
+<meta name="audit-yoast-word-max" content="2500" />
+<meta property="og:type" content="product" />
+<meta property="og:title" content="AmbiSEC Module — IoT Security Co-Processor" />
+<meta property="og:description" content="Dual-domain co-processor for connected devices. MCU + isolated cryptographic security domain. Secure boot, anti-replay, multi-hop encryption, secure OTA authentication, device identity burned at factory." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/products/iot-security-coprocessor/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/products.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/products.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Products", "item": "https://ambisecure.ambimat.com/products/"},
+    {"@type": "ListItem", "position": 3, "name": "IoT Security Co-Processor", "item": "https://ambisecure.ambimat.com/products/iot-security-coprocessor/"}
+   ]
+  },
+  {
+   "@type": "Product",
+   "name": "AmbiSEC Module — IoT Security Co-Processor",
+   "description": "Dual-domain IoT security co-processor. MCU domain runs the application; an isolated cryptographic security domain holds device identity, signs/verifies/encrypts, prevents replay, and authenticates secure OTA. Keys never reach application firmware.",
+   "brand": {"@type": "Brand", "name": "AmbiSecure"},
+   "category": "IoT Security Co-Processor",
+   "offers": {
+    "@type": "Offer",
+    "priceCurrency": "USD",
+    "price": "0",
+    "priceValidUntil": "2027-12-31",
+    "availability": "https://schema.org/InStock",
+    "url": "https://ambisecure.ambimat.com/contact/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an IoT security co-processor?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An IoT security co-processor is a dedicated piece of silicon that sits next to the device's main MCU and owns everything cryptographic — the device identity key, signing/verification, encryption, replay counters, and the authenticity check on incoming firmware updates. The application MCU does what it does well (sensing, radios, business logic); the co-processor does what the MCU cannot do safely (hold keys that must outlive the firmware)."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why separate cryptographic execution from the MCU?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because an MCU compromise should not equal a key compromise. Application firmware is large, frequently updated, and routinely exposed to untrusted input (BLE packets, OTA payloads, sensor data). If the private key lives in MCU memory it is one buffer overflow away from exfiltration. Moving the key into an isolated co-processor means an attacker who owns the MCU can ask the co-processor to sign things while the device is live, but cannot extract the key or impersonate the device once unplugged from the network."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is secure OTA verification and where does it run?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Secure OTA verification means the cryptographic check on a firmware image happens inside the co-processor, against an issuance public key that was burned in at factory and is not modifiable by the MCU. The MCU may handle the download, but the boot gate is the co-processor's signature verdict. A malicious firmware image cannot lie its way past the gate, because the verifier is on the other side of the trust boundary."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is hardware-rooted device identity?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A unique device key generated and stored inside a tamper-resistant secure element, non-extractable by design and bound to a specific piece of silicon. The device proves it is itself by signing a challenge with that key; the back end verifies the signature against an attestation chain that goes back to AmbiSecure's issuance CA. There is no shared secret to leak, no factory-default password to brute-force, and no way to clone the identity without the physical part."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why deploy as an MFF2 secure-element form factor instead of just a chip?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "MFF2 is the solderable, embedded secure-element form factor (8 × 6 mm, 8-pad). It lets OEMs treat the co-processor like any other surface-mount component in their PCB design, with no socket, no removable card, and no field-replaceable identity. For industrial and infrastructure deployments where the device must remain bound to its identity for its entire service life, MFF2 is the right answer. A removable nano-card form factor is also available for products where the identity moves with the user."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/" class="active">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/products/">Products</a><span class="sep">/</span><span class="current">IoT Security Co-Processor</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px 40px;">
+  <div class="section-container">
+    <div class="feature-row">
+      <div>
+        <span class="eyebrow">AmbiSEC Module &middot; IoT Security Co-Processor</span>
+        <h1 style="font-family:'Montserrat',sans-serif; font-size: 42px; font-weight:700; line-height:1.12; letter-spacing:-0.6px; color:var(--ink); margin-bottom:18px;">
+          A second silicon domain for connected devices &mdash; <span style="color:var(--brand-red);">keys never reach application firmware.</span>
+        </h1>
+        <p style="font-size:17.5px; color:var(--brand-grey); line-height:1.65; margin-bottom:22px;">AmbiSEC Module is a dual-domain IoT security co-processor. The MCU domain runs the application &mdash; firmware, radios, sensor acquisition. The cryptographic security domain holds the device identity, signs and verifies, prevents replay, and authenticates every OTA image before it boots. The two domains share a bus, not a memory map.</p>
+        <div class="chip-row"><span class="chip">Dual-domain</span><span class="chip">Hardware root of trust</span><span class="chip">Secure OTA</span><span class="chip">Anti-replay</span><span class="chip">Multi-hop encryption</span><span class="chip">JavaCard applet stack</span></div>
+        <div class="hero-cta-row" style="margin-top:24px;">
+          <a href="/contact/" class="btn btn-primary" data-analytics-event="request_demo">Request integration brief</a>
+          <a href="/contact/" class="btn btn-outline">Schedule architecture review</a>
+          <a href="/products/iot-solution/" class="btn btn-outline">IoT Solution overview</a>
+        </div>
+      </div>
+      <div class="feature-visual feature-visual-img"><img src="/assets/img/product-embedded-se.svg" alt="AmbiSEC Module — dual-domain IoT security co-processor pairing an MCU domain with an isolated cryptographic security domain" width="520" height="360" loading="lazy" decoding="async" /></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">The gap</span>
+      <h2 class="section-title">Multi-hop = multi-risk.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">A connected device rarely talks to the back end directly. Every relay node &mdash; gateway, concentrator, mesh peer &mdash; is a place where firmware can be tampered with, traffic can be replayed, or an attacker can impersonate the device. Software-only trust models do not survive that geometry.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Every relay is an attack surface</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A device that speaks to a gateway, that speaks to a concentrator, that speaks to the cloud, is only as trustworthy as the weakest hop. Any one of them can be coerced into forwarding lies.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Replay, impersonation, firmware threats</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Captured packets get replayed. Sibling devices get impersonated. Malicious firmware images get pushed under the cover of a legitimate OTA channel. These are not theoretical &mdash; they are the standard playbook.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Software-only trust runs out</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A key sitting in MCU flash is one buffer overflow away from exfiltration. Once it leaves the silicon, the device's identity travels with the attacker, not the hardware.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">The architecture</span>
+      <h2 class="section-title">Dual-domain. Two pieces of silicon, one bus, one trust boundary.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">The MCU domain handles everything that talks to the outside world. The cryptographic security domain holds the keys and does the operations the MCU is not allowed to do itself. The MCU asks; the security domain answers. Private material does not cross the boundary.</p>
+    </div>
+
+    <figure aria-labelledby="arch-caption" style="margin:8px 0 0;">
+      <svg viewBox="0 0 1200 560" role="img" aria-labelledby="arch-title arch-desc" style="width:100%;height:auto;display:block;background:#fafafa;border:1px solid var(--line);border-radius:8px;">
+        <title id="arch-title">AmbiSEC Module dual-domain architecture</title>
+        <desc id="arch-desc">Two silicon domains share a single bus across a trust boundary. The MCU domain on the left runs application firmware, BLE / Wi-Fi / LoRa / Sub-GHz radios, and sensor acquisition. The cryptographic security domain on the right holds key storage, performs sign / verify / encrypt operations, enforces anti-replay counters, and runs the secure OTA verification applet. Keys never cross the boundary.</desc>
+
+        <defs>
+          <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="6" stroke="#E3222A" stroke-width="1" opacity="0.18"/>
+          </pattern>
+          <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#3a3f40"/>
+          </marker>
+          <marker id="arr-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#E3222A"/>
+          </marker>
+        </defs>
+
+        <!-- Network band (top) -->
+        <g>
+          <rect x="40" y="30" width="1120" height="70" rx="6" fill="#f4f4f5" stroke="#dcdde0"/>
+          <text x="60" y="56" font-family="Montserrat, sans-serif" font-size="13" font-weight="700" fill="#3a3f40">Network &middot; multi-hop path</text>
+          <text x="60" y="78" font-family="'Source Sans 3', sans-serif" font-size="12.5" fill="#5b6163">Device &rarr; Gateway &rarr; Concentrator &rarr; Cloud &nbsp; &middot; &nbsp; every hop untrusted by default</text>
+          <g font-family="'Source Sans 3', sans-serif" font-size="11.5" fill="#3a3f40">
+            <circle cx="940" cy="65" r="6" fill="#fff" stroke="#3a3f40"/>
+            <circle cx="990" cy="65" r="6" fill="#fff" stroke="#3a3f40"/>
+            <circle cx="1040" cy="65" r="6" fill="#fff" stroke="#3a3f40"/>
+            <circle cx="1090" cy="65" r="6" fill="#E3222A" stroke="#E3222A"/>
+            <text x="1108" y="69">cloud</text>
+            <line x1="946" y1="65" x2="984" y2="65" stroke="#3a3f40" stroke-width="1.5" marker-end="url(#arr)"/>
+            <line x1="996" y1="65" x2="1034" y2="65" stroke="#3a3f40" stroke-width="1.5" marker-end="url(#arr)"/>
+            <line x1="1046" y1="65" x2="1084" y2="65" stroke="#3a3f40" stroke-width="1.5" marker-end="url(#arr)"/>
+          </g>
+        </g>
+
+        <!-- MCU domain (left) -->
+        <g>
+          <rect x="40" y="130" width="500" height="380" rx="10" fill="#ffffff" stroke="#3a3f40" stroke-width="1.5"/>
+          <rect x="40" y="130" width="500" height="38" rx="10" fill="#3a3f40"/>
+          <text x="60" y="155" font-family="Montserrat, sans-serif" font-size="14" font-weight="700" fill="#ffffff">MCU domain &middot; application execution</text>
+
+          <g font-family="'Source Sans 3', sans-serif" font-size="13" fill="#3a3f40">
+            <rect x="64" y="190" width="452" height="64" rx="6" fill="#f7f7f8" stroke="#dcdde0"/>
+            <text x="80" y="212" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Application firmware</text>
+            <text x="80" y="234" font-size="12.5" fill="#5b6163">Business logic, device lifecycle, OTA download path</text>
+
+            <rect x="64" y="270" width="452" height="64" rx="6" fill="#f7f7f8" stroke="#dcdde0"/>
+            <text x="80" y="292" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Radios &middot; BLE &middot; Wi-Fi &middot; LoRa &middot; Sub-GHz</text>
+            <text x="80" y="314" font-size="12.5" fill="#5b6163">Untrusted I/O. Packets land here first.</text>
+
+            <rect x="64" y="350" width="452" height="64" rx="6" fill="#f7f7f8" stroke="#dcdde0"/>
+            <text x="80" y="372" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Sensor acquisition</text>
+            <text x="80" y="394" font-size="12.5" fill="#5b6163">ADC, GPIO, peripheral buses. Telemetry origination.</text>
+
+            <rect x="64" y="430" width="452" height="56" rx="6" fill="#fff" stroke="#dcdde0" stroke-dasharray="4 3"/>
+            <text x="80" y="452" font-family="Montserrat, sans-serif" font-size="12.5" font-weight="700" fill="#5b6163">Host driver &middot; APDU over I&sup2;C / SPI / ISO&nbsp;7816</text>
+            <text x="80" y="472" font-size="12" fill="#5b6163">The only way the MCU talks to the security domain.</text>
+          </g>
+        </g>
+
+        <!-- Trust boundary -->
+        <g>
+          <rect x="555" y="130" width="40" height="380" fill="url(#hatch)" stroke="#E3222A" stroke-dasharray="6 4"/>
+          <text x="575" y="325" font-family="Montserrat, sans-serif" font-size="12" font-weight="700" fill="#E3222A" transform="rotate(-90 575 325)" text-anchor="middle">TRUST BOUNDARY &middot; keys do not cross</text>
+        </g>
+
+        <!-- Crypto domain (right) -->
+        <g>
+          <rect x="610" y="130" width="550" height="380" rx="10" fill="#fff8f8" stroke="#E3222A" stroke-width="1.5"/>
+          <rect x="610" y="130" width="550" height="38" rx="10" fill="#E3222A"/>
+          <text x="630" y="155" font-family="Montserrat, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Cryptographic security domain &middot; AmbiSEC</text>
+
+          <g font-family="'Source Sans 3', sans-serif" font-size="13" fill="#3a3f40">
+            <rect x="634" y="190" width="502" height="64" rx="6" fill="#ffffff" stroke="#f3c9cb"/>
+            <text x="650" y="212" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Key storage &middot; non-extractable</text>
+            <text x="650" y="234" font-size="12.5" fill="#5b6163">128-bit device identity burned at factory. Hardware-isolated key vault.</text>
+
+            <rect x="634" y="270" width="240" height="64" rx="6" fill="#ffffff" stroke="#f3c9cb"/>
+            <text x="650" y="292" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Sign / verify / encrypt</text>
+            <text x="650" y="314" font-size="12.5" fill="#5b6163">Cryptographic operations only.</text>
+
+            <rect x="896" y="270" width="240" height="64" rx="6" fill="#ffffff" stroke="#f3c9cb"/>
+            <text x="912" y="292" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Anti-replay counters</text>
+            <text x="912" y="314" font-size="12.5" fill="#5b6163">Monotonic, in-domain.</text>
+
+            <rect x="634" y="350" width="240" height="64" rx="6" fill="#ffffff" stroke="#f3c9cb"/>
+            <text x="650" y="372" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Secure OTA applet</text>
+            <text x="650" y="394" font-size="12.5" fill="#5b6163">Image signature verified here. Boot gated here.</text>
+
+            <rect x="896" y="350" width="240" height="64" rx="6" fill="#ffffff" stroke="#f3c9cb"/>
+            <text x="912" y="372" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Credential rotation</text>
+            <text x="912" y="394" font-size="12.5" fill="#5b6163">Operational keys rotate; root remains.</text>
+
+            <rect x="634" y="430" width="502" height="56" rx="6" fill="#ffffff" stroke="#f3c9cb" stroke-dasharray="4 3"/>
+            <text x="650" y="452" font-family="Montserrat, sans-serif" font-size="12.5" font-weight="700" fill="#E3222A">JavaCard applet stack &middot; secure-element platform</text>
+            <text x="650" y="472" font-size="12" fill="#5b6163">Identity, OTA verifier, attestation, rotation applets &mdash; loaded under SCP03.</text>
+          </g>
+        </g>
+
+        <!-- Bus arrow MCU -> Crypto -->
+        <g>
+          <line x1="525" y1="458" x2="630" y2="458" stroke="#E3222A" stroke-width="2" marker-end="url(#arr-red)"/>
+          <text x="540" y="445" font-family="Montserrat, sans-serif" font-size="11" font-weight="700" fill="#E3222A">APDU bus</text>
+        </g>
+      </svg>
+      <figcaption id="arch-caption" style="margin-top:10px;color:var(--brand-grey);font-size:13.5px;line-height:1.6;">
+        The MCU initiates every cryptographic call; the security domain returns a result. The key material that produced the result never leaves the right-hand box.
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Security capabilities</span>
+      <h2 class="section-title">What the security domain does &mdash; and why it matters.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-3">
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Secure boot</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Every firmware image is verified by the co-processor against an issuance public key burned in at factory, before the MCU executes a single instruction from it. A signature failure is a boot failure.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Anti-replay</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Monotonic counters live inside the security domain. A captured frame from yesterday cannot be reused today &mdash; the counter has already moved past it, and the MCU cannot rewind it.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Credential isolation</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Device identity and operational keys are stored in the co-processor's TEE-class credential store. A compromise of the application firmware does not yield a compromise of the keys.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Encrypted communication</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Session keys derived inside the co-processor. Confidentiality and integrity end at the co-processor, not at the MCU's network stack &mdash; closing the gap that classic embedded TLS leaves open.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Hardware-rooted device identity</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A 128-bit unique device identity burned at factory, signed under AmbiSecure's issuance chain. The device proves it is itself with a signature, not a serial number. No defaults, no shared secrets.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">OTA trust validation</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A dedicated OTA verification applet checks every incoming image: signature, version, rollback protection. The MCU may host the download buffer; only the applet decides whether the image becomes the next boot.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Credential rotation</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Operational keys can be rotated over the air against the same root identity. The device stays in field through its full lifecycle; the keys that derive from the root change as policy requires.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Cryptographic attestation</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Each device produces a verifiable attestation that chains back to AmbiSecure's issuance CA. Auditors can walk the chain from a deployed device to a factory key ceremony record at any future point.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Tamper resistance</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Active shield, voltage and clock monitors, fault-injection countermeasures &mdash; the standard secure-element defences live inside the co-processor, not the MCU.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">TEC 31318 coverage</span>
+      <h2 class="section-title">Aligned with the TEC IoT security baseline, by construction.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">TEC 31318 is the Telecommunication Engineering Centre's IoT security framework. AmbiSEC Module's dual-domain design covers the baseline categories at the silicon level &mdash; not as a policy add-on, but as the architecture itself.</p>
+    </div>
+    <table class="spec-table">
+      <tr><th>No default passwords</th><td>Unique 128-bit device identity burned at factory. There is no factory-default credential to brute-force.</td></tr>
+      <tr><th>TEE credential store</th><td>Hardware-isolated key vault inside the cryptographic security domain &mdash; secure-element-class storage, non-extractable by design.</td></tr>
+      <tr><th>Secure boot</th><td>Image signature verified by the co-processor before the MCU executes the new firmware. Boot is gated on the verdict.</td></tr>
+      <tr><th>Multi-hop encryption</th><td>Three deployment models &mdash; hop-by-hop, end-to-end, hybrid &mdash; selected to match the trust geometry of the link layer.</td></tr>
+      <tr><th>Secure OTA</th><td>OTA verification applet inside the security domain. Credential rotation under the same root identity.</td></tr>
+    </table>
+    <p style="color:var(--brand-grey);font-size:13px;line-height:1.65;margin-top:14px;">Compliance is a function of full-system design, not silicon alone. AmbiSEC Module provides the hardware primitives the framework asks for; the certification path is a joint effort with the OEM integrator.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Multi-hop encryption</span>
+      <h2 class="section-title">Three encryption models. Pick the one the link layer deserves.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">Not every IoT link has the same threat model. A LoRa packet crossing five untrusted relays is not the same as a Wi-Fi packet on a customer network. The co-processor supports all three patterns so the integrator can match the cryptography to the topology.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Hop-by-hop</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Each link encrypted independently. Gateways need to be trusted to decrypt-and-re-encrypt. Lowest overhead. Right for tightly-managed industrial backhauls.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">End-to-end</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Device-to-cloud cryptography. Gateways forward ciphertext blindly. Highest confidentiality. Right for fleets where the gateway is field-owned and not the trust anchor.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Hybrid</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">End-to-end for payload, hop-by-hop for control frames. The pragmatic real-world mode &mdash; payload confidentiality preserved while operations like throttling and routing remain inspectable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Connectivity &amp; integration</span>
+      <h2 class="section-title">The MCU side handles every radio you ship. The co-processor never has to.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">Radios live in the MCU domain &mdash; BLE for proximity, Wi-Fi for premises connectivity, LoRa for long-range industrial telemetry, Sub-GHz for licensed bands. The co-processor talks only to the MCU, over a simple bus. That separation is what makes the cryptographic surface tractable to reason about.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">BLE &amp; Wi-Fi</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Consumer-grade and premises-grade radios. Session keys derived inside the co-processor; the MCU handles framing.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">LoRa &amp; Sub-GHz</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Long-range, low-power industrial telemetry. The co-processor's anti-replay counters survive the long backhauls these networks expose.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Edge gateways &amp; concentrators</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">In hybrid encryption mode the gateway sees control frames and forwards payload ciphertext blindly. Telemetry stays confidential past the field network boundary.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Deployment models</span>
+      <h2 class="section-title">Where AmbiSEC Module fits in real product lines.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-3">
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">OEM integration</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Drop the co-processor onto the PCB next to the MCU. Reference C driver for the host MCU; reference applet stack on the secure element. Two weeks to first signed boot in our reference designs.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Industrial deployment</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Operational keys rotate across the fleet against a per-device root that never moves. Devices remain in field through their full service life without recall.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Smart infrastructure</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Metering, lighting, traffic, water, grid &mdash; deployments where physical access to devices cannot be controlled, and identity must survive tampering attempts.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Connected products</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Consumer and prosumer devices that need real device identity &mdash; not a default password, not a per-fleet shared key, not a serial number.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Energy systems</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">DER controllers, EV charging, battery management &mdash; deployments where signed firmware authentication is the difference between a safe update and a catastrophic one.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Edge gateways</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">When the gateway itself needs hardware-rooted identity to relay telemetry under its own signed attestation, not under a per-deployment shared secret.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Form factors</span>
+      <h2 class="section-title">Removable for products that ship identity with the user. Solderable for products that don&rsquo;t.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-2">
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Nano-card removable secure element (4FF)</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A removable secure-element form factor for products where the device identity travels with the user, or where field-replacement of the credential is a requirement. Mechanically familiar; logically a JavaCard secure element with the AmbiSEC applet stack on board.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">MFF2 solderable embedded secure element</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Surface-mount, 8 &times; 6 mm, treated as a normal PCB component. Right for infrastructure-grade and industrial deployments where the device is intended to remain bound to its identity for its full service life. No socket, no removable card.</p>
+      </div>
+    </div>
+    <p style="color:var(--brand-grey);font-size:13px;line-height:1.65;margin-top:14px;">Both form factors carry the same AmbiSEC applet stack and the same trust model. AmbiSEC is a secure-element deployment, not a telecom SIM &mdash; the form factor is borrowed; the role is identity, not subscriber identification.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Trust &amp; standards positioning</span>
+      <h2 class="section-title">Where AmbiSEC Module sits in the standards landscape.</h2>
+      <span class="section-line"></span>
+    </div>
+    <table class="spec-table">
+      <tr><th>Secure element class</th><td>Hardware-isolated cryptographic execution environment. Tamper-resistant package. Active shield, voltage / clock monitors, fault-injection countermeasures.</td></tr>
+      <tr><th>Hardware-backed identity</th><td>Per-device unique key generated and stored inside the SE. Non-extractable. Attested by AmbiSecure's issuance CA.</td></tr>
+      <tr><th>GlobalPlatform</th><td>JavaCard applet platform with GlobalPlatform Card Specification loading and personalisation patterns.</td></tr>
+      <tr><th>SCP03</th><td>Secure channel protocol for applet loading and key personalisation, authenticated under per-keyset issuer keys.</td></tr>
+      <tr><th>Secure OTA</th><td>Image signature verification inside the co-processor; rollback protection via in-domain monotonic version counter.</td></tr>
+      <tr><th>Device attestation</th><td>X.509 attestation chain &mdash; device &rarr; per-batch attestation CA &rarr; AmbiSecure issuance CA &rarr; HSM key ceremony record.</td></tr>
+      <tr><th>PKI integration</th><td>Standard CSR / certificate enrolment flows; mTLS credential storage; per-fleet issuance policies on the back-end.</td></tr>
+      <tr><th>Cryptography</th><td>ECC P-256 / P-384, RSA 2048 / 3072, AES-128 / 256, SHA-256 / SHA-384, HMAC, ECDSA.</td></tr>
+      <tr><th>Certification path</th><td>Designed against Common Criteria EAL5+ secure-element targets. SE-compliant integration patterns for AVA_VAN.5. Final certification is engaged per OEM programme &mdash; this page does not assert any specific certificate as already issued.</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Capability ecosystem</span>
+      <h2 class="section-title">AmbiSEC Module is one node in a larger trust system.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">The co-processor is the hardware tier. The applets, the JavaCard platform, the validation server, the PKI, and the secure-mail surface all sit on the same trust spine.</p>
+    </div>
+    <div class="grid-3">
+      <a href="/products/iot-security-applets/" class="card"><h3>IoT Security Applets</h3><p>JavaCard applets the co-processor runs &mdash; identity, attestation, OTA verifier, mTLS credentials.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/javacard-applets/" class="card"><h3>JavaCard Applet Platform</h3><p>The wider applet platform &mdash; FIDO, PIV, OpenPGP, NDEF, and the GlobalPlatform tooling.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/iot-solution/" class="card"><h3>IoT Solution</h3><p>End-to-end view &mdash; co-processor, key manager service, operator FIDO MFA, attestation pipeline.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/services/javacard-development/" class="card"><h3>JavaCard development</h3><p>Custom applet engineering for SE-based device identity &mdash; the team that wrote the AmbiSEC stack.</p><div class="card-meta">View service &rarr;</div></a>
+      <a href="/services/fido-validation-server/" class="card"><h3>FIDO Validation Server</h3><p>Operator MFA for the cloud-side management plane that talks to the co-processor.</p><div class="card-meta">View service &rarr;</div></a>
+      <a href="/solutions/secure-element-integration/" class="card"><h3>Secure element integration</h3><p>How to bring a secure element into a connected product end-to-end.</p><div class="card-meta">View solution &rarr;</div></a>
+      <a href="/technologies/secure-elements/" class="card"><h3>Technology: secure elements</h3><p>The silicon class the co-processor belongs to.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/technologies/attestation/" class="card"><h3>Technology: attestation</h3><p>The cryptographic ceremony the co-processor's identity chain implements.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/blog/secure-iot-identity-with-applets/" class="card"><h3>Blog: secure IoT identity</h3><p>Cornerstone read &mdash; the five applets, threat model, host MCU integration.</p><div class="card-meta">Read article &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Frequently asked</span>
+      <h2 class="section-title">Questions we hear from engineering teams.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-2">
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">What is an IoT security co-processor?</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A dedicated piece of silicon that sits next to the main MCU and owns everything cryptographic &mdash; identity key, signing, verification, replay counters, OTA signature check. The MCU does sensing and radios; the co-processor does the work the MCU cannot do safely.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">Why separate cryptographic execution from the MCU?</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Because an MCU compromise should not equal a key compromise. The application firmware is large, frequently updated, and routinely exposed to untrusted input. Moving the key into an isolated co-processor means a compromised MCU can request signatures but cannot extract them.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">What is secure OTA verification?</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">The cryptographic check on a firmware image happens inside the co-processor, against an issuance public key burned in at factory and not modifiable by the MCU. The MCU may host the download; the co-processor decides whether the image becomes the next boot.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">What is hardware-rooted device identity?</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A unique key generated and stored inside a tamper-resistant secure element, non-extractable by design and bound to a specific piece of silicon. The device proves it is itself by signing a challenge with that key.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">Why use MFF2 secure-element deployments?</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">MFF2 is the solderable 8 &times; 6 mm embedded secure-element form factor. For industrial and infrastructure deployments where the device must remain bound to its identity for its full service life, surface-mount integration is the right answer &mdash; no socket, no removable card.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">Is AmbiSEC Module a SIM?</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">No. It is a secure-element deployment that borrows the nano-card and MFF2 mechanical form factors. Its role is device identity and cryptographic execution, not subscriber identification on a cellular network.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div><h2>Designing a connected product that needs real keys?</h2><p>We will sit with your hardware lead and your firmware lead, walk the architecture, and show how the co-processor integrates without rewriting the MCU side. Reference designs available under NDA.</p></div>
+      <div><a href="/contact/" class="btn btn-primary" data-analytics-event="request_demo">Request integration brief</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div>
+        <p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p>
+        <div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div>
+      </div>
+      <div><h3>Products</h3><ul>
+        <li><a href="/products/onepass-card/">OnePass Card</a></li>
+        <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
+        <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li>
+        <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
+        <li><a href="/products/">All products</a></li>
+      </ul></div>
+      <div><h3>Services</h3><ul>
+        <li><a href="/services/javacard-development/">JavaCard development</a></li>
+        <li><a href="/services/fido-validation-server/">FIDO validation server</a></li>
+        <li><a href="/services/tool-chain-development/">Tool-chain development</a></li>
+        <li><a href="/services/">All services</a></li>
+      </ul></div>
+      <div><h3>Company</h3><ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/about/certifications/">Certifications</a></li>
+        <li><a href="/industries/">Industries</a></li>
+        <li><a href="/support/">Support</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul></div>
+      <div><h3>Contact</h3><ul>
+        <li>Ahmedabad, Gujarat 380015<br />India</li>
+        <li>India: +91 79255 01989</li>
+        <li>US: +1 215 397 3819</li>
+        <li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
+      <div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>

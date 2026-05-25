@@ -79,12 +79,17 @@ def main():
     missing_alts = []
     total = 0
 
+    META_REFRESH_RE = re.compile(r'<meta\s+http-equiv="refresh"', re.IGNORECASE)
+    REDIRECT_EXEMPT = {"canonical", "og_image", "og_description", "jsonld", "breadcrumb"}
+
     for path in iter_html():
         total += 1
         with open(path) as f:
             html = f.read()
         relpath = rel(path)
-        exempt = EXEMPT.get(relpath, set())
+        exempt = set(EXEMPT.get(relpath, set()))
+        if META_REFRESH_RE.search(html):
+            exempt |= REDIRECT_EXEMPT
 
         m = TITLE_RE.search(html)
         if m: titles[m.group(1).strip()].append(relpath)

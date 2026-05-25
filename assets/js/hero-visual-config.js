@@ -70,7 +70,7 @@ window.AS_HERO_VISUAL_THEMES = [
     label: "IoT trust anchors",
     caption: "Hardware root of trust on the connected-product BOM — SIM-card and MFF2 solderable form factors.",
     accent: "red",
-    cta: { label: "IoT chipset", url: "/products/iot-security-chipset/" },
+    cta: { label: "IoT co-processor", url: "/products/iot-security-coprocessor/" },
     icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="17" r="1.4"/><path d="M8.5 13.5a5 5 0 0 1 7 0"/><path d="M5.5 10.5a9 9 0 0 1 13 0"/><path d="M2.5 7.5a13 13 0 0 1 19 0"/></svg>'
   },
   {

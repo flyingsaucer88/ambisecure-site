@@ -114,7 +114,7 @@
     <p>The design centres on three components:</p>
 
     <div class="arch-row">
-      <div class="arch-cell"><span class="arch-tag">SILICON</span><h4>Secure element</h4><p>An <a href="/products/iot-security-chipset/">AmbiSecure IoT security chipset</a> on the device BOM, communicating with the host MCU over I2C / SPI. Each chip ships with a per-unit serial and a factory-injected attestation key.</p></div>
+      <div class="arch-cell"><span class="arch-tag">SILICON</span><h4>Secure element</h4><p>An <a href="/products/iot-security-coprocessor/">AmbiSecure IoT security co-processor</a> on the device BOM, communicating with the host MCU over I2C / SPI. Each chip ships with a per-unit serial and a factory-injected attestation key.</p></div>
       <div class="arch-cell accent"><span class="arch-tag">PROVISIONING</span><h4>SMT-line personalisation</h4><p>At the manufacturer&rsquo;s SMT line, each device runs a brief personalisation step: generate an on-chip device-identity keypair, get a per-device certificate from the customer&rsquo;s issuing CA, attestation-sign the keypair, write all three back to the secure element.</p></div>
       <div class="arch-cell cyan"><span class="arch-tag">PKI</span><h4>Issuing CA + lifecycle</h4><p>Customer-operated issuing CA backed by an HSM. Certificate issuance receives the secure element&rsquo;s attestation as input, so the CA only signs certificates over keys that actually live inside a certified secure element.</p></div>
       <div class="arch-cell"><span class="arch-tag">RUNTIME</span><h4>Device-to-cloud attestation</h4><p>Cloud services authenticate devices via mTLS, and verify the per-device certificate plus the secure element&rsquo;s attestation. Devices can&rsquo;t be impersonated by a stolen certificate alone.</p></div>
@@ -208,7 +208,7 @@
 
     <h2 id="related">Related products and services</h2>
     <ul>
-      <li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li>
+      <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li>
       <li><a href="/technologies/secure-elements/">Technology: Secure elements</a></li>
       <li><a href="/products/digital-signature-token/">Digital Signature Token (companion PKI hardware)</a></li>
       <li><a href="/solutions/secure-element-integration/">Solution: secure-element integration</a></li>
@@ -219,7 +219,7 @@
     <ul>
       <li><a href="/blog/why-hardware-backed-identity-matters/">Why Hardware-Backed Identity Matters</a></li>
       <li><a href="/blog/apdu-from-first-principles/">APDU From First Principles</a></li>
-      <li><a href="/products/iot-security-chipset/">Product: IoT Security Chipset (alternate link)</a></li>
+      <li><a href="/products/iot-security-coprocessor/">Product: IoT Security Co-Processor (alternate link)</a></li>
       <li><a href="/resources/tools/x509-viewer/">Tool: X.509 viewer</a></li>
       <li><a href="/resources/tools/asn1-parser/">Tool: ASN.1 parser</a></li>
     </ul>
@@ -244,7 +244,7 @@
 <footer class="site-footer"><div class="footer-inner">
   <div class="footer-grid">
     <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a></div></div>
-    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
     <div><h3>Engage</h3><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/faqs/">FAQs</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
     <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
     <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>

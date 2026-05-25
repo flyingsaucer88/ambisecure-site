@@ -15,9 +15,9 @@ This file follows the emerging [llms.txt convention](https://llmstxt.org) for LL
 - [Digital Signature Token](https://ambisecure.ambimat.com/products/digital-signature-token/): PKCS#11 hardware signing token, eIDAS-compatible.
 - [PKCS Signature Suite](https://ambisecure.ambimat.com/products/pkcs-signature-suite/): token + PKCS#11 / PKCS#15 middleware, cross-platform digital signing.
 - [Secure Mail Suite](https://ambisecure.ambimat.com/products/secure-mail-suite/): S/MIME + PAdES document-signing platform, hardware-backed.
-- [IoT Security Chipset](https://ambisecure.ambimat.com/products/iot-security-chipset/): embedded secure element for connected devices.
+- [IoT Security Co-Processor (AmbiSEC Module)](https://ambisecure.ambimat.com/products/iot-security-coprocessor/): dual-domain co-processor for connected devices — MCU domain runs the application; an isolated cryptographic security domain holds keys, signs/verifies/encrypts, anti-replays, and authenticates secure OTA. TEC 31318 coverage. Nano-card and MFF2 solderable form factors.
 - [IoT Security Applets](https://ambisecure.ambimat.com/products/iot-security-applets/): JavaCard applets for IoT device identity, attestation, signed firmware.
-- [IoT Solution](https://ambisecure.ambimat.com/products/iot-solution/): end-to-end IoT trust platform — chipset, key manager, attestation pipeline.
+- [IoT Solution](https://ambisecure.ambimat.com/products/iot-solution/): end-to-end IoT trust platform — co-processor, key manager, attestation pipeline.
 - [JavaCard Applet Platform](https://ambisecure.ambimat.com/products/javacard-applets/): twelve applets co-resident on one CC EAL5+ secure element, AID-selectable.
 - [FIDO2 Nano-Card Applet](https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/): FIDO2 / CTAP2 applet on a nano-card (4FF) secure element.
 - [PIV Nano-Card Applet](https://ambisecure.ambimat.com/products/piv-nano-sim-applet/): NIST SP 800-73 PIV applet on a nano-card secure element.

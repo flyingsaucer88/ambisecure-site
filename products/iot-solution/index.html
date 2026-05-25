@@ -96,7 +96,7 @@
         <div class="chip-row"><span class="chip">Secure Element</span><span class="chip">Key Manager</span><span class="chip">FIDO MFA</span><span class="chip">PKI</span></div>
         <div class="hero-cta-row" style="margin-top:24px;">
           <a href="/contact/" class="btn btn-primary" data-analytics-event="request_demo">Request architecture brief</a>
-          <a href="/products/iot-security-chipset/" class="btn btn-outline">Chipset spec</a>
+          <a href="/products/iot-security-coprocessor/" class="btn btn-outline">Co-processor spec</a>
         </div>
       </div>
       <div class="feature-visual feature-visual-img"><img src="/assets/img/product-embedded-se.svg" alt="AmbiSecure IoT security solution — embedded SE plus provisioning toolchain" width="520" height="360" loading="lazy" decoding="async" /></div>
@@ -111,7 +111,7 @@
       <h2 class="section-title">A device is not secure until the back end agrees it is.</h2>
       <span class="section-line"></span>
     </div>
-    <div class="grid-3"><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Hardware root in the device</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">AmbiSecure IoT Security Chipset gives every device a non-extractable identity key. Provisioning happens on our line.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Key manager service</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Set/Get Master Key, Generate Key Pair, Sign data &mdash; with proprietary extensions for specific use cases. The service the device calls.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">FIDO MFA for operators</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Operators and integrators authenticate to the platform with phishing-resistant FIDO2 credentials, not passwords.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Attestation pipeline</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Each device proves its identity to the back end. The back end never has to trust the network.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Lifecycle keys</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Operational keys rotate over the air. The root remains. Devices stay in field through their full life.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">OEM-friendly</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Reference SDK for the host MCU; provisioning tooling for the factory; APIs for the cloud.</p></div></div>
+    <div class="grid-3"><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Hardware root in the device</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">AmbiSEC Module &mdash; the IoT security co-processor &mdash; gives every device a non-extractable identity key. Provisioning happens on our line.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Key manager service</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Set/Get Master Key, Generate Key Pair, Sign data &mdash; with proprietary extensions for specific use cases. The service the device calls.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">FIDO MFA for operators</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Operators and integrators authenticate to the platform with phishing-resistant FIDO2 credentials, not passwords.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Attestation pipeline</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Each device proves its identity to the back end. The back end never has to trust the network.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Lifecycle keys</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Operational keys rotate over the air. The root remains. Devices stay in field through their full life.</p></div><div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">OEM-friendly</h3><p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Reference SDK for the host MCU; provisioning tooling for the factory; APIs for the cloud.</p></div></div>
   </div>
 </section>
 
@@ -123,7 +123,7 @@
       <span class="section-line"></span>
       <p class="section-desc" style="margin:0;">Three layers, all rooted in hardware.</p>
     </div>
-    <div class="arch"><div class="arch-node"><span class="arch-tag">01</span><h4>Device</h4><p>AmbiSecure IoT Security Chipset, host driver, attestation.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">02</span><h4>Field</h4><p>Operational key rotation, signed update, audit log.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node accent"><span class="arch-tag">03</span><h4>Cloud</h4><p>Key Manager service, attestation verifier, PKI.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">04</span><h4>Operator</h4><p>FIDO MFA login to the management plane.</p></div></div>
+    <div class="arch"><div class="arch-node"><span class="arch-tag">01</span><h4>Device</h4><p>AmbiSEC Module IoT security co-processor, host driver, attestation.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">02</span><h4>Field</h4><p>Operational key rotation, signed update, audit log.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node accent"><span class="arch-tag">03</span><h4>Cloud</h4><p>Key Manager service, attestation verifier, PKI.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">04</span><h4>Operator</h4><p>FIDO MFA login to the management plane.</p></div></div>
   </div>
 </section>
 
@@ -134,7 +134,7 @@
       <h2 class="section-title">What ships under one umbrella.</h2>
       <span class="section-line"></span>
     </div>
-    <table class="spec-table"><tr><th>Hardware</th><td>AmbiSecure IoT Security Chipset (separate product page); CC EAL5+ secure element</td></tr><tr><th>Embedded SDK</th><td>Reference C driver for Linux, RTOS, bare-metal MCU; Python tooling for provisioning lines</td></tr><tr><th>Key Manager service</th><td>REST endpoints for key operations; per-device unique key wrapping; audit log</td></tr><tr><th>Operator MFA</th><td>FIDO2 / WebAuthn integration via the AmbiSecure FIDO Validation Server</td></tr><tr><th>Provisioning</th><td>Per-device unique key injection at our personalisation line, or in-field</td></tr><tr><th>Compliance path</th><td>Designed for industrial / consumer IoT cyber resilience requirements (EU CRA, IoT cybersecurity baselines)</td></tr></table>
+    <table class="spec-table"><tr><th>Hardware</th><td>AmbiSEC Module &mdash; IoT Security Co-Processor (separate product page); dual-domain secure-element platform</td></tr><tr><th>Embedded SDK</th><td>Reference C driver for Linux, RTOS, bare-metal MCU; Python tooling for provisioning lines</td></tr><tr><th>Key Manager service</th><td>REST endpoints for key operations; per-device unique key wrapping; audit log</td></tr><tr><th>Operator MFA</th><td>FIDO2 / WebAuthn integration via the AmbiSecure FIDO Validation Server</td></tr><tr><th>Provisioning</th><td>Per-device unique key injection at our personalisation line, or in-field</td></tr><tr><th>Compliance path</th><td>Designed for industrial / consumer IoT cyber resilience requirements (EU CRA, IoT cybersecurity baselines)</td></tr></table>
   </div>
 </section>
 
@@ -145,7 +145,7 @@
       <h2 class="section-title">Where this fits in the bigger picture.</h2>
       <span class="section-line"></span>
     </div>
-    <div class="grid-3"><a href="/products/iot-security-chipset/" class="card"><h3>Product: IoT Security Chipset</h3><p>The hardware tier of the IoT Solution.</p><div class="card-meta">View product &rarr;</div></a><a href="/services/fido-validation-server/" class="card"><h3>Service: FIDO Validation Server</h3><p>The MFA tier for operators and integrators.</p><div class="card-meta">View service &rarr;</div></a><a href="/solutions/secure-element-integration/" class="card"><h3>Solution: Secure Element Integration</h3><p>How to integrate the SE into a connected product.</p><div class="card-meta">View solution &rarr;</div></a></div>
+    <div class="grid-3"><a href="/products/iot-security-coprocessor/" class="card"><h3>Product: IoT Security Co-Processor</h3><p>The hardware tier of the IoT Solution &mdash; AmbiSEC Module&rsquo;s dual-domain co-processor.</p><div class="card-meta">View product &rarr;</div></a><a href="/services/fido-validation-server/" class="card"><h3>Service: FIDO Validation Server</h3><p>The MFA tier for operators and integrators.</p><div class="card-meta">View service &rarr;</div></a><a href="/solutions/secure-element-integration/" class="card"><h3>Solution: Secure Element Integration</h3><p>How to integrate the SE into a connected product.</p><div class="card-meta">View solution &rarr;</div></a></div>
   </div>
 </section>
 
@@ -171,7 +171,7 @@
         <li><a href="/products/onepass-card/">OnePass Card</a></li>
         <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
         <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
-        <li><a href="/products/iot-security-chipset/">IoT Security Chipset</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li>
         <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
         <li><a href="/products/">All products</a></li>
       </ul></div>

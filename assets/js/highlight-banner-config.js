@@ -71,7 +71,7 @@ window.AS_HOMEPAGE_BANNERS = [
     title: "Solderable secure identity for connected products.",
     body: "Embed FIDO, PIV, IoT-identity, and OpenID Connect applets directly onto your product board via MFF2 secure-element modules — alongside the same applets in a convenient nano-card form factor.",
     accent: "red",
-    primaryCta: { label: "IoT security chipset", url: "/products/iot-security-chipset/" },
+    primaryCta: { label: "IoT security co-processor", url: "/products/iot-security-coprocessor/" },
     secondaryCta: { label: "JavaCard applets", url: "/products/javacard-applets/" }
   },
   {
@@ -91,7 +91,7 @@ window.AS_HOMEPAGE_BANNERS = [
     title: "Hardware root of trust on the connected-product BOM.",
     body: "Secure Element integration for OEM devices — key provisioning, signed firmware update, attestation, mTLS, key rotation. Available as MFF2-solderable or nano-card package for the same silicon.",
     accent: "red",
-    primaryCta: { label: "IoT chipset", url: "/products/iot-security-chipset/" },
+    primaryCta: { label: "IoT co-processor", url: "/products/iot-security-coprocessor/" },
     secondaryCta: { label: "Secure-element integration", url: "/solutions/secure-element-integration/" }
   },
   {

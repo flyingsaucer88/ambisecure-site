@@ -38,6 +38,15 @@ ORPHAN_EXEMPT = {
     "404.html",
 }
 
+META_REFRESH_RE = re.compile(r'<meta\s+http-equiv="refresh"', re.IGNORECASE)
+
+def is_redirect_stub(path):
+    try:
+        with open(path) as f:
+            return bool(META_REFRESH_RE.search(f.read()))
+    except OSError:
+        return False
+
 def iter_html():
     for dirpath, _, files in os.walk(ROOT):
         if any(skip in dirpath for skip in ("/legacysitedata/", "/.git/", "/node_modules/", "/.lighthouseci/", "/dist/", "/_internal/")):
@@ -111,6 +120,8 @@ def main():
         r = rel(path)
         if r in ORPHAN_EXEMPT:
             continue
+        if is_redirect_stub(path):
+            continue
         top = r.split("/", 1)[0] if "/" in r else r
         # Only check top-level content folders + the homepage.
         if r == "index.html" or top in INDEXABLE_TOPS:
@@ -129,6 +140,8 @@ def main():
             continue
         with open(path) as f:
             html = f.read()
+        if META_REFRESH_RE.search(html):
+            continue
         m = CANON_RE.search(html)
         if not m:
             continue

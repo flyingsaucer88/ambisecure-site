@@ -31,7 +31,9 @@ Redirect 301 /ambisecure-one-pass-bio-card /products/onepass-bio-card/
 Redirect 301 /ambisecure-usb-key /products/onepass-usb-key/
 Redirect 301 /products/ambisecure-security-key /products/onepass-usb-key/
 Redirect 301 /products/ambisecure-card /products/onepass-card/
-Redirect 301 /ambisecure-iot-solution /products/iot-security-chipset/
+Redirect 301 /ambisecure-iot-solution /products/iot-security-coprocessor/
+Redirect 301 /products/iot-security-chipset /products/iot-security-coprocessor/
+Redirect 301 /products/iot-security-chipset/ /products/iot-security-coprocessor/
 Redirect 301 /ambisecure-biokey /products/biokey/
 Redirect 301 /ambisecure-tappable /products/tappable/
 Redirect 301 /ambisecure-digital-signature-token /products/digital-signature-token/
