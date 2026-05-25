@@ -24,6 +24,7 @@ run "audit-media"       python3 tools/audit-media.py
 run "audit-freshness"   python3 tools/audit-freshness.py --strict
 run "audit-yoast"       python3 tools/audit-yoast.py --strict
 run "audit-circular"    python3 tools/audit-circular-links.py --hard-only
+run "audit-spam-seo"    python3 tools/audit-spam-seo.py
 
 echo
 if [ "$fail" -eq 0 ]; then

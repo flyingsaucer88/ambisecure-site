@@ -1,4 +1,26 @@
+# AmbiSecure — robots policy
+# Site is a fully static deploy. The following paths return 410/403 at
+# the server level (.htaccess), but listing them here gives well-behaved
+# crawlers an earlier signal so they stop wasting budget on probes.
+
 User-agent: *
 Allow: /
+
+# Operator-only dashboards (denied at server level, double-belt here).
+Disallow: /_internal/
+
+# WordPress-shaped probe surfaces — site has never run WP; these are
+# always spam-network fingerprints.
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/
+Disallow: /wp-json/
+Disallow: /wp-login.php
+Disallow: /xmlrpc.php
+
+# Disallow indexing of any query-string variants of canonical pages.
+# All real navigation uses clean paths; ?foo=bar URLs are either crawler
+# noise or spam-poisoning probes.
+Disallow: /*?
 
 Sitemap: https://ambisecure.ambimat.com/sitemap.xml

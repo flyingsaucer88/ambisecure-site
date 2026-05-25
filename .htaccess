@@ -34,6 +34,61 @@ RewriteRule ^ /%1 [R=301,L]
 RewriteRule ^[0-9]{6,10}\.htm$ - [G,L]
 RewriteRule ^[a-z]{5}/[a-z][0-9]{6,8}\.html$ - [G,L]
 
+# =============================================================
+# Phase 40 — Defensive hardening
+# Static-site posture: NO server-side code is shipped. These rules
+# are defence-in-depth so an accidental FTP upload of a .env/.git
+# folder, a stray .php file from a future operator, or a probe for
+# common CMS surfaces cannot be exploited or fingerprinted.
+# Uses only portable mod_rewrite directives (LiteSpeed-safe; no
+# <Files ~> regex blocks which LiteSpeed parses but with caveats).
+# Order matters: these run BEFORE legacy 301 redirects so a probe
+# for /wp-admin/install.php is blocked, not redirected.
+# =============================================================
+
+# Block all dotfile/dotdir access except /.well-known/ (ACME, security.txt).
+RewriteCond %{REQUEST_URI} ^/\.(?!well-known/)
+RewriteRule .* - [F,L]
+
+# Block dangerous source/backup/config/key extensions at any depth.
+RewriteRule \.(env|ini|log|sh|sql|bak|old|orig|save|swp|swo|dist|inc|tpl|tmpl|pem|key|crt|cert|p12|pfx|asc|gpg|sqlite|sqlite3|db)$ - [F,NC,L]
+
+# Block source-control + dev artifacts (.git already covered above, but
+# also block VCS-like names without leading dot, plus package manifests).
+RewriteRule (^|/)(\.git|\.svn|\.hg|\.bzr|\.idea|\.vscode|node_modules|vendor|composer\.(json|lock)|package(-lock)?\.json|yarn\.lock|Gemfile(\.lock)?|requirements\.txt|Pipfile(\.lock)?|webpack\.config\.js|gulpfile\.js|gruntfile\.js|Dockerfile|docker-compose\.ya?ml|Makefile)(/|$) - [F,NC,L]
+
+# Block source-map exposure (information leak from bundlers, if any).
+RewriteRule \.(map|sql\.gz|tar|tar\.gz|tgz|7z|rar)$ - [F,NC,L]
+
+# Common WP/CMS probe paths — return 410 (Gone) so Google de-indexes any
+# that ever made it into the index. Anchored to URI prefixes so subpaths
+# (e.g. /wp-content/plugins/foo.php) are caught too.
+RewriteRule ^(wp-admin|wp-includes|wp-json|wp-content/(plugins|themes|mu-plugins|uploads/[0-9]+/[0-9]+))(/|$) - [G,NC,L]
+RewriteRule ^(wp-login\.php|wp-config\.php|wp-cron\.php|wp-mail\.php|wp-trackback\.php|wp-signup\.php|wp-links-opml\.php|wp-comments-post\.php|wlwmanifest\.xml|xmlrpc\.php2?)$ - [G,NC,L]
+
+# Block other CMS probe surfaces (Joomla / Drupal / Magento fingerprints).
+RewriteRule ^(administrator|admin/login|user/login|configuration\.php|sites/default/files|magmi|joomla|drupal|typo3|phpmyadmin|pma|adminer|setup-config)(/|$) - [F,NC,L]
+
+# Block PHP / CGI / scripting execution. Site is fully static; any .php
+# that lands on disk must be treated as compromise, not feature.
+RewriteRule \.(php[0-9s]?|phtml|phar|cgi|pl|py|asp|aspx|jsp|jspx|war)$ - [F,NC,L]
+
+# Author-enumeration probe (?author=1 returns WP username on stock WP).
+RewriteCond %{QUERY_STRING} (^|&)author=\d [NC]
+RewriteRule .* - [F,L]
+
+# Suspicious query strings — SQLi / XSS / RFI / spam payloads. Tight regex
+# so real site queries (none today, but defensive for future tools) survive.
+RewriteCond %{QUERY_STRING} (<|%3c)\s*script [NC,OR]
+RewriteCond %{QUERY_STRING} (union[\s+/*]+select|insert\s+into|drop\s+table|cast\s*\(|concat\s*\() [NC,OR]
+RewriteCond %{QUERY_STRING} (base64_(en|de)code|eval\s*\(|gzinflate\s*\(|system\s*\(|passthru\s*\() [NC,OR]
+RewriteCond %{QUERY_STRING} (\.\./|%2e%2e%2f|%2e%2e/|\.\.%2f) [NC,OR]
+RewriteCond %{QUERY_STRING} (file=https?://|=http://[^/]+/[^/]+\.(txt|php)) [NC]
+RewriteRule .* - [F,L]
+
+# Block server-status / server-info / cgi-bin probes.
+RewriteRule ^(server-status|server-info|cgi-bin|fcgi-bin)(/|$) - [F,NC,L]
+
 # Redirect map — legacy WordPress URLs to new structure.
 # About
 Redirect 301 /about/company-overview /about/
@@ -258,9 +313,14 @@ ErrorDocument 404 /404.html
 # Security headers
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
+  # X-Frame-Options is legacy/redundant with CSP frame-ancestors 'none' below,
+  # but kept for older crawlers/browsers that ignore CSP framing rules.
+  Header set X-Frame-Options "DENY"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
-  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=(), browsing-topics=()"
   Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+  # Block Flash/Silverlight cross-domain policy lookups (Adobe legacy).
+  Header set X-Permitted-Cross-Domain-Policies "none"
   # CSP — Phase 20: tightened. Fonts are fully self-hosted; the previous
   # fonts.googleapis.com / fonts.gstatic.com allow-list was defensive but
   # unused. 'unsafe-inline' for style-src remains until the residual inline
