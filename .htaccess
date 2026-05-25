@@ -19,6 +19,21 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
 RewriteCond %{THE_REQUEST} \s/+(.*?)index\.html[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 
+# =============================================================
+# SEO-spam pattern killer — return 410 Gone (not 404) so Google
+# de-indexes faster. These URL patterns are NOT site URLs; they
+# are Japanese-keyword-hack / pharma-hack injection fingerprints
+# that external spam networks have pointed at this domain. GSC
+# reports ~250 such URLs as either 404 or "Crawled - currently
+# not indexed". 410 is the correct signal: "permanently gone".
+# Patterns confirmed against GSC Pages export (May 2026):
+#   /<8-10 digits>.htm        (e.g. /100180190.htm)
+#   /<5 letters>/<l><6-8 digits>.html  (e.g. /eusdh/c2784685.html)
+# Both regexes are intentionally tight so no real URL matches.
+# =============================================================
+RewriteRule ^[0-9]{6,10}\.htm$ - [G,L]
+RewriteRule ^[a-z]{5}/[a-z][0-9]{6,8}\.html$ - [G,L]
+
 # Redirect map — legacy WordPress URLs to new structure.
 # About
 Redirect 301 /about/company-overview /about/
@@ -34,6 +49,9 @@ Redirect 301 /products/ambisecure-card /products/onepass-card/
 Redirect 301 /ambisecure-iot-solution /products/iot-security-coprocessor/
 Redirect 301 /products/iot-security-chipset /products/iot-security-coprocessor/
 Redirect 301 /products/iot-security-chipset/ /products/iot-security-coprocessor/
+# Defunct product slug Google still tries (May 2026 GSC export)
+Redirect 301 /products/smart-wallet-for-payments /products/tappable/
+Redirect 301 /products/smart-wallet-for-payments/ /products/tappable/
 Redirect 301 /ambisecure-biokey /products/biokey/
 Redirect 301 /ambisecure-tappable /products/tappable/
 Redirect 301 /ambisecure-digital-signature-token /products/digital-signature-token/
