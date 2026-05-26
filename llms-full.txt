@@ -55,12 +55,14 @@ Each entry is `[title](url) — one-line summary`. Summaries come from the page 
 - [Secure validator platforms | AmbiSecure](https://ambisecure.ambimat.com/solutions/secure-validator-platforms/) — Validator hardware that survives tamper, environmental stress, and unattended deployment. SAM-protected, signed-firmware, field-serviceable.
 - [Smart access control | AmbiSecure](https://ambisecure.ambimat.com/solutions/smart-access-control/) — Physical access control with FIDO2 + DESFire-class credentials. One card opens doors, signs into laptops, badges into elevators.
 - [Smart-Card Personalisation](https://ambisecure.ambimat.com/solutions/smart-card-personalization/) — Smart-card personalisation as a service or in-country line. SCP03 + HSM-backed issuance for FIDO2 / PIV / EMV / eID applets. CC EAL5+ secure elements.
+- [V2X Security Architecture — OBU, RSU, and ITS PKI | AmbiSecure](https://ambisecure.ambimat.com/solutions/v2x-security/) — Cryptographic trust architecture for Vehicle-to-Everything infrastructure. EA/AA PKI, pseudonymous certificates, hardware-isolated key storage, HSM-backed manufacturing provisioning. IEEE 1609.2 / ETSI TS 103 097 / ETSI TS 102 941 design alignment.
 - [Solutions](https://ambisecure.ambimat.com/solutions/) — AmbiSecure solutions: passwordless MFA, IoT root of trust, secure provisioning, digital identity, payment security, secure firmware update.
 - [Transit ticketing](https://ambisecure.ambimat.com/solutions/transit-ticketing/) — Closed-loop transit-ticketing deployments — DESFire cards, SAM-protected validators, depot edge, back-office settlement.
 - [Workforce Identity](https://ambisecure.ambimat.com/solutions/workforce-identity/) — Workforce identity programme — issuance, daily authentication, recovery, off-boarding. Hardware-rooted with attestation-anchored AAGUID policy and IdP-layer federation.
 
 ## Technologies
 
+- [V2X PKI: IEEE 1609.2 and ETSI TS 103 097 Certificate Architecture | AmbiSecure](https://ambisecure.ambimat.com/technologies/v2x-pki/) — Technical reference for V2X PKI: Enrolment Credentials, Pseudonymous Certificates, certificate lifecycle, Butterfly Key Expansion, hardware binding requirements for connected-vehicle deployments. India TRAI CP 30/04/2026 policy context.
 - [Card ↔ Reader ↔ SAM — mutual-authentication architecture | AmbiSecure](https://ambisecure.ambimat.com/technologies/card-reader-sam-flow/) — Reference walkthrough of the trust chain that powers closed-loop DESFire deployments — trust zones, key hierarchy, mutual auth flow, offline lifecycle, validator form factors.
 - [CTAP2](https://ambisecure.ambimat.com/technologies/ctap2/) — CTAP2 is the FIDO Alliance Client-To-Authenticator Protocol — the wire format the browser uses to talk to USB-HID, NFC, and BLE roaming authenticators. Commands, transports, PIN/UV protocols.
 - [FIDO & WebAuthn](https://ambisecure.ambimat.com/technologies/fido/) — How FIDO2 / WebAuthn / CTAP2 work — the trust chain, registration, authentication, attestation, AAGUIDs — and the AmbiSecure products and services that ship it.
@@ -277,6 +279,7 @@ Each entry is `[title](url) — one-line summary`. Summaries come from the page 
 
 ## Industries
 
+- [Connected Mobility & V2X Security | AmbiSecure](https://ambisecure.ambimat.com/industries/connected-mobility/) — Hardware-backed identity for V2X infrastructure. Secure-element integration for OBUs and RSUs, V2X PKI architecture, and ITS certificate lifecycle management for India's connected road ecosystem. IEEE 1609.2 / ETSI TS 103 097 / ETSI TS 102 941 / ISO 21177 / TEC 31318:2021 design alignment.
 - [Enterprise access](https://ambisecure.ambimat.com/industries/enterprise-access/) — Combined physical access + passwordless authentication using a single FIDO2 + DESFire-class card. Pilot to deployment in months.
 - [Government & Defence](https://ambisecure.ambimat.com/industries/government-and-defence/) — PIV-style smart cards, eID, digital signature tokens, custom JavaCard applets for government and defence deployments. Audit-grade issuance.
 - [Industries](https://ambisecure.ambimat.com/industries/) — Where AmbiSecure ships: banking and payments, government and defence, telecom, healthcare, IoT and industrial, retail and hospitality.

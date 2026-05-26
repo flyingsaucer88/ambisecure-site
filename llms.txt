@@ -50,6 +50,15 @@ Cross-link points where AmbiSecure and AmbiAutomation deployments naturally over
 - [Secure-element integration](https://ambisecure.ambimat.com/solutions/secure-element-integration/): SE on the BOM, silicon selection through SMT-line personalisation.
 - [JavaCard applet deployment](https://ambisecure.ambimat.com/solutions/javacard-deployment/): applet lifecycle from spec to user.
 - [Smart-card personalisation](https://ambisecure.ambimat.com/solutions/smart-card-personalization/): sovereign issuance lines, HSM-backed key custody.
+- [V2X & ITS security architecture](https://ambisecure.ambimat.com/solutions/v2x-security/): EA/AA PKI, pseudonymous certificates, hardware-isolated key storage, HSM-backed manufacturing-time provisioning for connected-vehicle deployments. IEEE 1609.2 / ETSI TS 103 097 / ETSI TS 102 941 design alignment.
+
+## Industries
+
+- [Connected Mobility & V2X](https://ambisecure.ambimat.com/industries/connected-mobility/): hardware-backed identity for OBU/RSU infrastructure. V2X PKI architecture, secure-element integration, certificate lifecycle for ITS deployments. TRAI CP 30/04/2026 context for India.
+- [Government & defence](https://ambisecure.ambimat.com/industries/government-and-defence/): PIV smart cards, eID, civil-servant authentication, audit-grade issuance.
+- [Enterprise access](https://ambisecure.ambimat.com/industries/enterprise-access/): phishing-resistant workforce MFA, badge + FIDO smart cards, AAL3 deployment.
+- [Transportation](https://ambisecure.ambimat.com/industries/transportation/): closed-loop fare collection, SAM-backed validators, DESFire ticketing.
+- [Smart cities](https://ambisecure.ambimat.com/industries/smart-cities/): multi-application citizen credentials, inter-departmental key custody.
 
 ## Technologies
 
@@ -61,6 +70,7 @@ Cross-link points where AmbiSecure and AmbiAutomation deployments naturally over
 - [SAM](https://ambisecure.ambimat.com/technologies/sam/) — secure access module architecture.
 - [Secure Elements](https://ambisecure.ambimat.com/technologies/secure-elements/) — CC EAL5+ silicon, attestation, key rotation.
 - [Card-reader / SAM flow](https://ambisecure.ambimat.com/technologies/card-reader-sam-flow/) — closed-loop transit flow.
+- [V2X PKI](https://ambisecure.ambimat.com/technologies/v2x-pki/) — IEEE 1609.2 certificate format, ETSI TS 103 097 security headers, EC vs PC, Butterfly Key Expansion, certificate lifecycle, India TRAI CP 30/04/2026 context.
 
 ## Standards evolution timelines
 

@@ -141,6 +141,11 @@
       <tr><th>NFC</th><td>NFC Forum NDEF 1.0; NFC Forum Type 4 Tag</td></tr>
       <tr><th>PKI</th><td>X.509 v3 (RFC 5280); PKCS#10; PKCS#11 v2.40; PKCS#12; PKCS#15</td></tr>
       <tr><th>Identity assurance</th><td>NIST SP 800-63-3 AAL3 architecture patterns</td></tr>
+      <tr><th>IoT security baseline</th><td>TEC 31318:2021 (India IoT Security Code of Practice) &mdash; design alignment for the IoT Security Co-Processor product line.</td></tr>
+      <tr><th>V2X &mdash; certificate format</th><td>IEEE 1609.2 &mdash; design alignment; explicit and implicit certificate forms, ECDSA-P256 / P-384 signing.</td></tr>
+      <tr><th>V2X &mdash; security headers</th><td>ETSI TS 103 097 &mdash; design alignment; secured-message structure, certificate-included vs certificate-digest signing, validity restrictions.</td></tr>
+      <tr><th>V2X &mdash; trust &amp; privacy</th><td>ETSI TS 102 941 &mdash; design alignment; Enrolment Authority and Authorisation Authority roles, EC/PC issuance flow, pseudonymity model.</td></tr>
+      <tr><th>ITS station services</th><td>ISO 21177 &mdash; design alignment; authentication, authorisation, data protection across the ITS station stack.</td></tr>
     </table>
   </div>
 </section>
@@ -158,6 +163,7 @@
       <tr><th>FIDO Biometric Component</th><td>Targeted for OnePass Bio Card and BioKey. Match-on-card / match-on-device evaluation path.</td></tr>
       <tr><th>Common Criteria EAL5+ chip platform</th><td>Our reference secure-element silicon partners hold CC EAL5+ chip-platform certificates. AmbiSecure applets layered on those platforms inherit the chip-level evaluation; the applet layer itself is not separately CC-evaluated by default.</td></tr>
       <tr><th>SSCD / QSCD evaluation</th><td>Targeted for the Digital Signature Token under specific customer roadmaps (eIDAS-aligned issuance).</td></tr>
+      <tr><th>Automotive-grade for V2X</th><td>ISO 26262 (functional safety) and ASPICE (process maturity) certification of the integrated AmbiSEC Module / IoT Security Co-Processor product as a V2X deployment target is a goal under active scoping, not yet a claim. The underlying secure-element silicon already carries Common Criteria EAL5+ at the chip level (see preceding row).</td></tr>
     </table>
     <p style="font-size:14px;color:var(--brand-grey);margin-top:18px;font-style:italic;">No claim of active certification at the AmbiSecure product / applet layer is implied for any of the above unless explicitly listed in the "Active" section.</p>
   </div>
@@ -246,10 +252,10 @@
         <li><a href="/products/onepass-card/">OnePass Card</a></li>
         <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
         <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
-        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li>
         <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
         <li><a href="/products/">All products</a></li>
-      </ul></div>
+      </ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
       <div><h3>Services</h3><ul>
         <li><a href="/services/javacard-development/">JavaCard development</a></li>
         <li><a href="/services/fido-validation-server/">FIDO validation server</a></li>

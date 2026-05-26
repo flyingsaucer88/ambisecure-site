@@ -45,16 +45,26 @@ Both should return `HTTP/2 200`.
 
 GSC → top bar **"Inspect any URL in ambisecure.ambimat.com"** → paste each URL → wait for inspection result → click **REQUEST INDEXING**. Limit is ~10/day, so this is one sitting.
 
+**Updated priority list** (V2X surfaces added — TRAI consultation timing makes them load-bearing):
+
 ```
 https://ambisecure.ambimat.com/
-https://ambisecure.ambimat.com/products/
+https://ambisecure.ambimat.com/industries/connected-mobility/
+https://ambisecure.ambimat.com/solutions/v2x-security/
+https://ambisecure.ambimat.com/technologies/v2x-pki/
 https://ambisecure.ambimat.com/products/iot-security-coprocessor/
-https://ambisecure.ambimat.com/products/onepass-card/
+https://ambisecure.ambimat.com/products/
+https://ambisecure.ambimat.com/solutions/
 https://ambisecure.ambimat.com/products/javacard-applets/
 https://ambisecure.ambimat.com/services/javacard-development/
-https://ambisecure.ambimat.com/solutions/
-https://ambisecure.ambimat.com/about/
 https://ambisecure.ambimat.com/about/certifications/
+```
+
+Previous priority URLs (homepage was already in the list; the FIDO authenticator flagships drop to day 2 for the new submission cycle):
+
+```
+https://ambisecure.ambimat.com/products/onepass-card/
+https://ambisecure.ambimat.com/about/
 https://ambisecure.ambimat.com/blog/secure-iot-identity-with-applets/
 ```
 

@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>V2X Security Architecture — OBU, RSU, and ITS PKI | AmbiSecure</title>
+<meta name="description" content="Cryptographic trust architecture for Vehicle-to-Everything infrastructure. EA/AA PKI, pseudonymous certificates, hardware-isolated key storage, and secure manufacturing for V2X deployments." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/solutions/v2x-security/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="V2X Security Architecture — OBU, RSU, and ITS PKI" />
+<meta property="og:description" content="Cryptographic trust architecture for Vehicle-to-Everything infrastructure. EA/AA PKI, pseudonymous certificates, hardware-isolated key storage." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/solutions/v2x-security/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/connected-mobility.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — hardware-rooted identity for V2X infrastructure" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/connected-mobility.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<meta name="audit-yoast-word-max" content="2500" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Solutions", "item": "https://ambisecure.ambimat.com/solutions/"},
+    {"@type": "ListItem", "position": 3, "name": "V2X Security", "item": "https://ambisecure.ambimat.com/solutions/v2x-security/"}
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "name": "V2X Security Architecture — OBU, RSU, and ITS PKI",
+   "url": "https://ambisecure.ambimat.com/solutions/v2x-security/",
+   "description": "Cryptographic trust architecture for Vehicle-to-Everything infrastructure. EA/AA PKI, pseudonymous certificates, hardware-isolated key storage, and secure manufacturing for V2X deployments.",
+   "isPartOf": {"@type": "WebSite", "@id": "https://ambisecure.ambimat.com/#site"}
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/" class="active">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/solutions/">Solutions</a><span class="sep">/</span><span class="current">V2X Security</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Solution</span>
+    <h1>V2X &amp; ITS security architecture.</h1>
+    <p class="dek">Vehicle-to-everything safety messaging only works if every receiver can trust every sender. The cryptography is the easy part; the architecture &mdash; pseudonymity, hardware binding, offline trust, certificate rotation at telecom volumes &mdash; is what makes a V2X PKI deployable instead of theoretical.</p>
+    <div class="hero-cta-row" style="margin-top:22px;">
+      <a href="/contact/" class="btn btn-primary" data-analytics-event="request_demo">Discuss V2X integration</a>
+      <a href="/products/iot-security-coprocessor/" class="btn btn-outline">Co-processor spec</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">The trust problem</span>
+      <h2 class="section-title">An unsigned V2X message is, by definition, unverifiable.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>The V2X threat model is not academic. The signed message a vehicle broadcasts could be a "collision imminent" warning to the vehicle behind it. The signed message an RSU transmits could be a "school zone, slow to 30 km/h" notice to every vehicle entering it. The signed message an emergency vehicle transmits could be a request that every traffic light on its path go green.</p>
+      <p>Every one of those messages, unsigned, is forgeable by any attacker with a software-defined radio. A V2X deployment that allows unsigned messages is a hazard-amplification system. A V2X deployment that allows extractable signing keys is a hazard-amplification system one stolen vehicle away.</p>
+      <p>Offline verification compounds the requirement. PC5 sidelink &mdash; the direct vehicle-to-vehicle radio link &mdash; carries safety messages that must be verified before a vehicle can react. A receiver cannot wait for a cloud round-trip. The trust anchors and the verification logic have to be local. That means the PKI architecture has to ship verification material to vehicles in advance and keep it up-to-date over the air.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">PKI architecture</span>
+      <h2 class="section-title">EA, AA, and the privacy-preserving certificate split.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">The V2X PKI structurally separates "which device am I?" from "what certificate did I just sign this message with?" &mdash; so the device is authenticated without being identified per message.</p>
+    </div>
+    <div class="arch">
+      <div class="arch-node"><span class="arch-tag">01</span><h4>Manufacturing</h4><p>SE generates EC key pair inside tamper boundary; public key + attestation sent to EA.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node accent"><span class="arch-tag">02</span><h4>Enrolment Authority</h4><p>Verifies hardware attestation; issues long-lived Enrolment Credential (EC).</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">03</span><h4>Authorisation Authority</h4><p>Receives anonymised request signed under EC; issues batch of short-lived Pseudonymous Certificates (PC). Does not learn vehicle identity.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">04</span><h4>Field signing</h4><p>OBU signs each V2X message with the currently-active PC. SE rotates PCs on schedule.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">05</span><h4>Verification</h4><p>Receivers verify the signature against PC; chain back to AA root; check revocation locally.</p></div>
+    </div>
+    <p style="color:var(--brand-grey);font-size:14px;line-height:1.7;margin-top:20px;max-width:880px;">Reference: ETSI TS 102 941 trust and privacy management framework defines this split. The EA knows "this is a genuine certified-hardware device" but never sees signed messages. The AA issues the PCs that sign messages but never learns which EC requested them. Even an attacker who compromised both authorities could not by themselves link a message back to a specific vehicle.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Hardware binding</span>
+      <h2 class="section-title">Why software key storage is insufficient.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>V2X devices are not in air-conditioned data centres. OBUs are in vehicles that get stolen, get crashed, get parked in salvage yards, get sold on the second-hand market. RSUs are bolted to roadside poles in cities where local contractors and curious passersby have physical access to them.</p>
+      <p>Software key storage means the credential is in flash, in RAM during a signing operation, on the JTAG / SWD debug interface if it has not been physically disabled, in the boot ROM if the boot ROM has access to it. An attacker with a soldering iron and time will find one of these. Once they have the key, they have the device's identity. They can manufacture a clone. The cloned device can transmit forged V2X messages indistinguishable from the original. The PKI cannot help: the messages are validly signed.</p>
+      <p>The standards-mandated answer is a tamper-resistant secure element: the private key never leaves the SE, signing operations execute inside the SE, the host MCU only sees the signature output. Common Criteria EAL5+ is the floor for the silicon &mdash; the integrated AmbiSEC Module product is a target for further automotive-grade certification (ISO 26262, ASPICE), not yet a claim.</p>
+      <p>MTCTE cybersecurity testing in India should mandate this property as a pass/fail criterion for V2X equipment, not as a recommendation. Both <a href="/technologies/v2x-pki/">IEEE 1609.2 / ETSI TS 103 097</a> and <a href="/about/certifications/">TEC 31318:2021</a> already point to it.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Manufacturing-time provisioning</span>
+      <h2 class="section-title">EC injection on a controlled provisioning line.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>The Enrolment Credential is the device's long-lived identity. If the provisioning step that creates it is sloppy &mdash; if the EC private key was ever in plaintext on a factory PC, if the operator could read a hex dump &mdash; the integrity of the whole deployment is compromised before the device ships.</p>
+      <p>The correct pattern is HSM-backed: the EC public key crosses the boundary; the EC private key never leaves the SE; the personalisation traffic between provisioning HSM and SE is wrapped under GlobalPlatform SCP03 (or an equivalent secure channel protocol). No plaintext key material is ever exposed to the factory line, the operator, or the factory floor's network.</p>
+      <p>Per-device unique identity is established through hardware attestation: the SE proves to the provisioning system that it is a specific instance of certified-hardware silicon, not a soft simulator. That attestation flows from the SE to the EA, which verifies it before issuing the EC. The EA refuses requests it cannot attest. See: <a href="/solutions/smart-card-personalization/">smart-card personalisation</a> for the same pattern in adjacent deployments.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Field lifecycle</span>
+      <h2 class="section-title">Certificate rotation, OTA update, and revocation.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-3">
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">PC rotation</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Automated. SE-managed. Typically every 5&ndash;10 minutes per OBU. No human involvement. The current PC is the one the SE picks; the next batch is fetched ahead of time over the connected channel.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">OTA credential update</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">PCs and ECs flow over an authenticated channel between the device and the AA / EA. The SE gates application: a PC delivered out of band, or with an invalid issuer chain, is rejected at the SE boundary.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Revocation: connected path</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">For connected OBUs and RSUs, revocation information is pulled OCSP-style from a trust-anchor service. The SE evaluates the revocation status before accepting a counterparty's signed message.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Revocation: offline path</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">For OBUs that may be offline for hours or days, RSUs broadcast CRL deltas as part of their normal beacon traffic. Vehicles passing the RSU receive the update without needing connectivity.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Applet upgrade path</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Certificate policy is enforced inside the SE&rsquo;s V2X applet. Policy changes &mdash; new validity-period rules, additional revocation distribution paths, alternative signing schemes &mdash; deploy as applet upgrades under GlobalPlatform SCP03. No device recall.</p>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Audit trail</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">EC issuance, PC batch issuance, revocation events &mdash; all logged with HSM-signed attestation back to the V2X Root CA. Each event is independently auditable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">What AmbiSecure brings</span>
+      <h2 class="section-title">Capabilities that map to V2X programmes.</h2>
+      <span class="section-line"></span>
+    </div>
+    <table class="spec-table">
+      <tr><th>IoT Security Co-Processor</th><td><a href="/products/iot-security-coprocessor/">AmbiSEC Module</a> dual-domain co-processor. CC EAL5+ secure-element silicon at the chip level. Hardware key isolation, ECDSA-P256/P-384 signing, secure boot, OTA verification applet. Automotive operating range available.</td></tr>
+      <tr><th>JavaCard applet development</th><td><a href="/services/javacard-development/">Custom V2X applet engineering</a> &mdash; EC storage, PC batch lifecycle, signing-protocol surface, OTA-deployable policy under GlobalPlatform SCP03. Same team that wrote the FIDO / PIV / OpenPGP applet portfolio.</td></tr>
+      <tr><th>Provisioning infrastructure</th><td>HSM-backed personalisation line, SCP03-wrapped key injection, per-device unique attestation chain. The pattern AmbiSecure already uses for <a href="/solutions/smart-card-personalization/">smart-card personalisation</a>; portable to V2X EC injection.</td></tr>
+      <tr><th>eSIM Initiative (sister)</th><td><a href="https://esim.ambimat.com/" rel="noopener">esim.ambimat.com</a> &mdash; telecom-grade credential lifecycle at SGP.22 / SGP.32 scale. The operational template AmbiSecure draws on for V2X EA/AA architectural choices.</td></tr>
+      <tr><th>FIDO Validation Server</th><td><a href="/services/fido-validation-server/">Operator MFA</a> for the management plane (EA / AA operators, trust-anchor administrators). Phishing-resistant authentication for the humans who hold the PKI&rsquo;s keys.</td></tr>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Scope discipline</span>
+      <h2 class="section-title">What AmbiSecure does <em>not</em> yet provide.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">We are not the only piece of a V2X deployment, and we are deliberately specific about which pieces we are.</p>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <ul style="line-height:1.8;">
+        <li>AmbiSecure does not currently ship an ISO 26262 / ASPICE-certified V2X stack. Automotive-grade certification of the integrated AmbiSEC Module product is a <em>target</em>, not a claim.</li>
+        <li>AmbiSecure is not a V2X Root CA operator. Root CA operation is a national-trust-anchor function; in the Indian context this would sit with a designated entity under CCA / DoT / C-DOT oversight.</li>
+        <li>AmbiSecure is not a turnkey OBU or RSU vendor. We build the secure-element silicon, the applet platform, and the provisioning infrastructure that integrate <em>into</em> an OBU/RSU OEM's product.</li>
+        <li>The TRAI Consultation Paper 30/04/2026 referenced on this site is a public consultation document. No reference here implies endorsement, procurement, or any other relationship with TRAI, CCA, DoT, or C-DOT.</li>
+      </ul>
+      <p>Where we fit: SE silicon, custom applets, provisioning-line infrastructure, operator-side MFA. We integrate alongside the OEM, the system integrator, and the designated PKI operator.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div><h2>Designing a V2X integration?</h2><p>We will walk the trust model end-to-end with your hardware lead and your security architect &mdash; SE selection, applet structure, provisioning-line architecture, EA/AA integration patterns. Reference designs under NDA.</p></div>
+      <div><a href="/contact/" class="btn btn-primary" data-analytics-event="request_demo">Discuss V2X integration</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div>
+        <p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p>
+        <div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div>
+      </div>
+      <div><h3>Products</h3><ul>
+        <li><a href="/products/onepass-card/">OnePass Card</a></li>
+        <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
+        <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li>
+        <li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li>
+        <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
+        <li><a href="/products/">All products</a></li>
+      </ul></div>
+      <div><h3>By Industry</h3><ul>
+        <li><a href="/industries/government-and-defence/">Government</a></li>
+        <li><a href="/industries/enterprise-access/">Enterprise</a></li>
+        <li><a href="/industries/transportation/">Transit</a></li>
+        <li><a href="/industries/smart-cities/">Smart Cities</a></li>
+        <li><a href="/industries/connected-mobility/">Connected Mobility</a></li>
+        <li><a href="/industries/">All industries</a></li>
+      </ul></div>
+      <div><h3>Company</h3><ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/about/certifications/">Certifications</a></li>
+        <li><a href="/support/">Support</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul></div>
+      <div><h3>Contact</h3><ul>
+        <li>Ahmedabad, Gujarat 380015<br />India</li>
+        <li>India: +91 79255 01989</li>
+        <li>US: +1 215 397 3819</li>
+        <li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
+      <div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>

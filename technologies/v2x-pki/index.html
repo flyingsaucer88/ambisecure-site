@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>V2X PKI: IEEE 1609.2 and ETSI TS 103 097 Certificate Architecture | AmbiSecure</title>
+<meta name="description" content="Technical reference for V2X PKI: Enrolment Credentials, Pseudonymous Certificates, certificate lifecycle, and hardware binding requirements for connected vehicle deployments." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/technologies/v2x-pki/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="V2X PKI: IEEE 1609.2 and ETSI TS 103 097 Certificate Architecture" />
+<meta property="og:description" content="Technical reference for V2X PKI: Enrolment Credentials, Pseudonymous Certificates, certificate lifecycle, and hardware binding requirements for connected vehicle deployments." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/technologies/v2x-pki/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/connected-mobility.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — hardware-rooted identity for V2X infrastructure" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/connected-mobility.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<meta name="audit-yoast-word-max" content="3000" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Technologies", "item": "https://ambisecure.ambimat.com/technologies/"},
+    {"@type": "ListItem", "position": 3, "name": "V2X PKI", "item": "https://ambisecure.ambimat.com/technologies/v2x-pki/"}
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "V2X PKI: IEEE 1609.2 and ETSI TS 103 097 Certificate Architecture",
+   "url": "https://ambisecure.ambimat.com/technologies/v2x-pki/",
+   "description": "Technical reference for V2X PKI: Enrolment Credentials, Pseudonymous Certificates, certificate lifecycle, and hardware binding requirements for connected vehicle deployments.",
+   "isPartOf": {"@type": "WebSite", "@id": "https://ambisecure.ambimat.com/#site"},
+   "publisher": {"@id": "https://ambisecure.ambimat.com/#org"},
+   "keywords": "V2X PKI, IEEE 1609.2, ETSI TS 103 097, ETSI TS 102 941, Pseudonymous Certificate, Enrolment Credential, Butterfly Key Expansion, ECDSA P-256, ECDSA P-384, ITS, OBU, RSU"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/" class="active">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/technologies/">Technologies</a><span class="sep">/</span><span class="current">V2X PKI</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Technology reference</span>
+    <h1>V2X PKI &mdash; IEEE 1609.2 &amp; ETSI TS 103 097.</h1>
+    <p class="dek">A V2X certificate is not an X.509 certificate. The encoding is different (COER, not DER). The identity model is different (pseudonymous, not named). The validity model is different (minutes, not years). The volume is different (millions per minute at peak, not thousands per day). This page is the technical reference for how the format actually works, why it diverges from web PKI, and how the lifecycle architecture wraps around it.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">1 &middot; The contrast</span>
+      <h2 class="section-title">V2X PKI vs general-purpose web PKI.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">Where the two PKI worlds diverge along the dimensions that matter for design.</p>
+    </div>
+    <table class="spec-table">
+      <tr><th>Dimension</th><th>Web PKI (X.509)</th><th>V2X PKI (IEEE 1609.2)</th></tr>
+      <tr><th>Identity</th><td>Named subject (CN, SAN)</td><td>Pseudonymous &mdash; no human-readable identity</td></tr>
+      <tr><th>Certificate lifetime</th><td>1&ndash;3 years</td><td>Minutes (PC) / years (EC)</td></tr>
+      <tr><th>Issuance volume</th><td>Thousands/day per CA</td><td>Millions/minute at national peak</td></tr>
+      <tr><th>Offline trust</th><td>Not required</td><td>Mandatory (PC5 sidelink, no network)</td></tr>
+      <tr><th>Key storage</th><td>Software acceptable</td><td>Hardware SE required by design intent</td></tr>
+      <tr><th>Encoding</th><td>ASN.1 DER</td><td>ASN.1 COER (Canonical Octet Encoding Rules)</td></tr>
+      <tr><th>Signature</th><td>RSA / ECDSA broad range</td><td>ECDSA-P256 / P-384 / Brainpool variants</td></tr>
+      <tr><th>Privacy</th><td>Not a design goal</td><td>Core design goal &mdash; pseudonymity built in</td></tr>
+      <tr><th>Revocation</th><td>OCSP / CRL pull</td><td>OCSP for connected; RSU CRL broadcast for offline</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">2 &middot; IEEE 1609.2 format</span>
+      <h2 class="section-title">Certificate structure &mdash; explicit and implicit forms.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">IEEE 1609.2 defines two certificate types &mdash; explicit (signature attached) and implicit (signature reconstructed from a curve point). Both share the same ToBeSigned skeleton.</p>
+    </div>
+    <table class="spec-table">
+      <tr><th>Field</th><th>Description</th></tr>
+      <tr><th>version</th><td>Uint8. Fixed at 3 in the current specification.</td></tr>
+      <tr><th>type</th><td>CHOICE: <code>explicit (0)</code> or <code>implicit (1)</code>. Determines whether the signature is attached or reconstructed.</td></tr>
+      <tr><th>issuer</th><td>IssuerIdentifier &mdash; either a HashedId8 reference to the issuing certificate, or a self-signed marker with a hash algorithm identifier.</td></tr>
+      <tr><th>toBeSigned.id</th><td>CertificateId &mdash; the certificate's own identity, including a name (linkage value for pseudonymous certs) or none.</td></tr>
+      <tr><th>toBeSigned.cracaId</th><td>HashedId3 &mdash; identifies the Certificate Revocation Authorization CA, if any, that may revoke this certificate.</td></tr>
+      <tr><th>toBeSigned.crlSeries</th><td>CrlSeries &mdash; identifies which CRL stream lists revocations for this certificate.</td></tr>
+      <tr><th>toBeSigned.validityPeriod</th><td>SEQUENCE { start Time32, duration Duration }. Duration can range from microseconds to years; PC durations typically minutes.</td></tr>
+      <tr><th>toBeSigned.region (optional)</th><td>GeographicRegion &mdash; circular, rectangular, polygonal, or identified-region restriction on where this certificate is valid.</td></tr>
+      <tr><th>toBeSigned.assuranceLevel (optional)</th><td>SubjectAssurance &mdash; assurance level of the subject.</td></tr>
+      <tr><th>toBeSigned.appPermissions (optional)</th><td>SequenceOfPsidSsp &mdash; the application services this certificate is allowed to authenticate (PSID + Service Specific Permissions).</td></tr>
+      <tr><th>toBeSigned.certIssuePermissions (optional)</th><td>SequenceOfPsidGroupPermissions &mdash; what permissions this certificate can pass on if it is itself a CA cert.</td></tr>
+      <tr><th>toBeSigned.verifyKeyIndicator</th><td>CHOICE: <code>verificationKey</code> (PublicVerificationKey) for explicit certs, or <code>reconstructionValue</code> (EccP256CurvePoint) for implicit certs.</td></tr>
+      <tr><th>signature (explicit only)</th><td>CHOICE: ecdsaNistP256Signature, ecdsaBrainpoolP256r1Signature, ecdsaNistP384Signature, or ecdsaBrainpoolP384r1Signature.</td></tr>
+    </table>
+    <p style="color:var(--brand-grey);font-size:13px;line-height:1.65;margin-top:14px;">A client-side <strong>IEEE 1609.2 certificate parser</strong> is on the AmbiSecure roadmap, matching the existing <a href="/resources/tools/apdu-parser/">APDU</a>, <a href="/resources/tools/tlv-parser/">TLV</a>, and <a href="/resources/tools/atr-parser/">ATR</a> parser tools. Watch this page or the <a href="/resources/">tools index</a>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">3 &middot; ETSI TS 103 097</span>
+      <h2 class="section-title">Secured-message structure &mdash; header, payload, trailer.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>ETSI TS 103 097 wraps an application payload in a security envelope. The structure has three logical regions:</p>
+      <ul style="line-height:1.8;">
+        <li><strong>Header</strong>: protocol version, header info, payload type, signer info. The signer info field is the critical privacy decision: the certificate is either <em>included in full</em> (large but self-contained) or <em>referenced by digest</em> (small but requires the receiver to have already seen the full certificate). For PC5 sidelink, message-by-message certificate inclusion would saturate the radio; in practice messages reference the cert by digest, and the full cert is re-broadcast on a separate cadence.</li>
+        <li><strong>Payload</strong>: the application-layer message itself &mdash; CAM (Cooperative Awareness Message), DENM (Decentralised Environmental Notification Message), BSM (Basic Safety Message), MAP, SPaT, etc. The signer of the secured message is asserting authority over the contents.</li>
+        <li><strong>Trailer</strong>: the signature itself, plus any geographic or temporal validity restrictions. A signature can be tied to a region (this OBU only signs messages valid inside its current geographic cell) and a time window (this PC is only valid for the next 7 minutes).</li>
+      </ul>
+      <p>Certificate-chain construction in V2X is bounded: each certificate references its issuer by HashedId8, and the chain terminates at the V2X Root CA. A typical chain is two or three deep &mdash; Root CA &rarr; AA &rarr; PC, or Root CA &rarr; EA &rarr; EC. There is no equivalent of web PKI's deeper intermediate hierarchies.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">4 &middot; The credential split</span>
+      <h2 class="section-title">Enrolment Credentials versus Pseudonymous Certificates.</h2>
+      <span class="section-line"></span>
+    </div>
+    <table class="spec-table">
+      <tr><th>Dimension</th><th>Enrolment Credential (EC)</th><th>Pseudonymous Certificate (PC)</th></tr>
+      <tr><th>Lifetime</th><td>Years (device life or until re-enrolment)</td><td>Minutes to ~1 week, configurable</td></tr>
+      <tr><th>Identity binding</th><td>Hardware-bound to a specific SE</td><td>No persistent identity; one of a batch</td></tr>
+      <tr><th>Issuer</th><td>Enrolment Authority (EA)</td><td>Authorisation Authority (AA)</td></tr>
+      <tr><th>Used for</th><td>Authenticating to the AA when requesting PCs</td><td>Signing V2X messages in the field</td></tr>
+      <tr><th>Number per device</th><td>One (typically)</td><td>A batch of dozens to thousands</td></tr>
+      <tr><th>Privacy property</th><td>Identifies the certified device</td><td>Pseudonymous &mdash; rotated to prevent linkage</td></tr>
+      <tr><th>Issued in response to</th><td>Hardware attestation from SE</td><td>Anonymised request signed under EC</td></tr>
+    </table>
+    <p style="color:var(--brand-grey);font-size:14px;line-height:1.7;margin-top:18px;max-width:880px;"><strong>Butterfly Key Expansion</strong> is the technique that lets the AA issue an entire batch of PCs from a single anonymous request without ever learning which EC made the request. The vehicle sends a single signed request derived from its EC; the AA derives <em>n</em> independent PC key pairs from a public seed using a chained derivation, signs each, and returns the batch. Because the derivation is one-way and the AA never sees the EC's identity, an attacker who later compromises the AA cannot link the PC batch back to a vehicle.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">5 &middot; Certificate lifecycle</span>
+      <h2 class="section-title">Provisioning &rarr; refresh &rarr; revocation.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="arch">
+      <div class="arch-node"><span class="arch-tag">EA</span><h4>Enrolment</h4><p>SE produces hardware attestation; EA verifies SE is MTCTE-certified hardware; EA issues EC.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node accent"><span class="arch-tag">AA</span><h4>PC issuance</h4><p>Vehicle sends anonymised request signed under EC; AA issues PC batch via Butterfly Key Expansion.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">SE</span><h4>Rotation</h4><p>SE rotates the active PC every 5&ndash;10 minutes (configurable). Older PCs go to history, then discarded after a retention window.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">RA</span><h4>Revocation</h4><p>CRL deltas distributed: pull-OCSP for connected, RSU broadcast for offline OBUs. SE rejects messages signed under a revoked certificate.</p></div>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;margin-top:24px;">
+      <p>Re-enrolment is rare. An EC is replaced only on incident (suspected SE compromise, hardware fault, change of ownership). PC refresh is continuous and automatic: when the SE&rsquo;s reserve PC pool dips below threshold, it asynchronously requests a new batch from the AA over the authenticated channel. The user, the OBU firmware, and the application layer are not involved.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">6 &middot; India context</span>
+      <h2 class="section-title">TRAI CP 30/04/2026 and the shape of an Indian V2X PKI.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>The TRAI Consultation Paper on V2X Communication (CP No. 30/04/2026) is a public consultation document. It frames the policy questions a domestic V2X PKI deployment has to answer:</p>
+      <ul style="line-height:1.8;">
+        <li><strong>Trust anchor governance.</strong> The proposed direction is a V2X Root CA under CCA oversight, structurally parallel to the existing RCAI root authority but operating in a separate certificate hierarchy. CCA does not issue V2X certificates directly; it accredits the operators that do.</li>
+        <li><strong>EA and AA operator designation.</strong> Likely candidates are DoT / C-DOT or an entity nominated under their oversight. The EA and AA must be operationally independent to preserve the privacy property of the EC/PC split; an entity that holds both roles can in principle de-anonymise.</li>
+        <li><strong>MTCTE cybersecurity baseline.</strong> Equipment certified under MTCTE for V2X service should be required to demonstrate hardware-backed key storage. TEC 31318:2021 already articulates the property at the IoT baseline; the V2X profile sharpens it to ECDSA-P256/P-384 signing inside a tamper-resistant SE.</li>
+        <li><strong>Parallel hierarchy.</strong> The V2X PKI runs independently of RCAI. An EC is not an X.509 client certificate. A V2X Root CA is not RCAI. Cross-recognition between the two hierarchies is a separate policy question and is not assumed.</li>
+      </ul>
+      <p>Nothing on this page should be read as endorsing any specific candidate operator or as anticipating the outcome of the consultation process. The consultation document is referenced here for technical alignment, not commercial positioning.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Related reading</span>
+      <h2 class="section-title">Where this fits in the bigger picture.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-3">
+      <a href="/technologies/secure-elements/" class="card"><h3>Secure elements</h3><p>The silicon class V2X identity rests on &mdash; tamper resistance, key isolation, attestation.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/products/iot-security-coprocessor/" class="card"><h3>IoT Security Co-Processor</h3><p>AmbiSEC Module &mdash; the dual-domain co-processor product. CC EAL5+ silicon at the chip level.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/technologies/fido/" class="card"><h3>FIDO attestation</h3><p>FIDO&rsquo;s attestation model is a useful analogy for V2X&rsquo;s EA enrolment, not equivalent &mdash; same shape, different protocol.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/solutions/v2x-security/" class="card"><h3>Solution: V2X security</h3><p>How OBU/RSU PKI, EA/AA, pseudonymous certs, and HSM-backed provisioning fit together end-to-end.</p><div class="card-meta">View solution &rarr;</div></a>
+      <a href="/industries/connected-mobility/" class="card"><h3>Industry: Connected Mobility</h3><p>Why V2X infrastructure demands hardware-backed identity, with India-context positioning.</p><div class="card-meta">View industry &rarr;</div></a>
+      <a href="https://esim.ambimat.com/" class="card" rel="noopener"><h3>Sister: eSIM Initiative</h3><p>SGP.32 telecom-grade credential lifecycle &mdash; the operational parallel for V2X EA/AA.</p><div class="card-meta">esim.ambimat.com &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div>
+        <p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p>
+        <div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div>
+      </div>
+      <div><h3>Products</h3><ul>
+        <li><a href="/products/onepass-card/">OnePass Card</a></li>
+        <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
+        <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li>
+        <li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li>
+        <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
+        <li><a href="/products/">All products</a></li>
+      </ul></div>
+      <div><h3>By Industry</h3><ul>
+        <li><a href="/industries/government-and-defence/">Government</a></li>
+        <li><a href="/industries/enterprise-access/">Enterprise</a></li>
+        <li><a href="/industries/transportation/">Transit</a></li>
+        <li><a href="/industries/smart-cities/">Smart Cities</a></li>
+        <li><a href="/industries/connected-mobility/">Connected Mobility</a></li>
+        <li><a href="/industries/">All industries</a></li>
+      </ul></div>
+      <div><h3>Company</h3><ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/about/certifications/">Certifications</a></li>
+        <li><a href="/support/">Support</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul></div>
+      <div><h3>Contact</h3><ul>
+        <li>Ahmedabad, Gujarat 380015<br />India</li>
+        <li>India: +91 79255 01989</li>
+        <li>US: +1 215 397 3819</li>
+        <li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
+      <div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>

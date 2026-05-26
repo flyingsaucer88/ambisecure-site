@@ -6,7 +6,7 @@
 <title>AmbiSEC Module &mdash; IoT Security Co-Processor | Dual-Domain Hardware-Rooted IoT Security | AmbiSecure</title>
 <meta name="description" content="AmbiSEC Module is a dual-domain IoT security co-processor: MCU domain runs the application, the cryptographic security domain holds keys, signs, verifies, anti-replays, and authenticates secure OTA. Keys never reach application firmware. TEC 31318 coverage." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/products/iot-security-coprocessor/" />
-<meta name="audit-yoast-word-max" content="2500" />
+<meta name="audit-yoast-word-max" content="3000" />
 <meta property="og:type" content="product" />
 <meta property="og:title" content="AmbiSEC Module — IoT Security Co-Processor" />
 <meta property="og:description" content="Dual-domain co-processor for connected devices. MCU + isolated cryptographic security domain. Secure boot, anti-replay, multi-hop encryption, secure OTA authentication, device identity burned at factory." />
@@ -427,6 +427,29 @@
   </div>
 </section>
 
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">V2X / ITS deployment fit</span>
+      <h2 class="section-title">Where the co-processor lands in connected-vehicle infrastructure.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">The dual-domain co-processor's signing surface, key isolation, and applet platform map directly onto the V2X OBU/RSU requirement profile. Standards alignment, not yet automotive-grade certification.</p>
+    </div>
+    <table class="spec-table">
+      <tr><th>Automotive operating range</th><td>Extended automotive temperature range (&minus;40&deg;C to +105&deg;C) available &mdash; relevant for OBU/RSU deployments in Indian road environments.</td></tr>
+      <tr><th>V2X key storage</th><td>IEEE 1609.2 compatible key isolation. ECDSA-P256 and P-384 signing operations hardware-isolated from the host MCU.</td></tr>
+      <tr><th>V2X certificate lifecycle</th><td>Supports Enrolment Credential (EC) storage and Pseudonymous Certificate (PC) batch-management patterns consistent with ETSI TS 102 941.</td></tr>
+      <tr><th>Attestation for EA enrolment</th><td>Hardware-signed attestation responses enable Enrolment Authority verification that key material resides in a certified secure element before EC issuance.</td></tr>
+      <tr><th>Silicon-level certification</th><td>The underlying secure-element silicon carries Common Criteria EAL5+ certification at the chip level. Automotive-grade certification (ISO 26262, ASPICE) of the integrated AmbiSEC Module product is a <em>target</em>, not yet claimed.</td></tr>
+    </table>
+    <div class="grid-3" style="margin-top:24px;">
+      <a href="/industries/connected-mobility/" class="card"><h3>Industry: Connected Mobility</h3><p>Why V2X infrastructure demands hardware-backed identity. Standards, threat model, India context.</p><div class="card-meta">View industry &rarr;</div></a>
+      <a href="/solutions/v2x-security/" class="card"><h3>Solution: V2X security</h3><p>EA/AA PKI architecture, pseudonymous certificates, HSM-backed provisioning, certificate lifecycle.</p><div class="card-meta">View solution &rarr;</div></a>
+      <a href="/technologies/v2x-pki/" class="card"><h3>Technology: V2X PKI</h3><p>IEEE 1609.2 certificate format, ETSI TS 103 097 message headers, Butterfly Key Expansion, revocation.</p><div class="card-meta">View technology &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="section-container">
     <div class="section-head left">
@@ -549,10 +572,10 @@
         <li><a href="/products/onepass-card/">OnePass Card</a></li>
         <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
         <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
-        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li>
         <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
         <li><a href="/products/">All products</a></li>
-      </ul></div>
+      </ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
       <div><h3>Services</h3><ul>
         <li><a href="/services/javacard-development/">JavaCard development</a></li>
         <li><a href="/services/fido-validation-server/">FIDO validation server</a></li>
