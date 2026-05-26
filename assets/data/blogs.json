@@ -1,7 +1,112 @@
 {
   "version": 1,
-  "generated": "2026-05-11",
+  "generated": "2026-05-26",
   "entries": [
+    {
+      "title": "How V2X PKI Works: EA, AA, Pseudonymous Certificates, Lifecycle",
+      "url": "/blog/how-v2x-pki-works/",
+      "date": "2026-05-26",
+      "summary": "An engineering walk-through of the V2X PKI: Root CA, Enrolment Authority, Authorisation Authority, Enrolment Credentials, Pseudonymous Certificates, HashedId8 linkage, Butterfly Key Expansion, CRL and CTL distribution. IEEE 1609.2 + ETSI TS 102 941 in practice.",
+      "categories": [
+        "V2X",
+        "PKI",
+        "Connected Mobility"
+      ],
+      "type": "modern",
+      "tags": [
+        "V2X",
+        "PKI",
+        "IEEE 1609.2",
+        "ETSI"
+      ],
+      "last_reviewed": "2026-05-26",
+      "freshness": "evergreen"
+    },
+    {
+      "title": "Secure Elements in Connected Vehicles: OBU, RSU, and the Hardware Root",
+      "url": "/blog/secure-elements-in-connected-vehicles/",
+      "date": "2026-05-26",
+      "summary": "Engineering view of the secure element in connected vehicles: key isolation, hardware-bound identity, anti-cloning, secure boot, OTA trust anchors. SIM form factor versus telecom service, removable nano-card versus solderable MFF2, TPM vs HSM vs secure element.",
+      "categories": [
+        "Secure Elements",
+        "V2X",
+        "Hardware"
+      ],
+      "type": "modern",
+      "tags": [
+        "V2X",
+        "Secure Elements",
+        "Hardware Security"
+      ],
+      "last_reviewed": "2026-05-26",
+      "freshness": "evergreen"
+    },
+    {
+      "title": "Pseudonymous Certificates and Privacy in V2X",
+      "url": "/blog/pseudonymous-certificates-and-privacy/",
+      "date": "2026-05-26",
+      "summary": "Why static V2X identities are dangerous, how Pseudonymous Certificates achieve unlinkability, how Butterfly Key Expansion makes the EA/AA privacy split work in practice, and how revocation propagates without de-anonymising the fleet.",
+      "categories": [
+        "V2X",
+        "PKI",
+        "Privacy"
+      ],
+      "type": "modern",
+      "tags": [
+        "V2X",
+        "PKI",
+        "Privacy",
+        "Pseudonymity"
+      ],
+      "last_reviewed": "2026-05-26",
+      "freshness": "evergreen"
+    },
+    {
+      "title": "Device Identity at Manufacturing Scale",
+      "url": "/blog/device-identity-at-manufacturing-scale/",
+      "date": "2026-05-26",
+      "summary": "Provisioning device identity at scale: per-device keys inside a secure element on the personalisation line, HSM-backed SCP03 key custody, OTA credential rotation, revocation across connectivity tiers, and V2X / eSIM / IoT lifecycle convergence.",
+      "categories": [
+        "Provisioning",
+        "PKI",
+        "IoT",
+        "V2X",
+        "eSIM"
+      ],
+      "type": "modern",
+      "tags": [
+        "Provisioning",
+        "SCP03",
+        "V2X",
+        "eSIM",
+        "IoT",
+        "SGP.32"
+      ],
+      "last_reviewed": "2026-05-26",
+      "freshness": "evergreen"
+    },
+    {
+      "title": "Why Software-Only Device Trust Fails",
+      "url": "/blog/why-software-only-device-trust-fails/",
+      "date": "2026-05-26",
+      "summary": "The threat model that rules out software-only device identity in field-deployed hardware: firmware extraction, key cloning, replay, fleet-scale compromise. Software vs TPM vs secure element comparison. Why connected vehicles, industrial IoT, and edge infrastructure converge on hardware-backed identity.",
+      "categories": [
+        "Threat Model",
+        "Embedded Identity",
+        "V2X",
+        "IoT"
+      ],
+      "type": "modern",
+      "tags": [
+        "Threat Model",
+        "Hardware Security",
+        "V2X",
+        "IoT",
+        "Secure Elements"
+      ],
+      "last_reviewed": "2026-05-26",
+      "freshness": "evergreen"
+    },
     {
       "title": "Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity",
       "url": "/blog/sim-based-fido2-authenticators/",

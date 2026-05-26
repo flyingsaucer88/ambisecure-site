@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Device Identity at Manufacturing Scale: Provisioning, Lifecycle, V2X / eSIM / IoT Convergence | AmbiSecure</title>
+<meta name="description" content="Engineering walk-through of provisioning device identity at scale: per-device keys generated inside a secure element on the personalisation line, HSM-backed SCP03 key custody, OTA credential rotation, revocation across connectivity tiers, and the architectural convergence between V2X EA/AA, eSIM SM-DP+, and IoT credential lifecycle." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/device-identity-at-manufacturing-scale/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Device Identity at Manufacturing Scale" />
+<meta property="og:description" content="Engineering walk-through of provisioning device identity at scale: per-device keys on the personalisation line, HSM-backed SCP03 custody, OTA rotation, revocation across connectivity tiers, V2X / eSIM / IoT convergence." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/device-identity-at-manufacturing-scale/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta property="article:published_time" content="2026-05-26" />
+<meta property="article:author" content="AmbiSecure Engineering" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<meta name="audit-yoast-word-max" content="3300" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {"@type":"Question","name":"What does 'device identity at manufacturing scale' actually mean?","acceptedAnswer":{"@type":"Answer","text":"A defensible per-device cryptographic identity, injected on the factory personalisation line under HSM-backed key custody, that holds for the device's operational lifetime and supports remote credential lifecycle (rotation, revocation, re-enrolment) without return-to-factory. Scale means the mechanism works identically for the first device and the millionth: no per-device manual operator step, no shared keys, full audit log per injection."}},
+    {"@type":"Question","name":"How does SCP03 protect the key-injection step?","acceptedAnswer":{"@type":"Answer","text":"SCP03 is the GlobalPlatform secure-channel protocol that wraps APDUs between the personalisation host and the secure element under session keys derived from card-resident base keys. The personalisation host receives wrapped APDUs from the HSM and forwards them to the SE; the SE unwraps under its base keys, processes the key-injection APDU, and the keys land inside the tamper boundary without ever appearing in plaintext on the host. The host sees only ciphertext."}},
+    {"@type":"Question","name":"Why is the eSIM / V2X / IoT convergence architecturally interesting?","acceptedAnswer":{"@type":"Answer","text":"All three architectures solve the same shape of problem — long-lived hardware-bound identity provisioned at factory, used to authenticate to a remote authority that issues operational credentials, rotated over the air, revoked when needed — under different protocol surfaces. eSIM SGP.32 uses IPA / SM-DP+ / SM-DS; V2X uses EA / AA; IoT may use EST or a vendor-specific flow. The structural lessons transpose across all three because the underlying architectural problem is identical."}},
+    {"@type":"Question","name":"What is the difference between factory injection and field provisioning?","acceptedAnswer":{"@type":"Answer","text":"Factory injection happens once, on the controlled personalisation line under HSM key custody. It establishes the device's root identity. Field provisioning happens many times over the device lifetime, over the air, under cryptographic continuity with the factory-injected root. Field provisioning never assumes a clean environment; it assumes the root is intact and uses it as the trust anchor to receive operational credentials."}},
+    {"@type":"Question","name":"How is revocation handled across always-connected, intermittent, and offline devices?","acceptedAnswer":{"@type":"Answer","text":"Three patterns, one architectural shape. Always-connected fleets pull OCSP-style status checks or rely on short-lived credentials that expire faster than the revocation propagation window. Intermittent fleets refresh CRLs on next contact. Offline fleets (notably V2X PC5 sidelink) receive CRL updates through infrastructure broadcast — RSUs rebroadcast the current CRL to passing OBUs. The cryptographic identity stays in the secure element; only the revocation distribution channel differs."}},
+    {"@type":"Question","name":"What goes wrong on a personalisation line that has not been engineered carefully?","acceptedAnswer":{"@type":"Answer","text":"Three recurring failures: keys appear in plaintext somewhere on the host because the SCP03 wrapping was implemented host-side instead of HSM-side; per-device serialisation drifts because the line lacks an authoritative serial counter; and the audit log is database rows rather than an append-only tamper-evident record. Each of these makes the entire deployment's identity story indefensible in a forensic review."}}
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
+    {"@type":"ListItem","position":3,"name":"Device Identity at Manufacturing Scale","item":"https://ambisecure.ambimat.com/blog/device-identity-at-manufacturing-scale/"}
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Device Identity at Manufacturing Scale",
+   "description": "Engineering walk-through of provisioning device identity at scale: per-device keys generated inside a secure element on the personalisation line, HSM-backed SCP03 key custody, OTA credential rotation, revocation across connectivity tiers, and the architectural convergence between V2X EA/AA, eSIM SM-DP+, and IoT credential lifecycle.",
+   "author": {"@type":"Organization","name":"AmbiSecure Engineering"},
+   "publisher": {"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},
+   "datePublished": "2026-05-26",
+   "dateModified": "2026-05-26",
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/device-identity-at-manufacturing-scale/",
+   "keywords": "device identity at scale, manufacturing-time provisioning, SCP03, HSM-backed key custody, personalisation line, OTA credential rotation, revocation, V2X EA AA, eSIM SM-DP+, SGP.32, IoT credential lifecycle, embedded PKI"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Device Identity at Manufacturing Scale</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>Provisioning &middot; PKI &middot; IoT &middot; V2X &middot; eSIM</span>
+      <span>Cornerstone</span>
+      <span>Published 2026-05-26</span>
+      <span>Updated 2026-05-26</span>
+      <span>18 min read</span>
+    </div>
+
+    <h1>Device Identity at Manufacturing Scale</h1>
+    <p class="dek">A deployment of one device with one credential is an engineering exercise. A deployment of a million devices, each with a non-clonable identity, each provisioned on a factory line, each able to rotate credentials in the field without recall, is an architectural problem with a small set of correct answers and a large set of expensive wrong ones. This is the engineering walk-through of the correct answers, from the personalisation line through OTA rotation to revocation across connectivity tiers, and the convergence between V2X, eSIM, and embedded IoT credential lifecycles.</p>
+
+    <p>If you have provisioned hardware at any volume, the surface symptoms of getting this wrong are familiar: a forensic investigation reveals plaintext keys in a manufacturing log; an OTA rotation campaign drops 12% of devices for reasons no one can reconstruct; a CRL bloats past the working memory of the verifier population; a regulator asks how per-device identities are protected on the line and the procurement team has nothing in writing. This piece is the architecture that prevents those outcomes.</p>
+
+    <h2 id="why-scale-changes-the-architecture">Why scale changes the architecture</h2>
+    <p>One device with one certificate is a manageable problem. Hundreds is still manageable. The constraints that fall out at six figures and above stop being engineering preferences and start being hard requirements.</p>
+    <ol>
+      <li><strong>Per-device uniqueness.</strong> No shared master key across the population. Extracting one device must not yield the cryptographic material that protects another. This is not a preference; it is the failure mode that took down enough deployments in the last fifteen years to settle the architectural question.</li>
+      <li><strong>Issuance throughput.</strong> The personalisation line has to inject identities at production cadence (seconds per device, often parallelised across multiple SE programmers). The pipeline from HSM-side key derivation to SE-side persistence has to be designed for that throughput, not retrofitted onto it.</li>
+      <li><strong>Field rotation without recall.</strong> A field-deployed device that requires a return-to-base for credential renewal is a deployment with a built-in attrition curve. Every operational credential lifecycle has to support over-the-air rotation under cryptographic continuity &mdash; the new credential proves itself using material the device already trusts.</li>
+      <li><strong>Revocation across connectivity tiers.</strong> Always-connected fleets can poll; intermittent fleets refresh on next contact; offline fleets (notably V2X OBUs verifying PC5 sidelink) need pre-distributed revocation that has already arrived before the verification is needed. One revocation architecture, three distribution channels.</li>
+      <li><strong>Audit and forensics.</strong> Every per-device injection has to leave an append-only, tamper-evident trace tying serial to identity to operator to timestamp. The trace is what makes the deployment defensible in a security review or regulatory audit.</li>
+    </ol>
+
+    <h2 id="the-line">The personalisation line</h2>
+    <p>Every cryptographic property of a deployed device traces back to a moment on the personalisation line when key material was injected and the device was attested. Get the line right and the deployment has a defensible identity story for its lifetime. Get it wrong and no amount of operational hardening recovers the deployment.</p>
+
+    <pre><code><span class="c">// Personalisation line — defensible architecture</span>
+
+  ┌──────────────────────────────────────────────────────────────────┐
+  │                       Manufacturing site                          │
+  │                                                                   │
+  │  ┌────────────┐    ┌──────────────────┐    ┌──────────────────┐  │
+  │  │   HSM      │    │ Personalisation  │    │   SE programmer  │  │
+  │  │   (cluster)│    │   host           │    │   (1..N parallel │  │
+  │  │            │    │                  │    │    stations)     │  │
+  │  │ holds:     │    │  receives:       │    │                  │  │
+  │  │ - issuer   │◄───┤ wrapped APDU     │◄───┤  applies APDU    │  │
+  │  │   keys     │    │ from HSM         │    │  to SE under     │  │
+  │  │ - per-     │    │                  │    │  SCP03 session   │  │
+  │  │   device   │    │ forwards         │    │                  │  │
+  │  │   derivation│   │ wrapped APDU     │    │  SE generates    │  │
+  │  │   logic    │    │ to SE programmer │    │  per-device key  │  │
+  │  │            │    │                  │    │  inside boundary │  │
+  │  │ split-     │    │ logs serial,     │    │                  │  │
+  │  │ knowledge  │    │ operator,        │    │  returns         │  │
+  │  │ custody    │    │ timestamp        │    │  attestation     │  │
+  │  └────────────┘    └──────────────────┘    └──────────────────┘  │
+  │         │                                                         │
+  │         ▼                                                         │
+  │  ┌────────────────────────────────────────────────────────────┐  │
+  │  │   Append-only audit log                                     │  │
+  │  │   (one entry per injection: serial, AID, key handle,       │  │
+  │  │    operator badge, HSM session, station ID, timestamp,     │  │
+  │  │    attestation hash)                                       │  │
+  │  └────────────────────────────────────────────────────────────┘  │
+  └──────────────────────────────────────────────────────────────────┘</code></pre>
+
+    <p>Five properties separate a defensible line from an indefensible one. None are exotic; all of them are missed often enough that the failures are predictable.</p>
+
+    <h3>1. Per-device keys are derived in the HSM, not generated on the host</h3>
+    <p>The HSM holds the issuer keys and the per-device derivation function. The personalisation host never sees a plaintext per-device key. It receives an SCP03-wrapped APDU from the HSM and forwards it to the SE programmer; the unwrap happens inside the SE, under its base keys. The host&rsquo;s exposure is bounded to ciphertext.</p>
+
+    <h3>2. Key generation happens inside the SE for high-value keys</h3>
+    <p>For keys the deployment must guarantee never existed outside the tamper boundary &mdash; the per-device device key, the V2X enrolment key &mdash; the SE generates the key pair inside itself in response to an APDU. The HSM contributes a derivation seed or a key handle assignment; the actual key never appears anywhere. For lower-value session derivation or wrapping keys, HSM-side generation followed by SCP03 transport is acceptable.</p>
+
+    <h3>3. SCP03 protects every key-injection APDU</h3>
+    <p>GlobalPlatform 2.3.1 Secure Channel Protocol 03 is the wire-level discipline: every APDU between the host and the SE is wrapped under session keys derived from card-resident base keys, with MAC and encryption applied per-command. A passive line-tap recovers only ciphertext; an active line-tap is detected by MAC failure on the SE side.</p>
+
+    <h3>4. Per-device serial is authoritative and monotonic</h3>
+    <p>The line has an authoritative serial counter (typically HSM-side) that increments per injection. The serial is part of the per-device derivation input, so the HSM cannot accidentally repeat an injection without producing a duplicate-serial alert. The audit log indexes by serial.</p>
+
+    <h3>5. The audit log is append-only and tamper-evident</h3>
+    <p>One entry per injection, never updated or deleted. Tamper-evidence via hash-chaining the log: each entry includes the hash of the previous entry, so tampering with any past entry invalidates every subsequent one. The log is the artefact a forensic audit will examine years after the deployment ships.</p>
+
+    <p>The <a href="/solutions/smart-card-personalization/">smart-card personalisation solution page</a> covers the operational mechanics of running such a line at production volume. The <a href="/blog/credential-lifecycle-management/">credential lifecycle management</a> post covers the broader programme design that the line sits inside.</p>
+
+    <h2 id="what-gets-injected">What gets injected, what gets generated</h2>
+    <p>Not every key on a deployed device comes from the same place. A well-designed personalisation flow distinguishes three classes.</p>
+
+    <div class="ref-table-wrap">
+    <table style="width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.65;">
+      <thead><tr style="border-bottom:2px solid var(--brand-red);"><th style="text-align:left;padding:10px 12px;">Key class</th><th style="text-align:left;padding:10px 12px;">Source</th><th style="text-align:left;padding:10px 12px;">Lifetime</th><th style="text-align:left;padding:10px 12px;">Example</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Manufacturer attestation key</strong></td><td style="padding:10px 12px;">Generated inside SE at factory</td><td style="padding:10px 12px;">Device lifetime</td><td style="padding:10px 12px;">V2X EA enrolment, FIDO attestation, eUICC EUM signature</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Operational identity</strong></td><td style="padding:10px 12px;">Derived from EC / profile downloaded over the air</td><td style="padding:10px 12px;">Months to years</td><td style="padding:10px 12px;">V2X Enrolment Credential, eSIM operator profile, FIDO RP credential</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Operational credentials</strong></td><td style="padding:10px 12px;">Generated inside SE under cryptographic continuity</td><td style="padding:10px 12px;">Minutes to weeks</td><td style="padding:10px 12px;">V2X Pseudonymous Certificate batch, ephemeral session keys</td></tr>
+        <tr><td style="padding:10px 12px;"><strong>Wrapping / session keys</strong></td><td style="padding:10px 12px;">HSM-derived under SCP03 base keys</td><td style="padding:10px 12px;">Single session</td><td style="padding:10px 12px;">SCP03 session keys during personalisation, OTA update channel keys</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The architecturally important class is the manufacturer attestation key. It is the device&rsquo;s lifetime trust anchor; it never rotates; it never leaves the SE. Every subsequent credential the device receives over the air authenticates through it. Get that key&rsquo;s generation and protection right and the rest of the lifecycle has a foundation to build on.</p>
+
+    <h2 id="ota-rotation">OTA credential rotation</h2>
+    <p>A factory-injected credential is the start of the lifecycle, not the end. The operational credentials evolve in the field. Three rotation patterns recur across deployments.</p>
+
+    <h3>Pattern A: short-lived credentials with refresh</h3>
+    <p>Used by V2X (PC batches refreshed every few weeks), eSIM (operational profiles refreshed on operator change), and some IoT mTLS deployments (short-lived certificates rotated on a daily/weekly cadence). The device authenticates with its long-lived identity, requests a new operational credential, installs it, and starts using it. The old credential expires under its own validity window.</p>
+
+    <h3>Pattern B: re-keying with overlap</h3>
+    <p>Used where credential lifetimes are months to years and an abrupt swap would risk fielded device failure. The new credential is issued with a validity window overlapping the old; both are active simultaneously for a few days; the verifier accepts either until the old expires. The device switches signing key at first verifier acknowledgement.</p>
+
+    <h3>Pattern C: re-enrolment</h3>
+    <p>Used for the long-lived identity itself &mdash; V2X EC re-enrolment before expiry, eUICC profile renewal. The device authenticates with the current long-lived credential, receives a new one, and persists it. The trust anchor underneath (the manufacturer attestation key) does not change; only the credential layered on top does.</p>
+
+    <p>All three patterns share the cryptographic-continuity property: the new credential proves itself using material the device already trusts. There is no "trust the network" hop. If a man-in-the-middle could intercept the rotation and substitute a credential the device would accept, the rotation is broken.</p>
+
+    <h2 id="revocation-across-tiers">Revocation across connectivity tiers</h2>
+    <p>A fleet revocation architecture has to work across three connectivity profiles. The cryptographic identity stays in the secure element; only the distribution channel for revocation status differs.</p>
+
+    <pre><code><span class="c">// Revocation by connectivity tier</span>
+
+  Always-connected (fleet trackers, smart meters with backhaul)
+  ┌────────────────────────────────────────────────────┐
+  │ • OCSP-style status check, or                       │
+  │ • Short-lived certificates that expire faster      │
+  │   than the revocation propagation window            │
+  │                                                    │
+  │ Latency: bounded by polling cadence                │
+  └────────────────────────────────────────────────────┘
+
+  Intermittent (industrial IoT, in-vehicle telematics)
+  ┌────────────────────────────────────────────────────┐
+  │ • CRL refresh on next connectivity event           │
+  │ • Verifier maintains last-known CRL in SE; uses    │
+  │   it until next refresh                            │
+  │                                                    │
+  │ Latency: bounded by connectivity reliability       │
+  └────────────────────────────────────────────────────┘
+
+  Offline (V2X OBU on PC5 sidelink, mesh sensors)
+  ┌────────────────────────────────────────────────────┐
+  │ • Pre-distributed CRL via infrastructure broadcast │
+  │ • Linkage-based revocation: one seed revokes a     │
+  │   whole batch of pseudonymous credentials          │
+  │ • RSU rebroadcasts CRL to passing OBUs             │
+  │                                                    │
+  │ Latency: bounded by infrastructure encounter rate  │
+  └────────────────────────────────────────────────────┘</code></pre>
+
+    <p>The architectural lesson is that revocation is a distribution problem more than a cryptographic problem. The signing of the CRL by the issuing authority is mechanical. The hard work is getting the CRL to every verifier in the fleet within a bounded window, against any connectivity profile the deployment has to support. <a href="/blog/pseudonymous-certificates-and-privacy/">Pseudonymous certificates and privacy</a> covers the linkage-based revocation mechanism in more detail.</p>
+
+    <h2 id="convergence">eSIM / V2X / IoT convergence</h2>
+    <p>The three credential-lifecycle architectures most production engineering teams encounter today &mdash; eSIM SGP.32 for IoT connectivity, V2X EA/AA for safety messaging, and embedded IoT identity for the rest of the fleet &mdash; converge architecturally. They solve the same shape of problem under different protocol surfaces.</p>
+
+    <div class="ref-table-wrap">
+    <table style="width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.65;">
+      <thead><tr style="border-bottom:2px solid var(--brand-red);"><th style="text-align:left;padding:10px 12px;">Architectural element</th><th style="text-align:left;padding:10px 12px;">eSIM SGP.32</th><th style="text-align:left;padding:10px 12px;">V2X (ETSI TS 102 941)</th><th style="text-align:left;padding:10px 12px;">IoT mTLS / EST</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Hardware root</strong></td><td style="padding:10px 12px;">eUICC + EUM cert</td><td style="padding:10px 12px;">SE + manufacturer attestation</td><td style="padding:10px 12px;">SE / TPM + device cert</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Identity authority</strong></td><td style="padding:10px 12px;">EUM</td><td style="padding:10px 12px;">EA</td><td style="padding:10px 12px;">Device CA</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Credential authority</strong></td><td style="padding:10px 12px;">SM-DP+</td><td style="padding:10px 12px;">AA</td><td style="padding:10px 12px;">EST CA / operator</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Discovery</strong></td><td style="padding:10px 12px;">SM-DS</td><td style="padding:10px 12px;">Out-of-band</td><td style="padding:10px 12px;">Out-of-band / DNS</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Host-side intermediary</strong></td><td style="padding:10px 12px;">IPA</td><td style="padding:10px 12px;">V2X stack on OBU MCU</td><td style="padding:10px 12px;">EST client library</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Operational credential lifetime</strong></td><td style="padding:10px 12px;">Months to years</td><td style="padding:10px 12px;">Minutes (PC)</td><td style="padding:10px 12px;">Hours to weeks</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Fleet orchestration</strong></td><td style="padding:10px 12px;">eIM (eSIM IoT Manager)</td><td style="padding:10px 12px;">Operator-side PKI</td><td style="padding:10px 12px;">Fleet-management platform</td></tr>
+        <tr><td style="padding:10px 12px;"><strong>Privacy property</strong></td><td style="padding:10px 12px;">N/A</td><td style="padding:10px 12px;">Pseudonymity via EA/AA split</td><td style="padding:10px 12px;">N/A</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The convergence has two practical consequences for the manufacturing line. First, the same silicon can host applets for all three: a single secure element can hold an eUICC, a V2X EC/PC management applet, and an IoT identity applet in parallel, AID-selectable under GlobalPlatform. One personalisation step, one identity story, three independent fleet authorities downstream. Second, the operational lessons transpose. The patterns that emerged from running SGP.22 / SGP.32 at telecom scale &mdash; unattended rotation, mutual-auth profile pull, fleet orchestration via a remote manager &mdash; directly inform V2X PC lifecycle and embedded IoT mTLS lifecycle. See <a href="/references/sgp-32/">the SGP.32 reference</a> for the eSIM side and <a href="/solutions/device-identity-at-scale/">device identity at scale</a> for the cross-architecture treatment.</p>
+
+    <h2 id="audit">Audit and forensics</h2>
+    <p>The personalisation line&rsquo;s defensibility lives in its audit log. Three properties make a log defensible.</p>
+    <ul>
+      <li><strong>Append-only.</strong> No row updates, no deletions. New entries only. Achieved either through a database whose access controls forbid updates or, more strongly, through a hash-chained log file written to immutable storage.</li>
+      <li><strong>Hash-chained.</strong> Each entry contains the hash of the previous entry. Tampering with any past entry invalidates every subsequent hash. A periodic notarisation step writes the most recent hash to an external timestamping authority so that even the log&rsquo;s end cannot be silently truncated.</li>
+      <li><strong>Multi-party signed.</strong> High-assurance lines have each entry signed by the personalisation host&rsquo;s key plus a witness key held by a second operator. Removing the witness signature requires a coordinated insider attack rather than a single compromised host.</li>
+    </ul>
+    <p>What the log contains per injection: per-device serial, AID and key handle of the injected key, operator badge (or shift identifier), HSM session ID, programmer station ID, timestamp, attestation hash, and a hash of the previous entry. If a forensic investigator asks "when was device serial X injected, on what station, by whom, and with what attestation" five years from now, the log answers.</p>
+
+    <h2 id="operational-numbers">Operational numbers from real lines</h2>
+    <p>From production deployments (figures approximate, anonymised):</p>
+    <ul>
+      <li>Personalisation cycle time per device, single SE programmer: 1.5&ndash;3 seconds for a single applet, 4&ndash;8 seconds for a four-applet card.</li>
+      <li>Parallelism: 8&ndash;32 SE programmers per line is typical; throughput scales near-linearly until HSM session limits dominate.</li>
+      <li>HSM session pool: 200&ndash;1000 concurrent sessions for an enterprise-grade cluster; tune per derivation cost.</li>
+      <li>Audit log volume: 1&ndash;3 KB per injection; a year of high-volume production produces tens to hundreds of GB.</li>
+      <li>Yield loss specifically attributable to personalisation: under 0.5% in a stable line; spikes above 1% indicate an HSM session issue, a programmer firmware mismatch, or a wrapping-key rotation problem.</li>
+    </ul>
+    <p>None of these are aspirational. They are the order of magnitude. Plan for them.</p>
+
+    <h2 id="india-context">India context</h2>
+    <p>India hosts manufacturing for multiple device classes covered by this architecture: connected vehicles, smart-meter endpoints, fleet trackers, payment terminals. The Telecom Regulatory Authority of India&rsquo;s Consultation Paper of 30 April 2026 raises questions about how device-identity provisioning should be regulated under the proposed V2X security framework; the paper is a public document, referenced here factually. The architectural answer is the one this piece walks through &mdash; hardware-rooted identity, HSM-backed personalisation, OTA rotation, connectivity-tier-aware revocation &mdash; applied uniformly across V2X and the adjacent device populations a coherent national approach would address together.</p>
+    <p>SGP.32 IoT eSIM deployments and V2X PKI deployments share device populations and architectural patterns. A manufacturer running an Indian personalisation line for connected-vehicle SEs benefits from the same line being able to inject eSIM identity, V2X attestation, and IoT mTLS identity in parallel, under one defensible audit story.</p>
+
+    <h2 id="what-ambisecure-ships">What AmbiSecure ships in this architecture</h2>
+    <ul>
+      <li><a href="/solutions/smart-card-personalization/">HSM-backed personalisation lines</a> &mdash; the manufacturing-time provisioning infrastructure that satisfies the five properties in section 2. SCP03-equivalent wrapping, per-device serialisation, append-only audit logging, multi-station parallelism.</li>
+      <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a> &mdash; the secure-element silicon that the per-device identity is injected into. Underlying SE silicon CC EAL5+ at the chip level.</li>
+      <li><a href="/products/javacard-applets/">JavaCard applets</a> &mdash; the applet platform inside the SE. Supports parallel-resident applets for eSIM, V2X EC/PC management, FIDO, PIV under one GlobalPlatform card manager.</li>
+      <li><a href="/services/javacard-development/">JavaCard development</a> &mdash; custom applet engineering for deployments whose credential-management requirements do not fit an off-the-shelf applet.</li>
+    </ul>
+    <p>The explicit boundary, also documented on the <a href="/trust/">trust page</a>: AmbiSecure does not operate the downstream fleet authorities (V2X EA / AA, eSIM SM-DP+ / SM-DS, IoT EST CA). The personalisation line provides defensible identity to whichever authority the integrator chooses. The lifecycle that follows is a separate engagement.</p>
+
+    <h2 id="implication">Architectural implication</h2>
+    <p>Device identity at scale is not a feature of the secure element. It is a property of the whole provisioning system &mdash; the HSM custody, the personalisation-line discipline, the SE-resident applet logic, the audit log, and the lifecycle authority downstream &mdash; designed together. A well-engineered personalisation line on the wrong silicon is no defence; the best silicon on an undisciplined line is also no defence. The architectural answer is the union, not any one piece.</p>
+    <p>The convergence between V2X, eSIM, and embedded IoT credential lifecycles makes the union increasingly worth designing once. A manufacturer who treats the personalisation line as a single defensible artefact &mdash; serving V2X, eSIM, FIDO, and IoT applets in parallel &mdash; gets economies of scale that no per-product line achieves. The architecture this piece walks through is what makes that union feasible.</p>
+
+    <h2 id="related">Related reading</h2>
+    <ul>
+      <li><a href="/blog/how-v2x-pki-works/">How V2X PKI works</a> &mdash; the downstream V2X authority architecture this line serves.</li>
+      <li><a href="/blog/secure-elements-in-connected-vehicles/">Secure elements in connected vehicles</a> &mdash; the silicon side of the architecture.</li>
+      <li><a href="/blog/pseudonymous-certificates-and-privacy/">Pseudonymous certificates and privacy</a> &mdash; the V2X-specific revocation deep-dive.</li>
+      <li><a href="/blog/credential-lifecycle-management/">Credential lifecycle management</a> &mdash; the general programme-design pattern.</li>
+      <li><a href="/blog/why-software-only-device-trust-fails/">Why software-only device trust fails</a> &mdash; the threat model the architecture answers.</li>
+      <li><a href="/solutions/device-identity-at-scale/">Solution: device identity at scale</a> &middot; <a href="/references/sgp-32/">SGP.32 reference</a> &middot; <a href="/references/etsi-ts-102-941/">ETSI TS 102 941 reference</a>.</li>
+    </ul>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Designing a per-device identity programme at fleet scale?</h2>
+        <p>We will walk the personalisation-line architecture, the HSM-side derivation, the SE-side applet structure, the audit log, and the downstream lifecycle authority integration with your engineering team. Reference designs under NDA.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a><a href="/solutions/smart-card-personalization/" class="btn btn-outline" style="margin-left:8px;">Personalisation solution</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Engage</h3><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/faqs/">FAQs</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/blog-toc.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>

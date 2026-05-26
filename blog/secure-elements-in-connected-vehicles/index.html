@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Secure Elements in Connected Vehicles: OBU, RSU, and the Hardware Root | AmbiSecure</title>
+<meta name="description" content="An engineering view of the secure element in connected vehicles: key isolation, hardware-bound identity, anti-cloning, secure boot, OTA trust anchors. SIM form factor versus telecom service, removable nano-card versus solderable MFF2, TPM vs HSM vs secure element." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/secure-elements-in-connected-vehicles/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Secure Elements in Connected Vehicles: OBU, RSU, and the Hardware Root" />
+<meta property="og:description" content="Key isolation, hardware-bound identity, anti-cloning, secure boot, OTA trust anchors. SIM form factor vs telecom service, removable nano-card vs solderable MFF2, TPM vs HSM vs secure element." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/secure-elements-in-connected-vehicles/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta property="article:published_time" content="2026-05-26" />
+<meta property="article:author" content="AmbiSecure Engineering" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<meta name="audit-yoast-word-max" content="3300" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {"@type":"Question","name":"Why does a connected vehicle need a discrete secure element?","acceptedAnswer":{"@type":"Answer","text":"An OBU and an RSU are field-deployed devices subject to physical access and indefinite attacker dwell time. A private key stored in firmware can be extracted through debug interfaces, flash dumping, or firmware exfiltration; once extracted, the fleet's identity is clonable. A discrete tamper-resistant secure element holds the key inside a boundary that does not expose its contents to firmware or operating system layers, removing the entire firmware-extraction class of attack."}},
+    {"@type":"Question","name":"Does using a SIM-card form factor secure element mean the vehicle has a SIM service?","acceptedAnswer":{"@type":"Answer","text":"No. A 4FF nano-card secure element is the physical form factor; whether it carries an eUICC profile and connects to a mobile network is an entirely separate question. The same form factor can host a FIDO2 applet, a PIV applet, a V2X EC/PC management applet, an eUICC, or several of these in parallel. Form factor and applet content are decoupled."}},
+    {"@type":"Question","name":"What is the difference between removable nano-card and solderable MFF2 form factors?","acceptedAnswer":{"@type":"Answer","text":"The 4FF nano-card form factor is a removable SIM-shape card that can be inserted into a holder, allowing factory or field replacement of the identity. The MFF2 form factor is a solderable surface-mount package (DFN-8 or similar) that becomes a permanent part of the board assembly, suited for unattended industrial deployments where physical access to the device is rare. Same silicon class, different mechanical integration."}},
+    {"@type":"Question","name":"How does a secure element differ from a TPM or an HSM?","acceptedAnswer":{"@type":"Answer","text":"A TPM is a device-bound trust anchor with a TCG-defined command set, typically optimised for platform attestation. An HSM is a high-throughput cryptographic appliance used in datacentres for bulk-signing operations under strict key custody. A secure element is a small, low-power tamper-resistant device optimised for embedded integration with a host MCU, with an APDU command set, a JavaCard runtime in many cases, and a focus on per-device identity rather than platform measurement or bulk crypto."}},
+    {"@type":"Question","name":"What does CC EAL5+ actually certify in this context?","acceptedAnswer":{"@type":"Answer","text":"Common Criteria EAL5+ is a certification of the underlying secure-element silicon at the chip level: the side-channel-hardened design, the tamper-detection mesh, the cryptographic accelerators, the random-number generator. It does not certify the integrated device that the SE is soldered into, the applets running on top, or the system-level deployment. AmbiSecure references CC EAL5+ as a chip-level claim, never as a claim about the AmbiSEC Module integrated product."}},
+    {"@type":"Question","name":"What is signed boot, and where does the secure element fit?","acceptedAnswer":{"@type":"Answer","text":"Signed boot is the property that the host MCU refuses to execute firmware whose signature does not verify against a trusted public key. The secure element holds the verification key inside its tamper boundary; the boot ROM asks the SE 'does this firmware image hash match a signature signed under your key?' before transferring control to the image. Without the SE in this loop, the verification key would live in firmware-modifiable flash, where it could be replaced."}}
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
+    {"@type":"ListItem","position":3,"name":"Secure Elements in Connected Vehicles","item":"https://ambisecure.ambimat.com/blog/secure-elements-in-connected-vehicles/"}
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Secure Elements in Connected Vehicles: OBU, RSU, and the Hardware Root",
+   "description": "An engineering view of the secure element in connected vehicles: key isolation, hardware-bound identity, anti-cloning, secure boot, OTA trust anchors. SIM form factor versus telecom service, removable nano-card versus solderable MFF2, TPM vs HSM vs secure element.",
+   "author": {"@type":"Organization","name":"AmbiSecure Engineering"},
+   "publisher": {"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},
+   "datePublished": "2026-05-26",
+   "dateModified": "2026-05-26",
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/secure-elements-in-connected-vehicles/",
+   "keywords": "secure element, connected vehicle, OBU, RSU, hardware root of trust, key isolation, secure boot, OTA trust, MFF2, nano-card, TPM vs HSM vs secure element, anti-cloning, IoT Security Co-Processor"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Secure Elements in Connected Vehicles</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>Secure Elements &middot; V2X &middot; Hardware</span>
+      <span>Cornerstone</span>
+      <span>Published 2026-05-26</span>
+      <span>Updated 2026-05-26</span>
+      <span>16 min read</span>
+    </div>
+
+    <h1>Secure Elements in Connected Vehicles</h1>
+    <p class="dek">The connected-vehicle threat model is not the laboratory threat model. The device sits in a chassis any owner, mechanic, or attacker can open. The firmware will eventually leak, intentionally or otherwise. The keys cannot live in software. This post walks the hardware root of trust as it actually applies to OBUs and RSUs &mdash; what a secure element does, where it sits, and what changes when the silicon is in MFF2 instead of a nano-card.</p>
+
+    <p>A V2X PKI is only as strong as the boundary that holds its private keys. The architecture documented in <a href="/blog/how-v2x-pki-works/">how V2X PKI works</a> assumes that boundary is a discrete tamper-resistant secure element with hardware key isolation and signed boot. This piece is the hardware side of that assumption: what an SE is, how it differs from neighbouring devices, what the form-factor choices imply, and why none of this is optional in field-deployed mobility hardware.</p>
+
+    <h2 id="why-hardware">Why hardware identity, not software identity</h2>
+    <p>The argument for hardware-rooted identity in connected vehicles compresses into four observations about the operating environment.</p>
+    <ol>
+      <li><strong>Physical access is the default.</strong> An OBU lives inside a vehicle owned, serviced, repaired, modified, and occasionally stolen by parties who are not the OEM. An RSU sits on a pole at a roadside, exposed to weather, vandalism, and unauthorised maintenance. There is no operationally meaningful sense in which an attacker is kept away from the device.</li>
+      <li><strong>Time is on the attacker&rsquo;s side.</strong> A laboratory attacker who has obtained one OBU has indefinite time to extract its firmware, dump its flash, probe its debug interfaces, and analyse its key-storage layout. The defence has to assume the attacker will succeed at any attack that scales linearly with patience.</li>
+      <li><strong>Fleet compromise from one device is the failure mode.</strong> A successful extraction on one OBU, when identity material is software-stored, yields the cryptographic technique used across the fleet. The marginal cost of compromising the second OBU is near zero. Hardware identity inverts this: every device requires its own attack on its own silicon, with no scaling discount.</li>
+      <li><strong>Verification is local.</strong> A vehicle on PC5 sidelink verifies safety messages from neighbours with no network round-trip. There is no real-time policy enforcement to fall back on if a key was extracted yesterday. The protection has to be at the key-storage layer, before it leaks.</li>
+    </ol>
+    <p>This is treated in more detail in <a href="/blog/why-software-only-device-trust-fails/">why software-only device trust fails</a>; the conclusion is that the threat model the architecture was designed against rules out software-only identity.</p>
+
+    <h2 id="what-an-se-is">What a secure element actually is</h2>
+    <p>A secure element is a small, low-power, tamper-resistant integrated circuit designed to hold cryptographic keys and perform cryptographic operations on them without ever exposing the keys to anything outside its boundary. It is not a coprocessor in the general-purpose sense; it is a key-custody and cryptographic-execution device with a narrowly defined command surface.</p>
+
+    <pre><code><span class="c">// Anatomy of a discrete secure element</span>
+                ┌───────────────────────────────────┐
+                │     Tamper boundary               │
+                │  ┌─────────────────────────────┐  │
+                │  │  CPU + secure RAM           │  │
+                │  │  (executes JavaCard /       │  │
+                │  │   native applet code)       │  │
+                │  └─────────────────────────────┘  │
+                │  ┌─────────────────────────────┐  │
+                │  │  Crypto accelerators        │  │
+                │  │  (AES, ECC P-256/P-384,     │  │
+                │  │   RSA, SHA, TRNG)           │  │
+                │  └─────────────────────────────┘  │
+                │  ┌─────────────────────────────┐  │
+                │  │  Non-volatile key store     │  │
+                │  │  (per-applet, isolated)     │  │
+                │  └─────────────────────────────┘  │
+                │  ┌─────────────────────────────┐  │
+                │  │  Sensors: voltage, clock,   │  │
+                │  │  temperature, light,        │  │
+                │  │  glitch detection           │  │
+                │  └─────────────────────────────┘  │
+                │   Mesh, side-channel hardening    │
+                └───────────────┬───────────────────┘
+                                │  ISO 7816 / I²C / SPI
+                                ▼
+                        ┌───────────────┐
+                        │   Host MCU    │  ← runs application firmware
+                        └───────────────┘</code></pre>
+
+    <p>Four properties distinguish a secure element from a general-purpose microcontroller, and each of them maps to one of the threats above.</p>
+    <ul>
+      <li><strong>Tamper resistance.</strong> Side-channel-hardened analog design, active mesh, voltage and clock monitors, glitch detectors. Common Criteria EAL5+ at the chip level is the public mark of this body of work &mdash; the underlying secure-element silicon in AmbiSEC Module carries that certification.</li>
+      <li><strong>Key isolation.</strong> Private keys are generated inside the boundary, never leave it, and are referenced by handle (e.g. "key 0x03") rather than by value. The host MCU never holds the key. A compromised host firmware cannot exfiltrate what it never had access to.</li>
+      <li><strong>Attestation.</strong> The SE can prove its identity to a remote authority before being trusted with a credential. The attestation signature is generated by a manufacturer-injected key inside the boundary. The Enrolment Authority in V2X relies on exactly this to decide whether a fresh device may enrol.</li>
+      <li><strong>Signed boot enforcement.</strong> The host MCU starts only if the firmware image&rsquo;s signature verifies against a key the SE exposes. Modified images stop at boot, before they can interact with anything else.</li>
+    </ul>
+    <p>The <a href="/technologies/secure-elements/">secure elements technology page</a> covers the silicon class in broader engineering detail.</p>
+
+    <h2 id="form-factors">Form factors: nano-card vs MFF2</h2>
+    <p>Same silicon class, different mechanical packaging. The choice drives factory-line cost, field-replacement options, and integration complexity. Three form factors matter in connected-mobility deployments.</p>
+
+    <h3>Removable 4FF nano-card</h3>
+    <p>The smallest SIM form factor (12&nbsp;&times;&nbsp;9&nbsp;mm), inserted into a holder on the host PCB. Used where the identity may need to be replaced in the field without replacing the entire device: roadside units that are serviced, fleet vehicles transferred between operators, lab development hardware. The mechanical holder adds BOM cost; the operational flexibility is the trade-off.</p>
+
+    <h3>Solderable MFF2 (DFN-8)</h3>
+    <p>A surface-mount package, soldered to the board at SMT line. Tamper-resistant by mechanical integration: physically removing the SE damages the board. The form factor automotive OEMs and industrial integrators choose for unattended deployments where the identity is intended to last the device lifetime. AmbiSecure ships both removable and solderable forms across its IoT Security Co-Processor product line.</p>
+
+    <h3>Integrated SE (iSIM / iSE)</h3>
+    <p>The secure element implemented as a hardened IP block inside the host MCU or modem SoC. Lower BOM cost, more constrained tamper boundary (the boundary is now whatever the SoC vendor implements). Suitable where supply-chain depth allows the OEM to trust the SoC vendor&rsquo;s integration. Less commonly the right answer for connected-vehicle deployments today; the discrete SE remains the conservative default.</p>
+
+    <p>The choice between these is not a security ranking &mdash; all three can satisfy the V2X threat model. It is a procurement and lifecycle decision. The nano-card is the most flexible; the MFF2 is the most automotive-friendly; the iSE is the most integrated. AmbiSecure&rsquo;s default for V2X integrations is MFF2 because the typical deployment is "soldered to an OBU board for ten years".</p>
+
+    <h2 id="form-factor-vs-service">Form factor is not service</h2>
+    <p>One persistent confusion worth addressing directly: the 4FF nano-card form factor is not a SIM service. The shape of the card is what people see; the contents of the card are what matters. The same physical 4FF package can carry:</p>
+    <ul>
+      <li>A FIDO2 / WebAuthn applet (no telecom service involved).</li>
+      <li>A PIV applet (government identity, no telecom service).</li>
+      <li>A V2X EC/PC management applet (no telecom service).</li>
+      <li>An eUICC carrying one or more operator profiles (yes, telecom service &mdash; via SGP.22 or SGP.32 RSP).</li>
+      <li>Several of the above in parallel, AID-selectable, on a multi-applet GlobalPlatform 2.3.1 card.</li>
+    </ul>
+    <p>The applet stack inside the SE is what determines what the SE does. The form factor is a packaging choice. <a href="/blog/sim-based-fido2-authenticators/">Embedded secure-element FIDO2 authenticators</a> covers this in detail for the FIDO-on-SIM case; the same architectural point applies to V2X-on-SIM.</p>
+
+    <h2 id="key-isolation">Key isolation in practice</h2>
+    <p>Key isolation is what makes hardware identity actually hardware identity. The operational pattern is straightforward and almost identical across applets.</p>
+
+    <pre><code><span class="c">// Host MCU asks the SE to sign a V2X message (illustrative)</span>
+host_mcu                                  secure_element
+  │                                       │
+  │  1. Hash V2X message (SHA-256 host    │
+  │     side; cheap, no key involved)     │
+  │                                       │
+  │  2. APDU: SIGN, keyHandle = 0x03,    │
+  │     data = hash                       │
+  ├─────────────────────────────────────►│
+  │                                       │
+  │                                       │ 3. SE retrieves Kpc_priv from
+  │                                       │    isolated key store (handle 0x03)
+  │                                       │
+  │                                       │ 4. SE performs ECDSA-P256 signature
+  │                                       │    using on-chip ECC accelerator
+  │                                       │
+  │  5. APDU response: signature (r, s)  │
+  │◄─────────────────────────────────────┤
+  │                                       │
+  │  6. Host MCU assembles V2X message    │
+  │     + signature on the wire. Never    │
+  │     touched the private key.          │</code></pre>
+
+    <p>The host never possesses the key. A debug interface, a buffer overflow, or a malicious firmware update on the host MCU does not yield key material because the key is not in host memory at any point. The compromised firmware can ask the SE to sign things while it is running, which is a different (and managed) problem &mdash; but the keys do not leak.</p>
+
+    <h2 id="secure-boot">Secure boot and the SE</h2>
+    <p>A V2X OBU has two firmware-trust problems and the SE participates in both.</p>
+
+    <h3>Boot-time integrity</h3>
+    <p>The host MCU&rsquo;s boot ROM hashes the application firmware image and asks the SE to verify the hash against a signature signed by the OEM&rsquo;s release key. The signature-verification key lives inside the SE&rsquo;s isolated key store. If the verification fails, the boot ROM refuses to transfer control. A modified firmware image stops at boot.</p>
+
+    <h3>OTA update integrity</h3>
+    <p>A firmware update arriving over the air (cellular, V2X, or service-bay diagnostic link) is signed by the OEM release key. The host MCU downloads the candidate image, asks the SE to verify the signature, and only commits the update to flash if verification succeeds. Combined with rollback protection (a monotonic version counter inside the SE), this prevents an attacker from downgrading the device to a vulnerable firmware version.</p>
+
+    <p>Without the SE in this loop, the verification key would live in flash that firmware could rewrite &mdash; the chicken-and-egg problem where the thing that verifies firmware integrity is itself firmware. The SE breaks the cycle by holding the verification key outside the host&rsquo;s reach.</p>
+
+    <h2 id="anti-cloning">Anti-cloning by construction</h2>
+    <p>A connected-vehicle deployment fails differently when device identity can be cloned. A cloned OBU presents the same fleet credential as the legitimate one; the PKI cannot distinguish them; safety-message signing power scales with the attacker&rsquo;s clone count. The deployment moves from "one compromised vehicle" to "an attacker who can amplify a hazard signal across geographies they don&rsquo;t occupy".</p>
+    <p>Hardware-bound identity makes cloning a silicon-level attack rather than a software attack. To clone an OBU&rsquo;s identity, an attacker has to extract material from the SE itself &mdash; against active tamper protection, against side-channel-hardened analog circuitry, against per-die randomised key storage. This is not impossible in a well-equipped lab; it is uneconomical at fleet scale because each clone costs as much as the first. The economics, not the impossibility, are the defence.</p>
+
+    <h2 id="comparison">TPM vs HSM vs secure element</h2>
+    <p>Three nearby device classes, often confused. The differences matter in connected-mobility deployments because picking the wrong class produces a hardware-rooted identity story that does not actually fit the threat model.</p>
+
+    <div class="ref-table-wrap">
+    <table style="width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.65;">
+      <thead><tr style="border-bottom:2px solid var(--brand-red);"><th style="text-align:left;padding:10px 12px;">Property</th><th style="text-align:left;padding:10px 12px;">TPM</th><th style="text-align:left;padding:10px 12px;">HSM</th><th style="text-align:left;padding:10px 12px;">Secure element</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Typical deployment</strong></td><td style="padding:10px 12px;">PC / server motherboard</td><td style="padding:10px 12px;">Datacentre rack</td><td style="padding:10px 12px;">Embedded device</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Primary purpose</strong></td><td style="padding:10px 12px;">Platform attestation, measured boot</td><td style="padding:10px 12px;">Bulk-signing under split-knowledge custody</td><td style="padding:10px 12px;">Per-device cryptographic identity</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Command surface</strong></td><td style="padding:10px 12px;">TCG TPM 2.0 spec</td><td style="padding:10px 12px;">PKCS#11, KMIP, vendor APIs</td><td style="padding:10px 12px;">ISO 7816-4 APDUs, GP commands, applet AIDs</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Power envelope</strong></td><td style="padding:10px 12px;">Tens of milliwatts</td><td style="padding:10px 12px;">Tens of watts</td><td style="padding:10px 12px;">Single-digit milliwatts</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Form factor</strong></td><td style="padding:10px 12px;">DIP / soldered chip</td><td style="padding:10px 12px;">1U / 2U appliance or PCIe card</td><td style="padding:10px 12px;">Nano-card, MFF2, or integrated</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Tamper resistance</strong></td><td style="padding:10px 12px;">FIPS 140 levels; varies</td><td style="padding:10px 12px;">FIPS 140 Level 3+ commonly</td><td style="padding:10px 12px;">CC EAL4+ to EAL6+ at chip level</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Applet model</strong></td><td style="padding:10px 12px;">Limited; mostly fixed function</td><td style="padding:10px 12px;">Vendor-extensible firmware</td><td style="padding:10px 12px;">JavaCard 3.x, GlobalPlatform 2.3.1</td></tr>
+        <tr><td style="padding:10px 12px;"><strong>Fit for V2X OBU</strong></td><td style="padding:10px 12px;">Partial (no V2X applet ecosystem)</td><td style="padding:10px 12px;">Poor (form factor, power, cost)</td><td style="padding:10px 12px;">Native fit (applet, form factor, certification)</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>The right tool for V2X PKI participation at the device is a discrete secure element. TPMs are excellent for the laptop they are soldered into; HSMs are excellent for the Authorisation Authority running in a datacentre. Neither has the applet ecosystem, the form factor, or the power envelope of a discrete SE for the OBU-side problem. <a href="/blog/secure-element-vs-tpm-vs-hsm/">Secure element vs TPM vs HSM</a> goes deeper into the classification.</p>
+
+    <h2 id="ota-trust">OTA trust anchors</h2>
+    <p>A connected vehicle&rsquo;s software composition changes over its lifetime. The secure element is the trust anchor that makes this safe.</p>
+    <ul>
+      <li><strong>OEM release key.</strong> Lives in the SE&rsquo;s key store. Used to verify firmware-update signatures.</li>
+      <li><strong>V2X PKI trust anchors.</strong> The Root CA public keys from the current CTL live in the SE. The trust anchor set evolves over time as the CTL is updated; the SE-side applet handles the update under a separate signing key.</li>
+      <li><strong>Manufacturer attestation key.</strong> Injected at factory, signed by the OEM CA, used by the SE during EA enrolment. Never rotated; the device&rsquo;s lifetime identity anchor.</li>
+      <li><strong>Per-device device key.</strong> Generated inside the SE; used to derive operational credentials. Never leaves the boundary.</li>
+    </ul>
+    <p>Together, these keys are what allow a vehicle&rsquo;s software composition to evolve safely over a decade in the field. The hardware does not change; the trust material does, under cryptographic continuity.</p>
+
+    <h2 id="automotive-environment">Automotive operating environment</h2>
+    <p>One detail that distinguishes connected-mobility SE selection from enterprise SE selection: the operating range. An OBU in a vehicle sees temperatures from &minus;40&deg;C in cold climates to +105&deg;C inside a parked engine bay. An RSU on an Indian highway sees +85&deg;C ambient. The SE silicon has to sustain the cryptographic-throughput requirement (10 Hz ECDSA-P256 signatures, ECDH for session establishment, periodic PC batch operations) across that range, for the design life of the device.</p>
+    <p>Not every SE silicon class meets this requirement. The IoT Security Co-Processor product line specifies an automotive-temperature variant precisely because this is where ordinary commercial-grade SE silicon stops working. The hardware constraint translates directly into a silicon-selection constraint that the rest of the architecture relies on.</p>
+
+    <h2 id="implication">Architectural implication</h2>
+    <p>The case for hardware-rooted V2X identity is not "use a secure element because it is more secure". The case is sharper than that. The V2X PKI architecture documented in <a href="/blog/how-v2x-pki-works/">how V2X PKI works</a> &mdash; the Enrolment Authority, the Authorisation Authority, the Pseudonymous Certificate lifecycle, the offline-trust property &mdash; was designed against a threat model that assumes hardware binding. Take the SE out and the architecture does not gracefully degrade; it fails in specific predictable ways:</p>
+    <ul>
+      <li>The EA cannot reliably attest a device; any verification can be spoofed by an attacker who extracted the attestation key from firmware.</li>
+      <li>PCs can be cloned across the fleet; one extracted batch becomes thousands of valid signers.</li>
+      <li>Signed boot is bypassable; modified firmware can be flashed onto stolen devices and joined back to the fleet.</li>
+      <li>Revocation only works against well-behaved attackers; a compromised device that does not consult the CRL keeps signing forever.</li>
+    </ul>
+    <p>Hardware identity is not an enhancement to the V2X PKI. It is the assumption the PKI was designed to rely on. The secure element is the architectural component that satisfies the assumption.</p>
+
+    <h2 id="what-ambisecure-ships">What AmbiSecure ships</h2>
+    <ul>
+      <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor (AmbiSEC Module)</a> &mdash; the secure-element silicon platform for V2X OBU / RSU integrations. Removable nano-card and solderable MFF2 form factors. Automotive operating range. Underlying secure-element silicon CC EAL5+ at the chip level.</li>
+      <li><a href="/products/javacard-applets/">JavaCard applets</a> &mdash; the applet platform inside the SE; ships with FIDO2, PIV, OpenPGP applets and supports custom V2X EC/PC management applets.</li>
+      <li><a href="/services/javacard-development/">JavaCard development</a> &mdash; custom applet engineering for the OBU-specific certificate-management logic.</li>
+      <li><a href="/solutions/smart-card-personalization/">HSM-backed personalisation lines</a> &mdash; the manufacturing-time provisioning infrastructure that makes the per-device attestation key injection defensible.</li>
+    </ul>
+    <p>What AmbiSecure does not do: operate the V2X PKI, ship turnkey OBUs or RSUs, or claim ISO 26262 / ASPICE certification of the integrated AmbiSEC Module product. The boundary is documented on the <a href="/trust/#v2x-its">trust page</a>.</p>
+
+    <h2 id="related">Related reading</h2>
+    <ul>
+      <li><a href="/blog/how-v2x-pki-works/">How V2X PKI works</a> &mdash; the architecture the SE participates in.</li>
+      <li><a href="/blog/why-software-only-device-trust-fails/">Why software-only device trust fails</a> &mdash; the threat model in detail.</li>
+      <li><a href="/blog/device-identity-at-manufacturing-scale/">Device identity at manufacturing scale</a> &mdash; the factory provisioning side.</li>
+      <li><a href="/blog/secure-element-vs-tpm-vs-hsm/">Secure element vs TPM vs HSM</a> &mdash; the device-class comparison.</li>
+      <li><a href="/technologies/secure-elements/">Secure elements technology page</a> &middot; <a href="/products/iot-security-coprocessor/">IoT Security Co-Processor product</a> &middot; <a href="/references/ieee-1609-2/">IEEE 1609.2 reference</a>.</li>
+    </ul>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Selecting silicon for a V2X OBU or RSU programme?</h2>
+        <p>We will walk through the form-factor trade-offs, the SE-side applet structure, the personalisation-line requirements, and the operating-temperature spec with your hardware lead. Reference designs under NDA.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a><a href="/products/iot-security-coprocessor/" class="btn btn-outline" style="margin-left:8px;">Co-Processor spec</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Engage</h3><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/faqs/">FAQs</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/blog-toc.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>

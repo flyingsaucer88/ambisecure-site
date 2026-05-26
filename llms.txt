@@ -116,8 +116,15 @@ V2X / ITS PKI tools:
 
 ## Engineering blog
 
-- 26 modern cornerstones (2026): WebAuthn attestation, passkeys, MFA, JavaCard applet development, secure element vs TPM vs HSM, DESFire EV1/2/3, transit validators, IoT identity, ePassport issuance, embedded secure-element FIDO2, PIV vs USB vs embedded SE, secure mail / PAdES, and more.
+- 31 modern cornerstones (2026): WebAuthn attestation, passkeys, MFA, JavaCard applet development, secure element vs TPM vs HSM, DESFire EV1/2/3, transit validators, IoT identity, ePassport issuance, embedded secure-element FIDO2, PIV vs USB vs embedded SE, secure mail / PAdES, V2X PKI, pseudonymous certificates, manufacturing-scale provisioning, and more.
 - 24 earlier engineering pieces (2017–2025) at [/blog/archive/](https://ambisecure.ambimat.com/blog/archive/), kept for engineering reference and cross-linked forward to current coverage.
+
+V2X / ITS engineering cornerstones (2026-05-26):
+- [How V2X PKI Works](https://ambisecure.ambimat.com/blog/how-v2x-pki-works/): Root CA, EA, AA, EC, PC, HashedId8, Butterfly Key Expansion, CRL / CTL distribution. IEEE 1609.2 + ETSI TS 102 941 in engineering depth.
+- [Secure Elements in Connected Vehicles](https://ambisecure.ambimat.com/blog/secure-elements-in-connected-vehicles/): key isolation, OBU / RSU integration, signed boot, anti-cloning, OTA trust anchors. Nano-card vs MFF2 form factors. TPM / HSM / SE comparison.
+- [Pseudonymous Certificates and Privacy in V2X](https://ambisecure.ambimat.com/blog/pseudonymous-certificates-and-privacy/): unlinkability, rotation cadence, Butterfly Key Expansion, linkage-based revocation, radio-layer hygiene.
+- [Device Identity at Manufacturing Scale](https://ambisecure.ambimat.com/blog/device-identity-at-manufacturing-scale/): personalisation line, HSM-backed SCP03 custody, OTA credential rotation, revocation across connectivity tiers, V2X / eSIM / IoT lifecycle convergence.
+- [Why Software-Only Device Trust Fails](https://ambisecure.ambimat.com/blog/why-software-only-device-trust-fails/): firmware extraction, key cloning, replay, fleet-scale compromise. Software vs TPM vs SE against four threat classes.
 
 ## Case studies (anonymised)
 

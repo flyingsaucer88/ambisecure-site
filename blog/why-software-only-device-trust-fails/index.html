@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Why Software-Only Device Trust Fails: Firmware Extraction, Key Cloning, Fleet Compromise | AmbiSecure</title>
+<meta name="description" content="An engineering walk-through of the threat model that rules out software-only device identity in field-deployed hardware: firmware extraction, key cloning, replay, fleet-scale compromise. Comparison of software-only, TPM, and secure element against the threats. Why connected vehicles, industrial IoT, and edge infrastructure converge on hardware-backed identity." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/why-software-only-device-trust-fails/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Why Software-Only Device Trust Fails" />
+<meta property="og:description" content="Firmware extraction, key cloning, replay, fleet-scale compromise — the threat model that rules out software-only device identity in field-deployed hardware. Software vs TPM vs secure element comparison." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/why-software-only-device-trust-fails/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta property="article:published_time" content="2026-05-26" />
+<meta property="article:author" content="AmbiSecure Engineering" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<meta name="audit-yoast-word-max" content="3300" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {"@type":"Question","name":"What is software-only device trust?","acceptedAnswer":{"@type":"Answer","text":"An architecture in which a device's cryptographic identity — its private keys, attestation material, signing operations — lives entirely inside the host MCU's firmware and flash, without isolation from the application firmware or operating system. The keys may be encrypted at rest using a key also held in firmware, but every byte the system needs to operate is reachable by host code at some point. This is the architecture that fails predictably in field-deployed hardware."}},
+    {"@type":"Question","name":"Why is software-only trust a problem in field-deployed devices specifically?","acceptedAnswer":{"@type":"Answer","text":"Field-deployed devices are subject to physical access by parties who are not the OEM — owners, mechanics, attackers, repair shops. Time is on the attacker's side: a laboratory attacker who obtains one device has indefinite dwell time to extract its firmware, dump its flash, and analyse its key storage. The mitigations that work for cloud-hosted code (sandboxing, runtime isolation, network controls) do not apply to a device an attacker can disassemble on a workbench."}},
+    {"@type":"Question","name":"What does 'firmware extraction' actually mean operationally?","acceptedAnswer":{"@type":"Answer","text":"Recovering the readable contents of a device's flash memory, either by reading it through a debug interface that was left enabled or insufficiently locked, by reading external SPI flash with a logic analyser or bench programmer, or by physically decapsulating the MCU and reading the on-die flash. Once recovered, the firmware can be analysed to find the cryptographic key material, the key-derivation logic, and any operational secrets the firmware needs to function."}},
+    {"@type":"Question","name":"How does a secure element prevent this?","acceptedAnswer":{"@type":"Answer","text":"By moving the key material into a separate tamper-resistant chip whose internal contents are not exposed to firmware. The host MCU asks the secure element to sign or decrypt; the SE performs the operation inside its tamper boundary and returns the result. The host never holds the private key. An attacker who extracts the host firmware finds APDU command sequences and key handles — references to keys, not the keys themselves. The class of attack 'extract firmware → recover keys' becomes 'extract firmware → discover that the keys are not there'."}},
+    {"@type":"Question","name":"Doesn't TPM also keep keys out of the host firmware?","acceptedAnswer":{"@type":"Answer","text":"Yes, with caveats. A TPM is a hardware-rooted trust device with its own protected key store. The TPM ecosystem evolved primarily around platform attestation and measured boot for desktop and server systems; its applet model, form factor, and power envelope do not always fit embedded V2X and IoT contexts. A discrete secure element typically offers a JavaCard runtime, smaller power envelope, ISO 7816 / I²C / SPI interfaces, and an applet ecosystem aligned with smart-card and embedded use. For connected-vehicle OBUs and constrained IoT endpoints, the secure element is usually the right answer."}},
+    {"@type":"Question","name":"What about post-quantum cryptography — does that change the picture?","acceptedAnswer":{"@type":"Answer","text":"It changes which algorithms run inside the boundary, not whether a boundary is needed. The post-quantum migration replaces ECDSA / RSA with lattice-based signatures (CRYSTALS-Dilithium, FALCON) and KEMs (CRYSTALS-Kyber). The threat model that drives hardware-rooted identity — physical access, firmware extraction, fleet-scale cloning — is independent of which signature scheme is in use. A post-quantum software-only deployment fails for the same reasons a classical software-only deployment fails."}}
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
+    {"@type":"ListItem","position":3,"name":"Why Software-Only Device Trust Fails","item":"https://ambisecure.ambimat.com/blog/why-software-only-device-trust-fails/"}
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Why Software-Only Device Trust Fails",
+   "description": "An engineering walk-through of the threat model that rules out software-only device identity in field-deployed hardware: firmware extraction, key cloning, replay, fleet-scale compromise. Comparison of software-only, TPM, and secure element. Why connected vehicles, industrial IoT, and edge infrastructure converge on hardware-backed identity.",
+   "author": {"@type":"Organization","name":"AmbiSecure Engineering"},
+   "publisher": {"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},
+   "datePublished": "2026-05-26",
+   "dateModified": "2026-05-26",
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/why-software-only-device-trust-fails/",
+   "keywords": "software-only device trust, firmware extraction, key cloning, replay attacks, fleet compromise, hardware root of trust, secure element, TPM, V2X, industrial IoT, edge infrastructure"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Why Software-Only Device Trust Fails</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>Threat Model &middot; Embedded Identity &middot; V2X &middot; IoT</span>
+      <span>Cornerstone</span>
+      <span>Published 2026-05-26</span>
+      <span>Updated 2026-05-26</span>
+      <span>15 min read</span>
+    </div>
+
+    <h1>Why Software-Only Device Trust Fails</h1>
+    <p class="dek">The case for hardware-rooted identity in field-deployed devices is not "hardware is more secure than software". The case is sharper. The threat model that field-deployed devices actually face &mdash; physical access, indefinite attacker dwell time, fleet-scale cloning &mdash; rules out software-only key storage as a defensible architecture. This piece walks the four failure modes that make this the case, why each one is structural rather than implementation-defect, and what changes when the keys move into a tamper-resistant boundary.</p>
+
+    <p>A persistent pattern in deployment reviews: an engineering team builds a connected device with cryptographic identity stored in firmware, ships it, and only learns about the threat model when a security researcher publishes a teardown. By that point the deployment is in the field. This piece is the threat-model walkthrough that should precede the build, not follow the disclosure.</p>
+
+    <h2 id="the-environment">The environment, not the algorithm</h2>
+    <p>The first observation is the one that gets argued against most. Software-only key storage is not insecure because the cryptography is weak. The cryptography is fine; ECDSA-P256 over SHA-256 is well-studied, well-implemented, and resistant to every published attack. The problem is not the algorithm. The problem is where the key lives.</p>
+    <p>A laptop&rsquo;s threat model assumes the device is under the user&rsquo;s control, the OS is patched, and the attacker is on the network. A datacentre server&rsquo;s threat model assumes physical access is controlled by the operator. Both environments leave the cryptographic-key-storage problem easy enough that software-only solutions work in practice.</p>
+    <p>A connected-vehicle OBU, a smart-meter endpoint, an industrial sensor node on a factory floor, a roadside unit on a pole &mdash; none of these environments share the laptop&rsquo;s or the server&rsquo;s assumptions. The device is physically reachable by parties who are not the operator. The attacker has time. The mitigations that work in controlled environments do not transpose. This is the environmental gap the threat model traces.</p>
+
+    <h2 id="four-modes">The four failure modes</h2>
+    <p>Software-only identity in field-deployed devices fails in four predictable, well-documented ways. Each one has produced shipped-and-recalled deployments at multiple companies in the last decade. None of them are theoretical.</p>
+
+    <h3>1. Flash extraction</h3>
+    <p>The most direct attack. The device&rsquo;s firmware and flash contents are read out by an attacker with bench equipment. Three vectors recur.</p>
+    <ul>
+      <li><strong>Debug interface left exposed.</strong> JTAG, SWD, or vendor-specific debug pins that were used during development and never permanently locked. The attacker connects a debug probe and reads the flash through it. Lock bits help; they are not always set correctly, and several MCU families have published vulnerabilities in their lock-bit enforcement.</li>
+      <li><strong>External SPI flash.</strong> Many cost-sensitive designs put the firmware in an external SPI flash chip rather than the MCU&rsquo;s internal flash. An attacker with a SOIC clip and a logic analyser reads the flash in-situ. If the firmware is encrypted, the decryption key is in the MCU; if the MCU is also extractable, both halves of the puzzle are available.</li>
+      <li><strong>Decapsulation.</strong> The advanced case. An attacker with a chemical-etch workbench exposes the MCU die and reads the on-die flash directly through optical or electrical probing. Expensive, but a one-time cost that yields fleet-wide cryptographic material if the keys are software-stored and shared.</li>
+    </ul>
+    <p>A private key stored as bytes in flash &mdash; even encrypted under a flash-resident key &mdash; is bytes in an attacker&rsquo;s possession after a successful extraction. The mitigations available in software (key derivation from a fused root, encryption-at-rest, anti-rollback counters) all assume the firmware is the unit of protection. If the firmware can be read, the unit of protection is wrong.</p>
+
+    <h3>2. Firmware extraction with key reuse</h3>
+    <p>The compounding failure. Extracting one device&rsquo;s firmware reveals the cryptographic patterns the entire fleet uses. If the per-device key is derived from a shared master in firmware &mdash; the design pattern many cost-sensitive deployments use to avoid factory-side per-device key injection &mdash; the firmware extract yields the master. One device&rsquo;s firmware now provides the cryptographic key to clone, impersonate, or sign on behalf of every other device in the deployment.</p>
+    <p>The variants of this pattern are common enough to enumerate:</p>
+    <ul>
+      <li>Shared master in firmware, per-device key derived from MAC address. (Master leak yields whole fleet.)</li>
+      <li>Shared signing key for OTA update verification. (Key leak yields ability to push any firmware to any device.)</li>
+      <li>Shared session-establishment key for cloud telemetry. (Key leak yields ability to impersonate any device to the back end.)</li>
+      <li>Single attestation key for the entire product line. (Key leak yields ability to enrol any forged device into the fleet PKI.)</li>
+    </ul>
+    <p>Each of these has shipped in production deployments. Each has been published. None of them are bugs that a careful firmware engineer would catch on review; they are architectural decisions made because the alternative (per-device factory injection under HSM custody) was not in the original BOM. The architecture itself is the failure.</p>
+
+    <h3>3. Key cloning</h3>
+    <p>A device with software-stored identity can be cloned: the bytes are copied to a second device, and now two devices present the same cryptographic identity. Three operational consequences follow.</p>
+    <ul>
+      <li><strong>Forged participation.</strong> A cloned V2X OBU broadcasts safety messages signed under a credential the PKI accepts. The receiving fleet has no architectural way to distinguish the cloned signer from the original.</li>
+      <li><strong>Geographic amplification.</strong> A cloned device can sign messages in a geography the original does not occupy. A single attacker amplifies a hazard signal across regions it physically cannot reach.</li>
+      <li><strong>Revocation paralysis.</strong> The operator cannot revoke the cloned credential without revoking the original. If both are still doing something legitimate, revocation is destructive.</li>
+    </ul>
+    <p>Hardware binding inverts this property. Cloning a hardware-bound identity requires copying the silicon, which is not a software-attack-class operation. The economics, not the impossibility, are the defence.</p>
+
+    <h3>4. Fleet compromise from a single device</h3>
+    <p>The compounding failure mode that turns one extraction into a deployment-ending incident. A successful extract on one device, given software-only identity with shared cryptographic structure, yields the cryptographic technique used across the fleet. The marginal cost of compromising the second device is near zero. Whether the fleet is one device or one million, the per-device attack cost is the cost of one attack.</p>
+    <p>Hardware-bound identity has the opposite property. Every device requires its own attack, against its own silicon, with no scaling discount. The aggregate cost of compromising N devices is N times the cost of one attack, indefinitely. This is the single most important architectural property hardware binding provides &mdash; it is the property that takes deployment-scale risk from "unbounded" to "bounded by per-device attack economics".</p>
+
+    <pre><code><span class="c">// Software-only vs hardware-bound: attack cost vs fleet size</span>
+
+  Cumulative attack cost
+       │
+   $$$ │            ┌── hardware-bound:
+       │            │   linear in fleet size
+       │            │   (each device its own attack)
+       │           ╱
+       │          ╱
+       │         ╱
+       │        ╱
+       │       ╱
+       │      ╱
+       │     ╱
+       │    ╱─── software-only:
+       │   ╱     near-flat after first extract
+       │  ╱      (one attack → fleet)
+       │ ╱
+       │╱
+       └────────────────────────────────────► Fleet size
+
+      The slopes are the architecture.</code></pre>
+
+    <h2 id="where-software-trust-survives">Where software-only trust does survive</h2>
+    <p>Worth saying explicitly: software-only key storage is not always wrong. Three environments where it is the right architectural choice.</p>
+    <ul>
+      <li><strong>Server-side keys in a datacentre with controlled physical access.</strong> The physical-access assumption holds; the threat model is network-side; software-only TLS keys are fine for the application server tier. (The CA underneath them usually still sits behind an HSM.)</li>
+      <li><strong>Ephemeral session keys generated and consumed entirely within one runtime.</strong> A TLS session key derived for a single connection lives a few seconds and is wiped when the connection closes. Hardware backing adds nothing.</li>
+      <li><strong>Devices in physically-secure operational contexts.</strong> A networking appliance in a locked cabinet on premises has a different threat model from a meter on a customer&rsquo;s wall. Software-only identity may be defensible in the first case.</li>
+    </ul>
+    <p>The unifying property of "where software-only works" is that the physical-access assumption holds. In V2X, industrial IoT, smart metering, and edge infrastructure, it does not. That is where the architectural conclusion changes.</p>
+
+    <h2 id="comparison">Software-only vs TPM vs secure element</h2>
+    <p>The three architectural options for "where does the key live", scored against the four threats above.</p>
+
+    <div class="ref-table-wrap">
+    <table style="width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.65;">
+      <thead><tr style="border-bottom:2px solid var(--brand-red);"><th style="text-align:left;padding:10px 12px;">Property / threat</th><th style="text-align:left;padding:10px 12px;">Software-only</th><th style="text-align:left;padding:10px 12px;">TPM</th><th style="text-align:left;padding:10px 12px;">Secure element</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Key isolation from host firmware</strong></td><td style="padding:10px 12px;">No</td><td style="padding:10px 12px;">Yes</td><td style="padding:10px 12px;">Yes</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Tamper resistance at chip level</strong></td><td style="padding:10px 12px;">No</td><td style="padding:10px 12px;">Varies (FIPS 140)</td><td style="padding:10px 12px;">Yes (CC EAL4+ to EAL6+)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Resists flash extraction</strong></td><td style="padding:10px 12px;">No</td><td style="padding:10px 12px;">Yes</td><td style="padding:10px 12px;">Yes</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Resists shared-key fleet leak</strong></td><td style="padding:10px 12px;">No (architectural)</td><td style="padding:10px 12px;">Yes (per-device root key)</td><td style="padding:10px 12px;">Yes (per-device root key)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Resists cloning by file copy</strong></td><td style="padding:10px 12px;">No</td><td style="padding:10px 12px;">Yes</td><td style="padding:10px 12px;">Yes</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Per-device attack cost scales with fleet</strong></td><td style="padding:10px 12px;">No</td><td style="padding:10px 12px;">Yes</td><td style="padding:10px 12px;">Yes</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Applet ecosystem for embedded use</strong></td><td style="padding:10px 12px;">Custom firmware</td><td style="padding:10px 12px;">Limited (TCG-defined)</td><td style="padding:10px 12px;">JavaCard, GlobalPlatform</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Form factor for OBU / IoT</strong></td><td style="padding:10px 12px;">None (in MCU)</td><td style="padding:10px 12px;">DIP / soldered</td><td style="padding:10px 12px;">Nano-card, MFF2, iSE</td></tr>
+        <tr><td style="padding:10px 12px;"><strong>Power envelope</strong></td><td style="padding:10px 12px;">N/A</td><td style="padding:10px 12px;">Tens of milliwatts</td><td style="padding:10px 12px;">Single-digit milliwatts</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>For server-class and PC-class devices, TPMs are the dominant deployed answer. For embedded V2X, IoT, smart-meter, and edge devices, the secure element is the dominant answer because of applet ecosystem, form factor, and power envelope. <a href="/blog/secure-element-vs-tpm-vs-hsm/">Secure element vs TPM vs HSM</a> goes deeper into the device-class boundaries.</p>
+
+    <h2 id="three-deployment-domains">Three deployment domains where the threat is concrete</h2>
+
+    <h3>V2X / connected mobility</h3>
+    <p>An OBU broadcasts position, speed, and signed safety messages at 10 Hz on PC5 sidelink. Software-only identity in this context produces every failure mode at once: cloned OBUs amplify hazard signals across geographies they don&rsquo;t occupy; extracted firmware yields the cryptographic technique for the entire fleet; the PKI&rsquo;s revocation channel cannot tell the cloned OBU from the original. The V2X PKI architecture described in <a href="/blog/how-v2x-pki-works/">how V2X PKI works</a> was designed against this threat model and assumes hardware binding as a baseline; software-only deployment of V2X identity defeats the architecture it sits inside.</p>
+
+    <h3>Industrial IoT</h3>
+    <p>A sensor node on a factory floor, a vibration monitor on a turbine, a level sensor on a tank farm. The device is reachable by anyone with maintenance access. The fleet is in the thousands or tens of thousands. The credentials authenticate the device to a cloud telemetry endpoint and authorise it to actuate (open a valve, change a setpoint). A single extracted credential authorises any forged device to issue commands. The mitigations from cloud-side (rate limiting, anomaly detection) help; they do not replace the hardware boundary that should have held the key.</p>
+
+    <h3>Edge infrastructure</h3>
+    <p>Smart-meter endpoints, electric-vehicle chargers, transit validators, kiosk hardware. Devices owned by infrastructure operators but sited on customer premises or in public locations. Threat actors include both opportunistic local attackers and sophisticated supply-chain or insider threats. The credential authenticates the device to the operator&rsquo;s back end and (in many cases) authorises a financial transaction. Software-only credentials in this domain are the recurring root cause of "merchant terminals cloned and used to steal customer credentials" incidents that periodically make security news.</p>
+
+    <h2 id="replay">Replay and downgrade</h2>
+    <p>Two specific attack patterns worth calling out because they are often confused with "the cryptography failed" when in fact they are pure environmental failures.</p>
+
+    <h3>Replay</h3>
+    <p>An attacker captures a valid signed message and replays it later, in a different context, where it looks valid again. In software-only systems with no anti-replay state (or with anti-replay state stored in attacker-rewriteable flash), replay is a one-line attack. In hardware-bound systems with anti-replay counters held inside the secure element, replay requires defeating the counter, which is a tamper-attack-class operation.</p>
+
+    <h3>Downgrade</h3>
+    <p>An attacker convinces the device to accept an old firmware version (or an old protocol version) with known vulnerabilities. In software-only systems, the rollback counter is in attacker-rewriteable flash. In hardware-bound systems, the monotonic counter is inside the secure element. The downgrade still has to convince the SE to accept a lower version; the SE checks against its internal counter and refuses.</p>
+    <p>Both replay and downgrade are "the cryptography is fine; the storage of the anti-replay or version state is the wrong place". Hardware binding fixes them by putting the state in the right place.</p>
+
+    <h2 id="economics">The economic argument</h2>
+    <p>Engineers tend to argue this on technical grounds. The procurement-facing version is shorter: hardware-rooted identity makes fleet compromise expensive in a way the deployment&rsquo;s threat model can absorb.</p>
+    <p>Consider two parallel deployments of a million devices each, one with software-only identity and one with hardware-bound identity. An attacker decides to compromise the fleet.</p>
+    <ul>
+      <li><strong>Software-only fleet.</strong> Attacker buys one device, extracts firmware (assume $50K of equipment plus a few weeks of researcher time). The extraction yields cryptographic material that authorises forged participation across the fleet. Cost to compromise one device: ~$50K. Cost to compromise the millionth: also ~$50K, because the first attack&rsquo;s output is reusable.</li>
+      <li><strong>Hardware-bound fleet.</strong> Attacker buys one device, extracts the host firmware (same $50K), and discovers the keys are not in firmware. Per-device silicon attack against the SE: typically $200K&ndash;$500K of equipment plus months of dedicated researcher time, per device, no scaling discount. Cost to compromise one device: ~$300K+. Cost to compromise the millionth: ~$300 trillion+ &mdash; uneconomical at any meaningful attacker scale.</li>
+    </ul>
+    <p>The exact dollar figures vary by silicon class and attacker capability. The structural point does not. Hardware binding moves the deployment from "attacker economics scale with N=1" to "attacker economics scale with N=fleet size". This is the single most important property a fleet operator buys when paying for hardware-rooted identity.</p>
+
+    <h2 id="ota-trust">OTA trust as the second domain</h2>
+    <p>The argument extends naturally to firmware-update trust. A software-only deployment cannot defensibly verify firmware updates: the verification key lives in flash that the firmware itself can rewrite. The chicken-and-egg problem is well-known; the practical resolution is to put the verification key inside the secure element and have the boot ROM ask the SE whether a candidate firmware image&rsquo;s signature verifies before installing it.</p>
+    <p><a href="/blog/secure-elements-in-connected-vehicles/">Secure elements in connected vehicles</a> covers the SE role in secure boot and OTA verification. The architectural point: OTA trust is the second area where the boundary between software and hardware decides whether the deployment&rsquo;s long-term integrity story holds together.</p>
+
+    <h2 id="counterarguments">Counterarguments worth addressing</h2>
+
+    <h3>"Modern MCUs have secure enclaves"</h3>
+    <p>Many do &mdash; ARM TrustZone-M, Cortex-A TrustZone, Espressif&rsquo;s Secure Boot V2 with HMAC keys in eFuses. These are real improvements over flat-firmware designs. They are also typically not certified at chip level for tamper resistance, do not have the applet ecosystem to host V2X / FIDO / PIV identity logic, and integrate the secure boundary into the same silicon that runs the application firmware. They raise the bar; they do not match the discrete-SE bar. For some deployments, that&rsquo;s enough. For V2X OBUs and other high-assurance contexts, it usually is not.</p>
+
+    <h3>"We will encrypt the firmware"</h3>
+    <p>Encrypting the firmware at rest moves the problem rather than solving it. The decryption key is in the MCU; if the MCU is extractable, both halves are recoverable. Firmware encryption raises the cost of casual extraction; it does not change the architectural failure mode against a determined attacker.</p>
+
+    <h3>"We will use obfuscation"</h3>
+    <p>Obfuscation raises the cost of static analysis. It does not move the key out of the firmware. Once the key is in an attacker&rsquo;s memory, the obfuscation is bypassed (the attacker runs the firmware in an emulator and lets it deobfuscate itself). Defence-in-depth has value; defence by obfuscation alone is not a substitute for hardware binding.</p>
+
+    <h3>"Our threat model doesn&rsquo;t include physical access"</h3>
+    <p>For some deployments &mdash; locked-cabinet networking appliances, badged-access-only datacentre hardware &mdash; this is genuinely true. For V2X, IoT, smart metering, payment terminals, and edge infrastructure, the threat model that excludes physical access is the threat model that is wrong, not the threat model that is correct. The deployment&rsquo;s actual environment is the constraint.</p>
+
+    <h2 id="implication">Implication: architecture before implementation</h2>
+    <p>The conclusion this piece converges on is not "use a secure element because secure elements are better". The conclusion is sharper: software-only device identity is an architectural choice that does not survive the threat model field-deployed devices actually face. The choice is not between "harder software" and "easier hardware"; the choice is between "an architecture that fails predictably" and "an architecture that bounds the attacker&rsquo;s economics".</p>
+    <p>The architectural alternative &mdash; hardware-rooted identity in a discrete tamper-resistant secure element, per-device unique keys injected at factory under HSM-backed custody, OTA credential lifecycle layered on top &mdash; is documented across this site. It is not exotic. It is the settled engineering answer to a settled engineering question. The cost is the SE silicon, the personalisation line, and the applet engineering. The cost of getting it wrong is a fleet whose identity story does not survive a single laboratory attack.</p>
+
+    <h2 id="what-ambisecure-ships">What AmbiSecure ships against this threat model</h2>
+    <ul>
+      <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a> &mdash; discrete tamper-resistant secure-element silicon class. Underlying secure-element silicon CC EAL5+ at chip level. The boundary that holds keys out of host firmware.</li>
+      <li><a href="/solutions/smart-card-personalization/">HSM-backed personalisation lines</a> &mdash; per-device unique key injection under split-knowledge custody. The factory-side defence against shared-key fleet leak.</li>
+      <li><a href="/products/javacard-applets/">JavaCard applets</a> &mdash; applet ecosystem for V2X EC/PC management, FIDO, PIV, OpenPGP, eUICC identity. Multi-applet co-residence under GlobalPlatform 2.3.1.</li>
+      <li><a href="/services/javacard-development/">JavaCard development services</a> &mdash; custom-applet engineering for deployments whose credential-management logic does not fit a standard applet.</li>
+    </ul>
+    <p>The explicit boundary, also on the <a href="/trust/">trust page</a>: AmbiSecure provides hardware-rooted identity primitives. AmbiSecure does not operate V2X PKI authorities, does not ship turnkey OBU / RSU products, and does not claim ISO 26262 or ASPICE certification of the integrated AmbiSEC Module.</p>
+
+    <h2 id="related">Related reading</h2>
+    <ul>
+      <li><a href="/blog/secure-elements-in-connected-vehicles/">Secure elements in connected vehicles</a> &mdash; the hardware side of the alternative architecture.</li>
+      <li><a href="/blog/how-v2x-pki-works/">How V2X PKI works</a> &mdash; an architecture explicitly designed against this threat model.</li>
+      <li><a href="/blog/device-identity-at-manufacturing-scale/">Device identity at manufacturing scale</a> &mdash; the factory provisioning side.</li>
+      <li><a href="/blog/secure-element-vs-tpm-vs-hsm/">Secure element vs TPM vs HSM</a> &mdash; the device-class comparison.</li>
+      <li><a href="/blog/why-hardware-backed-identity-matters/">Why hardware-backed identity matters</a> &mdash; the user-identity case for the same architectural point.</li>
+      <li><a href="/technologies/secure-elements/">Secure elements technology page</a> &middot; <a href="/solutions/device-identity-at-scale/">Solution: device identity at scale</a>.</li>
+    </ul>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Reviewing a fielded deployment&rsquo;s identity architecture?</h2>
+        <p>We will walk the existing key-storage architecture, the threat model the deployment was designed against, the migration path to hardware-rooted identity, and the personalisation-line requirements with your engineering team. Reference designs under NDA.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a><a href="/products/iot-security-coprocessor/" class="btn btn-outline" style="margin-left:8px;">Co-Processor spec</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Engage</h3><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/faqs/">FAQs</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/blog-toc.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>
