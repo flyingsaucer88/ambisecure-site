@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>V2X Certificate Chain Validator — AmbiSecure</title>
+<meta name="description" content="Client-side structural validator for IEEE 1609.2 V2X certificate chains. Checks parse success, issuer linkage by HashedId8, validity windows, and supported signature schemes. Cryptographic signature verification not performed." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/v2x-cert-chain-validator/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="V2X Certificate Chain Validator — AmbiSecure" />
+<meta property="og:description" content="Structural validation for IEEE 1609.2 V2X certificate chains: parse, linkage, validity, signature scheme. Client-side only." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/v2x-cert-chain-validator/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/connected-mobility.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure — V2X PKI" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/connected-mobility.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"BreadcrumbList","itemListElement":[
+   {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
+   {"@type":"ListItem","position":2,"name":"Resources","item":"https://ambisecure.ambimat.com/resources/"},
+   {"@type":"ListItem","position":3,"name":"V2X Certificate Chain Validator","item":"https://ambisecure.ambimat.com/resources/tools/v2x-cert-chain-validator/"}
+ ]},
+ {"@type":"SoftwareApplication","name":"V2X Certificate Chain Validator","applicationCategory":"DeveloperApplication","operatingSystem":"Web","url":"https://ambisecure.ambimat.com/resources/tools/v2x-cert-chain-validator/","keywords":"V2X, IEEE 1609.2, ETSI TS 103 097, certificate chain, ITS PKI, HashedId8","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
+]}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">V2X Certificate Chain Validator</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">V2X / ITS utility</span>
+  <h1>V2X Certificate Chain Validator</h1>
+  <p>Walk an IEEE 1609.2 V2X certificate chain end-entity &rarr; intermediate &rarr; root, parse each link, and report on structural consistency. Confirms parse success, issuer linkage by HashedId8 (computed with WebCrypto SHA-256), validity windows, and supported signature schemes. <strong>Structural validation only.</strong> Cryptographic signature verification is not performed by this tool.</p>
+  <div class="tool-meta">
+    <span>Client-side</span><span>WebCrypto SHA-256</span><span>IEEE 1609.2 + ETSI TS 103 097</span><span>Updated 2026-05</span>
+  </div>
+</header>
+
+<div class="tool-shell stacked">
+  <div class="tool-panel">
+    <div class="tool-panel-head">
+      <h2>Input &mdash; chain certificates</h2>
+      <div class="tool-panel-actions">
+        <button class="tool-action tool-action--primary" id="chain-validate">Validate</button>
+        <button class="tool-action" id="chain-load-example">Load example chain</button>
+        <button class="tool-action" id="chain-clear">Clear</button>
+      </div>
+    </div>
+    <div class="tool-options" style="flex-direction:column;gap:14px;">
+      <label style="display:block;">
+        <span style="display:block;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;color:var(--secure-cyan-dark);margin-bottom:4px;">End-entity certificate (PC or EC) &mdash; required</span>
+        <textarea id="chain-input-end" class="hex-input" rows="3" spellcheck="false" autocomplete="off" placeholder="Hex, Base64, or PEM."></textarea>
+      </label>
+      <label style="display:block;">
+        <span style="display:block;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;color:var(--secure-cyan-dark);margin-bottom:4px;">Intermediate certificate (AA / EA / Sub-CA) &mdash; optional</span>
+        <textarea id="chain-input-mids" class="hex-input" rows="3" spellcheck="false" autocomplete="off" placeholder="Hex, Base64, or PEM."></textarea>
+      </label>
+      <label style="display:block;">
+        <span style="display:block;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;color:var(--secure-cyan-dark);margin-bottom:4px;">Root CA certificate &mdash; optional</span>
+        <textarea id="chain-input-root" class="hex-input" rows="3" spellcheck="false" autocomplete="off" placeholder="Hex, Base64, or PEM."></textarea>
+      </label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Validation report</h2></div>
+    <div class="tool-output">
+      <div id="chain-output">
+        <div class="placeholder">Provide one or more certificates above &mdash; the validator will parse each link and check linkage by HashedId8.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="tool-privacy warn">Structural validation only. A green check on linkage means the lower certificate's stated issuer HashedId8 matches the SHA-256 of the upper certificate's bytes &mdash; it does <strong>not</strong> mean the issuer actually signed the certificate. Treat this tool as a structural sanity check, never as a cryptographic gate.</div>
+
+<section class="tool-reference">
+  <h2>What the validator checks &mdash; and what it doesn't</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>What it checks</h3>
+      <ul style="margin:0;padding-left:18px;line-height:1.7;font-size:14.5px;color:var(--brand-grey);">
+        <li>Each certificate parses cleanly against the IEEE 1609.2 schema subset our decoder supports.</li>
+        <li>The lower certificate's <em>issuer</em> field matches the upper certificate's HashedId8 (last 8 bytes of SHA-256 over the upper certificate's bytes).</li>
+        <li>The validity period (Time32 start + Duration) is structurally well-formed.</li>
+        <li>The signature CHOICE selects a supported ECDSA scheme (NIST P-256 / P-384, Brainpool P-256r1 / P-384r1).</li>
+      </ul>
+    </div>
+    <div class="ref-card">
+      <h3>What it does <em>not</em> check</h3>
+      <ul style="margin:0;padding-left:18px;line-height:1.7;font-size:14.5px;color:var(--brand-grey);">
+        <li>Whether the signature on each certificate is cryptographically valid.</li>
+        <li>Whether any certificate in the chain is revoked.</li>
+        <li>Whether the EE certificate's permissions (PSID/SSP) are appropriate for any specific V2X service.</li>
+        <li>Whether the current time falls inside the validity window.</li>
+      </ul>
+    </div>
+    <div class="ref-card">
+      <h3>Privacy</h3>
+      <p>All parsing and SHA-256 hashing happens in your browser. Certificate bytes never leave this page. The WebCrypto SubtleCrypto interface is used for the HashedId8 derivation only.</p>
+    </div>
+  </div>
+
+  <h2>FAQ</h2>
+  <details><summary>Why is HashedId8 derived from SHA-256 of the certificate bytes?</summary>
+    <p>IEEE 1609.2 §6.4.3 defines HashedId8 as the last 8 bytes of the cryptographic hash (SHA-256, or SHA-384 for the larger algorithm family) of the COER-encoded issuer certificate. It is a compact reference to "which certificate is the issuer", small enough to embed in every signed message that uses certificate-digest form (rather than carrying the full issuer certificate). The chain validator computes the same hash over the bytes you supply and compares it against what the lower certificate claims.</p>
+  </details>
+  <details><summary>Why doesn't the tool verify the signature itself?</summary>
+    <p>Signature verification requires the issuer's public verification key, which is extracted from the issuer's <em>verifyKeyIndicator</em> field. That is decodable here, but assembling a real ECDSA verification &mdash; including correct point-decompression for compressed-y curve points, correct hash input domain, and correct handling of implicit certificates' reconstructed public key &mdash; is enough surface that we have explicitly scoped this tool as <em>structural only</em> to avoid offering a false sense of cryptographic validation. Use a conformance test bench (or implement against an ETSI / IEEE published test vector set) for real verification.</p>
+  </details>
+  <details><summary>Can I supply more than 3 levels of chain?</summary>
+    <p>Not in this build. V2X PKI chains are typically 2 or 3 levels (Root CA &rarr; AA &rarr; PC, or Root CA &rarr; EA &rarr; EC). The 3-input form matches that. If you need deeper chains, the underlying parser can handle them &mdash; ping us via <a href="/contact/">contact</a> with a use case.</p>
+  </details>
+
+  <h2>Related</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>IEEE 1609.2 parser</h3><p><a href="/resources/tools/ieee-1609-2-parser/">Full field-tree decoding</a> for a single certificate. Useful for inspecting a chain link in detail before running the validator.</p></div>
+    <div class="ref-card"><h3>V2X PKI reference</h3><p><a href="/technologies/v2x-pki/">Technical companion</a>: certificate format, EC vs PC, Butterfly Key Expansion, India TRAI CP 30/04/2026 context.</p></div>
+    <div class="ref-card"><h3>V2X security architecture</h3><p><a href="/solutions/v2x-security/">Solution view</a>: EA/AA, manufacturing-time provisioning, lifecycle, scope discipline.</p></div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+      <div><h3>Products</h3><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+      <div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+      <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/ieee-1609-2-parser/">IEEE 1609.2 parser</a></li><li><a href="/resources/tools/tlv-parser/">TLV parser</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+      <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+      <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+    </div>
+    <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+  </div>
+</footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/ieee1609-2-coer.js" defer></script>
+<script src="/assets/js/tools/ieee1609-2-examples.js" defer></script>
+<script src="/assets/js/tools/v2x-cert-chain-validator.js" defer></script>
+</body>
+</html>

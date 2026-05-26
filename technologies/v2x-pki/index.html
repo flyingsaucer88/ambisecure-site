@@ -117,7 +117,7 @@
       <tr><th>toBeSigned.verifyKeyIndicator</th><td>CHOICE: <code>verificationKey</code> (PublicVerificationKey) for explicit certs, or <code>reconstructionValue</code> (EccP256CurvePoint) for implicit certs.</td></tr>
       <tr><th>signature (explicit only)</th><td>CHOICE: ecdsaNistP256Signature, ecdsaBrainpoolP256r1Signature, ecdsaNistP384Signature, or ecdsaBrainpoolP384r1Signature.</td></tr>
     </table>
-    <p style="color:var(--brand-grey);font-size:13px;line-height:1.65;margin-top:14px;">A client-side <strong>IEEE 1609.2 certificate parser</strong> is on the AmbiSecure roadmap, matching the existing <a href="/resources/tools/apdu-parser/">APDU</a>, <a href="/resources/tools/tlv-parser/">TLV</a>, and <a href="/resources/tools/atr-parser/">ATR</a> parser tools. Watch this page or the <a href="/resources/">tools index</a>.</p>
+    <p style="color:var(--brand-grey);font-size:13px;line-height:1.65;margin-top:14px;">A client-side <strong><a href="/resources/tools/ieee-1609-2-parser/">IEEE 1609.2 certificate parser</a></strong> is now live, matching the existing <a href="/resources/tools/apdu-parser/">APDU</a>, <a href="/resources/tools/tlv-parser/">TLV</a>, and <a href="/resources/tools/atr-parser/">ATR</a> parsers. A companion <a href="/resources/tools/v2x-cert-chain-validator/"><strong>V2X certificate chain validator</strong></a> performs structural-only chain checks (parse, HashedId8 linkage, validity window, signature scheme).</p>
   </div>
 </section>
 
@@ -217,6 +217,8 @@
       <a href="/solutions/v2x-security/" class="card"><h3>Solution: V2X security</h3><p>How OBU/RSU PKI, EA/AA, pseudonymous certs, and HSM-backed provisioning fit together end-to-end.</p><div class="card-meta">View solution &rarr;</div></a>
       <a href="/industries/connected-mobility/" class="card"><h3>Industry: Connected Mobility</h3><p>Why V2X infrastructure demands hardware-backed identity, with India-context positioning.</p><div class="card-meta">View industry &rarr;</div></a>
       <a href="https://esim.ambimat.com/" class="card" rel="noopener"><h3>Sister: eSIM Initiative</h3><p>SGP.32 telecom-grade credential lifecycle &mdash; the operational parallel for V2X EA/AA.</p><div class="card-meta">esim.ambimat.com &rarr;</div></a>
+      <a href="/resources/tools/ieee-1609-2-parser/" class="card"><h3>Tool: IEEE 1609.2 parser</h3><p>Client-side COER decoder. Paste a V2X certificate in hex / Base64 / PEM and see the labelled field tree.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/resources/tools/v2x-cert-chain-validator/" class="card"><h3>Tool: V2X chain validator</h3><p>Structural validation of an end-entity &rarr; intermediate &rarr; root chain. HashedId8 linkage via WebCrypto.</p><div class="card-meta">Open tool &rarr;</div></a>
     </div>
   </div>
 </section>

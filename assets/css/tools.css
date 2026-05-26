@@ -281,3 +281,71 @@
   .tool-reference .ref-grid { grid-template-columns: 1fr; }
   .parsed-row { grid-template-columns: 1fr; }
 }
+
+/* ===== IEEE 1609.2 parser + V2X chain validator (Phase B) ===== */
+.ieee-summary {
+  display: grid; grid-template-columns: repeat(3, auto); gap: 8px 24px;
+  margin: 0 0 18px; padding: 12px 14px;
+  background: var(--secure-cyan-soft); border: 1px solid #bfe1e6; border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 12.5px;
+}
+.ieee-summary-row { display: flex; gap: 8px; align-items: center; }
+.ieee-summary-row strong { font-family: 'Montserrat', sans-serif; font-size: 11px;
+  letter-spacing: 0.4px; text-transform: uppercase; color: var(--secure-cyan-dark); }
+.ieee-summary-row span.ok { color: #1d5e34; font-weight: 600; }
+.ieee-summary-row span.warn { color: #8a5300; font-weight: 600; }
+.ieee-tree {
+  list-style: none; padding: 0; margin: 0;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6;
+}
+.ieee-tree .ieee-tree { padding-left: 18px; border-left: 2px solid var(--line); margin-left: 4px; }
+.ieee-tree-node { padding: 3px 0; }
+.ieee-tree-row { display: grid; grid-template-columns: 200px 1fr auto; gap: 10px;
+  align-items: baseline; }
+.ieee-tree-name { color: var(--ink); font-weight: 700; }
+.ieee-tree-value { color: var(--brand-grey); word-break: break-all; }
+.ieee-tree-ref { font-family: 'Montserrat', sans-serif; font-size: 10.5px;
+  text-transform: none; letter-spacing: 0.2px;
+  color: var(--secure-cyan-dark); opacity: 0.9;
+  text-align: right; white-space: nowrap; }
+.ieee-error {
+  padding: 14px 16px; background: rgba(227,34,42,0.06);
+  border: 1px solid rgba(227,34,42,0.20); border-radius: 8px;
+  color: var(--brand-red-dark);
+}
+.ieee-error strong { display: block; margin-bottom: 6px; font-family: 'Montserrat', sans-serif;
+  font-size: 12px; letter-spacing: 0.4px; text-transform: uppercase; }
+.ieee-error p { margin: 0; font-size: 14px; color: var(--ink); }
+
+/* Chain validator-specific rows */
+.chain-cert {
+  margin: 12px 0; padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: 8px; background: #fff;
+}
+.chain-cert-head { display: flex; gap: 10px; align-items: baseline; margin-bottom: 6px; }
+.chain-cert-pos { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--brand-grey); }
+.chain-cert-label { margin: 0; font-family: 'Montserrat', sans-serif; font-size: 15px;
+  font-weight: 700; color: var(--ink); }
+.chain-row { display: grid; grid-template-columns: 28px 200px 1fr; gap: 8px;
+  align-items: baseline; padding: 4px 0; font-size: 13.5px; }
+.chain-status { display: inline-block; width: 22px; height: 22px; line-height: 22px;
+  text-align: center; border-radius: 6px; font-weight: 700; font-size: 13px; }
+.chain-status.ok   { background: var(--secure-green-soft); color: #1d5e34; }
+.chain-status.fail { background: rgba(227,34,42,0.10); color: var(--brand-red-dark); }
+.chain-status.warn { background: var(--secure-amber-soft); color: #8a5300; }
+.chain-label { font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--ink); }
+.chain-detail { color: var(--brand-grey); font-family: 'JetBrains Mono', monospace; font-size: 12.5px; }
+.chain-linkage { margin-top: 18px; padding: 12px 14px;
+  background: var(--card-soft); border-radius: 8px; }
+.chain-linkage h3 { margin: 0 0 8px; font-family: 'Montserrat', sans-serif;
+  font-size: 13px; font-weight: 700; letter-spacing: 0.4px;
+  text-transform: uppercase; color: var(--ink); }
+.chain-empty { padding: 18px; color: var(--brand-grey); font-style: italic; }
+
+@media (max-width: 720px) {
+  .ieee-summary { grid-template-columns: 1fr; }
+  .ieee-tree-row { grid-template-columns: 1fr; }
+  .ieee-tree-ref { text-align: left; }
+  .chain-row { grid-template-columns: 28px 1fr; }
+  .chain-row .chain-detail { grid-column: 2; }
+}

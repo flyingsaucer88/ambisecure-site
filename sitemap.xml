@@ -38,6 +38,9 @@
 
   <!-- Resources / Tools -->
   <url><loc>https://ambisecure.ambimat.com/resources/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <!-- V2X / ITS PKI tools -->
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/ieee-1609-2-parser/</loc><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/v2x-cert-chain-validator/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://ambisecure.ambimat.com/resources/tools/atr-parser/</loc><priority>0.7</priority></url>
   <url><loc>https://ambisecure.ambimat.com/resources/tools/apdu-parser/</loc><priority>0.7</priority></url>
   <url><loc>https://ambisecure.ambimat.com/resources/tools/tlv-parser/</loc><priority>0.7</priority></url>
