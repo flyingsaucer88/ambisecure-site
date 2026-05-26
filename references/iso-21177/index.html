@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ISO 21177 ITS Station Security Services Reference — AmbiSecure</title>
+<meta name="description" content="ISO 21177 reference. ITS station security service architecture, secure session establishment between ITS stations, certificate-based mutual authentication, and the bridge between 1609.2 / 102 941 PKI and session-layer protocols." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/references/iso-21177/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="ISO 21177 ITS Station Security Services" />
+<meta property="og:description" content="ITS station security service architecture, secure-session establishment between ITS stations, certificate-based mutual authentication." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/references/iso-21177/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "/"},
+    {"@type": "ListItem", "position": 2, "name": "References", "item": "/references/"},
+    {"@type": "ListItem", "position": 3, "name": "ISO 21177", "item": "https://ambisecure.ambimat.com/references/iso-21177/"}
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "ISO 21177 ITS Station Security Services Reference",
+   "author": {"@type": "Organization", "name": "AmbiSecure Engineering"}
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">ISO 21177</span></nav>
+
+<main id="main">
+<header class="tool-header" style="padding-bottom:18px;">
+  <span class="eyebrow">V2X / ITS &middot; ISO 21177</span>
+  <h1>ISO 21177 ITS Station Security Services</h1>
+  <p>The session-layer security framework for cooperative ITS stations. Defines the security service primitives that an ITS application invokes, the secure-session establishment protocol between ITS stations, and the bridge from the 1609.2 / 102 941 PKI primitives down into application-layer secure sessions.</p>
+</header>
+
+<section class="tool-reference" style="padding-top:0;">
+  <h2>Scope &amp; status</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>What 21177 defines</h3>
+      <p>Session-layer security services for ITS station-to-station communication. Service Access Point (SAP) definitions, secure session establishment using 1609.2 certificates, mutual authentication, key derivation, and integrity protection for unicast ITS sessions (as distinct from broadcast V2X messages).</p>
+    </div>
+    <div class="ref-card">
+      <h3>How 21177 fits</h3>
+      <p>Sits above 1609.2 / 102 941 (which provide certificates and PKI) and below ITS applications (which consume security services through SAPs). The standard is what application code talks to when it needs an authenticated session with another ITS station.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Where 21177 applies</h3>
+      <p>ITS station-to-station sessions: vehicle &harr; backend, RSU &harr; central management, OBU &harr; OBU unicast sessions. NOT the broadcast V2X case (CAMs, DENMs) &mdash; those are message-by-message signed under 103 097 and do not establish a session.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Service primitives</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Session establishment</h3><p>Initiates a secure session between two ITS stations. Either party authenticates with a 1609.2 certificate; mutual authentication is the typical mode. Returns a session context the application uses for subsequent secured data exchange.</p></div>
+    <div class="ref-card"><h3>Session data exchange</h3><p>Application data sent through an established session is integrity-protected and authenticated using session keys derived during establishment. Confidentiality is optional and is selected at establishment time.</p></div>
+    <div class="ref-card"><h3>Session termination</h3><p>Explicit or implicit (timeout-based) closure. Session keys are wiped from the secure element on termination; subsequent traffic to the same peer requires a fresh session.</p></div>
+    <div class="ref-card"><h3>Peer authentication query</h3><p>An application may query the session context for the peer's authenticated identity (the certificate the peer used to establish). This is what an application uses to enforce authorisation policy based on certificate permissions.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Session establishment flow</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>1. Initiator hello</h3>
+      <p>Initiating ITS station sends a session-establishment request: its 1609.2 certificate (or the digest if cached), an ephemeral key contribution, a nonce, and the session-parameter selection (cipher suite, confidentiality on/off).</p>
+    </div>
+    <div class="ref-card">
+      <h3>2. Responder hello + signature</h3>
+      <p>Responder validates the initiator's certificate against trust anchors, returns its own certificate, its ephemeral key contribution, and a signature over the exchange transcript. Optionally indicates which application services it accepts.</p>
+    </div>
+    <div class="ref-card">
+      <h3>3. Initiator signature</h3>
+      <p>Initiator validates the responder, computes the shared secret from the two ephemeral contributions, derives session keys, signs the transcript. Sends the signature to the responder.</p>
+    </div>
+    <div class="ref-card">
+      <h3>4. Confirmed session</h3>
+      <p>Both sides derive matching session keys from the ephemeral contributions and the long-term certificate identities. Subsequent application data is protected under these keys. The signature step makes the exchange replay-resistant.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Certificate use within sessions</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>EC vs PC at session layer</h3><p>Sessions are typically authenticated with ECs (long-lived identity) rather than PCs (short-lived broadcast credentials). A session to a backend identifies the device; pseudonymity does not apply to unicast traffic where the backend already knows which device it is talking to.</p></div>
+    <div class="ref-card"><h3>Permission-bound sessions</h3><p>A certificate's <code>appPermissions</code> SSPs constrain what services it may invoke through an established session. Verifiers enforce this at SAP boundary: a CAM-permitted certificate cannot establish a maintenance-management session.</p></div>
+    <div class="ref-card"><h3>Hardware-bound endpoints</h3><p>The session private key remains in the secure element. Session-key derivation, ephemeral contribution generation, and signature operations are SE-side. The host MCU receives session-encrypted application data but never holds the session-derivation material.</p></div>
+    <div class="ref-card"><h3>Revocation during a session</h3><p>If the peer's certificate is revoked mid-session, the session does not automatically terminate &mdash; revocation enforcement is implementation-dependent. Most implementations re-check at next session re-key.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Implementation implications</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>SE session-key custody</h3><p>The secure element holds the long-term EC private key and performs the ECDH contribution for ephemeral key agreement. The session symmetric keys may live in the SE (high assurance) or be exported under a wrapped channel (performance-sensitive paths).</p></div>
+    <div class="ref-card"><h3>Round-trip cost</h3><p>The 4-message handshake adds latency before application traffic flows. For long-lived sessions (RSU &harr; central management) this is negligible; for short-burst sessions, the handshake cost dominates.</p></div>
+    <div class="ref-card"><h3>Certificate caching at the responder</h3><p>An RSU servicing many OBU sessions caches OBU certificates it has previously authenticated, allowing digest-only references on subsequent re-handshakes within a short window.</p></div>
+    <div class="ref-card"><h3>SAP integration</h3><p>Application authors invoke the security SAP rather than direct certificate operations. This abstracts the difference between 1609.2 and other underlying PKI primitives; the same SAP shape can be backed by different PKI material.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Companion AmbiSecure pages</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Tools</h3><p><a href="/resources/tools/ieee-1609-2-parser/">IEEE 1609.2 V2X Certificate Parser</a> &middot; <a href="/resources/tools/v2x-cert-chain-validator/">V2X Certificate Chain Validator</a></p></div>
+    <div class="ref-card"><h3>Architecture</h3><p><a href="/technologies/v2x-pki/">V2X PKI technology page</a> &middot; <a href="/solutions/v2x-security/">V2X security solution</a> &middot; <a href="/solutions/device-identity-at-scale/">Device identity at scale</a></p></div>
+    <div class="ref-card"><h3>Adjacent references</h3><p><a href="/references/ieee-1609-2/">IEEE 1609.2 certificate format</a> &middot; <a href="/references/etsi-ts-103-097/">ETSI TS 103 097 (broadcast V2X)</a> &middot; <a href="/references/etsi-ts-102-941/">ETSI TS 102 941 (PKI architecture)</a></p></div>
+    <div class="ref-card"><h3>Hardware</h3><p><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a> &mdash; secure-element silicon for session-key custody and ECDH operations.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>External references</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Standards bodies</h3><p>ISO TC 204 (Intelligent transport systems) &middot; ISO 21177 (Cooperative ITS security services) &middot; ISO 21217 (ITS station reference architecture) &middot; ISO 24102 (ITS station management)</p></div>
+    <div class="ref-card"><h3>Aligned ETSI / IEEE work</h3><p>ETSI TS 102 941 (PKI architecture this slots into) &middot; IEEE 1609.2 (underlying certificate format)</p></div>
+    <div class="ref-card"><h3>Disclaimer</h3><p>This page is a structural reference summary derived from publicly available ISO 21177 concepts. For implementation conformance, consult the published ISO standard directly.</p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Solutions</h3><ul><li><a href="/solutions/v2x-security/">V2X / ITS Security</a></li><li><a href="/solutions/device-identity-at-scale/">Device Identity at Scale</a></li><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>

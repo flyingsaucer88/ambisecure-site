@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>GSMA SGP.32 IoT eSIM Reference — AmbiSecure | eUICC, IPA, SM-DP+, SM-DS</title>
+<meta name="description" content="GSMA SGP.32 IoT eSIM reference. eUICC architecture, IPA (IoT Profile Assistant), SM-DP+, SM-DS, the IoT Profile Discovery (PPD) flow, and the parallel to V2X EA / AA lifecycle." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/references/sgp-32/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="GSMA SGP.32 IoT eSIM Reference" />
+<meta property="og:description" content="eUICC architecture, IPA, SM-DP+, SM-DS, IoT Profile Discovery, and the parallel to V2X EA/AA lifecycle." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/references/sgp-32/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "/"},
+    {"@type": "ListItem", "position": 2, "name": "References", "item": "/references/"},
+    {"@type": "ListItem", "position": 3, "name": "GSMA SGP.32", "item": "https://ambisecure.ambimat.com/references/sgp-32/"}
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "GSMA SGP.32 IoT eSIM Reference",
+   "author": {"@type": "Organization", "name": "AmbiSecure Engineering"}
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">GSMA SGP.32</span></nav>
+
+<main id="main">
+<header class="tool-header" style="padding-bottom:18px;">
+  <span class="eyebrow">eSIM / IoT &middot; GSMA SGP.32</span>
+  <h1>GSMA SGP.32 IoT eSIM Reference</h1>
+  <p>The IoT-specific eSIM Remote SIM Provisioning architecture. Replaces SGP.22's user-driven activation flow with an unattended IoT Profile Assistant (IPA) and a Profile Provisioning Discovery service. The structural lessons from SGP.32 inform every other unattended fleet-credential lifecycle &mdash; V2X EC/PC included.</p>
+</header>
+
+<section class="tool-reference" style="padding-top:0;">
+  <h2>Scope &amp; status</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>What SGP.32 defines</h3>
+      <p>The eSIM Remote SIM Provisioning architecture for IoT devices that cannot drive a user-interactive profile-download UI. Introduces IPA, the eIM (eSIM IoT Manager), and the variant SM-DP+ / SM-DS interactions tailored for headless devices.</p>
+    </div>
+    <div class="ref-card">
+      <h3>How it differs from SGP.22</h3>
+      <p>SGP.22 (consumer) assumes a device with a screen and a user. The profile download is triggered by a QR-code scan or activation code entered by the user. SGP.32 (IoT) assumes neither &mdash; profile pull happens autonomously based on device identity and policy.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Hardware root</h3>
+      <p>The eUICC is a tamper-resistant secure-element that holds the long-term eUICC identity and the downloaded operational profiles. CC EAL5+ is the typical certification level for eUICC silicon. The eUICC private key never leaves the boundary.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Architecture entities</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>eUICC</h3><p>The hardware secure element &mdash; embedded, removable, or integrated (iSIM). Holds the eUICC certificate (EUM-issued), profile metadata, and the active operational profile. Speaks SGP.32 over the host IPA.</p></div>
+    <div class="ref-card"><h3>IPA (IoT Profile Assistant)</h3><p>Host-side software (on the device's application processor) that intermediates between the eUICC and the network. Drives the profile-download HTTP exchange that a consumer-device UI would otherwise drive.</p></div>
+    <div class="ref-card"><h3>eIM (eSIM IoT Manager)</h3><p>Optional remote management entity. Coordinates profile lifecycle across fleets: which device gets which profile, when to switch, when to delete. The fleet-operator-side authority for eSIM lifecycle.</p></div>
+    <div class="ref-card"><h3>SM-DP+ (Subscription Manager &mdash; Data Preparation+)</h3><p>The operator-side credential preparation service. Holds operational profiles, packages them into the BPP (Bound Profile Package), encrypts to the target eUICC, serves them on request.</p></div>
+    <div class="ref-card"><h3>SM-DS (Subscription Manager &mdash; Discovery Service)</h3><p>Indexes pending profile events by eUICC identity. Lets a device find which SM-DP+ has a profile waiting for it without the device knowing the SM-DP+ address in advance.</p></div>
+    <div class="ref-card"><h3>EUM (eUICC Manufacturer)</h3><p>Manufactures the eUICC and signs its certificate. Trust anchor for the eUICC identity. Equivalent to the V2X manufacturer attestation step that precedes EA enrolment.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>IoT profile-download flow</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>1. Discovery</h3>
+      <p>IPA queries SM-DS with the eUICC identity. SM-DS returns the SM-DP+ address(es) holding pending profile events for this eUICC, or empty if none.</p>
+    </div>
+    <div class="ref-card">
+      <h3>2. Mutual authentication</h3>
+      <p>IPA establishes a TLS connection to SM-DP+. eUICC and SM-DP+ perform certificate-based mutual authentication: eUICC certificate signed by EUM, SM-DP+ certificate signed by the GSMA CI Root CA. Both validate against trust anchors.</p>
+    </div>
+    <div class="ref-card">
+      <h3>3. BPP delivery</h3>
+      <p>SM-DP+ packages the operational profile as a Bound Profile Package (BPP), encrypted to the eUICC's ephemeral session key established during authentication. IPA forwards the BPP to the eUICC.</p>
+    </div>
+    <div class="ref-card">
+      <h3>4. Profile install</h3>
+      <p>eUICC decrypts the BPP, validates its integrity, installs the profile as the active or pending profile. Acknowledges back through IPA &rarr; SM-DP+. The download event is then complete on both sides.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Operational lifecycle</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Profile enable / disable</h3><p>An eUICC may hold multiple profiles but only one active at a time. Enable / disable is managed locally by IPA or remotely by eIM. Disabled profiles remain installed and can be re-enabled without re-download.</p></div>
+    <div class="ref-card"><h3>Profile delete</h3><p>Permanent removal of a profile from the eUICC. Frees eUICC memory; the profile must be re-downloaded if needed again. Triggered by IPA or eIM.</p></div>
+    <div class="ref-card"><h3>Profile swap</h3><p>Sequential disable-of-current + enable-of-target. The eUICC enforces atomicity so the device is never left in an "active but unconfigured" state.</p></div>
+    <div class="ref-card"><h3>eIM-driven fleet operations</h3><p>The eIM can orchestrate profile changes across a fleet without per-device user interaction. The eSIM IoT lifecycle scales structurally because the orchestration layer is built into the architecture.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>SGP.32 &harr; V2X EA / AA structural parallel</h2>
+  <p style="font-size:14.5px;color:var(--brand-grey);margin:8px 0 18px;">The two architectures solve different problems &mdash; eSIM provides telecom credentials, V2X provides signed-message credentials &mdash; but the architectural patterns rhyme. Designing one informs the other.</p>
+  <div class="ref-table-wrap">
+    <table style="width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.65;">
+      <thead><tr style="border-bottom:2px solid var(--brand-red);"><th style="text-align:left;padding:10px 12px;">Concept</th><th style="text-align:left;padding:10px 12px;">SGP.32 (eSIM IoT)</th><th style="text-align:left;padding:10px 12px;">V2X (ETSI TS 102 941)</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Hardware root</strong></td><td style="padding:10px 12px;">eUICC + EUM cert chain</td><td style="padding:10px 12px;">Secure element + manufacturer attestation</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Identity authority</strong></td><td style="padding:10px 12px;">EUM (manufacturer-issued eUICC cert)</td><td style="padding:10px 12px;">Manufacturer attestation &rarr; EA (Enrolment Authority)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Credential authority</strong></td><td style="padding:10px 12px;">SM-DP+ (operator-credential preparation)</td><td style="padding:10px 12px;">AA (Authorisation Authority)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Discovery service</strong></td><td style="padding:10px 12px;">SM-DS</td><td style="padding:10px 12px;">(no direct equivalent; AA discovery is out-of-band)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Host-side intermediary</strong></td><td style="padding:10px 12px;">IPA (IoT Profile Assistant)</td><td style="padding:10px 12px;">V2X stack on OBU host MCU</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Operational credential</strong></td><td style="padding:10px 12px;">Operator profile (long-lived)</td><td style="padding:10px 12px;">Pseudonymous Certificate (short-lived)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Fleet orchestration</strong></td><td style="padding:10px 12px;">eIM (eSIM IoT Manager)</td><td style="padding:10px 12px;">Operator-side PKI orchestration</td></tr>
+        <tr><td style="padding:10px 12px;"><strong>Privacy property</strong></td><td style="padding:10px 12px;">N/A (telecom requires identification)</td><td style="padding:10px 12px;">Privacy-preserving via EA/AA split</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Implementation implications</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>eUICC vs discrete SE</h3><p>An eUICC is a secure element with the SGP.32 application stack pre-loaded. A discrete SE used for V2X EC/PC management runs a different applet set (a JavaCard applet for 1609.2 certificate management). Same silicon class, different applications.</p></div>
+    <div class="ref-card"><h3>Provisioning convergence</h3><p>A single SE can host both a V2X EC/PC applet and an eUICC profile, allowing one piece of silicon to anchor both the connectivity identity and the V2X identity. This is an architectural option, not a requirement.</p></div>
+    <div class="ref-card"><h3>Lifecycle lessons</h3><p>The patterns proven at telecom scale (unattended rotation, mutual-auth profile pull, fleet orchestration via a remote manager) transpose almost directly into V2X PC lifecycle. The differences (PC rotation cadence is minutes, profile rotation cadence is months) are operational, not architectural.</p></div>
+    <div class="ref-card"><h3>India context</h3><p>SGP.32 IoT eSIM deployment and TRAI-CP-30/04/2026 V2X security framework address overlapping device populations: connected vehicles, smart-meter endpoints, fleet trackers. A coherent national approach treats them as related architectures rather than separate problems.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Companion AmbiSecure pages</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Ecosystem</h3><p><a href="https://esim.ambimat.com/" rel="noopener">AmbiSecure eSIM Initiative</a> &mdash; sister-initiative within the Ambimat Group focused on eSIM lifecycle. The page that operationalises the architecture covered here.</p></div>
+    <div class="ref-card"><h3>Architecture</h3><p><a href="/solutions/device-identity-at-scale/">Device identity at scale</a> &middot; <a href="/technologies/v2x-pki/">V2X PKI</a> &middot; <a href="/solutions/v2x-security/">V2X security</a></p></div>
+    <div class="ref-card"><h3>Adjacent references</h3><p><a href="/references/etsi-ts-102-941/">ETSI TS 102 941 V2X PKI architecture</a> &middot; <a href="/references/ieee-1609-2/">IEEE 1609.2 certificate format</a></p></div>
+    <div class="ref-card"><h3>Hardware</h3><p><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a> &mdash; the secure-element platform that can host eUICC profiles and V2X applets in tandem.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>External references</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Standards bodies</h3><p>GSMA &middot; GSMA SGP.32 (IoT eSIM Technical Specification) &middot; GSMA SGP.22 (Consumer eSIM RSP) &middot; GSMA SGP.21 (Architecture)</p></div>
+    <div class="ref-card"><h3>Aligned standards</h3><p>ETSI TS 103 666 (eUICC profile package) &middot; ITU-T X.509 (certificate format for SM-DP+ / SM-DS)</p></div>
+    <div class="ref-card"><h3>Disclaimer</h3><p>This page is a structural reference summary derived from the publicly available GSMA SGP.32 framework. For implementation conformance, consult the published GSMA specifications directly.</p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Solutions</h3><ul><li><a href="/solutions/v2x-security/">V2X / ITS Security</a></li><li><a href="/solutions/device-identity-at-scale/">Device Identity at Scale</a></li><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>

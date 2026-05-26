@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Device Identity at Scale — Hardware Roots, Lifecycle, Provisioning | AmbiSecure</title>
+<meta name="description" content="Architectural overview of device identity at scale: hardware roots of trust, secure manufacturing-time provisioning, OTA credential lifecycle, V2X EA/AA, eSIM SM-DP+, and revocation across fleets of millions." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/solutions/device-identity-at-scale/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Device Identity at Scale — Hardware Roots, Lifecycle, Provisioning" />
+<meta property="og:description" content="Architectural overview of device identity at scale: hardware roots of trust, secure manufacturing-time provisioning, OTA credential lifecycle, V2X EA/AA, eSIM SM-DP+, and revocation across fleets of millions." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/solutions/device-identity-at-scale/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/solutions.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; hardware-rooted device identity at scale" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/solutions.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<meta name="audit-yoast-word-max" content="3000" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/"},
+    {"@type": "ListItem", "position": 2, "name": "Solutions", "item": "https://ambisecure.ambimat.com/solutions/"},
+    {"@type": "ListItem", "position": 3, "name": "Device Identity at Scale", "item": "https://ambisecure.ambimat.com/solutions/device-identity-at-scale/"}
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "Device Identity at Scale",
+   "description": "Architectural reference for hardware-rooted device identity across V2X, IoT, eSIM, transit, and embedded fleets. Manufacturing-time provisioning, OTA credential lifecycle, revocation patterns.",
+   "url": "https://ambisecure.ambimat.com/solutions/device-identity-at-scale/",
+   "author": {"@type": "Organization", "name": "AmbiSecure Engineering"},
+   "publisher": {"@type": "Organization", "name": "AmbiSecure", "url": "https://ambisecure.ambimat.com/"},
+   "isPartOf": {"@type": "WebSite", "@id": "https://ambisecure.ambimat.com/#site"},
+   "keywords": "device identity at scale, hardware root of trust, secure element provisioning, OTA credential lifecycle, embedded PKI, V2X identity, IoT credential lifecycle, eSIM lifecycle architecture, hardware-backed device identity, SGP.32, IEEE 1609.2, ETSI TS 102 941"
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why is hardware identity preferred over software-only device identity?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "In field-deployed devices subject to physical access and firmware tampering, software-stored keys can be extracted from flash, cloned, and replayed. A hardware root of trust holds private key material inside a tamper-resistant boundary, performs cryptographic operations in hardware isolation, and never exposes key bytes to the host operating system. This is what makes a device identity non-clonable in the field rather than only in the lab."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does provisioning at the factory differ from provisioning in the field?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Factory provisioning runs on a controlled line under HSM-backed key custody. Per-device keys are injected once, attested, and bound to the silicon. Field provisioning &mdash; OTA credential rotation, profile downloads, certificate refresh &mdash; runs over an authenticated channel that derives session keys from the factory-provisioned root. Field provisioning never assumes a clean environment; it assumes the root is intact and uses it as the trust anchor."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Are eSIM SM-DP+ and V2X EA/AA the same architecture?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Structurally similar, contextually distinct. Both authenticate hardware-backed identity to a remote authority, both issue credentials without revealing every credential request to every party in the chain, and both manage credential rotation without device recall. eSIM SGP.32 separates the discovery service (SM-DS) from the data preparation service (SM-DP+); V2X ETSI TS 102 941 separates the Enrolment Authority from the Authorisation Authority and adds privacy-preserving pseudonymity. Designing one informs the other."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does AmbiSecure actually deliver into this architecture?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Three layers. The silicon: AmbiSEC Module embeds a CC EAL5+ certified secure-element die with key isolation, ECDSA acceleration, and signed boot. The applet platform: JavaCard applets for FIDO, PIV, OpenPGP, and custom V2X certificate management. The provisioning infrastructure: HSM-backed personalisation lines with SCP03-equivalent wrapping, batch APDU pipelines, and audit-grade key custody. AmbiSecure does not operate Root CAs, issue V2X certificates, or ship turnkey OBU/RSU products."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is revocation handled across millions of devices?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Depends on connectivity. Always-connected fleets can rely on OCSP-style status checks or short-lived credentials. Intermittent fleets refresh CRLs on next contact. Offline-tolerant systems (notably V2X PC5 sidelink) require pre-distributed CRLs broadcast through infrastructure nodes &mdash; an RSU pushes the current CRL to passing OBUs. The pattern is the same: cryptographic identity stays in the secure element; revocation status is distributed material that the verifier consults locally."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/" class="active">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/solutions/">Solutions</a><span class="sep">/</span><span class="current">Device Identity at Scale</span></nav>
+
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Architecture</span>
+    <h1>Device identity at scale.</h1>
+    <p class="dek">Millions of devices, each with a non-clonable identity, each provisioned at manufacturing, each rotating credentials in the field without recall, each revocable on a per-device basis. The cryptography is settled; what determines whether a deployment survives a decade is the architecture around the keys &mdash; the hardware root, the provisioning line, the lifecycle authority, the revocation channel.</p>
+    <div class="hero-cta-row" style="margin-top:22px;">
+      <a href="/contact/" class="btn btn-primary" data-analytics-event="request_demo">Discuss a deployment</a>
+      <a href="/products/iot-security-coprocessor/" class="btn btn-outline">Co-processor spec</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">01 &mdash; The scale problem</span>
+      <h2 class="section-title">Why "issue a certificate" stops being a sentence at six figures.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>One device with one certificate is a manageable problem. A pilot of a hundred devices is a manageable problem. The architectures that work at a hundred do not survive a million. At fleet scale, four constraints stop being engineering preferences and start being hard requirements.</p>
+      <p><strong>Issuance throughput.</strong> A connected-vehicle deployment refreshing pseudonymous certificates at the cadence ETSI TS 102 941 contemplates issues credentials at sustained rates that a single CA tier cannot serve. Issuance has to be batched, parallelised, and structurally split between the authority that knows the device and the authority that signs the per-message credential. Section three of this page goes deeper.</p>
+      <p><strong>Rotation without recall.</strong> A field-deployed device that requires a return-to-base for certificate renewal is a deployment with a built-in attrition curve. Every credential lifecycle has to support over-the-air rotation under cryptographic continuity &mdash; the new credential proves itself to the device using material the device already trusts.</p>
+      <p><strong>Revocation across connectivity tiers.</strong> Always-connected devices can poll. Intermittent devices need CRL refresh on next contact. Offline-tolerant devices &mdash; V2X OBUs verifying PC5 sidelink messages with no backhaul &mdash; need pre-distributed revocation material that has already arrived before the verification is needed. One revocation system, three connectivity profiles.</p>
+      <p><strong>Field-replacement avoidance.</strong> The economic case for hardware-rooted identity hinges on the device lasting the depreciation window without being touched. Recalling a million OBUs to replace a secure element costs more than running the deployment. The architecture has to assume the silicon is fixed and the credentials, policies, and trust anchors are the only thing that changes.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">02 &mdash; Hardware roots of trust</span>
+      <h2 class="section-title">The tamper boundary is the architecture.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">A device identity is only as strong as the boundary that holds its private key. Everything above the boundary &mdash; the host MCU, the OS, the application firmware &mdash; is reachable by an attacker with physical access. Everything inside is not. The four properties below are what move a key from "stored in flash" to "held in a hardware root of trust".</p>
+    </div>
+    <div class="grid-2" style="margin-top:30px;">
+      <div class="card">
+        <div class="card-icon">SE</div>
+        <h3>Tamper-resistant silicon</h3>
+        <p>Side-channel-hardened analog design, mesh sensors, voltage and clock monitors, glitch detectors. Common Criteria EAL5+ at the chip level is the public mark of this work &mdash; the underlying secure-element silicon in AmbiSEC Module carries that certification. Above this layer, claims need their own evidence.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">KI</div>
+        <h3>Key isolation</h3>
+        <p>Private keys are generated inside the boundary, never leave it, and are referenced by handle rather than by value. The host MCU asks the secure element "sign this hash with key handle 0x03" and receives a signature; it never sees the key. A compromised host firmware cannot exfiltrate what it never had access to.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">AT</div>
+        <h3>Attestation</h3>
+        <p>The secure element can prove its identity to a remote authority before being trusted with a credential. The attestation signature is generated by a manufacturer-injected key inside the boundary, verifiable against a manufacturer certificate chain. This is the gate that decides whether a device is allowed to enrol into a fleet PKI in the first place.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">SB</div>
+        <h3>Signed boot</h3>
+        <p>The host MCU starts only if the firmware image's signature verifies against a key the secure element exposes. A modified image stops at boot. This is what makes a stolen device useless rather than a starting point &mdash; the keys are intact, but the firmware can no longer use them because the firmware does not boot.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">03 &mdash; Manufacturing-time provisioning</span>
+      <h2 class="section-title">The line is the most sensitive part of the system.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>Every cryptographic property of a deployed device traces back to a moment in a controlled environment when key material was injected and the device was attested. Get that moment right and the deployment has a defensible identity story for its lifetime. Get it wrong and no amount of operational hardening recovers the deployment.</p>
+      <p>The provisioning line is where the four properties above are established for the population. The pattern that survives audit looks the same across industries: an HSM holds the key-derivation material; per-device keys are derived under a key-ceremony procedure with split custody; the secure element accepts a wrapped key-injection APDU under SCP03 or an equivalent secure channel; the manufacturing host sees only ciphertext; the line logs every injection with a per-device serial; the device leaves the line attested.</p>
+      <p>What changes between industries is the chain that follows. A FIDO authenticator leaves the line with an attestation certificate signed by the manufacturer CA. An eSIM-capable IoT device leaves the line with an eUICC identity that subsequently downloads operator profiles from SM-DP+. A V2X OBU leaves the line with a manufacturer attestation that the Enrolment Authority will subsequently verify before issuing an Enrolment Credential. The provisioning step is identical in structure; the downstream authority differs.</p>
+      <p>AmbiSecure operates personalisation lines under this discipline. The HSM-backed key custody, SCP03-equivalent wrapping, per-device serialisation, and audit-grade logging are not optional features; they are the baseline. The page on <a href="/solutions/smart-card-personalization/">smart-card personalisation</a> covers the operational mechanics; this page treats provisioning as one stage in a longer lifecycle.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">04 &mdash; Lifecycle management</span>
+      <h2 class="section-title">OTA credential rotation, policy change, rollover.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">A credential injected at the factory is the start of the lifecycle, not the end. The patterns below are the credential-management operations a fleet PKI has to perform indefinitely, on a population it cannot recall.</p>
+    </div>
+    <div class="arch">
+      <div class="arch-node"><span class="arch-tag">A</span><h4>Mint</h4><p>Per-device root identity injected once at the factory. Hardware-bound, attested, immovable.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node accent"><span class="arch-tag">B</span><h4>Enrol</h4><p>Device authenticates to a fleet authority using the factory identity; receives a deployment-scoped credential (operator profile, EC, PIV cert).</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">C</span><h4>Refresh</h4><p>Short-lived operational credentials (PCs, session keys, ephemeral certs) rotate on a cadence driven by policy, not by recall.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">D</span><h4>Re-key</h4><p>Long-lived credentials roll over before expiry or after policy change. New credential proves itself under cryptographic continuity with the previous one.</p></div>
+      <div class="arch-arrow">&rarr;</div>
+      <div class="arch-node"><span class="arch-tag">E</span><h4>Revoke</h4><p>Compromised device is marked in the revocation channel appropriate to its connectivity profile. Lifecycle ends without a return-to-base step.</p></div>
+    </div>
+    <p style="color:var(--brand-grey);font-size:14px;line-height:1.7;margin-top:20px;max-width:880px;">The five operations are universal across V2X, eSIM, FIDO, and PIV. What differs is the timescale &mdash; V2X PCs refresh in minutes, FIDO credentials last the life of the authenticator &mdash; and the channel &mdash; eSIM uses SM-DP+ HTTPS, V2X OBUs use RSU broadcast for revocation distribution. The architectural shape is the same.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">05 &mdash; eSIM lifecycle parallels</span>
+      <h2 class="section-title">SM-DP+, SM-DS, SGP.32: the telecom rehearsal.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>The eSIM Remote SIM Provisioning architecture is the most operationally mature fleet-PKI in production at scale. The patterns that emerged from GSMA SGP.22 (consumer) and SGP.32 (IoT) are now the reference architecture every other fleet credential system gets compared against. Three of them are worth carrying over.</p>
+      <p><strong>SM-DP+ as the credential preparation service.</strong> The Subscription Manager &mdash; Data Preparation+ holds the operational profiles to be downloaded into eUICCs. It does not hold device identity. It holds credentials that have been bound to a target device by upstream coordination. The structural analogue in V2X is the Authorisation Authority &mdash; an authority that issues operational credentials without itself authenticating the device every time.</p>
+      <p><strong>SM-DS as the discovery service.</strong> The Subscription Manager &mdash; Discovery Service lets an eUICC find which SM-DP+ has a pending profile for it. It indexes pending credentials by eUICC identity without storing the credentials themselves. The structural analogue in V2X is the Enrolment Authority &mdash; the authority that knows which device is which, but only orchestrates the issuance rather than performing it.</p>
+      <p><strong>SGP.32 IoT profile.</strong> The IoT-specific SGP.32 architecture introduces the eUICC Identifier Manager (IPA) and Profile Provisioning Discovery (PPD) flows tailored for unattended devices that cannot drive a user-interactive profile-download UI. The analogue across automotive and embedded fleets is the OBU or RSU that must enrol and refresh without a human in the loop &mdash; identical architectural shape, different protocol surface.</p>
+      <p>The <a href="https://esim.ambimat.com/" rel="noopener">AmbiSecure eSIM Initiative</a> operates in this domain directly. The lessons rotated through this part of the business inform the V2X and IoT credential-lifecycle work elsewhere on the site. The <a href="/references/sgp-32/">SGP.32 reference</a> covers the eUICC IoT lifecycle in structured form.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">06 &mdash; V2X lifecycle parallels</span>
+      <h2 class="section-title">EA, AA, EC, PC: the privacy-aware variant.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">V2X PKI takes the fleet-credential architecture and adds a property eSIM does not need: pseudonymity. The authority that signs a per-message credential must not learn which device requested it. The four-letter alphabet below is what makes that work.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-icon">EA</div>
+        <h3>Enrolment Authority</h3>
+        <p>Knows which device is which. Verifies hardware attestation, gates entry into the fleet PKI, issues the long-lived Enrolment Credential. Sees the device identity exactly once at enrolment; does not see it again on every signed message.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">AA</div>
+        <h3>Authorisation Authority</h3>
+        <p>Issues the short-lived Pseudonymous Certificates the OBU uses to sign V2X messages. Receives a request from a device that has proved possession of an EC; does not learn which EC. Cannot link PC to vehicle, even if compromised together with the EA.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">EC</div>
+        <h3>Enrolment Credential</h3>
+        <p>Hardware-bound long-lived certificate that the device uses to prove it is entitled to request operational credentials. Lives in the secure element. Never used to sign V2X messages directly &mdash; only used to authenticate PC requests to the AA.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">PC</div>
+        <h3>Pseudonymous Certificate</h3>
+        <p>Short-lived operational certificate. Used to sign one batch of V2X messages over a few minutes, then rotated. Carries no device identifier. Issued in batches by the AA via Butterfly Key Expansion so that the AA itself cannot link PCs back to a single requesting EC.</p>
+      </div>
+    </div>
+    <p style="margin-top:24px;color:var(--brand-grey);font-size:14px;line-height:1.7;max-width:880px;">References: <a href="/references/etsi-ts-102-941/">ETSI TS 102 941</a> (trust + privacy management framework), <a href="/references/ieee-1609-2/">IEEE 1609.2</a> (certificate format), <a href="/references/etsi-ts-103-097/">ETSI TS 103 097</a> (secured message headers). The full V2X PKI mechanics are on <a href="/technologies/v2x-pki/">the V2X PKI technology page</a>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">07 &mdash; Why software-only identity fails</span>
+      <h2 class="section-title">Field tampering, firmware extraction, key cloning, fleet compromise.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>The threat model for an in-laboratory device is not the threat model for a field-deployed device. The first assumes a controlled adversary on a controlled network; the second assumes physical access and indefinite time. Four failure modes recur across every deployment that tried software-only identity and ended up replacing it.</p>
+      <p><strong>Flash extraction.</strong> A microcontroller's external SPI flash &mdash; or its internal flash via a debug interface left enabled or recoverable &mdash; can be read out by an attacker with bench-top equipment. A private key stored as bytes in flash is bytes in an attacker's possession. Encryption-at-rest of the flash with a key derived from a hardware-fused root is the minimum bar; what a secure element gives is one level above: the key never reaches flash at all.</p>
+      <p><strong>Firmware extraction with key reuse.</strong> Extracting one device's firmware reveals the cryptographic patterns the entire fleet uses. If the per-device key is derived from a shared master in firmware, the firmware extract yields the master. Once the master is out, the entire fleet's identity is reproducible by anyone. A hardware-rooted per-device identity has no master to leak.</p>
+      <p><strong>Key cloning.</strong> A device whose identity is software-stored can be cloned: the bytes are copied to a second device, and now two devices present the same identity to the fleet PKI. A pseudonymous V2X deployment with cloned keys allows a single attacker to amplify a hazard signal across geographies it does not occupy. A hardware-bound identity cannot be cloned without copying the silicon &mdash; an attack that costs more than the deployment.</p>
+      <p><strong>Fleet compromise from a single device.</strong> The compounding failure mode. A successful extract on one device, given software-only identity, yields the cryptographic technique used across the fleet. The marginal cost of compromising the second device is near zero. Hardware identity inverts this property: every device requires its own attack, against its own silicon, with no scaling discount. Whether the fleet is one device or one million, the per-device attack cost is the same.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">08 &mdash; AmbiSecure capability mapping</span>
+      <h2 class="section-title">What plugs in where.</h2>
+      <span class="section-line"></span>
+      <p class="section-desc" style="margin:0;">The architecture above is industry-shape. The mapping below is what AmbiSecure ships against it &mdash; silicon, applets, services, infrastructure. The boundary between what we provide and what we integrate alongside is explicit in section 9.</p>
+    </div>
+    <div class="grid-2" style="margin-top:24px;">
+      <a href="/products/iot-security-coprocessor/" class="card">
+        <div class="card-icon">SE</div>
+        <h3>IoT Security Co-Processor</h3>
+        <p>The hardware root of trust for embedded fleets. CC EAL5+ certified secure-element silicon; ECDSA-P256/P-384 hardware acceleration; key isolation; signed boot; automotive operating range. The piece that sits at the bottom of every section on this page.</p>
+        <div class="card-meta">View product &rarr;</div>
+      </a>
+      <a href="/products/javacard-applets/" class="card">
+        <div class="card-icon">JC</div>
+        <h3>JavaCard Applets</h3>
+        <p>FIDO, PIV, OpenPGP, eID applets &mdash; and custom applets for V2X certificate management. Multi-applet co-residence under GlobalPlatform 2.3.1; applet upgradability for credential-policy changes that do not require silicon replacement.</p>
+        <div class="card-meta">View product &rarr;</div>
+      </a>
+      <a href="/solutions/smart-card-personalization/" class="card">
+        <div class="card-icon">PL</div>
+        <h3>Personalisation lines</h3>
+        <p>HSM-backed manufacturing-time provisioning. SCP03-equivalent wrapping; key-ceremony procedures with split custody; per-device serialisation; audit-grade logging. The factory side of section three.</p>
+        <div class="card-meta">View solution &rarr;</div>
+      </a>
+      <a href="/services/javacard-development/" class="card">
+        <div class="card-icon">DEV</div>
+        <h3>JavaCard development</h3>
+        <p>Custom-applet engineering for credential lifecycle scenarios the off-the-shelf applet does not cover &mdash; V2X EC/PC management, fleet-specific attestation flows, applet-side revocation enforcement.</p>
+        <div class="card-meta">View service &rarr;</div>
+      </a>
+      <a href="/technologies/fido/" class="card">
+        <div class="card-icon">FIDO</div>
+        <h3>FIDO &amp; WebAuthn</h3>
+        <p>The hardware-attested identity pattern at the human-authenticator scale. Same architectural shape as fleet-device attestation, smaller credentials, FIDO MDS as the equivalent of a fleet authority &mdash; included here because the attestation pattern is the reference.</p>
+        <div class="card-meta">View technology &rarr;</div>
+      </a>
+      <a href="https://esim.ambimat.com/" rel="noopener" class="card">
+        <div class="card-icon">EI</div>
+        <h3>eSIM Initiative</h3>
+        <p>The telecom-scale credential lifecycle in production. SGP.22 and SGP.32 deployment patterns informing the broader fleet-PKI work. External site, sister-initiative within the Ambimat Group.</p>
+        <div class="card-meta">Visit eSIM Initiative &rarr;</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">09 &mdash; What AmbiSecure does not claim</span>
+      <h2 class="section-title" id="what-ambisecure-does-not-claim">The boundary, in writing.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>Procurement-grade positioning needs an explicit boundary. The list below exists to keep this page useful to integrators and auditors who need to know where AmbiSecure stops and an OEM, a CA operator, or a system integrator picks up. None of these are aspirational omissions; they are the architectural shape of what AmbiSecure ships.</p>
+      <ul style="line-height:1.85;font-size:15px;color:var(--ink);margin-left:18px;">
+        <li><strong>Not a Root CA operator.</strong> AmbiSecure does not operate the Root Certificate Authority for any V2X, FIDO, or government-identity deployment. Root operation belongs to the regulator-designated entity (in India, CCA for V2X under the proposed framework). AmbiSecure integrates against an operator-run Root.</li>
+        <li><strong>Not a turnkey OBU or RSU vendor.</strong> The integrated radio + compute + secure element + application stack that constitutes a V2X OBU is an OEM product. AmbiSecure supplies the secure-element silicon and the applet platform that the OEM integrates.</li>
+        <li><strong>No claim of ISO 26262 (functional safety) or ASPICE (automotive software process) certification of the integrated AmbiSEC Module product.</strong> Automotive-grade certification of the integrated product is a target, not a present claim. The underlying secure-element silicon's CC EAL5+ certification is at the chip level and is the only certification claim made for AmbiSEC Module today.</li>
+        <li><strong>No claim of TRAI or government endorsement.</strong> The TRAI Consultation Paper of 30 April 2026 is referenced on this and adjacent pages as a public document defining the proposed framework for V2X security in India. References are descriptive, not endorsements.</li>
+        <li><strong>No named customer or deployment claims.</strong> Where this page or any V2X page refers to "city-scale" or "fleet-scale" deployments, the framing is architectural. Specific deployments, where they exist, are covered under NDA and not disclosed on the public site.</li>
+        <li><strong>No fabricated chip-vendor or silicon-partner claims.</strong> Component-level partnerships, where they exist, are disclosed only with vendor authorisation.</li>
+      </ul>
+      <p style="margin-top:18px;">The <a href="/trust/">Trust Center</a> documents the certification posture and the disclosure practice in full. The <a href="/about/certifications/">Certifications page</a> lists the standards AmbiSecure designs against and the one chip-level certification (CC EAL5+) that is formally held.</p>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">10 &mdash; FAQ</span>
+      <h2 class="section-title">Questions integrators ask first.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <details class="faq-item">
+        <summary>Can a software TPM substitute for a discrete secure element?</summary>
+        <p>For some deployments, yes &mdash; specifically those where the threat model is bounded to network adversaries and the device chassis is in a controlled environment. For field-deployed devices subject to physical access (OBUs, RSUs, smart-meter endpoints, kiosks), a discrete tamper-resistant secure element is the architecture that survives. Software TPMs share the host MCU's attack surface; a discrete SE does not.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How do you handle the case where a fleet authority changes?</summary>
+        <p>The factory-injected manufacturer identity is invariant; the fleet credential is not. A device that moves between fleet authorities re-enrols under the new authority by attesting with the manufacturer identity. The previous fleet credential is revoked through the previous authority's revocation channel; the new one is issued by the new authority. The silicon stays put.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What is the practical minimum for a credential rotation cadence?</summary>
+        <p>Depends on the credential's purpose. V2X Pseudonymous Certificates are designed for refresh on the order of minutes to limit linkability windows. eSIM operational profiles may persist for years. FIDO credentials are typically lifetime-of-authenticator. The cadence is a property of the threat model, not the technology &mdash; the technology supports any cadence the policy specifies.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can the secure element's identity be migrated to a new device?</summary>
+        <p>Architecturally, no. That is the property that makes it a hardware-bound identity. If a device is decommissioned, the silicon is decommissioned with it; the new device receives its own factory-injected identity on its own provisioning run. This is by design &mdash; a migrable identity is a clonable identity.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What does integration look like from an OEM's perspective?</summary>
+        <p>Host MCU communicates with the secure element over I&sup2;C or SPI. The integration touchpoints are: the secure-element APDU command set, the JavaCard applet AID for the credential type in use, and the personalisation-line procedure for factory injection. The application firmware does not handle keys; it requests signatures, attestations, and certificate refreshes from the secure element. AmbiSecure provides the applet, the SDK, and the personalisation line; the OEM provides the host firmware integration.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Designing an at-scale credential lifecycle?</h2>
+        <p>Tell us about the fleet, the connectivity profile, and the credential authority you are integrating against. We respond within two business days.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Discuss a deployment</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div>
+        <p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p>
+        <div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div>
+      </div>
+      <div><h3>Products</h3><ul>
+        <li><a href="/products/onepass-card/">OnePass Card</a></li>
+        <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
+        <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li>
+        <li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li>
+        <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
+        <li><a href="/products/">All products</a></li>
+      </ul></div>
+      <div><h3>By Industry</h3><ul>
+        <li><a href="/industries/government-and-defence/">Government</a></li>
+        <li><a href="/industries/enterprise-access/">Enterprise</a></li>
+        <li><a href="/industries/transportation/">Transit</a></li>
+        <li><a href="/industries/smart-cities/">Smart Cities</a></li>
+        <li><a href="/industries/connected-mobility/">Connected Mobility</a></li>
+        <li><a href="/industries/">All industries</a></li>
+      </ul></div>
+      <div><h3>Company</h3><ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/about/certifications/">Certifications</a></li>
+        <li><a href="/trust/">Trust center</a></li>
+        <li><a href="/support/">Support</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul></div>
+      <div><h3>Contact</h3><ul>
+        <li>Ahmedabad, Gujarat 380015<br />India</li>
+        <li>India: +91 79255 01989</li>
+        <li>US: +1 215 397 3819</li>
+        <li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
+      <div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>

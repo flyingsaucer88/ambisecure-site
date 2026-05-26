@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IEEE 1609.2 V2X Certificate Reference — AmbiSecure | Structure, encoding, fields</title>
+<meta name="description" content="IEEE 1609.2 V2X certificate reference. Certificate structure, COER encoding, IssuerIdentifier, ToBeSignedCertificate, validity, verification key, signature schemes, and the comparison with X.509." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/references/ieee-1609-2/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="IEEE 1609.2 V2X Certificate Reference" />
+<meta property="og:description" content="Certificate structure, COER encoding, IssuerIdentifier, ToBeSignedCertificate, signature schemes, and the comparison with X.509." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/references/ieee-1609-2/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "/"},
+    {"@type": "ListItem", "position": 2, "name": "References", "item": "/references/"},
+    {"@type": "ListItem", "position": 3, "name": "IEEE 1609.2", "item": "https://ambisecure.ambimat.com/references/ieee-1609-2/"}
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "IEEE 1609.2 V2X Certificate Reference",
+   "author": {"@type": "Organization", "name": "AmbiSecure Engineering"}
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">IEEE 1609.2</span></nav>
+
+<main id="main">
+<header class="tool-header" style="padding-bottom:18px;">
+  <span class="eyebrow">V2X / ITS &middot; IEEE 1609.2</span>
+  <h1>IEEE 1609.2 V2X Certificate Reference</h1>
+  <p>The certificate format used by every signed V2X message and by every PKI authority that issues V2X credentials. Structurally similar to X.509 but encoded in COER rather than DER, with a different field set, a different signature scheme, and a fundamentally different lifecycle model.</p>
+</header>
+
+<section class="tool-reference" style="padding-top:0;">
+  <h2>Scope &amp; status</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>What 1609.2 defines</h3>
+      <p>Certificate format, secured-message wrapper structure, signature schemes, encryption schemes, and trust-management primitives for the IEEE 1609 WAVE protocol family. The certificate format also serves the ETSI ITS stack via the equivalence layer in ETSI TS 103 097.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Current edition</h3>
+      <p>IEEE 1609.2-2022 (and amendments) supersedes the 2016 baseline. The encoding floor (COER) and the certificate skeleton are stable across editions; what evolves is the permitted PSID list, the signature/encryption suites, and the geographic-region representation.</p>
+    </div>
+    <div class="ref-card">
+      <h3>What 1609.2 does NOT define</h3>
+      <p>It does not define the PKI authority structure (that is in ETSI TS 102 941), the secured-message header on the wire (that is in ETSI TS 103 097), or the ITS station security services (ISO 21177). 1609.2 is the certificate format and the cryptographic primitives, not the operational PKI architecture.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Certificate structure (top-level)</h2>
+  <p style="font-size:14.5px;color:var(--brand-grey);margin:8px 0 18px;">A 1609.2 <code>CertificateBase</code> is the ASN.1 type that every issued certificate conforms to. The top-level shape is identical across explicit and implicit certificate types &mdash; what varies is the verification key indicator and whether a trailing signature is present.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>version</h3><p><code>Uint8</code> &mdash; fixed at <code>3</code> in current spec. Sentinel for forward compatibility.</p></div>
+    <div class="ref-card"><h3>type</h3><p><code>CertificateType</code> ENUMERATED &mdash; <code>explicit (0)</code> or <code>implicit (1)</code>. Explicit certs carry a verification key + a separate signature; implicit certs carry a reconstruction value from which the verification key is derived. Both forms are supported in V2X deployments.</p></div>
+    <div class="ref-card"><h3>issuer</h3><p><code>IssuerIdentifier</code> CHOICE: <code>self HashAlgorithm</code> (root cert), <code>sha256AndDigest HashedId8</code>, or <code>sha384AndDigest HashedId8</code>. The HashedId8 is the last 8 bytes of the SHA hash over the issuer's COER-encoded certificate &mdash; the V2X analogue of an X.509 <code>Authority Key Identifier</code>.</p></div>
+    <div class="ref-card"><h3>toBeSigned</h3><p><code>ToBeSignedCertificate</code> SEQUENCE &mdash; the structural body. Holds identifier, validity, application permissions, region (optional), assurance level (optional), verification key indicator, and other optional descriptors.</p></div>
+    <div class="ref-card"><h3>signature</h3><p><code>Signature</code> CHOICE &mdash; optional for implicit certificates, present for explicit certificates. ECDSA over the COER-encoded <code>toBeSigned</code>.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2><code>ToBeSignedCertificate</code> fields</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>id</h3><p><code>CertificateId</code> CHOICE: <code>linkageData</code> (Pseudonymous Certificates), <code>name Hostname</code>, <code>binaryId OCTET STRING</code>, or <code>none NULL</code>. PCs use <code>linkageData</code> to support privacy-preserving revocation; ECs commonly use <code>binaryId</code>.</p></div>
+    <div class="ref-card"><h3>cracaId</h3><p><code>HashedId3</code> &mdash; identifies the Certificate Revocation Authorising CA. Three-byte short identifier; ties a certificate to the revocation authority that manages it.</p></div>
+    <div class="ref-card"><h3>crlSeries</h3><p><code>CrlSeries</code> Uint16 &mdash; indexes the specific revocation series this certificate is enrolled in. Together with <code>cracaId</code>, identifies the CRL the verifier must check.</p></div>
+    <div class="ref-card"><h3>validityPeriod</h3><p><code>SEQUENCE { start Time32, duration Duration }</code>. <code>Time32</code> is seconds since the IEEE 1609 epoch (2004-01-01T00:00:00 UTC). <code>Duration</code> is a CHOICE of microseconds, milliseconds, seconds, minutes, hours, sixty-hours, or years &mdash; one selected branch.</p></div>
+    <div class="ref-card"><h3>region</h3><p>Optional <code>GeographicRegion</code> CHOICE &mdash; circular, rectangular, polygonal, or identified region. Restricts where the certificate is valid. Often omitted for global certs.</p></div>
+    <div class="ref-card"><h3>assuranceLevel</h3><p>Optional <code>SubjectAssurance</code> OCTET STRING(1) &mdash; assurance + confidence bits per IEEE 1609.2 §6.4.18. Encodes hardware-binding strength at issuance time.</p></div>
+    <div class="ref-card"><h3>appPermissions</h3><p>Optional <code>SequenceOfPsidSsp</code> &mdash; the PSIDs (application identifiers, e.g. BSM, SPaT, MAP) and SSPs (service-specific permissions) this certificate is authorised to sign messages for.</p></div>
+    <div class="ref-card"><h3>certIssuePermissions</h3><p>Optional <code>SequenceOfPsidGroupPermissions</code> &mdash; only present in CA certs; defines which application permissions this CA is allowed to issue downstream.</p></div>
+    <div class="ref-card"><h3>verifyKeyIndicator</h3><p><code>VerificationKeyIndicator</code> CHOICE: <code>verificationKey PublicVerificationKey</code> (explicit certs) or <code>reconstructionValue EccP256CurvePoint</code> (implicit certs, ECQV).</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Encoding: COER, not DER</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>What COER is</h3>
+      <p>Canonical Octet Encoding Rules &mdash; ASN.1 X.696, the canonical subset of OER. Schema-driven (no on-wire tags), big-endian, fixed integer encoding where the schema bounds allow it, length-prefixed where needed. Distinct from DER, which is tag-length-value with universal-class tags.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Why COER (not DER)</h3>
+      <p>COER produces shorter encodings &mdash; no per-field tag overhead. A V2X message broadcast at 10 Hz on PC5 sidelink benefits from every byte saved. The trade-off: COER decoders need the schema; you cannot decode a 1609.2 cert with a generic ASN.1 walker.</p>
+    </div>
+    <div class="ref-card">
+      <h3>SEQUENCE preamble</h3>
+      <p>A SEQUENCE with extensibility marker and/or OPTIONALs starts with a preamble byte (or bytes): one bit per OPTIONAL indicating presence, plus the extension presence bit if the SEQUENCE is extensible. Skipping the preamble is the most common decoding bug in hand-rolled parsers.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Length encoding</h3>
+      <p>Short form (one byte, length < 128) or long form (first byte's high bit set, lower 7 bits give the count of following length octets). Same shape as DER length, simpler interpretation: the length always immediately precedes the variable-length content.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Public key &amp; signature shapes</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3><code>PublicVerificationKey</code></h3>
+      <p>CHOICE over four ECDSA schemes: <code>ecdsaNistP256</code>, <code>ecdsaBrainpoolP256r1</code>, <code>ecdsaNistP384</code>, <code>ecdsaBrainpoolP384r1</code>. The selected branch carries an <code>EccP256CurvePoint</code> or <code>EccP384CurvePoint</code>.</p>
+    </div>
+    <div class="ref-card">
+      <h3><code>EccP256CurvePoint</code></h3>
+      <p>CHOICE with five branches: <code>x-only OCTET STRING(32)</code>, <code>fill NULL</code> (placeholder), <code>compressed-y-0 OCTET STRING(32)</code>, <code>compressed-y-1 OCTET STRING(32)</code>, <code>uncompressedP256 SEQUENCE { x, y }</code>. Compressed forms are most common on the wire.</p>
+    </div>
+    <div class="ref-card">
+      <h3><code>EccP384CurvePoint</code></h3>
+      <p>Same five-branch structure, 48-byte coordinates instead of 32. Used by P-384 deployments &mdash; less common in vehicular V2X today, more common in long-validity infrastructure certificates.</p>
+    </div>
+    <div class="ref-card">
+      <h3><code>Signature</code></h3>
+      <p>CHOICE over the four ECDSA schemes above. The selected branch carries <code>{ rSig EccP256CurvePoint, sSig OCTET STRING(32) }</code> or the P-384 equivalent. <code>rSig</code> is encoded as a curve point to facilitate point-recovery optimisations on some verifier implementations.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Comparison with X.509</h2>
+  <div class="ref-table-wrap">
+    <table style="width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.65;">
+      <thead><tr style="border-bottom:2px solid var(--brand-red);"><th style="text-align:left;padding:10px 12px;">Property</th><th style="text-align:left;padding:10px 12px;">X.509 (RFC 5280)</th><th style="text-align:left;padding:10px 12px;">IEEE 1609.2</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Encoding</strong></td><td style="padding:10px 12px;">DER (TLV)</td><td style="padding:10px 12px;">COER (schema-driven, untagged)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Typical size</strong></td><td style="padding:10px 12px;">1.0 &ndash; 2.5 kB</td><td style="padding:10px 12px;">120 &ndash; 250 bytes</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Subject identifier</strong></td><td style="padding:10px 12px;">DN (Subject + SAN)</td><td style="padding:10px 12px;"><code>CertificateId</code> CHOICE (often <code>linkageData</code> for PCs &mdash; no identity)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Issuer identifier</strong></td><td style="padding:10px 12px;">Issuer DN</td><td style="padding:10px 12px;"><code>HashedId8</code> (last 8 bytes of SHA over issuer cert)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Typical lifetime</strong></td><td style="padding:10px 12px;">1 &ndash; 10 years (EE), longer (CA)</td><td style="padding:10px 12px;">5 &ndash; 10 minutes (PC), years (EC), decades (root)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Permissions</strong></td><td style="padding:10px 12px;">KU, EKU OIDs</td><td style="padding:10px 12px;"><code>SequenceOfPsidSsp</code> (PSID + SSP)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Region restriction</strong></td><td style="padding:10px 12px;">Not standard</td><td style="padding:10px 12px;"><code>GeographicRegion</code> (circular / rectangular / polygonal)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Implicit certs</strong></td><td style="padding:10px 12px;">Not supported</td><td style="padding:10px 12px;">First-class (ECQV reconstruction value)</td></tr>
+        <tr><td style="padding:10px 12px;"><strong>Trust anchor</strong></td><td style="padding:10px 12px;">Root CA store</td><td style="padding:10px 12px;">Self-signed root cert with <code>issuer = self</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Companion V2X tooling</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Walk a certificate</h3><p><a href="/resources/tools/ieee-1609-2-parser/">IEEE 1609.2 V2X Certificate Parser</a> &mdash; hand-rolled COER decoder for the certificate subset. Hex, Base64, or PEM input. Tree output with field-by-field references back to the relevant 1609.2 sections. Three worked example certificates included.</p></div>
+    <div class="ref-card"><h3>Validate a chain</h3><p><a href="/resources/tools/v2x-cert-chain-validator/">V2X Certificate Chain Validator</a> &mdash; structural chain validation. Walks root &rarr; intermediate &rarr; end-entity, computes HashedId8 for each cert, verifies the issuer-linkage chain. Structural validation only &mdash; signature verification is a separate gate.</p></div>
+    <div class="ref-card"><h3>Adjacent standards</h3><p><a href="/references/etsi-ts-103-097/">ETSI TS 103 097</a> (secured-message header, certificate equivalence) &middot; <a href="/references/etsi-ts-102-941/">ETSI TS 102 941</a> (trust + privacy management) &middot; <a href="/references/iso-21177/">ISO 21177</a> (ITS station security services).</p></div>
+    <div class="ref-card"><h3>Architecture pages</h3><p><a href="/technologies/v2x-pki/">V2X PKI technology page</a> &middot; <a href="/solutions/v2x-security/">V2X security solution</a> &middot; <a href="/industries/connected-mobility/">Connected mobility industry page</a> &middot; <a href="/solutions/device-identity-at-scale/">Device identity at scale</a>.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>External references</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Standards bodies</h3><p>IEEE 1609 Working Group (WAVE) &middot; IEEE Standards Association (1609.2 editions and amendments) &middot; ITU-T X.696 (OER) &middot; ITU-T X.680 (ASN.1)</p></div>
+    <div class="ref-card"><h3>Companion AmbiSecure pages</h3><p><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a> &middot; <a href="/technologies/secure-elements/">Secure Elements</a> &middot; <a href="/services/javacard-development/">JavaCard development</a></p></div>
+    <div class="ref-card"><h3>Disclaimer</h3><p>This page is a structural reference summary derived from the publicly available structure of IEEE 1609.2. It is not a substitute for the standard itself. For implementation conformance, consult the published IEEE standard directly.</p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Solutions</h3><ul><li><a href="/solutions/v2x-security/">V2X / ITS Security</a></li><li><a href="/solutions/device-identity-at-scale/">Device Identity at Scale</a></li><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>

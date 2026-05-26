@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ETSI TS 103 097 V2X Secured-Message Reference — AmbiSecure</title>
+<meta name="description" content="ETSI TS 103 097 reference. V2X SecuredMessage structure, header info fields, signer-info modes (digest, certificate, chain), profile constraints, and the equivalence with IEEE 1609.2." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/references/etsi-ts-103-097/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="ETSI TS 103 097 V2X Secured-Message Reference" />
+<meta property="og:description" content="ETSI TS 103 097 reference. SecuredMessage structure, header info fields, signer-info modes, profile constraints, and the IEEE 1609.2 equivalence." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/references/etsi-ts-103-097/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "/"},
+    {"@type": "ListItem", "position": 2, "name": "References", "item": "/references/"},
+    {"@type": "ListItem", "position": 3, "name": "ETSI TS 103 097", "item": "https://ambisecure.ambimat.com/references/etsi-ts-103-097/"}
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "ETSI TS 103 097 V2X Secured-Message Reference",
+   "author": {"@type": "Organization", "name": "AmbiSecure Engineering"}
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">ETSI TS 103 097</span></nav>
+
+<main id="main">
+<header class="tool-header" style="padding-bottom:18px;">
+  <span class="eyebrow">V2X / ITS &middot; ETSI TS 103 097</span>
+  <h1>ETSI TS 103 097 Secured-Message Reference</h1>
+  <p>The wire-format specification that wraps every signed V2X message in the ETSI ITS stack. Defines the SecuredMessage structure, the header info fields, the signer-info modes, and the application-profile constraints. Layered on top of IEEE 1609.2 cryptographic primitives via an explicit equivalence mapping.</p>
+</header>
+
+<section class="tool-reference" style="padding-top:0;">
+  <h2>Scope &amp; status</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>What 103 097 defines</h3>
+      <p>The on-wire format for secured V2X messages in the ETSI ITS-G5 protocol stack: SecuredMessage envelope, payload framing, header-info population rules, signer-info choice, and per-application profile constraints (CAM, DENM, SPaT/MAP, IVI).</p>
+    </div>
+    <div class="ref-card">
+      <h3>Relationship to 1609.2</h3>
+      <p>Modern editions of 103 097 reference IEEE 1609.2 for the underlying certificate format and cryptographic primitives. The two standards are intentionally aligned: a 103 097 SecuredMessage carries a 1609.2 certificate or its HashedId8 digest. Implementations share the COER decoder.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Profiles</h3>
+      <p>Profiles constrain what may appear in the header info, which signer-info mode is permitted for which message type, and how often a full certificate must be included rather than just its digest. The CAM profile (Cooperative Awareness Message) is the most studied; DENM (Decentralized Environmental Notification) has stricter freshness requirements.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2><code>SecuredMessage</code> structure</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>protocolVersion</h3><p><code>Uint8</code> &mdash; current spec version. Sentinel for receiver dispatch to the correct parser.</p></div>
+    <div class="ref-card"><h3>headerFields</h3><p><code>SequenceOf HeaderField</code> &mdash; ordered list of header info entries (generation time, expiry, signer info, generation location, etc.). Order is canonical for replay-resistance.</p></div>
+    <div class="ref-card"><h3>payloadFields</h3><p><code>SequenceOf Payload</code> &mdash; the protected application data. Typically a single <code>signed</code> payload carrying the unsecured ITS message (CAM, DENM, SPaT/MAP) as an opaque OCTET STRING.</p></div>
+    <div class="ref-card"><h3>trailerFields</h3><p><code>SequenceOf TrailerField</code> &mdash; carries the ECDSA <code>signature</code> field at the end of the message. Single-element in practice for signed messages.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2><code>HeaderField</code> entries</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>generation_time</h3><p><code>Time64</code> (microseconds since IEEE 1609 epoch, 2004-01-01) &mdash; when the sender generated this message. Receivers reject messages with generation_time too far in the past or future.</p></div>
+    <div class="ref-card"><h3>expiry_time</h3><p>Optional <code>Time64</code> &mdash; explicit expiry. Many profiles omit this and rely on generation_time + profile-defined freshness window.</p></div>
+    <div class="ref-card"><h3>generation_location</h3><p>Optional <code>ThreeDLocation</code> &mdash; ITS-coordinate latitude/longitude/elevation. Required by some profiles where the verifier checks the message's geographic plausibility.</p></div>
+    <div class="ref-card"><h3>signer_info</h3><p><code>SignerInfo</code> CHOICE: <code>self</code>, <code>certificate_digest_with_sha256</code> (just the HashedId8), <code>certificate</code> (full cert inline), <code>certificate_chain</code> (cert + intermediates). Cadence governed by the profile: every Nth message includes the full certificate, the rest reference its digest.</p></div>
+    <div class="ref-card"><h3>its_aid</h3><p>Optional <code>IntX</code> &mdash; the ITS Application ID (PSID-equivalent). Identifies the application type for verifier policy.</p></div>
+    <div class="ref-card"><h3>its_aid_list</h3><p>Optional list variant for messages carrying multiple application contexts.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2><code>SignerInfo</code> modes &amp; the digest cadence</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>Digest mode</h3>
+      <p><code>certificate_digest_with_sha256</code> &mdash; carries only the HashedId8 of the signing PC. The receiver must already have the full certificate cached from a prior message; otherwise verification stalls until a refresh.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Full-certificate mode</h3>
+      <p><code>certificate</code> &mdash; carries the signing PC inline. Larger message, but lets a fresh receiver verify immediately without certificate-fetch round-trips.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Chain mode</h3>
+      <p><code>certificate_chain</code> &mdash; carries the PC plus intermediate AA certificate. Used when a receiver may not have the issuing AA's trust anchor cached. Rare in steady-state vehicular traffic; more common in infrastructure broadcasts.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Cadence pattern</h3>
+      <p>Profiles typically specify: include the full certificate every N messages or every T milliseconds, whichever comes first. Between full-certificate beacons, messages carry only the HashedId8. The trade-off is bandwidth vs verifier cold-start latency.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Application-profile constraints</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>CAM (Cooperative Awareness)</h3><p>Periodic broadcast at 1&ndash;10 Hz. Profile mandates generation_time, generation_location, ITS-AID for CA service. Certificate-inclusion cadence typically every 1 second or every 10 messages.</p></div>
+    <div class="ref-card"><h3>DENM (Decentralized Environmental Notification)</h3><p>Event-triggered. Higher integrity bar: stricter validity windows, mandatory generation_location, often full certificate inline because the receiver may not have seen the sender previously.</p></div>
+    <div class="ref-card"><h3>SPaT / MAP</h3><p>Infrastructure-originated signal-phase-and-timing and intersection-map broadcasts. RSU-signed, low frequency (~1 Hz), receivers cache the RSU's certificate aggressively because RSU identity is stable across thousands of vehicle interactions.</p></div>
+    <div class="ref-card"><h3>IVI (In-Vehicle Information)</h3><p>Infrastructure-originated signage and warnings. Similar caching profile to SPaT/MAP; geographic-region restriction in the signing certificate is more commonly populated.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Equivalence with IEEE 1609.2</h2>
+  <p style="font-size:14.5px;color:var(--brand-grey);margin:8px 0 18px;">The two standards align at the cryptographic primitive layer; what differs is the wire format and the operational profiles. The table below shows the structural equivalents.</p>
+  <div class="ref-table-wrap">
+    <table style="width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.65;">
+      <thead><tr style="border-bottom:2px solid var(--brand-red);"><th style="text-align:left;padding:10px 12px;">Concept</th><th style="text-align:left;padding:10px 12px;">ETSI TS 103 097</th><th style="text-align:left;padding:10px 12px;">IEEE 1609.2</th></tr></thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Signed message wrapper</strong></td><td style="padding:10px 12px;"><code>SecuredMessage</code></td><td style="padding:10px 12px;"><code>Ieee1609Dot2Data</code> with <code>signedData</code></td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Certificate format</strong></td><td style="padding:10px 12px;">References 1609.2 <code>Certificate</code></td><td style="padding:10px 12px;"><code>CertificateBase</code></td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Signer digest</strong></td><td style="padding:10px 12px;"><code>certificate_digest_with_sha256</code></td><td style="padding:10px 12px;"><code>HashedId8</code></td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Generation time</strong></td><td style="padding:10px 12px;"><code>Time64</code> (&micro;s)</td><td style="padding:10px 12px;"><code>Time64</code> (&micro;s)</td></tr>
+        <tr style="border-bottom:1px solid #eee;"><td style="padding:10px 12px;"><strong>Encoding</strong></td><td style="padding:10px 12px;">COER</td><td style="padding:10px 12px;">COER</td></tr>
+        <tr><td style="padding:10px 12px;"><strong>Signature</strong></td><td style="padding:10px 12px;"><code>EcdsaP256Signature</code> in trailer</td><td style="padding:10px 12px;"><code>Signature</code> CHOICE</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Implementation implications</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Bandwidth budgeting</h3><p>A CAM with full-certificate signer info is ~250 bytes; with digest-only signer info, ~80 bytes. At 10 Hz per vehicle on PC5, the certificate-inclusion cadence directly drives channel load. Profiles balance this against verifier cold-start latency.</p></div>
+    <div class="ref-card"><h3>Receiver cert cache</h3><p>A verifier maintains a cache of recently-seen signing certificates indexed by HashedId8. Cache size, TTL, and replacement policy are implementation decisions; the standard specifies the on-wire format, not the cache.</p></div>
+    <div class="ref-card"><h3>Replay window</h3><p>Generation-time validation defines an implicit replay-resistance window. A few hundred milliseconds is typical for CAMs; DENMs use longer windows because the event-triggered messages may be rebroadcast.</p></div>
+    <div class="ref-card"><h3>SE signing cost</h3><p>Each signed message requires one ECDSA signature inside the secure element. At 10 Hz CAM, that is 10 signatures per second per vehicle. The chosen SE silicon must sustain this throughput at automotive temperature ranges &mdash; a hard requirement on the silicon spec.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Companion AmbiSecure pages</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Tools</h3><p><a href="/resources/tools/ieee-1609-2-parser/">IEEE 1609.2 V2X Certificate Parser</a> &middot; <a href="/resources/tools/v2x-cert-chain-validator/">V2X Certificate Chain Validator</a> &mdash; parse certificates referenced inside a SecuredMessage signer_info.</p></div>
+    <div class="ref-card"><h3>Architecture</h3><p><a href="/technologies/v2x-pki/">V2X PKI technology page</a> &middot; <a href="/solutions/v2x-security/">V2X security solution</a> &middot; <a href="/industries/connected-mobility/">Connected mobility</a></p></div>
+    <div class="ref-card"><h3>Adjacent references</h3><p><a href="/references/ieee-1609-2/">IEEE 1609.2</a> &middot; <a href="/references/etsi-ts-102-941/">ETSI TS 102 941</a> &middot; <a href="/references/iso-21177/">ISO 21177</a></p></div>
+    <div class="ref-card"><h3>Hardware</h3><p><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a> &mdash; secure-element silicon that satisfies the 10 Hz signing throughput requirement.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>External references</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Standards bodies</h3><p>ETSI Technical Committee ITS &middot; ETSI TS 103 097 (latest edition) &middot; ETSI TS 103 097-2 (testing) &middot; ETSI EN 302 663 (ITS-G5 access layer)</p></div>
+    <div class="ref-card"><h3>Related ETSI TS documents</h3><p>ETSI EN 302 637-2 (CAM) &middot; ETSI EN 302 637-3 (DENM) &middot; ETSI TS 103 301 (SPaT/MAP/IVI/SREM/SSEM)</p></div>
+    <div class="ref-card"><h3>Disclaimer</h3><p>This page is a structural reference summary of publicly available ETSI TS 103 097 concepts. For implementation conformance, consult the published ETSI standard directly.</p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Solutions</h3><ul><li><a href="/solutions/v2x-security/">V2X / ITS Security</a></li><li><a href="/solutions/device-identity-at-scale/">Device Identity at Scale</a></li><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>

@@ -51,6 +51,7 @@ Cross-link points where AmbiSecure and AmbiAutomation deployments naturally over
 - [JavaCard applet deployment](https://ambisecure.ambimat.com/solutions/javacard-deployment/): applet lifecycle from spec to user.
 - [Smart-card personalisation](https://ambisecure.ambimat.com/solutions/smart-card-personalization/): sovereign issuance lines, HSM-backed key custody.
 - [V2X & ITS security architecture](https://ambisecure.ambimat.com/solutions/v2x-security/): EA/AA PKI, pseudonymous certificates, hardware-isolated key storage, HSM-backed manufacturing-time provisioning for connected-vehicle deployments. IEEE 1609.2 / ETSI TS 103 097 / ETSI TS 102 941 design alignment.
+- [Device identity at scale](https://ambisecure.ambimat.com/solutions/device-identity-at-scale/): architectural unification across V2X, eSIM, IoT, transit, and embedded fleets. Hardware roots of trust, manufacturing-time provisioning, OTA credential lifecycle, V2X EA/AA, eSIM SM-DP+, revocation patterns by connectivity tier. Explicit boundary on what AmbiSecure does not claim.
 
 ## Industries
 
@@ -96,6 +97,13 @@ Cross-link points where AmbiSecure and AmbiAutomation deployments naturally over
 - [EMV Tags](https://ambisecure.ambimat.com/references/emv-tags/) — EMV Books 3, 4, contactless.
 - [DESFire Status Codes](https://ambisecure.ambimat.com/references/desfire/) — EV1/EV2/EV3 status codes.
 - [NDEF TNF Types](https://ambisecure.ambimat.com/references/nfc/) — NFC Forum record-header TNF.
+
+V2X / ITS PKI references:
+- [IEEE 1609.2 V2X Certificates](https://ambisecure.ambimat.com/references/ieee-1609-2/) — certificate structure, COER encoding, IssuerIdentifier, ToBeSignedCertificate, signature schemes, comparison with X.509.
+- [ETSI TS 103 097](https://ambisecure.ambimat.com/references/etsi-ts-103-097/) — SecuredMessage structure, header info, signer-info modes, application-profile constraints, equivalence with IEEE 1609.2.
+- [ETSI TS 102 941](https://ambisecure.ambimat.com/references/etsi-ts-102-941/) — V2X PKI hierarchy, Root CA / EA / AA roles, EC/PC issuance flows, Butterfly Key Expansion, CRL and CTL distribution.
+- [ISO 21177](https://ambisecure.ambimat.com/references/iso-21177/) — ITS station security services, session establishment, mutual authentication using 1609.2 certificates.
+- [GSMA SGP.32](https://ambisecure.ambimat.com/references/sgp-32/) — IoT eSIM RSP architecture, eUICC, IPA, SM-DP+, SM-DS, parallel to V2X EA/AA lifecycle.
 
 ## Engineering tools (client-side)
 

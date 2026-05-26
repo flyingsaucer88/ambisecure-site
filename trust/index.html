@@ -50,7 +50,7 @@
   <div class="prose">
     <span class="eyebrow">Trust center</span>
     <h1>Trust, certifications, and disclosures.</h1>
-    <p class="dek">A single page that points buyers, auditors, and security teams at the four documents that matter most when evaluating AmbiSecure: our certification posture, our standards conformance, our security model, and our vulnerability-disclosure practice.</p>
+    <p class="dek">A single page that points buyers, auditors, and security teams at the documents that matter most when evaluating AmbiSecure: our certification posture, our standards conformance, our security model, our V2X / ITS trust posture, and our vulnerability-disclosure practice.</p>
   </div>
 </section>
 
@@ -81,6 +81,23 @@
 
 <section class="alt">
   <div class="section-container">
+    <div class="section-head left"><h2 class="section-title" id="v2x-its">V2X / ITS trust posture</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:880px;margin:0;">
+      <p>AmbiSecure's V2X / ITS work sits inside an explicit boundary: we supply the hardware-rooted identity primitives that connected-vehicle and roadside infrastructure depend on, and we integrate alongside the operators, OEMs, and PKI authorities that run the deployment. The trust posture below is what procurement, regulators, and OEM integrators need to know.</p>
+      <ul style="line-height:1.9;font-size:15px;color:var(--ink);">
+        <li><strong>Hardware identity:</strong> the underlying secure-element silicon in AmbiSEC Module is CC EAL5+ certified at the chip level. Key isolation, ECDSA-P256 / P-384 acceleration, signed boot, and tamper-resistant storage all sit inside that boundary. See <a href="/products/iot-security-coprocessor/">the IoT Security Co-Processor page</a> for the silicon detail.</li>
+        <li><strong>Standards alignment, not certification:</strong> the AmbiSEC Module integrated product is designed against <a href="/references/ieee-1609-2/">IEEE 1609.2</a>, <a href="/references/etsi-ts-103-097/">ETSI TS 103 097</a>, <a href="/references/etsi-ts-102-941/">ETSI TS 102 941</a>, <a href="/references/iso-21177/">ISO 21177</a>, and TEC 31318:2021. These are design-alignment statements, not formal certifications of the integrated product. Automotive-grade certification (ISO 26262, ASPICE) of the integrated product is a target, not a present claim.</li>
+        <li><strong>Secure provisioning:</strong> personalisation lines run under HSM-backed key custody with SCP03-equivalent wrapping, per-device serialisation, and audit-grade logging. The factory side of the V2X EC / PC lifecycle &mdash; the moment that determines whether a deployment has a defensible identity story &mdash; is operated to the same discipline as the FIDO and PIV personalisation lines.</li>
+        <li><strong>Certificate lifecycle integrity:</strong> Enrolment Credentials live inside the secure element; Pseudonymous Certificate batches rotate under SE management; revocation material is distributed through the channel appropriate to the connectivity tier. See <a href="/solutions/device-identity-at-scale/">device identity at scale</a> for the architectural treatment.</li>
+        <li><strong>Offline trust environments:</strong> the V2X PC5 sidelink case &mdash; verification with no backhaul &mdash; is handled by the same hardware-isolation properties that hold at the chip level. CRL distribution via RSU broadcast is part of the architecture, not a bolted-on extension.</li>
+        <li><strong>What we explicitly do NOT claim:</strong> AmbiSecure does not operate a V2X Root CA, does not ship turnkey OBU or RSU products, has not been endorsed by TRAI or any government authority, and does not disclose named customers or specific city deployments on the public site. <a href="/solutions/device-identity-at-scale/#what-ambisecure-does-not-claim">The boundary is documented in writing</a>.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
     <div class="section-head left"><h2 class="section-title" id="disclosure">Vulnerability disclosure</h2><span class="section-line"></span></div>
     <div class="prose" style="max-width:880px;margin:0;">
       <p>If you believe you have identified a security vulnerability in an AmbiSecure product, applet, validation server, or tool, we want to know about it before anyone else does.</p>
@@ -95,7 +112,7 @@
   </div>
 </section>
 
-<section>
+<section class="alt">
   <div class="section-container">
     <div class="section-head left"><h2 class="section-title" id="documents">Trust documents on request</h2><span class="section-line"></span></div>
     <div class="prose" style="max-width:880px;margin:0;">
@@ -104,7 +121,7 @@
   </div>
 </section>
 
-<section class="alt">
+<section>
   <div class="section-container">
     <div class="callout">
       <div>

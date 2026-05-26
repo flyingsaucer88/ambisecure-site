@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ETSI TS 102 941 V2X Trust &amp; Privacy Management Reference — AmbiSecure</title>
+<meta name="description" content="ETSI TS 102 941 reference. V2X PKI hierarchy, Enrolment Authority, Authorisation Authority, EC/PC issuance flows, Butterfly Key Expansion, CRL and CTL distribution." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/references/etsi-ts-102-941/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="ETSI TS 102 941 V2X Trust &amp; Privacy Management" />
+<meta property="og:description" content="V2X PKI hierarchy, EA/AA roles, EC/PC issuance, Butterfly Key Expansion, CRL/CTL distribution." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/references/etsi-ts-102-941/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "/"},
+    {"@type": "ListItem", "position": 2, "name": "References", "item": "/references/"},
+    {"@type": "ListItem", "position": 3, "name": "ETSI TS 102 941", "item": "https://ambisecure.ambimat.com/references/etsi-ts-102-941/"}
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "ETSI TS 102 941 V2X Trust &amp; Privacy Management Reference",
+   "author": {"@type": "Organization", "name": "AmbiSecure Engineering"}
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">ETSI TS 102 941</span></nav>
+
+<main id="main">
+<header class="tool-header" style="padding-bottom:18px;">
+  <span class="eyebrow">V2X / ITS &middot; ETSI TS 102 941</span>
+  <h1>ETSI TS 102 941 Trust &amp; Privacy Management</h1>
+  <p>The architectural specification that defines the V2X PKI hierarchy: Root CA, Enrolment Authority, Authorisation Authority, the EC and PC issuance flows, the CRL and CTL distribution model, and the privacy-preserving certificate split that lets a verifier authenticate a message without identifying its sender.</p>
+</header>
+
+<section class="tool-reference" style="padding-top:0;">
+  <h2>Scope &amp; status</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>What 102 941 defines</h3>
+      <p>The trust model and the operational PKI architecture for ETSI ITS. Designates the entities (Root CA, Trust List Manager, EA, AA), the protocols between them and the ITS-S (Initial Enrolment, Authorisation Request, Authorisation Validation), and the credential-distribution mechanisms (CRL, CTL).</p>
+    </div>
+    <div class="ref-card">
+      <h3>What 102 941 does NOT define</h3>
+      <p>It does not define the certificate format (1609.2 / 103 097), the on-wire signed-message format (103 097), or the ITS station security services (ISO 21177). 102 941 is the operational layer above the cryptographic primitives.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Privacy property</h3>
+      <p>The central design property: no single authority in the PKI can link a signed V2X message back to a specific vehicle. The EA knows the device identity but never sees signed messages. The AA signs PCs but cannot link a PC back to a specific EC, even with full record-keeping. Architectural rather than legal.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>PKI hierarchy</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Root CA</h3><p>Top-of-trust. Signs the certificates of Enrolment Authorities and Authorisation Authorities. Operated by the regulator-designated authority (CCA in India's proposed framework; the CAR2CAR Communication Consortium's CPOC in the European framework).</p></div>
+    <div class="ref-card"><h3>Trust List Manager (TLM)</h3><p>Maintains and distributes the Certificate Trust List (CTL) &mdash; the authoritative list of trusted Root CAs and their public keys. ITS stations bootstrap their trust anchor set from the CTL.</p></div>
+    <div class="ref-card"><h3>Enrolment Authority (EA)</h3><p>Verifies hardware-backed device identity at enrolment, issues long-lived Enrolment Credentials. One per regional or fleet jurisdiction. Sees device identity exactly once.</p></div>
+    <div class="ref-card"><h3>Authorisation Authority (AA)</h3><p>Issues short-lived Pseudonymous Certificates in batches. Receives requests signed under EC; does not see which EC. Multiple AAs per region for load distribution and isolation.</p></div>
+    <div class="ref-card"><h3>ITS Station (ITS-S)</h3><p>The vehicle or roadside unit. Holds the EC inside its secure element; rotates through PC batches issued by AAs; signs V2X messages with the currently-active PC.</p></div>
+    <div class="ref-card"><h3>Manufacturer</h3><p>Out-of-band trust anchor. Injects a manufacturer attestation key at factory; the EA validates this attestation before issuing the EC. The manufacturer is NOT part of the operational PKI &mdash; it is the bootstrap authority.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Issuance flows</h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <h3>Initial Enrolment Request</h3>
+      <p>ITS-S &rarr; EA. The device proves possession of a manufacturer-attested key (the hardware identity injected at factory), requests an EC. EA validates the attestation against the manufacturer certificate chain, issues the EC. One-time-per-device flow.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Authorisation Request</h3>
+      <p>ITS-S &rarr; AA. The device proves possession of an EC (without disclosing it directly &mdash; via an EA-validated token or via Butterfly Key Expansion seeds). Requests a batch of PCs. AA issues the PCs without learning which EC requested them.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Authorisation Validation</h3>
+      <p>AA &rarr; EA (optional flow). The AA may ask the EA to confirm an EC is still valid (not revoked) before issuing a PC batch. EA returns yes/no without disclosing the EC bytes back to the AA. Preserves the partition.</p>
+    </div>
+    <div class="ref-card">
+      <h3>Re-enrolment</h3>
+      <p>Periodic refresh of the EC before expiry. The device authenticates with its existing EC (which is still valid) and receives a new one. No return to manufacturer-attestation step unless the silicon is replaced.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Butterfly Key Expansion</h2>
+  <p style="font-size:14.5px;color:var(--brand-grey);margin:8px 0 18px;">The mechanism that lets an AA issue a large batch of PCs from a single device-supplied seed without learning the per-PC private keys. This is what makes the EA / AA split actually privacy-preserving in practice rather than only in theory.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Seed material</h3><p>The ITS-S generates a caterpillar key pair plus an expansion function and sends the public caterpillar key + a seed to the AA. The AA cannot derive any private key from what it receives.</p></div>
+    <div class="ref-card"><h3>Public-key derivation</h3><p>The AA computes a sequence of public keys from the caterpillar public key using the seed and the expansion function. Each derived public key is the verification key for one PC in the batch.</p></div>
+    <div class="ref-card"><h3>Cocoon keys</h3><p>The AA signs each derived public key into a PC and returns the batch. The ITS-S, holding the private caterpillar key + the seed, can re-derive each corresponding private key locally inside the secure element.</p></div>
+    <div class="ref-card"><h3>Unlinkability</h3><p>From the AA's view, every PC in the batch is independent &mdash; the AA cannot link them to the same requester after issuance. From an outside observer's view, each PC has an unrelated public key. Vehicles can rotate through the batch without exposing their identity.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Revocation: CRL &amp; CTL</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Certificate Revocation List (CRL)</h3><p>Lists revoked certificates by their identifiers (HashedId8 for ECs; linkage values for PCs). Distributed by the issuing authority. RSUs cache and rebroadcast CRLs for offline OBUs.</p></div>
+    <div class="ref-card"><h3>Linkage-based PC revocation</h3><p>PCs carry <code>linkageData</code> derived from a linkage seed held only by the AA's revocation function. To revoke all PCs of a compromised device, the AA publishes the seed; verifiers compute the linkage values, reject any matching PC. No need to list every PC individually.</p></div>
+    <div class="ref-card"><h3>Certificate Trust List (CTL)</h3><p>List of currently trusted Root CAs and authorities. Signed by the TLM. ITS-S fetches CTL updates on a defined cadence to ensure its trust anchor set is current. Distinct from CRL: CTL is "who is trusted", CRL is "what is revoked".</p></div>
+    <div class="ref-card"><h3>RSU broadcast distribution</h3><p>The architectural mechanism for offline OBUs. RSUs broadcast CRL deltas and CTL updates as part of their infrastructure messaging. An OBU passing an RSU receives the current revocation set without needing backhaul.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Implementation implications</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>EC storage</h3><p>The EC is the device's high-value long-lived credential. Must live in the secure element with key isolation. Extraction = device compromise.</p></div>
+    <div class="ref-card"><h3>PC batch size</h3><p>Trade-off: larger batches reduce AA round-trips but increase the consequence of a stolen batch. Production deployments target batches sized to a week or month of operation.</p></div>
+    <div class="ref-card"><h3>PC rotation cadence</h3><p>Profile-dependent. Sub-10-minute rotation limits the linkability window of any single PC. The SE manages the rotation autonomously based on a clock + counter.</p></div>
+    <div class="ref-card"><h3>CRL caching</h3><p>The verifier maintains a CRL cache local to the OBU. CRL distribution latency is part of the threat model &mdash; a revoked PC may continue verifying until the CRL update propagates.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>Companion AmbiSecure pages</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Tools</h3><p><a href="/resources/tools/ieee-1609-2-parser/">IEEE 1609.2 V2X Certificate Parser</a> &middot; <a href="/resources/tools/v2x-cert-chain-validator/">V2X Certificate Chain Validator</a></p></div>
+    <div class="ref-card"><h3>Architecture</h3><p><a href="/technologies/v2x-pki/">V2X PKI technology page</a> &middot; <a href="/solutions/v2x-security/">V2X security solution</a> &middot; <a href="/solutions/device-identity-at-scale/">Device identity at scale</a></p></div>
+    <div class="ref-card"><h3>Adjacent references</h3><p><a href="/references/ieee-1609-2/">IEEE 1609.2 certificate format</a> &middot; <a href="/references/etsi-ts-103-097/">ETSI TS 103 097 secured messages</a> &middot; <a href="/references/iso-21177/">ISO 21177</a> &middot; <a href="/references/sgp-32/">SGP.32 (parallel lifecycle pattern)</a></p></div>
+    <div class="ref-card"><h3>Hardware</h3><p><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a> &mdash; secure-element silicon for EC storage and PC rotation.</p></div>
+  </div>
+</section>
+
+<section class="tool-reference">
+  <h2>External references</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Standards bodies</h3><p>ETSI Technical Committee ITS &middot; ETSI TS 102 941 (current edition + amendments) &middot; ETSI TS 102 940 (architecture overview) &middot; ETSI TS 102 942 (access control)</p></div>
+    <div class="ref-card"><h3>Related ITS framework documents</h3><p>ETSI TR 102 893 (threat analysis) &middot; C2C-CC Basic System Profile &middot; CAR 2 CAR Communication Consortium Certificate Policy</p></div>
+    <div class="ref-card"><h3>Disclaimer</h3><p>This page is a structural reference summary derived from the public ETSI TS 102 941 framework. For implementation conformance, consult the published ETSI standard directly.</p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Solutions</h3><ul><li><a href="/solutions/v2x-security/">V2X / ITS Security</a></li><li><a href="/solutions/device-identity-at-scale/">Device Identity at Scale</a></li><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>
