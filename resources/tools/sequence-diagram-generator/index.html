@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sequence Diagram Generator — Authentication, V2X, eSIM Flow Diagrams | AmbiSecure</title>
+<meta name="description" content="Client-side sequence diagram generator for security and identity engineers. Write WebSequenceDiagrams syntax, get clean SVG / PNG output. Built-in templates for FIDO2, secure-element provisioning (SCP03), eSIM SGP.32, V2X PKI, UPI, banking MFA, and device-identity lifecycle. Nothing leaves your browser." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/sequence-diagram-generator/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Sequence Diagram Generator — AmbiSecure" />
+<meta property="og:description" content="Client-side sequence diagram generator. WebSequenceDiagrams syntax, SVG / PNG export, FIDO2 / SCP03 / eSIM SGP.32 / V2X PKI / UPI / banking MFA / device-identity templates." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/sequence-diagram-generator/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/default.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/default.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"BreadcrumbList","itemListElement":[
+   {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
+   {"@type":"ListItem","position":2,"name":"Resources","item":"https://ambisecure.ambimat.com/resources/"},
+   {"@type":"ListItem","position":3,"name":"Sequence Diagram Generator","item":"https://ambisecure.ambimat.com/resources/tools/sequence-diagram-generator/"}
+ ]},
+ {"@type":"SoftwareApplication","name":"Sequence Diagram Generator","applicationCategory":"DeveloperApplication","operatingSystem":"Web","url":"https://ambisecure.ambimat.com/resources/tools/sequence-diagram-generator/","keywords":"sequence diagram generator, UML sequence diagram tool, WebSequenceDiagrams syntax, FIDO2 sequence diagram, SCP03 flow, eSIM SGP.32 download flow, V2X PKI sequence, UPI payment flow, banking MFA diagram, device identity lifecycle, SVG export, PNG export","featureList":"Client-side rendering · WebSequenceDiagrams syntax · SVG and PNG export · 7 security-engineering templates · No upload, no telemetry","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}},
+ {"@type":"FAQPage","mainEntity":[
+   {"@type":"Question","name":"What syntax does this tool accept?","acceptedAnswer":{"@type":"Answer","text":"A subset of the WebSequenceDiagrams syntax: title, participant / actor (with optional 'as' alias), note left of / right of / over, synchronous messages (->), asynchronous messages (->>), dashed replies (--> and -->>), alt / else / end, loop / end, opt / end, and autonumber. Self-loops, multi-line note labels via \\\\n, and quoted multi-word participant names are supported."}},
+   {"@type":"Question","name":"Does anything I type leave my browser?","acceptedAnswer":{"@type":"Answer","text":"No. Parsing, layout, and rendering all run client-side in JavaScript. The diagram source is autosaved to your browser's localStorage so it survives reloads. No analytics, no server, no telemetry. Export of SVG or PNG happens locally via a download blob."}},
+   {"@type":"Question","name":"How is this different from Mermaid or PlantUML?","acceptedAnswer":{"@type":"Answer","text":"The syntax is closer to WebSequenceDiagrams (and to ETSI / IEEE conventions used in security specs) than to Mermaid's mermaid-specific grammar. The renderer is hand-rolled SVG matching the AmbiSecure design language. Mermaid and PlantUML support could be layered on top in a follow-up; this tool ships with the WebSequenceDiagrams subset only."}},
+   {"@type":"Question","name":"Why are there security-engineering templates baked in?","acceptedAnswer":{"@type":"Answer","text":"The tool is positioned for the engineers who actually need to communicate authentication, provisioning, and PKI flows under review. FIDO2 / WebAuthn, SCP03 personalisation, eSIM SGP.32 profile download, V2X PKI EA/AA + Butterfly batch, UPI collect request, banking MFA, and device-identity lifecycle are the seven flows that recur in security architecture documents. Each template is editable; pick one, then refactor it for your deployment."}},
+   {"@type":"Question","name":"Can I export to PDF?","acceptedAnswer":{"@type":"Answer","text":"Not in this version. SVG and PNG export are supported. SVG is vector-clean and converts losslessly to PDF in any modern viewer (Preview, browser print-to-PDF, Illustrator, Inkscape). PDF export inside the tool would require a heavy in-browser PDF library, which conflicts with the client-side, no-build-step architecture this tool follows."}}
+ ]}
+]}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">eSIM Initiative</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">Sequence Diagram Generator</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Engineering utility</span>
+  <h1>Sequence Diagram Generator</h1>
+  <p>Write authentication, provisioning, and PKI flow diagrams in WebSequenceDiagrams syntax; get clean SVG or PNG output. Seven security-engineering templates included &mdash; FIDO2 / WebAuthn, SCP03 personalisation, eSIM SGP.32 download, V2X PKI enrolment + Butterfly batch, UPI collect, banking MFA, and device-identity lifecycle. All rendering happens in your browser.</p>
+  <div class="tool-meta">
+    <span>Client-side</span><span>No upload</span><span>SVG &amp; PNG export</span><span>Updated 2026-05</span>
+  </div>
+</header>
+
+<div class="asseq-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head">
+      <h2>Source</h2>
+      <div class="tool-panel-actions">
+        <label class="tool-options" for="asseq-template">
+          <span>Template:</span>
+          <select id="asseq-template">
+            <option value="">&mdash; pick &mdash;</option>
+          </select>
+        </label>
+        <button class="tool-action tool-action--primary" id="asseq-render" type="button">Render</button>
+        <button class="tool-action" id="asseq-clear" type="button">Clear</button>
+      </div>
+    </div>
+    <div class="asseq-editor">
+      <div class="asseq-gutter" id="asseq-gutter" aria-hidden="true"></div>
+      <textarea
+        id="asseq-source"
+        class="asseq-source"
+        spellcheck="false" autocomplete="off" autocapitalize="off"
+        wrap="off"
+        aria-label="Sequence diagram source"
+        placeholder="title FIDO2 login&#10;participant Browser&#10;participant RP&#10;Browser -> RP: /assert/options&#10;RP --> Browser: challenge"
+      ></textarea>
+    </div>
+    <div id="asseq-errors" class="asseq-errors clean">No syntax errors.</div>
+    <div class="tool-panel-actions" style="margin-top:12px;">
+      <label class="asseq-import-label tool-action" for="asseq-import">Import .txt
+        <input type="file" id="asseq-import" accept=".txt,.md,.wsd,text/plain" />
+      </label>
+      <button class="tool-action" id="asseq-export-txt" type="button">Export source</button>
+      <button class="tool-action" id="asseq-copy-source" type="button">Copy source</button>
+    </div>
+  </div>
+
+  <div class="tool-panel">
+    <div class="tool-panel-head">
+      <h2>Preview</h2>
+      <div class="tool-panel-actions">
+        <button class="tool-action" id="asseq-export-svg" type="button">Export SVG</button>
+        <button class="tool-action" id="asseq-export-png" type="button">Export PNG (2&times;)</button>
+      </div>
+    </div>
+    <div class="asseq-preview" id="asseq-preview" role="img" aria-label="Rendered sequence diagram"></div>
+    <div class="asseq-meta-row">
+      <span>Shortcuts:</span>
+      <code>Cmd/Ctrl &#43; Enter</code> render now &middot; <code>Tab</code> indent &middot; autosaved to <code>localStorage</code>.
+    </div>
+  </div>
+</div>
+
+<div class="tool-privacy">All parsing, layout, and rendering happens in your browser. No source bytes are sent to a server. The current source is autosaved locally; clear the editor to remove it.</div>
+
+<section class="tool-reference">
+  <h2>Supported syntax</h2>
+  <p>A WebSequenceDiagrams-style subset. Lines are evaluated in order; participants referenced by messages or notes are auto-declared if not declared explicitly. Comment lines start with <code>#</code> or <code>//</code>.</p>
+  <ul class="asseq-syntax-key">
+    <li><code>title &lt;text&gt;</code> &mdash; diagram title (one per file)</li>
+    <li><code>participant Alice</code> &middot; <code>participant "Long Name" as A</code></li>
+    <li><code>actor User</code> &mdash; stick-figure participant</li>
+    <li><code>A -&gt; B: label</code> &mdash; synchronous message</li>
+    <li><code>A -&gt;&gt; B: label</code> &mdash; asynchronous (open arrow)</li>
+    <li><code>A --&gt; B: label</code> &mdash; dashed reply</li>
+    <li><code>A --&gt;&gt; B: label</code> &mdash; dashed async reply</li>
+    <li><code>A -&gt; A: label</code> &mdash; self-loop</li>
+    <li><code>note over A: text</code> &middot; <code>note over A,B: text</code></li>
+    <li><code>note left of A: text</code> &middot; <code>note right of A: text</code></li>
+    <li><code>alt &lt;cond&gt;</code> / <code>else &lt;cond&gt;</code> / <code>end</code></li>
+    <li><code>loop &lt;cond&gt;</code> / <code>end</code></li>
+    <li><code>opt &lt;cond&gt;</code> / <code>end</code></li>
+    <li><code>autonumber</code> &mdash; auto-number subsequent messages</li>
+    <li><code>\n</code> inside labels &mdash; line break</li>
+  </ul>
+
+  <h2>Templates</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>FIDO2 / WebAuthn authentication</h3><p>Full assertion ceremony &mdash; <code>PublicKeyCredentialRequestOptions</code> &rarr; authenticator user verification &rarr; signature &rarr; relying-party verify with counter / origin / RP-ID-hash checks. See also <a href="/blog/how-fido-authentication-works/">how FIDO authentication works</a>.</p></div>
+    <div class="ref-card"><h3>Secure-element provisioning (SCP03)</h3><p>HSM-backed personalisation line: <code>INITIALIZE UPDATE</code> &rarr; <code>EXTERNAL AUTHENTICATE</code> &rarr; per-applet <code>PUT KEY</code> with hash-chained audit log. See also <a href="/blog/device-identity-at-manufacturing-scale/">device identity at manufacturing scale</a>.</p></div>
+    <div class="ref-card"><h3>eSIM SGP.32 profile download</h3><p>IoT eSIM RSP: SM-DS discovery, mutual auth with SM-DP+, bound-profile-package delivery, optional enable. See also <a href="/references/sgp-32/">the SGP.32 reference</a>.</p></div>
+    <div class="ref-card"><h3>V2X PKI enrolment + AA batch</h3><p>EA enrolment under manufacturer attestation, then Butterfly Key Expansion for an Authorisation Authority batch of pseudonymous certificates. See also <a href="/blog/how-v2x-pki-works/">how V2X PKI works</a>.</p></div>
+    <div class="ref-card"><h3>UPI payment &mdash; collect + verify</h3><p>NPCI switch flow with encrypted PIN block, payer-bank authorise, credit settlement. The kind of diagram every UPI integration spec needs.</p></div>
+    <div class="ref-card"><h3>Banking login &mdash; phishing-resistant MFA</h3><p>Password + WebAuthn step-up + risk engine. Alt-branch on risk score for out-of-band confirmation.</p></div>
+    <div class="ref-card"><h3>Device identity lifecycle</h3><p>Factory mint &rarr; field enrolment &rarr; operational refresh &rarr; re-enrolment &rarr; revocation across always-on / intermittent / offline tiers.</p></div>
+  </div>
+
+  <h2>FAQ</h2>
+  <details><summary>Why a sequence diagram tool on an embedded-security site?</summary>
+    <p>Authentication ceremonies, V2X PKI flows, eSIM RSP exchanges, and SCP03 personalisation steps are sequence diagrams in disguise. Every architecture review of these systems ends up sketching one. Owning the tool that draws them &mdash; with templates that match the actual standards &mdash; cuts review cycles for our engineering team and is useful to external readers working in the same space.</p>
+  </details>
+  <details><summary>Why not just use WebSequenceDiagrams.com or Mermaid?</summary>
+    <p>WebSequenceDiagrams.com is a paid hosted service that uploads your source to render. For an under-NDA architecture diagram (which authentication and provisioning flows often are), that&rsquo;s the wrong privacy posture. Mermaid is excellent but uses a different syntax convention; this tool stays close to the WebSequenceDiagrams grammar engineers in the security space already know.</p>
+  </details>
+  <details><summary>What is the current syntax-feature gap?</summary>
+    <p>Not yet supported: <code>par</code> / <code>end</code> (concurrent branches), <code>activate</code> / <code>deactivate</code> (lifeline activations), participant grouping, and Mermaid- or PlantUML-style syntax. The architecture is designed to accept these in a follow-up phase without rewriting the layout engine.</p>
+  </details>
+  <details><summary>How does dark mode work?</summary>
+    <p>The SVG honours <code>prefers-color-scheme: dark</code> in your browser or operating system. Switch your OS appearance to dark and reload to see the dark theme. No toggle ships with the tool because the rest of the AmbiSecure site does not currently expose one.</p>
+  </details>
+
+  <h2>Related</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Other developer utilities</h3><p><a href="/resources/tools/apdu-parser/">APDU parser</a> &middot; <a href="/resources/tools/asn1-parser/">ASN.1 parser</a> &middot; <a href="/resources/tools/x509-viewer/">X.509 viewer</a> &middot; <a href="/resources/tools/ieee-1609-2-parser/">IEEE 1609.2 V2X parser</a></p></div>
+    <div class="ref-card"><h3>Architecture writing</h3><p><a href="/blog/how-v2x-pki-works/">How V2X PKI works</a> &middot; <a href="/blog/device-identity-at-manufacturing-scale/">Device identity at manufacturing scale</a> &middot; <a href="/blog/pseudonymous-certificates-and-privacy/">Pseudonymous certificates and privacy</a></p></div>
+    <div class="ref-card"><h3>References</h3><p><a href="/references/ieee-1609-2/">IEEE 1609.2</a> &middot; <a href="/references/sgp-32/">GSMA SGP.32</a> &middot; <a href="/references/etsi-ts-102-941/">ETSI TS 102 941</a></p></div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">eSIM Initiative</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+      <div><h3>Products</h3><ul><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div>
+      <div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+      <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/ieee-1609-2-parser/">V2X parser</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/apdu-parser/">APDU parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+      <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+      <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+    </div>
+    <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+  </div>
+</footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/sequence-diagrams/lexer.js" defer></script>
+<script src="/assets/js/tools/sequence-diagrams/parser.js" defer></script>
+<script src="/assets/js/tools/sequence-diagrams/layout.js" defer></script>
+<script src="/assets/js/tools/sequence-diagrams/renderer.js" defer></script>
+<script src="/assets/js/tools/sequence-diagrams/templates.js" defer></script>
+<script src="/assets/js/tools/sequence-diagrams/export.js" defer></script>
+<script src="/assets/js/tools/sequence-diagrams/editor.js" defer></script>
+</body>
+</html>
