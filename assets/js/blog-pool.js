@@ -2,6 +2,18 @@
 // Source of truth: assets/data/blogs.json. Re-run that script after edits.
 window.AS_BLOG_POOL = [
  {
+  "title": "Lava Lamps and Cryptographic Entropy: Inside the Wall of Entropy",
+  "url": "/blog/lava-lamps-and-cryptographic-entropy/",
+  "date": "2026-05-28",
+  "summary": "How Cloudflare's lava-lamp 'Wall of Entropy' produces randomness \u2014 and why hardware TRNGs in secure-element silicon underpin TLS, FIDO, V2X PKI, and eSIM. An engineering-grade walk-through of cryptographic entropy from physical sources through CSPRNG to deployed device keys.",
+  "categories": [
+   "Cryptography",
+   "Infrastructure",
+   "Hardware"
+  ],
+  "type": "modern"
+ },
+ {
   "title": "How V2X PKI Works: EA, AA, Pseudonymous Certificates, Lifecycle",
   "url": "/blog/how-v2x-pki-works/",
   "date": "2026-05-26",

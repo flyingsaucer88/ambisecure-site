@@ -122,6 +122,9 @@ V2X / ITS PKI tools:
 - 31 modern cornerstones (2026): WebAuthn attestation, passkeys, MFA, JavaCard applet development, secure element vs TPM vs HSM, DESFire EV1/2/3, transit validators, IoT identity, ePassport issuance, embedded secure-element FIDO2, PIV vs USB vs embedded SE, secure mail / PAdES, V2X PKI, pseudonymous certificates, manufacturing-scale provisioning, and more.
 - 24 earlier engineering pieces (2017–2025) at [/blog/archive/](https://ambisecure.ambimat.com/blog/archive/), kept for engineering reference and cross-linked forward to current coverage.
 
+Cryptography engineering (2026-05-28):
+- [Lava Lamps and Cryptographic Entropy](https://ambisecure.ambimat.com/blog/lava-lamps-and-cryptographic-entropy/): how Cloudflare's lava-lamp Wall of Entropy feeds randomness into the cryptographic pipeline, what entropy actually is, why predictable randomness breaks TLS / FIDO / V2X / eSIM / smart-card systems, on-chip TRNG architecture in secure-element silicon, comparison of entropy sources, the AmbiSecure perspective on hardware-rooted entropy for FIDO / V2X Butterfly Key Expansion / eSIM SM-DP+ ECDH. References Cloudflare's article as primary source. 8-question FAQ schema.
+
 V2X / ITS engineering cornerstones (2026-05-26):
 - [How V2X PKI Works](https://ambisecure.ambimat.com/blog/how-v2x-pki-works/): Root CA, EA, AA, EC, PC, HashedId8, Butterfly Key Expansion, CRL / CTL distribution. IEEE 1609.2 + ETSI TS 102 941 in engineering depth.
 - [Secure Elements in Connected Vehicles](https://ambisecure.ambimat.com/blog/secure-elements-in-connected-vehicles/): key isolation, OBU / RSU integration, signed boot, anti-cloning, OTA trust anchors. Nano-card vs MFF2 form factors. TPM / HSM / SE comparison.
