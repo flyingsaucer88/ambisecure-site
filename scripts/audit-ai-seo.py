@@ -41,6 +41,7 @@ class PageParser(HTMLParser):
         super().__init__()
         self.title_parts = []
         self.in_title = False
+        self.title_done = False  # only capture the first <title> (head); skip SVG <title>
         self.in_script = False
         self.canonical = None
         self.meta_description = None
@@ -75,7 +76,7 @@ class PageParser(HTMLParser):
         a = dict(attrs)
         if tag == 'html':
             self.html_lang = a.get('lang')
-        elif tag == 'title':
+        elif tag == 'title' and not self.title_done:
             self.in_title = True
         elif tag == 'link' and a.get('rel') == 'canonical':
             self.canonical = a.get('href')
@@ -148,6 +149,8 @@ class PageParser(HTMLParser):
 
     def handle_endtag(self, tag):
         if tag == 'title':
+            if self.in_title:
+                self.title_done = True
             self.in_title = False
         elif tag == 'h1':
             self.in_h1 = False
