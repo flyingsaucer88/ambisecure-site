@@ -45,7 +45,7 @@ The minimum coherent unit that gives AmbiSecure visible V2X positioning.
 - These are real authoring work and warrant their own turns
 
 ### Phase E — External (separate repo)
-- eSIM Initiative bridge link back from `esim.ambimat.com` — lives in `esim-website/`, not this repo
+- SIMAuth bridge link back from `esim.ambimat.com` — lives in `esim-website/`, not this repo
 - AmbiAutomation reciprocal link — lives in `ambiautomations-site/`, not this repo
 
 ---
@@ -120,7 +120,7 @@ Anchor every V2X surface to this language. Deviations need explicit override.
 3. **Hardware binding: why software key storage is insufficient** — OBUs in vehicles (theft/damage); RSUs at roadsides (physical access); CC EAL5+ or equivalent tamper resistance; MTCTE cybersecurity baseline should mandate hardware-backed key storage.
 4. **Secure manufacturing and provisioning** — EC injection on controlled provisioning line under HSM-backed key custody; SCP03-equivalent wrapping; per-device unique identity via hardware attestation.
 5. **Certificate lifecycle in field deployments** — PC rotation automated SE-managed; OTA credential updates over authenticated channel; revocation via CRL broadcast for offline OBUs and OCSP-like for connected.
-6. **AmbiSecure capabilities relevant to V2X** — IoT Security Co-Processor (CC EAL5+ silicon, hardware key isolation, signed boot, OTA); JavaCard applet development (custom V2X certificate management); smart-card personalisation (HSM-backed provisioning line); eSIM Initiative (credential lifecycle at telecom scale).
+6. **AmbiSecure capabilities relevant to V2X** — IoT Security Co-Processor (CC EAL5+ silicon, hardware key isolation, signed boot, OTA); JavaCard applet development (custom V2X certificate management); smart-card personalisation (HSM-backed provisioning line); SIMAuth (credential lifecycle at telecom scale).
 7. **What AmbiSecure does NOT yet provide** — explicit disclaimer block: not currently shipping an ISO 26262 / ASPICE-certified V2X stack; not a V2X Root CA operator; not a turnkey OBU vendor. We provide the *components* — secure-element silicon, applet platform, provisioning infrastructure — and integrate alongside OBU/RSU OEMs and PKI operators. This block prevents a regulator or system integrator from misinterpreting positioning.
 
 **Hero CTA:**
@@ -208,7 +208,7 @@ Add under existing "Standards we build to" section. Use **design alignment** phr
 - **ETSI TS 102 941** — V2X trust and privacy management (design alignment).
 - **ISO 21177** — ITS station security services (design alignment).
 - **TEC 31318:2021** — IoT Security Code of Practice (design alignment).
-- **GSMA SGP.32** — IoT eSIM profile lifecycle (design alignment, via eSIM Initiative).
+- **GSMA SGP.32** — IoT eSIM profile lifecycle (design alignment, via SIMAuth).
 - **ISO 26262 / ASPICE** — automotive-grade certification of the integrated AmbiSEC Module product is a *target*, not yet claimed.
 
 ---
@@ -412,7 +412,7 @@ Add five new `/references/` entries matching the existing reference page style. 
 - `/references/etsi-ts-103-097/` — secured-message header structure, cert-format variants, external link to ETSI.
 - `/references/etsi-ts-102-941/` — V2X trust + privacy management, EA/AA roles, PKI hierarchy.
 - `/references/iso-21177/` — ITS station security services summary.
-- `/references/sgp-32/` — IoT eSIM profile lifecycle, cross-reference to eSIM Initiative.
+- `/references/sgp-32/` — IoT eSIM profile lifecycle, cross-reference to SIMAuth.
 
 Each is ~200–400 words; the value is structured field tables, not prose.
 
@@ -445,7 +445,7 @@ Before Phase A merges:
 - [ ] TRAI consultation referenced as public document, not endorsement
 - [ ] No deployment numbers or named customers
 - [ ] City-scale claims generic, not named-city
-- [ ] eSIM Initiative links use `rel="noopener"` (matches existing pattern)
+- [ ] SIMAuth links use `rel="noopener"` (matches existing pattern)
 - [ ] Internal-link graph from section 14 fully implemented
 - [ ] Navigation entries on `/industries/`, `/solutions/`, `/technologies/` hubs
 - [ ] Mobile responsiveness on new layout tiles (use existing `.grid-3` / `.card` / `.card-soft` classes — same as recent commits)
@@ -558,7 +558,7 @@ Realistic single-turn duration: substantial. Roughly 1.3× the scope of the orig
 ### Items still in follow-up
 
 - **`/blog/categories/v2x/`** and **`/tags/v2x/`** category/tag pages: standard auto-generation pattern after the first V2X blog post lands. Pick up in Phase D.
-- **eSIM Initiative reciprocal link**: separate repo (`esim-website/`), separate commit. Plan documented here; execute there.
+- **SIMAuth reciprocal link**: separate repo (`esim-website/`), separate commit. Plan documented here; execute there.
 
 ---
 

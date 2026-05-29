@@ -6,10 +6,10 @@
 
 Before the cross-linking work, AmbiAutomation appeared on AmbiSecure only inside three archived blog posts (`blog/archive/cyber-attacks-in-india-part-*`, etc.). It was not in the navigation, footer ecosystem, schema, llms.txt, or any product/solution/industry page.
 
-The parallel pattern that already existed was the **eSIM Initiative** sister-site cross-linking:
+The parallel pattern that already existed was the **SIMAuth** sister-site cross-linking:
 
-- Top ecosystem-bar: `eSIM Initiative` link.
-- Footer ecosystem block: `Part of the Ambimat Group · eSIM Initiative`.
+- Top ecosystem-bar: `SIMAuth` link.
+- Footer ecosystem block: `Part of the Ambimat Group · SIMAuth`.
 - Topic-page mentions where eSIM/eUICC content overlaps (FIDO2 nano-card applet, PIV nano-card applet, eSIM solution product page).
 
 The right pattern for AmbiAutomation is to mirror this — sitewide ecosystem-bar + footer entry, plus contextual mentions only where the topic legitimately overlaps.
@@ -40,7 +40,7 @@ Audit found genuine topical overlap on these AmbiSecure surfaces:
 
 | Page | Reason for natural fit | Anchor used |
 |---|---|---|
-| Homepage top ecosystem-bar | Existing sibling-site nav pattern (parallel to eSIM Initiative). | `AmbiAutomation` (branded nav anchor) |
+| Homepage top ecosystem-bar | Existing sibling-site nav pattern (parallel to SIMAuth). | `AmbiAutomation` (branded nav anchor) |
 | Footer ecosystem (all pages) | Existing "Part of Ambimat Group" pattern. | `AmbiAutomation` (branded footer anchor) |
 | `/about/` | Company / ecosystem positioning. New dedicated Ecosystem section with three sibling-platform cards. | `AmbiAutomation` (card title) |
 | `/industries/smart-cities/` | Smart-city deployments touch buildings (hospitals, civic centres) where HVAC + access converge. | `building-automation platform at AmbiAutomation` |
@@ -70,12 +70,12 @@ These pages exist on AmbiSecure but have no genuine AmbiAutomation overlap. Addi
 
 | Risk | Mitigation |
 |---|---|
-| Sitewide outbound link concentration | One sitewide nav entry + one sitewide footer entry. Mirrors existing eSIM Initiative pattern; not a *new* sitewide pattern. |
+| Sitewide outbound link concentration | One sitewide nav entry + one sitewide footer entry. Mirrors existing SIMAuth pattern; not a *new* sitewide pattern. |
 | Repetitive exact-match anchors | 5 distinct anchor variants used across contextual placements; navigational nav/footer uses branded anchor consistently (Google handles editorial nav anchors fine). |
 | Over-linking on a single page | At most one contextual link per modified page (the sitewide nav + footer are separate). |
 | Hierarchy confusion | All copy uses *sibling* / *sister team* / *within the Ambimat group* language. Nothing implies AmbiSecure owns or depends on AmbiAutomation, or vice versa. |
 | Topical-authority dilution | No HVAC / building-automation mentions on identity-only surfaces. Cross-links restricted to pages whose own content already touches buildings or commercial real estate. |
-| Footer spam pattern | The footer ecosystem block lists three entities (`Ambimat Group · eSIM Initiative · AmbiAutomation`) — same shape as the eSIM Initiative pattern that already existed. Not a sudden new pattern. |
+| Footer spam pattern | The footer ecosystem block lists three entities (`Ambimat Group · SIMAuth · AmbiAutomation`) — same shape as the SIMAuth pattern that already existed. Not a sudden new pattern. |
 | Outbound-link equity drain | AmbiSecure is currently indexed=0 in GSC (see `docs/GSC_RECOVERY_ACTION_PLAN.md`) — there is no equity to drain right now. The ecosystem positioning is forward-looking. Once AmbiSecure recovers, equity will flow to AmbiAutomation naturally and proportionately. |
 
 ## 6. Topical relevance opportunities (used)

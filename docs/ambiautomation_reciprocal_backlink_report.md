@@ -4,7 +4,7 @@
 
 ## 1. Backlinks added
 
-### 1.1 Sitewide navigational (mirrors existing eSIM Initiative pattern)
+### 1.1 Sitewide navigational (mirrors existing SIMAuth pattern)
 
 | Surface | Files affected | Anchor |
 |---|---|---|
@@ -14,7 +14,7 @@
 Both are editorial nav links — Google treats sitewide footer/nav links to sibling sites as expected for company-group structures. They are not "spam blocks" because:
 
 - They sit inside the existing `ecosystem-bar` and `footer-ecosystem` patterns, not in a freshly invented block.
-- The same pattern already exists for `eSIM Initiative` and was added by AmbiSecure long before this work.
+- The same pattern already exists for `SIMAuth` and was added by AmbiSecure long before this work.
 - No keyword-stuffed anchor text; it's the brand name in nav context.
 
 ### 1.2 Contextual editorial placements
@@ -64,7 +64,7 @@ Contextual anchors (5 distinct):
 
 Navigational anchors:
 
-- Top ecosystem-bar: `AmbiAutomation` (same convention as `eSIM Initiative` next to it)
+- Top ecosystem-bar: `AmbiAutomation` (same convention as `SIMAuth` next to it)
 - Footer ecosystem block: `AmbiAutomation` (same convention)
 
 No exact-match keyword-stuffed anchors. No "best HVAC" / "cheap automation" / promotional copy.
@@ -83,7 +83,7 @@ No exact-match keyword-stuffed anchors. No "best HVAC" / "cheap automation" / pr
 
 - Homepage `Organization.sameAs[]` now enumerates the full Ambimat property family. This is the canonical schema-level entity-graph signal for "these properties are part of the same organisation."
 - About-page Ecosystem section uses card-based UI to enumerate the three sibling platforms, with each card linking to its respective domain.
-- `llms.txt` Ecosystem block explicitly tells AI engines that AmbiSecure, eSIM Initiative, AmbiAutomation, and Ambimat Electronics are **distinct entities, not duplicate content** — head-off the AI-collapse risk where multiple sibling sites under the same parent get treated as one.
+- `llms.txt` Ecosystem block explicitly tells AI engines that AmbiSecure, SIMAuth, AmbiAutomation, and Ambimat Electronics are **distinct entities, not duplicate content** — head-off the AI-collapse risk where multiple sibling sites under the same parent get treated as one.
 
 Hierarchy clarity (verified across all copy):
 
@@ -97,7 +97,7 @@ Hierarchy clarity (verified across all copy):
 | Check | Outcome |
 |---|---|
 | Broken outbound link | None — `curl -I https://ambiautomation.ambimat.com/` returns 200 |
-| Excessive backlink density | None — sitewide nav uses single editorial entry mirroring the existing eSIM Initiative pattern; ≤1 contextual link per modified page |
+| Excessive backlink density | None — sitewide nav uses single editorial entry mirroring the existing SIMAuth pattern; ≤1 contextual link per modified page |
 | Duplicate anchor over-use | None — 5 distinct contextual anchor variations + 1 navigational anchor |
 | Hierarchy confusion | None — all copy frames the relationship as siblings under the Ambimat Group |
 | Irrelevant placement | None — all 5 contextual placements are on pages whose own subject matter touches buildings or commercial real estate |

@@ -1378,7 +1378,7 @@ Behaviour:
 | Group | Entries |
 |---|---|
 | AmbiSecure capability | OnePass platform, PIV across form factors, JavaCard development, FIDO Validation Server, MFF2 secure elements, ePassport platform, IoT identity, Case studies, Engineering FAQs |
-| eSIM Initiative (esim.ambimat.com) | eUICC platform engineering, SMS-OTP → hardware MFA bridge |
+| SIMAuth (esim.ambimat.com) | eUICC platform engineering, SMS-OTP → hardware MFA bridge |
 | Ambimat Electronics (ambimat.com) | 45 years of embedded engineering, in-house hardware capability |
 
 The Phase 22 carousel CSS (prev/next buttons, dot indicators, auto-advance, hover pause) is dead code from Phase 28's perspective but harmless; remove it in a future CSS cleanup.
@@ -1410,7 +1410,7 @@ Frame both as packaging choices for the same applet. Cross-reference [esim.ambim
 ### Phrasing to avoid
 
 - "SIM-resident applet" / "SIM-based applet" / "applet on a SIM" — implies telecom-issued
-- "Telco-grade authentication" used to describe AmbiSecure SE applets (use only for the eSIM Initiative platform)
+- "Telco-grade authentication" used to describe AmbiSecure SE applets (use only for the SIMAuth platform)
 - "Subscriber-controlled" / "carrier-loaded" / "operator-provisioned" in AmbiSecure copy
 - The unqualified word "SIM" without "nano-card form factor" or similar disambiguation
 
@@ -1468,7 +1468,7 @@ Terminology normalisation (preserves Oracle proper-noun citations and ISO form-f
 - `Java Card` (with space) — left as-is only where it refers to Oracle's "Java Card Runtime Environment (JCRE)" or "Java Card converter" tool name. The remaining body prose uses "JavaCard" consistently.
 - `e-passport` / `E-passport` / `E-Passport` → `ePassport` everywhere in body prose. URLs / slugs unchanged.
 - `FIDO 2` (with space) → `FIDO2`, except where it represents a version label like `FIDO 2.0`.
-- `Nano SIM applet` / `nano SIM applet` / `SIM applet` (body, alt text, related-card titles) → `nano-card applet` / `nano-card authenticator` / `nano-card secure element`. URL slugs (`piv-nano-sim-applet`, `fido2-nano-sim-applet`) preserved for SEO equity. Three remaining "SIM applet" hits are legitimate: the `industries/` eSIM Initiative card (genuine telecom-SIM context) and two "nano-SIM applet" form-factor references on the PIV timeline (where "nano-SIM" is the ISO/IEC 7810 4FF size, not the telecom-SIM concept).
+- `Nano SIM applet` / `nano SIM applet` / `SIM applet` (body, alt text, related-card titles) → `nano-card applet` / `nano-card authenticator` / `nano-card secure element`. URL slugs (`piv-nano-sim-applet`, `fido2-nano-sim-applet`) preserved for SEO equity. Three remaining "SIM applet" hits are legitimate: the `industries/` SIMAuth card (genuine telecom-SIM context) and two "nano-SIM applet" form-factor references on the PIV timeline (where "nano-SIM" is the ISO/IEC 7810 4FF size, not the telecom-SIM concept).
 - `webauthn` lowercase only kept inside `<code>` examples (`type === "webauthn.create"` is the literal WebAuthn spec string).
 
 Verifier (run after each pass):
@@ -1525,7 +1525,7 @@ Earlier passes (§44) fixed body prose. Codex flagged that blog cards, OG/Twitte
 
 **Three intentional exceptions** (verifier knows to skip):
 
-1. `industries/index.html` — the `Telecom — eSIM Initiative` card on the industries page legitimately describes eSIM applets in the telecom-SIM context, because it links to the dedicated eSIM Initiative sister site at `esim.ambimat.com`. That sister property is the actual telecom-SIM ecosystem.
+1. `industries/index.html` — the `Telecom — SIMAuth` card on the industries page legitimately describes eSIM applets in the telecom-SIM context, because it links to the dedicated SIMAuth sister site at `esim.ambimat.com`. That sister property is the actual telecom-SIM ecosystem.
 2. `assets/js/hero-visual-config.js` — the file-level docstring quotes "SIM-resident applets" inside a banned-wording governance comment. That's documentation, not user-facing copy.
 3. `blog/designing-low-latency-secure-transit-validators/index.html` — "SAM in a 4FF SIM-form FRU" refers to the physical socket-form hardware module that SAMs ship in (transit validators historically socket a SAM in a 4FF / SIM-card-shaped FRU). Engineering reference, not a telecom-applet implication.
 
@@ -1558,7 +1558,7 @@ Across all `*.html / *.json / *.js / *.txt` outside `dist/`, `docs/`, `_internal
 Codex's final-acceptance review surfaced three remaining items (robots.txt explicitly out of scope for this phase):
 
 1. **Cornerstone `sim-based-fido2-authenticators` blog still leaked operator framing.** Earlier sweeps fixed surface-level phrasing but the article body, FAQPage JSON-LD, dek, and `keywords` were still built around "the operator controls the trust root" / "telecom operator deployment model" / "operator-issued devices" / "operator-controlled certified secure element". This is the entire structural premise of the legacy 2021-era piece and it directly conflicts with the Phase 28 / 31 / 33 positioning.
-2. **`faqs/index.html`** had one Q&A that mixed AmbiSecure's nano-card/MFF2 product positioning with eSIM Initiative subscriber framing in the same answer.
+2. **`faqs/index.html`** had one Q&A that mixed AmbiSecure's nano-card/MFF2 product positioning with SIMAuth subscriber framing in the same answer.
 3. **`blogs.json`** still carried legacy "Dear Readers" / "This week's blog" / "The post introduces" summaries for 24 archive entries — invisible on rendered pages (the HTML had been rewritten) but visible in `blog-pool.js` (homepage rotation) and `blog-search-index.json` (search results).
 
 **Deep reframe of the cornerstone blog (~30 paragraph-level rewrites, technical content preserved):**
@@ -1583,9 +1583,9 @@ The URL slug `/blog/sim-based-fido2-authenticators/` is preserved for SEO equity
 
 **`blogs.json` source-of-truth re-sync.** 24 archive entries got their `summary` field replaced with the canonical engineering-tone text that the rendered HTML, dek, and meta-description already use. This finally makes the four blog-related surfaces consistent: rendered archive page, blog/category/tag index card, homepage daily-spotlight rotation (`blog-pool.js`), and on-page blog search (`blog-search-index.json`).
 
-**`faqs/index.html` answer reframed** to clearly separate AmbiSecure's nano-card/MFF2 product positioning ("on CC EAL5+ secure elements packaged as removable nano-cards … and solderable MFF2 modules — for embedded identity, OEM device authentication, and enterprise rollouts") from the eSIM Initiative sister site ("Telecom-grade eSIM / eUICC and SGP.22 / SGP.32 RSP lifecycle work is covered separately on the dedicated eSIM Initiative platform").
+**`faqs/index.html` answer reframed** to clearly separate AmbiSecure's nano-card/MFF2 product positioning ("on CC EAL5+ secure elements packaged as removable nano-cards … and solderable MFF2 modules — for embedded identity, OEM device authentication, and enterprise rollouts") from the SIMAuth sister site ("Telecom-grade eSIM / eUICC and SGP.22 / SGP.32 RSP lifecycle work is covered separately on the dedicated SIMAuth platform").
 
-**Homepage banner config tweak** — the `esim-otp-bridge` entry on `assets/js/highlight-banner-config.js` had body text "When an operator wants to retire SMS OTP without re-issuing every SIM…". A reader who didn't notice the `ECOSYSTEM · eSIM Initiative` eyebrow could read that as AmbiSecure positioning. Reworded to "When a telco wants to retire SMS OTP…" with a closing line "eSIM Initiative is the dedicated telecom platform; AmbiSecure ships the non-telecom nano-card / MFF2 applet portfolio."
+**Homepage banner config tweak** — the `esim-otp-bridge` entry on `assets/js/highlight-banner-config.js` had body text "When an operator wants to retire SMS OTP without re-issuing every SIM…". A reader who didn't notice the `ECOSYSTEM · SIMAuth` eyebrow could read that as AmbiSecure positioning. Reworded to "When a telco wants to retire SMS OTP…" with a closing line "SIMAuth is the dedicated telecom platform; AmbiSecure ships the non-telecom nano-card / MFF2 applet portfolio."
 
 **Final verifier** (16 patterns: Dear Readers, This week's blog, The blog of this week, The post introduces/addresses/discusses/examines/is-a-follow-up/serves-as-a-continuation, operator-controlled, operator-issued, carrier-controlled, carrier-issued, telecom-grade identity, telecom-integrated, SIM-based, SIM-resident, SIM applet, SIM authenticator, nano SIM applet, Telecom and identity convergence, on the SIM) — across every `*.html / *.json / *.js / *.txt` outside `dist/`, `docs/`, `_internal/`, `.git/`, and the four intentional-context files:
 
@@ -1593,9 +1593,9 @@ The URL slug `/blog/sim-based-fido2-authenticators/` is preserved for SEO equity
 
 Documented intentional exceptions (verifier skips):
 
-1. `industries/index.html` — eSIM Initiative card legitimately describes the telecom-SIM sister site.
+1. `industries/index.html` — SIMAuth card legitimately describes the telecom-SIM sister site.
 2. `assets/js/hero-visual-config.js` — file-level governance comment quotes banned wording on purpose.
-3. `assets/js/highlight-banner-config.js` — file-level governance comment + the (now-clarified) eSIM Initiative banner entries.
+3. `assets/js/highlight-banner-config.js` — file-level governance comment + the (now-clarified) SIMAuth banner entries.
 4. `blog/designing-low-latency-secure-transit-validators/` — "SAM in a 4FF SIM-form FRU" is the physical-socket name for transit-validator SAMs.
 
 `robots.txt` was explicitly out of scope for this pass and was not touched (operator instruction).
@@ -1692,7 +1692,7 @@ Not for GA4 ingestion. This is the editorial keyword map the site already optimi
 
 **Secondary (product + service + tool):**
 
-`OnePass`, `OnePass Card`, `OnePass Bio Card`, `OnePass USB Key`, `BioKey`, `Tappable`, `Digital Signature Token`, `PKCS Signature Suite`, `Secure Mail Suite`, `FIDO Validation Server`, `ATR parser`, `APDU parser`, `TLV parser`, `X.509 viewer`, `attestation decoder`, `authenticatorData parser`, `COSE algorithms reference`, `WebAuthn extensions reference`, `nano-card`, `MFF2 solderable`, `eSIM Initiative`.
+`OnePass`, `OnePass Card`, `OnePass Bio Card`, `OnePass USB Key`, `BioKey`, `Tappable`, `Digital Signature Token`, `PKCS Signature Suite`, `Secure Mail Suite`, `FIDO Validation Server`, `ATR parser`, `APDU parser`, `TLV parser`, `X.509 viewer`, `attestation decoder`, `authenticatorData parser`, `COSE algorithms reference`, `WebAuthn extensions reference`, `nano-card`, `MFF2 solderable`, `SIMAuth`.
 
 **Standards / acronym signals:**
 

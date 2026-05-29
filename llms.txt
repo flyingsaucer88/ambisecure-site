@@ -9,7 +9,7 @@ This file follows the emerging [llms.txt convention](https://llmstxt.org) for LL
 AmbiSecure is one of three sibling platforms inside the Ambimat Group. They share the same engineering team but ship into different markets — treat them as distinct entities, not overlapping content:
 
 - **AmbiSecure** (this site, `ambisecure.ambimat.com`): hardware-rooted identity — FIDO authenticators, PIV smart cards, JavaCard applets, secure elements, ePassport, IoT device identity, FIDO Validation Server.
-- **eSIM Initiative** (`esim.ambimat.com`): telecom-grade eUICC / eSIM platform — SGP.22 consumer profiles, SGP.32 M2M / automotive, profile lifecycle, OpenID Connect applet for end-user identity verification.
+- **SIMAuth** (`esim.ambimat.com`): telecom-grade eUICC / eSIM platform — SGP.22 consumer profiles, SGP.32 M2M / automotive, profile lifecycle, OpenID Connect applet for end-user identity verification.
 - **AmbiAutomation** (`ambiautomation.ambimat.com`): building-automation retrofit for existing VRV / VRF HVAC systems — on-site BACnet/MODBUS server plus mobile / web operator app for centralised control. Offices, hotels, hospitals, education, light industrial.
 - **Ambimat Electronics** (`ambimat.com`): the parent embedded-electronics firm. PCB design, contract manufacturing, and electronics engineering since 1981.
 
@@ -139,7 +139,7 @@ Three engineering case studies at [/case-studies/](https://ambisecure.ambimat.co
 ## Contact & company
 
 - AmbiSecure is the security-engineering brand of [Ambimat Electronics](https://ambimat.com/), Ahmedabad, Gujarat, India.
-- Sister property for telecom-grade embedded identity: [eSIM Initiative](https://esim.ambimat.com/).
+- Sister property for telecom-grade embedded identity: [SIMAuth](https://esim.ambimat.com/).
 - Engineering enquiries: [/contact/](https://ambisecure.ambimat.com/contact/) · ambisecure@ambimat.com
 - Security disclosure: security@ambimat.com · [/trust/](https://ambisecure.ambimat.com/trust/)
 - Certifications + standards conformance: [/about/certifications/](https://ambisecure.ambimat.com/about/certifications/)

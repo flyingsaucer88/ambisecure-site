@@ -83,7 +83,7 @@ window.AS_HERO_VISUAL_THEMES = [
   },
   {
     id: "esim",
-    label: "eSIM Initiative",
+    label: "SIMAuth",
     caption: "SGP.22 / SGP.32 RSP lifecycle, eUICC platform engineering — our dedicated sister property.",
     accent: "cyan",
     cta: { label: "esim.ambimat.com", url: "https://esim.ambimat.com/" },

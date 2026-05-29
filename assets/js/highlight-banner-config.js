@@ -8,7 +8,7 @@
  * Entries span the full Ambimat ecosystem:
  *   - AmbiSecure internal capabilities (FIDO, PIV, JavaCard, secure element,
  *     ePassport, IoT, validation server, MFF2 vs nano-card form factor)
- *   - eSIM Initiative (esim.ambimat.com) — telecom-grade identity, eUICC,
+ *   - SIMAuth (esim.ambimat.com) — telecom-grade identity, eUICC,
  *     SGP.22 / SGP.32 lifecycle
  *   - Ambimat Electronics group (ambimat.com) — embedded engineering heritage,
  *     industrial / connected-product systems
@@ -115,25 +115,25 @@ window.AS_HOMEPAGE_BANNERS = [
     secondaryCta: { label: "Engineering blog", url: "/blog/" }
   },
 
-  /* === eSIM Initiative (esim.ambimat.com) === */
+  /* === SIMAuth (esim.ambimat.com) === */
   {
     id: "esim-ecosystem",
     enabled: true,
-    eyebrow: "ECOSYSTEM · eSIM Initiative",
+    eyebrow: "ECOSYSTEM · SIMAuth",
     title: "eUICC platform engineering — RSP, SGP.22, SGP.32.",
-    body: "AmbiSecure's sister property — the eSIM Initiative — covers SGP.22 / SGP.32 RSP lifecycle, eUICC platform integration, profile management, and consumer / M2M / automotive variants.",
+    body: "AmbiSecure's sister property — the SIMAuth — covers SGP.22 / SGP.32 RSP lifecycle, eUICC platform integration, profile management, and consumer / M2M / automotive variants.",
     accent: "cyan",
-    primaryCta: { label: "Visit eSIM Initiative", url: "https://esim.ambimat.com/" },
+    primaryCta: { label: "Visit SIMAuth", url: "https://esim.ambimat.com/" },
     secondaryCta: { label: "OpenID Connect on SE", url: "/products/esim-solution/" }
   },
   {
     id: "esim-otp-bridge",
     enabled: true,
-    eyebrow: "ECOSYSTEM · eSIM Initiative",
+    eyebrow: "ECOSYSTEM · SIMAuth",
     title: "Bridge from SMS OTP to hardware-rooted MFA.",
-    body: "When a telco wants to retire SMS OTP without re-issuing every SIM, the eSIM Initiative covers the migration path — same eUICC, new applet, phishing-resistant credentials. eSIM Initiative is the dedicated telecom platform; AmbiSecure ships the non-telecom nano-card / MFF2 applet portfolio.",
+    body: "When a telco wants to retire SMS OTP without re-issuing every SIM, the SIMAuth covers the migration path — same eUICC, new applet, phishing-resistant credentials. SIMAuth is the dedicated telecom platform; AmbiSecure ships the non-telecom nano-card / MFF2 applet portfolio.",
     accent: "cyan",
-    primaryCta: { label: "eSIM Initiative", url: "https://esim.ambimat.com/" },
+    primaryCta: { label: "SIMAuth", url: "https://esim.ambimat.com/" },
     secondaryCta: { label: "Why hardware-rooted identity matters", url: "/blog/why-hardware-backed-identity-matters/" }
   },
 
