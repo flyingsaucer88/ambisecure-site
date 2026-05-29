@@ -105,6 +105,52 @@
         "target": { "@type": "EntryPoint", "urlTemplate": "https://ambisecure.ambimat.com/?q={search_term_string}" },
         "query-input": "required name=search_term_string"
       }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://ambisecure.ambimat.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does AmbiSecure build?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is AmbiSecure a hardware vendor or a software vendor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both, by design. AmbiSecure ships JavaCard applets, FIDO Validation Server software, and tool-chains on top of certified secure-element silicon. The promise is wafer-to-validation in one engineering team rather than three vendor handoffs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which standards and certification regimes does AmbiSecure align with?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "FIDO2 / WebAuthn / CTAP2, PIV / FIPS 201, JavaCard 3.x with GlobalPlatform 2.3.1 and SCP03, IEEE 1609.2 and ETSI TS 103 097 for V2X PKI, GSMA SGP.22 / SGP.32 for eSIM, ICAO 9303 for ePassport, and CC EAL5+ secure-element silicon. Certification posture is documented on the trust center."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is AmbiSecure built for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Engineering and procurement teams that need device-bound rather than syncable identity — connected-mobility OEMs, transit operators, government identity programmes, telecom eSIM rollouts, and security and identity engineering leads who evaluate against threat models rather than feature lists."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do AmbiSecure engagements typically start?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most engagements start as 'we need something like X but with Y'. Tell AmbiSecure about the Y. There is usually an applet, a tool, or a secure-element pairing that gets you most of the way there."
+          }
+        }
+      ]
     }
   ]
 }
@@ -758,6 +804,52 @@
       <a href="/brochures/" class="card"><h3>Brochures</h3><p>Six platform overviews &mdash; OnePass, FIDO deployment, transit security, JavaCard, PKI, device identity. Printable, no lead-capture wall.</p><div class="card-meta">Browse brochures &rarr;</div></a>
       <a href="/engagement-models/" class="card"><h3>Engagement models</h3><p>How AmbiSecure engagements are scoped &mdash; architecture review, pilot, rollout, integration, secure manufacturing, custom JavaCard.</p><div class="card-meta">See engagement shapes &rarr;</div></a>
     </div>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section aria-labelledby="faq-heading">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Frequently asked</span>
+      <h2 class="section-title" id="faq-heading">Questions evaluators ask first.</h2>
+      <span class="section-line"></span>
+    </div>
+
+    <details class="faq-q" open>
+      <summary><h3>What does AmbiSecure build?</h3></summary>
+      <div class="faq-a">
+        <p>Hardware-rooted identity systems &mdash; FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors &mdash; for governments, enterprises, telecom operators, and connected-product OEMs.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Is AmbiSecure a hardware vendor or a software vendor?</h3></summary>
+      <div class="faq-a">
+        <p>Both, by design. AmbiSecure ships JavaCard applets, FIDO Validation Server software, and tool-chains on top of certified secure-element silicon. The promise is wafer-to-validation in one engineering team rather than three vendor handoffs.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Which standards and certification regimes does AmbiSecure align with?</h3></summary>
+      <div class="faq-a">
+        <p>FIDO2 / WebAuthn / CTAP2, PIV / FIPS 201, JavaCard 3.x with GlobalPlatform 2.3.1 and SCP03, IEEE 1609.2 and ETSI TS 103 097 for V2X PKI, GSMA SGP.22 / SGP.32 for eSIM, ICAO 9303 for ePassport, and CC EAL5+ secure-element silicon. Certification posture is documented on the <a href="/trust/">trust center</a>.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Who is AmbiSecure built for?</h3></summary>
+      <div class="faq-a">
+        <p>Engineering and procurement teams that need device-bound rather than syncable identity &mdash; connected-mobility OEMs, transit operators, government identity programmes, telecom eSIM rollouts, and security and identity engineering leads who evaluate against threat models rather than feature lists.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>How do AmbiSecure engagements typically start?</h3></summary>
+      <div class="faq-a">
+        <p>Most engagements start as &ldquo;we need something like X but with Y.&rdquo; Tell AmbiSecure about the Y. There is usually an applet, a tool, or a secure-element pairing that gets you most of the way there. See the <a href="/engagement-models/">engagement models</a> for the shapes those start with.</p>
+      </div>
+    </details>
   </div>
 </section>
 
