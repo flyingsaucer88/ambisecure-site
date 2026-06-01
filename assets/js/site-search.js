@@ -1,8 +1,18 @@
 (function () {
   'use strict';
 
-  var INDEX_URL = '/assets/data/search-index.json';
+  var INDEX_URL = '/assets/data/search-index.json?v=31';
   var indexPromise = null;
+
+  // Privacy-safe analytics shim: no-op unless analytics.js has defined
+  // window.ASTrack. Only an event marker + numeric value are sent — never
+  // the query text or destination URL.
+  function track(name, value) {
+    try {
+      if (typeof window.ASTrack === 'function') window.ASTrack(name, Number(value || 1));
+    } catch (_) {}
+  }
+  var lastSubmitted = '', lastNoResults = '';
   var modal = null, input = null, list = null, footerCount = null, footerHint = null, opened = false;
 
   var GROUPS = [
@@ -60,7 +70,7 @@
       '<div class="as-search-panel" role="combobox" aria-expanded="true" aria-haspopup="listbox" aria-owns="as-search-list">' +
       '  <div class="as-search-input-row">' +
       '    <span class="as-search-input-icon" aria-hidden="true">' + searchIconSVG() + '</span>' +
-      '    <input class="as-search-input" type="search" placeholder="Search products, services, references, blogs, timelines…" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" aria-label="Search the site" aria-controls="as-search-list" />' +
+      '    <input class="as-search-input" type="search" placeholder="Search AmbiSecure…" autocomplete="off" spellcheck="false" autocorrect="off" autocapitalize="off" aria-label="Search the site" aria-controls="as-search-list" />' +
       '    <kbd class="as-search-kbd" aria-hidden="true">esc</kbd>' +
       '  </div>' +
       '  <div class="as-search-results" id="as-search-list" role="listbox" tabindex="-1"></div>' +
@@ -90,7 +100,7 @@
       var li = e.target.closest('.as-search-item');
       if (!li) return;
       var url = li.dataset.url;
-      if (url) { e.preventDefault(); window.location.href = url; }
+      if (url) { e.preventDefault(); track('search_result_clicked', 1); window.location.href = url; }
     });
     return modal;
   }
@@ -126,6 +136,8 @@
     var d = p._d || (p._d = normalize(p.d));
     var e = p._e || (p._e = normalize(p.e));
     var u = p._u || (p._u = normalize(p.u));
+    var k = p._k || (p._k = normalize((p.k || []).join(' ')));
+    var x = p._x || (p._x = normalize(p.x));
     var s = 0;
     var tokens = q.split(' ').filter(Boolean);
     for (var i = 0; i < tokens.length; i++) {
@@ -136,8 +148,10 @@
       else if (t.indexOf(tok) > -1) s += 14;
       if (e === tok) s += 22;
       else if (e.indexOf(tok) > -1) s += 8;
+      if (k.indexOf(tok) > -1) s += 16;
       if (u.indexOf(tok) > -1) s += 5;
       if (d.indexOf(tok) > -1) s += 4;
+      if (x.indexOf(tok) > -1) s += 3;
       if (s === 0) {
         var words = t.split(' ');
         for (var w = 0; w < words.length; w++) {
@@ -191,6 +205,7 @@
       if (!nq) {
         ranked = pages.slice(0, 16).map(function (p) { return { p: p, s: 1 }; });
       } else {
+        if (nq.length >= 2 && nq !== lastSubmitted) { lastSubmitted = nq; track('search_submitted', nq.length); }
         for (var i = 0; i < pages.length; i++) {
           var v = score(pages[i], nq);
           if (v > 0) ranked.push({ p: pages[i], s: v });
@@ -201,6 +216,7 @@
 
       list.innerHTML = '';
       if (ranked.length === 0) {
+        if (nq !== lastNoResults) { lastNoResults = nq; track('search_no_results', nq.length); }
         list.innerHTML = '<div class="as-search-empty"><strong>No matches.</strong><span>Try a standard (FIDO, PIV, ASN.1, ICAO) or a tool (APDU parser, X.509 viewer, CBOR).</span></div>';
         footerCount.textContent = '';
         return;

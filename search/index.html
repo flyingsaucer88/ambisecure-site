@@ -84,7 +84,8 @@
       <label for="sitewide-search-input" class="visually-hidden">Search query</label>
       <input id="sitewide-search-input"
              type="search"
-             placeholder="Search the site (e.g. OnePass, FIDO, DESFire, PIV, SCP03, attestation, MFF2)"
+             placeholder="Search AmbiSecure…"
+             aria-label="Search AmbiSecure"
              autocomplete="off"
              autocorrect="off"
              spellcheck="false"
@@ -92,6 +93,31 @@
       <p class="search-hint">Tip: results are grouped by content type &mdash; Products, Services, Technologies, Solutions, Industries, Case studies, Timelines, References, Developer tools, Engineering blog, Engineering archive, Categories, Tags, Videos, Brochures, Engagement models, Resources, Company, Support, Partners, Trust, Contact, Privacy. The same index powers the navbar search overlay (<kbd>⌘K</kbd> / <kbd>Ctrl+K</kbd>).</p>
       <p class="search-hint">Acronym synonyms (FIDO &harr; WebAuthn, SE &harr; secure element, MFA &harr; 2FA, PKI &harr; X.509) and prefix matching are applied at query time. No queries leave your browser; the search index is fetched once on first use and cached. Looking for a specific blog post? Filter by content type or browse <a href="/blog/categories/">/blog/categories/</a> and <a href="/tags/">/tags/</a>.</p>
     </div>
+
+    <nav class="search-suggest" aria-label="Popular search topics">
+      <span class="search-suggest-label">Popular topics</span>
+      <!-- Each chip's href is the real canonical page for that topic (works
+           with JS disabled and keeps the link crawlable); data-search-suggest
+           lets the script intercept the click and run the in-page search. -->
+      <ul class="search-suggest-chips">
+        <li><a href="/solutions/esim-security/" data-search-suggest="SIMAuth">SIMAuth</a></li>
+        <li><a href="/resources/timelines/otp-sms/" data-search-suggest="SMS OTP">SMS OTP replacement</a></li>
+        <li><a href="/technologies/fido/" data-search-suggest="FIDO">FIDO</a></li>
+        <li><a href="/technologies/fido2/" data-search-suggest="FIDO2">FIDO2</a></li>
+        <li><a href="/products/piv-card/" data-search-suggest="PIV">PIV</a></li>
+        <li><a href="/technologies/secure-elements/" data-search-suggest="secure element">secure element</a></li>
+        <li><a href="/products/esim-solution/" data-search-suggest="eUICC">eUICC</a></li>
+        <li><a href="/solutions/esim-security/" data-search-suggest="eSIM">eSIM</a></li>
+        <li><a href="/solutions/v2x-security/" data-search-suggest="V2X">V2X</a></li>
+        <li><a href="/references/ieee-1609-2/" data-search-suggest="IEEE 1609.2">IEEE 1609.2</a></li>
+        <li><a href="/references/etsi-ts-102-941/" data-search-suggest="ETSI TS 102 941">ETSI TS 102 941</a></li>
+        <li><a href="/references/etsi-ts-103-097/" data-search-suggest="ETSI TS 103 097">ETSI TS 103 097</a></li>
+        <li><a href="/references/iso-21177/" data-search-suggest="ISO 21177">ISO 21177</a></li>
+        <li><a href="/technologies/desfire/" data-search-suggest="DESFire">DESFire</a></li>
+        <li><a href="/references/x509-extensions/" data-search-suggest="PKI">PKI</a></li>
+      </ul>
+    </nav>
+
     <ul class="sitewide-search-results" data-sitewide-search-results></ul>
   </div>
 </section>
