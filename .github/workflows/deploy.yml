@@ -1,17 +1,21 @@
 name: Deploy to Hostinger
 
 # Triggers:
-#   - push to main → continuous deployment
-#   - workflow_dispatch → manual button in the GitHub Actions UI (escape hatch)
+#   - workflow_dispatch → manual button in the GitHub Actions UI
+#
+# NOTE: automatic continuous deployment on push to main is intentionally
+# DISABLED. The site-search/assistant work was merged with a "push without
+# deploying" decision, so this push must not auto-deploy to Hostinger.
+# Re-enable CD by uncommenting the `push:` block below.
 on:
-  push:
-    branches: [main]
-    paths-ignore:
-      # Don't waste CI minutes on doc-only commits.
-      - 'docs/**'
-      - '.claude/**'
-      - 'README.md'
-      - '**/*.md'
+  # push:
+  #   branches: [main]
+  #   paths-ignore:
+  #     # Don't waste CI minutes on doc-only commits.
+  #     - 'docs/**'
+  #     - '.claude/**'
+  #     - 'README.md'
+  #     - '**/*.md'
   workflow_dispatch:
 
 # If a new push lands while a deploy is in flight, cancel the old one —
