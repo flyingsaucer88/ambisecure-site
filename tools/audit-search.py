@@ -221,6 +221,55 @@ def check_cache_bust_and_events():
             ok(f'{js} wires search analytics events')
 
 
+ASSISTANT_DISCLAIMER = ('This assistant searches AmbiSecure content and suggests '
+                        'relevant pages. It does not generate AI answers.')
+
+
+def check_assistant(data):
+    """Phase 2: the non-AI 'Ask AmbiSecure' assistant must link only to real,
+    crawlable indexed pages, carry the 'no AI answers' disclaimer, and ship its
+    static crawlable fallback."""
+    urls = {p['u'] for p in data['pages']}
+    on_disk = lambda u: os.path.exists(
+        os.path.join(ROOT, u.strip('/'), 'index.html')) or u in urls
+
+    js_path = os.path.join(ROOT, 'assets', 'js', 'ask-ambisecure.js')
+    if not os.path.exists(js_path):
+        fail('assets/js/ask-ambisecure.js is missing')
+        return
+    js = open(js_path, encoding='utf-8').read()
+    if 'I found relevant AmbiSecure resources' not in js:
+        fail("assistant JS missing the curated-results lead phrase")
+    # Page paths referenced in the JS (site pages, not /assets/ or anchors).
+    js_paths = set(re.findall(r"'(/[a-z0-9][a-z0-9/-]*/)'", js))
+    js_paths = {u for u in js_paths if not u.startswith('/assets/')}
+    bad = sorted(u for u in js_paths if u not in urls)
+    if bad:
+        fail(f"assistant JS links to pages not in the index: {bad}")
+    else:
+        ok(f"assistant intent map: all {len(js_paths)} links resolve to indexed pages")
+
+    sp = os.path.join(ROOT, 'search', 'index.html')
+    src = open(sp, encoding='utf-8').read()
+    if 'ask-ambisecure.js' not in src:
+        fail('/search/ page does not load ask-ambisecure.js')
+    if ASSISTANT_DISCLAIMER not in src:
+        fail('/search/ page missing the required "does not generate AI answers" disclaimer')
+    else:
+        ok('assistant disclaimer present ("does not generate AI answers")')
+    if 'data-ask-assistant' not in src:
+        fail('/search/ page missing the assistant container (data-ask-assistant)')
+    # Static fallback links inside the data-ask-topics block must be real pages.
+    m = re.search(r'data-ask-topics.*?</div>\s*</div>\s*</div>', src, re.S)
+    block = m.group(0) if m else src
+    topic_links = re.findall(r'href="(/[a-z0-9][a-z0-9/-]*/)"', block)
+    broken = sorted({u for u in topic_links if not on_disk(u)})
+    if broken:
+        fail(f"static 'Browse by topic' links not found on disk: {broken}")
+    else:
+        ok(f"assistant static fallback: all {len(set(topic_links))} topic links are real pages")
+
+
 def check_no_ai_bundled():
     """No shipped client JS may reference an AI provider SDK, endpoint, or key.
     The discovery assistant is non-AI by design (Phases 1–2); Phase 3 keeps AI
@@ -255,6 +304,7 @@ def main():
     check_header_search()
     check_sitemap()
     check_cache_bust_and_events()
+    check_assistant(data)
     check_no_ai_bundled()
 
     print()

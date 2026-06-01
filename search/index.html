@@ -78,6 +78,113 @@
   </div>
 </section>
 
+<section class="ask-section">
+  <div class="section-container">
+    <div class="ask-assistant" data-ask-assistant>
+      <span class="eyebrow">Ask AmbiSecure</span>
+      <h2 class="ask-title">Ask AmbiSecure.</h2>
+      <p class="ask-intro">Ask a question in plain English &mdash; e.g. &ldquo;How does V2X PKI work?&rdquo; or &ldquo;What replaces SMS OTP?&rdquo; &mdash; and we&rsquo;ll point you to the most relevant AmbiSecure pages.</p>
+
+      <form class="ask-form" data-ask-form role="search" aria-label="Ask AmbiSecure">
+        <label for="ask-input" class="visually-hidden">Ask a question</label>
+        <input id="ask-input"
+               type="search"
+               class="ask-input"
+               data-ask-input
+               placeholder="Ask AmbiSecure… (e.g. How does V2X PKI work?)"
+               autocomplete="off"
+               autocorrect="off"
+               spellcheck="false" />
+        <button type="submit" class="btn btn-primary ask-submit" data-ask-submit>Ask</button>
+      </form>
+
+      <p class="ask-disclaimer" role="note">This assistant searches AmbiSecure content and suggests relevant pages. It does not generate AI answers.</p>
+
+      <div class="ask-response" data-ask-response aria-live="polite"></div>
+
+      <!-- Static, always-visible, crawlable fallback. Works with JS disabled
+           and keeps every recommendation in the DOM as a real internal link
+           (content is never hidden inside a JS-only chat). -->
+      <div class="ask-topics" data-ask-topics>
+        <h3 class="ask-topics-label">Browse AmbiSecure by topic</h3>
+        <div class="ask-topics-grid">
+          <div class="ask-topic">
+            <h4>FIDO, passkeys &amp; validation</h4>
+            <ul>
+              <li><a href="/technologies/fido2/">FIDO2 / WebAuthn</a></li>
+              <li><a href="/technologies/passkeys/">Passkeys</a></li>
+              <li><a href="/services/fido-validation-server/">FIDO validation server</a></li>
+              <li><a href="/products/onepass-platform/">OnePass platform</a></li>
+              <li><a href="/references/webauthn-cose/">WebAuthn / COSE reference</a></li>
+            </ul>
+          </div>
+          <div class="ask-topic">
+            <h4>Secure element &amp; root of trust</h4>
+            <ul>
+              <li><a href="/technologies/secure-elements/">Secure elements</a></li>
+              <li><a href="/products/iot-security-coprocessor/">AmbiSEC co-processor</a></li>
+              <li><a href="/products/javacard-applets/">JavaCard applets</a></li>
+              <li><a href="/references/globalplatform/">GlobalPlatform reference</a></li>
+              <li><a href="/resources/timelines/secure-elements/">Secure-element timeline</a></li>
+            </ul>
+          </div>
+          <div class="ask-topic">
+            <h4>SIMAuth, SMS-OTP &amp; telco</h4>
+            <ul>
+              <li><a href="/solutions/esim-security/">eSIM security</a></li>
+              <li><a href="/products/esim-solution/">eSIM solution</a></li>
+              <li><a href="/resources/timelines/otp-sms/">OTP / SMS timeline</a></li>
+              <li><a href="/solutions/device-identity-at-scale/">Device identity at scale</a></li>
+              <li><a href="/references/sgp-32/">SGP.32 reference</a></li>
+            </ul>
+          </div>
+          <div class="ask-topic">
+            <h4>V2X / ITS PKI</h4>
+            <ul>
+              <li><a href="/solutions/v2x-security/">V2X / ITS identity</a></li>
+              <li><a href="/technologies/v2x-pki/">V2X PKI</a></li>
+              <li><a href="/references/ieee-1609-2/">IEEE 1609.2</a></li>
+              <li><a href="/references/etsi-ts-102-941/">ETSI TS 102 941</a></li>
+              <li><a href="/references/etsi-ts-103-097/">ETSI TS 103 097</a></li>
+              <li><a href="/references/iso-21177/">ISO 21177</a></li>
+              <li><a href="/blog/how-v2x-pki-works/">How V2X PKI works</a></li>
+            </ul>
+          </div>
+          <div class="ask-topic">
+            <h4>DESFire &amp; ticketing</h4>
+            <ul>
+              <li><a href="/technologies/desfire/">DESFire</a></li>
+              <li><a href="/references/desfire/">DESFire reference</a></li>
+              <li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li>
+              <li><a href="/solutions/transit-ticketing/">Transit ticketing</a></li>
+              <li><a href="/industries/transportation/">Transportation</a></li>
+            </ul>
+          </div>
+          <div class="ask-topic">
+            <h4>eSIM, eUICC &amp; SM-DP+</h4>
+            <ul>
+              <li><a href="/products/esim-solution/">eSIM solution</a></li>
+              <li><a href="/solutions/esim-security/">eSIM security</a></li>
+              <li><a href="/references/sgp-32/">SGP.32 reference</a></li>
+              <li><a href="/solutions/device-identity-at-scale/">Device identity at scale</a></li>
+            </ul>
+          </div>
+          <div class="ask-topic">
+            <h4>PKI, certificates &amp; signing</h4>
+            <ul>
+              <li><a href="/references/x509-extensions/">X.509 extensions</a></li>
+              <li><a href="/references/x509-oids/">X.509 OIDs</a></li>
+              <li><a href="/products/digital-signature-token/">Digital signature token</a></li>
+              <li><a href="/resources/tools/cert-chain/">Cert-chain tool</a></li>
+              <li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="section-container">
     <div class="search-shell">
@@ -135,6 +242,7 @@
 </section>
 
 <script src="/assets/js/sitewide-search-page.js?v=31" defer></script>
+<script src="/assets/js/ask-ambisecure.js?v=31" defer></script>
 
 </main>
 
