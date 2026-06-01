@@ -270,6 +270,31 @@ def check_assistant(data):
         ok(f"assistant static fallback: all {len(set(topic_links))} topic links are real pages")
 
 
+def check_ai_disabled():
+    """Phase 3: AI must be disabled by default and the config must be wired."""
+    cfg_path = os.path.join(ROOT, 'assets', 'js', 'assistant-config.js')
+    if not os.path.exists(cfg_path):
+        fail('assets/js/assistant-config.js is missing')
+        return
+    cfg = open(cfg_path, encoding='utf-8').read()
+    if re.search(r'enableAI\s*:\s*true', cfg):
+        fail('assistant-config.js has enableAI:true — AI must be disabled by default')
+    elif not re.search(r'enableAI\s*:\s*false', cfg):
+        fail('assistant-config.js does not set enableAI:false')
+    else:
+        ok('AI assistant disabled by default (enableAI:false)')
+    sp = open(os.path.join(ROOT, 'search', 'index.html'), encoding='utf-8').read()
+    # assistant-config.js must load before ask-ambisecure.js so the flag exists.
+    ci = sp.find('assistant-config.js')
+    ai = sp.find('ask-ambisecure.js')
+    if ci == -1:
+        fail('/search/ does not load assistant-config.js')
+    elif ai != -1 and ci > ai:
+        fail('assistant-config.js must load before ask-ambisecure.js')
+    else:
+        ok('assistant-config.js is wired ahead of the assistant')
+
+
 def check_no_ai_bundled():
     """No shipped client JS may reference an AI provider SDK, endpoint, or key.
     The discovery assistant is non-AI by design (Phases 1–2); Phase 3 keeps AI
@@ -305,6 +330,7 @@ def main():
     check_sitemap()
     check_cache_bust_and_events()
     check_assistant(data)
+    check_ai_disabled()
     check_no_ai_bundled()
 
     print()
