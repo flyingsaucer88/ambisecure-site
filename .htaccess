@@ -278,7 +278,7 @@ Redirect 301 /wp-content/uploads/2023/09/Brochure-5.pdf /brochures/onepass/
 
 # Anchored redirects for empty-dir / missing-target paths (regex-bounded so they
 # don't capture sub-paths and avoid Apache prefix-suffix concatenation).
-RedirectMatch 301 ^/technologies/secure-elements/?$ /technologies/javacard/
+# (secure-elements is a live technology page — no redirect; it canonicalises to itself.)
 RedirectMatch 301 ^/support/guides/use-fido-card/?$ /products/onepass-card/
 
 # WordPress -> static cleanup: nuke any wp- crawl path with 410 (gone)
