@@ -43,6 +43,9 @@ rsync -a \
   --exclude='/.lighthouserc.json' \
   --exclude='/package.json' \
   --exclude='/package-lock.json' \
+  --exclude='/Makefile' \
+  --exclude='/deploy.example.env' \
+  --exclude='/.deploy.env' \
   --exclude='.DS_Store' \
   --exclude='*.swp' \
   --exclude='*.pyc' \

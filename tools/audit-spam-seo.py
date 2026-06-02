@@ -105,6 +105,11 @@ FORBIDDEN_FILES = re.compile(
     re.IGNORECASE,
 )
 
+# Known-safe root files that match a forbidden extension but are never shipped
+# (build-hostinger-package.sh excludes them) and contain no secrets. The real
+# .deploy.env is gitignored and never present in a clean tree.
+FORBIDDEN_EXEMPT = {"deploy.example.env"}
+
 # Sitemap must contain only ambisecure.ambimat.com or pre-approved peer
 # hosts (Ambimat parent, eSIM cousin). Anything else is poisoning.
 ALLOWED_SITEMAP_HOSTS = {
@@ -166,6 +171,8 @@ def scan_filenames():
         for name in files:
             if FORBIDDEN_FILES.search(name):
                 rel = os.path.relpath(os.path.join(dirpath, name), ROOT)
+                if rel in FORBIDDEN_EXEMPT:
+                    continue
                 bad.append(rel)
     return bad
 

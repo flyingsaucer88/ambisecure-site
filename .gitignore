@@ -47,3 +47,6 @@ legacysitedata/videos/**/*.webm
 # Local Lighthouse CI tooling (not part of the site)
 chrome/
 .lighthouseci/
+
+# Local deploy credentials — NEVER commit. Use deploy.example.env as the template.
+.deploy.env
