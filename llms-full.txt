@@ -266,18 +266,24 @@ Each entry is `[title](url) — one-line summary`. Summaries come from the page 
 
 ## Blog tags
 
-- [Browse the blog by tag](https://ambisecure.ambimat.com/tags/) — Every tag across the AmbiSecure engineering blog — 23 topic clusters after the Phase 13 taxonomy cleanup.
+- [Browse the blog by tag](https://ambisecure.ambimat.com/tags/) — Every tag across the AmbiSecure engineering blog — 31 topic clusters spanning identity, hardware security, and CRA readiness.
 - [Posts tagged "AAGUID"](https://ambisecure.ambimat.com/tags/aaguid/) — 2 AmbiSecure engineering blog posts tagged AAGUID. Latest: How to Choose Between Smart Cards, FIDO Tokens and Passkeys (2026-05-11).
+- [Posts tagged "AmbiSEC"](https://ambisecure.ambimat.com/tags/ambisec/) — Articles featuring AmbiSEC as a hardware-backed embedded security module for connected products, IoT, smart city systems, and device identity.
 - [Posts tagged "Attestation"](https://ambisecure.ambimat.com/tags/attestation/) — 2 AmbiSecure engineering blog posts tagged Attestation. Latest: How to Choose Between Smart Cards, FIDO Tokens and Passkeys (2026-05-11).
 - [Posts tagged "Biometrics"](https://ambisecure.ambimat.com/tags/biometrics/) — 2 AmbiSecure engineering blog posts tagged Biometrics. Latest: Workplace Security — How Biometrics Is the Key to the New Normal (2020-07-30).
+- [Posts tagged "CRA"](https://ambisecure.ambimat.com/tags/cra/) — Practical AmbiSecure articles on CRA readiness, secure-by-design architecture, and product lifecycle security.
+- [Posts tagged "Cyber Resilience Act"](https://ambisecure.ambimat.com/tags/cyber-resilience-act/) — Articles covering the EU Cyber Resilience Act, connected-product security, vulnerability handling, and CRA-aligned security architecture.
 - [Posts tagged "Cyber Security"](https://ambisecure.ambimat.com/tags/cyber-security/) — 8 AmbiSecure engineering blog posts tagged Cyber Security. Latest: Cyber Security Threats — What Actually Matters in 2026 (2026-05-11).
 - [Posts tagged "DESFire"](https://ambisecure.ambimat.com/tags/desfire/) — 2 AmbiSecure engineering blog posts tagged DESFire. Latest: Why Transit Validators Need Offline Trust Architecture (2026-05-11).
+- [Posts tagged "Device Identity"](https://ambisecure.ambimat.com/tags/device-identity/) — Articles on cryptographic device identity, secure provisioning, trust anchors, and lifecycle identity for connected products.
+- [Posts tagged "Embedded Security"](https://ambisecure.ambimat.com/tags/embedded-security/) — Guides and product-security articles on embedded trust, secure key storage, hardware-backed identity, and connected-device protection.
 - [Posts tagged "Enterprise"](https://ambisecure.ambimat.com/tags/enterprise/) — 3 AmbiSecure engineering blog posts tagged Enterprise. Latest: Designing Enterprise Passwordless Systems (2026-01-15).
 - [Posts tagged "ePassport"](https://ambisecure.ambimat.com/tags/epassport/) — 2 AmbiSecure engineering blog posts tagged ePassport. Latest: ePassport and How will chip-based e-Passports work (2021-01-28).
 - [Posts tagged "FIDO"](https://ambisecure.ambimat.com/tags/fido/) — 7 AmbiSecure engineering blog posts tagged FIDO. Latest: How to Choose Between Smart Cards, FIDO Tokens and Passkeys (2026-05-11).
 - [Posts tagged "Government Identity"](https://ambisecure.ambimat.com/tags/government-identity/) — 4 AmbiSecure engineering blog posts tagged Government Identity. Latest: Multi-factor Authentication in Government Sector (2021-08-19).
 - [Posts tagged "Hardware"](https://ambisecure.ambimat.com/tags/hardware/) — 2 AmbiSecure engineering blog posts tagged Hardware. Latest: Secure Element vs TPM vs HSM — Where Each Fits (2026-05-11).
 - [Posts tagged "Identity"](https://ambisecure.ambimat.com/tags/identity/) — 1 AmbiSecure engineering blog post tagged Identity. Latest: Single Sign-On Vs. Multi-Factor Authentication (2021-08-19).
+- [Posts tagged "IoT Security"](https://ambisecure.ambimat.com/tags/iot-security/) — Articles on securing connected devices, IoT infrastructure, smart city deployments, and lifecycle-ready device security.
 - [Posts tagged "IoT"](https://ambisecure.ambimat.com/tags/iot/) — 3 AmbiSecure engineering blog posts tagged IoT. Latest: Securing your IIoT infrastructure (2020-06-08).
 - [Posts tagged "JavaCard"](https://ambisecure.ambimat.com/tags/javacard/) — 2 AmbiSecure engineering blog posts tagged JavaCard. Latest: JavaCard Applet Development for Enterprise Identity (2026-05-11).
 - [Posts tagged "MFA"](https://ambisecure.ambimat.com/tags/mfa/) — 9 AmbiSecure engineering blog posts tagged MFA. Latest: Cyber Security Threats — What Actually Matters in 2026 (2026-05-11).
@@ -287,6 +293,8 @@ Each entry is `[title](url) — one-line summary`. Summaries come from the page 
 - [Posts tagged "Privacy"](https://ambisecure.ambimat.com/tags/privacy/) — 1 AmbiSecure engineering blog post tagged Privacy. Latest: Consumer Biometrics in the Data Privacy Age (2020-06-29).
 - [Posts tagged "Recovery"](https://ambisecure.ambimat.com/tags/recovery/) — 2 AmbiSecure engineering blog posts tagged Recovery. Latest: How to Choose Between Smart Cards, FIDO Tokens and Passkeys (2026-05-11).
 - [Posts tagged "SAM"](https://ambisecure.ambimat.com/tags/sam/) — 2 AmbiSecure engineering blog posts tagged SAM. Latest: Why Transit Validators Need Offline Trust Architecture (2026-05-11).
+- [Posts tagged "Secure by Design"](https://ambisecure.ambimat.com/tags/secure-by-design/) — Articles on building security into connected products from architecture through deployment and maintenance.
+- [Posts tagged "Secure Element"](https://ambisecure.ambimat.com/tags/secure-element/) — Technical articles on secure elements, protected key storage, smart cards, applets, and hardware-backed trust.
 - [Posts tagged "Smart Cards"](https://ambisecure.ambimat.com/tags/smart-cards/) — 5 AmbiSecure engineering blog posts tagged Smart Cards. Latest: APDU From First Principles (2025-12-12).
 - [Posts tagged "Transit"](https://ambisecure.ambimat.com/tags/transit/) — 7 AmbiSecure engineering blog posts tagged Transit. Latest: Why Transit Validators Need Offline Trust Architecture (2026-05-11).
 - [Posts tagged "WebAuthn"](https://ambisecure.ambimat.com/tags/webauthn/) — 2 AmbiSecure engineering blog posts tagged WebAuthn. Latest: Where Your AmbiSecure FIDO Key Works (2026-05-11).

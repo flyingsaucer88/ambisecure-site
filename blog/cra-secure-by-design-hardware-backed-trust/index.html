@@ -86,10 +86,10 @@
     <h1>Secure by Design Under the CRA: Why Hardware-Backed Trust Matters</h1>
     <p class="dek">&ldquo;Secure by design&rdquo; is the phrase in the Cyber Resilience Act that engineers can actually act on. It is not a paperwork requirement &mdash; it is a statement about where security lives in a product. For connected hardware, the honest reading is that secure-by-design begins with a single architectural question: can an attacker who holds the device extract its keys? This piece walks the threat model the CRA's secure-by-design expectation is really about, and shows where a hardware root of trust &mdash; specifically the AmbiSEC module &mdash; fits.</p>
 
-    <div style="border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:14px 18px; border-radius:0 6px 6px 0; color:var(--brand-grey); font-size:13.5px; margin:22px 0;"><strong style="color:var(--ink);">Disclaimer:</strong> This article is for technical and product-security awareness only. CRA obligations depend on product category, manufacturer role, market placement, conformity assessment route, and applicable EU guidance. AmbiSecure products can support CRA-aligned security architecture but do not replace legal, conformity, or notified-body assessment.</div>
+    <div style="border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:14px 18px; border-radius:0 6px 6px 0; color:var(--brand-grey); font-size:13.5px; margin:22px 0;"><strong style="color:var(--ink);">Note:</strong> This article summarizes publicly available CRA information for product-security awareness. Manufacturers should refer to the official EU sources and their own compliance process for product-specific obligations. AmbiSecure products can support CRA-aligned security architecture but do not replace conformity assessment or legal review.</div>
 
     <h2 id="what-secure-by-design-means">What secure by design means in practice</h2>
-    <p>The <a href="https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act" rel="noopener" target="_blank">EU Cyber Resilience Act</a> expects products with digital elements to be secure by design and by default: cybersecurity considered from the planning and design phase, a secure out-of-the-box configuration, and a minimised attack surface. For software, that maps onto familiar practices &mdash; threat modelling, least privilege, safe defaults. For connected hardware, it reduces to a small set of foundational decisions that are nearly impossible to revise once a fleet ships:</p>
+    <p>According to the European Commission, the <a href="https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act" rel="noopener" target="_blank">EU Cyber Resilience Act</a> expects products with digital elements to be secure by design and by default: cybersecurity considered from the planning and design phase, a secure out-of-the-box configuration, and a minimised attack surface. For software, that maps onto familiar practices &mdash; threat modelling, least privilege, safe defaults. For connected hardware, it reduces to a small set of foundational decisions that are nearly impossible to revise once a fleet ships:</p>
     <ul>
       <li>Where do the private keys live, and can the application firmware read them?</li>
       <li>How is each device's identity established, and is it unique per device?</li>
@@ -161,6 +161,9 @@
       <li><a href="/blog/ambisecure-products-cra-readiness/">Mapping AmbiSecure products to CRA readiness</a></li>
       <li><a href="/products/iot-security-coprocessor/">AmbiSEC secure module</a> &middot; <a href="/technologies/secure-elements/">Secure elements</a> &middot; <a href="/solutions/device-identity-at-scale/">Device identity at scale</a></li>
     </ul>
+
+  
+    <p class="post-tags" style="margin-top:28px;padding-top:16px;border-top:1px solid var(--line,#e6e6e6);font-size:13.5px;color:var(--brand-grey);"><strong style="color:var(--ink);">Tags:</strong> <a href="/tags/cyber-resilience-act/">Cyber Resilience Act</a> &middot; <a href="/tags/cra/">CRA</a> &middot; <a href="/tags/secure-by-design/">Secure by Design</a> &middot; <a href="/tags/ambisec/">AmbiSEC</a> &middot; <a href="/tags/secure-element/">Secure Element</a> &middot; <a href="/tags/embedded-security/">Embedded Security</a> &middot; <a href="/tags/device-identity/">Device Identity</a></p>
 
   </article>
 </section>
