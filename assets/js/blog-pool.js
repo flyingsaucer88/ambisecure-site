@@ -2,6 +2,53 @@
 // Source of truth: assets/data/blogs.json. Re-run that script after edits.
 window.AS_BLOG_POOL = [
  {
+  "title": "EU Cyber Resilience Act: What It Means for Connected Hardware and IoT Manufacturers",
+  "url": "/blog/eu-cyber-resilience-act-connected-hardware-iot/",
+  "date": "2026-06-02",
+  "summary": "A practical product-security read on the EU Cyber Resilience Act for makers of connected devices, embedded systems, IoT modules, and smart-city hardware: products with digital elements, secure-by-design, lifecycle maintenance, vulnerability handling, support periods, and the 2026\u20132027 deadlines.",
+  "categories": [
+   "Cyber Resilience",
+   "Regulation & Product Security",
+   "IoT Security"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "Secure by Design Under the CRA: Why Hardware-Backed Trust Matters",
+  "url": "/blog/cra-secure-by-design-hardware-backed-trust/",
+  "date": "2026-06-02",
+  "summary": "The threat model behind the CRA's secure-by-design expectation \u2014 cloned devices, exposed keys, insecure provisioning, weak firmware identity, poor lifecycle control \u2014 and how a hardware root of trust such as the AmbiSEC module fits a CRA-aligned architecture for connected products.",
+  "categories": [
+   "Cyber Resilience",
+   "Secure by Design",
+   "Embedded Security"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "CRA Vulnerability Handling and Product Lifecycle Security: What Manufacturers Need to Prepare",
+  "url": "/blog/cra-vulnerability-handling-product-lifecycle-security/",
+  "date": "2026-06-02",
+  "summary": "CRA vulnerability handling and lifecycle security in practice: reporting obligations from 11 September 2026, support-period communication, coordinated disclosure, security updates, and how secure elements support key rotation, credential lifecycle, device identity, and controlled updates.",
+  "categories": [
+   "Cyber Resilience",
+   "Regulation & Product Security"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "Mapping AmbiSecure Products to CRA Readiness: AmbiSEC, ONE Pass, BioKey and Secure Identity",
+  "url": "/blog/ambisecure-products-cra-readiness/",
+  "date": "2026-06-02",
+  "summary": "A product-mapping article linking AmbiSecure offerings to CRA-aligned security themes \u2014 hardware-backed device identity and secure key storage with AmbiSEC, phishing-resistant access with FIDO and ONE Pass, secure user authentication with BioKey, and secure element-backed credentials.",
+  "categories": [
+   "Cyber Resilience",
+   "Product Security",
+   "Device Identity"
+  ],
+  "type": "modern"
+ },
+ {
   "title": "Lava Lamps and Cryptographic Entropy: Inside the Wall of Entropy",
   "url": "/blog/lava-lamps-and-cryptographic-entropy/",
   "date": "2026-05-28",

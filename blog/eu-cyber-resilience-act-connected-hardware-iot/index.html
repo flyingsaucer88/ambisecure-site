@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>EU Cyber Resilience Act for IoT &amp; Hardware | AmbiSecure</title>
+<meta name="description" content="What the EU Cyber Resilience Act means for connected hardware and IoT makers: products with digital elements, secure-by-design, lifecycle, and key deadlines." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/eu-cyber-resilience-act-connected-hardware-iot/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="EU Cyber Resilience Act: Connected Hardware &amp; IoT" />
+<meta property="og:description" content="A practical, product-security read on the CRA for makers of connected devices, embedded systems, and smart-city hardware — scope, secure-by-design, lifecycle, and key dates." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/eu-cyber-resilience-act-connected-hardware-iot/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta property="article:published_time" content="2026-06-02" />
+<meta property="article:author" content="AmbiSecure Engineering" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<meta name="audit-yoast-word-max" content="2600" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {"@type":"Question","name":"What is the EU Cyber Resilience Act?","acceptedAnswer":{"@type":"Answer","text":"The Cyber Resilience Act (CRA) is an EU regulation that sets mandatory cybersecurity requirements for products with digital elements — hardware and software that connect directly or indirectly to a device or network. It obliges manufacturers to address cybersecurity across planning, design, development, production, delivery, maintenance, and vulnerability handling, and to provide technical documentation, a conformity assessment, an EU Declaration of Conformity, and CE marking where applicable."}},
+    {"@type":"Question","name":"Does the CRA apply to connected hardware?","acceptedAnswer":{"@type":"Answer","text":"Yes. The CRA covers products with digital elements, which expressly includes hardware with a direct or indirect data connection to a device or network — connected devices, embedded systems, IoT modules, and smart-city equipment fall within scope. The exact obligations and conformity-assessment route depend on the product category and the manufacturer's role, so each product should be assessed against the official text and EU guidance."}},
+    {"@type":"Question","name":"When do CRA obligations apply?","acceptedAnswer":{"@type":"Answer","text":"The reporting obligations for actively exploited vulnerabilities and severe security incidents apply from 11 September 2026. The main set of manufacturer obligations applies from 11 December 2027. Manufacturers generally use the period in between to build secure-development, vulnerability-handling, and documentation processes ahead of the main application date."}},
+    {"@type":"Question","name":"Why does secure-by-design matter for IoT manufacturers?","acceptedAnswer":{"@type":"Answer","text":"Because the CRA expects security to be built into a product from the planning and design stage, not bolted on before shipping. For connected hardware, foundational choices — where cryptographic keys live, how device identity is established, how updates are authenticated — are difficult to change after a fleet is in the field. Designing a hardware-backed trust layer early makes secure-by-design and vulnerability-handling expectations far easier to meet later."}}
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
+    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
+    {"@type":"ListItem","position":3,"name":"EU Cyber Resilience Act: Connected Hardware and IoT","item":"https://ambisecure.ambimat.com/blog/eu-cyber-resilience-act-connected-hardware-iot/"}
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "EU Cyber Resilience Act: What It Means for Connected Hardware and IoT Manufacturers",
+   "description": "A practical product-security explainer of the EU Cyber Resilience Act for makers of connected devices, embedded systems, IoT modules, and smart-city hardware: products with digital elements, secure-by-design, lifecycle maintenance, vulnerability handling, support periods, and the 2026–2027 deadlines.",
+   "author": {"@type":"Organization","name":"AmbiSecure Engineering"},
+   "publisher": {"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},
+   "datePublished": "2026-06-02",
+   "dateModified": "2026-06-02",
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/eu-cyber-resilience-act-connected-hardware-iot/",
+   "keywords": "EU Cyber Resilience Act, CRA, products with digital elements, connected hardware, IoT security, secure by design, vulnerability handling, support period, CE marking, conformity assessment"
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">EU Cyber Resilience Act: Connected Hardware and IoT</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px;">
+  <article class="prose">
+    <div class="post-meta">
+      <span>Cyber Resilience &middot; Regulation &amp; Product Security &middot; IoT</span>
+      <span>Published 2026-06-02</span>
+      <span>Updated 2026-06-02</span>
+      <span>11 min read</span>
+    </div>
+
+    <h1>EU Cyber Resilience Act: What It Means for Connected Hardware and IoT Manufacturers</h1>
+    <p class="dek">The EU Cyber Resilience Act (CRA) turns &ldquo;ship it and patch later&rdquo; into a regulated discipline for anything with a plug, a radio, or a network stack. For manufacturers of connected devices, embedded systems, IoT modules, and smart-city hardware, it makes cybersecurity a product requirement across the whole lifecycle &mdash; not a feature you add before launch. This is a practical, product-security read on what the CRA asks for and why the hardware foundations need to be designed early.</p>
+
+    <div style="border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:14px 18px; border-radius:0 6px 6px 0; color:var(--brand-grey); font-size:13.5px; margin:22px 0;"><strong style="color:var(--ink);">Disclaimer:</strong> This article is for technical and product-security awareness only. CRA obligations depend on product category, manufacturer role, market placement, conformity assessment route, and applicable EU guidance. AmbiSecure products can support CRA-aligned security architecture but do not replace legal, conformity, or notified-body assessment.</div>
+
+    <h2 id="what-it-is">What the CRA actually is</h2>
+    <p>The <a href="https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act" rel="noopener" target="_blank">EU Cyber Resilience Act</a> is a regulation that sets mandatory cybersecurity requirements for <strong>products with digital elements</strong> placed on the EU market. Where earlier rules touched specific sectors, the CRA takes a horizontal view: if a product has digital elements and connects, it is in scope unless explicitly carved out. The obligations land on manufacturers across the entire product life &mdash; planning, design, development, production, delivery, maintenance, and vulnerability handling.</p>
+    <p>The framing that matters for engineering teams is simple: cybersecurity stops being a launch checklist item and becomes a property the product has to carry for its whole supported life, backed by documentation an auditor can read.</p>
+
+    <h2 id="products-with-digital-elements">&ldquo;Products with digital elements&rdquo; &mdash; what is in scope</h2>
+    <p>The CRA defines its scope around <em>products with digital elements</em>: hardware and software whose intended or reasonably foreseeable use includes a direct or indirect data connection to a device or network. That phrasing is deliberately broad, and for hardware makers it captures most of what you ship:</p>
+    <ul>
+      <li><strong>Connected devices</strong> &mdash; anything that authenticates, reports telemetry, or receives updates over a network.</li>
+      <li><strong>Embedded systems and IoT modules</strong> &mdash; sensors, controllers, gateways, metering endpoints, building-automation nodes.</li>
+      <li><strong>Smart-city infrastructure</strong> &mdash; lighting, traffic, transit, water and grid equipment sited in public space.</li>
+      <li><strong>Security and identity hardware</strong> &mdash; authenticators, secure modules, and the credentials that ride on them.</li>
+    </ul>
+    <p>The precise classification &mdash; default category, important, or critical &mdash; and the conformity-assessment route depend on the product and how it is used. That classification is a job for the official text and EU guidance, not a blog. What is safe to assume early is that connected hardware is in scope and should be designed accordingly.</p>
+
+    <h2 id="secure-by-design">Security by design and by default</h2>
+    <p>The CRA expects products to be <strong>secure by design and by default</strong>. In practice that means cybersecurity is considered from the planning and design phase, that products ship in a secure default configuration, and that the attack surface is minimised rather than left open for convenience. For connected hardware specifically, a few foundational questions decide whether the rest of the requirements are reachable:</p>
+    <ul>
+      <li><strong>Where do the cryptographic keys live?</strong> Keys in general-purpose flash are extractable; keys in a tamper-resistant boundary are not.</li>
+      <li><strong>How is device identity established?</strong> A per-device key established at manufacture is defensible; a shared secret or default password is not.</li>
+      <li><strong>How are updates authenticated?</strong> An update path that the device itself can verify against a key it cannot rewrite is the difference between a fix and a new attack vector.</li>
+    </ul>
+    <p>These are architecture decisions. They are cheap at design time and expensive &mdash; sometimes impossible &mdash; to retrofit once a fleet is deployed. A hardware-backed trust layer such as the <a href="/products/iot-security-coprocessor/">AmbiSEC secure module</a> exists to answer exactly these questions at the silicon level, so the secure-by-design expectation has somewhere concrete to stand. We go deeper into that in <a href="/blog/cra-secure-by-design-hardware-backed-trust/">secure by design under the CRA</a>.</p>
+
+    <h2 id="lifecycle">Lifecycle maintenance, support periods, and vulnerability handling</h2>
+    <p>The CRA's most operationally significant idea is that a product's security obligations do not end at sale. Manufacturers are expected to:</p>
+    <ul>
+      <li><strong>Handle vulnerabilities</strong> throughout the expected product lifecycle / support period &mdash; identify, address, and remediate them, and distribute security updates.</li>
+      <li><strong>Define and communicate the support period</strong> &mdash; how long the product will receive security maintenance, stated clearly to the user.</li>
+      <li><strong>Operate a coordinated vulnerability-handling process</strong> &mdash; including reporting obligations for actively exploited vulnerabilities and severe incidents.</li>
+    </ul>
+    <p>For hardware, this is where the design-time choices pay off. Shipping a security fix to a fielded device requires an update channel the device can trust; rotating a compromised credential requires a key hierarchy that allows rotation without bricking the device. A secure element that supports authenticated updates, anti-rollback, and credential rotation gives the vulnerability-handling process a mechanism to act through. The detail of those obligations &mdash; timelines, support-period communication, evidence &mdash; is the subject of <a href="/blog/cra-vulnerability-handling-product-lifecycle-security/">CRA vulnerability handling and product lifecycle security</a>.</p>
+
+    <h2 id="timeline">The dates that matter: 2026 and 2027</h2>
+    <p>Two dates anchor the planning calendar:</p>
+    <ul>
+      <li><strong>11 September 2026</strong> &mdash; the reporting obligations for actively exploited vulnerabilities and severe security incidents start to apply.</li>
+      <li><strong>11 December 2027</strong> &mdash; the main body of manufacturer obligations applies.</li>
+    </ul>
+    <p>The gap between them is not slack. The reporting machinery has to exist before September 2026, and the secure-development, documentation, and conformity work behind the main obligations takes the lead time up to December 2027 to do properly. Hardware programmes in particular &mdash; where silicon selection, provisioning lines, and certification all have long lead times &mdash; need to be making architecture decisions now to be ready then.</p>
+
+    <h2 id="documentation">Documentation, conformity, and CE marking</h2>
+    <p>The CRA expects manufacturers to produce <strong>technical documentation</strong>, carry out a <strong>conformity assessment</strong> appropriate to the product class, draw up an <strong>EU Declaration of Conformity</strong>, and apply <strong>CE marking</strong> where applicable. The practical consequence for engineering is that security claims need evidence behind them: how identity is established, how keys are protected, how updates are verified, how vulnerabilities are handled. Architectures that can produce that evidence &mdash; an attestation chain, a documented key ceremony, a verifiable update mechanism &mdash; make the documentation burden tractable instead of retrospective.</p>
+
+    <h2 id="hardware-early">Why hardware security needs to be designed early</h2>
+    <p>The recurring theme is lead time. Software controls can be revised in a release; hardware trust anchors cannot. If a fleet ships with keys in extractable flash, no shared firmware update fixes the architecture &mdash; the keys are already exposed to anyone who can read the chip. If devices ship with a shared secret, no policy change un-shares it. The decisions that make the rest of CRA readiness achievable &mdash; where keys live, how identity is rooted, how updates are trusted &mdash; are made at design time or not at all.</p>
+    <p>This is why a hardware-backed trust layer is worth selecting before the architecture sets. <a href="/products/iot-security-coprocessor/">AmbiSEC for smart city and IoT security</a> provides a hardware root of trust, non-extractable key storage, per-device identity, and authenticated secure OTA &mdash; the primitives a CRA-aligned secure-by-design architecture is built on. AmbiSEC supports CRA readiness; it does not by itself make a product compliant, and it does not replace conformity assessment.</p>
+
+    <h2 id="cta">Where to start</h2>
+    <p>If you build connected products for the EU market, the productive first move is an architecture review against the secure-by-design and vulnerability-handling expectations &mdash; before the silicon and provisioning decisions are locked. Explore how AmbiSecure helps manufacturers build hardware-backed security into connected products, starting with the <a href="/products/iot-security-coprocessor/">AmbiSEC module for embedded security</a>, and read the rest of this series to go deeper on architecture, lifecycle, and product mapping.</p>
+
+    <h2 id="faq">Frequently asked questions</h2>
+    <details class="faq-q" open>
+      <summary><h3>What is the EU Cyber Resilience Act?</h3></summary>
+      <div class="faq-a"><p>The CRA is an EU regulation that sets mandatory cybersecurity requirements for products with digital elements &mdash; hardware and software that connect directly or indirectly to a device or network. It obliges manufacturers to address cybersecurity across planning, design, development, production, delivery, maintenance, and vulnerability handling, and to provide technical documentation, conformity assessment, an EU Declaration of Conformity, and CE marking where applicable.</p></div>
+    </details>
+    <details class="faq-q">
+      <summary><h3>Does the CRA apply to connected hardware?</h3></summary>
+      <div class="faq-a"><p>Yes. The CRA covers products with digital elements, which expressly includes hardware with a direct or indirect data connection to a device or network &mdash; connected devices, embedded systems, IoT modules, and smart-city equipment fall within scope. The exact obligations and conformity-assessment route depend on the product category and the manufacturer&rsquo;s role.</p></div>
+    </details>
+    <details class="faq-q">
+      <summary><h3>When do CRA obligations apply?</h3></summary>
+      <div class="faq-a"><p>The reporting obligations for actively exploited vulnerabilities and severe security incidents apply from 11 September 2026. The main set of manufacturer obligations applies from 11 December 2027. Manufacturers generally use the time in between to build secure-development, vulnerability-handling, and documentation processes.</p></div>
+    </details>
+    <details class="faq-q">
+      <summary><h3>Why does secure-by-design matter for IoT manufacturers?</h3></summary>
+      <div class="faq-a"><p>Because the CRA expects security to be built in from planning and design, not added before shipping. For connected hardware, foundational choices &mdash; where keys live, how device identity is established, how updates are authenticated &mdash; are hard to change after deployment. Designing a hardware-backed trust layer early makes secure-by-design and vulnerability-handling expectations far easier to meet.</p></div>
+    </details>
+
+    <h2 id="related">Related reading</h2>
+    <ul>
+      <li><a href="/blog/cra-secure-by-design-hardware-backed-trust/">Secure by design under the CRA: why hardware-backed trust matters</a></li>
+      <li><a href="/blog/cra-vulnerability-handling-product-lifecycle-security/">CRA vulnerability handling and product lifecycle security</a></li>
+      <li><a href="/blog/ambisecure-products-cra-readiness/">Mapping AmbiSecure products to CRA readiness</a></li>
+      <li><a href="/blog/why-software-only-device-trust-fails/">Why software-only device trust fails</a> &middot; <a href="/products/iot-security-coprocessor/">AmbiSEC secure module</a> &middot; <a href="/industries/smart-cities/">Smart cities</a></li>
+    </ul>
+
+  </article>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Building connected products for the EU market?</h2>
+        <p>Explore how AmbiSecure helps manufacturers build hardware-backed security into connected products. We will walk your architecture against secure-by-design and vulnerability-handling expectations with your engineering team.</p>
+      </div>
+      <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to AmbiSecure</a><a href="/products/iot-security-coprocessor/" class="btn btn-outline" style="margin-left:8px;">Explore AmbiSEC</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Engage</h3><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/faqs/">FAQs</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/blog-toc.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>
