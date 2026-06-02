@@ -43,3 +43,7 @@ legacysitedata/videos/**/*.webm
 !legacysitedata/videos/**/*.description
 !legacysitedata/videos/**/*.md
 !legacysitedata/video_inventory.md
+
+# Local Lighthouse CI tooling (not part of the site)
+chrome/
+.lighthouseci/

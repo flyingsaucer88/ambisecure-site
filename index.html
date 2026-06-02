@@ -175,7 +175,7 @@
 
 <!-- ============== NAVBAR ============== -->
 <header class="navbar" role="banner">
-  <a href="/" class="brand" aria-label="AmbiSecure home">
+  <a href="/" class="brand">
     <span class="brand-mark">AS</span>
     <span class="brand-text">
       <span class="brand-line">Ambi<span class="accent">Secure</span></span>
@@ -194,7 +194,7 @@
     </ul>
   </nav>
   <div class="nav-actions">
-    <button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">⌘K</kbd></button><a href="/contact/" class="nav-btn">Contact</a>
+    <button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a>
     <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -725,7 +725,7 @@
           <div class="video-card-meta"><span>1:27</span><span>Product overview</span></div>
           <h3>AmbiSecure card &mdash; all use cases</h3>
           <p class="video-card-desc">FIDO, PIV, door access, NDEF, and OpenPGP roles on a single multi-application card.</p>
-          <a class="video-card-cta" href="/videos/ambisecure-card-use-cases/" aria-label="View AmbiSecure card use cases video page">View page &rarr;</a>
+          <a class="video-card-cta" href="/videos/ambisecure-card-use-cases/" aria-label="View page: AmbiSecure card use cases">View page &rarr;</a>
         </div>
       </article>
       <article class="video-card">
@@ -737,7 +737,7 @@
           <div class="video-card-meta"><span>1:21</span><span>FIDO setup</span></div>
           <h3>Set up the AmbiSecure card on Gmail</h3>
           <p class="video-card-desc">Adding the card as a FIDO security key on a Google account, on desktop.</p>
-          <a class="video-card-cta" href="/videos/setup-ambisecure-card-gmail/" aria-label="View Gmail setup video page">View page &rarr;</a>
+          <a class="video-card-cta" href="/videos/setup-ambisecure-card-gmail/" aria-label="View page: AmbiSecure card on Gmail">View page &rarr;</a>
         </div>
       </article>
       <article class="video-card">
@@ -749,7 +749,7 @@
           <div class="video-card-meta"><span>0:05</span><span>Product demo</span></div>
           <h3>AmbiSecure BioKey &mdash; product loop</h3>
           <p class="video-card-desc">Short hero loop showing the biometric USB security key.</p>
-          <a class="video-card-cta" href="/videos/biokey-product-loop/" aria-label="View BioKey product loop video page">View page &rarr;</a>
+          <a class="video-card-cta" href="/videos/biokey-product-loop/" aria-label="View page: AmbiSecure BioKey product loop">View page &rarr;</a>
         </div>
       </article>
     </div>
@@ -769,15 +769,15 @@
       <p class="section-desc" style="margin:0;max-width:880px;">AmbiSecure sits between the silicon vendor and the application developer &mdash; picking the chip, writing the applet, running personalisation, shipping the authenticator, and standing up the validation server. Steps that are usually each their own RFP.</p>
     </div>
     <div class="arch">
-      <div class="arch-node"><span class="arch-tag">01</span><h4>Silicon</h4><p>CC EAL5+ secure element from a partner vendor.</p></div>
+      <div class="arch-node"><span class="arch-tag">01</span><h3>Silicon</h3><p>CC EAL5+ secure element from a partner vendor.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">02</span><h4>Applet</h4><p>FIDO, PIV, OpenPGP, NDEF, OIDC, IoT &mdash; AID-selectable on one chip.</p></div>
+      <div class="arch-node"><span class="arch-tag">02</span><h3>Applet</h3><p>FIDO, PIV, OpenPGP, NDEF, OIDC, IoT &mdash; AID-selectable on one chip.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node accent"><span class="arch-tag">03</span><h4>Personalise</h4><p>SCP03 loading, per-card key derivation, AAGUID + attestation cert injection.</p></div>
+      <div class="arch-node accent"><span class="arch-tag">03</span><h3>Personalise</h3><p>SCP03 loading, per-card key derivation, AAGUID + attestation cert injection.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">04</span><h4>Form factor</h4><p>Card, USB key, biometric variant, NFC fob &mdash; brandable.</p></div>
+      <div class="arch-node"><span class="arch-tag">04</span><h3>Form factor</h3><p>Card, USB key, biometric variant, NFC fob &mdash; brandable.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">05</span><h4>Validate</h4><p>FIDO Validation Server with REST + JS API &mdash; or your own RP.</p></div>
+      <div class="arch-node"><span class="arch-tag">05</span><h3>Validate</h3><p>FIDO Validation Server with REST + JS API &mdash; or your own RP.</p></div>
     </div>
     <div class="grid-3" style="margin-top:36px;">
       <a href="/trust/" class="card"><h3>Trust center</h3><p>Certification posture, standards conformance, security model, and vulnerability disclosure.</p><div class="card-meta">Open trust center &rarr;</div></a>
@@ -953,7 +953,7 @@
       <div class="footer-social" aria-label="Social links">
         <a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a>
         <a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a>
-        <a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a>
+        <a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a>
       </div>
     </div>
   </div>

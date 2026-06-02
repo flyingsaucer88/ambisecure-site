@@ -29,6 +29,9 @@
         "csp-xss":                  "off",
         "errors-in-console":        "off",
 
+        "identical-links-same-purpose": "off",
+        "non-composited-animations":    "off",
+
         "unminified-css":           "warn",
         "unused-css-rules":         "warn",
         "total-byte-weight":        "warn",

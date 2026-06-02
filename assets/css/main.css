@@ -134,7 +134,7 @@ a { color: inherit; }
   text-transform: uppercase;
   font-size: 11px;
   letter-spacing: 1.4px;
-  color: #9aa0a3;
+  color: #b4b9bb;
 }
 .ecosystem-bar a {
   color: #d8dadb;
@@ -156,7 +156,7 @@ a { color: inherit; }
 }
 .ecosystem-bar .ext::after { content: ' \2197'; font-size: 10px; opacity: .6; }
 .ecosystem-bar .spacer { flex: 1; }
-.ecosystem-bar .meta { font-size: 11.5px; color: #9aa0a3; font-family: 'Montserrat', sans-serif; }
+.ecosystem-bar .meta { font-size: 11.5px; color: #b4b9bb; font-family: 'Montserrat', sans-serif; }
 
 /* =========================================================
    NAVBAR
@@ -281,6 +281,7 @@ a { color: inherit; }
   box-shadow: 0 6px 14px rgba(58,63,64,0.06);
 }
 .nav-search svg { display: block; }
+.nav-kbd-hint::after { content: '\2318K'; }
 .nav-search kbd {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10.5px;
@@ -338,7 +339,7 @@ a { color: inherit; }
   color: var(--muted-2);
   text-transform: uppercase;
 }
-.breadcrumb a { color: var(--muted); text-decoration: none; }
+.breadcrumb a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
 .breadcrumb a:hover { color: var(--brand-red); }
 .breadcrumb .sep { margin: 0 8px; color: var(--line); }
 .breadcrumb .current { color: var(--brand-dark); }
@@ -536,7 +537,7 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
 .eyebrow {
   font-size: var(--fs-eyebrow);
   letter-spacing: 2.6px;
-  color: var(--brand-red);
+  color: var(--brand-red-dark);
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 12px;
@@ -705,7 +706,7 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
   height: 44px;
   border-radius: 6px;
   background: rgba(227,34,42,0.08);
-  color: var(--brand-red);
+  color: var(--brand-red-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -721,7 +722,7 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
   margin-top: 18px;
   font-family: 'Montserrat', sans-serif;
   font-size: 12.5px;
-  color: var(--brand-red);
+  color: var(--brand-red-dark);
   font-weight: 600;
   letter-spacing: 0.3px;
 }
@@ -836,7 +837,7 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
   margin: 8px;
   min-width: 160px;
 }
-.arch-node h4 {
+.arch-node h3 {
   font-size: 14px;
   font-weight: 700;
   color: var(--ink);
@@ -1070,7 +1071,7 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
 .prose tbody tr:last-child th,
 .prose tbody tr:last-child td { border-bottom: none; }
 .prose hr { border: 0; height: 1px; background: var(--line); margin: 36px 0; }
-.prose a { color: var(--brand-red); text-decoration: underline; text-underline-offset: 3px; }
+.prose a { color: var(--brand-red-dark); text-decoration: underline; text-underline-offset: 3px; }
 .prose a:hover { color: var(--brand-red-dark); }
 
 .post-meta {
@@ -1233,9 +1234,9 @@ footer.site-footer a { color: #c9cccd; text-decoration: none; transition: color 
 footer.site-footer a:hover { color: var(--brand-red); }
 
 .footer-brand .brand-line { color: #fff; }
-.footer-brand .brand-tag { color: #9aa0a3; }
-.footer-brand p { color: #9aa0a3; line-height: 1.65; margin-top: 16px; font-size: 13.5px; }
-.footer-ecosystem { margin-top: 18px; font-size: 12px; color: #9aa0a3; font-family: 'Montserrat', sans-serif; letter-spacing: 0.3px; }
+.footer-brand .brand-tag { color: #b4b9bb; }
+.footer-brand p { color: #b4b9bb; line-height: 1.65; margin-top: 16px; font-size: 13.5px; }
+.footer-ecosystem { margin-top: 18px; font-size: 12px; color: #b4b9bb; font-family: 'Montserrat', sans-serif; letter-spacing: 0.3px; }
 .footer-ecosystem a { color: #d8dadb; }
 
 .footer-base {
@@ -1244,7 +1245,7 @@ footer.site-footer a:hover { color: var(--brand-red); }
   align-items: center;
   padding-top: 22px;
   font-size: 12.5px;
-  color: #9aa0a3;
+  color: #b4b9bb;
   flex-wrap: wrap;
   gap: 14px;
 }
@@ -1448,7 +1449,7 @@ footer.site-footer a:hover { color: var(--brand-red); }
   display: block;
   margin-bottom: 4px;
 }
-.arch-row .arch-cell h4 {
+.arch-row .arch-cell h3 {
   font-family: 'Montserrat', sans-serif;
   font-size: 13.5px;
   color: var(--ink);
@@ -1478,7 +1479,7 @@ footer.site-footer a:hover { color: var(--brand-red); }
 .apdu-flow .step { color: #b0b3b8; display: block; margin-top: 8px; }
 .apdu-flow .step:first-child { margin-top: 0; }
 .apdu-flow .arrow-out { color: var(--brand-red); }
-.apdu-flow .arrow-in { color: var(--secure-cyan); }
+.apdu-flow .arrow-in { color: var(--secure-cyan-dark); }
 .apdu-flow .cmt { color: #6c7179; font-style: italic; }
 
 /* =========================================================
@@ -1793,8 +1794,8 @@ footer.site-footer a:hover { color: var(--brand-red); }
   overflow-x: auto;
 }
 .annot-struct .as-key { color: var(--brand-red-dark); font-weight: 600; }
-.annot-struct .as-str { color: #2E8B4F; }
-.annot-struct .as-num { color: #C77A00; }
+.annot-struct .as-str { color: #1F6E3B; }
+.annot-struct .as-num { color: #9A5E00; }
 .annot-struct .as-cmt {
   color: var(--brand-grey);
   font-family: 'Source Sans 3', sans-serif;
@@ -2297,8 +2298,8 @@ footer.site-footer a:hover { color: var(--brand-red); }
 }
 .proc-table tbody tr:last-child td { border-bottom: none; }
 .proc-table tbody tr:nth-child(even) { background: var(--brand-soft); }
-.proc-table .pt-yes { color: #2E8B4F; font-weight: 700; }
-.proc-table .pt-no { color: var(--brand-red); font-weight: 700; }
+.proc-table .pt-yes { color: #1F6E3B; font-weight: 700; }
+.proc-table .pt-no { color: var(--brand-red-dark); font-weight: 700; }
 .proc-table .pt-feature {
   font-weight: 600;
   color: var(--ink);
@@ -2375,7 +2376,7 @@ footer.site-footer a:hover { color: var(--brand-red); }
 }
 .video-card-cta {
   font-size: 13px;
-  color: var(--brand-red, #E3222A);
+  color: var(--brand-red-dark, #B81A21);
   font-weight: 600;
   text-decoration: none;
   margin-top: 6px;
@@ -3070,7 +3071,7 @@ section.brochure {
   padding: 22px 26px;
   max-width: 720px;
 }
-.analytics-prefs h3 {
+.analytics-prefs h2 {
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   font-weight: 700;
@@ -3376,7 +3377,7 @@ body.as-search-open { overflow: hidden; }
 .as-item-url {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10.5px;
-  color: #9aa0a3;
+  color: var(--muted);
   margin-top: 4px;
   overflow: hidden;
   text-overflow: ellipsis;

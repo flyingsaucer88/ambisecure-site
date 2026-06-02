@@ -31,7 +31,7 @@
     var wrap = document.createElement("div");
     wrap.className = "analytics-prefs";
 
-    var h = document.createElement("h3");
+    var h = document.createElement("h2");
     h.textContent = "Analytics preferences";
     wrap.appendChild(h);
 
