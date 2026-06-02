@@ -30,6 +30,7 @@
 
   <!-- Technologies -->
   <url><loc>https://ambisecure.ambimat.com/technologies/</loc><lastmod>2026-05-26</lastmod><priority>0.8</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/technologies/secure-elements/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://ambisecure.ambimat.com/technologies/javacard/</loc><lastmod>2026-05-26</lastmod><priority>0.75</priority></url>
   <url><loc>https://ambisecure.ambimat.com/technologies/fido/</loc><lastmod>2026-05-26</lastmod><priority>0.75</priority></url>
 
@@ -296,6 +297,11 @@
   <url><loc>https://ambisecure.ambimat.com/blog/how-v2x-pki-works/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/device-identity-at-manufacturing-scale/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/why-software-only-device-trust-fails/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/eu-cyber-resilience-act-connected-hardware-iot/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/cra-secure-by-design-hardware-backed-trust/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/cra-vulnerability-handling-product-lifecycle-security/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/ambisecure-products-cra-readiness/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/blog/categories/cyber-resilience/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/secure-elements-in-connected-vehicles/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/pseudonymous-certificates-and-privacy/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.85</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/smart-cards-vs-fido-tokens-vs-passkeys/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -314,6 +320,14 @@
   <url><loc>https://ambisecure.ambimat.com/privacy/</loc><lastmod>2026-05-26</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/page/2/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/tags/cyber-resilience-act/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/tags/cra/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/tags/ambisec/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/tags/embedded-security/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/tags/iot-security/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/tags/secure-by-design/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/tags/secure-element/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/tags/device-identity/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/aaguid/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/attestation/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/biometrics/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
