@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BioKey On-Device TOTP &mdash; Hardware-Sealed OTP | AmbiSecure</title>
+<meta name="description" content="Extend AmbiSecure BioKey with hardware-sealed OATH-TOTP: store OTP seeds in a secure element, release each code only after fingerprint verification, alongside FIDO2." />
+<!-- Long-form product explainer (architecture + flow + roadmap + FAQ); raise the
+     yoast word-max above the default product cap, as on iot-security-coprocessor. -->
+<meta name="audit-yoast-word-max" content="2400" />
+<link rel="canonical" href="https://ambisecure.ambimat.com/products/biokey-on-device-totp/" />
+<meta property="og:type" content="product" />
+<meta property="og:title" content="BioKey On-Device TOTP" />
+<meta property="og:description" content="Hardware-sealed OATH-TOTP for BioKey. Seeds stay in the secure element; every code is fingerprint-gated. FIDO2 stays the primary phishing-resistant path." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/products/biokey-on-device-totp/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/products.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/products.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Products",
+     "item": "https://ambisecure.ambimat.com/products/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "BioKey On-Device TOTP",
+     "item": "https://ambisecure.ambimat.com/products/biokey-on-device-totp/"
+    }
+   ]
+  },
+  {
+   "@type": "Product",
+   "name": "AmbiSecure BioKey On-Device TOTP",
+   "description": "Hardware-sealed OATH-TOTP extension for AmbiSecure BioKey. TOTP seeds are stored inside a secure element with no read-back path, and every code is released only after on-device fingerprint verification. FIDO2/WebAuthn remains the primary phishing-resistant login path.",
+   "brand": {
+    "@type": "Brand",
+    "name": "AmbiSecure"
+   },
+   "category": "Hardware Security Token",
+   "isRelatedTo": {
+    "@type": "Product",
+    "name": "AmbiSecure BioKey",
+    "url": "https://ambisecure.ambimat.com/products/biokey/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is BioKey On-Device TOTP?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It is a proposed extension to AmbiSecure BioKey that adds OATH-TOTP one-time passwords. TOTP seeds are stored inside the BioKey secure element, the HMAC is computed on-chip, and only the short-lived 6-digit code leaves the device after an on-device fingerprint match. It is additive to BioKey's existing FIDO2/CTAP2 capability rather than a replacement for it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is this more secure than a phone authenticator app?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It changes where the secret lives. A phone authenticator stores TOTP seeds in software-accessible storage or OS keystores that can be exposed by malware, a rooted device, or insecure cloud backups. BioKey keeps the seed inside tamper-resistant silicon with no read-back or export path, and requires a fingerprint before every code. It does not, however, make TOTP itself phishing-resistant."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does this replace FIDO2?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. FIDO2/WebAuthn remains the primary, phishing-resistant authentication path and is unchanged. On-device TOTP is positioned as a secure bridge for legacy services that still depend on OTP codes and do not yet support FIDO2."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is TOTP phishing-resistant?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. TOTP is a shared-secret scheme and remains phishable: a user can still be tricked into typing a valid code into a fraudulent site. BioKey's contribution is hardening where the seed is stored and forcing a biometric per code, not making TOTP phishing-resistant. For phishing resistance, use FIDO2/WebAuthn."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where is the TOTP seed stored?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Inside the BioKey secure element, in a protected slot alongside FIDO credentials. After enrollment there is no API to read back or export the seed; the secure element only accepts a request and returns a computed code."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does every OTP require fingerprint verification?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Every code release is gated by an on-device fingerprint match. The biometric template is matched on-chip and never leaves the device, reusing the same user-verification subsystem BioKey already uses for FIDO2."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does it work on Windows, macOS, Linux, Android, and iOS?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Windows, macOS, and Linux are clean targets via standard PC/SC (CCID) with a companion app. Android is supported over USB-C/OTG with a companion app. iOS/iPadOS is constrained because third-party USB HID/CCID access is limited; NFC is the practical path for iOS, but only if the BioKey hardware includes an NFC antenna."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is iOS support different?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "iOS restricts third-party access to USB HID/CCID interfaces even on USB-C iPhones, so the companion-app-over-USB model used on desktop and Android does not translate directly. The practical route to iOS is NFC, which depends on an NFC antenna being present on the device, a hardware roadmap decision."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the recommended V1 implementation?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Host-supplied time over a CCID companion app. The host (already time-synced) supplies the current time, so BioKey needs no on-device clock or battery. This keeps the bill of materials lowest and supports listing, adding, renaming, and deleting credentials, with a fingerprint required per code."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can BioKey type the OTP automatically?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Only in an optional hardware variant. Appless keyboard-HID auto-type requires the device to know the time on its own, which means a battery-backed real-time clock. That variant suits kiosks and locked-down hosts but adds battery lifecycle and clock-drift considerations, so it is treated as an optional product variant rather than the V1 default."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/" class="active">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true">&#8984;K</kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/products/">Products</a><span class="sep">/</span><a href="/products/biokey/">BioKey</a><span class="sep">/</span><span aria-current="page">On-Device TOTP</span></nav>
+<main id="main">
+
+<!-- ============== HERO ============== -->
+<section style="padding: 60px 80px 40px;">
+  <div class="section-container">
+    <div class="feature-row">
+      <div>
+        <span class="eyebrow">BioKey Extension &middot; OATH-TOTP &middot; FIDO2 + Legacy MFA</span>
+        <h1 style="font-family:'Montserrat',sans-serif; font-size: 42px; font-weight:700; line-height:1.12; letter-spacing:-0.6px; color:var(--ink); margin-bottom:18px;">
+          BioKey adds <span style="color:var(--brand-red);">on-device TOTP</span>
+        </h1>
+        <p style="font-size:17.5px; color:var(--brand-grey); line-height:1.65; margin-bottom:22px;">A hardware-sealed OTP extension for <a href="/products/biokey/">AmbiSecure BioKey</a> that stores TOTP seeds inside a secure element, gates every code with fingerprint verification, and keeps FIDO2/WebAuthn as the primary phishing-resistant path. Built for legacy services that do not yet support FIDO2.</p>
+        <div class="chip-row"><span class="chip">OATH-TOTP</span><span class="chip">Secure element</span><span class="chip">Fingerprint-gated</span><span class="chip">FIDO2 + legacy MFA</span></div>
+        <div class="hero-cta-row" style="margin-top:24px;">
+          <a href="/contact/" class="btn btn-primary" data-analytics-event="request_demo">Talk to AmbiSecure</a>
+          <a href="/products/biokey/" class="btn btn-outline">Explore BioKey</a>
+        </div>
+        <p style="margin-top:20px; border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:12px 16px; border-radius:0 6px 6px 0; color:var(--brand-grey); font-size:14px;"><b style="color:var(--ink);">FIDO2 for phishing-resistant login. TOTP for legacy MFA compatibility.</b> One device, both worlds &mdash; not a replacement for FIDO2.</p>
+      </div>
+      <div class="feature-visual feature-visual-img"><img src="/assets/img/product-biokey.webp" alt="AmbiSecure BioKey biometric security key with on-device TOTP" width="1030" height="613" loading="lazy" decoding="async" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== WHY ============== -->
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Why this matters</span>
+      <h2 class="section-title">The seed is the asset. Stop storing it in software.</h2>
+      <span class="section-line"></span>
+    </div>
+    <p style="color:var(--brand-grey); font-size:16px; line-height:1.7; max-width:760px; margin-bottom:8px;">Authenticator apps hold your TOTP seeds as recoverable data. BioKey already protects FIDO credentials in tamper-resistant silicon &mdash; the same vault, the same fingerprint gate, can issue your one-time codes.</p>
+    <div class="grid-2" style="margin-top:30px;">
+      <div class="card-soft">
+        <span class="eyebrow">Authenticator app today</span>
+        <ul style="margin-top:12px; padding-left:18px; color:var(--brand-grey); font-size:14.5px; line-height:1.8;">
+          <li>Seed lives in <b style="color:var(--ink);">app storage or the OS keystore</b> &mdash; software-accessible.</li>
+          <li>Extractable via <b style="color:var(--ink);">malware or a rooted device</b>.</li>
+          <li>Synced to <b style="color:var(--ink);">cloud backups</b> &mdash; the seed leaves your control.</li>
+          <li>Codes appear with <b style="color:var(--ink);">no dedicated user-verification step</b> once the phone is unlocked.</li>
+        </ul>
+      </div>
+      <div class="card-soft">
+        <span class="eyebrow">BioKey on-device TOTP</span>
+        <ul style="margin-top:12px; padding-left:18px; color:var(--brand-grey); font-size:14.5px; line-height:1.8;">
+          <li>Seed sealed in the <b style="color:var(--ink);">secure element</b> &mdash; no read-back API.</li>
+          <li>HMAC computed <b style="color:var(--ink);">inside the chip</b>; only the 6 digits leave.</li>
+          <li>Seed is <b style="color:var(--ink);">never synced and never exported</b>.</li>
+          <li>Every code gated by an <b style="color:var(--ink);">on-device fingerprint match</b>.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FIDO2 + TOTP ============== -->
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">One device, both worlds</span>
+      <h2 class="section-title">FIDO2 + TOTP on one key.</h2>
+      <span class="section-line"></span>
+    </div>
+    <p style="color:var(--brand-grey); font-size:16px; line-height:1.7; max-width:780px;">BioKey already ships the primitives strong authentication needs. On-device TOTP is additive &mdash; an OATH applet that reuses what is already there. FIDO2 stays exactly as it is.</p>
+    <div class="grid-4" style="margin-top:30px;">
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">Secure element</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">The key store that holds FIDO credentials now also holds OATH seeds.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">Biometric matcher</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">The same on-chip fingerprint user-verification gates every code release.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">USB transport stack</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">CCID is added as a sibling interface beside the existing CTAPHID path.</p></div>
+      <div class="card-soft"><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">On-chip crypto</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">The crypto engine already in BioKey computes the HMAC-SHA1/SHA-256.</p></div>
+    </div>
+    <p style="margin-top:26px; border-left:3px solid var(--secure-cyan, #0E8C9C); background:rgba(14,140,156,0.06); padding:16px 20px; border-radius:0 6px 6px 0; color:var(--ink); font-size:15.5px;"><b>One fingerprint-gated key for phishing-resistant FIDO2 and hardware-sealed TOTP</b> &mdash; replacing both your security key and your phone authenticator. See how user verification flows through <a href="/technologies/webauthn/">WebAuthn</a> and <a href="/technologies/fido2/">FIDO2</a>.</p>
+  </div>
+</section>
+
+<!-- ============== ARCHITECTURE ============== -->
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">System architecture</span>
+      <h2 class="section-title">One device, two USB interfaces, one secure element.</h2>
+      <span class="section-line"></span>
+    </div>
+    <p style="color:var(--brand-grey); font-size:16px; line-height:1.7; max-width:800px;">TOTP rides into BioKey as an additive OATH applet &mdash; not new silicon. The key presents as a composite USB device: the existing FIDO HID interface is untouched, and a CCID (smart-card) interface is added for credential management.</p>
+    <div class="grid-3" style="margin-top:30px;">
+      <div class="card-soft">
+        <span class="eyebrow">Host</span>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">Desktop / mobile</h3>
+        <p style="color:var(--brand-grey);font-size:14px;line-height:1.7;">Companion app to list, add and calculate codes. A browser or OS field receives the code. The FIDO relying party is unchanged.</p>
+      </div>
+      <div class="card-soft">
+        <span class="eyebrow">USB composite device</span>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">Three interfaces</h3>
+        <p style="color:var(--brand-grey);font-size:14px;line-height:1.7;"><b style="color:var(--ink);">CTAPHID</b> for FIDO2 (unchanged) &middot; <b style="color:var(--ink);">CCID / PC&#47;SC</b> for TOTP management and calculate &middot; optional <b style="color:var(--ink);">keyboard HID</b> for auto-type in the RTC variant.</p>
+      </div>
+      <div class="card-soft">
+        <span class="eyebrow">BioKey device</span>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">MCU &middot; biometrics &middot; SE</h3>
+        <p style="color:var(--brand-grey);font-size:14px;line-height:1.7;">The MCU routes interfaces and holds no key material. The biometric subsystem matches on-chip. The <a href="/technologies/secure-elements/">secure element</a> stores seeds and computes the code.</p>
+      </div>
+    </div>
+    <p style="margin-top:24px; border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:16px 20px; border-radius:0 6px 6px 0; color:var(--ink); font-size:15px;"><b>Inside the secure element: seed in, code out.</b> The OATH seed and FIDO credentials share the tamper-resistant key store. The crypto engine runs the HMAC and truncates to six digits. There is no export path and no read-back &mdash; only the code crosses the hardware boundary.</p>
+  </div>
+</section>
+
+<!-- ============== GENERATION FLOW ============== -->
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Generation flow</span>
+      <h2 class="section-title">Provision once. Generate per touch.</h2>
+      <span class="section-line"></span>
+    </div>
+    <p style="color:var(--brand-grey); font-size:16px; line-height:1.7; max-width:800px;">TOTP follows <b style="color:var(--ink);">RFC&nbsp;6238</b> (built on HOTP / RFC&nbsp;4226 and HMAC / RFC&nbsp;2104). The device needs the current time and the stored seed; it returns a 6-digit code. The seed is the one thing that never moves.</p>
+    <div class="grid-4" style="margin-top:30px;">
+      <div class="card-soft"><span class="eyebrow">Step 01</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">Request</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">Companion app sends the current Unix time and credential ID to the device over CCID.</p></div>
+      <div class="card-soft"><span class="eyebrow">Step 02</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">Verify</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">The device prompts for fingerprint. The match runs on-chip &mdash; no template leaves.</p></div>
+      <div class="card-soft"><span class="eyebrow">Step 03</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">Compute</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">The secure element derives the time-step, runs HMAC over the seed, and truncates to six digits.</p></div>
+      <div class="card-soft"><span class="eyebrow">Step 04</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">Return</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">Only the 6-digit code crosses the boundary. The app displays it, or it is typed via the optional HID path.</p></div>
+    </div>
+    <p style="margin-top:24px; border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:16px 20px; border-radius:0 6px 6px 0; color:var(--brand-grey); font-size:14.5px;"><b style="color:var(--ink);">Honest framing:</b> TOTP is a shared-secret scheme and remains phishable &mdash; a user can still type a code into a fake site. BioKey's value is hardening <i>where the secret lives</i> and forcing a biometric per code. TOTP is the secure bridge for legacy services; <a href="/technologies/fido2/">FIDO2</a> stays the phishing-resistant gold standard &mdash; both on one key.</p>
+  </div>
+</section>
+
+<!-- ============== TIME SOURCE ============== -->
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">The key decision</span>
+      <h2 class="section-title">Where does the device get the time?</h2>
+      <span class="section-line"></span>
+    </div>
+    <p style="color:var(--brand-grey); font-size:16px; line-height:1.7; max-width:800px;">USB keys usually have no clock. That single fact drives the product. The host can supply the time (needs a companion app, zero battery) or a battery-backed real-time clock can keep it on the device (no app, but a coin cell to maintain).</p>
+    <div class="grid-2" style="margin-top:30px;">
+      <div class="card" style="border-color:var(--brand-red);">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;"><h3 style="font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--ink);margin:0;">Host-supplied time</h3><span class="chip" style="background:var(--brand-red);color:#fff;">Recommended V1</span></div>
+        <p style="color:var(--brand-grey);font-size:13px;font-family:'JetBrains Mono',monospace;margin-bottom:12px;">via CCID companion app</p>
+        <ul style="padding-left:18px; color:var(--brand-grey); font-size:14px; line-height:1.75;">
+          <li><b style="color:var(--ink);">Clock:</b> none on device &mdash; host sends time (already server-synced).</li>
+          <li><b style="color:var(--ink);">BOM:</b> lowest &mdash; no battery, no RTC.</li>
+          <li><b style="color:var(--ink);">UX:</b> app lists all accounts; manage/rename/delete; biometric per code.</li>
+          <li><b style="color:var(--ink);">Fits:</b> managed enterprise and multi-account power users.</li>
+          <li><b style="color:var(--ink);">Cost:</b> requires a companion app to function.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;"><h3 style="font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;color:var(--ink);margin:0;">On-device RTC</h3><span class="chip">Optional variant</span></div>
+        <p style="color:var(--brand-grey);font-size:13px;font-family:'JetBrains Mono',monospace;margin-bottom:12px;">enables keyboard auto-type, no software</p>
+        <ul style="padding-left:18px; color:var(--brand-grey); font-size:14px; line-height:1.75;">
+          <li><b style="color:var(--ink);">Clock:</b> battery-backed RTC keeps time on the chip.</li>
+          <li><b style="color:var(--ink);">BOM:</b> higher &mdash; coin cell + RTC; battery is a lifecycle item.</li>
+          <li><b style="color:var(--ink);">UX:</b> focus a field, touch + fingerprint &mdash; the device types the code.</li>
+          <li><b style="color:var(--ink);">Fits:</b> kiosks, locked-down hosts, single-credential buyers.</li>
+          <li><b style="color:var(--ink);">Cost:</b> clock drift and battery replacement; awkward for many accounts.</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:24px; border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:16px 20px; border-radius:0 6px 6px 0; color:var(--ink); font-size:15px;"><b>Recommendation:</b> ship V1 with host-supplied time via a CCID companion app. Treat RTC + keyboard auto-type as an optional product variant.</p>
+  </div>
+</section>
+
+<!-- ============== TRANSPORT ============== -->
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Transport</span>
+      <h2 class="section-title">CCID vs keyboard HID &mdash; and why you ship both.</h2>
+      <span class="section-line"></span>
+    </div>
+    <p style="color:var(--brand-grey); font-size:16px; line-height:1.7; max-width:800px;">The two USB interfaces serve different needs. CCID is the management workhorse; keyboard-HID is the appless convenience layer; CTAPHID stays exactly as it is for FIDO2.</p>
+    <div class="ref-table-wrap" style="margin-top:28px; overflow-x:auto;">
+      <table class="proc-table">
+        <thead><tr><th>Capability</th><th>Keyboard HID</th><th>CCID (PC&#47;SC)</th></tr></thead>
+        <tbody>
+          <tr><td class="pt-feature">Host software required</td><td><span class="pt-yes">None</span> &mdash; universal</td><td>Companion app</td></tr>
+          <tr><td class="pt-feature">Communication</td><td>One-way &mdash; types the code</td><td><b>Bidirectional APDU</b> &mdash; full dialog</td></tr>
+          <tr><td class="pt-feature">Manage many credentials</td><td><span class="pt-no">awkward</span> (one touch = one code)</td><td><span class="pt-yes">list / add / delete / rename</span></td></tr>
+          <tr><td class="pt-feature">Needs on-device clock</td><td>yes (RTC)</td><td><span class="pt-yes">no</span> &mdash; host supplies time</td></tr>
+          <tr><td class="pt-feature">Best for</td><td>Appless auto-type, kiosks</td><td>Multi-account, enterprise</td></tr>
+          <tr><td class="pt-feature">Status</td><td>Optional (RTC variant)</td><td><b>Core of V1</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:22px; border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:14px 18px; border-radius:0 6px 6px 0; color:var(--brand-grey); font-size:14.5px;">CTAPHID (FIDO2) already occupies its own HID usage page and is unaffected. Adding a CCID interface and an optional keyboard-HID interface makes BioKey a <b style="color:var(--ink);">composite USB device</b> &mdash; a firmware/descriptor change, not a hardware redesign.</p>
+  </div>
+</section>
+
+<!-- ============== ENROLLMENT ============== -->
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Enrollment</span>
+      <h2 class="section-title">How a seed gets onto the device &mdash; once.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-4" style="margin-top:8px;">
+      <div class="card-soft"><span class="eyebrow">Step 01</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">Service QR</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">The web service shows an <span style="font-family:'JetBrains Mono',monospace;">otpauth://</span> QR with secret, issuer, algorithm, digits and period.</p></div>
+      <div class="card-soft"><span class="eyebrow">Step 02</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">App parses</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">The companion app scans or imports it and extracts the parameters.</p></div>
+      <div class="card-soft"><span class="eyebrow">Step 03</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">Push to SE</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">The app sends an ADD-credential APDU; the secure element stores the seed in a protected slot.</p></div>
+      <div class="card-soft"><span class="eyebrow">Step 04</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">Zeroize</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.65;">Host memory holding the secret is wiped. From now on the seed exists only in the SE.</p></div>
+    </div>
+    <p style="margin-top:24px; border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:16px 20px; border-radius:0 6px 6px 0; color:var(--brand-grey); font-size:14.5px;"><b style="color:var(--ink);">Be transparent about this:</b> during enrollment the seed is transiently visible to the host, because the issuing service provides it as a QR/string. This is standard for TOTP enrollment. After enrollment, BioKey should expose no read-back/export path, and host memory is zeroized. A sealed SE-to-SE provisioning channel is a roadmap item.</p>
+  </div>
+</section>
+
+<!-- ============== PLATFORM REACH ============== -->
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Platform reach</span>
+      <h2 class="section-title">Where it works &mdash; and the one constraint to flag.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="ref-table-wrap" style="margin-top:8px; overflow-x:auto;">
+      <table class="proc-table">
+        <thead><tr><th>Platform</th><th>CCID (app)</th><th>Keyboard HID</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td class="pt-feature">Windows</td><td><span class="pt-yes">yes</span> &mdash; native PC&#47;SC</td><td><span class="pt-yes">yes</span></td><td>Cleanest target</td></tr>
+          <tr><td class="pt-feature">macOS</td><td><span class="pt-yes">yes</span> &mdash; CryptoTokenKit</td><td><span class="pt-yes">yes</span></td><td>Cleanest target</td></tr>
+          <tr><td class="pt-feature">Linux</td><td><span class="pt-yes">yes</span> &mdash; pcsc-lite</td><td><span class="pt-yes">yes</span></td><td>Cleanest target</td></tr>
+          <tr><td class="pt-feature">Android</td><td><span class="pt-yes">yes</span> &mdash; USB host + lib</td><td><span class="pt-yes">yes</span> &mdash; USB-C / OTG</td><td>Strong mobile story; add NFC if hardware allows</td></tr>
+          <tr><td class="pt-feature">iOS / iPadOS</td><td>restricted</td><td>restricted</td><td>Third-party USB HID/CCID access is limited even on USB-C iPhones. <b>NFC is the practical path</b> &mdash; only if the device has an NFC antenna.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:22px; border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:14px 18px; border-radius:0 6px 6px 0; color:var(--brand-grey); font-size:14.5px;"><b style="color:var(--ink);">Decision to surface:</b> iOS is the hard constraint. If iOS coverage matters to target buyers, the cleanest answer is an <b style="color:var(--ink);">NFC antenna</b> on the device (which also future-proofs FIDO-over-NFC). Otherwise scope V1 to desktop + Android and treat iOS as a fast-follow.</p>
+  </div>
+</section>
+
+<!-- ============== ROADMAP ============== -->
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Phasing</span>
+      <h2 class="section-title">A build path that ships value early.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-2" style="margin-top:30px;">
+      <div class="card-soft"><span class="eyebrow">Phase 1 &middot; Foundation</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">OATH applet + CCID + desktop app</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.7;">Add the OATH applet to the secure element and a CCID interface. Ship a Windows / macOS / Linux companion app with enrollment, listing, and fingerprint-gated calculate. Reuses the entire FIDO platform &mdash; lowest-risk, fastest demo.</p></div>
+      <div class="card-soft"><span class="eyebrow">Phase 2 &middot; Mobile</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">Android companion app</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.7;">USB-C / OTG support with the same fingerprint-gated flow. Brings the &ldquo;replace your phone authenticator&rdquo; message to mobile.</p></div>
+      <div class="card-soft"><span class="eyebrow">Phase 3 &middot; Appless</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">RTC variant + keyboard auto-type</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.7;">Optional hardware variant with a battery-backed clock. Touch-and-type codes with zero software for kiosk and locked-down buyers.</p></div>
+      <div class="card-soft"><span class="eyebrow">Phase 4 &middot; Reach + scale</span><h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin:8px 0;color:var(--ink);">iOS via NFC + enterprise</h3><p style="color:var(--brand-grey);font-size:14px;line-height:1.7;">NFC path for iOS, plus bulk provisioning, MDM hooks, admin policy, and sealed SE-to-SE enrollment for managed fleets.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SECURITY FRAMING ============== -->
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Honest security framing</span>
+      <h2 class="section-title">What this does &mdash; and does not &mdash; claim.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-2" style="margin-top:30px;">
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:10px;color:var(--ink);">What it does</h3>
+        <ul style="list-style:none; padding:0; color:var(--brand-grey); font-size:14.5px; line-height:1.8;">
+          <li><span style="color:#2E8B4F;font-weight:700;">&#10003;</span> Keeps the TOTP seed inside secure hardware after enrollment.</li>
+          <li><span style="color:#2E8B4F;font-weight:700;">&#10003;</span> Exposes no seed export / read-back path from BioKey.</li>
+          <li><span style="color:#2E8B4F;font-weight:700;">&#10003;</span> Requires a fingerprint per code release.</li>
+          <li><span style="color:#2E8B4F;font-weight:700;">&#10003;</span> Reduces exposure from phone compromise or cloud authenticator backups.</li>
+          <li><span style="color:#2E8B4F;font-weight:700;">&#10003;</span> Supports services that do not yet support FIDO2.</li>
+        </ul>
+      </div>
+      <div class="card-soft">
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:10px;color:var(--ink);">What it does not</h3>
+        <ul style="list-style:none; padding:0; color:var(--brand-grey); font-size:14.5px; line-height:1.8;">
+          <li><span style="color:var(--brand-red);font-weight:700;">&#10007;</span> Make TOTP phishing-resistant.</li>
+          <li><span style="color:var(--brand-red);font-weight:700;">&#10007;</span> Prevent users from typing OTPs into fake websites.</li>
+          <li><span style="color:var(--brand-red);font-weight:700;">&#10007;</span> Remove the need for <a href="/technologies/fido2/">FIDO2/WebAuthn</a> where available.</li>
+          <li><span style="color:var(--brand-red);font-weight:700;">&#10007;</span> Eliminate transient seed exposure during enrollment.</li>
+          <li><span style="color:var(--brand-red);font-weight:700;">&#10007;</span> Guarantee iOS USB support without an NFC/hardware decision.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== FAQ ============== -->
+<section aria-labelledby="faq-heading" class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Frequently asked</span>
+      <h2 class="section-title" id="faq-heading">BioKey on-device TOTP, answered.</h2>
+      <span class="section-line"></span>
+    </div>
+
+    <details class="faq-q" open>
+      <summary><h3>What is BioKey On-Device TOTP?</h3></summary>
+      <div class="faq-a">
+        <p>It is a proposed extension to <a href="/products/biokey/">AmbiSecure BioKey</a> that adds OATH-TOTP one-time passwords. Seeds are stored inside the BioKey secure element, the HMAC is computed on-chip, and only the short-lived 6-digit code leaves the device after an on-device fingerprint match. It is additive to BioKey's existing FIDO2/CTAP2 capability rather than a replacement for it.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Is this more secure than a phone authenticator app?</h3></summary>
+      <div class="faq-a">
+        <p>It changes where the secret lives. A phone authenticator stores TOTP seeds in software-accessible storage or OS keystores that can be exposed by malware, a rooted device, or insecure cloud backups. BioKey keeps the seed inside tamper-resistant silicon with no read-back or export path, and requires a fingerprint before every code. It does not make TOTP itself phishing-resistant.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Does this replace FIDO2?</h3></summary>
+      <div class="faq-a">
+        <p>No. <a href="/technologies/fido2/">FIDO2/WebAuthn</a> remains the primary, phishing-resistant authentication path and is unchanged. On-device TOTP is positioned as a secure bridge for legacy services that still depend on OTP codes and do not yet support FIDO2.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Is TOTP phishing-resistant?</h3></summary>
+      <div class="faq-a">
+        <p>No. TOTP is a shared-secret scheme and remains phishable: a user can still be tricked into typing a valid code into a fraudulent site. BioKey's contribution is hardening where the seed is stored and forcing a biometric per code &mdash; not making TOTP phishing-resistant. For phishing resistance, use FIDO2/WebAuthn.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Where is the TOTP seed stored?</h3></summary>
+      <div class="faq-a">
+        <p>Inside the BioKey <a href="/technologies/secure-elements/">secure element</a>, in a protected slot alongside FIDO credentials. After enrollment there is no API to read back or export the seed; the secure element only accepts a request and returns a computed code.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Does every OTP require fingerprint verification?</h3></summary>
+      <div class="faq-a">
+        <p>Yes. Every code release is gated by an on-device fingerprint match. The biometric template is matched on-chip and never leaves the device, reusing the same user-verification subsystem BioKey already uses for FIDO2.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Does it work on Windows, macOS, Linux, Android, and iOS?</h3></summary>
+      <div class="faq-a">
+        <p>Windows, macOS, and Linux are clean targets via standard PC/SC (CCID) with a companion app. Android is supported over USB-C/OTG with a companion app. iOS/iPadOS is constrained because third-party USB HID/CCID access is limited; NFC is the practical path for iOS, but only if the BioKey hardware includes an NFC antenna.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Why is iOS support different?</h3></summary>
+      <div class="faq-a">
+        <p>iOS restricts third-party access to USB HID/CCID interfaces even on USB-C iPhones, so the companion-app-over-USB model used on desktop and Android does not translate directly. The practical route to iOS is NFC, which depends on an NFC antenna being present on the device &mdash; a hardware roadmap decision.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>What is the recommended V1 implementation?</h3></summary>
+      <div class="faq-a">
+        <p>Host-supplied time over a CCID companion app. The host (already time-synced) supplies the current time, so BioKey needs no on-device clock or battery. This keeps the bill of materials lowest and supports listing, adding, renaming, and deleting credentials, with a fingerprint required per code.</p>
+      </div>
+    </details>
+
+    <details class="faq-q">
+      <summary><h3>Can BioKey type the OTP automatically?</h3></summary>
+      <div class="faq-a">
+        <p>Only in an optional hardware variant. Appless keyboard-HID auto-type requires the device to know the time on its own, which means a battery-backed real-time clock. That variant suits kiosks and locked-down hosts but adds battery lifecycle and clock-drift considerations, so it is treated as an optional product variant rather than the V1 default.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ============== CONNECTED READING ============== -->
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Connected reading</span>
+      <h2 class="section-title">Where this fits in the bigger picture.</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-3">
+      <a href="/products/biokey/" class="card"><h3>Product: BioKey</h3><p>The biometric USB security key this extension builds on.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/technologies/fido2/" class="card"><h3>Technology: FIDO2</h3><p>The phishing-resistant primary path that stays unchanged.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/technologies/secure-elements/" class="card"><h3>Technology: Secure elements</h3><p>The tamper-resistant vault that seals the OATH seed.</p><div class="card-meta">View technology &rarr;</div></a>
+      <a href="/solutions/passwordless-mfa/" class="card"><h3>Solution: Passwordless MFA</h3><p>How phishing-resistant login and legacy MFA sit together.</p><div class="card-meta">View solution &rarr;</div></a>
+      <a href="/products/onepass-usb-key/" class="card"><h3>Product: OnePass USB Key</h3><p>The non-biometric tier of the USB security key range.</p><div class="card-meta">View product &rarr;</div></a>
+      <a href="/products/" class="card"><h3>All products</h3><p>The full AmbiSecure hardware and applet catalogue.</p><div class="card-meta">Browse products &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CALLOUT ============== -->
+<section class="alt">
+  <div class="section-container">
+    <div class="callout">
+      <div><h2>Evaluating one key for FIDO2 and legacy MFA?</h2><p>Tell us your host platforms, whether iOS coverage matters, and your account volume. We can map the time-source and NFC decisions to your rollout.</p></div>
+      <div><a href="/contact/" class="btn btn-primary" data-analytics-event="request_demo">Talk to AmbiSecure</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div>
+        <p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p>
+        <div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div>
+      </div>
+      <div><h3>Products</h3><ul>
+        <li><a href="/products/onepass-card/">OnePass Card</a></li>
+        <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
+        <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li>
+        <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
+        <li><a href="/products/">All products</a></li>
+      </ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+      <div><h3>Services</h3><ul>
+        <li><a href="/services/javacard-development/">JavaCard development</a></li>
+        <li><a href="/services/fido-validation-server/">FIDO validation server</a></li>
+        <li><a href="/services/tool-chain-development/">Tool-chain development</a></li>
+        <li><a href="/services/">All services</a></li>
+      </ul></div>
+      <div><h3>Company</h3><ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/about/certifications/">Certifications</a></li>
+        <li><a href="/industries/">Industries</a></li>
+        <li><a href="/support/">Support</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul></div>
+      <div><h3>Contact</h3><ul>
+        <li>Ahmedabad, Gujarat 380015<br />India</li>
+        <li>India: +91 79255 01989</li>
+        <li>US: +1 215 397 3819</li>
+        <li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
+      <div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+</body>
+</html>
