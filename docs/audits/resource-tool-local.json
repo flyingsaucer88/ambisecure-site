@@ -1,0 +1,2527 @@
+{
+  "mode": "local",
+  "base": "/Users/neelshah/Documents/git_repo/ambisecure-site",
+  "generated": "2026-06-03T10:34:10Z",
+  "tools": [
+    {
+      "slug": "aaguid-lookup",
+      "label": "aaguid-lookup",
+      "page": "/resources/tools/aaguid-lookup/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "apdu-builder",
+      "label": "APDU Builder",
+      "page": "/resources/tools/apdu-builder/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 17,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "Case 1 build",
+          "ok": true,
+          "got": "00A40400",
+          "expected": "00A40400"
+        },
+        {
+          "group": "golden",
+          "name": "SELECT AID + Le",
+          "ok": true,
+          "got": "00A4040008A00000000300000000",
+          "expected": "00A4040008A00000000300000000"
+        },
+        {
+          "group": "invalid",
+          "name": "CLA out of range",
+          "ok": true,
+          "got": "threw: CLA must be a single byte (0–255).",
+          "expected": "(error)"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "apdu-parser",
+      "label": "apdu-parser",
+      "page": "/resources/tools/apdu-parser/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 7,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "apdu-script-validator",
+      "label": "apdu-script-validator",
+      "page": "/resources/tools/apdu-script-validator/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "apdu-status-dict",
+      "label": "apdu-status-dict",
+      "page": "/resources/tools/apdu-status-dict/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 4,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "ascii-hex",
+      "label": "ascii-hex",
+      "page": "/resources/tools/ascii-hex/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 8,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "asn1-parser",
+      "label": "asn1-parser",
+      "page": "/resources/tools/asn1-parser/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "asn1-tree-explorer",
+      "label": "asn1-tree-explorer",
+      "page": "/resources/tools/asn1-tree-explorer/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "atr-parser",
+      "label": "atr-parser",
+      "page": "/resources/tools/atr-parser/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "ats-parser",
+      "label": "ats-parser",
+      "page": "/resources/tools/ats-parser/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "attestation-decoder",
+      "label": "attestation-decoder",
+      "page": "/resources/tools/attestation-decoder/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "authdata-parser",
+      "label": "authdata-parser",
+      "page": "/resources/tools/authdata-parser/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "base32",
+      "label": "Base32",
+      "page": "/resources/tools/base32/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 10,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "encode hello",
+          "ok": true,
+          "got": "NBSWY3DP",
+          "expected": "NBSWY3DP"
+        },
+        {
+          "group": "golden",
+          "name": "encode foobar",
+          "ok": true,
+          "got": "MZXW6YTBOI======",
+          "expected": "MZXW6YTBOI======"
+        },
+        {
+          "group": "golden",
+          "name": "decode NBSWY3DP",
+          "ok": true,
+          "got": "hello",
+          "expected": "hello"
+        },
+        {
+          "group": "golden",
+          "name": "lowercase decode",
+          "ok": true,
+          "got": "hello",
+          "expected": "hello"
+        },
+        {
+          "group": "golden",
+          "name": "base32hex foobar",
+          "ok": true,
+          "got": "CPNMUOJ1E8======",
+          "expected": "CPNMUOJ1E8======"
+        },
+        {
+          "group": "invalid",
+          "name": "invalid alphabet char",
+          "ok": true,
+          "got": "threw: Invalid Base32 character \"0\" at position 1.",
+          "expected": "(error)"
+        },
+        {
+          "group": "edge",
+          "name": "empty encode",
+          "ok": true,
+          "got": "",
+          "expected": ""
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "base64",
+      "label": "base64",
+      "page": "/resources/tools/base64/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 8,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "base64-cert",
+      "label": "base64-cert",
+      "page": "/resources/tools/base64-cert/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "base64url",
+      "label": "base64url",
+      "page": "/resources/tools/base64url/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "ber-length",
+      "label": "ber-length",
+      "page": "/resources/tools/ber-length/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "binary-calculator",
+      "label": "Binary Calculator",
+      "page": "/resources/tools/binary-calculator/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 13,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "1010(b2) -> 10",
+          "ok": true,
+          "got": "10",
+          "expected": "10"
+        },
+        {
+          "group": "golden",
+          "name": "1010(b2) -> hex A",
+          "ok": true,
+          "got": "0A",
+          "expected": "0A"
+        },
+        {
+          "group": "golden",
+          "name": "255(d) width8 -> bin",
+          "ok": true,
+          "got": "11111111",
+          "expected": "11111111"
+        },
+        {
+          "group": "golden",
+          "name": "signed 0xFF width8 -> -1",
+          "ok": true,
+          "got": "-1",
+          "expected": "-1"
+        },
+        {
+          "group": "golden",
+          "name": "AND 1010&1100",
+          "ok": true,
+          "got": "8",
+          "expected": "8"
+        },
+        {
+          "group": "golden",
+          "name": "OR 1010|1100",
+          "ok": true,
+          "got": "14",
+          "expected": "14"
+        },
+        {
+          "group": "golden",
+          "name": "XOR 1010^1100",
+          "ok": true,
+          "got": "6",
+          "expected": "6"
+        },
+        {
+          "group": "golden",
+          "name": "NOT 00001111 width8",
+          "ok": true,
+          "got": "240",
+          "expected": "240"
+        },
+        {
+          "group": "golden",
+          "name": "SHL 1<<4 width8",
+          "ok": true,
+          "got": "16",
+          "expected": "16"
+        },
+        {
+          "group": "invalid",
+          "name": "non-binary in base2",
+          "ok": true,
+          "got": "threw: \"1012\" is not a valid base-2 value.",
+          "expected": "(error)"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "byte-offset-calculator",
+      "label": "Byte-offset Calculator",
+      "page": "/resources/tools/byte-offset-calculator/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 11,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "6 byte rows group1",
+          "ok": true,
+          "got": "6",
+          "expected": "6"
+        },
+        {
+          "group": "golden",
+          "name": "ascii 41 42 -> AB",
+          "ok": true,
+          "got": "AB",
+          "expected": "AB"
+        },
+        {
+          "group": "golden",
+          "name": "interpret 4142 BE u16",
+          "ok": true,
+          "got": "16706",
+          "expected": "16706"
+        },
+        {
+          "group": "golden",
+          "name": "interpret 4142 LE u16",
+          "ok": true,
+          "got": "16961",
+          "expected": "16961"
+        },
+        {
+          "group": "invalid",
+          "name": "odd-length hex",
+          "ok": true,
+          "got": "threw: Hex input has an odd number of digits (3). Each byte needs two hex digits.",
+          "expected": "(error)"
+        },
+        {
+          "group": "invalid",
+          "name": "invalid hex char",
+          "ok": true,
+          "got": "threw: Input contains a non-hex character \"Z\". Allowed: 0-9 a-f, plus spaces, 0x, : ; , as separators.",
+          "expected": "(error)"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "cbor-decoder",
+      "label": "CBOR Parser",
+      "page": "/resources/tools/cbor-decoder/",
+      "relink_of": "cbor-parser",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "01 -> uint 1",
+          "ok": true,
+          "got": "1",
+          "expected": "1"
+        },
+        {
+          "group": "golden",
+          "name": "0A -> uint 10",
+          "ok": true,
+          "got": "10",
+          "expected": "10"
+        },
+        {
+          "group": "golden",
+          "name": "20 -> nint -1",
+          "ok": true,
+          "got": "-1",
+          "expected": "-1"
+        },
+        {
+          "group": "golden",
+          "name": "6161 -> text a",
+          "ok": true,
+          "got": "a",
+          "expected": "a"
+        },
+        {
+          "group": "golden",
+          "name": "83010203 -> [1,2,3]",
+          "ok": true,
+          "got": "[1,2,3]",
+          "expected": "[1,2,3]"
+        },
+        {
+          "group": "golden",
+          "name": "A1616101 -> {a:1}",
+          "ok": true,
+          "got": "{\"a\":1}",
+          "expected": "{\"a\":1}"
+        },
+        {
+          "group": "invalid",
+          "name": "incomplete array (83 says 3 items, 1 given)",
+          "ok": true,
+          "got": "threw: Unexpected end of CBOR input.",
+          "expected": "(error)"
+        },
+        {
+          "group": "invalid",
+          "name": "invalid hex",
+          "ok": true,
+          "got": "threw: invalid hex",
+          "expected": "(error)"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "cert-chain",
+      "label": "cert-chain",
+      "page": "/resources/tools/cert-chain/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "cert-fingerprint",
+      "label": "cert-fingerprint",
+      "page": "/resources/tools/cert-fingerprint/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "challenge-viewer",
+      "label": "challenge-viewer",
+      "page": "/resources/tools/challenge-viewer/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "checksum",
+      "label": "Checksum",
+      "page": "/resources/tools/checksum/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 9,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "sum8 010203 -> 06",
+          "ok": true,
+          "got": "6",
+          "expected": "06"
+        },
+        {
+          "group": "golden",
+          "name": "twos8 010203 -> FA",
+          "ok": true,
+          "got": "FA",
+          "expected": "FA"
+        },
+        {
+          "group": "golden",
+          "name": "xor8 010203 -> 00",
+          "ok": true,
+          "got": "0",
+          "expected": "00"
+        },
+        {
+          "group": "golden",
+          "name": "adler32 Wikipedia",
+          "ok": true,
+          "got": "11E60398",
+          "expected": "11E60398"
+        },
+        {
+          "group": "golden",
+          "name": "fletcher16 abcde",
+          "ok": true,
+          "got": "C8F0",
+          "expected": "C8F0"
+        },
+        {
+          "group": "invalid",
+          "name": "invalid hex",
+          "ok": true,
+          "got": "threw: invalid hex",
+          "expected": "(error)"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "clientdata-decoder",
+      "label": "clientdata-decoder",
+      "page": "/resources/tools/clientdata-decoder/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "cmac-length",
+      "label": "cmac-length",
+      "page": "/resources/tools/cmac-length/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 7,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "cose-key",
+      "label": "cose-key",
+      "page": "/resources/tools/cose-key/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "crc-calculator",
+      "label": "CRC Calculator",
+      "page": "/resources/tools/crc-calculator/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 14,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "CRC-32",
+          "ok": true,
+          "got": "CBF43926",
+          "expected": "CBF43926"
+        },
+        {
+          "group": "golden",
+          "name": "CRC-32C",
+          "ok": true,
+          "got": "E3069283",
+          "expected": "E3069283"
+        },
+        {
+          "group": "golden",
+          "name": "CRC-16/CCITT-FALSE",
+          "ok": true,
+          "got": "29B1",
+          "expected": "29B1"
+        },
+        {
+          "group": "golden",
+          "name": "CRC-16/XMODEM",
+          "ok": true,
+          "got": "31C3",
+          "expected": "31C3"
+        },
+        {
+          "group": "golden",
+          "name": "CRC-16/ARC",
+          "ok": true,
+          "got": "BB3D",
+          "expected": "BB3D"
+        },
+        {
+          "group": "golden",
+          "name": "CRC-16/X-25",
+          "ok": true,
+          "got": "906E",
+          "expected": "906E"
+        },
+        {
+          "group": "golden",
+          "name": "CRC-8",
+          "ok": true,
+          "got": "F4",
+          "expected": "F4"
+        },
+        {
+          "group": "golden",
+          "name": "CRC-8/MAXIM",
+          "ok": true,
+          "got": "A1",
+          "expected": "A1"
+        },
+        {
+          "group": "golden",
+          "name": "CRC-64/ECMA-182",
+          "ok": true,
+          "got": "6C40DF5F0B497347",
+          "expected": "6C40DF5F0B497347"
+        },
+        {
+          "group": "invalid",
+          "name": "invalid hex input",
+          "ok": true,
+          "got": "threw: invalid hex",
+          "expected": "(error)"
+        },
+        {
+          "group": "special",
+          "name": "all-presets check value (123456789): 59 presets",
+          "ok": true,
+          "got": "59 verified",
+          "expected": "all match"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "credential-id",
+      "label": "credential-id",
+      "page": "/resources/tools/credential-id/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "csr-decoder",
+      "label": "csr-decoder",
+      "page": "/resources/tools/csr-decoder/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "desfire-access-rights",
+      "label": "desfire-access-rights",
+      "page": "/resources/tools/desfire-access-rights/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "desfire-file-settings",
+      "label": "desfire-file-settings",
+      "page": "/resources/tools/desfire-file-settings/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "desfire-key-settings",
+      "label": "desfire-key-settings",
+      "page": "/resources/tools/desfire-key-settings/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "desfire-status",
+      "label": "desfire-status",
+      "page": "/resources/tools/desfire-status/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 4,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "ecc-curve-reference",
+      "label": "ECC Curve Reference",
+      "page": "/resources/tools/ecc-curve-reference/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 8,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "P-256 in table",
+          "ok": true,
+          "got": "true",
+          "expected": "(ok)"
+        },
+        {
+          "group": "golden",
+          "name": "secp256k1 in table",
+          "ok": true,
+          "got": "true",
+          "expected": "(ok)"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "emv-tag-dict",
+      "label": "emv-tag-dict",
+      "page": "/resources/tools/emv-tag-dict/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 3,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "endian",
+      "label": "endian",
+      "page": "/resources/tools/endian/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 7,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "euicc-eid-decoder",
+      "label": "eUICC EID Decoder",
+      "page": "/resources/tools/euicc-eid-decoder/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "32-digit accepted",
+          "ok": true,
+          "got": "{\"eid\":\"89049032123451234512345678901235\",\"grouped\":\"8904 9032 1234 5123 4512 3456 7890 1235\",\"fields\":{\"mii\":\"89\",\"version\":\"049\",\"eumId\":\"03212345\",\"custom\":\"12345\",\"serial\":\"123456789012\",\"checkDigits\":\"35\"},\"miiOk\":true,\"checkValid\":false,\"expectedCheck\":\"00\"}",
+          "expected": "(ok)"
+        },
+        {
+          "group": "invalid",
+          "name": "31 digits",
+          "ok": true,
+          "got": "threw: An EID must be exactly 32 digits — got 31.",
+          "expected": "(error)"
+        },
+        {
+          "group": "invalid",
+          "name": "33 digits",
+          "ok": true,
+          "got": "threw: An EID must be exactly 32 digits — got 33.",
+          "expected": "(error)"
+        },
+        {
+          "group": "invalid",
+          "name": "letters",
+          "ok": true,
+          "got": "threw: An EID is 32 decimal digits — non-digit characters found.",
+          "expected": "(error)"
+        },
+        {
+          "group": "edge",
+          "name": "spaces normalized to 32",
+          "ok": true,
+          "got": "32",
+          "expected": "32"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "fido-mds-explorer",
+      "label": "fido-mds-explorer",
+      "page": "/resources/tools/fido-mds-explorer/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 4,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "gp-status",
+      "label": "gp-status",
+      "page": "/resources/tools/gp-status/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 2,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "hex-bytes",
+      "label": "hex-bytes",
+      "page": "/resources/tools/hex-bytes/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 7,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "iccid-decoder",
+      "label": "ICCID Decoder",
+      "page": "/resources/tools/iccid-decoder/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "valid dummy ICCID Luhn",
+          "ok": true,
+          "got": "true",
+          "expected": "true"
+        },
+        {
+          "group": "golden",
+          "name": "decode MII=89",
+          "ok": true,
+          "got": "{\"input\":\"8991101200003204514\",\"digits\":\"8991101200003204514\",\"length\":19,\"mii\":\"89\",\"miiIsTelecom\":true,\"countryCode\":\"91\",\"countryName\":\"India\",\"countryDigits\":2,\"issuerAndAccount\":\"10120000320451\",\"checkDigit\":\"4\",\"expectedCheckDigit\":\"4\",\"luhnValid\":true}",
+          "expected": "includes {\"mii\":\"89\"}"
+        },
+        {
+          "group": "invalid",
+          "name": "bad Luhn check",
+          "ok": true,
+          "got": "false",
+          "expected": "false"
+        },
+        {
+          "group": "invalid",
+          "name": "letters",
+          "ok": true,
+          "got": "threw: ICCID must contain digits only after removing spaces and dashes.",
+          "expected": "(error)"
+        },
+        {
+          "group": "edge",
+          "name": "spaces normalized",
+          "ok": true,
+          "got": "true",
+          "expected": "true"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "ieee-1609-2-parser",
+      "label": "ieee-1609-2-parser",
+      "page": "/resources/tools/ieee-1609-2-parser/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 7,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "imsi-decoder",
+      "label": "IMSI Decoder",
+      "page": "/resources/tools/imsi-decoder/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 7,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "2-digit MNC",
+          "ok": true,
+          "got": "{\"input\":\"404450123456789\",\"mcc\":\"404\",\"mnc\":\"45\",\"msin\":\"0123456789\",\"mncLength\":2,\"country\":\"India\",\"notes\":[]}",
+          "expected": "includes {\"mcc\":\"404\",\"mnc\":\"45\",\"msin\":\"0123456789\"}"
+        },
+        {
+          "group": "golden",
+          "name": "3-digit MNC",
+          "ok": true,
+          "got": "{\"input\":\"310260123456789\",\"mcc\":\"310\",\"mnc\":\"260\",\"msin\":\"123456789\",\"mncLength\":3,\"country\":\"United States\",\"notes\":[]}",
+          "expected": "includes {\"mcc\":\"310\",\"mnc\":\"260\",\"msin\":\"123456789\"}"
+        },
+        {
+          "group": "invalid",
+          "name": "letters",
+          "ok": true,
+          "got": "threw: IMSI must contain digits 0-9 only.",
+          "expected": "(error)"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "iso14443-frame",
+      "label": "iso14443-frame",
+      "page": "/resources/tools/iso14443-frame/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "iso14443-ref",
+      "label": "iso14443-ref",
+      "page": "/resources/tools/iso14443-ref/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 2,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "iso7816-cla",
+      "label": "iso7816-cla",
+      "page": "/resources/tools/iso7816-cla/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "iso7816-ref",
+      "label": "iso7816-ref",
+      "page": "/resources/tools/iso7816-ref/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 2,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "javacard-cap",
+      "label": "CAP File Inspector",
+      "page": "/resources/tools/javacard-cap/",
+      "relink_of": "cap-file-inspector",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "render-only / browser-dependent: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "json-bin-builder",
+      "label": "json-bin-builder",
+      "page": "/resources/tools/json-bin-builder/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 19,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "json-formatter",
+      "label": "JSON Formatter",
+      "page": "/resources/tools/json-formatter/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 10,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "pretty 2-space",
+          "ok": true,
+          "got": "{\n  \"b\": 2,\n  \"a\": 1\n}",
+          "expected": "{\n  \"b\": 2,\n  \"a\": 1\n}"
+        },
+        {
+          "group": "golden",
+          "name": "sort keys",
+          "ok": true,
+          "got": "{\n  \"a\": 1,\n  \"b\": 2\n}",
+          "expected": "{\n  \"a\": 1,\n  \"b\": 2\n}"
+        },
+        {
+          "group": "golden",
+          "name": "minify",
+          "ok": true,
+          "got": "{\"a\":1}",
+          "expected": "{\"a\":1}"
+        },
+        {
+          "group": "golden",
+          "name": "nested + array",
+          "ok": true,
+          "got": "{\"x\":[1,2,{\"y\":3}]}",
+          "expected": "{\"x\":[1,2,{\"y\":3}]}"
+        },
+        {
+          "group": "golden",
+          "name": "unicode preserved",
+          "ok": true,
+          "got": "{\"s\":\"café\"}",
+          "expected": "{\"s\":\"café\"}"
+        },
+        {
+          "group": "invalid",
+          "name": "trailing comma",
+          "ok": true,
+          "got": "threw: Expected double-quoted property name in JSON at position 7 (line 1 column 8)",
+          "expected": "(error)"
+        },
+        {
+          "group": "invalid",
+          "name": "missing value",
+          "ok": true,
+          "got": "threw: Unexpected token '}', \"{\"a\":}\" is not valid JSON",
+          "expected": "(error)"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "json-validator",
+      "label": "JSON Validator",
+      "page": "/resources/tools/json-validator/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 8,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "valid object",
+          "ok": true,
+          "got": "true",
+          "expected": "true"
+        },
+        {
+          "group": "golden",
+          "name": "valid array",
+          "ok": true,
+          "got": "true",
+          "expected": "true"
+        },
+        {
+          "group": "golden",
+          "name": "schema valid",
+          "ok": true,
+          "got": "true",
+          "expected": "true"
+        },
+        {
+          "group": "golden",
+          "name": "schema invalid (range)",
+          "ok": true,
+          "got": "false",
+          "expected": "false"
+        },
+        {
+          "group": "golden",
+          "name": "schema invalid (type)",
+          "ok": true,
+          "got": "false",
+          "expected": "false"
+        },
+        {
+          "group": "invalid",
+          "name": "trailing comma",
+          "ok": true,
+          "got": "threw: invalid JSON",
+          "expected": "(error)"
+        },
+        {
+          "group": "invalid",
+          "name": "missing quote",
+          "ok": true,
+          "got": "threw: invalid JSON",
+          "expected": "(error)"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "key-diversification",
+      "label": "key-diversification",
+      "page": "/resources/tools/key-diversification/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "length-field",
+      "label": "length-field",
+      "page": "/resources/tools/length-field/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "lrc-calculator",
+      "label": "LRC Calculator",
+      "page": "/resources/tools/lrc-calculator/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 10,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "XOR 010203 -> 00",
+          "ok": true,
+          "got": "0",
+          "expected": "00"
+        },
+        {
+          "group": "golden",
+          "name": "XOR 010204 -> 07",
+          "ok": true,
+          "got": "7",
+          "expected": "07"
+        },
+        {
+          "group": "golden",
+          "name": "sum8 mod 010203 -> 06",
+          "ok": true,
+          "got": "6",
+          "expected": "06"
+        },
+        {
+          "group": "golden",
+          "name": "twos8 010203 -> FA",
+          "ok": true,
+          "got": "FA",
+          "expected": "FA"
+        },
+        {
+          "group": "golden",
+          "name": "sum16 mod 010203 -> 0006",
+          "ok": true,
+          "got": "6",
+          "expected": "0006"
+        },
+        {
+          "group": "invalid",
+          "name": "invalid hex",
+          "ok": true,
+          "got": "threw: Hex input contains non-hex characters.",
+          "expected": "(error)"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "ndef-decoder",
+      "label": "ndef-decoder",
+      "page": "/resources/tools/ndef-decoder/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "passkey-flow-viz",
+      "label": "passkey-flow-viz",
+      "page": "/resources/tools/passkey-flow-viz/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 4,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "pem-der",
+      "label": "pem-der",
+      "page": "/resources/tools/pem-der/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 9,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "pfx-inspector",
+      "label": "pfx-inspector",
+      "page": "/resources/tools/pfx-inspector/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "rp-id-validator",
+      "label": "rp-id-validator",
+      "page": "/resources/tools/rp-id-validator/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "rsa-key-formats",
+      "label": "RSA Key Formats",
+      "page": "/resources/tools/rsa-key-formats/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 9,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "identify PKCS#8",
+          "ok": true,
+          "got": "PKCS#8 PrivateKeyInfo",
+          "expected": "~/PKCS#8|PrivateKeyInfo/"
+        },
+        {
+          "group": "golden",
+          "name": "identify SPKI",
+          "ok": true,
+          "got": "SubjectPublicKeyInfo (SPKI)",
+          "expected": "~/SubjectPublicKeyInfo|SPKI|Public/"
+        },
+        {
+          "group": "golden",
+          "name": "identify PKCS#1 priv",
+          "ok": true,
+          "got": "PKCS#1 RSAPrivateKey",
+          "expected": "~/PKCS#1|RSA/"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "scp03-helper",
+      "label": "SCP03 Helper",
+      "page": "/resources/tools/scp03-helper/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 9,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "AES-CMAC RFC4493 empty msg",
+          "ok": true,
+          "got": "BB1D6929E95937287FA37D129B756746",
+          "expected": "BB1D6929E95937287FA37D129B756746"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "scp03-walkthrough",
+      "label": "scp03-walkthrough",
+      "page": "/resources/tools/scp03-walkthrough/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 2,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "secure-messaging-viz",
+      "label": "secure-messaging-viz",
+      "page": "/resources/tools/secure-messaging-viz/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "sequence-diagram-generator",
+      "label": "sequence-diagram-generator",
+      "page": "/resources/tools/sequence-diagram-generator/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 11,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "sha-hash-generator",
+      "label": "SHA Hash Generator",
+      "page": "/resources/tools/sha-hash-generator/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 9,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "name": "SHA-1(abc)",
+          "ok": true,
+          "got": "A9993E364706816ABA3E25717850C26C9CD0D89D",
+          "expected": "A9993E364706816ABA3E25717850C26C9CD0D89D"
+        },
+        {
+          "name": "SHA-256(abc)",
+          "ok": true,
+          "got": "BA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD",
+          "expected": "BA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD"
+        },
+        {
+          "name": "SHA-384(abc)",
+          "ok": true,
+          "got": "CB00753F45A35E8BB5A03D699AC65007272C32AB0EDED1631A8B605A43FF5BED8086072BA1E7CC2358BAECA134C825A7",
+          "expected": "CB00753F45A35E8BB5A03D699AC65007272C32AB0EDED1631A8B605A43FF5BED8086072BA1E7CC2358BAECA134C825A7"
+        },
+        {
+          "name": "SHA-512(abc)",
+          "ok": true,
+          "got": "DDAF35A193617ABACC417349AE20413112E6FA4E89A97EA20A9EEEE64B55D39A2192992A274FC1A836BA3C23A3FEEBBD454D4423643CE80E2A9AC94FA54CA49F",
+          "expected": "DDAF35A193617ABACC417349AE20413112E6FA4E89A97EA20A9EEEE64B55D39A2192992A274FC1A836BA3C23A3FEEBBD454D4423643CE80E2A9AC94FA54CA49F"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "sw-lookup",
+      "label": "sw-lookup",
+      "page": "/resources/tools/sw-lookup/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 4,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "tlv-parser",
+      "label": "tlv-parser",
+      "page": "/resources/tools/tlv-parser/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "tlv-tree-viz",
+      "label": "tlv-tree-viz",
+      "page": "/resources/tools/tlv-tree-viz/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "tmac-visualizer",
+      "label": "tmac-visualizer",
+      "page": "/resources/tools/tmac-visualizer/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "uid-analyzer",
+      "label": "uid-analyzer",
+      "page": "/resources/tools/uid-analyzer/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 5,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "url-encoder",
+      "label": "URL Encoder",
+      "page": "/resources/tools/url-encoder/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 8,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "encode a b+c (%20 mode)",
+          "ok": true,
+          "got": "a%20b%2Bc",
+          "expected": "a%20b%2Bc"
+        },
+        {
+          "group": "golden",
+          "name": "encode a b+c (plus mode)",
+          "ok": true,
+          "got": "a+b%2Bc",
+          "expected": "a+b%2Bc"
+        },
+        {
+          "group": "golden",
+          "name": "decode a%20b%2Bc",
+          "ok": true,
+          "got": "a b+c",
+          "expected": "a b+c"
+        },
+        {
+          "group": "invalid",
+          "name": "malformed percent",
+          "ok": true,
+          "got": "threw: URI malformed",
+          "expected": "(error)"
+        },
+        {
+          "group": "edge",
+          "name": "empty encode",
+          "ok": true,
+          "got": "",
+          "expected": ""
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    },
+    {
+      "slug": "utf8",
+      "label": "utf8",
+      "page": "/resources/tools/utf8/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "v2x-cert-chain-validator",
+      "label": "v2x-cert-chain-validator",
+      "page": "/resources/tools/v2x-cert-chain-validator/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 8,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "x509-viewer",
+      "label": "x509-viewer",
+      "page": "/resources/tools/x509-viewer/",
+      "relink_of": null,
+      "hasMatrix": false,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 6,
+        "has_ui": true,
+        "not_parking": true
+      },
+      "algo": [],
+      "fails": [],
+      "warns": [
+        "no test matrix entry: structural checks only"
+      ],
+      "passed": true
+    },
+    {
+      "slug": "xml-formatter",
+      "label": "XML Formatter",
+      "page": "/resources/tools/xml-formatter/",
+      "hasMatrix": true,
+      "structural": {
+        "http_200": true,
+        "canonical_ok": true,
+        "noindex_absent": true,
+        "has_h1": true,
+        "has_title": true,
+        "soon_absent": true,
+        "ui_markers": 9,
+        "has_ui": true,
+        "not_parking": true,
+        "content_missing": []
+      },
+      "algo": [
+        {
+          "group": "golden",
+          "name": "pretty",
+          "ok": true,
+          "got": "<root>\n  <a>1</a>\n</root>",
+          "expected": "<root>\n  <a>1</a>\n</root>"
+        },
+        {
+          "group": "golden",
+          "name": "minify",
+          "ok": true,
+          "got": "<root><a>1</a></root>",
+          "expected": "<root><a>1</a></root>"
+        }
+      ],
+      "fails": [],
+      "warns": [],
+      "passed": true
+    }
+  ],
+  "summary": {
+    "tools_total": 76,
+    "tools_passed": 76,
+    "tools_with_algo": 19,
+    "algo_assertions": 101,
+    "algo_passed": 101,
+    "critical_failures": 0,
+    "warnings": 57
+  },
+  "browser": "Browser layer not requested (--browser). Algorithm tests run against the deployed JS in a Node VM (no DOM); structural checks cover render markers."
+}

@@ -1,0 +1,286 @@
+{
+  "_comment": "Machine-readable test matrix for AmbiSecure resource tools. Consumed by tools/verify-resource-tools.mjs. Each tool: page path, JS source to load for algorithm tests, UI/content structural expectations, and golden/invalid/edge vectors. The harness has a per-slug adapter that knows how to call each tool's exported functions; the vectors here are the data. To add a future tool: add an entry, and (if its API is novel) a matching adapter in the harness. Decoder examples use DUMMY values only.",
+  "tools": [
+    {
+      "slug": "base32", "label": "Base32", "source": "tools/base32.js",
+      "ui_markers_min": 1, "content_includes": ["RFC 4648", "runs locally"],
+      "golden": [
+        { "name": "encode hello", "input": { "op": "encode", "text": "hello" }, "expect": "NBSWY3DP" },
+        { "name": "encode foobar", "input": { "op": "encode", "text": "foobar" }, "expect": "MZXW6YTBOI======" },
+        { "name": "decode NBSWY3DP", "input": { "op": "decode", "b32": "NBSWY3DP" }, "expect": "hello" },
+        { "name": "lowercase decode", "input": { "op": "decode", "b32": "nbswy3dp" }, "expect": "hello" },
+        { "name": "base32hex foobar", "input": { "op": "encode", "text": "foobar", "alpha": "base32hex" }, "expect": "CPNMUOJ1E8======" }
+      ],
+      "invalid": [
+        { "name": "invalid alphabet char", "input": { "op": "decode", "b32": "0189" }, "expectError": true }
+      ],
+      "edge": [
+        { "name": "empty encode", "input": { "op": "encode", "text": "" }, "expect": "" }
+      ]
+    },
+    {
+      "slug": "url-encoder", "label": "URL Encoder", "source": "tools/url-encoder.js",
+      "ui_markers_min": 1, "content_includes": ["percent", "runs locally"],
+      "golden": [
+        { "name": "encode a b+c (%20 mode)", "input": { "op": "encode", "raw": "a b+c", "full": false, "plus": false }, "expect": "a%20b%2Bc" },
+        { "name": "encode a b+c (plus mode)", "input": { "op": "encode", "raw": "a b+c", "full": false, "plus": true }, "expect": "a+b%2Bc" },
+        { "name": "decode a%20b%2Bc", "input": { "op": "decode", "raw": "a%20b%2Bc", "full": false, "plus": false }, "expect": "a b+c" }
+      ],
+      "invalid": [
+        { "name": "malformed percent", "input": { "op": "decode", "raw": "%E0%A4%A", "full": false, "plus": false }, "expectError": true }
+      ],
+      "edge": [
+        { "name": "empty encode", "input": { "op": "encode", "raw": "", "full": false, "plus": false }, "expect": "" }
+      ]
+    },
+    {
+      "slug": "json-formatter", "label": "JSON Formatter", "source": "tools/json-formatter.js",
+      "ui_markers_min": 1, "content_includes": ["minify"],
+      "golden": [
+        { "name": "pretty 2-space", "input": { "text": "{\"b\":2,\"a\":1}", "opts": { "indent": 2 } }, "expect": "{\n  \"b\": 2,\n  \"a\": 1\n}" },
+        { "name": "sort keys", "input": { "text": "{\"b\":2,\"a\":1}", "opts": { "indent": 2, "sort": true } }, "expect": "{\n  \"a\": 1,\n  \"b\": 2\n}" },
+        { "name": "minify", "input": { "text": "{ \"a\" : 1 }", "opts": { "mode": "minify" } }, "expect": "{\"a\":1}" },
+        { "name": "nested + array", "input": { "text": "{\"x\":[1,2,{\"y\":3}]}", "opts": { "mode": "minify" } }, "expect": "{\"x\":[1,2,{\"y\":3}]}" },
+        { "name": "unicode preserved", "input": { "text": "{\"s\":\"café\"}", "opts": { "mode": "minify" } }, "expect": "{\"s\":\"café\"}" }
+      ],
+      "invalid": [
+        { "name": "trailing comma", "input": { "text": "{\"a\":1,}", "opts": {} }, "expectError": true },
+        { "name": "missing value", "input": { "text": "{\"a\":}", "opts": {} }, "expectError": true }
+      ],
+      "edge": []
+    },
+    {
+      "slug": "json-validator", "label": "JSON Validator", "source": "tools/json-validator.js",
+      "ui_markers_min": 1, "content_includes": ["schema"],
+      "golden": [
+        { "name": "valid object", "input": { "op": "parse", "text": "{\"ok\":true}" }, "expect": true },
+        { "name": "valid array", "input": { "op": "parse", "text": "[1,2,3]" }, "expect": true },
+        { "name": "schema valid", "input": { "op": "schema", "instance": { "n": 5 }, "schema": { "type": "object", "required": ["n"], "properties": { "n": { "type": "integer", "minimum": 0 } } } }, "expect": true },
+        { "name": "schema invalid (range)", "input": { "op": "schema", "instance": { "n": -1 }, "schema": { "type": "object", "properties": { "n": { "type": "integer", "minimum": 0 } } } }, "expect": false },
+        { "name": "schema invalid (type)", "input": { "op": "schema", "instance": { "n": "x" }, "schema": { "type": "object", "properties": { "n": { "type": "integer" } } } }, "expect": false }
+      ],
+      "invalid": [
+        { "name": "trailing comma", "input": { "op": "parse", "text": "[1,2,]" }, "expectError": true },
+        { "name": "missing quote", "input": { "op": "parse", "text": "{a:1}" }, "expectError": true }
+      ],
+      "edge": []
+    },
+    {
+      "slug": "xml-formatter", "label": "XML Formatter", "source": "tools/xml-formatter.js",
+      "ui_markers_min": 1, "content_includes": ["DTD", "well-formed"],
+      "golden": [
+        { "name": "pretty", "input": { "op": "pretty", "text": "<root><a>1</a></root>", "indent": "  " }, "expect": "<root>\n  <a>1</a>\n</root>" },
+        { "name": "minify", "input": { "op": "minify", "text": "<root>\n  <a>1</a>\n</root>" }, "expect": "<root><a>1</a></root>" }
+      ],
+      "invalid": [],
+      "edge": [],
+      "browser_only_notes": ["well-formedness error detection uses DOMParser (browser only)"]
+    },
+    {
+      "slug": "binary-calculator", "label": "Binary Calculator", "source": "tools/binary-calculator.js",
+      "ui_markers_min": 1, "content_includes": ["bit"],
+      "golden": [
+        { "name": "1010(b2) -> 10", "input": { "op": "convert", "value": "1010", "base": 2, "width": 16 }, "expect": "10" },
+        { "name": "1010(b2) -> hex A", "input": { "op": "hex", "value": "1010", "base": 2, "width": 8 }, "expect": "0A" },
+        { "name": "255(d) width8 -> bin", "input": { "op": "bin", "value": "255", "base": 10, "width": 8 }, "expect": "11111111" },
+        { "name": "signed 0xFF width8 -> -1", "input": { "op": "signed", "value": "11111111", "base": 2, "width": 8 }, "expect": "-1" },
+        { "name": "AND 1010&1100", "input": { "op": "bit", "fn": "and", "a": "1010", "b": "1100", "base": 2, "width": 8 }, "expect": "8" },
+        { "name": "OR 1010|1100", "input": { "op": "bit", "fn": "or", "a": "1010", "b": "1100", "base": 2, "width": 8 }, "expect": "14" },
+        { "name": "XOR 1010^1100", "input": { "op": "bit", "fn": "xor", "a": "1010", "b": "1100", "base": 2, "width": 8 }, "expect": "6" },
+        { "name": "NOT 00001111 width8", "input": { "op": "bit", "fn": "not", "a": "00001111", "b": "0", "base": 2, "width": 8 }, "expect": "240" },
+        { "name": "SHL 1<<4 width8", "input": { "op": "bit", "fn": "shl", "a": "1", "b": "4", "base": 10, "width": 8 }, "expect": "16" }
+      ],
+      "invalid": [
+        { "name": "non-binary in base2", "input": { "op": "convert", "value": "1012", "base": 2, "width": 8 }, "expectError": true }
+      ],
+      "edge": []
+    },
+    {
+      "slug": "byte-offset-calculator", "label": "Byte-offset Calculator", "source": "tools/byte-offset-calculator.js",
+      "ui_markers_min": 1, "content_includes": ["offset"],
+      "golden": [
+        { "name": "6 byte rows group1", "input": { "op": "rowcount", "hex": "00 11 22 33 41 42", "group": 1 }, "expect": "6" },
+        { "name": "ascii 41 42 -> AB", "input": { "op": "ascii", "hex": "41 42" }, "expect": "AB" },
+        { "name": "interpret 4142 BE u16", "input": { "op": "interpret", "hex": "41 42", "start": 0, "len": 2, "little": false }, "expect": "16706" },
+        { "name": "interpret 4142 LE u16", "input": { "op": "interpret", "hex": "41 42", "start": 0, "len": 2, "little": true }, "expect": "16961" }
+      ],
+      "invalid": [
+        { "name": "odd-length hex", "input": { "op": "rowcount", "hex": "001", "group": 1 }, "expectError": true },
+        { "name": "invalid hex char", "input": { "op": "rowcount", "hex": "ZZ", "group": 1 }, "expectError": true }
+      ],
+      "edge": []
+    },
+    {
+      "slug": "crc-calculator", "label": "CRC Calculator", "source": "tools/crc-calculator.js",
+      "ui_markers_min": 1, "content_includes": ["polynomial", "123456789"],
+      "golden": [
+        { "name": "CRC-32", "input": { "name": "CRC-32", "text": "123456789" }, "expect": "CBF43926" },
+        { "name": "CRC-32C", "input": { "name": "CRC-32C", "text": "123456789" }, "expect": "E3069283" },
+        { "name": "CRC-16/CCITT-FALSE", "input": { "name": "CRC-16/CCITT-FALSE", "text": "123456789" }, "expect": "29B1" },
+        { "name": "CRC-16/XMODEM", "input": { "name": "CRC-16/XMODEM", "text": "123456789" }, "expect": "31C3" },
+        { "name": "CRC-16/ARC", "input": { "name": "CRC-16/ARC", "text": "123456789" }, "expect": "BB3D" },
+        { "name": "CRC-16/X-25", "input": { "name": "CRC-16/X-25", "text": "123456789" }, "expect": "906E" },
+        { "name": "CRC-8", "input": { "name": "CRC-8", "text": "123456789" }, "expect": "F4" },
+        { "name": "CRC-8/MAXIM", "input": { "name": "CRC-8/MAXIM", "text": "123456789" }, "expect": "A1" },
+        { "name": "CRC-64/ECMA-182", "input": { "name": "CRC-64/ECMA-182", "text": "123456789" }, "expect": "6C40DF5F0B497347" }
+      ],
+      "invalid": [
+        { "name": "invalid hex input", "input": { "name": "CRC-32", "hex": "ZZ" }, "expectError": true }
+      ],
+      "edge": [],
+      "special": ["all_presets_check_123456789"]
+    },
+    {
+      "slug": "lrc-calculator", "label": "LRC Calculator", "source": "tools/lrc-calculator.js",
+      "ui_markers_min": 1, "content_includes": ["LRC"],
+      "golden": [
+        { "name": "XOR 010203 -> 00", "input": { "hex": "01 02 03", "variant": "xor" }, "expect": "00" },
+        { "name": "XOR 010204 -> 07", "input": { "hex": "01 02 04", "variant": "xor" }, "expect": "07" },
+        { "name": "sum8 mod 010203 -> 06", "input": { "hex": "01 02 03", "variant": "sum8mod" }, "expect": "06" },
+        { "name": "twos8 010203 -> FA", "input": { "hex": "01 02 03", "variant": "twos8" }, "expect": "FA" },
+        { "name": "sum16 mod 010203 -> 0006", "input": { "hex": "01 02 03", "variant": "sum16mod" }, "expect": "0006" }
+      ],
+      "invalid": [
+        { "name": "invalid hex", "input": { "hex": "ZZ", "variant": "xor" }, "expectError": true }
+      ],
+      "edge": []
+    },
+    {
+      "slug": "checksum", "label": "Checksum", "source": "tools/checksum.js",
+      "ui_markers_min": 1, "content_includes": ["Fletcher", "Adler"],
+      "golden": [
+        { "name": "sum8 010203 -> 06", "input": { "name": "sum8", "hex": "01 02 03" }, "expect": "06" },
+        { "name": "twos8 010203 -> FA", "input": { "name": "twos8", "hex": "01 02 03" }, "expect": "FA" },
+        { "name": "xor8 010203 -> 00", "input": { "name": "xor8", "hex": "01 02 03" }, "expect": "00" },
+        { "name": "adler32 Wikipedia", "input": { "name": "adler32", "text": "Wikipedia" }, "expect": "11E60398" },
+        { "name": "fletcher16 abcde", "input": { "name": "fletcher16", "text": "abcde" }, "expect": "C8F0" }
+      ],
+      "invalid": [
+        { "name": "invalid hex", "input": { "name": "sum8", "hex": "ZZ" }, "expectError": true }
+      ],
+      "edge": []
+    },
+    {
+      "slug": "sha-hash-generator", "label": "SHA Hash Generator", "source": null,
+      "ui_markers_min": 1, "content_includes": ["crypto.subtle", "SHA-256", "legacy"],
+      "reference_vectors": [
+        { "name": "SHA-1(abc)", "algo": "sha1", "input": "abc", "expect": "A9993E364706816ABA3E25717850C26C9CD0D89D" },
+        { "name": "SHA-256(abc)", "algo": "sha256", "input": "abc", "expect": "BA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD" },
+        { "name": "SHA-384(abc)", "algo": "sha384", "input": "abc", "expect": "CB00753F45A35E8BB5A03D699AC65007272C32AB0EDED1631A8B605A43FF5BED8086072BA1E7CC2358BAECA134C825A7" },
+        { "name": "SHA-512(abc)", "algo": "sha512", "input": "abc", "expect": "DDAF35A193617ABACC417349AE20413112E6FA4E89A97EA20A9EEEE64B55D39A2192992A274FC1A836BA3C23A3FEEBBD454D4423643CE80E2A9AC94FA54CA49F" }
+      ],
+      "notes": ["digest computed by browser Web Crypto (crypto.subtle); harness cross-checks the standard vectors and confirms the page delegates to crypto.subtle"]
+    },
+    {
+      "slug": "apdu-builder", "label": "APDU Builder", "source": "tools/apdu-builder.js",
+      "ui_markers_min": 1, "content_includes": ["ISO 7816", "SELECT"],
+      "golden": [
+        { "name": "Case 1 build", "input": { "op": "build", "fields": { "cla": 0, "ins": 164, "p1": 4, "p2": 0 } }, "expect": "00A40400" },
+        { "name": "SELECT AID + Le", "input": { "op": "build", "fields": { "cla": 0, "ins": 164, "p1": 4, "p2": 0, "data": [160, 0, 0, 0, 3, 0, 0, 0], "le": 256 } }, "expect": "00A4040008A00000000300000000" }
+      ],
+      "invalid": [
+        { "name": "CLA out of range", "input": { "op": "build", "fields": { "cla": 999, "ins": 0, "p1": 0, "p2": 0 } }, "expectError": true }
+      ],
+      "edge": []
+    },
+    {
+      "slug": "iccid-decoder", "label": "ICCID Decoder", "source": "tools/iccid-decoder.js",
+      "ui_markers_min": 1, "content_includes": ["Luhn", "ITU-T E.118"],
+      "golden": [
+        { "name": "valid dummy ICCID Luhn", "input": { "op": "luhn", "digits": "8991101200003204514" }, "expect": true },
+        { "name": "decode MII=89", "input": { "op": "decode", "raw": "8991101200003204514" }, "expectIncludes": { "mii": "89" } }
+      ],
+      "invalid": [
+        { "name": "bad Luhn check", "input": { "op": "luhn", "digits": "8991101200003204515" }, "expect": false },
+        { "name": "letters", "input": { "op": "decode", "raw": "89AB101200003204514" }, "expectError": true }
+      ],
+      "edge": [
+        { "name": "spaces normalized", "input": { "op": "luhn", "digits": "8991 1012 0000 3204 514" }, "expect": true }
+      ]
+    },
+    {
+      "slug": "imsi-decoder", "label": "IMSI Decoder", "source": "tools/imsi-decoder.js",
+      "ui_markers_min": 1, "content_includes": ["MCC", "MNC", "MSIN"],
+      "golden": [
+        { "name": "2-digit MNC", "input": { "raw": "404450123456789", "mncMode": 2 }, "expectIncludes": { "mcc": "404", "mnc": "45", "msin": "0123456789" } },
+        { "name": "3-digit MNC", "input": { "raw": "310260123456789", "mncMode": 3 }, "expectIncludes": { "mcc": "310", "mnc": "260", "msin": "123456789" } }
+      ],
+      "invalid": [
+        { "name": "letters", "input": { "raw": "40445ABCDEF6789", "mncMode": 2 }, "expectError": true }
+      ],
+      "edge": []
+    },
+    {
+      "slug": "euicc-eid-decoder", "label": "eUICC EID Decoder", "source": "tools/euicc-eid-decoder.js",
+      "ui_markers_min": 1, "content_includes": ["EID", "eUICC"],
+      "golden": [
+        { "name": "32-digit accepted", "input": { "op": "decode", "raw": "89049032123451234512345678901235" }, "expectOk": true }
+      ],
+      "invalid": [
+        { "name": "31 digits", "input": { "op": "decode", "raw": "8904903212345123451234567890123" }, "expectError": true },
+        { "name": "33 digits", "input": { "op": "decode", "raw": "890490321234512345123456789012345" }, "expectError": true },
+        { "name": "letters", "input": { "op": "decode", "raw": "8904903212345123451234567890123X" }, "expectError": true }
+      ],
+      "edge": [
+        { "name": "spaces normalized to 32", "input": { "op": "normlen", "raw": "8904 9032 1234 5123 4512 3456 7890 1235" }, "expect": "32" }
+      ]
+    },
+    {
+      "slug": "cbor-decoder", "label": "CBOR Parser", "source": "lib/cbor.js", "relink_of": "cbor-parser",
+      "ui_markers_min": 1, "content_includes": ["RFC 8949"],
+      "golden": [
+        { "name": "01 -> uint 1", "input": { "hex": "01" }, "expect": 1 },
+        { "name": "0A -> uint 10", "input": { "hex": "0a" }, "expect": 10 },
+        { "name": "20 -> nint -1", "input": { "hex": "20" }, "expect": -1 },
+        { "name": "6161 -> text a", "input": { "hex": "6161" }, "expect": "a" },
+        { "name": "83010203 -> [1,2,3]", "input": { "hex": "83010203" }, "expect": [1, 2, 3] },
+        { "name": "A1616101 -> {a:1}", "input": { "hex": "a1616101" }, "expect": { "a": 1 } }
+      ],
+      "invalid": [
+        { "name": "incomplete array (83 says 3 items, 1 given)", "input": { "hex": "8301" }, "expectError": true },
+        { "name": "invalid hex", "input": { "hex": "ZZ" }, "expectError": true }
+      ],
+      "edge": []
+    },
+    {
+      "slug": "rsa-key-formats", "label": "RSA Key Formats", "source": "tools/rsa-key-formats.js",
+      "ui_markers_min": 1, "content_includes": ["PKCS#1", "PKCS#8", "1024", "2048", "3072", "4096", "legacy", "never leave"],
+      "golden": [
+        { "name": "identify PKCS#8", "input": { "op": "identifyPem", "genFormat": "pkcs8" }, "expectMatch": "PKCS#8|PrivateKeyInfo" },
+        { "name": "identify SPKI", "input": { "op": "identifyPem", "genFormat": "spki" }, "expectMatch": "SubjectPublicKeyInfo|SPKI|Public" },
+        { "name": "identify PKCS#1 priv", "input": { "op": "identifyPem", "genFormat": "pkcs1" }, "expectMatch": "PKCS#1|RSA" }
+      ],
+      "invalid": [],
+      "edge": [],
+      "render_only": true
+    },
+    {
+      "slug": "ecc-curve-reference", "label": "ECC Curve Reference", "source": "tools/ecc-curve-reference.js",
+      "ui_markers_min": 1, "content_includes": ["P-256", "secp256k1", "Ed25519", "X25519", "Web Crypto"],
+      "golden": [
+        { "name": "P-256 in table", "input": { "op": "curve", "name": "P-256" }, "expectOk": true },
+        { "name": "secp256k1 in table", "input": { "op": "curve", "name": "secp256k1" }, "expectOk": true }
+      ],
+      "invalid": [],
+      "edge": [],
+      "render_only": true
+    },
+    {
+      "slug": "scp03-helper", "label": "SCP03 Helper", "source": "tools/scp03-helper.js",
+      "ui_markers_min": 1, "content_includes": ["developer aid", "not", "GlobalPlatform"],
+      "golden": [
+        { "name": "AES-CMAC RFC4493 empty msg", "input": { "op": "cmac", "key": "2b7e151628aed2a6abf7158809cf4f3c", "msg": "" }, "expect": "BB1D6929E95937287FA37D129B756746" }
+      ],
+      "invalid": [],
+      "edge": [],
+      "render_only": true,
+      "notes": ["AES-CMAC tested via RFC 4493 test vector using Web Crypto (Node webcrypto) if exported; otherwise render-only"]
+    },
+    {
+      "slug": "javacard-cap", "label": "CAP File Inspector", "source": null, "relink_of": "cap-file-inspector",
+      "ui_markers_min": 1, "content_includes": ["CAP"],
+      "render_only": true,
+      "notes": ["ZIP/CAP upload parsing is browser-only (FileReader); structural checks only here"]
+    }
+  ]
+}
