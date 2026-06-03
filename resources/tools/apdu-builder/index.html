@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>APDU Builder — AmbiSecure | ISO 7816-4 command APDU constructor</title>
+<meta name="description" content="Build a valid ISO 7816-4 command APDU from CLA/INS/P1/P2/data/Le with live case detection and validation, or parse APDU hex back into fields. Client-side." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/apdu-builder/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="APDU Builder — AmbiSecure" />
+<meta property="og:description" content="Construct an ISO 7816-4 command APDU from header bytes, data and Le with live case detection — short and extended length, all client-side." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/apdu-builder/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "APDU Builder", "item": "https://ambisecure.ambimat.com/resources/tools/apdu-builder/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "APDU Builder",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/apdu-builder/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What are the four ISO 7816-4 APDU cases?",
+"acceptedAnswer": { "@type": "Answer", "text": "Case 1 is header only (CLA INS P1 P2) with no command data and no expected response. Case 2 sends no data but expects a response, so it carries an Le field. Case 3 sends command data (Lc plus the body) but expects no response data. Case 4 both sends data and expects a response, carrying Lc, the data, and Le. This builder detects the case automatically from the fields you fill in." }
+},
+{
+"@type": "Question",
+"name": "When does an APDU need extended length encoding?",
+"acceptedAnswer": { "@type": "Answer", "text": "Short length uses a single byte for Lc (1–255) and a single byte for Le (1–256, where 00 means 256). Extended length is required when the command data is longer than 255 bytes or you expect more than 256 bytes back. Extended Lc and Le are three bytes: a leading 00 followed by a big-endian 16-bit value. The card must advertise extended-length support before you rely on it." }
+},
+{
+"@type": "Question",
+"name": "Why is the Lc field computed for me?",
+"acceptedAnswer": { "@type": "Answer", "text": "Lc is by definition the length of the command data field, so letting you edit it independently would only create desynchronised, invalid APDUs that a card rejects with 6700 (wrong length). The builder derives Lc from the bytes you enter in the Data field and chooses short or extended encoding automatically, which is the behaviour the card expects." }
+},
+{
+"@type": "Question",
+"name": "What does Le = 00 actually mean?",
+"acceptedAnswer": { "@type": "Answer", "text": "In short encoding an Le byte of 00 does not mean zero — it means the maximum, 256 bytes. In extended encoding the two Le bytes 00 00 mean the maximum 65536 bytes. Pick the maximum option in the builder to emit this, or enter an exact byte count to emit a specific Le." }
+},
+{
+"@type": "Question",
+"name": "Does anything I enter leave my browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. The APDU is assembled and parsed entirely in JavaScript on this page. Nothing is uploaded, logged, or sent to a server, so it is safe to build commands that contain keys, PINs, or other sensitive material." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">APDU Builder</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Smart card utility</span>
+  <h1>APDU Builder</h1>
+  <p>Assemble a valid <strong>ISO/IEC 7816-4</strong> command APDU from <code>CLA</code>, <code>INS</code>, <code>P1</code>, <code>P2</code>, optional command data and <code>Le</code>. The tool detects the case, computes <code>Lc</code>, and picks short or extended length for you — or paste an APDU back in to break it into fields.</p>
+  <div class="tool-meta"><span>Client-side</span><span>ISO 7816-4</span><span>Short &amp; extended</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Command fields</h2><div class="tool-panel-actions"><button class="tool-action" id="ab-sample">Sample</button> <button class="tool-action" id="ab-clear">Clear</button></div></div>
+    <div class="tool-options">
+      <label>Example:
+        <select id="ab-example">
+          <option value="">— pick a template —</option>
+          <option value="select">SELECT by AID (00 A4 04 00)</option>
+          <option value="getresp">GET RESPONSE (00 C0 00 00)</option>
+          <option value="readbin">READ BINARY (00 B0 00 00)</option>
+          <option value="verify">VERIFY PIN (00 20 00 80)</option>
+          <option value="getdata">GET DATA (00 CA 9F 17)</option>
+        </select>
+      </label>
+    </div>
+    <div class="tool-options">
+      <label>CLA <input type="text" id="ab-cla" class="hex-input" style="width:5em;" spellcheck="false" value="00" maxlength="4" /></label>
+      <label>INS <input type="text" id="ab-ins" class="hex-input" style="width:5em;" spellcheck="false" value="A4" maxlength="4" /></label>
+      <label>P1 <input type="text" id="ab-p1" class="hex-input" style="width:5em;" spellcheck="false" value="04" maxlength="4" /></label>
+      <label>P2 <input type="text" id="ab-p2" class="hex-input" style="width:5em;" spellcheck="false" value="00" maxlength="4" /></label>
+    </div>
+    <label for="ab-data" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Command data (hex bytes, optional). Lc is computed from this.</label>
+    <textarea id="ab-data" class="hex-input" rows="4" spellcheck="false">A0 00 00 00 03 10 10</textarea>
+    <div class="tool-options">
+      <label>Le:
+        <select id="ab-lemode">
+          <option value="none">No Le (no response expected)</option>
+          <option value="max">Maximum (00 / 0000)</option>
+          <option value="value">Exact byte count →</option>
+        </select>
+      </label>
+      <label>Le bytes <input type="text" id="ab-le" class="hex-input" style="width:6em;" spellcheck="false" inputmode="numeric" /></label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Command APDU</h2><div class="tool-panel-actions"><button class="tool-action" id="ab-copy">Copy</button></div></div>
+    <div class="tool-output" id="ab-output"><div class="placeholder">Fill in the header to build a command APDU.</div></div>
+  </div>
+</div>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Parse an APDU back</h2><div class="tool-panel-actions"><button class="tool-action" id="ab-parse-sample">Sample</button> <button class="tool-action" id="ab-parse-clear">Clear</button></div></div>
+    <label for="ab-parse-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Paste a command APDU hex to split it into CLA/INS/P1/P2/Lc/Data/Le.</label>
+    <textarea id="ab-parse-input" class="hex-input" rows="4" spellcheck="false"></textarea>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Decoded fields</h2><div class="tool-panel-actions"><button class="tool-action" id="ab-parse-copy">Copy</button></div></div>
+    <div class="tool-output" id="ab-parse-output"><div class="placeholder">Paste an APDU hex to break it into fields.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All assembly and parsing runs locally in your browser. Nothing is uploaded — safe for commands containing keys or PINs.</div>
+
+<section class="tool-reference">
+  <h2>What this builder does</h2>
+  <p>A command APDU (Application Protocol Data Unit) is the packet a host sends to a smart card or secure element under ISO/IEC 7816-4. Every command starts with a four-byte header — <code>CLA</code> (class), <code>INS</code> (instruction), and the two parameters <code>P1</code> and <code>P2</code> — and may optionally carry a command body and a request for response data. This tool takes those pieces, validates each one, and emits the exact byte sequence a reader will transmit over the contact or contactless interface. It is the inverse of the <a href="/resources/tools/apdu-parser/">APDU parser</a>: instead of decoding bytes into meaning, it composes meaning into bytes.</p>
+  <p>Crucially, the builder does not let you type a length field by hand. <code>Lc</code> is the length of the command data, so it is derived from the Data field automatically, and the tool chooses short or extended encoding based on the sizes involved. That removes the single most common source of a <code>6700</code> "wrong length" rejection.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for the builder when you are scripting a card personalisation flow, writing a test vector for a JavaCard applet, debugging a reader integration, or simply learning how the four cases differ. It is handy for hand-crafting a <strong>SELECT by AID</strong> before a transaction, a <strong>GET RESPONSE</strong> to retrieve buffered bytes after a <code>61xx</code> status, or a <strong>VERIFY</strong> command while testing PIN handling. The example dropdown seeds realistic headers you can then tweak. Pair it with the <a href="/resources/tools/iso7816-cla/">CLA byte decoder</a> when you are unsure which class byte to use, and the <a href="/resources/tools/apdu-status-dict/">status word dictionary</a> to interpret the card's reply.</p>
+
+  <h2>Inputs and outputs</h2>
+  <p>Each header field (<code>CLA</code>, <code>INS</code>, <code>P1</code>, <code>P2</code>) accepts exactly one byte written as two hex digits; spaces and a <code>0x</code> prefix are tolerated and stripped. The Data field accepts any number of whole hex bytes and may be left empty. The Le control offers three choices: no Le at all, the maximum (a short <code>00</code> meaning 256, or extended <code>00 00</code> meaning 65536), or an exact decimal byte count. From those inputs the tool reports the detected <strong>case</strong>, the total byte length, the computed <code>Lc</code>, and whether extended length was triggered, then prints the full APDU as space-separated hex you can copy straight into a reader script.</p>
+
+  <h2>Short vs extended length</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Short length</h3><p>One byte for <code>Lc</code> (1–255) and one byte for <code>Le</code> (1–256, with <code>00</code> meaning 256). The default for almost all everyday commands.</p></div>
+    <div class="ref-card"><h3>Extended length</h3><p>Three bytes — a leading <code>00</code> then a big-endian 16-bit value — used when data exceeds 255 bytes or you expect more than 256 back. The card must support it.</p></div>
+    <div class="ref-card"><h3>Case detection</h3><p>Case 1 is header only; Case 2 adds <code>Le</code>; Case 3 adds data; Case 4 carries both. The builder picks the case from the fields you fill.</p></div>
+  </div>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Setting an Le byte of <code>00</code> expecting zero.</strong> In short form <code>00</code> means 256 bytes, not none. To request nothing back, choose "No Le".</li>
+    <li><strong>Editing Lc by hand.</strong> <code>Lc</code> must equal the data length. This tool computes it; a desynced Lc is the classic cause of a <code>6700</code> error.</li>
+    <li><strong>Odd-length data.</strong> The command body is whole bytes, so the hex must have an even number of digits.</li>
+    <li><strong>Assuming extended length always works.</strong> A card advertises extended-length support in its ATR or historical bytes; sending a 3-byte Lc to a card that only does short length will fail.</li>
+    <li><strong>Mixing up P1/P2 semantics.</strong> Their meaning is per-instruction. Check the command reference for the INS you are using rather than copying parameters between commands.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>APDU parser</h3><p>Decode a command or response APDU into named fields and status words.</p><p><a href="/resources/tools/apdu-parser/">Open APDU parser →</a></p></div>
+    <div class="ref-card"><h3>CLA byte decoder</h3><p>Break the class byte into channel, secure-messaging, and chaining bits.</p><p><a href="/resources/tools/iso7816-cla/">Open CLA decoder →</a></p></div>
+    <div class="ref-card"><h3>Status word dictionary</h3><p>Look up the meaning of the SW1 SW2 the card returns.</p><p><a href="/resources/tools/apdu-status-dict/">Open status dictionary →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/apdu-builder.js" defer></script>
+</body>
+</html>

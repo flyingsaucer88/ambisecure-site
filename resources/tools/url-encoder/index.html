@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>URL Encoder and Decoder — AmbiSecure | percent-encoding tool</title>
+<meta name="description" content="Percent-encode and decode URLs and URL components in your browser. Toggle space as %20 or +, encode full URLs vs components, handle malformed input. Client-side." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/url-encoder/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="URL Encoder and Decoder — AmbiSecure" />
+<meta property="og:description" content="Percent-encode and decode URLs and components client-side. Toggle %20 vs +, full-URL vs component encoding, graceful malformed-input handling." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/url-encoder/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "URL Encoder and Decoder", "item": "https://ambisecure.ambimat.com/resources/tools/url-encoder/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "URL Encoder and Decoder",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/url-encoder/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What is the difference between encoding a full URL and a URL component?",
+"acceptedAnswer": { "@type": "Answer", "text": "Encoding a full URL (encodeURI) leaves the characters that hold a URL together — such as the colon, slash, question mark, ampersand, and hash — untouched so the address still works. Encoding a component (encodeURIComponent) escapes those same characters too, because a single query value or path segment must not be allowed to contain delimiters that would change the URL's structure. Use component encoding for individual query values and path pieces; use full-URL encoding only on an already-assembled address." }
+},
+{
+"@type": "Question",
+"name": "When should a space become %20 instead of +?",
+"acceptedAnswer": { "@type": "Answer", "text": "Inside the path of a URL a space must be %20, and JavaScript's encodeURIComponent always emits %20. The plus sign only means space in the application/x-www-form-urlencoded format used by HTML form submissions and many query strings. This tool offers a toggle so you can produce + for form-style query values, but %20 is the safer default for paths and for servers that do not apply form decoding." }
+},
+{
+"@type": "Question",
+"name": "Why does decoding throw a 'malformed URI' error?",
+"acceptedAnswer": { "@type": "Answer", "text": "decodeURIComponent throws a URIError when it meets a percent sign that is not followed by two valid hexadecimal digits, or a percent sequence that does not form valid UTF-8. A lone % from human-typed text, or a value that was double-encoded and then partially decoded, are the usual causes. This tool catches the error and shows exactly what failed instead of returning a wrong value." }
+},
+{
+"@type": "Question",
+"name": "Does anything I paste leave my browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. All percent-encoding and decoding runs locally in JavaScript on this page using the browser's built-in encodeURIComponent, encodeURI, decodeURIComponent, and decodeURI functions. Nothing is uploaded, logged, or sent to a server, so it is safe to process URLs that carry tokens or session identifiers." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">URL Encoder</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Encoding utility</span>
+  <h1>URL Encoder and Decoder</h1>
+  <p>Percent-encode and decode URLs and URL components with the browser's own <code>encodeURIComponent</code>, <code>encodeURI</code>, <code>decodeURIComponent</code>, and <code>decodeURI</code>. Toggle space as <code>%20</code> or <code>+</code>, and see malformed input flagged instead of silently mangled.</p>
+  <div class="tool-meta"><span>Client-side</span><span>RFC 3986</span><span>UTF-8</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="url-sample">Sample</button> <button class="tool-action" id="url-clear">Clear</button></div></div>
+    <label for="url-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Text, a URL, or a percent-encoded string.</label>
+    <textarea id="url-input" class="hex-input" rows="8" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label>Mode:
+        <select id="url-mode">
+          <option value="encodeComponent">Encode component (encodeURIComponent)</option>
+          <option value="encodeUri">Encode full URL (encodeURI)</option>
+          <option value="decodeComponent">Decode component (decodeURIComponent)</option>
+          <option value="decodeUri">Decode full URL (decodeURI)</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="url-plus" /> Encode space as <code>+</code> (else <code>%20</code>)</label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="url-copy">Copy</button></div></div>
+    <div class="tool-output" id="url-output"><div class="placeholder">Type something to convert.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All encoding and decoding runs locally in your browser. Nothing is uploaded — safe for URLs that carry tokens or session identifiers.</div>
+
+<section class="tool-reference">
+  <h2>What URL encoding is for</h2>
+  <p>A URL has a strict syntax. A handful of characters — the colon, slash, question mark, hash, ampersand, equals sign, and a few others — act as structural delimiters that mark where the scheme, host, path, query, and fragment begin and end. Any data you want to carry <em>inside</em> one of those parts must avoid colliding with the delimiters, and any byte outside the small set of URL-safe characters must be escaped. Percent-encoding solves both problems: each unsafe byte is written as a <code>%</code> followed by its two-digit hexadecimal value, and multi-byte UTF-8 characters become a run of those escapes.</p>
+  <p>This tool wraps the four standard JavaScript primitives. <code>encodeURIComponent</code> escapes everything that is not an unreserved character, so it is the right choice for a single query value or path segment. <code>encodeURI</code> assumes you have already assembled a complete URL and leaves the reserved delimiters intact so the address keeps working. The two <code>decode</code> functions reverse each direction. Because they are the browser's own implementations, the output matches exactly what your application code will produce at runtime.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for component encoding whenever you build a query string or insert user data into a path — a search term, an email address, a redirect target, or a base64 token that contains <code>+</code>, <code>/</code>, or <code>=</code>. Reach for full-URL encoding when you have a finished address that contains spaces or accented characters and you only want the unsafe bytes fixed, not the structure rewritten. On the decode side, paste a percent-encoded value from a server log, a browser address bar, or an OAuth <code>redirect_uri</code> to read it back as plain text and confirm it was encoded correctly.</p>
+
+  <h2>Input and output</h2>
+  <p>The input box takes any text. The result panel shows the converted string plus badges with the active mode, the character count, and the UTF-8 byte count, so you can spot expansion at a glance — one accented letter or one reserved character often becomes three or more output characters. The <code>+</code> versus <code>%20</code> toggle applies only to the two encode modes: with it on, spaces become <code>+</code> for form-style query values; with it off you get the standards-default <code>%20</code>. On decode modes the toggle additionally turns a literal <code>+</code> back into a space first, matching how form data is read. Decoding is wrapped in a guard: a lone <code>%</code> or an invalid escape produces a clear inline error showing the offending sequence rather than a wrong or partial value.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Using <code>encodeURI</code> on a query value.</strong> It leaves <code>&amp;</code>, <code>=</code>, <code>?</code>, and <code>+</code> unescaped, so a value containing them can break out of its field and corrupt the query. Use component encoding for individual values.</li>
+    <li><strong>Assuming <code>+</code> always means space.</strong> A plus sign decodes to a space only in form-urlencoded data. In a path, <code>+</code> is a literal plus; decoding it as a space silently changes the value.</li>
+    <li><strong>Double-encoding.</strong> Encoding an already-encoded string turns each <code>%</code> into <code>%25</code>. If you see <code>%2520</code>, a value was encoded twice — decode once, then re-check.</li>
+    <li><strong>Ignoring a decode error.</strong> A <code>URIError</code> means the input is not valid percent-encoding. Fix the source rather than stripping the <code>%</code>, which would hide a real bug.</li>
+    <li><strong>Encoding the whole URL with component encoding.</strong> That escapes the <code>://</code> and slashes, producing a string that is no longer a usable address.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Base64</h3><p>Decode tokens you find in query strings — many JWTs and IDs are Base64 before they are URL-encoded.</p><p><a href="/resources/tools/base64/">Open Base64 →</a></p></div>
+    <div class="ref-card"><h3>Base32</h3><p>Case-insensitive encoding used for TOTP secrets and other values that travel in URLs.</p><p><a href="/resources/tools/base32/">Open Base32 →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/url-encoder.js" defer></script>
+</body>
+</html>

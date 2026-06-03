@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CRC Calculator — AmbiSecure | 70+ CRC presets &amp; custom polynomials</title>
+<meta name="description" content="Compute CRCs with 70+ catalogue presets (CRC-8/16/32/64, CCITT, XMODEM, CRC-32C…) or a fully custom width/poly/init/refin/refout/xorout. Verifies the 0x check value. Client-side." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/crc-calculator/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="CRC Calculator — AmbiSecure" />
+<meta property="og:description" content="70+ CRC catalogue presets plus a fully custom width/poly/init/refin/refout/xorout engine, with check-value verification. Client-side." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/crc-calculator/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "CRC Calculator", "item": "https://ambisecure.ambimat.com/resources/tools/crc-calculator/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "CRC Calculator",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/crc-calculator/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What do width, poly, init, refin, refout and xorout mean?",
+"acceptedAnswer": { "@type": "Answer", "text": "These six parameters fully define a CRC variant (the Rocksoft / reveng model). Width is the size of the CRC register in bits. Poly is the generator polynomial in normal (non-reflected) form. Init is the starting value of the register. RefIn reflects each input byte before it is processed, and RefOut reflects the final register. Xorout is XORed into the result at the very end. Two CRCs with the same polynomial but different reflection or xorout produce completely different values." }
+},
+{
+"@type": "Question",
+"name": "What is the check value and why verify it?",
+"acceptedAnswer": { "@type": "Answer", "text": "The check value is the CRC of the nine ASCII bytes \"123456789\" under a given parameter set, as published in Greg Cook's catalogue. It is a fingerprint for a CRC definition. When you pick a preset this tool recomputes that value with its own engine and shows a pass or fail badge, so you can confirm the implementation and the parameters match the documented algorithm before trusting any other result." }
+},
+{
+"@type": "Question",
+"name": "Why does CRC-32 of the same data differ between two libraries?",
+"acceptedAnswer": { "@type": "Answer", "text": "Almost always because of reflection or final XOR, not the polynomial. The common zlib CRC-32 reflects input and output and XORs the result with all ones; CRC-32/BZIP2 uses the same polynomial but does not reflect; CRC-32/MPEG-2 drops the final XOR. Always pin down all six parameters, not just the polynomial, when reproducing a value from another stack." }
+},
+{
+"@type": "Question",
+"name": "Can this tool handle non-standard widths like CRC-5 or CRC-24?",
+"acceptedAnswer": { "@type": "Answer", "text": "Yes. The engine is a generic bit-by-bit implementation using BigInt, so any width from 3 to 64 bits works, including CRC-3/GSM, CRC-5/USB, CRC-7/MMC, CRC-15/CAN, CRC-24 and the 64-bit variants. Pick a preset or switch to custom mode and set the width, polynomial, init, reflection flags and xorout yourself." }
+},
+{
+"@type": "Question",
+"name": "Does any of my input leave the browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. The CRC is computed entirely in JavaScript on this page. Nothing you type as text, hex, or binary is uploaded, logged, or sent to a server, so it is safe for proprietary frame layouts and firmware payloads." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">CRC Calculator</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Crypto &amp; integrity</span>
+  <h1>CRC Calculator</h1>
+  <p>Compute a <strong>cyclic redundancy check</strong> over text, hex, or binary input using 70+ catalogue presets (<code>CRC-8/16/32/64</code>, CCITT, XMODEM, MODBUS, CRC-32C and more) or a fully custom width, polynomial, init, reflection, and xorout. The engine verifies each preset against its documented check value.</p>
+  <div class="tool-meta"><span>Client-side</span><span>Widths 3–64</span><span>reveng catalogue</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="crc-sample">Sample</button> <button class="tool-action" id="crc-clear">Clear</button></div></div>
+    <label for="crc-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Message to checksum (text, hex bytes, or binary).</label>
+    <textarea id="crc-input" class="hex-input" rows="6" spellcheck="false">123456789</textarea>
+    <div class="tool-options">
+      <label>Preset:
+        <select id="crc-preset"></select>
+      </label>
+      <label>Input is:
+        <select id="crc-inmode"><option value="text">Text (UTF-8)</option><option value="hex">Hex bytes</option><option value="binary">Binary bits</option></select>
+      </label>
+    </div>
+    <div id="crc-custom-fields" class="tool-options" style="display:none;">
+      <label>Width:
+        <input type="number" id="crc-width" min="3" max="64" value="32" style="width:5.5em;" />
+      </label>
+      <label>Poly (hex):
+        <input type="text" id="crc-poly" value="0x04C11DB7" spellcheck="false" style="width:9em;" />
+      </label>
+      <label>Init (hex):
+        <input type="text" id="crc-init" value="0xFFFFFFFF" spellcheck="false" style="width:9em;" />
+      </label>
+      <label>XorOut (hex):
+        <input type="text" id="crc-xorout" value="0xFFFFFFFF" spellcheck="false" style="width:9em;" />
+      </label>
+      <label><input type="checkbox" id="crc-refin" /> RefIn</label>
+      <label><input type="checkbox" id="crc-refout" /> RefOut</label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="crc-copy">Copy</button></div></div>
+    <div class="tool-output" id="crc-output"><div class="placeholder">Pick a preset and enter input to compute its CRC.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All CRC computation runs locally in your browser. Nothing is uploaded — safe for proprietary frame layouts and firmware payloads.</div>
+
+<section class="tool-reference">
+  <h2>What a CRC calculator is for</h2>
+  <p>A <strong>cyclic redundancy check</strong> is an error-detecting code computed by treating your message as the coefficients of a polynomial and taking the remainder after dividing by a fixed generator polynomial. The remainder — the CRC — is appended to the data so a receiver can recompute it and detect transmission or storage errors. CRCs are everywhere in embedded and protocol work: Ethernet frames, USB packets, MODBUS RTU, CAN bus, ZIP/gzip archives, ISO 7816 smart-card transport, and countless proprietary radio and sensor frames.</p>
+  <p>The catch is that "CRC-16" or "CRC-32" alone does not pin down a value. A CRC variant is defined by six parameters — width, polynomial, initial value, input reflection, output reflection, and a final XOR — and changing any one of them yields a different result for the same bytes. This tool implements one generic bit-by-bit engine, parameterised by those six values and using <code>BigInt</code> internally, so widths from 3 to 64 bits all behave identically and correctly. It ships with 70+ named presets drawn from Greg Cook's well-known reveng catalogue, plus a fully custom mode.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for this tool when you are reverse-engineering or implementing a protocol and need to confirm exactly which CRC variant a device uses, when a checksum you computed in one language does not match another stack, or when you are validating firmware that appends a CRC trailer. Selecting a preset immediately recomputes that preset's documented <em>check value</em> — the CRC of the ASCII string <code>123456789</code> — and shows a pass/fail badge comparing the computed result against the catalogue figure, so you can trust the engine before trusting any other output. For a plain additive or XOR integrity byte instead of a polynomial CRC, the sibling <a href="/resources/tools/lrc-calculator/">LRC calculator</a> and <a href="/resources/tools/checksum/">checksum tool</a> are the right fit.</p>
+
+  <h2>Input and output</h2>
+  <p>Choose how your message is interpreted: <strong>Text</strong> is UTF-8 encoded to bytes; <strong>Hex bytes</strong> accepts pairs of hex digits with optional spaces, colons, or <code>0x</code> prefixes; <strong>Binary bits</strong> accepts <code>0</code>/<code>1</code> in groups totalling a whole number of bytes. The result panel reports the byte count and the final CRC in three forms — hexadecimal (zero-padded to the register width), decimal, and binary — and the Copy button copies the hex value. Each render also prints the active six parameters so the result is self-documenting.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Presets</h3><p>70+ named variants across widths 3–64: CRC-8 family, CCITT-FALSE, XMODEM, KERMIT, MODBUS, USB, X-25, CRC-32, CRC-32C, BZIP2, MPEG-2, the CRC-64 set, and more.</p></div>
+    <div class="ref-card"><h3>Custom mode</h3><p>Set width, polynomial, init, RefIn, RefOut, and xorout by hand to match an undocumented device. The same engine runs, so results are consistent with the presets.</p></div>
+    <div class="ref-card"><h3>Check verification</h3><p>Every preset's CRC of <code>123456789</code> is recomputed live and compared to the documented value, giving you a green pass badge before you rely on the tool.</p></div>
+  </div>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Quoting only the polynomial.</strong> Two variants can share a polynomial and still differ by reflection or final XOR. Always nail down all six parameters when reproducing a value elsewhere.</li>
+    <li><strong>Reflected vs normal polynomial form.</strong> Presets here use the normal (non-reflected, MSB-first) polynomial. If a datasheet lists the reversed form (for example <code>0xEDB88320</code> for CRC-32), do not type it directly — use the normal form <code>0x04C11DB7</code> and the RefIn/RefOut flags instead.</li>
+    <li><strong>Hashing the wrong bytes.</strong> Decide whether the CRC should cover the header, the payload, or both, and whether the existing trailer bytes are included. Feeding the wrong span is the most common cause of a "wrong" CRC.</li>
+    <li><strong>Treating a CRC as cryptographic.</strong> CRCs detect accidental errors, not tampering. An attacker can adjust data to keep any CRC intact. For authentication use a MAC such as <a href="/resources/tools/cmac-length/">CMAC</a> instead.</li>
+    <li><strong>Endianness of the appended CRC.</strong> The CRC value here is a number; how a protocol serialises it (big- or little-endian) is separate. Check the <a href="/resources/tools/endian/">endianness tool</a> when laying the bytes into a frame.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>LRC calculator</h3><p>Longitudinal redundancy check — the XOR/sum integrity byte used in many serial protocols.</p><p><a href="/resources/tools/lrc-calculator/">Open LRC calculator →</a></p></div>
+    <div class="ref-card"><h3>Checksum</h3><p>Simple additive and complement checksums for lightweight frame validation.</p><p><a href="/resources/tools/checksum/">Open Checksum →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card, protocol, and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/crc-calculator.js" defer></script>
+</body>
+</html>

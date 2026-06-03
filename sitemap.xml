@@ -188,6 +188,7 @@
   <url><loc>https://ambisecure.ambimat.com/resources/tools/passkey-flow-viz/</loc><lastmod>2026-05-26</lastmod><priority>0.75</priority></url>
   <url><loc>https://ambisecure.ambimat.com/resources/tools/tlv-tree-viz/</loc><lastmod>2026-05-26</lastmod><priority>0.7</priority></url>
   <url><loc>https://ambisecure.ambimat.com/resources/tools/asn1-tree-explorer/</loc><lastmod>2026-05-26</lastmod><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/json-bin-builder/</loc><lastmod>2026-06-03</lastmod><priority>0.75</priority></url>
 
   <!-- Phase 5: Buyer-facing solution / vertical pages -->
   <url><loc>https://ambisecure.ambimat.com/solutions/workforce-identity/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
@@ -370,5 +371,25 @@
   <url><loc>https://ambisecure.ambimat.com/products/piv-card/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
   <url><loc>https://ambisecure.ambimat.com/products/piv-bio-card/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
   <url><loc>https://ambisecure.ambimat.com/products/piv-usb-key/</loc><lastmod>2026-05-26</lastmod><changefreq>monthly</changefreq><priority>0.80</priority></url>
+
+  <!-- Resources tools: 18 new client-side utilities (June 2026) -->
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/base32/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/url-encoder/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/json-formatter/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/json-validator/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/xml-formatter/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/binary-calculator/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/byte-offset-calculator/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/crc-calculator/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/lrc-calculator/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/checksum/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/sha-hash-generator/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/apdu-builder/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/scp03-helper/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/iccid-decoder/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/imsi-decoder/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/euicc-eid-decoder/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/rsa-key-formats/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/resources/tools/ecc-curve-reference/</loc><lastmod>2026-06-03</lastmod><changefreq>monthly</changefreq><priority>0.75</priority></url>
 
 </urlset>

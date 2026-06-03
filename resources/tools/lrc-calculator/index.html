@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LRC Calculator — AmbiSecure | longitudinal redundancy check</title>
+<meta name="description" content="Compute LRC variants — XOR parity, 8/16-bit additive two’s-complement and modulo sums — over text or hex, with optional STX/ETX framing and a step-by-step table. Client-side." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/lrc-calculator/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="LRC Calculator — AmbiSecure" />
+<meta property="og:description" content="XOR and additive two’s-complement / modulo LRC over text or hex, with STX/ETX framing and a running-accumulator table. Runs locally." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/lrc-calculator/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "LRC Calculator", "item": "https://ambisecure.ambimat.com/resources/tools/lrc-calculator/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "LRC Calculator",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/lrc-calculator/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What is a longitudinal redundancy check (LRC)?",
+"acceptedAnswer": { "@type": "Answer", "text": "An LRC is a one- or two-byte block check value computed by combining every byte of a message, traditionally with a column-wise XOR (longitudinal parity) or with an additive sum. The sender appends the LRC and the receiver recomputes it; a mismatch flags a transmission error. It is a lightweight integrity check, not a cryptographic one, and it cannot detect every error pattern." }
+},
+{
+"@type": "Question",
+"name": "How is a two’s-complement LRC calculated?",
+"acceptedAnswer": { "@type": "Answer", "text": "Add every covered byte modulo 256 to get a running sum, then take the two’s-complement: LRC = (256 − (sum & 0xFF)) & 0xFF. The useful property is that the sum of all message bytes plus the LRC byte equals zero modulo 256, so a receiver can simply add everything including the LRC and check for a zero result. The 16-bit variant uses 65536 in place of 256." }
+},
+{
+"@type": "Question",
+"name": "Should STX and ETX be included in the LRC?",
+"acceptedAnswer": { "@type": "Answer", "text": "It depends on the protocol. Many ISO 8583 and serial framings compute the LRC over the data field plus the trailing ETX (0x03) but exclude the leading STX (0x02); others cover neither or both. There is no universal rule, so check your specification. This tool lets you toggle STX and ETX independently so you can match the exact bytes your protocol covers." }
+},
+{
+"@type": "Question",
+"name": "Is an LRC the same as a CRC or a checksum?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. An LRC is a simple parity or additive block check. A CRC uses polynomial division and catches far more error patterns, including most burst errors, which is why protocols such as Modbus RTU use a CRC while Modbus ASCII uses an LRC. A general checksum may use any of these schemes. Pick the one your wire format mandates." }
+},
+{
+"@type": "Question",
+"name": "Does anything I paste leave my browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. All LRC computation runs locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server, so it is safe to paste frame captures or protocol payloads while debugging." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">LRC Calculator</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Crypto &amp; integrity</span>
+  <h1>LRC Calculator</h1>
+  <p>Compute a <strong>longitudinal redundancy check</strong> over text or hex bytes: XOR parity, 8-bit and 16-bit additive <strong>two’s-complement</strong> and <strong>modulo</strong> sums, with optional <code>STX</code>/<code>ETX</code> framing and a step-by-step running-accumulator table.</p>
+  <div class="tool-meta"><span>Client-side</span><span>Serial / ISO 8583 / Modbus ASCII</span><span>XOR &amp; additive</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="lrc-sample">Sample</button> <button class="tool-action" id="lrc-clear">Clear</button></div></div>
+    <label for="lrc-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Message body as UTF-8 text or hex bytes. Framing bytes are added below if enabled.</label>
+    <textarea id="lrc-input" class="hex-input" rows="8" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label>Variant:
+        <select id="lrc-variant">
+          <option value="xor">XOR LRC (longitudinal parity)</option>
+          <option value="twos8">Additive 8-bit two’s-complement</option>
+          <option value="sum8mod">Additive 8-bit modulo-256 sum</option>
+          <option value="twos16">Additive 16-bit two’s-complement</option>
+          <option value="sum16mod">Additive 16-bit modulo sum</option>
+        </select>
+      </label>
+      <label>Input is:
+        <select id="lrc-inmode"><option value="text">ASCII / UTF-8 text</option><option value="hex">Hex bytes</option></select>
+      </label>
+      <label><input type="checkbox" id="lrc-stx" /> Include <code>STX</code> (0x02)</label>
+      <label><input type="checkbox" id="lrc-etx" /> Include <code>ETX</code> (0x03)</label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="lrc-copy">Copy</button></div></div>
+    <div class="tool-output" id="lrc-output"><div class="placeholder">Enter text or hex bytes to compute an LRC.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All LRC computation runs locally in your browser. Nothing is uploaded — safe for protocol captures and frame dumps.</div>
+
+<section class="tool-reference">
+  <h2>What an LRC is for</h2>
+  <p>A longitudinal redundancy check (LRC) is one of the oldest and simplest block-check values in data communications. You combine every byte of a message into a single one- or two-byte result, append it to the frame, and let the receiver recompute the same value. If the two disagree, the frame is corrupt and gets rejected or retransmitted. The name "longitudinal" comes from the original tape and teleprinter use: where a parity bit checks one character vertically, the LRC checks a whole column of characters lengthwise down the message.</p>
+  <p>The classic LRC is a byte-wise <strong>XOR</strong> of every covered byte — a longitudinal parity that flips with any single-bit change in a column. A second family is <strong>additive</strong>: sum the bytes and keep either the raw sum modulo 256 (or 65536), or its two’s-complement. The two’s-complement form is popular because adding it back into the running sum drives the total to zero, so a verifier just sums the data <em>and</em> the LRC and checks for a clean zero result.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for an LRC when a wire protocol explicitly specifies one. The XOR form appears in many proprietary serial links, point-of-sale terminals, and barcode framing. The two’s-complement additive form is the block check in <strong>ISO 8583</strong>-style financial messaging and in <strong>Modbus ASCII</strong>, where each frame ends with an LRC computed over the address, function, and data fields. If your protocol instead calls for polynomial integrity, you want a CRC, not an LRC — for example Modbus RTU uses a 16-bit CRC while Modbus ASCII uses this LRC. Use this tool to confirm a captured frame’s trailing byte, to generate the check value when hand-building a test frame, or to settle which bytes a vendor’s spec actually covers.</p>
+
+  <h2>Input and output</h2>
+  <p>Paste the message body as ASCII / UTF-8 text or as hex bytes (spaces, commas, colons and a leading <code>0x</code> are ignored). Pick a variant, then toggle whether the leading <code>STX</code> (0x02) and trailing <code>ETX</code> (0x03) framing bytes are included in the computation — protocols differ, and this is the most common source of mismatches. The result panel shows the LRC in hexadecimal and decimal, the exact list of bytes that were processed, and a <strong>running-accumulator table</strong> listing each offset, byte value, printable character, and the accumulator after that step. For long inputs the table is capped to keep the page responsive; the final value is always exact.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Including or excluding the wrong framing bytes.</strong> Whether <code>STX</code> and <code>ETX</code> are inside the LRC varies by spec. Toggle them here to match your protocol exactly.</li>
+    <li><strong>Confusing modulo sum with two’s-complement.</strong> The modulo-256 sum and its two’s-complement differ by negation; picking the wrong one yields a value that looks plausible but never verifies.</li>
+    <li><strong>Treating hex input as text.</strong> The string <code>3132</code> is two bytes in hex mode but four characters in text mode. Set the input type before reading the result.</li>
+    <li><strong>Expecting CRC-grade detection.</strong> An LRC misses many multi-bit and transposition errors. For burst-error resilience use a <a href="/resources/">CRC instead</a>.</li>
+    <li><strong>Width confusion.</strong> An 8-bit LRC is one byte; the 16-bit variants emit two bytes. Send the bytes in the order your protocol expects.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Hex ↔ bytes</h3><p>Normalise, group, and inspect the raw bytes you are checking.</p><p><a href="/resources/tools/hex-bytes/">Open Hex ↔ bytes →</a></p></div>
+    <div class="ref-card"><h3>ASCII ↔ HEX</h3><p>Convert between printable text and byte values before computing an LRC.</p><p><a href="/resources/tools/ascii-hex/">Open ASCII ↔ HEX →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and integrity tools for smart-card and protocol engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/lrc-calculator.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>XML Formatter and Validator — AmbiSecure | pretty-print XML</title>
+<meta name="description" content="Format, minify, and well-formedness-check XML in your browser using the native DOMParser. Preserves attributes and text; reports parse errors. Client-side, no DTD processing." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/xml-formatter/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="XML Formatter and Validator — AmbiSecure" />
+<meta property="og:description" content="Pretty-print, minify, and well-formedness-check XML client-side with the native DOMParser. Preserves attributes and text; no DTD or external-entity processing." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/xml-formatter/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "XML Formatter and Validator", "item": "https://ambisecure.ambimat.com/resources/tools/xml-formatter/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "XML Formatter and Validator",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/xml-formatter/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Does this tool validate XML against a DTD or XSD schema?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. This tool performs well-formedness checking only: it confirms that tags are balanced, attributes are quoted, and the document parses as XML. It does not validate against a Document Type Definition (DTD), an XML Schema (XSD), or a RELAX NG grammar. A document can be perfectly well-formed yet still invalid against its schema, so use a dedicated validator when you need structural conformance." }
+},
+{
+"@type": "Question",
+"name": "Are external entities or DTDs resolved?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. The browser DOMParser does not fetch or resolve external entities, external DTD subsets, or remote document references, so this tool is not susceptible to classic XML External Entity (XXE) expansion. Internal entity references that the browser cannot resolve will surface as a parse error rather than being expanded against a network resource." }
+},
+{
+"@type": "Question",
+"name": "What does pretty-printing change in my XML?",
+"acceptedAnswer": { "@type": "Answer", "text": "Pretty-printing re-serializes the parsed DOM with newlines and indentation between elements. Element names, attributes, attribute values, and text content are preserved and re-escaped correctly. Insignificant whitespace between tags is normalized, so if your XML treats whitespace as significant text, prefer the minify or leave-as-is options instead of reformatting." }
+},
+{
+"@type": "Question",
+"name": "Does anything I paste leave my browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. Parsing, formatting, and minifying all run locally in JavaScript on this page using the browser's built-in DOMParser and XMLSerializer. Nothing is uploaded, logged, or sent to a server, so it is safe to format configuration files or signed XML payloads." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">XML Formatter</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Data utility</span>
+  <h1>XML Formatter and Validator</h1>
+  <p>Pretty-print, minify, and well-formedness-check <strong>XML</strong> entirely in your browser. Parsing uses the native <code>DOMParser</code>, so tags, attributes, and text round-trip exactly — and no external entities or DTDs are ever fetched.</p>
+  <div class="tool-meta"><span>Client-side</span><span>DOMParser</span><span>No XXE</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="xf-sample">Sample</button> <button class="tool-action" id="xf-clear">Clear</button></div></div>
+    <label for="xf-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Paste XML to format, minify, or check.</label>
+    <textarea id="xf-input" class="hex-input" rows="10" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label>Mode:
+        <select id="xf-mode"><option value="pretty">Pretty-print</option><option value="minify">Minify</option><option value="check">Check only</option></select>
+      </label>
+      <label>Indent:
+        <select id="xf-indent"><option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tab</option></select>
+      </label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="xf-copy">Copy</button> <button class="tool-action" id="xf-download">Download</button></div></div>
+    <div class="tool-output" id="xf-output"><div class="placeholder">Paste XML to format.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All parsing and formatting runs locally in your browser via DOMParser. Nothing is uploaded. External entities and DTDs are never fetched.</div>
+
+<section class="tool-reference">
+  <h2>What this XML formatter does</h2>
+  <p>This tool takes raw XML and runs it through the browser's built-in <code>DOMParser</code>. If the document is well-formed, it walks the resulting DOM tree and re-serializes it. In <strong>pretty-print</strong> mode it inserts newlines and your chosen indentation (two spaces, four spaces, or a tab) so the structure is readable. In <strong>minify</strong> mode it strips the insignificant whitespace between tags to produce the most compact equivalent document. In <strong>check only</strong> mode it reports well-formedness without rewriting anything. Element names, attributes, attribute values, namespaces, and text content are preserved and re-escaped correctly on output.</p>
+  <p>Crucially, this is <strong>well-formedness checking, not validation</strong>. A well-formed document has balanced tags, quoted attribute values, a single root element, and properly escaped special characters. It says nothing about whether the document conforms to a DTD, an XSD schema, or a RELAX NG grammar. If you need schema conformance, reach for a dedicated validator — well-formedness is necessary but not sufficient.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for this tool when you receive minified or single-line XML — SOAP envelopes, RSS or Atom feeds, Android layout or manifest files, Maven <code>pom.xml</code>, SAML assertions, or signed XML payloads — and you want to read it. It is also handy when you are about to embed XML in a config file or a log and want the smallest well-formed representation, or when a downstream parser rejected your XML and you need to find the exact line and column of the syntax error.</p>
+
+  <h2>Input and output</h2>
+  <p>The <strong>input</strong> is any XML document or fragment with a single root element. Paste it into the box, pick a mode and an indent width, and the result updates as you type. The <strong>output</strong> is the reformatted (or minified, or merely validated) XML, with a badge summarizing the root element name and node count. Use <em>Copy</em> to put it on your clipboard or <em>Download</em> to save it as a <code>.xml</code> file with the <code>application/xml</code> media type. When the input is not well-formed, the output panel shows the parser's error message and, where the browser provides it, the line and column of the failure instead of guessing at a fix.</p>
+
+  <h2>Security: no DTD or external-entity processing</h2>
+  <p>The browser <code>DOMParser</code> deliberately does <strong>not</strong> resolve external entities, fetch external DTD subsets, or follow remote document references. That means this tool is not exposed to classic <abbr title="XML External Entity">XXE</abbr> attacks, billion-laughs-style entity expansion against network resources, or server-side request forgery through entity URLs. The flip side is that documents which genuinely depend on a DTD for entity definitions or default attribute values will not have those resolved here — unresolved entity references surface as a parse error rather than being expanded. Treat this tool as a syntax formatter, and do schema-aware processing in your application stack.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Expecting schema validation.</strong> Well-formed is not the same as valid. This tool never checks a DTD or XSD; a document can pass here and still be rejected by a schema validator.</li>
+    <li><strong>Pasting multiple root elements.</strong> XML requires exactly one root. A fragment with two sibling top-level elements is not well-formed — wrap it in a container element first.</li>
+    <li><strong>Reformatting whitespace-significant content.</strong> Pretty-printing normalizes inter-tag whitespace. If your XML stores meaningful spaces or newlines inside elements, use minify or check-only instead of pretty-print.</li>
+    <li><strong>Relying on entity expansion.</strong> Custom entities defined in an external or internal DTD are not resolved here and will trigger a parse error.</li>
+    <li><strong>Unescaped <code>&amp;</code>, <code>&lt;</code>, or quotes.</strong> A bare ampersand or angle bracket in text or an attribute breaks well-formedness — escape them as <code>&amp;amp;</code>, <code>&amp;lt;</code>, and so on.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>JSON Formatter</h3><p>Pretty-print, minify, and validate JSON the same way.</p><p><a href="/resources/tools/json-formatter/">Open JSON Formatter →</a></p></div>
+    <div class="ref-card"><h3>ASN.1 Parser</h3><p>Decode the binary structures behind certificates and keys.</p><p><a href="/resources/tools/asn1-parser/">Open ASN.1 Parser →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/xml-formatter.js" defer></script>
+</body>
+</html>
