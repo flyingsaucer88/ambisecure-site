@@ -137,6 +137,25 @@
   </div>
 </section>
 
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">See it in action &mdash; live FIDO / WebAuthn demo</h2><span class="section-line"></span></div>
+    <p style="max-width:780px;">FIDO/WebAuthn is built on <strong>public-key cryptography</strong>: the authenticator holds a private key that never leaves the device, and the relying-party server only ever sees a public key and a signed challenge. Because each credential is bound to a specific origin, a phishing site cannot replay it &mdash; the property that makes the flow phishing-resistant rather than merely &ldquo;strong&rdquo;. It reduces phishing and password-replay risk; hardware-backed authenticators further improve resistance to remote credential theft.</p>
+    <p style="max-width:780px;">Our hosted demo walks a complete passwordless ceremony in the browser &mdash; register a credential, touch the authenticator, and authenticate against a verified signature:</p>
+    <ol style="max-width:780px;line-height:1.7;">
+      <li>The browser or app requests registration / authentication.</li>
+      <li>The authenticator signs a server challenge after a user gesture (touch or biometric).</li>
+      <li>The server verifies the public-key signature &mdash; the private key never leaves the authenticator.</li>
+    </ol>
+    <p style="max-width:780px;"><strong>Where it fits:</strong> customer login, workforce and privileged access, banking and fintech sign-in, mobile-app passkeys, and device-bound identity &mdash; backed, where required, by hardware secure elements such as the <a href="/products/onepass-usb-key/">AmbiSecure Key</a>. Recovery and lifecycle flows still need deliberate design, and no single control eliminates all account compromise.</p>
+    <p style="margin-top:22px;">
+      <a href="https://fido.ambimat.com/" class="btn btn-primary" rel="noopener" data-analytics-event="request_demo" data-analytics-value="fido-webauthn">Try the live FIDO / WebAuthn demo &rarr;</a>
+      <a href="/contact/" class="btn btn-outline" data-analytics-event="contact_engineering">Talk to AmbiSecure</a>
+    </p>
+    <p style="margin-top:14px;font-size:14px;color:var(--brand-grey);">Go deeper: <a href="/technologies/webauthn/">WebAuthn reference</a> &middot; <a href="/technologies/fido2/">FIDO2</a> &middot; <a href="/technologies/passkeys/">Passkeys</a> &middot; <a href="/products/fido2-nano-sim-applet/">FIDO2 nano-SIM applet</a> &middot; <a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></p>
+  </div>
+</section>
+
 <section>
   <div class="section-container">
     <div class="section-head left"><h2 class="section-title">Engineering reading</h2><span class="section-line"></span></div>
