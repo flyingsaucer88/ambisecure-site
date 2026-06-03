@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JSON Bin Builder and Validator | AmbiSecure</title>
+<meta name="description" content="Validate, format, minify, and save local JSON bins in your browser for API testing, static-site data, demos, and configuration examples." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/json-bin-builder/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="JSON Bin Builder and Validator" />
+<meta property="og:description" content="Validate, format, minify, and save local JSON bins in your browser for API testing, static-site data, demos, and configuration examples." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/json-bin-builder/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<style>
+  /* Page-scoped styling for the local-bin manager. Reuses the tools.css
+     design system everywhere else; only the bin list is bespoke. */
+  .jbb-binbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+  .jbb-binbar input[type="text"] {
+    flex: 1 1 220px; min-width: 0; border: 1px solid var(--line); border-radius: 4px;
+    padding: 9px 12px; font-family: 'Source Sans 3', sans-serif; font-size: 14px; color: var(--ink); background: #fcfcfd;
+  }
+  .jbb-binbar input[type="text"]:focus { outline: none; border-color: var(--secure-cyan); box-shadow: 0 0 0 3px var(--secure-cyan-soft); background: #fff; }
+  .jbb-bin-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .jbb-bin-row {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; background: #fcfcfd;
+  }
+  .jbb-bin-row.is-active { border-color: var(--secure-cyan); box-shadow: inset 0 0 0 1px var(--secure-cyan-soft); }
+  .jbb-bin-name { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 14px; color: var(--ink); }
+  .jbb-bin-meta { font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--muted-2); }
+  .jbb-bin-spacer { flex: 1 1 auto; }
+  .jbb-bin-empty { color: var(--muted-2); font-family: 'Source Sans 3', sans-serif; font-style: italic; font-size: 14px; }
+  .jbb-share { margin-top: 12px; font-family: 'Source Sans 3', sans-serif; font-size: 13px; color: var(--brand-grey); }
+  .jbb-share code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.04); padding: 2px 6px; border-radius: 4px; word-break: break-all; }
+  .jbb-statusline { margin-bottom: 12px; }
+  .jbb-errpos { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--brand-red-dark); }
+  .jbb-dont-list { columns: 2; column-gap: 32px; max-width: 620px; margin: 8px 0 0; padding-left: 18px; }
+  .jbb-dont-list li { line-height: 1.7; }
+  @media (max-width: 640px) { .jbb-dont-list { columns: 1; } }
+</style>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "JSON Bin Builder and Validator",
+     "item": "https://ambisecure.ambimat.com/resources/tools/json-bin-builder/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "JSON Bin Builder and Validator",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/json-bin-builder/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">JSON Bin Builder and Validator</span></nav>
+
+<main id="main">
+<header class="tool-header">
+  <span class="eyebrow">JSON · Browser-local</span>
+  <h1>JSON Bin Builder and Validator</h1>
+  <p>Create and manage local JSON bins in your browser. Validate, format, minify, and save JSON locally &mdash; useful for preparing demo payloads, static-site data, configuration examples, and API test samples. <strong>This tool does not upload your JSON to AmbiSecure servers; everything runs in your browser.</strong></p>
+  <div class="tool-meta"><span id="jbb-count-chars">0 chars</span><span id="jbb-count-bytes">0 bytes (UTF-8)</span><span id="jbb-count-status">Empty</span></div>
+</header>
+
+<div class="tool-privacy warn">JSON stays in this browser. Do not paste passwords, API keys, tokens, customer data, or production secrets.</div>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>JSON</h2><div class="tool-panel-actions">
+      <button class="tool-action tool-action--primary" id="jbb-format" type="button">Format</button>
+      <button class="tool-action" id="jbb-minify" type="button">Minify</button>
+      <button class="tool-action" id="jbb-sample" type="button">Sample</button>
+      <button class="tool-action" id="jbb-clear" type="button">Clear</button>
+    </div></div>
+    <label for="jbb-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Paste or type JSON. Validation, formatting, and minifying all run locally.</label>
+    <textarea id="jbb-input" class="tool-textarea" rows="16" spellcheck="false" aria-describedby="jbb-count-status"></textarea>
+    <div class="tool-options">
+      <label for="jbb-indent">Indent
+        <select id="jbb-indent" style="margin-left:6px;padding:4px 6px;border:1px solid var(--line);border-radius:4px;">
+          <option value="2" selected>2 spaces</option>
+          <option value="4">4 spaces</option>
+          <option value="tab">Tab</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions">
+      <button class="tool-action" id="jbb-copy" type="button">Copy output</button>
+      <button class="tool-action" id="jbb-clear-out" type="button">Clear output</button>
+    </div></div>
+    <div class="jbb-statusline" id="jbb-status"><span class="tech-badge tech-badge--info">READY</span></div>
+    <textarea id="jbb-output" class="tool-textarea" rows="14" spellcheck="false" readonly aria-label="Formatted or minified JSON output"></textarea>
+  </div>
+</div>
+
+<div class="tool-shell stacked">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>JSON Schema (optional)</h2><div class="tool-panel-actions">
+      <button class="tool-action tool-action--primary" id="jbb-schema-validate" type="button">Validate against schema</button>
+      <button class="tool-action" id="jbb-schema-generate" type="button">Generate schema from JSON</button>
+      <button class="tool-action" id="jbb-schema-clear" type="button">Clear schema</button>
+    </div></div>
+    <label for="jbb-schema" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">A subset of JSON Schema (Draft-07 style) runs locally: <code>type, required, properties, items, enum, const, minimum, maximum, minLength, maxLength, pattern, minItems, maxItems, additionalProperties, anyOf, allOf, oneOf</code>. <code>$ref</code> is not resolved.</label>
+    <textarea id="jbb-schema" class="tool-textarea" rows="8" spellcheck="false"></textarea>
+    <div class="tool-output" id="jbb-schema-output" style="margin-top:12px;"><div class="placeholder">Add a schema, then validate your JSON against it &mdash; or generate a starter schema from the JSON above.</div></div>
+  </div>
+</div>
+
+<div class="tool-shell stacked">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Local JSON bins</h2><div class="tool-panel-actions">
+      <button class="tool-action" id="jbb-clear-all" type="button">Clear all local bins</button>
+    </div></div>
+    <p style="font-size:13px;color:var(--brand-grey);margin:0 0 12px;"><strong>Local browser storage only.</strong> Saved bins live in this browser&rsquo;s <code>localStorage</code> &mdash; they are never uploaded, and clearing your browser storage may delete them.</p>
+    <div class="jbb-binbar">
+      <input type="text" id="jbb-bin-name" placeholder="Bin name (e.g. demo-payload)" aria-label="Bin name" maxlength="80" />
+      <button class="tool-action tool-action--primary" id="jbb-save" type="button">Save current JSON</button>
+    </div>
+    <ul class="jbb-bin-list" id="jbb-bin-list"><li class="jbb-bin-empty">No saved bins yet.</li></ul>
+    <div class="jbb-share" id="jbb-share" hidden>Reopen link for this browser: <code id="jbb-share-link"></code> <button class="tool-action" id="jbb-copy-link" type="button" style="margin-left:6px;">Copy link</button><br /><span style="color:var(--muted-2);">This link only reopens a bin already saved in this same browser. It is not a public URL and does not fetch data from any server.</span></div>
+  </div>
+</div>
+
+<section class="tool-reference">
+  <h2>What this tool does</h2>
+  <p>A browser-only JSON helper. Paste or create JSON, then validate its syntax, format it into readable JSON, or minify it into a compact single line. Save named JSON bins in local browser storage, then reopen, duplicate, and delete them. It is built for preparing JSON payloads for API testing, static-site data files, demo apps, and configuration examples &mdash; before you paste them into another system.</p>
+
+  <h2 style="margin-top:36px;">Local storage behavior</h2>
+  <p>This is a static-site tool. Your JSON is processed entirely in the browser. Saved bins are stored only in this browser&rsquo;s local storage &mdash; the tool does not create public API endpoints, does not generate fetchable URLs, and does not upload JSON to AmbiSecure. Clearing your browser storage (or using a private window) may delete saved bins.</p>
+
+  <h2 style="margin-top:36px;">Common use cases</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>API &amp; demos</h3><p>API payload testing, demo-app data, and developer-handoff samples you want to format and sanity-check first.</p></div>
+    <div class="ref-card"><h3>Static-site data</h3><p>Prepare JSON data files, FAQ/resource-list JSON, and configuration examples for a static build.</p></div>
+    <div class="ref-card"><h3>Pre-flight checks</h3><p>Validate and tidy JSON before pasting it into another system, a config store, or a code review.</p></div>
+  </div>
+
+  <h2 style="margin-top:36px;">What not to put here</h2>
+  <p>This is a convenience tool, not a vault. Do <strong>not</strong> paste or store:</p>
+  <ul class="jbb-dont-list">
+    <li>Passwords</li>
+    <li>API keys</li>
+    <li>Access tokens</li>
+    <li>Private customer data</li>
+    <li>Regulated data</li>
+    <li>Production secrets</li>
+    <li>Production security-sensitive configuration</li>
+  </ul>
+
+  <h2 style="margin-top:36px;">Security note</h2>
+  <p>Browser-local tools are handy for everyday convenience, but local browser storage is <strong>not a secure vault</strong>: shared or managed computers, browser extensions, and synced profiles can all expose local data. Production systems that handle real data need authentication, authorization, expiry, access controls, logging, secure hosting, and data classification &mdash; none of which a client-side helper provides.</p>
+  <p>For context: token-bearing URLs from JSON-bin&ndash;style hosted systems are convenient but are <strong>not</strong> equivalent to strong authentication &mdash; anyone with the URL can read the data. This static AmbiSecure version sidesteps that risk entirely because it <strong>does not create token URLs or any server-side endpoint</strong>; nothing leaves your browser.</p>
+
+  <div class="ref-grid" style="margin-top:36px;">
+    <div class="ref-card"><h3>Companion tools</h3><p><a href="/resources/tools/cbor-decoder/">CBOR decoder</a> &middot; <a href="/resources/tools/base64/">Base64</a> &middot; <a href="/resources/tools/clientdata-decoder/">clientDataJSON decoder</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p><a href="/resources/">All developer tools</a> &middot; <a href="/resources/tools/utf8/">UTF-8 inspector</a></p></div>
+    <div class="ref-card"><h3>Attribution</h3><p>This tool is based on the <a href="https://github.com/azirbel/npoint" rel="noopener nofollow">open-source GitHub project</a> by Alex Zirbel.</p></div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Solutions</h3><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/json-bin-builder.js" defer></script>
+</body>
+</html>
