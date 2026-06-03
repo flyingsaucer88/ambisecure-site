@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Base32 Encoder and Decoder — AmbiSecure | RFC 4648 &amp; base32hex</title>
+<meta name="description" content="Encode and decode Base32 and base32hex (RFC 4648) in your browser — optional padding, case-insensitive input, text or hex modes. Useful for TOTP / 2FA secrets." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/base32/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Base32 Encoder and Decoder — AmbiSecure" />
+<meta property="og:description" content="Standard Base32 and base32hex (RFC 4648), client-side. Optional padding, case-insensitive decode, TOTP-friendly." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/base32/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "Base32 Encoder and Decoder", "item": "https://ambisecure.ambimat.com/resources/tools/base32/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "Base32 Encoder and Decoder",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/base32/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What is the difference between Base32 and base32hex?",
+"acceptedAnswer": { "@type": "Answer", "text": "Both are defined in RFC 4648 and map five bits to one printable character. Standard Base32 uses the alphabet A–Z then 2–7. base32hex (the extended-hex alphabet) uses 0–9 then A–V, so the encoded text keeps the same sort order as the underlying bytes. They are not interchangeable: text encoded with one alphabet will decode to different bytes under the other." }
+},
+{
+"@type": "Question",
+"name": "Why does my TOTP secret use Base32?",
+"acceptedAnswer": { "@type": "Answer", "text": "RFC 6238 (TOTP) and RFC 4226 (HOTP) carry the shared secret as Base32 because it is case-insensitive and avoids the +, / and = characters that are awkward in otpauth:// URIs and QR codes. Authenticator apps decode the Base32 secret back to raw bytes before running HMAC. Use this tool to decode a Base32 secret to hex when debugging a one-time-password mismatch." }
+},
+{
+"@type": "Question",
+"name": "Is Base32 padding required?",
+"acceptedAnswer": { "@type": "Answer", "text": "RFC 4648 specifies = padding so that the encoded length is always a multiple of eight characters, but many systems (including most TOTP secrets) drop it. This tool can emit padded or unpadded output and accepts either on decode, ignoring whitespace and case." }
+},
+{
+"@type": "Question",
+"name": "Does anything I paste leave my browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. All Base32 encoding and decoding runs locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server, so it is safe to decode sensitive secrets such as TOTP seeds." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">Base32</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Encoding utility</span>
+  <h1>Base32 Encoder and Decoder</h1>
+  <p>Encode and decode <strong>Base32</strong> and <strong>base32hex</strong> per RFC 4648. Handles UTF-8 text or raw hex bytes, toggles <code>=</code> padding, and decodes case-insensitively — the shape TOTP / 2FA secrets ship in.</p>
+  <div class="tool-meta"><span>Client-side</span><span>RFC 4648</span><span>TOTP-friendly</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="b32-sample">Sample</button> <button class="tool-action" id="b32-clear">Clear</button></div></div>
+    <label for="b32-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Text, hex bytes, or Base32 to convert.</label>
+    <textarea id="b32-input" class="hex-input" rows="8" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label>Direction:
+        <select id="b32-direction"><option value="encode">Encode</option><option value="decode">Decode</option></select>
+      </label>
+      <label>Alphabet:
+        <select id="b32-variant"><option value="base32">Base32 (A–Z 2–7)</option><option value="base32hex">base32hex (0–9 A–V)</option></select>
+      </label>
+      <label>Input is:
+        <select id="b32-inmode"><option value="text">Text (UTF-8)</option><option value="hex">Hex bytes</option></select>
+      </label>
+      <label><input type="checkbox" id="b32-pad" checked /> Emit <code>=</code> padding</label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="b32-copy">Copy</button></div></div>
+    <div class="tool-output" id="b32-output"><div class="placeholder">Type something to convert.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All conversion runs locally in your browser. Nothing is uploaded — safe for TOTP secrets and keys.</div>
+
+<section class="tool-reference">
+  <h2>What Base32 is for</h2>
+  <p>Base32 turns arbitrary bytes into a 32-character, case-insensitive alphabet so the result survives copy-paste, voice dictation, QR codes, and case-folding transports that mangle Base64. It trades density for robustness: every five bytes become eight characters, a 60% size overhead versus 33% for Base64. That overhead is a fair price wherever a human might read, type, or dictate the value.</p>
+  <p>The most common place engineers meet Base32 is the shared secret in a TOTP or HOTP authenticator (RFC 6238 / RFC 4226). The <code>otpauth://</code> URI behind a 2FA QR code stores its <code>secret</code> parameter in Base32 precisely because it is case-insensitive and avoids the <code>+</code>, <code>/</code>, and <code>=</code> characters that complicate URLs. You will also see Base32 in DNS-based systems, NSEC3 hashes, Bitcoin/onion-style addresses, and anywhere a token needs to be read aloud.</p>
+
+  <h2>Standard Base32 vs base32hex</h2>
+  <p>RFC 4648 defines two alphabets. Standard Base32 (§6) uses <code>A–Z</code> followed by <code>2–7</code>. The extended-hex variant, base32hex (§7), uses <code>0–9</code> followed by <code>A–V</code>; its advantage is that encoded strings sort in the same order as the bytes they represent, which matters for keys in ordered databases such as DNSSEC NSEC3. The two are <strong>not</strong> interchangeable — decode with the same alphabet you encoded with, or you will get different bytes back.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Base32</h3><p>Alphabet <code>ABCDEFGHIJKLMNOPQRSTUVWXYZ234567</code>. The default for TOTP, RFC 3548 legacy systems, and most 2FA apps.</p></div>
+    <div class="ref-card"><h3>base32hex</h3><p>Alphabet <code>0123456789ABCDEFGHIJKLMNOPQRSTUV</code>. Sort-order-preserving; used by NSEC3 and ordered key stores.</p></div>
+    <div class="ref-card"><h3>Padding</h3><p>Trailing <code>=</code> rounds output to a multiple of 8 characters. Optional in practice — TOTP secrets usually omit it. This tool reads either.</p></div>
+  </div>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Confusing Base32 with Base64.</strong> A string of only <code>A–Z2–7</code> with no lowercase is almost always Base32; mixed case with <code>+</code> or <code>/</code> is Base64. Use the <a href="/resources/tools/base64/">Base64 tool</a> for the latter.</li>
+    <li><strong>Including <code>0</code>, <code>1</code>, or <code>8</code> in standard Base32.</strong> They are not in the alphabet — they are often transcription errors for <code>O</code>, <code>I/L</code>, and <code>B</code>.</li>
+    <li><strong>Decoding a TOTP secret as text.</strong> The decoded bytes are a raw key, not a string. Switch the result to a hex view (this tool falls back to hex automatically when the bytes are not printable UTF-8).</li>
+    <li><strong>Mismatched alphabet.</strong> Decoding base32hex data with the standard alphabet silently produces wrong bytes — pick the matching variant.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Base64</h3><p>Standard and URL-safe Base64 for the denser cases.</p><p><a href="/resources/tools/base64/">Open Base64 →</a></p></div>
+    <div class="ref-card"><h3>ASCII ↔ HEX</h3><p>Inspect the raw bytes behind a decoded secret.</p><p><a href="/resources/tools/ascii-hex/">Open ASCII ↔ HEX →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/base32.js" defer></script>
+</body>
+</html>

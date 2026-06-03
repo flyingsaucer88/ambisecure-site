@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ICCID Decoder — AmbiSecure | SIM card number &amp; Luhn validator</title>
+<meta name="description" content="Decode an ICCID into MII, country code, issuer identifier, and account number, and validate the Luhn check digit — 19/20-digit aware, whitespace-tolerant. Uses dummy examples only." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/iccid-decoder/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="ICCID Decoder — AmbiSecure" />
+<meta property="og:description" content="Decode an ICCID into MII, country code, issuer, and account number and validate the Luhn check digit. Client-side, dummy examples only." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/iccid-decoder/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "ICCID Decoder", "item": "https://ambisecure.ambimat.com/resources/tools/iccid-decoder/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "ICCID Decoder",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/iccid-decoder/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What is an ICCID?",
+"acceptedAnswer": { "@type": "Answer", "text": "The Integrated Circuit Card Identifier (ICCID) is the unique serial number printed on a SIM or eSIM profile and stored in the EF-ICCID file. It is defined by ITU-T E.118 and begins with the Major Industry Identifier 89 for telecommunications, followed by a country code, an issuer identifier, an individual account number, and an optional trailing Luhn check digit." }
+},
+{
+"@type": "Question",
+"name": "How long is an ICCID — 19 or 20 digits?",
+"acceptedAnswer": { "@type": "Answer", "text": "ITU-T E.118 allows up to 19 digits plus an optional Luhn check digit, so you commonly see 19-digit and 20-digit ICCIDs in the field. This tool accepts 18 to 20 digits, treats the last digit as the candidate check digit, and reports whether the value is Luhn-consistent. Some operators print the number without the check digit." }
+},
+{
+"@type": "Question",
+"name": "How is the Luhn check digit validated?",
+"acceptedAnswer": { "@type": "Answer", "text": "The Luhn (mod-10) algorithm doubles every second digit from the right, subtracts 9 from any result over 9, sums all digits, and requires the total to be a multiple of 10. The tool runs Luhn across the full ICCID including the trailing digit and shows pass or fail, plus the expected check digit so you can spot a single mistyped digit." }
+},
+{
+"@type": "Question",
+"name": "Why does the country code not always decode?",
+"acceptedAnswer": { "@type": "Answer", "text": "The country code follows ITU-T E.164 dialing codes and can be one, two, or three digits, with no length marker inside the ICCID. This tool uses a small built-in map of common codes and matches greedily; if the leading digits are not in the map it labels the country as unknown rather than guess. The issuer and account split also varies by operator." }
+},
+{
+"@type": "Question",
+"name": "Does the ICCID I paste leave my browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. All parsing and Luhn validation run locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server. The built-in sample is a non-real dummy value generated in the browser, not a genuine SIM number." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">ICCID Decoder</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">eSIM / SIM / telecom</span>
+  <h1>ICCID Decoder</h1>
+  <p>Decode an <strong>ICCID</strong> — the serial number printed on a SIM or eSIM — into its <abbr title="Major Industry Identifier">MII</abbr>, country code, issuer identifier, and account number per <strong>ITU-T E.118</strong>, and validate the trailing <strong>Luhn</strong> check digit.</p>
+  <div class="tool-meta"><span>Client-side</span><span>ITU-T E.118</span><span>Luhn-checked</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>ICCID</h2><div class="tool-panel-actions"><button class="tool-action" id="iccid-sample">Sample</button> <button class="tool-action" id="iccid-clear">Clear</button></div></div>
+    <label for="iccid-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Paste an 18–20 digit ICCID. Spaces and dashes are ignored.</label>
+    <textarea id="iccid-input" class="hex-input" rows="4" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <span style="font-size:13px;color:var(--brand-grey);">Tip: the sample is a generated dummy value, not a real SIM number.</span>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Decoded fields</h2><div class="tool-panel-actions"><button class="tool-action" id="iccid-copy">Copy</button></div></div>
+    <div class="tool-output" id="iccid-output"><div class="placeholder">Paste an ICCID to decode its E.118 fields.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All parsing and Luhn validation run locally in your browser. Nothing is uploaded — and the sample is a non-real dummy value.</div>
+
+<section class="tool-reference">
+  <h2>What an ICCID is</h2>
+  <p>The <strong>Integrated Circuit Card Identifier</strong> (ICCID) is the globally unique serial number of a SIM card or an eSIM profile. It is laser-etched on the plastic of a physical SIM, encoded in the <code>EF-ICCID</code> elementary file on the card, and carried inside an eSIM profile package during remote provisioning. Unlike the IMSI — which identifies the <em>subscriber</em> — the ICCID identifies the <em>card</em> itself, and it stays constant even when the subscription or phone number changes.</p>
+  <p>Its structure follows <strong>ITU-T Recommendation E.118</strong>, the international numbering plan for telecommunication cards. Every compliant ICCID starts with the Major Industry Identifier <code>89</code>, the prefix reserved for telecommunications, the same way payment cards start with other MII values under ISO/IEC 7812. After the MII comes a country code, an issuer identifier, an individual account number, and an optional trailing check digit computed with the Luhn (mod-10) formula.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for this decoder when you are debugging SIM or eSIM provisioning, validating a batch of ICCIDs before they are loaded into an HLR/HSS or an entitlement server, or sanity-checking a number a customer read out over the phone. Catching a bad Luhn digit or a wrong length before it enters a billing system saves a great deal of downstream cleanup. It is also handy when reverse-engineering a profile package, reconciling inventory across operators, or teaching the E.118 layout to a new team member.</p>
+
+  <h2>Input and output</h2>
+  <p>Paste any value between 18 and 20 digits. The tool first <strong>normalizes</strong> the input by stripping spaces, dashes, dots, and underscores, then rejects anything that still contains non-digits or falls outside the accepted length. It splits the digits into fields and reports each one:</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>MII</h3><p>The first two digits. <code>89</code> marks a telecom card; the tool flags any other value because a non-89 prefix is not a standard ICCID.</p></div>
+    <div class="ref-card"><h3>Country code</h3><p>An ITU-T E.164 dialing code of one to three digits. The tool greedily matches a small built-in map and shows <code>unknown</code> rather than guessing.</p></div>
+    <div class="ref-card"><h3>Issuer + account</h3><p>The remaining digits before the check digit. The exact issuer/account boundary varies by operator, so the segment is shown intact for you to split.</p></div>
+    <div class="ref-card"><h3>Check digit</h3><p>The final digit. The tool runs Luhn over the whole number and shows pass or fail plus the expected digit, so a single typo is easy to spot.</p></div>
+  </div>
+  <p>The plain-text summary in the result panel is what the <strong>Copy</strong> button places on your clipboard, so you can paste a one-line decode straight into a ticket or a script comment.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Assuming every ICCID is 20 digits.</strong> E.118 permits up to 19 digits plus an optional check digit; both 19- and 20-digit forms are valid in the wild. An 18- or 19-digit value may simply omit the Luhn digit.</li>
+    <li><strong>Reading a Luhn failure as a fake card.</strong> Not every operator prints a Luhn-protected ICCID. A failure usually means a transcription error, but it can also mean the operator never added a check digit — check both possibilities.</li>
+    <li><strong>Confusing the country code with the home country.</strong> The E.164 code reflects where the card was <em>issued</em>, not where the SIM currently roams, and it can be one to three digits with no internal delimiter.</li>
+    <li><strong>Mixing up ICCID, IMSI, and EID.</strong> The ICCID identifies the card, the IMSI identifies the subscriber, and the EID identifies the eUICC chip. They are different identifiers with different lengths and rules.</li>
+    <li><strong>Pasting an MSISDN.</strong> A phone number is not an ICCID. If the value does not start with <code>89</code>, you are almost certainly looking at a different identifier.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Luhn &amp; length fields</h3><p>The same mod-10 idea shows up in TLV length checks and other framed formats.</p><p><a href="/resources/tools/length-field/">Open Length field →</a></p></div>
+    <div class="ref-card"><h3>Hex &amp; bytes</h3><p>Inspect the raw bytes of an EF-ICCID file or a profile package field.</p><p><a href="/resources/tools/hex-bytes/">Open Hex bytes →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card, SIM, and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/iccid-decoder.js" defer></script>
+</body>
+</html>

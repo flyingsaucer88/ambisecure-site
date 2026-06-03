@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SCP03 Helper — AmbiSecure | session keys &amp; cryptogram calculator</title>
+<meta name="description" content="Educational GlobalPlatform SCP03 helper: derive S-ENC/S-MAC/S-RMAC session keys and host/card cryptograms from static keys and challenges using AES-CMAC in your browser. Developer aid." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/scp03-helper/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="SCP03 Helper — AmbiSecure" />
+<meta property="og:description" content="Educational SCP03 session-key and cryptogram calculator using AES-CMAC and SP 800-108, client-side. Test keys only — not for production." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/scp03-helper/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "SCP03 Helper", "item": "https://ambisecure.ambimat.com/resources/tools/scp03-helper/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "SCP03 Helper",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/scp03-helper/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What does this SCP03 helper compute?",
+"acceptedAnswer": { "@type": "Answer", "text": "From a static S-ENC and S-MAC key plus an 8-byte host challenge and 8-byte card challenge, it derives the SCP03 session keys (S-ENC, S-MAC, S-RMAC) and the host and card cryptograms. The derivation uses AES-CMAC as the PRF inside the NIST SP 800-108 counter-mode key-derivation function, following GlobalPlatform Amendment D." }
+},
+{
+"@type": "Question",
+"name": "How is AES-CMAC implemented without a native CMAC primitive?",
+"acceptedAnswer": { "@type": "Answer", "text": "Web Crypto exposes AES but not CMAC, so the tool implements RFC 4493 itself on top of crypto.subtle. Single AES blocks are encrypted via AES-CBC with a zero IV, then the CMAC subkeys K1/K2 and the final MAC are computed in JavaScript. The implementation matches the published RFC 4493 test vectors for AES-128." }
+},
+{
+"@type": "Question",
+"name": "Is this safe to use with production keys?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. This is an educational developer aid, not a certified GlobalPlatform secure-channel implementation. It does no key wrapping, channel-state tracking, or sequence-counter handling, and runs in a webpage. Use only pseudo-random or test keys; production SCP03 keys must stay inside an HSM or SAM." }
+},
+{
+"@type": "Question",
+"name": "Why must the host and card challenges be 8 bytes?",
+"acceptedAnswer": { "@type": "Answer", "text": "SCP03 fixes both challenges at 8 bytes (64 bits). The host challenge is sent in INITIALIZE UPDATE and the card challenge is returned by the card; their concatenation forms the KDF context used to derive every session key and cryptogram, so the tool rejects any other length." }
+},
+{
+"@type": "Question",
+"name": "Does anything I enter leave my browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. All AES-CMAC and key derivation runs locally in JavaScript using the browser Web Crypto API. Nothing is uploaded or logged. Even so, treat any key you paste as compromised and use throwaway test values only." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">SCP03 Helper</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Smart card utility</span>
+  <h1>SCP03 Helper</h1>
+  <p>An educational companion to the <a href="/resources/tools/scp03-walkthrough/">SCP03 walkthrough</a>: derive the <strong>S-ENC</strong>, <strong>S-MAC</strong>, and <strong>S-RMAC</strong> session keys plus the host and card cryptograms from static keys and challenges, using AES-CMAC and the SP&nbsp;800-108 KDF entirely in your browser.</p>
+  <div class="tool-meta"><span>Client-side</span><span>AES-CMAC</span><span>GP Amendment D</span><span>Test keys only</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="scp-sample">Sample</button> <button class="tool-action" id="scp-clear">Clear</button></div></div>
+    <label for="scp-enc" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Static S-ENC / K-ENC (hex, 16 / 24 / 32 bytes).</label>
+    <input type="text" id="scp-enc" class="hex-input" spellcheck="false" autocomplete="off" />
+    <label for="scp-mac" style="font-size:13px;color:var(--brand-grey);margin:10px 0 6px;">Static S-MAC / K-MAC (hex, same length as K-ENC).</label>
+    <input type="text" id="scp-mac" class="hex-input" spellcheck="false" autocomplete="off" />
+    <label for="scp-host" style="font-size:13px;color:var(--brand-grey);margin:10px 0 6px;">Host challenge (hex, exactly 8 bytes).</label>
+    <input type="text" id="scp-host" class="hex-input" spellcheck="false" autocomplete="off" />
+    <label for="scp-card" style="font-size:13px;color:var(--brand-grey);margin:10px 0 6px;">Card challenge (hex, exactly 8 bytes).</label>
+    <input type="text" id="scp-card" class="hex-input" spellcheck="false" autocomplete="off" />
+    <div class="tool-options"><span style="font-size:12.5px;color:var(--brand-grey);">SAMPLE-FORMAT values only. Never paste a real production key into a webpage.</span></div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Derived values</h2><div class="tool-panel-actions"><button class="tool-action" id="scp-copy">Copy</button></div></div>
+    <div class="tool-output" id="scp-output"><div class="placeholder">Enter static keys and challenges, or load the sample-format values.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All AES-CMAC and key derivation runs locally in your browser via Web Crypto. Nothing is uploaded. This is a teaching aid — use throwaway test keys only.</div>
+
+<section class="tool-reference">
+  <h2>What this tool does</h2>
+  <p>SCP03 is GlobalPlatform's AES-based Secure Channel Protocol: the handshake a host (a card-management tool or backend) and a secure element run to agree on fresh session keys before exchanging confidential, integrity-protected APDUs. This helper reproduces the <strong>cryptographic core</strong> of that handshake so you can follow the maths with concrete numbers. Given the two static base keys and the two challenges, it computes the three session keys and both cryptograms exactly as GlobalPlatform Amendment&nbsp;D specifies.</p>
+  <p>Under the hood, every value is produced by a NIST SP&nbsp;800-108 counter-mode key-derivation function whose pseudo-random function is <strong>AES-CMAC</strong>. Because the Web Crypto API ships AES but no CMAC, the tool implements RFC&nbsp;4493 itself — generating the K1/K2 subkeys and the MAC on top of <code>crypto.subtle</code> AES-CBC with a zero IV. The CMAC implementation reproduces the published RFC&nbsp;4493 AES-128 test vectors, so the building block underneath the KDF is verifiable rather than hand-waved.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for this when you are <em>learning</em> or <em>debugging</em> an SCP03 flow: checking why a card rejected your EXTERNAL AUTHENTICATE, confirming that your own KDF produces the same session keys as a reference, or teaching the difference between S-ENC, S-MAC, and S-RMAC. It pairs naturally with the step-by-step <a href="/resources/tools/scp03-walkthrough/">SCP03 walkthrough</a>, which narrates the protocol exchange, while this page gives you the numbers. If you only need the MAC-length or padding rules, the <a href="/resources/tools/cmac-length/">CMAC length</a> reference is lighter weight.</p>
+
+  <h2>Inputs and outputs</h2>
+  <p>The four inputs are all hexadecimal. <strong>K-ENC</strong> and <strong>K-MAC</strong> are the static base keys provisioned on the card; each is a 16-, 24-, or 32-byte AES key (AES-128/192/256) and both must be the same length. The <strong>host challenge</strong> and <strong>card challenge</strong> are each exactly 8 bytes — the host generates one, the card returns the other, and their concatenation (<code>host || card</code>) forms the KDF context.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Session keys</h3><p>S-ENC (constant <code>0x04</code>), S-MAC (<code>0x06</code>), and S-RMAC (<code>0x07</code>), each derived to the base-key length.</p></div>
+    <div class="ref-card"><h3>Cryptograms</h3><p>Card cryptogram (<code>0x00</code>) and host cryptogram (<code>0x01</code>), each 8 bytes, derived under the freshly computed S-MAC.</p></div>
+    <div class="ref-card"><h3>Context</h3><p>The 16-byte <code>host&nbsp;||&nbsp;card</code> challenge concatenation that ties every derivation to this one session.</p></div>
+  </div>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Swapping the two cryptograms.</strong> The card returns the card cryptogram in INITIALIZE UPDATE; the host sends the host cryptogram in EXTERNAL AUTHENTICATE. They are derived with different constants (<code>0x00</code> vs <code>0x01</code>) and are not interchangeable.</li>
+    <li><strong>Reversing the challenge order.</strong> The context is <code>host&nbsp;||&nbsp;card</code>, not <code>card&nbsp;||&nbsp;host</code>. Reversing it changes every output.</li>
+    <li><strong>Mismatched key lengths.</strong> SCP03 uses the same AES key length for K-ENC and K-MAC; mixing a 16-byte and a 24-byte key is not a valid configuration.</li>
+    <li><strong>Treating this as production crypto.</strong> There is no channel state, no command counter, and no key wrapping here. It is a calculator for the derivation, not a secure channel.</li>
+    <li><strong>Pasting real keys.</strong> Even though everything runs locally, a webpage is the wrong place for production key material — use throwaway test values.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>SCP03 walkthrough</h3><p>Step-by-step narration of the SCP03 protocol exchange and APDUs.</p><p><a href="/resources/tools/scp03-walkthrough/">Open SCP03 walkthrough →</a></p></div>
+    <div class="ref-card"><h3>CMAC length</h3><p>Rules for AES-CMAC tag and padding lengths in secure messaging.</p><p><a href="/resources/tools/cmac-length/">Open CMAC length →</a></p></div>
+    <div class="ref-card"><h3>Key diversification</h3><p>How per-card keys are derived from a master key in a SAM.</p><p><a href="/resources/tools/key-diversification/">Open key diversification →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/scp03-helper.js" defer></script>
+</body>
+</html>

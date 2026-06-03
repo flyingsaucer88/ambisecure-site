@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IMSI Decoder — AmbiSecure | MCC / MNC / MSIN breakdown</title>
+<meta name="description" content="Decode an IMSI into MCC, MNC, and MSIN with 2- or 3-digit MNC handling and a small built-in MCC name map. Privacy-aware, dummy examples only, fully client-side." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/imsi-decoder/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="IMSI Decoder — AmbiSecure" />
+<meta property="og:description" content="Split an IMSI into MCC, MNC, and MSIN in your browser. 2- or 3-digit MNC handling, small MCC country map, dummy examples only." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/imsi-decoder/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "IMSI Decoder", "item": "https://ambisecure.ambimat.com/resources/tools/imsi-decoder/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "IMSI Decoder",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/imsi-decoder/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What are the parts of an IMSI?",
+"acceptedAnswer": { "@type": "Answer", "text": "An IMSI (International Mobile Subscriber Identity) is up to 15 digits. The first three digits are the MCC (Mobile Country Code), the next two or three are the MNC (Mobile Network Code) identifying the operator, and the remainder is the MSIN (Mobile Subscriber Identification Number) assigned by that operator. Together MCC plus MNC form the PLMN identifier of the home network." }
+},
+{
+"@type": "Question",
+"name": "How do I know if the MNC is two or three digits?",
+"acceptedAnswer": { "@type": "Answer", "text": "MNC length is region-dependent and is not encoded in the IMSI itself. North American (NANP) networks under MCC 310–316 typically use a three-digit MNC, while many other countries use two digits. This tool offers an auto heuristic plus explicit 2-digit and 3-digit options. When you know the operator, set the length manually for an exact split." }
+},
+{
+"@type": "Question",
+"name": "Does this tool identify the mobile operator from the MNC?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. It includes only a small static MCC-to-country map and does not resolve MNC to a named operator. MNC-to-operator assignments change frequently and there are thousands of them, so a reliable lookup needs a maintained public MCC/MNC table. This tool deliberately keeps that out of scope and shows the raw MNC digits instead." }
+},
+{
+"@type": "Question",
+"name": "Is an IMSI sensitive, and does anything I paste leave my browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "An IMSI uniquely identifies a SIM subscription and is privacy-sensitive — IMSI catchers exploit it for tracking, which is why 5G hides it behind the encrypted SUCI. Use only dummy values here. Either way, all decoding runs locally in JavaScript on this page; nothing you type is uploaded, logged, or sent to a server." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">IMSI Decoder</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">eSIM / SIM / telecom</span>
+  <h1>IMSI Decoder</h1>
+  <p>Split an <strong>IMSI</strong> into its <strong>MCC</strong>, <strong>MNC</strong>, and <strong>MSIN</strong> fields, with 2- or 3-digit MNC handling and a small built-in country lookup. Runs entirely in your browser — use <strong>dummy values only</strong>.</p>
+  <div class="tool-meta"><span>Client-side</span><span>3GPP TS 23.003</span><span>Privacy-aware</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="imsi-sample">Sample</button> <button class="tool-action" id="imsi-clear">Clear</button></div></div>
+    <label for="imsi-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Paste an IMSI (up to 15 digits). Spaces and dashes are ignored. Dummy values only.</label>
+    <textarea id="imsi-input" class="hex-input" rows="3" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label>MNC length:
+        <select id="imsi-mnc"><option value="auto">Auto (guess from MCC)</option><option value="2">2-digit</option><option value="3">3-digit</option></select>
+      </label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="imsi-copy">Copy</button></div></div>
+    <div class="tool-output" id="imsi-output"><div class="placeholder">Enter an IMSI to split into MCC / MNC / MSIN.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All decoding runs locally in your browser. Nothing is uploaded. An IMSI identifies a real subscriber, so please paste dummy values only.</div>
+
+<section class="tool-reference">
+  <h2>What this IMSI decoder does</h2>
+  <p>The <strong>IMSI</strong> (International Mobile Subscriber Identity) is the number that ties a SIM or eSIM profile to a subscription on a mobile network. Defined in 3GPP TS 23.003, it is at most 15 digits and breaks into three fixed-position fields: the three-digit <strong>MCC</strong> (Mobile Country Code), the two- or three-digit <strong>MNC</strong> (Mobile Network Code), and the remaining <strong>MSIN</strong> (Mobile Subscriber Identification Number). This tool takes the digits you paste, strips spaces and dashes, validates them, and shows each field separately along with a country name when the MCC is in its small built-in map.</p>
+  <p>Together the MCC and MNC form the PLMN identity of the home network — the same pair you see in IMSI catchers, roaming agreements, and the home-network field of a 5G SUCI. The MSIN is the operator-assigned serial that distinguishes one subscriber from another within that network.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for this when you are eyeballing a SIM provisioning record, a test profile from an eSIM/eUICC lab, an HLR/HSS export, or a signalling trace and you just want to confirm which country and network a given IMSI belongs to. It is handy for sanity-checking that a freshly written test SIM carries the MCC/MNC you intended, or for explaining the structure of subscriber identities in documentation. It is not a subscriber database and not a live operator directory.</p>
+
+  <h2>Input and output</h2>
+  <p>Input is a string of digits — paste with or without separators; only <code>0–9</code> survive cleaning. The decoder rejects non-digits and anything longer than 15 digits, and warns when the value is shorter than a full 15-digit IMSI. Because MNC length is region-dependent and is <em>not</em> carried in the IMSI itself, you choose how to split: <strong>Auto</strong> guesses 3 digits for NANP-style ranges (MCC 310–316 and a few others) and 2 digits elsewhere, or you can force <strong>2-digit</strong> or <strong>3-digit</strong>. Output lists the MCC (with a country name when known), the MNC digits, and the MSIN. The operator row is intentionally left unresolved.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>MCC</h3><p>First 3 digits. Identifies the country/region. This tool maps a curated subset (for example 404/405 India, 310–316 USA, 234/235 UK, 262 Germany, 460 China) to a country name.</p></div>
+    <div class="ref-card"><h3>MNC</h3><p>2 or 3 digits after the MCC. Identifies the operator within the country. Length varies by region; pick it with the selector when you know it.</p></div>
+    <div class="ref-card"><h3>MSIN</h3><p>Everything after MCC + MNC. The operator-assigned subscriber serial. Shown verbatim; this tool does not interpret it.</p></div>
+  </div>
+
+  <h2>Scope and honesty note</h2>
+  <p>This decoder does <strong>not</strong> resolve the MNC to a named operator. There are thousands of MNC assignments and they change often, so a trustworthy lookup needs a maintained public MCC/MNC table rather than a hard-coded list that would quietly go stale. For operator resolution, consult a current public MCC/MNC reference such as the ITU/GSMA listings or community-maintained tables. The country map here is small and best-effort, not authoritative.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Confusing IMSI with ICCID.</strong> The ICCID is the SIM chip serial printed on the card; the IMSI is the subscription identity stored inside. Use the <a href="/resources/tools/iccid-decoder/">ICCID decoder</a> for the former.</li>
+    <li><strong>Assuming a fixed MNC length.</strong> A 2-digit guess on a 3-digit MNC network shifts every later digit into the wrong field. Set the MNC length explicitly when you know the network.</li>
+    <li><strong>Expecting an operator name.</strong> This tool only maps the MCC to a country; it never names the carrier behind the MNC.</li>
+    <li><strong>Pasting a real IMSI.</strong> An IMSI is privacy-sensitive and can enable tracking. Work with dummy values; 5G even hides the IMSI inside the encrypted SUCI for this reason.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>ICCID Decoder</h3><p>Break down the SIM/eSIM card serial and its Luhn check digit.</p><p><a href="/resources/tools/iccid-decoder/">Open ICCID decoder →</a></p></div>
+    <div class="ref-card"><h3>eUICC EID Decoder</h3><p>Parse the 32-digit eUICC identifier behind an eSIM.</p><p><a href="/resources/tools/euicc-eid-decoder/">Open EID decoder →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for SIM, smart-card, and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/imsi-decoder.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>eUICC EID Decoder — AmbiSecure | eSIM EID structure &amp; checksum</title>
+<meta name="description" content="Decode a 32-digit eUICC EID into its issuer/version fields per GSMA SGP.02 / ITU-T E.118 and validate the trailing Luhn check digits — client-side, dummy examples only." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/euicc-eid-decoder/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="eUICC EID Decoder — AmbiSecure" />
+<meta property="og:description" content="Decode a 32-digit eSIM EID into its documented fields per GSMA SGP.02 / ITU-T E.118 and validate the Luhn check digits, all in your browser." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/euicc-eid-decoder/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "eUICC EID Decoder", "item": "https://ambisecure.ambimat.com/resources/tools/euicc-eid-decoder/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "eUICC EID Decoder",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/euicc-eid-decoder/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What is an eUICC EID?",
+"acceptedAnswer": { "@type": "Answer", "text": "The EID (eUICC Identifier) is a globally unique 32-decimal-digit number burned into an embedded SIM (eSIM) during manufacture. It identifies the eUICC chip itself — not a subscription — and is used by GSMA SGP.22 / SGP.02 remote SIM provisioning systems to address the device when downloading a carrier profile. Unlike an ICCID, which belongs to a specific profile, the EID stays constant for the life of the chip." }
+},
+{
+"@type": "Question",
+"name": "How is the EID check digit calculated?",
+"acceptedAnswer": { "@type": "Answer", "text": "The full 32-digit EID is constructed so that it passes a Luhn (mod-10) check. The first 30 digits carry the structure (industry identifier, version, manufacturer, serial) and the last two digits are check digits chosen so the whole value is Luhn-valid. This tool recomputes the expected check over the first 30 digits and flags a mismatch, the same way a provisioning server would reject a malformed EID." }
+},
+{
+"@type": "Question",
+"name": "Why are some EID fields shown as issuer-specific?",
+"acceptedAnswer": { "@type": "Answer", "text": "GSMA and ITU-T E.118 fix the leading Major Industry Identifier (89) and the overall 32-digit, Luhn-checked layout, but the internal allocation of the manufacturer-specific and serial-number portions is assigned by each eUICC manufacturer (EUM). Those sub-fields are not publicly specified, so this decoder labels them as issuer-specific rather than inventing meanings for bytes that are proprietary." }
+},
+{
+"@type": "Question",
+"name": "Does this tool send my EID anywhere?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. All parsing, field splitting, and Luhn validation run locally in JavaScript on this page. Nothing is uploaded, logged, or transmitted. Even so, the samples provided here are dummy values — avoid pasting a real subscriber device identifier into any web tool you do not control." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">eUICC EID Decoder</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">eSIM / SIM / telecom</span>
+  <h1>eUICC EID Decoder</h1>
+  <p>Split a 32-digit <strong>eUICC EID</strong> into its documented fields per <strong>GSMA SGP.02 / SGP.22</strong> and <strong>ITU-T E.118</strong>, and validate the trailing <strong>Luhn</strong> check digits — the identifier eSIM remote provisioning uses to address an embedded SIM.</p>
+  <div class="tool-meta"><span>Client-side</span><span>GSMA SGP.02</span><span>ITU-T E.118</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="eid-sample">Sample</button> <button class="tool-action" id="eid-clear">Clear</button></div></div>
+    <label for="eid-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Paste a 32-digit EID. Spaces, dashes, and dots are ignored.</label>
+    <textarea id="eid-input" class="hex-input" rows="4" spellcheck="false"></textarea>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Decoded fields</h2><div class="tool-panel-actions"><button class="tool-action" id="eid-copy">Copy</button></div></div>
+    <div class="tool-output" id="eid-output"><div class="placeholder">Paste a 32-digit EID to decode.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All decoding and Luhn validation runs locally in your browser. Nothing is uploaded — but use dummy EIDs, not real subscriber device identifiers.</div>
+
+<section class="tool-reference">
+  <h2>What the EID is for</h2>
+  <p>The <strong>EID</strong> (eUICC Identifier) is the permanent serial number of an embedded SIM. Where a traditional SIM is a removable card, an eUICC is a soldered-down secure element that can hold several carrier profiles and switch between them over the air. Remote SIM provisioning (RSP) systems built on GSMA <strong>SGP.22</strong> (consumer) and <strong>SGP.02</strong> (M2M) use the EID to address a specific eUICC when an operator pushes down a new profile. The EID identifies the <em>chip</em>; the ICCID and IMSI identify the <em>subscription</em> that later lands on it.</p>
+  <p>An EID is exactly <strong>32 decimal digits</strong>. Its outer structure follows ITU-T E.118 numbering: it begins with the Major Industry Identifier <code>89</code> (telecommunications), continues with a version/format field and a manufacturer (EUM) allocation, and ends with two check digits that make the whole value pass a Luhn (mod-10) checksum. This tool splits those documented regions and recomputes the checksum so you can spot a typo before it reaches a provisioning server.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for this decoder when you are debugging eSIM activation, reading an EID off a QR code or device settings screen, or sanity-checking values in an entitlement or RSP integration. A failed Luhn check almost always means a transcription error — a swapped pair of digits or a dropped character. Confirming the leading <code>89</code> and the 32-digit length tells you the value is at least shaped like a telecom EID rather than an ICCID, IMSI, or some other identifier that happens to be numeric.</p>
+
+  <h2>Input and output</h2>
+  <p>The input accepts a single EID as 32 digits; whitespace, dashes, dots, and colons are stripped before parsing. The output shows the value grouped into readable blocks, a set of status badges (32-digit length, Major Industry Identifier, and Luhn result), and a field-by-field breakdown. Fields whose internal meaning is fixed by the specifications are labelled accordingly; fields whose layout is assigned privately by each eUICC manufacturer are labelled <strong>issuer-specific (not publicly specified)</strong> rather than given invented meanings.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>MII + version</h3><p>Digits 1–5: the <code>89</code> telecom industry identifier followed by the EID format/version field defined by GSMA.</p></div>
+    <div class="ref-card"><h3>EUM &amp; serial</h3><p>Digits 6–30: the eUICC manufacturer allocation and an EUM-assigned serial — layout is issuer-specific.</p></div>
+    <div class="ref-card"><h3>Check digits</h3><p>Digits 31–32: two digits chosen so the full 32-digit EID satisfies a Luhn (mod-10) check.</p></div>
+  </div>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Confusing an EID with an ICCID.</strong> Both can start with <code>89</code>, but an EID is always 32 digits and identifies the chip, while an ICCID identifies a profile. Use the <a href="/resources/tools/iccid-decoder/">ICCID decoder</a> for the latter.</li>
+    <li><strong>Trusting a value that fails Luhn.</strong> A failed check digit means the EID was mistyped — fix the source rather than forcing it through a provisioning call.</li>
+    <li><strong>Reading meaning into proprietary digits.</strong> The manufacturer-specific and serial portions are not publicly specified; do not assume a country, operator, or date is encoded there.</li>
+    <li><strong>Pasting a real device EID into web tools.</strong> Even client-side, treat a production EID as sensitive. The samples here are dummy values built to validate cleanly.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>ICCID decoder</h3><p>Parse the 19–20 digit profile identifier that rides on an eUICC.</p><p><a href="/resources/tools/iccid-decoder/">Open ICCID decoder →</a></p></div>
+    <div class="ref-card"><h3>IMSI decoder</h3><p>Break out the MCC / MNC / MSIN of a subscriber identity.</p><p><a href="/resources/tools/imsi-decoder/">Open IMSI decoder →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card, SIM, and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/euicc-eid-decoder.js" defer></script>
+</body>
+</html>

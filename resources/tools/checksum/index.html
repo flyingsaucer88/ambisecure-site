@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Checksum Calculator — AmbiSecure | sum, XOR, Fletcher, Adler-32</title>
+<meta name="description" content="Compute 8/16/32-bit sums, one’s/two’s-complement, XOR, Fletcher-16/32, Adler-32, and the Internet (RFC 1071) checksum over text or hex — all client-side with endian options." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/checksum/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Checksum Calculator — AmbiSecure" />
+<meta property="og:description" content="8/16/32-bit sums, XOR, Fletcher-16/32, Adler-32, and the RFC 1071 Internet checksum over text or hex, client-side." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/checksum/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "Checksum Calculator", "item": "https://ambisecure.ambimat.com/resources/tools/checksum/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "Checksum Calculator",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/checksum/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Which checksum should I use to detect errors?",
+"acceptedAnswer": { "@type": "Answer", "text": "It depends on the threat. A plain 8-bit additive sum or XOR (LRC) catches single-bit and most burst errors and is trivial to compute on tiny micro-controllers, but it misses reordering and pairs of cancelling errors. Fletcher-16/32 and Adler-32 add a positional component so byte transpositions are detected, at very low cost. For Internet protocols the RFC 1071 16-bit one's-complement checksum is standard. None of these are cryptographic — for tamper resistance use a hash or a keyed MAC, not a checksum." }
+},
+{
+"@type": "Question",
+"name": "What is the difference between a one's-complement and two's-complement checksum?",
+"acceptedAnswer": { "@type": "Answer", "text": "Both are derived from the simple byte sum. The one's-complement checksum is the bitwise NOT of the truncated sum, so the sum plus the checksum equals all-ones. The two's-complement checksum is the arithmetic negation of the sum, so the sum plus the checksum wraps to zero — appending it makes the total of all bytes equal zero, which is convenient for verification. This tool reports both over an 8-bit accumulator." }
+},
+{
+"@type": "Question",
+"name": "Why does endianness matter for the 16-bit and 32-bit sums?",
+"acceptedAnswer": { "@type": "Answer", "text": "When bytes are grouped into 16-bit or 32-bit words before adding, the byte order inside each word changes the numeric value of every word and therefore the sum. Little-endian and big-endian grouping give different results for the same bytes. The 8-bit sum, XOR, Fletcher, Adler-32, and the Internet checksum are defined byte-by-byte or on a fixed word order, so the endian toggle does not change them; it only affects the 16-bit and 32-bit additive sums." }
+},
+{
+"@type": "Question",
+"name": "Are these checksums safe against deliberate tampering?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. Sum, XOR, Fletcher, Adler-32, and the Internet checksum are integrity checks for accidental corruption only. An attacker can append or adjust bytes to force any target value, so they provide no authentication. For tamper detection use a cryptographic hash such as SHA-256, and for authenticity use a keyed MAC such as HMAC or CMAC verified by a secure element." }
+},
+{
+"@type": "Question",
+"name": "Does any of my data leave the browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. Every checksum on this page is computed locally in JavaScript. Nothing you type or paste is uploaded, logged, or sent to a server, so it is safe to checksum sensitive payloads, firmware images, or APDU scripts." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">Checksum Calculator</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Crypto &amp; integrity</span>
+  <h1>Checksum Calculator</h1>
+  <p>Compute every common non-cryptographic <strong>checksum</strong> over the same input at once: 8/16/32-bit sums, one&rsquo;s- and two&rsquo;s-complement, XOR (LRC), <strong>Fletcher-16/32</strong>, <strong>Adler-32</strong>, and the <strong>Internet checksum</strong> (RFC 1071). Feed it text, hex, or binary, toggle endianness for the word sums, and read the result in hex, decimal, or binary.</p>
+  <div class="tool-meta"><span>Client-side</span><span>RFC 1071</span><span>Fletcher · Adler-32</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="cs-sample">Sample</button> <button class="tool-action" id="cs-clear">Clear</button></div></div>
+    <label for="cs-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Text, hex bytes, or a binary bit-string to checksum.</label>
+    <textarea id="cs-input" class="hex-input" rows="8" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label>Input is:
+        <select id="cs-inmode"><option value="text">Text (UTF-8)</option><option value="hex">Hex bytes</option><option value="binary">Binary bits</option></select>
+      </label>
+      <label>Word order (16/32-bit sums):
+        <select id="cs-endian"><option value="little">Little-endian</option><option value="big">Big-endian</option></select>
+      </label>
+      <label>Show as:
+        <select id="cs-base"><option value="hex">Hex</option><option value="dec">Decimal</option><option value="bin">Binary</option></select>
+      </label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="cs-copy">Copy</button></div></div>
+    <div class="tool-output" id="cs-output"><div class="placeholder">Type something to checksum.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All checksums are computed locally in your browser. Nothing is uploaded — safe for firmware images, APDU scripts, and other payloads.</div>
+
+<section class="tool-reference">
+  <h2>What this tool does</h2>
+  <p>A checksum condenses a block of bytes into a short fixed-width value so a reader can tell whether the block arrived intact. This calculator runs ten of the most widely used <em>non-cryptographic</em> checksums over the same input and shows every result side by side, which is exactly what you want when you are reverse-engineering an undocumented frame format and do not yet know which algorithm a device uses. Paste the payload, then scan the column for the value that matches the trailer byte already in the message.</p>
+  <p>The families covered are: plain additive sums truncated to 8, 16, or 32 bits; the one&rsquo;s-complement and two&rsquo;s-complement variants of the 8-bit sum; the XOR checksum (the same longitudinal redundancy check, or LRC, used in many serial and smart-card protocols); the position-sensitive Fletcher-16 and Fletcher-32; Adler-32 as used by zlib; and the 16-bit one&rsquo;s-complement Internet checksum specified in RFC 1071 and carried in IP, TCP, UDP, and ICMP headers.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for this tool when you are validating or forging a trailer on a protocol frame, debugging a firmware update that a bootloader rejects with a &ldquo;bad checksum&rdquo; error, or confirming that a zlib/PNG stream&rsquo;s Adler-32 matches. It is also handy for teaching: changing one byte of the input and watching which checksums move (and which collide) makes the error-detection trade-offs concrete. For polynomial CRCs see the dedicated <a href="/resources/">CRC and LRC utilities in the resource library</a>; for the byte-level views you will pair this with, see the encoding tools below.</p>
+
+  <h2>Input and output</h2>
+  <p>The <strong>Input is</strong> selector controls how your text is turned into bytes. <code>Text (UTF-8)</code> encodes the characters as UTF-8. <code>Hex bytes</code> accepts pairs of hex digits with optional spaces, commas, colons, or <code>0x</code> prefixes. <code>Binary bits</code> accepts a run of <code>0</code>/<code>1</code> whose length is a multiple of eight. The <strong>Word order</strong> toggle only affects the 16-bit and 32-bit additive sums, because those are the only algorithms here that group bytes into multi-byte words before adding; all the others are defined byte-by-byte or on a fixed order. The <strong>Show as</strong> selector renders each result in hex (zero-padded to the algorithm&rsquo;s width), decimal, or grouped binary. The Copy button exports every row as tab-separated <code>label&nbsp;value</code> lines.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Treating a checksum as security.</strong> Sum, XOR, Fletcher, Adler-32, and the Internet checksum all detect accidental corruption only; an attacker can trivially adjust bytes to hit any target. Use a hash or a keyed MAC for tamper resistance.</li>
+    <li><strong>Wrong endianness on word sums.</strong> A 16-bit or 32-bit sum that is &ldquo;almost right&rdquo; is usually a little-endian/big-endian mix-up — flip the toggle before assuming the spec is wrong.</li>
+    <li><strong>Forgetting the seed.</strong> Adler-32 starts from <code>1</code> (not <code>0</code>) and Fletcher accumulators start from <code>0</code>; an implementation that seeds them differently will never match.</li>
+    <li><strong>Including or excluding the wrong bytes.</strong> Many protocols checksum only part of a frame (often skipping the checksum field itself). Trim your input to the exact covered range.</li>
+    <li><strong>Odd-length input for 16-bit algorithms.</strong> The Internet and 16-bit sums conventionally pad a trailing odd byte with a zero; this tool does that, but a peer that pads differently will disagree.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>ASCII &harr; HEX</h3><p>Convert between text and the raw bytes you feed into a checksum.</p><p><a href="/resources/tools/ascii-hex/">Open ASCII &harr; HEX &rarr;</a></p></div>
+    <div class="ref-card"><h3>Hex &harr; bytes</h3><p>Normalise, group, and inspect a hex dump before checksumming it.</p><p><a href="/resources/tools/hex-bytes/">Open Hex &harr; bytes &rarr;</a></p></div>
+    <div class="ref-card"><h3>CMAC length</h3><p>When you need a real keyed integrity tag instead of a checksum.</p><p><a href="/resources/tools/cmac-length/">Open CMAC length &rarr;</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card and FIDO engineers.</p><p><a href="/resources/">All resources &rarr;</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/checksum.js" defer></script>
+</body>
+</html>

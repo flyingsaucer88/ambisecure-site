@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SHA Hash Generator — AmbiSecure | SHA-1/256/384/512, hex &amp; Base64</title>
+<meta name="description" content="Generate SHA-1, SHA-256, SHA-384, and SHA-512 digests of text, hex, or a local file using the browser’s Web Crypto API — hex and Base64 output, copy buttons. Nothing is uploaded." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/sha-hash-generator/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="SHA Hash Generator — AmbiSecure" />
+<meta property="og:description" content="SHA-1, SHA-256, SHA-384 and SHA-512 digests in your browser via Web Crypto. Hex and Base64 output, file hashing, copy buttons. Nothing leaves your machine." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/sha-hash-generator/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "SHA Hash Generator", "item": "https://ambisecure.ambimat.com/resources/tools/sha-hash-generator/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "SHA Hash Generator",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/sha-hash-generator/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Which SHA algorithms does this tool support?",
+"acceptedAnswer": { "@type": "Answer", "text": "Exactly the four digests the browser’s Web Crypto API natively implements: SHA-1, SHA-256, SHA-384 and SHA-512. The tool runs crypto.subtle.digest for each, so the output is the same bytes the platform would produce in any other Web Crypto call. It does not implement any algorithm in hand-written JavaScript." }
+},
+{
+"@type": "Question",
+"name": "Why are SHA-224, SHA-512/256 and SHA-3 not offered?",
+"acceptedAnswer": { "@type": "Answer", "text": "The WebCrypto SubtleCrypto.digest method only defines SHA-1, SHA-256, SHA-384 and SHA-512. SHA-224, the truncated SHA-512/224 and SHA-512/256 variants, and the entire SHA-3 / Keccak / SHAKE family are not available in the browser. Rather than ship an unverified pure-JavaScript implementation that could produce wrong digests, we intentionally omit them." }
+},
+{
+"@type": "Question",
+"name": "Is it safe to keep using SHA-1?",
+"acceptedAnswer": { "@type": "Answer", "text": "No, not for anything that relies on collision resistance. SHA-1 has practical collision attacks (SHAttered, 2017) and is forbidden for new digital signatures and certificates. It is included here only so you can verify or compare against legacy systems. Use SHA-256 or stronger for any new design." }
+},
+{
+"@type": "Question",
+"name": "What is the difference between the hex and Base64 output?",
+"acceptedAnswer": { "@type": "Answer", "text": "Both encode the identical digest bytes. Lowercase hex is the conventional form for checksums and command-line tools such as sha256sum. Standard Base64 is denser and shows up in Subresource Integrity attributes, certificate fingerprints and JWT thumbprints. Decode either back to the same raw bytes." }
+},
+{
+"@type": "Question",
+"name": "Does my input or file leave the browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. The text, hex and any file you choose are read locally and hashed in memory with Web Crypto. Nothing is uploaded, logged, or sent to a server, so the tool is safe for sensitive content." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">SHA Hash Generator</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Crypto &amp; integrity</span>
+  <h1>SHA Hash Generator</h1>
+  <p>Compute <strong>SHA-1</strong>, <strong>SHA-256</strong>, <strong>SHA-384</strong>, and <strong>SHA-512</strong> digests of text, hex bytes, or a local file using the browser’s <code>crypto.subtle.digest</code>. Each digest is shown as lowercase hex <em>and</em> standard Base64, with copy buttons.</p>
+  <div class="tool-meta"><span>Client-side</span><span>Web Crypto API</span><span>No upload</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="sha-sample">Sample</button> <button class="tool-action" id="sha-clear">Clear</button></div></div>
+    <label for="sha-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Text, hex bytes, or use the file button below to hash file contents.</label>
+    <textarea id="sha-input" class="hex-input" rows="6" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label>Input is:
+        <select id="sha-inmode"><option value="text">Text (UTF-8)</option><option value="hex">Hex bytes</option></select>
+      </label>
+      <label>Show:
+        <select id="sha-which"><option value="all">All four digests</option><option value="SHA-1">SHA-1 only</option><option value="SHA-256">SHA-256 only</option><option value="SHA-384">SHA-384 only</option><option value="SHA-512">SHA-512 only</option></select>
+      </label>
+      <label class="tool-action file-pick">Hash a file&hellip;<input type="file" id="sha-file" /></label>
+    </div>
+    <p id="sha-fileinfo" style="font-size:12.5px;color:var(--brand-grey);margin:8px 0 0;"></p>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Digests</h2><div class="tool-panel-actions"><button class="tool-action" id="sha-copy">Copy</button></div></div>
+    <div class="tool-output" id="sha-output"><div class="placeholder">Type something, or choose a file, to hash.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All hashing runs locally in your browser via the Web Crypto API. Your text, hex, and any chosen file are never uploaded.</div>
+
+<section class="tool-reference">
+  <h2>What this SHA hash generator does</h2>
+  <p>A cryptographic hash function maps any amount of input to a fixed-length digest that is practically impossible to reverse and, for a strong algorithm, infeasible to collide. This page computes the digest of whatever you type, paste as hex, or load from a local file, and renders it in two encodings: lowercase hexadecimal (the form printed by <code>sha256sum</code> and most command-line tooling) and standard Base64 (the form used in Subresource Integrity attributes, JWT thumbprints, and many certificate fingerprints).</p>
+  <p>Everything is computed with the browser’s built-in <code>crypto.subtle.digest</code>. There is no hand-rolled hashing JavaScript here — the bytes you see are exactly what the platform’s vetted Web Crypto implementation returns, identical to what any other application on the machine would compute. Because <code>crypto.subtle</code> is asynchronous, the page awaits each digest before displaying it.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for this tool when you need to verify a download against a published checksum, confirm two files are byte-identical, derive an SRI <code>integrity</code> value for a script tag, sanity-check a fingerprint your code produced, or learn how the four SHA-2 lengths differ. It pairs naturally with the <a href="/resources/tools/cert-fingerprint/">certificate fingerprint tool</a> when you are matching a thumbprint, and with the <a href="/resources/tools/base64/">Base64 tool</a> when you need to convert a digest between encodings.</p>
+
+  <h2>Input and output</h2>
+  <p>Choose how your input is interpreted. <strong>Text (UTF-8)</strong> encodes the characters you type as UTF-8 bytes before hashing. <strong>Hex bytes</strong> treats the input as raw bytes — useful when you already have a key or message in hex; separators, <code>0x</code> prefixes, and whitespace are ignored, but the digit count must be even. The <strong>file</strong> button hashes the exact bytes of a local file and shows its name and size; an empty input still produces the well-known digest of the empty string.</p>
+  <p>For each selected algorithm the result panel lists the digest length in bits, the lowercase hex form, and the standard Base64 form, each with its own copy control. Choose “All four digests” to compare lengths side by side, or pick a single algorithm to focus on one value.</p>
+
+  <h2>Supported and unsupported algorithms</h2>
+  <p>Web Crypto’s <code>SubtleCrypto.digest</code> defines only four digests, and those are the only four offered here:</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>SHA-256 / 384 / 512</h3><p>The SHA-2 family. SHA-256 is the modern default; SHA-384 and SHA-512 give longer digests for higher security margins.</p></div>
+    <div class="ref-card"><h3>SHA-1 (legacy)</h3><p>160-bit and <strong>broken for collision resistance</strong> (SHAttered, 2017). Provided only to verify legacy values — never design new security around it.</p></div>
+    <div class="ref-card"><h3>Not available</h3><p>SHA-224, SHA-512/224, SHA-512/256 and the entire SHA-3 / Keccak / SHAKE family are not in Web Crypto. We omit them rather than ship unverified crypto.</p></div>
+  </div>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Hashing the wrong bytes.</strong> Leaving the mode on “Text” when your value is hex (or vice versa) produces a completely different digest. Pick the mode that matches your data.</li>
+    <li><strong>Trusting SHA-1.</strong> Matching a SHA-1 value to verify an old artifact is fine; using SHA-1 for a new signature, integrity check, or password scheme is not.</li>
+    <li><strong>Comparing across encodings.</strong> A hex digest and a Base64 digest of the same input look totally different but encode the same bytes — compare like with like.</li>
+    <li><strong>Expecting SHA-3 or SHA-224.</strong> They are intentionally absent because the browser cannot compute them; this tool will not fake them.</li>
+    <li><strong>Odd-length hex.</strong> Hex input must have an even number of digits, since each byte is two hex characters.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Certificate fingerprint</h3><p>Compute SHA-1/256 fingerprints of an X.509 certificate.</p><p><a href="/resources/tools/cert-fingerprint/">Open fingerprint tool →</a></p></div>
+    <div class="ref-card"><h3>Base64</h3><p>Convert a digest between Base64 and raw bytes or hex.</p><p><a href="/resources/tools/base64/">Open Base64 →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/sha-hash-generator.js" defer></script>
+</body>
+</html>

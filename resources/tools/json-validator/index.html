@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JSON Validator — AmbiSecure | syntax &amp; JSON Schema checker</title>
+<meta name="description" content="Validate JSON syntax with exact error location, and optionally check an instance against a JSON Schema — all client-side. No upload. Pairs with the JSON formatter." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/json-validator/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="JSON Validator — AmbiSecure" />
+<meta property="og:description" content="Validate JSON syntax with exact line and column, then check it against a practical JSON Schema subset. Client-side, no upload." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/json-validator/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "JSON Validator", "item": "https://ambisecure.ambimat.com/resources/tools/json-validator/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "JSON Validator",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/json-validator/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Does this validator upload my JSON anywhere?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. Both the instance JSON and the optional JSON Schema are parsed and validated entirely in JavaScript on this page. Nothing is sent to a server, logged, or stored, so it is safe to paste configuration, tokens, or attestation payloads." }
+},
+{
+"@type": "Question",
+"name": "Which JSON Schema keywords are supported?",
+"acceptedAnswer": { "@type": "Answer", "text": "A practical subset of draft 2020-12: type, required, properties, items, enum, const, minimum, maximum, minLength, maxLength, pattern, minItems, maxItems, additionalProperties as a boolean, anyOf, allOf, oneOf, and local $ref into #/definitions or #/$defs. Each failure is reported with its JSON Pointer path." }
+},
+{
+"@type": "Question",
+"name": "What is NOT covered by the schema checker?",
+"acceptedAnswer": { "@type": "Answer", "text": "It deliberately skips format assertions (date-time, email, uri), remote or URL $ref, if/then/else, dependentSchemas and dependentRequired, $dynamicRef, and unevaluatedProperties. For full draft 2020-12 conformance use a dedicated library such as Ajv; this tool targets the everyday cases you hit while hand-writing config." }
+},
+{
+"@type": "Question",
+"name": "How precise is the syntax error location?",
+"acceptedAnswer": { "@type": "Answer", "text": "The validator reads the browser's native JSON.parse error and converts it to a 1-based line and column plus a short snippet that marks the offending character. Exact wording depends on the browser engine, but the position points at where parsing failed." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">JSON Validator</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Data utility</span>
+  <h1>JSON Validator</h1>
+  <p>Check whether a document is <strong>well-formed JSON</strong> — with the exact line and column on failure — and optionally validate it against a <strong>JSON Schema</strong>. Every schema violation is reported with its JSON Pointer path. Runs entirely in your browser.</p>
+  <div class="tool-meta"><span>Client-side</span><span>JSON Schema 2020-12 subset</span><span>No upload</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="jv-sample">Sample</button> <button class="tool-action" id="jv-clear">Clear</button></div></div>
+    <label for="jv-instance" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Instance JSON to validate.</label>
+    <textarea id="jv-instance" class="hex-input" rows="9" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label><input type="checkbox" id="jv-use-schema" /> Validate against schema</label>
+    </div>
+    <label for="jv-schema" style="font-size:13px;color:var(--brand-grey);margin:10px 0 6px;">JSON Schema (optional — used only when the box above is ticked).</label>
+    <textarea id="jv-schema" class="hex-input" rows="9" spellcheck="false"></textarea>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="jv-copy">Copy</button></div></div>
+    <div class="tool-output" id="jv-output"><div class="placeholder">Paste JSON to validate it.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">Parsing and schema validation run locally in your browser. Nothing is uploaded — safe for config, tokens, and attestation payloads.</div>
+
+<section class="tool-reference">
+  <h2>What this tool does</h2>
+  <p>The JSON Validator answers two questions about a document. First: is it syntactically valid JSON at all? It hands your text to the browser's native <code>JSON.parse</code> and, on failure, normalises the engine's error into a 1-based line and column plus a short snippet that marks the exact character where parsing broke. That turns the famously terse "Unexpected token" message into something you can jump to. Second, and optionally: does a valid document also satisfy a <strong>JSON Schema</strong> you supply? When the schema box is ticked, every constraint violation is listed with its JSON Pointer location, such as <code>/items/2/port</code>, so you know precisely which value is wrong and why.</p>
+  <p>Both inputs stay on this page. There is no network request, no telemetry, and nothing is written to storage — the same client-side guarantee as every other tool in this collection, which matters when the payload is a credential, an access policy, or a device attestation blob.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for the validator when a parser somewhere downstream rejects your JSON and you need the offending character, when you are hand-authoring a config file and want a fast well-formedness check, or when you maintain a contract (an API request body, a webauthn options object, an applet provisioning manifest) expressed as a JSON Schema and want to confirm a sample conforms. If you only want to pretty-print or minify already-valid JSON, use the <a href="/resources/tools/json-formatter/">JSON formatter</a> instead — this page is about correctness, not layout. To assemble a binary blob from structured fields, see the <a href="/resources/tools/json-bin-builder/">JSON bin builder</a>.</p>
+
+  <h2>Inputs and outputs</h2>
+  <p>The top textarea is the <strong>instance</strong>: the JSON you want to check. The lower textarea is an optional <strong>JSON Schema</strong>; it is only consulted when "Validate against schema" is ticked, and it must itself be valid JSON. The result panel shows one of a few states: a green <em>VALID JSON</em> badge when syntax is well-formed; an <em>INVALID JSON</em> badge with line, column, and a snippet when it is not; <em>SCHEMA PASS</em> when the instance satisfies every supported keyword; or <em>SCHEMA FAIL</em> with one row per violation, each carrying its JSON Pointer path. The Copy button copies a plain-text summary of whatever the result currently shows.</p>
+
+  <h2>Supported schema keywords</h2>
+  <p>This is a small, self-contained validator covering a practical slice of draft 2020-12 — enough for everyday contracts, not full conformance.</p>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Covered</h3><p><code>type</code>, <code>required</code>, <code>properties</code>, <code>items</code>, <code>enum</code>, <code>const</code>, <code>minimum</code>, <code>maximum</code>, <code>minLength</code>, <code>maxLength</code>, <code>pattern</code>, <code>minItems</code>, <code>maxItems</code>, <code>additionalProperties</code> (boolean), <code>anyOf</code>, <code>allOf</code>, <code>oneOf</code>.</p></div>
+    <div class="ref-card"><h3>$ref</h3><p>Local JSON Pointer references only: <code>#/definitions/&hellip;</code> and <code>#/$defs/&hellip;</code>. Sibling keywords next to a <code>$ref</code> are honoured.</p></div>
+    <div class="ref-card"><h3>Not covered</h3><p>Honestly out of scope: <code>format</code> assertions, remote / URL <code>$ref</code>, <code>if</code>/<code>then</code>/<code>else</code>, <code>dependentSchemas</code> / <code>dependentRequired</code>, <code>$dynamicRef</code>, and <code>unevaluatedProperties</code>. For those, use a full library such as Ajv.</p></div>
+  </div>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Trailing commas.</strong> JSON forbids the comma after the last array element or object member that JavaScript allows. The reported column usually lands on the closing <code>]</code> or <code>}</code>.</li>
+    <li><strong>Single quotes or unquoted keys.</strong> Strings and property names must use double quotes. <code>{'a':1}</code> and <code>{a:1}</code> are both invalid JSON.</li>
+    <li><strong>Confusing "valid JSON" with "valid against my schema".</strong> A document can parse cleanly yet still fail the schema. Tick the schema box to check the second question.</li>
+    <li><strong>Expecting <code>format</code> to be enforced.</strong> Keywords this tool does not implement are silently ignored, not failed — so a passing result only means the supported keywords are satisfied.</li>
+    <li><strong>Putting the schema in the instance box.</strong> The schema goes in the lower textarea; the data you are checking goes in the top one.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>JSON formatter</h3><p>Pretty-print, minify, and re-indent valid JSON.</p><p><a href="/resources/tools/json-formatter/">Open JSON formatter →</a></p></div>
+    <div class="ref-card"><h3>JSON bin builder</h3><p>Build a binary blob from structured JSON fields.</p><p><a href="/resources/tools/json-bin-builder/">Open JSON bin builder →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/json-validator.js" defer></script>
+</body>
+</html>

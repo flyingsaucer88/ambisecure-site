@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Binary Calculator — AmbiSecure | bitwise ops &amp; base converter</title>
+<meta name="description" content="Convert between binary, decimal, hex, and octal and run bitwise AND/OR/XOR/NOT and shifts at 8/16/32/64-bit width with signed/unsigned and two’s-complement views. Client-side." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/binary-calculator/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Binary Calculator — AmbiSecure" />
+<meta property="og:description" content="Base converter plus bitwise AND/OR/XOR/NOT and shifts at 8/16/32/64-bit width, signed/unsigned and two’s-complement views. BigInt-backed, client-side." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/binary-calculator/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "Binary Calculator", "item": "https://ambisecure.ambimat.com/resources/tools/binary-calculator/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "Binary Calculator",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/binary-calculator/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "Why use BigInt instead of plain JavaScript bitwise operators?",
+"acceptedAnswer": { "@type": "Answer", "text": "JavaScript's &, |, ^, ~, and shift operators coerce their operands to signed 32-bit integers, so any value above 2^31-1 is silently truncated or flips sign. That makes them useless for 64-bit registers and unreliable even at 32 bits. This calculator performs every operation on BigInt values and masks the result to the selected width, so 8, 16, 32, and 64-bit results are all exact." }
+},
+{
+"@type": "Question",
+"name": "What is the difference between logical and arithmetic right shift?",
+"acceptedAnswer": { "@type": "Answer", "text": "A logical right shift (often written >>>) always fills the vacated high bits with zero, treating the value as unsigned. An arithmetic right shift (>>) replicates the sign bit so that a negative two's-complement number stays negative — it divides by powers of two with rounding toward negative infinity. This tool offers both and lets you pick the operand width that defines where the sign bit sits." }
+},
+{
+"@type": "Question",
+"name": "How is two's complement shown here?",
+"acceptedAnswer": { "@type": "Answer", "text": "When you set the interpretation to signed, the most significant bit of the chosen width is the sign bit. A value with that bit set is shown as a negative decimal equal to value minus 2^width, while the binary, hex, and octal views always show the raw unsigned bit pattern. That lets you see, for example, that the 8-bit pattern 11111111 is 255 unsigned and -1 signed at the same time." }
+},
+{
+"@type": "Question",
+"name": "Does the calculator send my values anywhere?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. All parsing, base conversion, and bitwise math run locally in your browser using JavaScript BigInt. Nothing is uploaded, logged, or sent to a server, so it is safe to work with register dumps, key material, or device identifiers." }
+},
+{
+"@type": "Question",
+"name": "What happens when a value exceeds the selected width?",
+"acceptedAnswer": { "@type": "Answer", "text": "Inputs and results are masked to the chosen width (8, 16, 32, or 64 bits). If you enter a number larger than the width can hold, the high bits are discarded — exactly as they would be when written to a register of that size — and the tool flags that the value was truncated so the wrap-around is never silent." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">Binary Calculator</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Developer utility</span>
+  <h1>Binary Calculator</h1>
+  <p>Convert between <strong>binary</strong>, <strong>decimal</strong>, <strong>hex</strong>, and <strong>octal</strong>, then run bitwise <code>AND</code>, <code>OR</code>, <code>XOR</code>, <code>NOT</code> and shifts at a chosen 8/16/32/64-bit width — with signed/unsigned and two&rsquo;s-complement views. BigInt-backed so 64-bit math stays exact.</p>
+  <div class="tool-meta"><span>Client-side</span><span>BigInt</span><span>8/16/32/64-bit</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Base converter</h2><div class="tool-panel-actions"><button class="tool-action" id="bc-sample">Sample</button> <button class="tool-action" id="bc-clear">Clear</button></div></div>
+    <label for="bc-conv-value" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Enter one value; all four bases update live. Prefixes <code>0x</code> / <code>0b</code> / <code>0o</code> are honoured.</label>
+    <input id="bc-conv-value" class="hex-input" type="text" spellcheck="false" autocomplete="off" />
+    <div class="tool-options">
+      <label>Value is in:
+        <select id="bc-conv-base"><option value="10">Decimal</option><option value="2">Binary</option><option value="16">Hex</option><option value="8">Octal</option></select>
+      </label>
+      <label>Width:
+        <select id="bc-conv-width"><option value="8">8-bit</option><option value="16">16-bit</option><option value="32" selected>32-bit</option><option value="64">64-bit</option></select>
+      </label>
+      <label>Interpret as:
+        <select id="bc-conv-sign"><option value="unsigned">Unsigned</option><option value="signed">Signed (two&rsquo;s complement)</option></select>
+      </label>
+    </div>
+    <div class="tool-output" id="bc-conv-output" style="margin-top:14px;"><div class="placeholder">Enter a value to see all bases.</div></div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Bitwise operation</h2><div class="tool-panel-actions"><button class="tool-action" id="bc-op-copy">Copy</button></div></div>
+    <div class="tool-options">
+      <label>Operand A:
+        <input id="bc-op-a" class="hex-input" type="text" spellcheck="false" autocomplete="off" style="margin-top:4px;" />
+      </label>
+      <label>Operation:
+        <select id="bc-op-op">
+          <option value="and">A AND B</option>
+          <option value="or">A OR B</option>
+          <option value="xor">A XOR B</option>
+          <option value="not">NOT A</option>
+          <option value="shl">A &laquo; B (left shift)</option>
+          <option value="shr_logical">A &raquo;&raquo; B (logical right)</option>
+          <option value="shr_arith">A &raquo; B (arithmetic right)</option>
+        </select>
+      </label>
+      <label>Operand B:
+        <input id="bc-op-b" class="hex-input" type="text" spellcheck="false" autocomplete="off" style="margin-top:4px;" />
+      </label>
+      <label>Operand base:
+        <select id="bc-op-base"><option value="10">Decimal</option><option value="2">Binary</option><option value="16">Hex</option><option value="8">Octal</option></select>
+      </label>
+    </div>
+    <div class="tool-output" id="bc-op-output" style="margin-top:14px;"><div class="placeholder">Choose an operation and enter operands.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All parsing, base conversion, and bitwise math run locally in your browser using JavaScript BigInt. Nothing is uploaded — safe for register dumps and key material.</div>
+
+<section class="tool-reference">
+  <h2>What this calculator does</h2>
+  <p>This is a binary calculator built for embedded and security engineers who spend their days staring at registers, status words, and bit-packed flags. The left panel is a live base converter: type a value once and read it back in binary, decimal, hexadecimal, and octal at the same time. The right panel runs the bitwise operations you reach for when masking flags or assembling protocol fields — <code>AND</code>, <code>OR</code>, <code>XOR</code>, <code>NOT</code>, and the three shifts (left, logical right, arithmetic right). Both panels share the same notion of operand <em>width</em> and <em>signedness</em>, so the bit pattern you convert is the bit pattern you operate on.</p>
+  <p>Everything is computed with JavaScript <code>BigInt</code> and then masked to the selected width. That matters more than it sounds: the native JavaScript bitwise operators silently coerce their inputs to signed 32-bit integers, so a 64-bit mask, a 40-bit APDU field, or any value past 2147483647 comes out wrong. Using BigInt and an explicit width mask keeps 8, 16, 32, and 64-bit results exact and lets the signed view show genuine two&rsquo;s-complement values.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for it whenever a value crosses a representation boundary. Decoding a smart-card status word and need to see <code>0x9000</code> as bits? Building an <code>ISO 7816</code> class byte or an EMV tag bitmap one flag at a time? Checking that a left shift wraps the way the silicon will at 8 bits? Confirming that <code>0xFF</code> is &minus;1 when a field is signed? Each of those is a few keystrokes here. It also pairs naturally with byte-order work: convert a value, then take the hex into the <a href="/resources/tools/endian/">endian converter</a> to swap byte order, or into <a href="/resources/tools/hex-bytes/">hex bytes</a> to view it as a byte sequence.</p>
+
+  <h2>Input and output</h2>
+  <p>In the base converter, choose which base your typed value is in and the tool parses it accordingly; you can also paste with a <code>0x</code>, <code>0b</code>, or <code>0o</code> prefix and it will infer the base. The output shows all four bases plus a nibble-grouped binary view (four bits per group) so long patterns stay readable. In the bitwise panel, operands A and B are read in the selected operand base; for <code>NOT</code> only operand A is used, and for shifts operand B is the shift amount. Results are masked to the active width and reported in binary, hex, decimal (both unsigned and signed two&rsquo;s-complement), and octal. If a value does not fit the width, the high bits are dropped and the tool flags the truncation rather than hiding it.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Trusting native JS bit-ops past 32 bits.</strong> <code>(0xFFFFFFFF &amp; 0xFFFFFFFF)</code> evaluates to <code>-1</code> in plain JavaScript. This tool uses BigInt to avoid that trap entirely.</li>
+    <li><strong>Confusing logical and arithmetic right shift.</strong> Shifting a negative signed value right with the logical shift zero-fills the sign bit and changes its meaning; pick the arithmetic shift to preserve sign.</li>
+    <li><strong>Forgetting the width when reading two&rsquo;s complement.</strong> The pattern <code>0x80</code> is &minus;128 at 8 bits but a positive 128 at 16 bits. Set the width to match the register.</li>
+    <li><strong>Entering a value wider than the field.</strong> A 9-bit number in an 8-bit width is truncated; watch for the truncation badge.</li>
+    <li><strong>Mixing operand bases.</strong> A and B are read in the single selected operand base — switch the base selector rather than prefixing only one operand.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Endian converter</h3><p>Swap byte order on the hex you produce here.</p><p><a href="/resources/tools/endian/">Open endian &rarr;</a></p></div>
+    <div class="ref-card"><h3>Hex &harr; bytes</h3><p>View a converted value as a sequence of bytes.</p><p><a href="/resources/tools/hex-bytes/">Open hex bytes &rarr;</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card and FIDO engineers.</p><p><a href="/resources/">All resources &rarr;</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/binary-calculator.js" defer></script>
+</body>
+</html>

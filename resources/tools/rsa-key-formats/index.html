@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RSA Key Formats — AmbiSecure | PKCS#1 vs PKCS#8 vs SPKI reference</title>
+<meta name="description" content="Reference and demo tool for RSA key formats: PKCS#1, PKCS#8, SubjectPublicKeyInfo, PEM vs DER, and JWK. Generate a demo key pair (2048/3072/4096) in-browser via Web Crypto. Client-side." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/rsa-key-formats/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="RSA Key Formats — AmbiSecure" />
+<meta property="og:description" content="PKCS#1, PKCS#8, SubjectPublicKeyInfo, PEM vs DER, and JWK — a reference plus an in-browser Web Crypto demo key generator. Client-side." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/rsa-key-formats/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "RSA Key Formats", "item": "https://ambisecure.ambimat.com/resources/tools/rsa-key-formats/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "RSA Key Formats Reference & Demo",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/rsa-key-formats/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What is the difference between PKCS#1 and PKCS#8?",
+"acceptedAnswer": { "@type": "Answer", "text": "PKCS#1 is the RSA-specific structure: an RSAPrivateKey or RSAPublicKey SEQUENCE that contains only the RSA integers. Its PEM armour reads BEGIN RSA PRIVATE KEY. PKCS#8 is an algorithm-neutral wrapper, PrivateKeyInfo, that tags the key with an AlgorithmIdentifier (rsaEncryption) and embeds the PKCS#1 RSAPrivateKey inside an OCTET STRING. Its PEM armour reads BEGIN PRIVATE KEY. Modern libraries prefer PKCS#8 because the same container also holds EC, Ed25519, and other key types." }
+},
+{
+"@type": "Question",
+"name": "What is SubjectPublicKeyInfo and how does it relate to PKCS#1?",
+"acceptedAnswer": { "@type": "Answer", "text": "SubjectPublicKeyInfo (SPKI) is the X.509 public-key container: an AlgorithmIdentifier plus a BIT STRING that wraps the bare PKCS#1 RSAPublicKey. Its PEM armour reads BEGIN PUBLIC KEY, whereas a bare PKCS#1 public key uses BEGIN RSA PUBLIC KEY. OpenSSL, Java, and Web Crypto all default to SPKI for public keys, so it is the format you will see most often." }
+},
+{
+"@type": "Question",
+"name": "What is the difference between PEM and DER?",
+"acceptedAnswer": { "@type": "Answer", "text": "DER is the binary ASN.1 encoding of the key. PEM is that same DER wrapped in Base64 and bracketed by dashed BEGIN and END header lines. Converting between them is purely an encoding step and does not change the underlying structure, so a PEM PKCS#8 key decodes to a DER PKCS#8 key. Use the PEM and DER converter for that transcoding." }
+},
+{
+"@type": "Question",
+"name": "Does this tool send my generated private key anywhere?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. The demo key pair is generated by your browser's Web Crypto API (crypto.subtle.generateKey) and exported entirely in local JavaScript. Nothing is uploaded, logged, or sent to a server. The keys are demonstration material only and should not be reused for production." }
+},
+{
+"@type": "Question",
+"name": "Can this tool convert a PKCS#1 key to PKCS#8?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. This tool only exports the formats that Web Crypto produces natively: SubjectPublicKeyInfo and JWK for public keys, and PKCS#8 and JWK for private keys. It does not perform PKCS#1 to PKCS#8 transcoding or vice versa, because that requires re-wrapping the ASN.1 structures, which Web Crypto does not expose. For real conversions, use OpenSSL or a dedicated library." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">RSA Key Formats</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Crypto reference</span>
+  <h1>RSA Key Formats</h1>
+  <p>A side-by-side reference for <strong>PKCS#1</strong>, <strong>PKCS#8</strong>, <strong>SubjectPublicKeyInfo</strong>, <strong>PEM vs DER</strong>, and <strong>JWK</strong> — plus an in-browser demo generator that exports a real RSA key pair using the Web Crypto API. Private keys never leave your browser.</p>
+  <div class="tool-meta"><span>Client-side</span><span>Web Crypto</span><span>PKCS#1 / PKCS#8 / SPKI / JWK</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Generate &amp; identify</h2><div class="tool-panel-actions"><button class="tool-action" id="rkf-sample">Sample</button> <button class="tool-action" id="rkf-clear">Clear</button></div></div>
+    <div class="tool-options">
+      <label>Key size:
+        <select id="rkf-size">
+          <option value="2048">2048-bit</option>
+          <option value="3072">3072-bit</option>
+          <option value="4096">4096-bit</option>
+          <option value="1024">1024-bit (LEGACY / INSECURE)</option>
+        </select>
+      </label>
+      <button class="tool-action tool-action--primary" id="rkf-gen" type="button">Generate demo key pair</button>
+    </div>
+    <label for="rkf-pem" style="font-size:13px;color:var(--brand-grey);margin:10px 0 6px;">Or paste a PEM block to identify its format (header label + first DER bytes — no full ASN.1 parse):</label>
+    <textarea id="rkf-pem" class="hex-input" rows="7" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <button class="tool-action" id="rkf-identify" type="button">Identify pasted PEM</button>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="rkf-copy">Copy</button></div></div>
+    <div class="tool-output" id="rkf-output"><div class="placeholder">Generate a demo key pair or paste a PEM to inspect.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">Everything runs locally in your browser via the Web Crypto API. Generated private keys are never uploaded, logged, or sent anywhere — they are demonstration material only.</div>
+
+<section class="tool-reference">
+  <h2>What this tool does</h2>
+  <p>RSA keys travel in several different containers, and confusing them is one of the most common causes of "wrong key format" errors in TLS, signing, and JWT work. This page is two things at once: a concise reference that lays out the four ASN.1 containers and the JWK JSON form side by side, and a small demo generator. The generator calls <code>crypto.subtle.generateKey</code> with the <code>RSASSA-PKCS1-v1_5</code> algorithm and SHA-256, then exports the resulting key pair in the formats the browser produces natively — <strong>SubjectPublicKeyInfo</strong> (SPKI) and <strong>JWK</strong> for the public key, and <strong>PKCS#8</strong> and <strong>JWK</strong> for the private key. The DER bytes are Base64-armoured into PEM in JavaScript, so the whole exchange stays on your machine.</p>
+  <p>The second mode does not generate anything. Paste any PEM block and the tool reports which format it is by reading the dashed header label and decoding the first few DER bytes — the outer <code>SEQUENCE</code> tag (<code>0x30</code>) and its length field — so you can quickly tell a PKCS#1 key from a PKCS#8 key or an SPKI public key.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for this when a library rejects a key with an opaque error, when you need a throwaway key pair to test a parser or a signing pipeline, or when you simply want to remember which PEM header maps to which structure. It is also handy for teaching: generate a 2048-bit pair, look at the SPKI and JWK side by side, and the relationship between the ASN.1 integers and the JWK <code>n</code>/<code>e</code> fields becomes obvious. For real-world certificate and CSR inspection, pair it with the dedicated parsers linked below.</p>
+
+  <h2>The formats at a glance</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>PKCS#1</h3><p>RSA-specific. <code>RSAPrivateKey</code> and <code>RSAPublicKey</code> SEQUENCEs holding only the RSA integers. PEM headers <code>RSA PRIVATE KEY</code> and <code>RSA PUBLIC KEY</code>.</p></div>
+    <div class="ref-card"><h3>PKCS#8</h3><p>Algorithm-neutral <code>PrivateKeyInfo</code>: an AlgorithmIdentifier (<code>rsaEncryption</code>) wrapping the PKCS#1 key in an OCTET STRING. PEM header <code>PRIVATE KEY</code>.</p></div>
+    <div class="ref-card"><h3>SubjectPublicKeyInfo</h3><p>The X.509 public-key container: AlgorithmIdentifier + a BIT STRING wrapping the PKCS#1 <code>RSAPublicKey</code>. PEM header <code>PUBLIC KEY</code>.</p></div>
+    <div class="ref-card"><h3>PEM vs DER</h3><p>DER is the raw binary ASN.1. PEM is that same DER, Base64-encoded between dashed BEGIN/END lines. Converting is encoding only — the structure is identical.</p></div>
+    <div class="ref-card"><h3>JWK</h3><p>JSON Web Key. Fields: <code>kty</code> (RSA), <code>n</code> and <code>e</code> for public; private adds <code>d</code>, <code>p</code>, <code>q</code>, <code>dp</code>, <code>dq</code>, <code>qi</code>. Integers are base64url with no leading zero byte.</p></div>
+    <div class="ref-card"><h3>What Web Crypto exports</h3><p>The browser exports public keys as <code>spki</code> or <code>jwk</code>, and private keys as <code>pkcs8</code> or <code>jwk</code>. It does not expose PKCS#1 directly.</p></div>
+  </div>
+
+  <h2>Input and output</h2>
+  <p><strong>Generate mode</strong> takes only a key size and produces four exports: the public key as SPKI PEM and JWK, and the private key as PKCS#8 PEM and JWK. Each block is labelled, and the JWK is pretty-printed JSON. <strong>Identify mode</strong> takes a pasted PEM block as input and outputs the detected format name, the matched header label, and the first decoded DER bytes (tag, length, and what they imply). If the input is not a valid PEM block, an inline error explains what is wrong.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Assuming <code>PRIVATE KEY</code> means PKCS#1.</strong> The <code>RSA</code> prefix is the tell: <code>RSA PRIVATE KEY</code> is PKCS#1; bare <code>PRIVATE KEY</code> is PKCS#8.</li>
+    <li><strong>Feeding an SPKI public key to a PKCS#1 parser.</strong> They differ by the AlgorithmIdentifier and BIT STRING wrapper, so a bare-RSAPublicKey parser will choke on SPKI.</li>
+    <li><strong>Expecting PEM↔DER to change the format.</strong> It only changes the encoding; a PKCS#8 PEM is a PKCS#8 DER once Base64-decoded.</li>
+    <li><strong>Reusing a 1024-bit key.</strong> 1024-bit RSA is considered broken for new use; some browsers' Web Crypto will refuse it outright, which this tool reports rather than faking a result.</li>
+    <li><strong>Treating a JWK integer as a normal Base64 string.</strong> JWK uses base64url without padding and strips leading zero bytes, so <code>n</code> is not byte-identical to the ASN.1 modulus.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>PEM ↔ DER</h3><p>Convert between Base64-armoured PEM and raw DER bytes.</p><p><a href="/resources/tools/pem-der/">Open PEM ↔ DER →</a></p></div>
+    <div class="ref-card"><h3>X.509 viewer</h3><p>Decode a certificate to see its SubjectPublicKeyInfo in context.</p><p><a href="/resources/tools/x509-viewer/">Open X.509 viewer →</a></p></div>
+    <div class="ref-card"><h3>CSR decoder</h3><p>Inspect a certificate signing request and its embedded public key.</p><p><a href="/resources/tools/csr-decoder/">Open CSR decoder →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/rsa-key-formats.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Byte Offset Calculator — AmbiSecure | hex offset &amp; field inspector</title>
+<meta name="description" content="Paste hex bytes for an indexed offset table with decimal/hex offsets, grouping, ASCII preview, and little/big-endian integer interpretation. For APDU/TLV debugging." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/byte-offset-calculator/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Byte Offset Calculator — AmbiSecure" />
+<meta property="og:description" content="Indexed hex offset table with decimal/hex offsets, grouping, ASCII preview, and LE/BE integer interpretation. Client-side — built for APDU/TLV debugging." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/byte-offset-calculator/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "Byte Offset Calculator", "item": "https://ambisecure.ambimat.com/resources/tools/byte-offset-calculator/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "Byte Offset Calculator",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/byte-offset-calculator/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What input does the byte offset calculator accept?",
+"acceptedAnswer": { "@type": "Answer", "text": "Paste hex bytes in almost any common shape. Spaces, line breaks, 0x prefixes, colons, commas, and semicolons are all stripped before parsing, so 00A40400, 00 A4 04 00, and 00:A4:04:00 are equivalent. The cleaned string must contain an even number of hex digits; an odd count or a non-hex character produces a clear inline error." }
+},
+{
+"@type": "Question",
+"name": "Why does the table show both decimal and hex offsets?",
+"acceptedAnswer": { "@type": "Answer", "text": "Protocol specifications mix conventions. ISO 7816 and EMV tables usually count fields in decimal, while memory dumps and TLV traces label positions in hex. Showing 0-based decimal, hex, and 1-based decimal offsets side by side lets you match whichever the spec you are reading uses, without re-counting by hand." }
+},
+{
+"@type": "Question",
+"name": "How are the little-endian and big-endian integers computed?",
+"acceptedAnswer": { "@type": "Answer", "text": "You choose a start offset and a length of 1 to 8 bytes. The tool reads that slice most-significant-byte-first for big-endian and least-significant-byte-first for little-endian, then reports both the unsigned value and the two's-complement signed value. It uses JavaScript BigInt so 64-bit values stay exact rather than losing precision." }
+},
+{
+"@type": "Question",
+"name": "Does anything I paste leave my browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. Parsing, the offset table, the ASCII preview, and all integer interpretation run locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server, so it is safe to inspect APDUs, keys, and other sensitive byte strings." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">Byte Offset Calculator</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Developer utility</span>
+  <h1>Byte Offset Calculator</h1>
+  <p>Paste hex bytes and read them back as an <strong>indexed offset table</strong> — decimal and hex offsets, selectable grouping, and a printable-ASCII preview. Then pick any slice and see its <strong>unsigned and signed</strong> value in both <strong>little-endian</strong> and <strong>big-endian</strong>. Built for APDU, TLV, and binary-protocol debugging.</p>
+  <div class="tool-meta"><span>Client-side</span><span>Hex in</span><span>LE / BE integers</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="boc-sample">Sample</button> <button class="tool-action" id="boc-clear">Clear</button></div></div>
+    <label for="boc-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Hex bytes — spaces, <code>0x</code>, <code>:</code>, <code>,</code> and line breaks are ignored.</label>
+    <textarea id="boc-input" class="hex-input" rows="6" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label>Group bytes by:
+        <select id="boc-group"><option value="1">1</option><option value="2">2</option><option value="4">4</option><option value="8">8</option><option value="16">16</option></select>
+      </label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Offset table</h2><div class="tool-panel-actions"><button class="tool-action" id="boc-copy">Copy</button></div></div>
+    <div class="tool-output" id="boc-output"><div class="placeholder">Paste hex bytes to build the offset table.</div></div>
+  </div>
+</div>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Interpret a slice as an integer</h2></div>
+    <div class="tool-options">
+      <label>Start offset (0-based):
+        <input type="number" id="boc-start" min="0" value="0" style="width:90px;" />
+      </label>
+      <label>Length (bytes, 1–8):
+        <input type="number" id="boc-len" min="1" max="8" value="1" style="width:90px;" />
+      </label>
+      <label>Primary view:
+        <select id="boc-endian"><option value="be">Big-endian</option><option value="le">Little-endian</option></select>
+      </label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Integer value</h2><div class="tool-panel-actions"><button class="tool-action" id="boc-int-copy">Copy</button></div></div>
+    <div class="tool-output" id="boc-int-output"><div class="placeholder">Parse some bytes, then choose a start and length.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All parsing, the offset table, and every integer interpretation run locally in your browser. Nothing is uploaded — safe for APDUs, keys, and sensitive byte strings.</div>
+
+<section class="tool-reference">
+  <h2>What this tool does</h2>
+  <p>A byte offset calculator answers the question every protocol engineer keeps asking while staring at a hex dump: <em>which byte is at which position, and what does this run of bytes mean as a number?</em> Paste a string of hex, and the tool produces a row-by-row table that pairs each group of bytes with its starting offset shown three ways — 0-based decimal, 0-based hexadecimal, and 1-based decimal — alongside a printable-ASCII rendering where any byte outside <code>0x20</code>–<code>0x7E</code> appears as a dot. The total byte count is shown so you can confirm a length field at a glance.</p>
+  <p>Below the table, a second panel takes a start offset and a length and decodes that slice as an integer. It reports the unsigned value and the two's-complement signed value in both byte orders, using exact 64-bit arithmetic. Together the two panels turn a wall of hex into something you can navigate by position and read as values.</p>
+
+  <h2>When to use it</h2>
+  <p>Reach for it whenever you are debugging a length-prefixed or position-addressed binary structure. Typical cases: locating the <code>Lc</code> field and command data in an ISO 7816 APDU; confirming a two-byte <code>SW1 SW2</code> status word; checking where a tag, length, and value sit inside a BER-TLV record; or reading a multi-byte counter or serial number out of a memory dump or NFC frame. Because grouping is selectable from 1 up to 16 bytes per row, you can line the view up with a 16-column hex editor or collapse it to one byte per row for fine-grained counting.</p>
+
+  <h2>Input and output</h2>
+  <p>The input is forgiving: it strips spaces, newlines, <code>0x</code> prefixes, and <code>:</code> <code>,</code> <code>;</code> separators before parsing, so traces copied from a card reader, a debugger, or a spec all work. The cleaned text must have an even number of hex digits and contain only <code>0–9</code> and <code>a–f</code>; anything else raises a specific inline error rather than guessing. The offset table output is plain monospaced text you can copy straight into a bug report. The integer panel echoes the exact slice it read, then the big-endian and little-endian values, so there is never ambiguity about which bytes produced which number.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Mixing up 0-based and 1-based offsets.</strong> Specs disagree; the table shows both, so quote the one your reference uses instead of converting in your head.</li>
+    <li><strong>Reading the wrong byte order.</strong> Smart-card and EMV fields are overwhelmingly big-endian, but many host-side and Intel-derived structures are little-endian. Check both — the panel always shows the pair.</li>
+    <li><strong>Forgetting the sign.</strong> A leading byte of <code>0x80</code> or higher flips a signed interpretation negative. If a value looks impossibly large, read the signed column.</li>
+    <li><strong>Slicing past the end.</strong> Asking for more bytes than remain raises an error rather than padding with zeros, so a bad length field is caught immediately.</li>
+    <li><strong>Pasting an odd number of digits.</strong> A dropped nibble shifts every byte after it; the even-length check stops that silently corrupting the table.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Hex ↔ Bytes</h3><p>Convert between hex, raw bytes, and text before measuring offsets.</p><p><a href="/resources/tools/hex-bytes/">Open Hex ↔ Bytes →</a></p></div>
+    <div class="ref-card"><h3>TLV parser</h3><p>Break a BER-TLV blob into tag, length, and value to see the structure behind the offsets.</p><p><a href="/resources/tools/tlv-parser/">Open TLV parser →</a></p></div>
+    <div class="ref-card"><h3>Endianness converter</h3><p>Flip byte order and view integers across widths in more detail.</p><p><a href="/resources/tools/endian/">Open Endianness →</a></p></div>
+    <div class="ref-card"><h3>More utilities</h3><p>Parsers, decoders, and references for smart-card and FIDO engineers.</p><p><a href="/resources/">All resources →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/byte-offset-calculator.js" defer></script>
+</body>
+</html>

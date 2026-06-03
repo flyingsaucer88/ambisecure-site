@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JSON Formatter and Minifier — AmbiSecure | pretty-print JSON</title>
+<meta name="description" content="Pretty-print, minify, and sort-key JSON in your browser with 2/4/tab indentation and precise error location. Client-side, copy and download. Pairs with the JSON validator." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/json-formatter/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="JSON Formatter and Minifier — AmbiSecure" />
+<meta property="og:description" content="Pretty-print, minify, and sort-key JSON locally with 2/4/tab indentation and precise line/column error location. Copy and download." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/json-formatter/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/tools.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+"@context": "https://schema.org",
+"@graph": [
+{
+"@type": "BreadcrumbList",
+"itemListElement": [
+{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+{ "@type": "ListItem", "position": 3, "name": "JSON Formatter and Minifier", "item": "https://ambisecure.ambimat.com/resources/tools/json-formatter/" }
+]
+},
+{
+"@type": "SoftwareApplication",
+"name": "JSON Formatter and Minifier",
+"applicationCategory": "DeveloperApplication",
+"operatingSystem": "Web",
+"url": "https://ambisecure.ambimat.com/resources/tools/json-formatter/",
+"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+},
+{
+"@type": "FAQPage",
+"mainEntity": [
+{
+"@type": "Question",
+"name": "What is the difference between pretty-printing and minifying JSON?",
+"acceptedAnswer": { "@type": "Answer", "text": "Pretty-printing re-emits the JSON with newlines and indentation so a human can read the structure. Minifying strips every optional space and newline to produce the smallest equivalent payload for transport or storage. Both parse the input first, so both also act as a validity check: invalid JSON cannot be formatted at all. The decoded value is identical either way." }
+},
+{
+"@type": "Question",
+"name": "Does sorting keys change the meaning of my JSON?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. JSON objects are unordered by specification, so reordering keys produces an equivalent document. Sorting keys recursively gives a deterministic, canonical-looking output that is easy to diff across two payloads or commits. It does not reorder array elements, because arrays are ordered and their order is significant." }
+},
+{
+"@type": "Question",
+"name": "How does the line and column in an error get calculated?",
+"acceptedAnswer": { "@type": "Answer", "text": "The browser's JSON.parse reports a character position for a syntax error. This tool reads that position from the error message and walks the input up to that offset, counting newlines to derive a one-based line number and the column within that line. When a position is not available it falls back to the raw browser message so you still see why parsing failed." }
+},
+{
+"@type": "Question",
+"name": "Should I use this tool or the JSON validator?",
+"acceptedAnswer": { "@type": "Answer", "text": "Use this formatter when you want to transform output — pretty-print, minify, or sort keys — and copy or download the result. Use the JSON validator when you need to check a document against a JSON Schema or report multiple structural findings. Both run entirely in your browser." }
+},
+{
+"@type": "Question",
+"name": "Does anything I paste leave my browser?",
+"acceptedAnswer": { "@type": "Answer", "text": "No. All parsing, formatting, minifying, and key sorting run locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server, so it is safe to format JSON that contains tokens, keys, or other sensitive fields." }
+}
+]
+}
+]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1981</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">JSON Formatter</span></nav>
+
+<main id="main">
+
+<header class="tool-header">
+  <span class="eyebrow">Data utility</span>
+  <h1>JSON Formatter and Minifier</h1>
+  <p>Pretty-print, <strong>minify</strong>, and optionally <strong>sort keys</strong> in JSON — right in your browser. Pick <code>2</code>-space, <code>4</code>-space, or tab indentation, and get a precise <strong>line and column</strong> when the input fails to parse.</p>
+  <div class="tool-meta"><span>Client-side</span><span>2 / 4 / tab indent</span><span>Sort keys</span></div>
+</header>
+
+<div class="tool-shell">
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="jf-sample">Sample</button> <button class="tool-action" id="jf-clear">Clear</button></div></div>
+    <label for="jf-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Paste JSON to format, minify, or sort.</label>
+    <textarea id="jf-input" class="hex-input" rows="10" spellcheck="false"></textarea>
+    <div class="tool-options">
+      <label>Mode:
+        <select id="jf-mode"><option value="pretty">Pretty-print</option><option value="minify">Minify</option></select>
+      </label>
+      <label>Indent:
+        <select id="jf-indent"><option value="2">2 spaces</option><option value="4">4 spaces</option><option value="tab">Tab</option></select>
+      </label>
+      <label><input type="checkbox" id="jf-sort" /> Sort object keys</label>
+    </div>
+  </div>
+  <div class="tool-panel">
+    <div class="tool-panel-head"><h2>Result</h2><div class="tool-panel-actions"><button class="tool-action" id="jf-copy">Copy</button> <button class="tool-action tool-action--primary" id="jf-download">Download</button></div></div>
+    <div class="tool-output" id="jf-output"><div class="placeholder">Paste JSON to format it.</div></div>
+  </div>
+</div>
+
+<div class="tool-privacy">All parsing and formatting runs locally in your browser. Nothing is uploaded — safe for JSON containing tokens or keys.</div>
+
+<section class="tool-reference">
+  <h2>What this tool does</h2>
+  <p>This is a JSON <strong>formatter</strong>: it reads a JSON document, parses it once with the browser's native <code>JSON.parse</code>, and re-emits it the way you ask. Pretty-print produces readable, indented output; minify collapses it to the smallest equivalent string; and the optional sort-keys pass reorders object keys recursively so two payloads diff cleanly. Because every mode parses first, the tool doubles as a fast validity gate — if the input is not well-formed JSON, you get a precise error instead of mangled output.</p>
+  <p>It is deliberately distinct from the <a href="/resources/tools/json-validator/">JSON validator</a>. The validator is about checking a document against a schema and reporting structural findings; this page is about <em>transforming</em> the output you already have. Reach for this tool when you have a blob of minified JSON from a network trace and want to read it, or a hand-edited config that needs to be normalised before committing.</p>
+
+  <h2>When to use it</h2>
+  <p>Pretty-print when you have captured a one-line response body — from an API log, a smart-card management server, or a WebAuthn ceremony trace — and need to see its shape. Minify before embedding JSON in a constrained field, a QR payload, or a URL where every byte counts. Sort keys before diffing two configuration files whose authors emitted fields in different orders, so the diff shows real changes rather than reordering noise. For binary-adjacent formats, the <a href="/resources/tools/cbor-decoder/">CBOR decoder</a> turns a compact binary encoding into JSON you can then format here.</p>
+
+  <h2>Input and output</h2>
+  <p>The input is any valid JSON value: an object, an array, a string, a number, a boolean, or <code>null</code>. Whitespace, indentation, and line endings in the input are irrelevant — the parser ignores them, so you can paste minified or already-indented text. The output reflects your chosen mode and indent. Pretty-print uses your indent setting (two spaces, four spaces, or a literal tab) for every nesting level; minify ignores the indent setting entirely and emits no optional whitespace. The decoded value is preserved exactly: strings, number precision within IEEE-754 limits, and key sets are unchanged — only layout and, optionally, object-key order change.</p>
+  <p>When the input cannot be parsed, the result panel shows a parse error with a <strong>line and column</strong>. The position is taken from the offset the browser reports for the syntax error; the tool walks the text to that offset, counting newlines to give a one-based line and column. If the browser does not supply an offset, the raw engine message is shown so you still know what broke.</p>
+
+  <h2>Common mistakes</h2>
+  <ul>
+    <li><strong>Trailing commas.</strong> <code>[1, 2, 3,]</code> and <code>{"a": 1,}</code> are valid in JavaScript object literals but invalid JSON. Remove the comma before the closing bracket.</li>
+    <li><strong>Single quotes.</strong> JSON requires double quotes around every string and key. <code>{'a': 1}</code> will fail to parse.</li>
+    <li><strong>Comments.</strong> Standard JSON has no comments; <code>//</code> and <code>/* */</code> are rejected. Strip them before formatting.</li>
+    <li><strong>Unquoted keys.</strong> <code>{a: 1}</code> is not JSON. Every key must be a double-quoted string.</li>
+    <li><strong>Expecting sorted arrays.</strong> Sort keys only reorders object members. Arrays are ordered by definition and are left exactly as they are.</li>
+  </ul>
+
+  <h2>Related tools</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>JSON Validator</h3><p>Check a document against a JSON Schema and report structural findings.</p><p><a href="/resources/tools/json-validator/">Open JSON Validator →</a></p></div>
+    <div class="ref-card"><h3>JSON Bin Builder</h3><p>Compose and inspect binary-bearing JSON payloads field by field.</p><p><a href="/resources/tools/json-bin-builder/">Open JSON Bin Builder →</a></p></div>
+    <div class="ref-card"><h3>CBOR Decoder</h3><p>Turn a compact CBOR binary encoding into JSON you can format here.</p><p><a href="/resources/tools/cbor-decoder/">Open CBOR Decoder →</a></p></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/resources/tools/x509-viewer/">X.509 viewer</a></li><li><a href="/resources/tools/pem-der/">PEM &harr; DER</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 parser</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/tools/_tool-shared.js" defer></script>
+<script src="/assets/js/tools/json-formatter.js" defer></script>
+</body>
+</html>
