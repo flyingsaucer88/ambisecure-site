@@ -266,6 +266,9 @@ Redirect 301 /non-cellular-network-based-wide-area-networks-1 https://esim.ambim
 Redirect 301 /cellular-network-based-wide-area-networks https://esim.ambimat.com/
 Redirect 301 /what-is-lpwan-and-types-of-lpwan-network https://esim.ambimat.com/
 
+# Fix top-level FIDO route alias to the canonical FIDO technology page.
+RedirectMatch 301 ^/fido/?$ /technologies/fido/
+
 # Phase 7: upgrade legacy /blog/category/* aliases to the new /blog/categories/ pages
 Redirect 301 /blog/category/javacard /blog/categories/javacard/
 Redirect 301 /blog/category/fido /blog/categories/fido/
