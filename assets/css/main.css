@@ -1112,6 +1112,56 @@ section.dark .section-desc, section.dark p { color: #c9cccd; }
 .faq details[open] summary::after { content: '\2212'; }
 .faq details p { margin-top: 12px; color: var(--brand-grey); font-size: 15px; line-height: 1.75; }
 
+/* Compact premium accordion (.faq-q) — used by homepage FAQ, deck transcript,
+   product FAQs and CRA blog FAQs. Carded, contained, chevron disclosure. */
+.faq-q {
+  max-width: 860px;
+  margin: 10px auto 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  overflow: hidden;
+  transition: border-color .15s, box-shadow .15s;
+}
+.faq-q[open] { border-color: #d8d8da; box-shadow: 0 6px 18px rgba(58,63,64,.06); }
+.faq-q summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 15px 20px;
+}
+.faq-q summary::-webkit-details-marker { display: none; }
+.faq-q summary h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+  margin: 0;
+}
+.faq-q summary::after {
+  content: '';
+  flex: 0 0 auto;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid var(--brand-grey);
+  border-bottom: 2px solid var(--brand-grey);
+  transform: rotate(45deg);
+  transition: transform .2s, border-color .15s;
+  margin-top: -3px;
+}
+.faq-q[open] summary::after { transform: rotate(-135deg); margin-top: 3px; }
+.faq-q summary:hover h3 { color: var(--brand-red); }
+.faq-q summary:hover::after { border-color: var(--brand-red); }
+.faq-q .faq-a { padding: 0 20px 16px; }
+.faq-q .faq-a p { margin: 0; color: var(--brand-grey); font-size: 14.5px; line-height: 1.7; }
+.faq-q .faq-a p + p { margin-top: 10px; }
+.faq-q .faq-a ol, .faq-q .faq-a ul { margin: 0; color: var(--brand-grey); font-size: 14.5px; line-height: 1.7; }
+.faq-q .faq-a li { margin: 4px 0; }
+
 /* =========================================================
    BLOG INDEX CARD
    ========================================================= */
