@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BioKey · On-Device OTP (TOTP + HOTP) — Product Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0f14;
+    --panel:#0e151c;
+    --panel-2:#111b24;
+    --line:#1d2c38;
+    --line-bright:#2b4456;
+    --ink:#dce8f0;
+    --ink-dim:#7b94a6;
+    --ink-faint:#52677a;
+    --cyan:#2fd6c8;
+    --cyan-deep:#0fa89c;
+    --amber:#f5a623;
+    --red:#ff5d5d;
+    --green:#43d18b;
+    --grid:rgba(47,214,200,.045);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+    line-height:1.6;
+    background-image:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:34px 34px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  .mono{font-family:'JetBrains Mono',monospace}
+
+  /* ---- entrance ---- */
+  .rise{opacity:0;transform:translateY(18px);animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  section{animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+
+  /* ---- header ---- */
+  header{
+    border-bottom:1px solid var(--line);
+    padding:62px 0 48px;
+    position:relative;overflow:hidden;
+  }
+  header::before{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(900px 360px at 78% -10%,rgba(47,214,200,.10),transparent 60%);
+    pointer-events:none;
+  }
+  .tagrow{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+  .tag{
+    font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;padding:5px 11px;border:1px solid var(--line-bright);
+    color:var(--ink-dim);border-radius:3px;
+  }
+  .tag.live{color:var(--cyan);border-color:var(--cyan-deep)}
+  .tag.new{color:var(--amber);border-color:#6b4d12;background:rgba(245,166,35,.06)}
+  h1{
+    font-family:'Chakra Petch',sans-serif;font-weight:700;
+    font-size:clamp(34px,6vw,62px);line-height:1.02;letter-spacing:-.01em;
+    margin-bottom:18px;
+  }
+  h1 .accent{color:var(--cyan)}
+  .lede{font-size:clamp(16px,2.2vw,20px);color:var(--ink-dim);max-width:680px}
+  .crumbs{
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint);
+    margin-top:30px;display:flex;gap:18px;flex-wrap:wrap;
+  }
+  .crumbs span::before{content:"▸ ";color:var(--cyan-deep)}
+
+  /* ---- section scaffolding ---- */
+  section{padding:58px 0;border-bottom:1px solid var(--line)}
+  .sec-no{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--cyan);letter-spacing:.18em}
+  h2{font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:clamp(24px,3.6vw,34px);margin:8px 0 14px;letter-spacing:-.01em}
+  h2 .q{color:var(--ink-faint);font-weight:400}
+  .sec-intro{color:var(--ink-dim);max-width:760px;font-size:16px}
+
+  h3{font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:18px;margin:0 0 8px}
+
+  /* ---- problem / solution split ---- */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:34px}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:26px;
+    position:relative;
+  }
+  .card.bad{border-color:#3a2230}
+  .card.good{border-color:#1c3a36}
+  .card .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+  .card.bad .lbl{color:var(--red)}
+  .card.good .lbl{color:var(--cyan)}
+  .card ul{list-style:none}
+  .card li{padding:7px 0 7px 22px;position:relative;color:var(--ink-dim);font-size:14.5px}
+  .card.bad li::before{content:"✕";position:absolute;left:0;color:var(--red);font-weight:700}
+  .card.good li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700}
+  .card li b{color:var(--ink);font-weight:600}
+
+  /* ---- diagram frame ---- */
+  .frame{
+    margin-top:30px;background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    padding:14px;overflow:hidden;
+  }
+  .frame svg{width:100%;height:auto;display:block}
+  .frame-cap{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-faint);padding:10px 6px 4px;letter-spacing:.04em}
+
+  /* ---- numbered flow ---- */
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:30px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px;position:relative}
+  .step .n{font-family:'Chakra Petch',sans-serif;font-size:30px;color:var(--cyan-deep);line-height:1}
+  .step h4{font-family:'Chakra Petch',sans-serif;font-size:15px;margin:10px 0 6px;color:var(--ink)}
+  .step p{font-size:13.5px;color:var(--ink-dim)}
+  .step .key{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--amber);margin-top:8px}
+
+  /* ---- tables ---- */
+  .tbl{margin-top:30px;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--panel)}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);background:var(--panel-2)}
+  tr:last-child td{border-bottom:none}
+  td b{color:var(--ink)}
+  td.feat{color:var(--ink-dim);font-weight:500}
+  .yes{color:var(--green)}.no{color:var(--red)}.warn{color:var(--amber)}
+  .rec{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--cyan);border:1px solid var(--cyan-deep);padding:2px 7px;border-radius:3px;margin-left:8px;vertical-align:middle}
+
+  /* ---- decision cards ---- */
+  .decision{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:30px}
+  .opt{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:24px}
+  .opt.primary{border-color:var(--cyan-deep);box-shadow:0 0 0 1px rgba(47,214,200,.15) inset}
+  .opt .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+  .opt .badge{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--cyan);border:1px solid var(--cyan-deep);padding:3px 8px;border-radius:3px}
+  .opt .sub{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint);margin-bottom:14px}
+  .opt dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;font-size:13.5px}
+  .opt dt{color:var(--ink-faint);font-family:'JetBrains Mono',monospace;font-size:11px;padding-top:2px}
+  .opt dd{color:var(--ink-dim)}
+
+  /* ---- synergy grid ---- */
+  .syn{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:30px}
+  .syn .cell{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px}
+  .syn .have{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan);letter-spacing:.06em}
+  .syn .arrow{color:var(--amber);font-family:'JetBrains Mono',monospace;margin:6px 0;font-size:13px}
+  .syn .use{font-size:14px;color:var(--ink)}
+
+  /* ---- roadmap ---- */
+  .road{margin-top:30px;position:relative;padding-left:26px}
+  .road::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--cyan-deep),var(--line))}
+  .phase{position:relative;padding:0 0 26px 16px}
+  .phase::before{content:"";position:absolute;left:-26px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan)}
+  .phase:last-child{padding-bottom:0}
+  .phase .pn{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--cyan);text-transform:uppercase}
+  .phase h4{font-family:'Chakra Petch',sans-serif;font-size:17px;margin:3px 0 5px}
+  .phase p{font-size:14px;color:var(--ink-dim)}
+
+  /* ---- callout ---- */
+  .note{margin-top:26px;border-left:3px solid var(--amber);background:rgba(245,166,35,.05);padding:16px 20px;border-radius:0 6px 6px 0;font-size:14px;color:var(--ink-dim)}
+  .note b{color:var(--amber)}
+  .note.cyan{border-color:var(--cyan);background:rgba(47,214,200,.05)}
+  .note.cyan b{color:var(--cyan)}
+
+  /* ---- footer ---- */
+  footer{padding:40px 0 70px;color:var(--ink-faint);font-size:13px}
+  footer .mono{color:var(--ink-faint)}
+  footer a{color:var(--cyan-deep);text-decoration:none}
+
+  @media(max-width:720px){
+    .split,.decision{grid-template-columns:1fr}
+    section{padding:42px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="tagrow rise" style="animation-delay:.05s">
+      <span class="tag live">● FIDO2 / CTAP2 — shipping</span>
+      <span class="tag new">+ OATH TOTP &amp; HOTP — proposed</span>
+      <span class="tag">Biometric Hardware Authenticator</span>
+    </div>
+    <h1 class="rise" style="animation-delay:.12s">BioKey adds<br><span class="accent">on-device OTP.</span></h1>
+    <p class="lede rise" style="animation-delay:.2s">A product blueprint for extending the BioKey hardware key with one-time passwords — both time-based (TOTP) and counter-based (HOTP) — generated inside the secure element, released only by fingerprint, and never exported off the chip.</p>
+    <div class="crumbs rise" style="animation-delay:.28s">
+      <span>Seed stays on device</span>
+      <span>USB HID + CCID transport</span>
+      <span>Built on the existing FIDO stack</span>
+    </div>
+  </div>
+</header>
+
+<!-- 01 POSITIONING -->
+<section style="animation-delay:.05s">
+  <div class="wrap">
+    <div class="sec-no">01 / WHY</div>
+    <h2>The seed is the asset. Stop storing it in software.</h2>
+    <p class="sec-intro">Every phone authenticator app holds your TOTP seeds as recoverable data — readable by malware, leaked through cloud backups, exposed if the phone is unlocked. BioKey already protects FIDO credentials in tamper-resistant silicon. The same vault, the same fingerprint gate, now issues your one-time codes.</p>
+    <div class="split">
+      <div class="card bad">
+        <div class="lbl">Phone authenticator app</div>
+        <ul>
+          <li>Seed lives in <b>app storage / OS keystore</b> — software-accessible</li>
+          <li>Extractable via <b>malware or a rooted device</b></li>
+          <li>Synced to cloud backups — <b>seed leaves your control</b></li>
+          <li>Codes appear with <b>no user verification</b> once the phone is open</li>
+        </ul>
+      </div>
+      <div class="card good">
+        <div class="lbl">BioKey on-device TOTP</div>
+        <ul>
+          <li>Seed sealed in the <b>secure element</b> — no read-back API exists</li>
+          <li>HMAC computed <b>inside the chip</b>; only the 6 digits leave</li>
+          <li>Seed is <b>never synced, never exported</b>, ever</li>
+          <li>Every code gated by an <b>on-chip fingerprint match</b></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 ARCHITECTURE -->
+<section style="animation-delay:.05s">
+  <div class="wrap">
+    <div class="sec-no">02 / SYSTEM ARCHITECTURE</div>
+    <h2>One device, two USB interfaces, one secure element.</h2>
+    <p class="sec-intro">OTP rides into BioKey as an additive OATH applet — covering both TOTP and HOTP, and not new silicon. The key presents as a composite USB device: the existing FIDO HID interface is untouched, and a CCID (smart-card) interface is added for credential management. An optional keyboard-HID path supports appless auto-type.</p>
+    <div class="frame">
+      <svg viewBox="0 0 980 470" xmlns="http://www.w3.org/2000/svg" font-family="JetBrains Mono, monospace">
+        <defs>
+          <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+            <path d="M0,0 L9,4.5 L0,9 Z" fill="#2fd6c8"/>
+          </marker>
+          <linearGradient id="se" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#0f2b2a"/><stop offset="1" stop-color="#0c1b1f"/>
+          </linearGradient>
+        </defs>
+
+        <!-- HOST LAYER -->
+        <rect x="20" y="20" width="940" height="96" rx="8" fill="#0e151c" stroke="#1d2c38"/>
+        <text x="38" y="44" fill="#52677a" font-size="11" letter-spacing="2">HOST  ·  desktop / mobile</text>
+        <rect x="38" y="56" width="220" height="46" rx="6" fill="#111b24" stroke="#2b4456"/>
+        <text x="148" y="78" fill="#dce8f0" font-size="13" text-anchor="middle">Companion app</text>
+        <text x="148" y="93" fill="#7b94a6" font-size="10" text-anchor="middle">list · add · calculate</text>
+        <rect x="278" y="56" width="220" height="46" rx="6" fill="#111b24" stroke="#2b4456"/>
+        <text x="388" y="78" fill="#dce8f0" font-size="13" text-anchor="middle">Browser / OS field</text>
+        <text x="388" y="93" fill="#7b94a6" font-size="10" text-anchor="middle">receives typed code</text>
+        <rect x="518" y="56" width="220" height="46" rx="6" fill="#111b24" stroke="#2b4456"/>
+        <text x="628" y="78" fill="#dce8f0" font-size="13" text-anchor="middle">FIDO relying party</text>
+        <text x="628" y="93" fill="#7b94a6" font-size="10" text-anchor="middle">existing — unchanged</text>
+
+        <!-- TRANSPORT -->
+        <text x="38" y="150" fill="#52677a" font-size="11" letter-spacing="2">USB TRANSPORT  ·  composite device</text>
+        <rect x="38" y="160" width="270" height="40" rx="6" fill="#0c1b1f" stroke="#0fa89c"/>
+        <text x="173" y="185" fill="#2fd6c8" font-size="12" text-anchor="middle">CCID interface — APDU / ISO 7816</text>
+        <rect x="338" y="160" width="230" height="40" rx="6" fill="#0c1b1f" stroke="#0fa89c"/>
+        <text x="453" y="185" fill="#2fd6c8" font-size="12" text-anchor="middle">Keyboard HID — auto-type</text>
+        <rect x="598" y="160" width="140" height="40" rx="6" fill="#141d18" stroke="#43d18b"/>
+        <text x="668" y="185" fill="#43d18b" font-size="12" text-anchor="middle">CTAPHID — FIDO</text>
+
+        <!-- arrows host<->transport -->
+        <line x1="148" y1="102" x2="160" y2="160" stroke="#2fd6c8" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="388" y1="102" x2="430" y2="160" stroke="#2fd6c8" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="628" y1="102" x2="660" y2="160" stroke="#43d18b" stroke-width="1.5" marker-end="url(#ar)"/>
+
+        <!-- DEVICE BOUNDARY -->
+        <rect x="20" y="226" width="940" height="220" rx="10" fill="#0a1318" stroke="#2b4456" stroke-dasharray="5 4"/>
+        <text x="38" y="250" fill="#f5a623" font-size="11" letter-spacing="2">BIOKEY DEVICE  ·  hardware boundary</text>
+
+        <!-- MCU -->
+        <rect x="38" y="262" width="200" height="160" rx="8" fill="#111b24" stroke="#2b4456"/>
+        <text x="138" y="290" fill="#dce8f0" font-size="13" text-anchor="middle">MCU / USB ctrl</text>
+        <text x="138" y="310" fill="#7b94a6" font-size="10.5" text-anchor="middle">routes interfaces</text>
+        <text x="138" y="326" fill="#7b94a6" font-size="10.5" text-anchor="middle">emits keystrokes</text>
+        <text x="138" y="342" fill="#7b94a6" font-size="10.5" text-anchor="middle">no key material</text>
+        <rect x="58" y="362" width="160" height="44" rx="6" fill="#0c1b1f" stroke="#3a4a30"/>
+        <text x="138" y="384" fill="#f5a623" font-size="11" text-anchor="middle">RTC + coin cell</text>
+        <text x="138" y="398" fill="#7b94a6" font-size="9.5" text-anchor="middle">optional · appless mode</text>
+
+        <!-- BIOMETRIC -->
+        <rect x="258" y="262" width="200" height="160" rx="8" fill="#111b24" stroke="#2b4456"/>
+        <text x="358" y="290" fill="#dce8f0" font-size="13" text-anchor="middle">Biometric subsystem</text>
+        <text x="358" y="312" fill="#7b94a6" font-size="10.5" text-anchor="middle">fingerprint sensor</text>
+        <text x="358" y="330" fill="#7b94a6" font-size="10.5" text-anchor="middle">match-on-chip</text>
+        <rect x="278" y="350" width="160" height="56" rx="6" fill="#0c1b1f" stroke="#0fa89c"/>
+        <text x="358" y="373" fill="#2fd6c8" font-size="11" text-anchor="middle">User Verification</text>
+        <text x="358" y="390" fill="#7b94a6" font-size="9.5" text-anchor="middle">template never leaves</text>
+
+        <!-- SECURE ELEMENT -->
+        <rect x="478" y="262" width="462" height="160" rx="8" fill="url(#se)" stroke="#0fa89c"/>
+        <text x="709" y="290" fill="#2fd6c8" font-size="13" text-anchor="middle" font-weight="700">SECURE ELEMENT — tamper-resistant</text>
+        <rect x="498" y="306" width="200" height="46" rx="6" fill="#0c1b1f" stroke="#2b4456"/>
+        <text x="598" y="328" fill="#dce8f0" font-size="11.5" text-anchor="middle">Key store</text>
+        <text x="598" y="343" fill="#7b94a6" font-size="9.5" text-anchor="middle">FIDO creds + OATH seeds</text>
+        <rect x="718" y="306" width="200" height="46" rx="6" fill="#0c1b1f" stroke="#2b4456"/>
+        <text x="818" y="328" fill="#dce8f0" font-size="11.5" text-anchor="middle">Crypto engine</text>
+        <text x="818" y="343" fill="#7b94a6" font-size="9.5" text-anchor="middle">HMAC-SHA1 / SHA256</text>
+        <rect x="498" y="362" width="420" height="44" rx="6" fill="#10201e" stroke="#0fa89c"/>
+        <text x="709" y="388" fill="#2fd6c8" font-size="11" text-anchor="middle">seed in → code out · no export path · no read-back</text>
+
+        <!-- internal arrows -->
+        <line x1="238" y1="342" x2="258" y2="342" stroke="#2fd6c8" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="458" y1="342" x2="478" y2="342" stroke="#2fd6c8" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="173" y1="200" x2="150" y2="262" stroke="#2fd6c8" stroke-width="1.5" marker-end="url(#ar)"/>
+        <line x1="453" y1="200" x2="160" y2="262" stroke="#2fd6c8" stroke-width="1" opacity=".35" marker-end="url(#ar)"/>
+        <line x1="668" y1="200" x2="709" y2="262" stroke="#43d18b" stroke-width="1.5" marker-end="url(#ar)"/>
+      </svg>
+      <div class="frame-cap">FIG.1 — Composite device. FIDO path (green) is untouched; the OATH/TOTP path (cyan) reuses the same secure element, biometric matcher, and USB stack.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 BILL OF MATERIALS -->
+<section style="animation-delay:.05s">
+  <div class="wrap">
+    <div class="sec-no">03 / BILL OF MATERIALS</div>
+    <h2>High-level BOM — and what TOTP actually adds.</h2>
+    <p class="sec-intro">The headline: the recommended V1 (CCID + companion app) adds <b style="color:var(--cyan)">zero new core hardware</b>. It's a firmware applet plus a host app on the silicon you already ship. New hardware appears only if you opt into the appless or iOS variants.</p>
+    <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em">
+      <span style="color:var(--green)">● In BioKey today</span>
+      <span style="color:var(--amber)">● New — optional variant</span>
+      <span style="color:var(--cyan)">● New — software / firmware</span>
+    </div>
+    <div class="tbl">
+      <table>
+        <tr><th>Subsystem</th><th>Component</th><th>Role</th><th>Status</th></tr>
+        <tr><td class="feat">Compute &amp; security</td><td><b>Secure element</b></td><td>Key store, crypto engine (HMAC), runs FIDO + OATH applets, tamper-resistant</td><td class="yes">In BioKey today</td></tr>
+        <tr><td class="feat">Compute &amp; security</td><td><b>Main MCU / USB controller</b></td><td>USB enumeration, interface routing, keystroke emission (often combined with the SE)</td><td class="yes">In BioKey today</td></tr>
+        <tr><td class="feat">Biometric</td><td><b>Fingerprint sensor module</b></td><td>Capacitive capture for user verification</td><td class="yes">In BioKey today</td></tr>
+        <tr><td class="feat">Biometric</td><td><b>Match-on-chip engine</b></td><td>Matches print on-device; template never leaves (already gates FIDO)</td><td class="yes">In BioKey today</td></tr>
+        <tr><td class="feat">Connectivity</td><td><b>USB-C connector + PHY</b></td><td>Carries CCID, keyboard-HID and CTAPHID; host link to phone/PC</td><td class="yes">In BioKey today</td></tr>
+        <tr><td class="feat">Indicators &amp; mech</td><td><b>LED · touch · PCB · enclosure · passives</b></td><td>Status, activation, board, housing</td><td class="yes">In BioKey today</td></tr>
+        <tr><td class="feat">Timing &amp; power</td><td><b>RTC + coin-cell battery</b></td><td>Only for appless <i>TOTP</i> auto-type — not needed for HOTP, which uses an on-chip counter</td><td class="warn">New — optional</td></tr>
+        <tr><td class="feat">Connectivity</td><td><b>NFC antenna + controller</b></td><td>Contactless path for iOS (and FIDO-over-NFC)</td><td class="warn">New — optional</td></tr>
+        <tr><td class="feat">Firmware / SW</td><td><b>OATH applet + CCID descriptors</b></td><td>Adds TOTP (RFC 6238) + HOTP (RFC 4226) and the smart-card interface to the device</td><td style="color:var(--cyan)">New — firmware</td></tr>
+        <tr><td class="feat">Firmware / SW</td><td><b>Companion app (thin client)</b></td><td>Enrolls seeds, sends time + credential ID, displays code — holds no seed</td><td style="color:var(--cyan)">New — software</td></tr>
+      </table>
+    </div>
+    <div class="note cyan"><b>Read this row by status:</b> everything green is already on the board. The cyan rows are the V1 build — firmware + an app. The amber rows are deliberate, scoped hardware decisions (appless mode, iOS reach), not requirements. That's why this is an incremental program, not a new device.</div>
+  </div>
+</section>
+
+<!-- 04 HOW IT WORKS -->
+<section style="animation-delay:.05s">
+  <div class="wrap">
+    <div class="sec-no">04 / GENERATION FLOW</div>
+    <h2>Two modes, one engine. Provision once, generate per touch.</h2>
+    <p class="sec-intro">BioKey supports both OATH modes from the same applet: <span class="mono" style="color:var(--cyan)">TOTP / RFC&nbsp;6238</span> (the counter is the current time) and <span class="mono" style="color:var(--cyan)">HOTP / RFC&nbsp;4226</span> (the counter is an on-chip event counter). Both are HMAC over a seed (RFC&nbsp;2104), truncated to a 6-digit code. The seed is the one thing that never moves.</p>
+    <div class="flow">
+      <div class="step"><div class="n">01</div><h4>Request</h4><p>Companion app (or a touch, in appless mode) asks the device for a code by credential ID.</p><p class="key">CCID › CALCULATE</p></div>
+      <div class="step"><div class="n">02</div><h4>Verify</h4><p>Device prompts for fingerprint. The match runs on-chip — no template leaves.</p><p class="key">UV › fingerprint</p></div>
+      <div class="step"><div class="n">03</div><h4>Compute</h4><p>SE picks the counter — <b>time ⌊t/30⌋ for TOTP</b> or the <b>stored event counter for HOTP</b> — runs HMAC, truncates to 6 digits.</p><p class="key">SE › HMAC-SHA1</p></div>
+      <div class="step"><div class="n">04</div><h4>Return</h4><p>Only the code crosses the boundary. App displays or autofills it.</p><p class="key">→ 6-digit OTP</p></div>
+    </div>
+    <h3 style="margin-top:34px">TOTP vs HOTP — when each wins</h3>
+    <div class="tbl" style="margin-top:14px">
+      <table>
+        <tr><th>&nbsp;</th><th>TOTP · RFC 6238</th><th>HOTP · RFC 4226</th></tr>
+        <tr><td class="feat">Counter is</td><td>Current time (⌊unix/30⌋)</td><td>A monotonic event counter</td></tr>
+        <tr><td class="feat">Needs a clock</td><td class="warn">Yes — time source required</td><td class="yes">No — counter lives in the SE</td></tr>
+        <tr><td class="feat">Code lifetime</td><td>Expires every 30s</td><td>Valid until used / next press</td></tr>
+        <tr><td class="feat">Failure mode</td><td>Clock skew (handled by server window)</td><td>Counter drift if codes go unused (server look-ahead + resync)</td></tr>
+        <tr><td class="feat">Appless auto-type</td><td>Needs on-device RTC</td><td class="yes"><b>Works with zero added hardware</b></td></tr>
+        <tr><td class="feat">Common use</td><td>Most consumer 2FA today</td><td>Banking tokens, OATH hardware, legacy fleets</td></tr>
+      </table>
+    </div>
+    <div class="note cyan"><b>The HOTP payoff:</b> because HOTP needs no clock — just a counter inside the secure element — it delivers the appless "touch and it types the code" experience <i>without any RTC or battery</i>. That removes the main hardware cost from the appless story (see §05).</div>
+    <div class="note"><b>Honest framing for your audience:</b> both TOTP and HOTP are shared-secret schemes and remain phishable — a user can still type a code into a fake site. BioKey's value is hardening <i>where the secret lives</i> and forcing a biometric per code. Position OTP as the secure bridge for legacy services that don't yet support FIDO, while FIDO2 stays the phishing-resistant gold standard — all on one key.</div>
+  </div>
+</section>
+
+<!-- 04 TIME SOURCE -->
+<section style="animation-delay:.05s">
+  <div class="wrap">
+    <div class="sec-no">05 / THE KEY DECISION</div>
+    <h2>Where does the device get the time? <span class="q">This is the fork.</span></h2>
+    <p class="sec-intro">USB keys usually have no clock. That single fact drives the whole product. You can let the host supply the time (needs a companion app, zero battery) or add a battery-backed real-time clock (no app, but a coin cell to maintain). This shapes BOM, UX, and which audiences you can serve.</p>
+    <div class="decision">
+      <div class="opt primary">
+        <div class="head"><h3>Host-supplied time</h3><span class="badge">RECOMMENDED V1</span></div>
+        <div class="sub">via CCID companion app</div>
+        <dl>
+          <dt>clock</dt><dd>None on device — host sends time (already server-synced, so accuracy is a non-issue)</dd>
+          <dt>BOM</dt><dd>Lowest — no battery, no RTC</dd>
+          <dt>UX</dt><dd>App lists all accounts, manage/rename/delete, biometric per code</dd>
+          <dt>fits</dt><dd>Managed enterprise, multi-account power users (mirrors the proven Yubico Authenticator model)</dd>
+          <dt>cost</dt><dd>Requires a companion app to function</dd>
+        </dl>
+      </div>
+      <div class="opt">
+        <div class="head"><h3>On-device RTC</h3><span class="badge" style="color:var(--amber);border-color:#6b4d12">OPTIONAL VARIANT</span></div>
+        <div class="sub">enables keyboard auto-type, no software</div>
+        <dl>
+          <dt>clock</dt><dd>Battery-backed RTC keeps time on the chip</dd>
+          <dt>BOM</dt><dd>Higher — coin cell + RTC; battery is a lifecycle item</dd>
+          <dt>UX</dt><dd>Focus a field, touch + fingerprint → device types the code. Zero install.</dd>
+          <dt>fits</dt><dd>Kiosks, locked-down hosts, single-credential "just works" buyers</dd>
+          <dt>cost</dt><dd>Clock drift / battery replacement; awkward for many accounts</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="note cyan"><b>HOTP changes this fork:</b> the RTC variant only matters for <i>appless TOTP</i>. If you want appless touch-to-type, ship it as <b>HOTP</b> instead — the counter lives in the secure element, so it needs no clock and no battery. The RTC becomes a true nice-to-have (appless <i>time-based</i> codes), not a requirement.</div>
+  </div>
+</section>
+<section style="animation-delay:.05s">
+  <div class="wrap">
+    <div class="sec-no">06 / TRANSPORT</div>
+    <h2>HID vs CCID — and why you ship both.</h2>
+    <p class="sec-intro">The two USB interfaces serve different needs. CCID is the management workhorse; keyboard-HID is the appless convenience layer; CTAPHID stays exactly as it is for FIDO.</p>
+    <div class="tbl">
+      <table>
+        <tr><th>Capability</th><th>Keyboard HID</th><th>CCID (PC/SC)</th></tr>
+        <tr><td class="feat">Host software required</td><td class="yes">None — universal</td><td class="warn">Companion app</td></tr>
+        <tr><td class="feat">Communication</td><td>One-way — types the code</td><td><b>Bidirectional APDU</b> — full dialog</td></tr>
+        <tr><td class="feat">Manage many credentials</td><td class="no">Awkward (one touch = one code)</td><td class="yes">List · add · delete · rename</td></tr>
+        <tr><td class="feat">Needs on-device clock</td><td class="warn">Yes (RTC)</td><td class="no">No — host supplies time</td></tr>
+        <tr><td class="feat">Best for</td><td>Appless auto-type, kiosks</td><td>Multi-account, enterprise</td></tr>
+        <tr><td class="feat">Status</td><td>Optional (with RTC variant)</td><td><b>Core of V1</b> <span class="rec">PRIMARY</span></td></tr>
+      </table>
+    </div>
+    <div class="note">CTAPHID (FIDO) already occupies its own HID usage page and is unaffected. Adding a CCID interface and an optional keyboard-HID interface makes BioKey a <b>composite USB device</b> — a firmware/descriptor change, not a hardware redesign.</div>
+  </div>
+</section>
+
+<!-- 06 PROVISIONING -->
+<section style="animation-delay:.05s">
+  <div class="wrap">
+    <div class="sec-no">07 / ENROLLMENT</div>
+    <h2>How a seed gets onto the device — once.</h2>
+    <div class="flow">
+      <div class="step"><div class="n">01</div><h4>Service QR</h4><p>The web service shows an <span class="mono" style="color:var(--cyan)">otpauth://</span> QR with secret, issuer, algorithm, digits, period.</p></div>
+      <div class="step"><div class="n">02</div><h4>App parses</h4><p>Companion app scans / reads it and extracts the parameters.</p></div>
+      <div class="step"><div class="n">03</div><h4>Push to SE</h4><p>App sends an ADD-credential APDU; the secure element stores the seed in a protected slot.</p><p class="key">CCID › PUT</p></div>
+      <div class="step"><div class="n">04</div><h4>Zeroize</h4><p>Host memory holding the secret is wiped. From now on the seed exists only in the SE.</p></div>
+    </div>
+    <div class="note"><b>Be transparent about this:</b> during enrollment the secret is transiently visible to the host — because the issuing service hands it out as a QR/string. This is industry-standard (the same as any authenticator). Mitigate with ephemeral handling, no logging, and a future roadmap item for a sealed SE-to-SE provisioning channel. After enrollment, the seed never touches the host again.</div>
+  </div>
+</section>
+
+<!-- 07 FIDO SYNERGY -->
+<section style="animation-delay:.05s">
+  <div class="wrap">
+    <div class="sec-no">08 / DOES FIDO HELP?</div>
+    <h2>Yes — TOTP is an applet on a platform you already shipped.</h2>
+    <p class="sec-intro">You asked whether FIDO support helps. It's the whole reason this is cheap to build. Nearly every primitive TOTP needs already exists in BioKey for FIDO; OATH reuses them rather than rebuilding.</p>
+    <div class="syn">
+      <div class="cell"><div class="have">YOU ALREADY HAVE</div><div class="arrow">↓ reuse for TOTP</div><div class="use">Secure element key store — now also holds OATH seeds</div></div>
+      <div class="cell"><div class="have">YOU ALREADY HAVE</div><div class="arrow">↓ reuse for TOTP</div><div class="use">Biometric matcher (FIDO UV) — gates every code release</div></div>
+      <div class="cell"><div class="have">YOU ALREADY HAVE</div><div class="arrow">↓ reuse for TOTP</div><div class="use">USB HID transport stack — add CCID as a sibling interface</div></div>
+      <div class="cell"><div class="have">YOU ALREADY HAVE</div><div class="arrow">↓ reuse for TOTP</div><div class="use">PIN / UV auth + on-chip crypto engine — HMAC fits right in</div></div>
+    </div>
+    <div class="note cyan"><b>The one-line pitch:</b> one fingerprint-gated key that does phishing-resistant FIDO2 for modern logins <i>and</i> hardware-sealed TOTP for everything legacy — replacing both your security key and your phone authenticator.</div>
+  </div>
+</section>
+
+<!-- 08 PLATFORMS -->
+<section style="animation-delay:.05s">
+  <div class="wrap">
+    <div class="sec-no">09 / PLATFORM REACH</div>
+    <h2>Where it works — and the one constraint to flag.</h2>
+    <div class="tbl">
+      <table>
+        <tr><th>Platform</th><th>CCID (app)</th><th>Keyboard HID</th><th>Notes</th></tr>
+        <tr><td><b>Windows</b></td><td class="yes">✓ native PC/SC</td><td class="yes">✓</td><td>Cleanest target</td></tr>
+        <tr><td><b>macOS</b></td><td class="yes">✓ CryptoTokenKit</td><td class="yes">✓</td><td>Cleanest target</td></tr>
+        <tr><td><b>Linux</b></td><td class="yes">✓ pcsclite</td><td class="yes">✓</td><td>Cleanest target</td></tr>
+        <tr><td><b>Android</b></td><td class="yes">✓ USB host + lib</td><td class="yes">✓ USB-C / OTG</td><td>Strong mobile story; add NFC if hardware allows</td></tr>
+        <tr><td><b>iOS / iPadOS</b></td><td class="warn">⚠ restricted</td><td class="warn">⚠ restricted</td><td>3rd-party USB HID/CCID access is limited even on USB-C iPhones. <b>NFC is the practical path</b> — but only if the device has an NFC antenna.</td></tr>
+      </table>
+    </div>
+    <div class="note"><b>Decision to surface with the audience:</b> iOS is the hard constraint. If iOS coverage matters to the target buyers, the cleanest answer is an <b>NFC antenna</b> on the device (also future-proofs FIDO-over-NFC). Otherwise scope V1 to desktop + Android and treat iOS as a fast-follow.</div>
+  </div>
+</section>
+
+<!-- 09 ROADMAP -->
+<section style="animation-delay:.05s">
+  <div class="wrap">
+    <div class="sec-no">10 / PHASING</div>
+    <h2>A build path that ships value early.</h2>
+    <div class="road">
+      <div class="phase"><div class="pn">Phase 1 · foundation</div><h4>OATH applet + CCID + desktop app</h4><p>Add the OATH applet to the SE and a CCID interface. Ship a Windows / macOS / Linux companion app with enrollment, listing, and biometric-gated calculate. Reuses the entire FIDO platform — lowest-risk, fastest demo.</p></div>
+      <div class="phase"><div class="pn">Phase 2 · mobile</div><h4>Android companion app</h4><p>USB-C / OTG support, same biometric-gated flow. Brings the "replace your phone authenticator" message to mobile.</p></div>
+      <div class="phase"><div class="pn">Phase 3 · appless</div><h4>RTC variant + keyboard auto-type</h4><p>Optional hardware variant with a battery-backed clock. Touch-and-type codes with zero software for kiosk / locked-down buyers.</p></div>
+      <div class="phase"><div class="pn">Phase 4 · reach + scale</div><h4>iOS via NFC + enterprise management</h4><p>NFC path for iOS, plus bulk provisioning, MDM hooks, and sealed SE-to-SE enrollment for managed fleets.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 SUMMARY -->
+<section style="animation-delay:.05s;border-bottom:none">
+  <div class="wrap">
+    <div class="sec-no">11 / THE TAKEAWAY</div>
+    <h2>What makes this defensible.</h2>
+    <div class="split" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+      <div class="card good"><div class="lbl">Seed sovereignty</div><ul><li>Secret <b>never leaves silicon</b> — not extractable, not syncable</li></ul></div>
+      <div class="card good"><div class="lbl">Biometric per code</div><ul><li>Every OTP requires a <b>live fingerprint</b>, matched on-chip</li></ul></div>
+      <div class="card good"><div class="lbl">One key, both worlds</div><ul><li><b>FIDO2 + TOTP + HOTP</b> — modern and legacy auth on one device</li></ul></div>
+      <div class="card good"><div class="lbl">Low build risk</div><ul><li>Additive applet — <b>reuses the shipping FIDO stack</b></li></ul></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="mono">BIOKEY · ON-DEVICE TOTP — PRODUCT BLUEPRINT (concept, for audience showcase)</p>
+    <p style="margin-top:8px">Standards referenced: RFC&nbsp;6238 (TOTP) · RFC&nbsp;4226 (HOTP) · RFC&nbsp;2104 (HMAC) · ISO/IEC&nbsp;7816-4 (APDU) · FIDO CTAP2 · <span class="mono">otpauth://</span> URI. Product names and module naming are placeholders. iOS support, the time-source choice, and an NFC antenna are open decisions to confirm with the target audience.</p>
+  </div>
+</footer>
+
+</body>
+</html>
