@@ -20,6 +20,7 @@
     var nextBtn = deck.querySelector('.deck-next');
     var curEl = deck.querySelector('.deck-cur');
     var live = deck.querySelector('.deck-live');
+    var fill = deck.querySelector('.deck-progress-fill');
     var current = 0;
 
     // Swap a slide's data-src into src (lazy) — used for the active slide and
@@ -47,6 +48,7 @@
       if (curEl) curEl.textContent = String(i + 1);
       if (prevBtn) prevBtn.disabled = i === 0;
       if (nextBtn) nextBtn.disabled = i === total - 1;
+      if (fill) fill.style.width = ((i + 1) / total * 100) + '%';
       if (live) live.textContent = 'Slide ' + (i + 1) + ' of ' + total;
     }
 
