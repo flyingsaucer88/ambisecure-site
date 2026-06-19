@@ -143,7 +143,7 @@ window.AS_HOMEPAGE_BANNERS = [
     enabled: true,
     eyebrow: "ECOSYSTEM · Ambimat Electronics",
     title: "Forty-five years of embedded engineering.",
-    body: "AmbiSecure is the security business unit of Ambimat Electronics — the parent group has been shipping PCB designs, firmware, contactless modules, GSM / Bluetooth platforms for medical devices, smart watches, smart homes and utilities since 1981.",
+    body: "AmbiSecure is the security business unit of Ambimat Electronics — the parent group has been shipping PCB designs, firmware, contactless modules, GSM / Bluetooth platforms for medical devices, smart watches, smart homes and utilities since 1982.",
     accent: "dark",
     primaryCta: { label: "Visit Ambimat Electronics", url: "https://ambimat.com/" },
     secondaryCta: { label: "About AmbiSecure", url: "/about/" }

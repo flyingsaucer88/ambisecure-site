@@ -73,7 +73,7 @@ ECOSYSTEM_BAR = (
     '<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span>'
     '<a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a>'
     '<a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a>'
-    '<a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1981</span></div></div>'
+    '<a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1982</span></div></div>'
 )
 
 NAVBAR = (

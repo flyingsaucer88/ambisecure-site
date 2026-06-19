@@ -1,6 +1,6 @@
 # AmbiSecure
 
-> AmbiSecure is the security-engineering brand of Ambimat Electronics (Ahmedabad, India; est. 1981). We design hardware-rooted identity products and services — FIDO authenticators, JavaCard applets, secure-element integration, IoT trust systems, eSIM/eUICC platforms, and a FIDO Validation Server SaaS.
+> AmbiSecure is the security-engineering brand of Ambimat Electronics (Ahmedabad, India; est. 1982). We design hardware-rooted identity products and services — FIDO authenticators, JavaCard applets, secure-element integration, IoT trust systems, eSIM/eUICC platforms, and a FIDO Validation Server SaaS.
 
 This file follows the emerging [llms.txt convention](https://llmstxt.org) for LLM-friendly site overviews. Crawl freely; no PII or sensitive content is exposed.
 
@@ -11,7 +11,7 @@ AmbiSecure is one of three sibling platforms inside the Ambimat Group. They shar
 - **AmbiSecure** (this site, `ambisecure.ambimat.com`): hardware-rooted identity — FIDO authenticators, PIV smart cards, JavaCard applets, secure elements, ePassport, IoT device identity, FIDO Validation Server.
 - **SIMAuth** (`esim.ambimat.com`): telecom-grade eUICC / eSIM platform — SGP.22 consumer profiles, SGP.32 M2M / automotive, profile lifecycle, OpenID Connect applet for end-user identity verification.
 - **AmbiAutomation** (`ambiautomation.ambimat.com`): building-automation retrofit for existing VRV / VRF HVAC systems — on-site BACnet/MODBUS server plus mobile / web operator app for centralised control. Offices, hotels, hospitals, education, light industrial.
-- **Ambimat Electronics** (`ambimat.com`): the parent embedded-electronics firm. PCB design, contract manufacturing, and electronics engineering since 1981.
+- **Ambimat Electronics** (`ambimat.com`): the parent embedded-electronics firm. PCB design, contract manufacturing, and electronics engineering since 1982.
 
 Cross-link points where AmbiSecure and AmbiAutomation deployments naturally overlap: smart-city building access, commercial-real-estate access control + HVAC, BACnet/MODBUS controllers that need hardware-rooted device identity. They are separate products, not duplicate offerings.
 

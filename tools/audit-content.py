@@ -36,9 +36,11 @@ EXEMPT = {
 def iter_html():
     for dirpath, _, files in os.walk(ROOT):
         if any(s in dirpath for s in ("/legacysitedata/", "/.git/", "/node_modules/",
-                                       "/.lighthouseci/", "/dist/", "/_internal/")):
+                                       "/.lighthouseci/", "/dist/", "/_internal/", "/docs/")):
             continue
         if dirpath.endswith(("/_internal", os.sep + "_internal")):
+            continue
+        if dirpath.endswith(("/docs", os.sep + "docs")):
             continue
         if dirpath.endswith("assets") or "/assets/" in dirpath:
             continue
