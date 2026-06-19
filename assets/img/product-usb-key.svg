@@ -41,6 +41,6 @@
   <!-- standards line -->
   <g font-family="JetBrains Mono, monospace" font-size="10" fill="#8C9092" letter-spacing="1.4">
     <text x="60" y="288">FIDO2 · CTAP2.1 · WebAuthn · ResidentKeys</text>
-    <text x="60" y="304">CC EAL5+ · ISO/IEC 7816 · USB-A · NFC</text>
+    <text x="60" y="304">CC EAL6+ · ISO/IEC 7816 · USB-A · NFC</text>
   </g>
 </svg>

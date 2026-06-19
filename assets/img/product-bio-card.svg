@@ -66,6 +66,6 @@
   <!-- spec line -->
   <g font-family="JetBrains Mono, monospace" font-size="9" fill="#8C9092" letter-spacing="1.2">
     <text x="78" y="290">FIDO2 · BIO-FIDO · BIO-PIV · NFC · USB</text>
-    <text x="78" y="304">CC EAL5+ · ISO/IEC 7816 · ID-1</text>
+    <text x="78" y="304">CC EAL6+ · ISO/IEC 7816 · ID-1</text>
   </g>
 </svg>

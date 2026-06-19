@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/connected-mobility.png" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
-<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -120,7 +120,7 @@
     <div class="prose" style="max-width:880px;margin:0;">
       <p>V2X devices are not in air-conditioned data centres. OBUs are in vehicles that get stolen, get crashed, get parked in salvage yards, get sold on the second-hand market. RSUs are bolted to roadside poles in cities where local contractors and curious passersby have physical access to them.</p>
       <p>Software key storage means the credential is in flash, in RAM during a signing operation, on the JTAG / SWD debug interface if it has not been physically disabled, in the boot ROM if the boot ROM has access to it. An attacker with a soldering iron and time will find one of these. Once they have the key, they have the device's identity. They can manufacture a clone. The cloned device can transmit forged V2X messages indistinguishable from the original. The PKI cannot help: the messages are validly signed.</p>
-      <p>The standards-mandated answer is a tamper-resistant secure element: the private key never leaves the SE, signing operations execute inside the SE, the host MCU only sees the signature output. Common Criteria EAL5+ is the floor for the silicon &mdash; the integrated AmbiSEC Module product is a target for further automotive-grade certification (ISO 26262, ASPICE), not yet a claim.</p>
+      <p>The standards-mandated answer is a tamper-resistant secure element: the private key never leaves the SE, signing operations execute inside the SE, the host MCU only sees the signature output. Common Criteria EAL6+ is the floor for the silicon &mdash; the integrated AmbiSEC Module product is a target for further automotive-grade certification (ISO 26262, ASPICE), not yet a claim.</p>
       <p>MTCTE cybersecurity testing in India should mandate this property as a pass/fail criterion for V2X equipment, not as a recommendation. Both <a href="/technologies/v2x-pki/">IEEE 1609.2 / ETSI TS 103 097</a> and <a href="/about/certifications/">TEC 31318:2021</a> already point to it.</p>
     </div>
   </div>
@@ -185,7 +185,7 @@
       <span class="section-line"></span>
     </div>
     <table class="spec-table">
-      <tr><th>IoT Security Co-Processor</th><td><a href="/products/iot-security-coprocessor/">AmbiSEC Module</a> dual-domain co-processor. CC EAL5+ secure-element silicon at the chip level. Hardware key isolation, ECDSA-P256/P-384 signing, secure boot, OTA verification applet. Automotive operating range available.</td></tr>
+      <tr><th>IoT Security Co-Processor</th><td><a href="/products/iot-security-coprocessor/">AmbiSEC Module</a> dual-domain co-processor. CC EAL6+ secure-element silicon at the chip level. Hardware key isolation, ECDSA-P256/P-384 signing, secure boot, OTA verification applet. Automotive operating range available.</td></tr>
       <tr><th>JavaCard applet development</th><td><a href="/services/javacard-development/">Custom V2X applet engineering</a> &mdash; EC storage, PC batch lifecycle, signing-protocol surface, OTA-deployable policy under GlobalPlatform SCP03. Same team that wrote the FIDO / PIV / OpenPGP applet portfolio.</td></tr>
       <tr><th>Provisioning infrastructure</th><td>HSM-backed personalisation line, SCP03-wrapped key injection, per-device unique attestation chain. The pattern AmbiSecure already uses for <a href="/solutions/smart-card-personalization/">smart-card personalisation</a>; portable to V2X EC injection.</td></tr>
       <tr><th>SIMAuth (sister)</th><td><a href="https://esim.ambimat.com/" rel="noopener">esim.ambimat.com</a> &mdash; telecom-grade credential lifecycle at SGP.22 / SGP.32 scale. The operational template AmbiSecure draws on for V2X EA/AA architectural choices.</td></tr>
@@ -300,10 +300,10 @@
     </div>
   </div>
 </footer>
-<script src="/assets/js/nav.js?v=31" defer></script>
-<script src="/assets/js/web-vitals.js?v=31" defer></script>
-<script src="/assets/js/site-search.js?v=31" defer></script>
-<script src="/assets/js/analytics-config.js?v=31" defer></script>
-<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
 </body>
 </html>

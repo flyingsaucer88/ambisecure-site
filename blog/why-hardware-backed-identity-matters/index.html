@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
-<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -143,7 +143,7 @@
     <h3>TPM (Trusted Platform Module)</h3>
     <p>Soldered onto the motherboard or instantiated inside a CPU package (fTPM). Protects keys from the operating system above it; doesn't necessarily protect against motivated physical attackers with $50k of equipment. Fine for laptop platform credentials. Common in Windows Hello deployments.</p>
     <h3>Secure Element (SE)</h3>
-    <p>A discrete crypto-chip with its own packaging and side-channel countermeasures. Lives inside a smart card, USB key, eSIM, secure enclave (Apple, Samsung Knox), or as an embedded SE on a phone. Certified to higher assurance levels (Common Criteria EAL5+). Designed to resist active physical attacks.</p>
+    <p>A discrete crypto-chip with its own packaging and side-channel countermeasures. Lives inside a smart card, USB key, eSIM, secure enclave (Apple, Samsung Knox), or as an embedded SE on a phone. Certified to higher assurance levels (Common Criteria EAL6+). Designed to resist active physical attacks.</p>
     <h3>HSM (Hardware Security Module)</h3>
     <p>Dedicated server-class crypto appliance. Higher throughput, FIPS 140-2 / 140-3 level 3 or 4 certified. Used for issuance, root keys, code-signing, certificate authorities. Not typically a per-user authenticator; it backs the issuance pipeline.</p>
     <p>For user authentication, the relevant tier is the secure element (SE). It is what sits inside the OnePass Card, the OnePass USB Key, and inside Apple's secure enclave / Samsung Knox / Google Titan-M.</p>
@@ -165,7 +165,7 @@
       <li>Software-stored private key on a normal corporate laptop: $50 to $5k per machine. Deploy malware, exfiltrate, or buy from initial-access broker.</li>
       <li>TPM-bound credential: $5k to $50k. Either a kernel-level compromise (after which the OS issues operations), or physical extraction with chip-level equipment.</li>
       <li>Secure-element-bound credential (consumer-grade): $50k to $500k. Acid-etch the chip, microprobe the bond pads, side-channel the operations.</li>
-      <li>Secure-element-bound credential (CC EAL5+): $500k to $5m+ per device. Most attempts fail; success requires a well-funded actor with months of effort.</li>
+      <li>Secure-element-bound credential (CC EAL6+): $500k to $5m+ per device. Most attempts fail; success requires a well-funded actor with months of effort.</li>
     </ul>
     <p>For mass attacks (phishing, credential stuffing) the relevant tier is the lower end. Defence tier matters because mass attacks are cheap. Once you push the per-extraction cost into the six-digit range, mass attacks become uneconomic; only targeted attacks remain. That is the business case for hardware.</p>
 
@@ -230,11 +230,11 @@
   </div>
   <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span></div>
 </div></footer>
-<script src="/assets/js/nav.js?v=31" defer></script>
-<script src="/assets/js/web-vitals.js?v=31" defer></script>
-<script src="/assets/js/blog-toc.js?v=31" defer></script>
-<script src="/assets/js/site-search.js?v=31" defer></script>
-<script src="/assets/js/analytics-config.js?v=31" defer></script>
-<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/blog-toc.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
 </body>
 </html>

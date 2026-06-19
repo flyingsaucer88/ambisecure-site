@@ -41,7 +41,7 @@
     <g font-family="JetBrains Mono, monospace" fill="#C49A4F" opacity="0.7">
       <text x="70" y="50" text-anchor="middle" font-size="10" letter-spacing="1.2">AMBISECURE</text>
       <text x="70" y="64" text-anchor="middle" font-size="8" letter-spacing="1">AS-SE32</text>
-      <text x="70" y="78" text-anchor="middle" font-size="7" letter-spacing="1">CC EAL5+</text>
+      <text x="70" y="78" text-anchor="middle" font-size="7" letter-spacing="1">CC EAL6+</text>
       <text x="70" y="90" text-anchor="middle" font-size="7" letter-spacing="1">SCP03 · GP 2.3.1</text>
     </g>
     <!-- pads -->

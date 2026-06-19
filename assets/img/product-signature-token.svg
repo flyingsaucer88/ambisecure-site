@@ -29,6 +29,6 @@
   </g>
   <g font-family="JetBrains Mono, monospace" font-size="10" fill="#8C9092" letter-spacing="1.4">
     <text x="40" y="288">RSA 2048/3072/4096 · ECDSA P-256/P-384 · AES-256</text>
-    <text x="40" y="304">CC EAL5+ · ISO/IEC 7816 · PKCS#11 v3.0 · PKCS#15</text>
+    <text x="40" y="304">CC EAL6+ · ISO/IEC 7816 · PKCS#11 v3.0 · PKCS#15</text>
   </g>
 </svg>

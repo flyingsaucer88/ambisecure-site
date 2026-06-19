@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
-<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -138,7 +138,7 @@
     <p>Roaming authenticators are external hardware that connects to the host via USB-HID, NFC, or BLE. They contain a secure element dedicated to FIDO operations. They are not bound to any single device; tap or insert into whichever host the user is at.</p>
     <p>The major implementations:</p>
     <ul>
-      <li><strong>USB security keys</strong> (YubiKey 5, Token2 T2F2, OnePass USB Key, Feitian K9) &mdash; USB-A or USB-C, optional NFC. Battery-free; the host powers them. FIDO L2 is typical; CC EAL5+ secure elements available.</li>
+      <li><strong>USB security keys</strong> (YubiKey 5, Token2 T2F2, OnePass USB Key, Feitian K9) &mdash; USB-A or USB-C, optional NFC. Battery-free; the host powers them. FIDO L2 is typical; CC EAL6+ secure elements available.</li>
       <li><strong>FIDO smart cards</strong> (OnePass Card, IDEMIA, Thales) &mdash; ISO 7810 ID-1 form factor. NFC + USB-C; brandable. Often combined with PIV for legacy compatibility and with employee-ID printing for badge use.</li>
       <li><strong>Bluetooth security keys</strong> (Token2 T2F2 BLE, Feitian Multipass) &mdash; rare; mostly relevant for tablet / phone use cases without an NFC reader. Battery-powered; pair / unpair management overhead.</li>
       <li><strong>Mobile-as-roaming-authenticator</strong> &mdash; via the WebAuthn hybrid transport (caBLE), the user's phone can act as a roaming authenticator for sessions on another device. QR-code initiated, BLE proximity-checked.</li>
@@ -152,7 +152,7 @@
         <tr><td>Cross-device portability</td><td>No (or via sync)</td><td>Yes (move physically)</td></tr>
         <tr><td>Loss recovery</td><td>Tied to device replacement</td><td>Issue replacement; original revoked</td></tr>
         <tr><td>Theft posture</td><td>Lose device, lose credential</td><td>Lose key, original device unaffected</td></tr>
-        <tr><td>Assurance level (default)</td><td>L1-L2 typical</td><td>L2-L3 typical (CC EAL5+ available)</td></tr>
+        <tr><td>Assurance level (default)</td><td>L1-L2 typical</td><td>L2-L3 typical (CC EAL6+ available)</td></tr>
         <tr><td>BE flag (default)</td><td>1 if synced; 0 if not</td><td>0 (device-bound)</td></tr>
         <tr><td>Provisioning</td><td>Self-service after device receipt</td><td>In-person / mailed-kit</td></tr>
         <tr><td>UV (default)</td><td>Touch ID / Face ID / Hello</td><td>PIN entered into device</td></tr>
@@ -168,12 +168,12 @@
     <h2>Form-factor specifics</h2>
     <h3>Smart cards</h3>
     <p>The strongest form factor for an enterprise that already issues badges. The card serves three roles &mdash; physical-access badge, FIDO authenticator, ID photo &mdash; on one piece of plastic. Issuance integrates with badge printing; lifecycle management ties into existing badge workflows. NFC + USB-C means the card works at every reader the user encounters.</p>
-    <p>OnePass Card ships with this posture. CC EAL5+ secure element, FIDO L2 certification, ISO 7810 ID-1 dimensions. PIV-compatible for legacy systems that haven't migrated to FIDO yet.</p>
+    <p>OnePass Card ships with this posture. CC EAL6+ secure element, FIDO L2 certification, ISO 7810 ID-1 dimensions. PIV-compatible for legacy systems that haven't migrated to FIDO yet.</p>
     <h3>USB keys</h3>
     <p>The simplest form factor. Plug it in, tap when prompted. Less ceremonial than smart cards; less brand-able. Works great for engineers who live in laptops. Less great for environments where the laptop port is occupied or where the user is mobile across many hosts (think: nurses moving between hospital workstations).</p>
     <p>OnePass USB Key, USB-A and USB-C variants. Battery-free. NFC variants available for phone-tap.</p>
     <h3>Biometric smart cards</h3>
-    <p>An emerging form factor: a smart card with an on-card fingerprint sensor. The fingerprint is matched on-card; the card emits the UV flag once matched. CTAP2.1 bio-enrolment; CC EAL5+ certified.</p>
+    <p>An emerging form factor: a smart card with an on-card fingerprint sensor. The fingerprint is matched on-card; the card emits the UV flag once matched. CTAP2.1 bio-enrolment; CC EAL6+ certified.</p>
     <p>Use case: environments where typing a PIN is impractical (gloved hands, public areas with shoulder-surfing concern). The card is a single tap; the fingerprint is the UV. Slightly more expensive ($60-$80 per unit); better UX for the right context.</p>
 
     <h2>Provisioning paths by form factor</h2>
@@ -261,11 +261,11 @@
   </div>
   <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span></div>
 </div></footer>
-<script src="/assets/js/nav.js?v=31" defer></script>
-<script src="/assets/js/web-vitals.js?v=31" defer></script>
-<script src="/assets/js/blog-toc.js?v=31" defer></script>
-<script src="/assets/js/site-search.js?v=31" defer></script>
-<script src="/assets/js/analytics-config.js?v=31" defer></script>
-<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/blog-toc.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
 </body>
 </html>

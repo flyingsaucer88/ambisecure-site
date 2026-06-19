@@ -24,8 +24,8 @@
 
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
-<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -44,7 +44,7 @@
       "name": "Is an AmbiSecure FIDO security key really more secure than passwords or SMS OTP?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Passwords are shared secrets — anything stored on a server can be phished or leaked. SMS OTP is bound to a phone number, not a person, and is vulnerable to SIM-swap and SS7 attacks. AmbiSecure FIDO2 / WebAuthn keys carry a private key that never leaves a tamper-resistant CC EAL5+ secure element. The relying party only ever receives a per-origin signed challenge — phishing-resistant by construction."
+        "text": "Yes. Passwords are shared secrets — anything stored on a server can be phished or leaked. SMS OTP is bound to a phone number, not a person, and is vulnerable to SIM-swap and SS7 attacks. AmbiSecure FIDO2 / WebAuthn keys carry a private key that never leaves a tamper-resistant CC EAL6+ secure element. The relying party only ever receives a per-origin signed challenge — phishing-resistant by construction."
       }
     },
     {
@@ -68,7 +68,7 @@
       "name": "Is the AmbiSecure card waterproof and durable enough for daily use?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. The card body is ISO/IEC 7810 ID-1 standard plastic and survives normal wallet conditions — rain, sweat, brief immersion. USB-key variants are ABS / metal-shell and survive keychain wear. The CC EAL5+ secure element inside has no battery, no firmware to die, and no moving parts."
+        "text": "Yes. The card body is ISO/IEC 7810 ID-1 standard plastic and survives normal wallet conditions — rain, sweat, brief immersion. USB-key variants are ABS / metal-shell and survive keychain wear. The CC EAL6+ secure element inside has no battery, no firmware to die, and no moving parts."
       }
     },
     {
@@ -84,7 +84,7 @@
       "name": "How does AmbiSecure keep my information from getting hacked?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "AmbiSecure never stores account passwords. The hardware-bound private key signs a per-origin challenge from the website — so the server learns nothing about other services, the key learns nothing about the user, and phishing servers receive nothing useful. The secure element is hardware-isolated, side-channel resistant, and certified at CC EAL5+ or higher."
+        "text": "AmbiSecure never stores account passwords. The hardware-bound private key signs a per-origin challenge from the website — so the server learns nothing about other services, the key learns nothing about the user, and phishing servers receive nothing useful. The secure element is hardware-isolated, side-channel resistant, and certified at CC EAL6+ or higher."
       }
     },
     {
@@ -100,7 +100,7 @@
       "name": "What about government backdoors or master keys in AmbiSecure devices?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "There are none. AmbiSecure secure elements are sourced from CC EAL5+ certified silicon vendors. The applet code is signed by the issuer, not by AmbiSecure. There is no extractable per-device master key, no remote update channel that bypasses the issuer, and no escrow of user credentials. The hardware certification reports for the underlying silicon are publicly available from the chip vendor."
+        "text": "There are none. AmbiSecure secure elements are sourced from CC EAL6+ certified silicon vendors. The applet code is signed by the issuer, not by AmbiSecure. There is no extractable per-device master key, no remote update channel that bypasses the issuer, and no escrow of user credentials. The hardware certification reports for the underlying silicon are publicly available from the chip vendor."
       }
     },
     {
@@ -124,7 +124,7 @@
       "name": "Does AmbiSecure work with eSIM and secure-element authentication?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. AmbiSecure ships FIDO2, PIV, and OpenID Connect applets on CC EAL5+ secure elements packaged as removable nano-cards (ISO/IEC 7810 4FF) and solderable MFF2 modules — for embedded identity, OEM device authentication, and enterprise rollouts. Telecom-grade eSIM / eUICC and SGP.22 / SGP.32 RSP lifecycle work is covered separately on the dedicated SIMAuth platform (esim.ambimat.com), where the same applet portfolio is integrated with operator profile management."
+        "text": "Yes. AmbiSecure ships FIDO2, PIV, and OpenID Connect applets on CC EAL6+ secure elements packaged as removable nano-cards (ISO/IEC 7810 4FF) and solderable MFF2 modules — for embedded identity, OEM device authentication, and enterprise rollouts. Telecom-grade eSIM / eUICC and SGP.22 / SGP.32 RSP lifecycle work is covered separately on the dedicated SIMAuth platform (esim.ambimat.com), where the same applet portfolio is integrated with operator profile management."
       }
     },
     {
@@ -156,7 +156,7 @@
       "name": "How does AmbiSecure compare with hosted MFA SaaS like Duo or Microsoft Authenticator?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Hosted MFA is mostly TOTP or push-based — the second factor lives in software on a phone. AmbiSecure is the hardware layer below: phishing-resistant FIDO2 credentials in a CC EAL5+ secure element, issuable under your branding and your keys, deployable alongside Duo/Microsoft as the second factor those services prefer. The two are complementary, not competing."
+        "text": "Hosted MFA is mostly TOTP or push-based — the second factor lives in software on a phone. AmbiSecure is the hardware layer below: phishing-resistant FIDO2 credentials in a CC EAL6+ secure element, issuable under your branding and your keys, deployable alongside Duo/Microsoft as the second factor those services prefer. The two are complementary, not competing."
       }
     }
   ]
@@ -227,7 +227,7 @@
     <details class="faq-q" open>
       <summary><h3>Is an AmbiSecure FIDO security key really more secure than passwords or SMS OTP?</h3></summary>
       <div class="faq-a">
-        <p>Yes. Passwords are shared secrets &mdash; anything stored on a server can be phished or leaked. SMS OTP is bound to a phone number, not a person, and is vulnerable to SIM-swap and SS7 attacks. AmbiSecure FIDO2 / WebAuthn keys carry a private key that <strong>never leaves a tamper-resistant CC EAL5+ secure element</strong>. The relying party only ever receives a per-origin signed challenge &mdash; phishing-resistant by construction.</p>
+        <p>Yes. Passwords are shared secrets &mdash; anything stored on a server can be phished or leaked. SMS OTP is bound to a phone number, not a person, and is vulnerable to SIM-swap and SS7 attacks. AmbiSecure FIDO2 / WebAuthn keys carry a private key that <strong>never leaves a tamper-resistant CC EAL6+ secure element</strong>. The relying party only ever receives a per-origin signed challenge &mdash; phishing-resistant by construction.</p>
         <p>Related: <a href="/technologies/fido/">FIDO technology</a> &middot; <a href="/blog/smart-cards-vs-fido-tokens-vs-passkeys/">smart cards vs FIDO tokens vs passkeys</a> &middot; <a href="/blog/why-hardware-backed-identity-matters/">why hardware-backed identity matters</a>.</p>
       </div>
     </details>
@@ -267,7 +267,7 @@
     <details class="faq-q">
       <summary><h3>Does AmbiSecure work with eSIM and secure-element authentication?</h3></summary>
       <div class="faq-a">
-        <p>Yes. AmbiSecure ships FIDO2, PIV, and OpenID Connect applets on CC EAL5+ secure elements packaged as removable nano-cards (ISO/IEC 7810 4FF) and solderable MFF2 modules &mdash; for embedded identity, OEM device authentication, and enterprise rollouts. Telecom-grade eSIM / eUICC and SGP.22 / SGP.32 RSP lifecycle work is covered separately on the dedicated <a href="https://esim.ambimat.com/" rel="noopener">SIMAuth</a> platform, where the same applet portfolio is integrated with operator profile management.</p>
+        <p>Yes. AmbiSecure ships FIDO2, PIV, and OpenID Connect applets on CC EAL6+ secure elements packaged as removable nano-cards (ISO/IEC 7810 4FF) and solderable MFF2 modules &mdash; for embedded identity, OEM device authentication, and enterprise rollouts. Telecom-grade eSIM / eUICC and SGP.22 / SGP.32 RSP lifecycle work is covered separately on the dedicated <a href="https://esim.ambimat.com/" rel="noopener">SIMAuth</a> platform, where the same applet portfolio is integrated with operator profile management.</p>
         <p>Related: <a href="https://esim.ambimat.com/" rel="noopener">SIMAuth platform</a> &middot; <a href="/products/fido2-nano-sim-applet/">FIDO2 in a nano-card / MFF2 secure element</a> &middot; <a href="/products/piv-nano-sim-applet/">PIV in a nano-card / MFF2 secure element</a> &middot; <a href="/products/esim-solution/">eSIM identity solution</a>.</p>
       </div>
     </details>
@@ -291,7 +291,7 @@
     <details class="faq-q">
       <summary><h3>What about government backdoors or master keys in AmbiSecure devices?</h3></summary>
       <div class="faq-a">
-        <p>There are none. AmbiSecure secure elements are sourced from CC EAL5+ certified silicon vendors. The applet code is signed by the issuer, not by AmbiSecure. There is no extractable per-device master key, no remote update channel that bypasses the issuer, and no escrow of user credentials. The hardware certification reports for the underlying silicon are publicly available from the chip vendor.</p>
+        <p>There are none. AmbiSecure secure elements are sourced from CC EAL6+ certified silicon vendors. The applet code is signed by the issuer, not by AmbiSecure. There is no extractable per-device master key, no remote update channel that bypasses the issuer, and no escrow of user credentials. The hardware certification reports for the underlying silicon are publicly available from the chip vendor.</p>
         <p>Related: <a href="/trust/">trust center</a> &middot; <a href="/about/certifications/">certifications</a>.</p>
       </div>
     </details>
@@ -299,14 +299,14 @@
     <details class="faq-q">
       <summary><h3>Is the AmbiSecure card waterproof and durable enough for daily use?</h3></summary>
       <div class="faq-a">
-        <p>Yes. The card body is ISO/IEC 7810 ID-1 standard plastic and survives normal wallet conditions &mdash; rain, sweat, brief immersion. USB-key variants are ABS / metal-shell and survive keychain wear. The CC EAL5+ secure element inside has no battery, no firmware to die, and no moving parts.</p>
+        <p>Yes. The card body is ISO/IEC 7810 ID-1 standard plastic and survives normal wallet conditions &mdash; rain, sweat, brief immersion. USB-key variants are ABS / metal-shell and survive keychain wear. The CC EAL6+ secure element inside has no battery, no firmware to die, and no moving parts.</p>
       </div>
     </details>
 
     <details class="faq-q">
       <summary><h3>How does AmbiSecure compare with hosted MFA SaaS (Duo, Microsoft Authenticator, Okta Verify)?</h3></summary>
       <div class="faq-a">
-        <p>Hosted MFA is mostly TOTP or push-based &mdash; the second factor lives in software on a phone. AmbiSecure is the hardware layer below: phishing-resistant FIDO2 credentials in a CC EAL5+ secure element, issuable under your branding and your keys, deployable <strong>alongside</strong> Duo / Microsoft / Okta as the second factor those services prefer. The two are complementary, not competing.</p>
+        <p>Hosted MFA is mostly TOTP or push-based &mdash; the second factor lives in software on a phone. AmbiSecure is the hardware layer below: phishing-resistant FIDO2 credentials in a CC EAL6+ secure element, issuable under your branding and your keys, deployable <strong>alongside</strong> Duo / Microsoft / Okta as the second factor those services prefer. The two are complementary, not competing.</p>
         <p>Related: <a href="/solutions/passwordless-enterprise/">passwordless enterprise</a> &middot; <a href="/solutions/phishing-resistant-authentication/">phishing-resistant authentication</a>.</p>
       </div>
     </details>
@@ -373,10 +373,10 @@
   </div>
 </footer>
 
-<script src="/assets/js/nav.js?v=31" defer></script>
-<script src="/assets/js/web-vitals.js?v=31" defer></script>
-<script src="/assets/js/site-search.js?v=31" defer></script>
-<script src="/assets/js/analytics-config.js?v=31" defer></script>
-<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
 </body>
 </html>

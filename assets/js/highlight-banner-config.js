@@ -49,7 +49,7 @@ window.AS_HOMEPAGE_BANNERS = [
     enabled: true,
     eyebrow: "SERVICE · JavaCard development",
     title: "Twelve applets. One chip. AID-selectable.",
-    body: "FIDO, PIV, OpenPGP, NDEF, OIDC, biometric variants, IoT — multi-applet on a single CC EAL5+ chip. CAP files loaded under your issuer keys via SCP03.",
+    body: "FIDO, PIV, OpenPGP, NDEF, OIDC, biometric variants, IoT — multi-applet on a single CC EAL6+ chip. CAP files loaded under your issuer keys via SCP03.",
     accent: "dark",
     primaryCta: { label: "View applet matrix", url: "/products/javacard-applets/" },
     secondaryCta: { label: "JavaCard service", url: "/services/javacard-development/" }

@@ -21,8 +21,8 @@
 <meta property="article:author" content="AmbiSecure Engineering" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
-<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -192,7 +192,7 @@
     <pre><code><span class="c">// On-chip entropy inside a secure element</span>
 
    ┌─────────────────────────────────────────┐
-   │  Tamper boundary (CC EAL5+ silicon)     │
+   │  Tamper boundary (CC EAL6+ silicon)     │
    │                                         │
    │   ┌──────────────┐    ┌──────────────┐  │
    │   │  TRNG core   │    │  Health      │  │
@@ -219,7 +219,7 @@
                       ▼
               host MCU / applet</code></pre>
 
-    <p>This is the architecture that ships inside discrete secure-element silicon used across the smart-card, FIDO, eUICC, and IoT-trust-chip product classes. The TRNG core is part of what Common Criteria evaluations test at chip level; an EAL5+ certified secure element has had its TRNG subjected to the AIS-31 test battery (the German BSI evaluation suite that NIST 800-90B largely parallels). The same applies to TPM 2.0 modules per the TCG specification, and to HSMs evaluated under FIPS 140-2 or FIPS 140-3, where the entropy source is one of the gating items in the certification.</p>
+    <p>This is the architecture that ships inside discrete secure-element silicon used across the smart-card, FIDO, eUICC, and IoT-trust-chip product classes. The TRNG core is part of what Common Criteria evaluations test at chip level; an EAL6+ certified secure element has had its TRNG subjected to the AIS-31 test battery (the German BSI evaluation suite that NIST 800-90B largely parallels). The same applies to TPM 2.0 modules per the TCG specification, and to HSMs evaluated under FIPS 140-2 or FIPS 140-3, where the entropy source is one of the gating items in the certification.</p>
     <p>Modern CPU instruction sets expose hardware TRNGs to userspace directly &mdash; Intel&rsquo;s <code>RDSEED</code> and <code>RDRAND</code>, ARM&rsquo;s <code>RNDR</code> and <code>RNDRRS</code>. The Linux kernel mixes these into the kernel pool alongside its other inputs, which is one reason cloud providers can run cryptography at scale on commodity hardware without each tenant needing its own wall of lava lamps.</p>
 
     <h2 id="ambisecure-perspective">Where this lands for hardware-rooted device identity</h2>
@@ -245,7 +245,7 @@
       <li><strong>No single source is unobservable.</strong> An attacker who could photograph the lobby wall through the window still cannot predict the lava lamps&rsquo; future state, but combining sources defeats even hypothetical adversaries who could compromise one.</li>
       <li><strong>Entropy is the seed; cryptography is the engine.</strong> The lava lamps do not encrypt anything. They contribute bits that, once mixed with the rest of the pool, seed the CSPRNG that does the actual work. The cryptographic primitives downstream &mdash; ChaCha20, AES, SHA-256, the ECDH curves &mdash; are what carry the bulk of the security budget. The entropy stack is the foundation that those primitives stand on.</li>
     </ul>
-    <p>The right mental model for the Wall of Entropy is "trust anchor, demonstrably independent, hard to compromise covertly" &mdash; the same role a CC EAL5+ certified TRNG plays inside a secure element, just at a different scale.</p>
+    <p>The right mental model for the Wall of Entropy is "trust anchor, demonstrably independent, hard to compromise covertly" &mdash; the same role a CC EAL6+ certified TRNG plays inside a secure element, just at a different scale.</p>
 
     <h2 id="comparison">Comparison: entropy sources by property</h2>
     <p>Order of magnitude only &mdash; specific TRNG silicon varies widely. The comparison is intended to show the trade-offs, not to rank sources absolutely.</p>
@@ -313,11 +313,11 @@
   </div>
   <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
 </div></footer>
-<script src="/assets/js/nav.js?v=31" defer></script>
-<script src="/assets/js/web-vitals.js?v=31" defer></script>
-<script src="/assets/js/blog-toc.js?v=31" defer></script>
-<script src="/assets/js/site-search.js?v=31" defer></script>
-<script src="/assets/js/analytics-config.js?v=31" defer></script>
-<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/blog-toc.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
 </body>
 </html>

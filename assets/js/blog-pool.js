@@ -127,7 +127,7 @@ window.AS_BLOG_POOL = [
   "title": "Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity",
   "url": "/blog/sim-based-fido2-authenticators/",
   "date": "2026-05-11",
-  "summary": "A FIDO2 applet running inside a CC EAL5+ secure element packaged as a removable nano-card (4FF) or a solderable MFF2 module. Loaded under the issuer's keys, not the device-vendor's. One piece of silicon, one personalisation line, one revocation surface.",
+  "summary": "A FIDO2 applet running inside a CC EAL6+ secure element packaged as a removable nano-card (4FF) or a solderable MFF2 module. Loaded under the issuer's keys, not the device-vendor's. One piece of silicon, one personalisation line, one revocation surface.",
   "categories": [
    "FIDO",
    "Telecom Identity",
@@ -162,7 +162,7 @@ window.AS_BLOG_POOL = [
   "title": "Building Secure IoT Identity with Security Applets",
   "url": "/blog/secure-iot-identity-with-applets/",
   "date": "2026-05-11",
-  "summary": "Five JavaCard applets for IoT device identity on a CC EAL5+ secure element: provisioning, attestation, mTLS, signed firmware, key rotation.",
+  "summary": "Five JavaCard applets for IoT device identity on a CC EAL6+ secure element: provisioning, attestation, mTLS, signed firmware, key rotation.",
   "categories": [
    "IoT",
    "JavaCard"

@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Building Secure IoT Identity with Security Applets</title>
-<meta name="description" content="Five JavaCard applets for IoT device identity: provisioning, attestation, mTLS, signed firmware, key rotation. Architecture on a CC EAL5+ secure element." />
+<meta name="description" content="Five JavaCard applets for IoT device identity: provisioning, attestation, mTLS, signed firmware, key rotation. Architecture on a CC EAL6+ secure element." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/blog/secure-iot-identity-with-applets/" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Building Secure IoT Identity with Security Applets" />
-<meta property="og:description" content="Five JavaCard applets for IoT device identity: provisioning, attestation, mTLS, signed firmware, key rotation. Architecture on a CC EAL5+ secure element." />
+<meta property="og:description" content="Five JavaCard applets for IoT device identity: provisioning, attestation, mTLS, signed firmware, key rotation. Architecture on a CC EAL6+ secure element." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/blog/secure-iot-identity-with-applets/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
 <meta property="og:image:type" content="image/png" />
@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
-<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -119,7 +119,7 @@
     </div>
 
     <h1>Building Secure IoT Identity with Security Applets.</h1>
-    <p class="dek">Hardware-backed IoT identity isn&rsquo;t one applet, it&rsquo;s five. Provisioning, attestation, mTLS, signed firmware, key rotation &mdash; on a Common Criteria EAL5+ secure element the host MCU never sees the private key on.</p>
+    <p class="dek">Hardware-backed IoT identity isn&rsquo;t one applet, it&rsquo;s five. Provisioning, attestation, mTLS, signed firmware, key rotation &mdash; on a Common Criteria EAL6+ secure element the host MCU never sees the private key on.</p>
 
     <h2>The IoT identity problem, restated</h2>
     <p>An IoT device is a credential bearer that lives outside an administrator's reach for years. It boots at a factory line. It is shipped to a customer site. It connects to a cloud or fleet platform. It runs for five to fifteen years. It will, eventually, be compromised &mdash; an attacker physically present, a malicious firmware update, a stolen unit reverse-engineered to extract a key. The identity architecture has to assume all of these and still be defensible.</p>
@@ -127,7 +127,7 @@
     <p>This post walks through how <a href="/products/iot-security-applets/">IoT security applets</a> on a hardware secure element solve the credential-lifecycle problem from first boot through revocation.</p>
 
     <h2>The applet layer, briefly</h2>
-    <p>A secure element on its own is silicon. It runs whatever applet you load onto it. The applet layer is where the device's identity workflow gets expressed: provisioning, attestation, mutual TLS, signed firmware update, key rotation. A well-designed IoT identity programme assembles the right set of applets and loads them on a CC EAL5+ secure element over GlobalPlatform SCP03. The host MCU then talks to the secure element over a thin bus (ISO 7816, I2C, SPI) and never sees the private key.</p>
+    <p>A secure element on its own is silicon. It runs whatever applet you load onto it. The applet layer is where the device's identity workflow gets expressed: provisioning, attestation, mutual TLS, signed firmware update, key rotation. A well-designed IoT identity programme assembles the right set of applets and loads them on a CC EAL6+ secure element over GlobalPlatform SCP03. The host MCU then talks to the secure element over a thin bus (ISO 7816, I2C, SPI) and never sees the private key.</p>
     <p>Five applets cover the IoT identity lifecycle:</p>
 
     <h2>1. The provisioning applet</h2>
@@ -190,7 +190,7 @@
     <p>The shim is the only host-side code that touches the SE. Everything else in the device's firmware is unchanged.</p>
 
     <h2>Standards posture</h2>
-    <p>The applets use ECC P-256 / P-384 for new deployments and RSA 2048 / 3072 for legacy fleets that have existing CA infrastructure. Hashing is SHA-256 / SHA-384. Personalisation is GlobalPlatform SCP03 (AES-128). The secure element itself is Common Criteria EAL5+.</p>
+    <p>The applets use ECC P-256 / P-384 for new deployments and RSA 2048 / 3072 for legacy fleets that have existing CA infrastructure. Hashing is SHA-256 / SHA-384. Personalisation is GlobalPlatform SCP03 (AES-128). The secure element itself is Common Criteria EAL6+.</p>
     <p>For a regulated fleet (industrial IoT, automotive, medical devices), the standards posture matters at audit time. The traceability is: <a href="/references/x509-extensions/">X.509 certificate</a> ↔ attestation chain ↔ per-batch CA ↔ AmbiSecure issuance CA ↔ HSM key ceremony record. The auditor can walk that chain from a deployed device back to a key ceremony with a documented quorum.</p>
 
     <h2>What an attacker still has</h2>
@@ -198,12 +198,12 @@
     <ul>
       <li>Use the device&rsquo;s credentials for as long as the operator doesn&rsquo;t revoke them. Detection is the operator's job; revocation is the operator's job.</li>
       <li>Reverse-engineer the host MCU's logic and discover application-layer vulnerabilities (the SE protects keys, not code).</li>
-      <li>Perform side-channel and fault-injection attacks against the SE at considerable cost &mdash; the CC EAL5+ certification means "considerable cost," not "impossible."</li>
+      <li>Perform side-channel and fault-injection attacks against the SE at considerable cost &mdash; the CC EAL6+ certification means "considerable cost," not "impossible."</li>
     </ul>
     <p>The threat model the SE addresses is "attacker extracts the credential and uses it elsewhere." The threat model it does not address is "attacker uses the captured device itself." For that, the operator's revocation pipeline has to be fast enough &mdash; minutes, not days &mdash; from "device reported missing" to "device's credential is no longer accepted."</p>
 
     <h2>The bottom line</h2>
-    <p>A serious IoT identity programme runs five applets on a CC EAL5+ secure element: provisioning, attestation, mTLS, signed update, key rotation. The host MCU stays light; the SE stays load-bearing. The credential lifecycle &mdash; from factory injection through field rotation to revocation &mdash; lives inside an auditable chain. None of this is novel; the standards have been stable for a decade. What changes is the depth and discipline with which the applet layer is implemented. That is where AmbiSecure ships.</p>
+    <p>A serious IoT identity programme runs five applets on a CC EAL6+ secure element: provisioning, attestation, mTLS, signed update, key rotation. The host MCU stays light; the SE stays load-bearing. The credential lifecycle &mdash; from factory injection through field rotation to revocation &mdash; lives inside an auditable chain. None of this is novel; the standards have been stable for a decade. What changes is the depth and discipline with which the applet layer is implemented. That is where AmbiSecure ships.</p>
 
     <hr />
     <h2>Companion reading</h2>
@@ -228,11 +228,11 @@
   </div>
   <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span></div>
 </div></footer>
-<script src="/assets/js/nav.js?v=31" defer></script>
-<script src="/assets/js/web-vitals.js?v=31" defer></script>
-<script src="/assets/js/blog-toc.js?v=31" defer></script>
-<script src="/assets/js/site-search.js?v=31" defer></script>
-<script src="/assets/js/analytics-config.js?v=31" defer></script>
-<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/blog-toc.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
 </body>
 </html>

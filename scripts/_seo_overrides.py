@@ -259,13 +259,13 @@ DESCRIPTION_ONLY = {
   'references/index.html':
     'Engineering reference DB: APDU status words, EMV tags, ISO 7816, COSE algs, FIDO AAGUIDs, DESFire, GlobalPlatform, ASN.1, X.509, IEEE 1609.2, SGP.32.',
   'products/fido2-nano-sim-applet/index.html':
-    'FIDO2 / CTAP2 applet on a CC EAL5+ secure element. Nano-card (4FF) and MFF2 packages. ECC P-256, ISO/IEC 7816 contact + 14443 contactless.',
+    'FIDO2 / CTAP2 applet on a CC EAL6+ secure element. Nano-card (4FF) and MFF2 packages. ECC P-256, ISO/IEC 7816 contact + 14443 contactless.',
   'blog/how-fido-authentication-works/index.html':
     'A clear, non-academic explanation of how FIDO2 / WebAuthn actually works — registration, authentication, origin binding, what device and server do.',
   'blog/sim-based-fido2-authenticators/index.html':
     'How nano-card and MFF2 secure elements act as roaming or embedded FIDO2 authenticators — threat-model gains and enterprise deployment economics.',
   'products/piv-nano-sim-applet/index.html':
-    'PIV-compatible JavaCard applet on a CC EAL5+ secure element. Nano-card (4FF) and MFF2 packages. Four cert slots, RSA + ECC, hardware-backed store.',
+    'PIV-compatible JavaCard applet on a CC EAL6+ secure element. Nano-card (4FF) and MFF2 packages. Four cert slots, RSA + ECC, hardware-backed store.',
   'references/iso-21177/index.html':
     'ISO 21177 reference — ITS station security service architecture, secure session establishment, and the bridge from 1609.2 / 102 941 PKI to session protocols.',
   'resources/tools/v2x-cert-chain-validator/index.html':
@@ -311,7 +311,7 @@ DESCRIPTION_ONLY = {
   'blog/archive/mfa-in-government/index.html':
     'Why government identity programmes are adopting MFA, how MFA holds up against phishing and credential theft, and where hardware-rooted authenticators sit.',
   'products/piv-usb-key/index.html':
-    'PIV-compatible JavaCard applet in a USB-A / USB-C key. CCID + WebAuthn dual interface, smart-card logon, PKCS#11, SSH agent forwarding, CC EAL5+ SE.',
+    'PIV-compatible JavaCard applet in a USB-A / USB-C key. CCID + WebAuthn dual interface, smart-card logon, PKCS#11, SSH agent forwarding, CC EAL6+ SE.',
   'solutions/phishing-resistant-authentication/index.html':
     'Phishing-resistant MFA has a precise meaning — origin-bound, hardware-backed credentials. What WebAuthn buys, and how it maps to AAL3 / CISA / OMB M-22-09.',
   'technologies/ctap2/index.html':
@@ -325,7 +325,7 @@ DESCRIPTION_ONLY = {
   'blog/pki-credential-issuance-workforce-government/index.html':
     'Issuing X.509 credentials at workforce or government scale is more architecture than crypto — RA, CA, key custody, attestation, lifecycle, audit.',
   'products/piv-bio-card/index.html':
-    'PIV-compatible JavaCard applet on a biometric smart card with on-card fingerprint sensor. Three-factor auth (have / know / are) on one ID-1 card. CC EAL5+ SE.',
+    'PIV-compatible JavaCard applet on a biometric smart card with on-card fingerprint sensor. Three-factor auth (have / know / are) on one ID-1 card. CC EAL6+ SE.',
   'blog/platform-vs-roaming-authenticators/index.html':
     'Platform and roaming FIDO2 authenticators look interchangeable on a slide and behave differently in production. The decision matrix and the right hybrid mix.',
   'resources/tools/ieee-1609-2-parser/index.html':

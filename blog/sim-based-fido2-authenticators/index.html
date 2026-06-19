@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
-<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -40,7 +40,7 @@
      "name": "What is an embedded secure-element FIDO2 authenticator?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "A FIDO2 applet running inside a CC EAL5+ secure element packaged as a removable nano-card (4FF) or a solderable MFF2 module. The credential is hardware-backed, origin-bound by the FIDO2 protocol, and stored under the issuer's GlobalPlatform security domain — not on the device's general-purpose enclave."
+      "text": "A FIDO2 applet running inside a CC EAL6+ secure element packaged as a removable nano-card (4FF) or a solderable MFF2 module. The credential is hardware-backed, origin-bound by the FIDO2 protocol, and stored under the issuer's GlobalPlatform security domain — not on the device's general-purpose enclave."
      }
     },
     {
@@ -127,14 +127,14 @@
     </div>
 
     <h1>Embedded Secure-Element FIDO2 Authenticators for Enterprise Identity.</h1>
-    <p class="dek">An enterprise FIDO2 credential that lives inside a CC EAL5+ secure element packaged as a removable nano-card (4FF) or a solderable MFF2 module &mdash; loaded under the issuer's keys, not the device-vendor's. One piece of silicon, one personalisation line, one revocation surface.</p>
+    <p class="dek">An enterprise FIDO2 credential that lives inside a CC EAL6+ secure element packaged as a removable nano-card (4FF) or a solderable MFF2 module &mdash; loaded under the issuer's keys, not the device-vendor's. One piece of silicon, one personalisation line, one revocation surface.</p>
 
     <h2>The shape of the problem</h2>
     <p>An enterprise rolling out phishing-resistant authentication faces a recurring procurement choice: USB security keys for every employee, smart cards on the badge line, or platform authenticators baked into the device. Each path has its operational tax. USB keys get lost. Smart cards need a personalisation line. Platform authenticators bind the credential to a device the user might replace twice in three years. What if the FIDO2 credential lived inside a secure element the product already carries on its BOM, loaded under the issuer's keys, and reissuable by the same personalisation line that issues every other secure-element credential?</p>
-    <p>That is the case for an <a href="/products/fido2-nano-sim-applet/">embedded secure-element FIDO2 authenticator</a>: a FIDO2 applet running on a CC EAL5+ chip packaged as either a removable nano-card (ISO/IEC 7810 4FF) or a solderable MFF2 module. The secure element is already certified. The personalisation pipeline already exists. The trust boundary already exists. Repurposing it as a phishing-resistant authenticator is a software question, not a BOM question.</p>
+    <p>That is the case for an <a href="/products/fido2-nano-sim-applet/">embedded secure-element FIDO2 authenticator</a>: a FIDO2 applet running on a CC EAL6+ chip packaged as either a removable nano-card (ISO/IEC 7810 4FF) or a solderable MFF2 module. The secure element is already certified. The personalisation pipeline already exists. The trust boundary already exists. Repurposing it as a phishing-resistant authenticator is a software question, not a BOM question.</p>
 
     <h2>What "embedded secure-element" actually means here</h2>
-    <p>The silicon inside a 4FF card and inside an MFF2 module is the same CC EAL5+ secure element. The plastic-and-pads of the nano-card and the soldered footprint of the MFF2 module are simply two integration choices for the same chip. Both packages run JavaCard 3.x on top of GlobalPlatform 2.3.1; both load applets under the issuer's SCP03 keys; both behave the same to a FIDO2 verifier upstream.</p>
+    <p>The silicon inside a 4FF card and inside an MFF2 module is the same CC EAL6+ secure element. The plastic-and-pads of the nano-card and the soldered footprint of the MFF2 module are simply two integration choices for the same chip. Both packages run JavaCard 3.x on top of GlobalPlatform 2.3.1; both load applets under the issuer's SCP03 keys; both behave the same to a FIDO2 verifier upstream.</p>
     <p>A FIDO2 applet on this surface looks, to the host device, exactly like an external FIDO2 authenticator. It speaks CTAP2.1 over the contact (ISO/IEC 7816 T=0/T=1) interface. The applet generates and stores ECC P-256 keypairs inside the secure element; the private key never crosses the chip boundary, even to the device's own operating system. Registration and authentication ceremonies are origin-bound by the FIDO2 protocol itself.</p>
     <p>Operationally, the applet has two modes:</p>
     <ul>
@@ -153,7 +153,7 @@
     <p>For an enterprise that already issues hardware to its workforce, the gain is different: workforce identity that travels with the secure-element card rather than the device. A user upgrading from one device to the next moves the removable nano-card; their FIDO2 credentials move with it. Where the secure element is soldered (MFF2), the credential stays with the device and is reissued at hardware-refresh time through the same personalisation pipeline that loads every other applet.</p>
 
     <h2>The threat model gain</h2>
-    <p>Platform authenticators on consumer phones rely on the phone vendor's secure enclave. That is fine for most threat models, but the credential is then bound to the vendor's lifecycle: a vendor breach, a forced OS update, or a lost device with the credential synced through the vendor's cloud all become operational concerns. Embedded secure-element FIDO2 changes the trust root: the credential lives on a CC EAL5+ chip whose attestation chain runs through an issuance CA the issuing organisation controls, not the device vendor.</p>
+    <p>Platform authenticators on consumer phones rely on the phone vendor's secure enclave. That is fine for most threat models, but the credential is then bound to the vendor's lifecycle: a vendor breach, a forced OS update, or a lost device with the credential synced through the vendor's cloud all become operational concerns. Embedded secure-element FIDO2 changes the trust root: the credential lives on a CC EAL6+ chip whose attestation chain runs through an issuance CA the issuing organisation controls, not the device vendor.</p>
     <p>For an enterprise or OEM that wants a phishing-resistant credential <em>and</em> wants the credential's trust root inside its own custody rather than the platform vendor's, embedded secure-element FIDO2 is the only widely deployable option. The next-cheapest alternative is a dedicated USB security key with its own issuance line: more hardware to ship, more cards to replace, more help-desk tickets when one goes missing.</p>
 
     <h2>How the credential flows in production</h2>
@@ -217,11 +217,11 @@
   </div>
   <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span></div>
 </div></footer>
-<script src="/assets/js/nav.js?v=31" defer></script>
-<script src="/assets/js/web-vitals.js?v=31" defer></script>
-<script src="/assets/js/blog-toc.js?v=31" defer></script>
-<script src="/assets/js/site-search.js?v=31" defer></script>
-<script src="/assets/js/analytics-config.js?v=31" defer></script>
-<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/blog-toc.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
 </body>
 </html>

@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/solutions.png" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
-<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -83,7 +83,7 @@
      "name": "What does AmbiSecure actually deliver into this architecture?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Three layers. The silicon: AmbiSEC Module embeds a CC EAL5+ certified secure-element die with key isolation, ECDSA acceleration, and signed boot. The applet platform: JavaCard applets for FIDO, PIV, OpenPGP, and custom V2X certificate management. The provisioning infrastructure: HSM-backed personalisation lines with SCP03-equivalent wrapping, batch APDU pipelines, and audit-grade key custody. AmbiSecure does not operate Root CAs, issue V2X certificates, or ship turnkey OBU/RSU products."
+      "text": "Three layers. The silicon: AmbiSEC Module embeds a CC EAL6+ certified secure-element die with key isolation, ECDSA acceleration, and signed boot. The applet platform: JavaCard applets for FIDO, PIV, OpenPGP, and custom V2X certificate management. The provisioning infrastructure: HSM-backed personalisation lines with SCP03-equivalent wrapping, batch APDU pipelines, and audit-grade key custody. AmbiSecure does not operate Root CAs, issue V2X certificates, or ship turnkey OBU/RSU products."
      }
     },
     {
@@ -149,7 +149,7 @@
       <div class="card">
         <div class="card-icon">SE</div>
         <h3>Tamper-resistant silicon</h3>
-        <p>Side-channel-hardened analog design, mesh sensors, voltage and clock monitors, glitch detectors. Common Criteria EAL5+ at the chip level is the public mark of this work &mdash; the underlying secure-element silicon in AmbiSEC Module carries that certification. Above this layer, claims need their own evidence.</p>
+        <p>Side-channel-hardened analog design, mesh sensors, voltage and clock monitors, glitch detectors. Common Criteria EAL6+ at the chip level is the public mark of this work &mdash; the underlying secure-element silicon in AmbiSEC Module carries that certification. Above this layer, claims need their own evidence.</p>
       </div>
       <div class="card">
         <div class="card-icon">KI</div>
@@ -289,7 +289,7 @@
       <a href="/products/iot-security-coprocessor/" class="card">
         <div class="card-icon">SE</div>
         <h3>IoT Security Co-Processor</h3>
-        <p>The hardware root of trust for embedded fleets. CC EAL5+ certified secure-element silicon; ECDSA-P256/P-384 hardware acceleration; key isolation; signed boot; automotive operating range. The piece that sits at the bottom of every section on this page.</p>
+        <p>The hardware root of trust for embedded fleets. CC EAL6+ certified secure-element silicon; ECDSA-P256/P-384 hardware acceleration; key isolation; signed boot; automotive operating range. The piece that sits at the bottom of every section on this page.</p>
         <div class="card-meta">View product &rarr;</div>
       </a>
       <a href="/products/javacard-applets/" class="card">
@@ -338,12 +338,12 @@
       <ul style="line-height:1.85;font-size:15px;color:var(--ink);margin-left:18px;">
         <li><strong>Not a Root CA operator.</strong> AmbiSecure does not operate the Root Certificate Authority for any V2X, FIDO, or government-identity deployment. Root operation belongs to the regulator-designated entity (in India, CCA for V2X under the proposed framework). AmbiSecure integrates against an operator-run Root.</li>
         <li><strong>Not a turnkey OBU or RSU vendor.</strong> The integrated radio + compute + secure element + application stack that constitutes a V2X OBU is an OEM product. AmbiSecure supplies the secure-element silicon and the applet platform that the OEM integrates.</li>
-        <li><strong>No claim of ISO 26262 (functional safety) or ASPICE (automotive software process) certification of the integrated AmbiSEC Module product.</strong> Automotive-grade certification of the integrated product is a target, not a present claim. The underlying secure-element silicon's CC EAL5+ certification is at the chip level and is the only certification claim made for AmbiSEC Module today.</li>
+        <li><strong>No claim of ISO 26262 (functional safety) or ASPICE (automotive software process) certification of the integrated AmbiSEC Module product.</strong> Automotive-grade certification of the integrated product is a target, not a present claim. The underlying secure-element silicon's CC EAL6+ certification is at the chip level and is the only certification claim made for AmbiSEC Module today.</li>
         <li><strong>No claim of TRAI or government endorsement.</strong> The TRAI Consultation Paper of 30 April 2026 is referenced on this and adjacent pages as a public document defining the proposed framework for V2X security in India. References are descriptive, not endorsements.</li>
         <li><strong>No named customer or deployment claims.</strong> Where this page or any V2X page refers to "city-scale" or "fleet-scale" deployments, the framing is architectural. Specific deployments, where they exist, are covered under NDA and not disclosed on the public site.</li>
         <li><strong>No fabricated chip-vendor or silicon-partner claims.</strong> Component-level partnerships, where they exist, are disclosed only with vendor authorisation.</li>
       </ul>
-      <p style="margin-top:18px;">The <a href="/trust/">Trust Center</a> documents the certification posture and the disclosure practice in full. The <a href="/about/certifications/">Certifications page</a> lists the standards AmbiSecure designs against and the one chip-level certification (CC EAL5+) that is formally held.</p>
+      <p style="margin-top:18px;">The <a href="/trust/">Trust Center</a> documents the certification posture and the disclosure practice in full. The <a href="/about/certifications/">Certifications page</a> lists the standards AmbiSecure designs against and the one chip-level certification (CC EAL6+) that is formally held.</p>
     </div>
   </div>
 </section>
@@ -439,10 +439,10 @@
     </div>
   </div>
 </footer>
-<script src="/assets/js/nav.js?v=31" defer></script>
-<script src="/assets/js/web-vitals.js?v=31" defer></script>
-<script src="/assets/js/site-search.js?v=31" defer></script>
-<script src="/assets/js/analytics-config.js?v=31" defer></script>
-<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
 </body>
 </html>

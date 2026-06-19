@@ -147,7 +147,7 @@ TIMELINES = [
             ('2015', 'JavaCard 3.0.5 + GlobalPlatform 2.3.1 SCP03', 'Modern JavaCard + GP combination becomes the baseline for high-assurance smart-card platforms. SCP03 secure channel mandates AES-128 keys.', 'JavaCard 3.0.5 · GP 2.3.1 SCP03'),
             ('2018', 'DESFire EV2 production', 'EV2 brings multi-application support, transaction MAC, secure messaging upgrades. Transit + access-control deploy at scale.', 'DESFire EV2'),
             ('2020', 'FIDO2 smart cards in production', 'FIDO2 applets on JavaCard secure elements ship as the next generation of multi-protocol identity cards.', 'FIDO2 on JC'),
-            ('2023', 'Twelve-applet co-resident architecture', 'A single CC EAL5+ smart card carries FIDO2 + PIV + OpenPGP + NDEF + Door Access + OIDC + biometric variants, AID-selectable.', '<a href="/products/javacard-applets/">JavaCard applets</a>'),
+            ('2023', 'Twelve-applet co-resident architecture', 'A single CC EAL6+ smart card carries FIDO2 + PIV + OpenPGP + NDEF + Door Access + OIDC + biometric variants, AID-selectable.', '<a href="/products/javacard-applets/">JavaCard applets</a>'),
             ('2026', 'Smart card as identity hub', 'The modern smart card is no longer one credential &mdash; it is an issuer-policy boundary, with the JCVM firewall isolating up to a dozen credential applets per chip.', '<a href="/products/onepass-card/">OnePass Card</a>'),
         ],
         'related': [
@@ -204,7 +204,7 @@ TIMELINES = [
             ('2017', 'M2M eSIM (GSMA SGP.02 → SGP.32)', 'Eventually GSMA SGP.32 modernises M2M eSIM provisioning for IoT use cases. The eUICC becomes a general-purpose telecom SE.', 'GSMA SGP.02 / SGP.32'),
             ('2019', 'TPM 2.0 + Microsoft Pluton platform announcements', 'Embedded security processors begin to ship inside CPUs. The boundary between SE and CPU softens.', 'Pluton'),
             ('2022', 'IoT-grade secure elements at scale', 'Purpose-built secure elements for connected devices: I&sup2;C / SPI interface, low power, attestation primitives, signed-firmware verification. The IoT SE category matures.', '<a href="/products/iot-security-chipset/">IoT Security Chipset</a>'),
-            ('2024', 'Multi-applet SEs across form factors', 'A single CC EAL5+ secure element carries FIDO2 + PIV + OpenPGP + NDEF in card form, embedded form, USB form, or nano-SIM form &mdash; AID-selectable.', '<a href="/products/javacard-applets/">JavaCard applets</a>'),
+            ('2024', 'Multi-applet SEs across form factors', 'A single CC EAL6+ secure element carries FIDO2 + PIV + OpenPGP + NDEF in card form, embedded form, USB form, or nano-SIM form &mdash; AID-selectable.', '<a href="/products/javacard-applets/">JavaCard applets</a>'),
             ('2026', 'SE-anchored identity in every connected product', 'Authenticators, automotive identity, eMRTD chips, and IoT devices share one architectural pattern: tamper-resistant key custody in a secure element, attestation verified by a tenant-scoped service.', '<a href="/technologies/secure-elements/">Secure elements</a>'),
         ],
         'related': [

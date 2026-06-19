@@ -21,8 +21,8 @@
 <meta property="article:author" content="AmbiSecure Engineering" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
-<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -42,7 +42,7 @@
     {"@type":"Question","name":"Does using a SIM-card form factor secure element mean the vehicle has a SIM service?","acceptedAnswer":{"@type":"Answer","text":"No. A 4FF nano-card secure element is the physical form factor; whether it carries an eUICC profile and connects to a mobile network is an entirely separate question. The same form factor can host a FIDO2 applet, a PIV applet, a V2X EC/PC management applet, an eUICC, or several of these in parallel. Form factor and applet content are decoupled."}},
     {"@type":"Question","name":"What is the difference between removable nano-card and solderable MFF2 form factors?","acceptedAnswer":{"@type":"Answer","text":"The 4FF nano-card form factor is a removable SIM-shape card that can be inserted into a holder, allowing factory or field replacement of the identity. The MFF2 form factor is a solderable surface-mount package (DFN-8 or similar) that becomes a permanent part of the board assembly, suited for unattended industrial deployments where physical access to the device is rare. Same silicon class, different mechanical integration."}},
     {"@type":"Question","name":"How does a secure element differ from a TPM or an HSM?","acceptedAnswer":{"@type":"Answer","text":"A TPM is a device-bound trust anchor with a TCG-defined command set, typically optimised for platform attestation. An HSM is a high-throughput cryptographic appliance used in datacentres for bulk-signing operations under strict key custody. A secure element is a small, low-power tamper-resistant device optimised for embedded integration with a host MCU, with an APDU command set, a JavaCard runtime in many cases, and a focus on per-device identity rather than platform measurement or bulk crypto."}},
-    {"@type":"Question","name":"What does CC EAL5+ actually certify in this context?","acceptedAnswer":{"@type":"Answer","text":"Common Criteria EAL5+ is a certification of the underlying secure-element silicon at the chip level: the side-channel-hardened design, the tamper-detection mesh, the cryptographic accelerators, the random-number generator. It does not certify the integrated device that the SE is soldered into, the applets running on top, or the system-level deployment. AmbiSecure references CC EAL5+ as a chip-level claim, never as a claim about the AmbiSEC Module integrated product."}},
+    {"@type":"Question","name":"What does CC EAL6+ actually certify in this context?","acceptedAnswer":{"@type":"Answer","text":"Common Criteria EAL6+ is a certification of the underlying secure-element silicon at the chip level: the side-channel-hardened design, the tamper-detection mesh, the cryptographic accelerators, the random-number generator. It does not certify the integrated device that the SE is soldered into, the applets running on top, or the system-level deployment. AmbiSecure references CC EAL6+ as a chip-level claim, never as a claim about the AmbiSEC Module integrated product."}},
     {"@type":"Question","name":"What is signed boot, and where does the secure element fit?","acceptedAnswer":{"@type":"Answer","text":"Signed boot is the property that the host MCU refuses to execute firmware whose signature does not verify against a trusted public key. The secure element holds the verification key inside its tamper boundary; the boot ROM asks the SE 'does this firmware image hash match a signature signed under your key?' before transferring control to the image. Without the SE in this loop, the verification key would live in firmware-modifiable flash, where it could be replaced."}}
    ]
   },
@@ -136,7 +136,7 @@
 
     <p>Four properties distinguish a secure element from a general-purpose microcontroller, and each of them maps to one of the threats above.</p>
     <ul>
-      <li><strong>Tamper resistance.</strong> Side-channel-hardened analog design, active mesh, voltage and clock monitors, glitch detectors. Common Criteria EAL5+ at the chip level is the public mark of this body of work &mdash; the underlying secure-element silicon in AmbiSEC Module carries that certification.</li>
+      <li><strong>Tamper resistance.</strong> Side-channel-hardened analog design, active mesh, voltage and clock monitors, glitch detectors. Common Criteria EAL6+ at the chip level is the public mark of this body of work &mdash; the underlying secure-element silicon in AmbiSEC Module carries that certification.</li>
       <li><strong>Key isolation.</strong> Private keys are generated inside the boundary, never leave it, and are referenced by handle (e.g. "key 0x03") rather than by value. The host MCU never holds the key. A compromised host firmware cannot exfiltrate what it never had access to.</li>
       <li><strong>Attestation.</strong> The SE can prove its identity to a remote authority before being trusted with a credential. The attestation signature is generated by a manufacturer-injected key inside the boundary. The Enrolment Authority in V2X relies on exactly this to decide whether a fresh device may enrol.</li>
       <li><strong>Signed boot enforcement.</strong> The host MCU starts only if the firmware image&rsquo;s signature verifies against a key the SE exposes. Modified images stop at boot, before they can interact with anything else.</li>
@@ -258,7 +258,7 @@ host_mcu                                  secure_element
 
     <h2 id="what-ambisecure-ships">What AmbiSecure ships</h2>
     <ul>
-      <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor (AmbiSEC Module)</a> &mdash; the secure-element silicon platform for V2X OBU / RSU integrations. Removable nano-card and solderable MFF2 form factors. Automotive operating range. Underlying secure-element silicon CC EAL5+ at the chip level.</li>
+      <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor (AmbiSEC Module)</a> &mdash; the secure-element silicon platform for V2X OBU / RSU integrations. Removable nano-card and solderable MFF2 form factors. Automotive operating range. Underlying secure-element silicon CC EAL6+ at the chip level.</li>
       <li><a href="/products/javacard-applets/">JavaCard applets</a> &mdash; the applet platform inside the SE; ships with FIDO2, PIV, OpenPGP applets and supports custom V2X EC/PC management applets.</li>
       <li><a href="/services/javacard-development/">JavaCard development</a> &mdash; custom applet engineering for the OBU-specific certificate-management logic.</li>
       <li><a href="/solutions/smart-card-personalization/">HSM-backed personalisation lines</a> &mdash; the manufacturing-time provisioning infrastructure that makes the per-device attestation key injection defensible.</li>
@@ -301,11 +301,11 @@ host_mcu                                  secure_element
   </div>
   <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
 </div></footer>
-<script src="/assets/js/nav.js?v=31" defer></script>
-<script src="/assets/js/web-vitals.js?v=31" defer></script>
-<script src="/assets/js/blog-toc.js?v=31" defer></script>
-<script src="/assets/js/site-search.js?v=31" defer></script>
-<script src="/assets/js/analytics-config.js?v=31" defer></script>
-<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/blog-toc.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
 </body>
 </html>

@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>FIDO2 Nano-Card Applet — embedded SE authenticator | AmbiSecure</title>
-<meta name="description" content="FIDO2 / CTAP2 applet on a CC EAL5+ secure element. Nano-card (4FF) and MFF2 packages. ECC P-256, ISO/IEC 7816 contact + 14443 contactless." />
+<meta name="description" content="FIDO2 / CTAP2 applet on a CC EAL6+ secure element. Nano-card (4FF) and MFF2 packages. ECC P-256, ISO/IEC 7816 contact + 14443 contactless." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/" />
 <meta property="og:type" content="product" />
 <meta property="og:title" content="AmbiSecure FIDO2 Nano-Card Applet" />
-<meta property="og:description" content="FIDO2 applet on a CC EAL5+ secure element — nano-card and MFF2 solderable packages for OEM integration. ECC P-256, ISO 7816 + 14443." />
+<meta property="og:description" content="FIDO2 applet on a CC EAL6+ secure element — nano-card and MFF2 solderable packages for OEM integration. ECC P-256, ISO 7816 + 14443." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/fido2-nano-sim-applet.png" />
 <meta property="og:image:type" content="image/png" />
@@ -19,8 +19,8 @@
 <meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/fido2-nano-sim-applet.png" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
-<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
 <link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
@@ -128,7 +128,7 @@
       <h2 class="section-title">What is in the applet.</h2>
       <span class="section-line"></span>
     </div>
-    <table class="spec-table"><tr><th>Form factor</th><td>ISO/IEC 7810 4FF nano-card form factor, 12.3 &times; 8.8 &times; 0.67 mm. Solderable MFF2 module available for embedded OEM deployments.</td></tr><tr><th>Interfaces</th><td>ISO/IEC 7816 contact (T=0 / T=1). NFC (ISO/IEC 14443 Type A) when paired with an NFC-equipped host device.</td></tr><tr><th>Protocols</th><td>FIDO2 (CTAP2.1); FIDO U2F (CTAP1) fallback.</td></tr><tr><th>Cryptography</th><td>ECC P-256 (FIDO2); SHA-256; on-applet key generation; signed attestation.</td></tr><tr><th>Resident credentials</th><td>Up to 12 discoverable credentials per applet (chip-variant dependent).</td></tr><tr><th>Operating system</th><td>JavaCard 3.x on a Common Criteria EAL5+ secure element from a partner vendor.</td></tr><tr><th>Personalisation</th><td>Loaded via GlobalPlatform SCP03. AAGUID injected at personalisation. Compatible with our Multi-Card Applet Loading Tool.</td></tr><tr><th>Attestation</th><td>Per-batch attestation certificate chain signed by an AmbiSecure issuance CA; ready for the FIDO Metadata Service entry.</td></tr><tr><th>Volumes</th><td>Engineering samples on request. Production volumes by the reel for OEM and embedded-identity customers.</td></tr></table>
+    <table class="spec-table"><tr><th>Form factor</th><td>ISO/IEC 7810 4FF nano-card form factor, 12.3 &times; 8.8 &times; 0.67 mm. Solderable MFF2 module available for embedded OEM deployments.</td></tr><tr><th>Interfaces</th><td>ISO/IEC 7816 contact (T=0 / T=1). NFC (ISO/IEC 14443 Type A) when paired with an NFC-equipped host device.</td></tr><tr><th>Protocols</th><td>FIDO2 (CTAP2.1); FIDO U2F (CTAP1) fallback.</td></tr><tr><th>Cryptography</th><td>ECC P-256 (FIDO2); SHA-256; on-applet key generation; signed attestation.</td></tr><tr><th>Resident credentials</th><td>Up to 12 discoverable credentials per applet (chip-variant dependent).</td></tr><tr><th>Operating system</th><td>JavaCard 3.x on a Common Criteria EAL6+ secure element from a partner vendor.</td></tr><tr><th>Personalisation</th><td>Loaded via GlobalPlatform SCP03. AAGUID injected at personalisation. Compatible with our Multi-Card Applet Loading Tool.</td></tr><tr><th>Attestation</th><td>Per-batch attestation certificate chain signed by an AmbiSecure issuance CA; ready for the FIDO Metadata Service entry.</td></tr><tr><th>Volumes</th><td>Engineering samples on request. Production volumes by the reel for OEM and embedded-identity customers.</td></tr></table>
   </div>
 </section>
 <section class="alt">
@@ -139,7 +139,7 @@
       <span class="section-line"></span>
       <p class="section-desc" style="margin:0;">An embedded secure-element FIDO2 authenticator is only as trustworthy as the line that personalised it. Here is the canonical flow.</p>
     </div>
-    <div class="arch"><div class="arch-node"><span class="arch-tag">01</span><h4>Chip</h4><p>Common Criteria EAL5+ secure element from a partner vendor.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">02</span><h4>Applet load</h4><p>FIDO2 applet loaded over GlobalPlatform SCP03 in a controlled facility.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node accent"><span class="arch-tag">03</span><h4>Personalise</h4><p>AAGUID injected, attestation certificate provisioned, secure-domain locked.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">04</span><h4>Provision</h4><p>Device-identity profile or other JavaCard applet written alongside, sharing the same secure element.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">05</span><h4>Issue</h4><p>Shipped to the OEM or issuer line as a finished nano-card (or MFF2 reel for embedded customers).</p></div></div>
+    <div class="arch"><div class="arch-node"><span class="arch-tag">01</span><h4>Chip</h4><p>Common Criteria EAL6+ secure element from a partner vendor.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">02</span><h4>Applet load</h4><p>FIDO2 applet loaded over GlobalPlatform SCP03 in a controlled facility.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node accent"><span class="arch-tag">03</span><h4>Personalise</h4><p>AAGUID injected, attestation certificate provisioned, secure-domain locked.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">04</span><h4>Provision</h4><p>Device-identity profile or other JavaCard applet written alongside, sharing the same secure element.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">05</span><h4>Issue</h4><p>Shipped to the OEM or issuer line as a finished nano-card (or MFF2 reel for embedded customers).</p></div></div>
   </div>
 </section>
 <section>
@@ -210,10 +210,10 @@
   </div>
 </footer>
 
-<script src="/assets/js/nav.js?v=31" defer></script>
-<script src="/assets/js/web-vitals.js?v=31" defer></script>
-<script src="/assets/js/site-search.js?v=31" defer></script>
-<script src="/assets/js/analytics-config.js?v=31" defer></script>
-<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
 </body>
 </html>

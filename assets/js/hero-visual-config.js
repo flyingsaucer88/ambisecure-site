@@ -44,7 +44,7 @@ window.AS_HERO_VISUAL_THEMES = [
   {
     id: "secure-elements",
     label: "Secure Elements",
-    caption: "CC EAL5+ silicon with attestation, key rotation, and signed update.",
+    caption: "CC EAL6+ silicon with attestation, key rotation, and signed update.",
     accent: "red",
     cta: { label: "Secure-element technology", url: "/technologies/secure-elements/" },
     icon: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="1.5"/><rect x="9" y="9" width="6" height="6"/><line x1="3" y1="9" x2="6" y2="9"/><line x1="3" y1="12" x2="6" y2="12"/><line x1="3" y1="15" x2="6" y2="15"/><line x1="18" y1="9" x2="21" y2="9"/><line x1="18" y1="12" x2="21" y2="12"/><line x1="18" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="6"/><line x1="12" y1="3" x2="12" y2="6"/><line x1="15" y1="3" x2="15" y2="6"/><line x1="9" y1="18" x2="9" y2="21"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="15" y1="18" x2="15" y2="21"/></svg>'

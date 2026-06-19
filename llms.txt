@@ -29,7 +29,7 @@ Cross-link points where AmbiSecure and AmbiAutomation deployments naturally over
 - [IoT Security Co-Processor (AmbiSEC Module)](https://ambisecure.ambimat.com/products/iot-security-coprocessor/): dual-domain co-processor for connected devices — MCU domain runs the application; an isolated cryptographic security domain holds keys, signs/verifies/encrypts, anti-replays, and authenticates secure OTA. TEC 31318 coverage. Nano-card and MFF2 solderable form factors.
 - [IoT Security Applets](https://ambisecure.ambimat.com/products/iot-security-applets/): JavaCard applets for IoT device identity, attestation, signed firmware.
 - [IoT Solution](https://ambisecure.ambimat.com/products/iot-solution/): end-to-end IoT trust platform — co-processor, key manager, attestation pipeline.
-- [JavaCard Applet Platform](https://ambisecure.ambimat.com/products/javacard-applets/): twelve applets co-resident on one CC EAL5+ secure element, AID-selectable.
+- [JavaCard Applet Platform](https://ambisecure.ambimat.com/products/javacard-applets/): twelve applets co-resident on one CC EAL6+ secure element, AID-selectable.
 - [FIDO2 Nano-Card Applet](https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/): FIDO2 / CTAP2 applet on a nano-card (4FF) secure element.
 - [PIV Nano-Card Applet](https://ambisecure.ambimat.com/products/piv-nano-sim-applet/): NIST SP 800-73 PIV applet on a nano-card secure element.
 - [eSIM Solution](https://ambisecure.ambimat.com/products/esim-solution/): SGP.22 / SGP.32 eUICC platform with OpenID Connect applet option.
@@ -69,7 +69,7 @@ Cross-link points where AmbiSecure and AmbiAutomation deployments naturally over
 - [JavaCard](https://ambisecure.ambimat.com/technologies/javacard/) — JCVM, GlobalPlatform, CAP files.
 - [DESFire](https://ambisecure.ambimat.com/technologies/desfire/) — EV1/EV2/EV3, SAM-backed transit.
 - [SAM](https://ambisecure.ambimat.com/technologies/sam/) — secure access module architecture.
-- [Secure Elements](https://ambisecure.ambimat.com/technologies/secure-elements/) — CC EAL5+ silicon, attestation, key rotation.
+- [Secure Elements](https://ambisecure.ambimat.com/technologies/secure-elements/) — CC EAL6+ silicon, attestation, key rotation.
 - [Card-reader / SAM flow](https://ambisecure.ambimat.com/technologies/card-reader-sam-flow/) — closed-loop transit flow.
 - [V2X PKI](https://ambisecure.ambimat.com/technologies/v2x-pki/) — IEEE 1609.2 certificate format, ETSI TS 103 097 security headers, EC vs PC, Butterfly Key Expansion, certificate lifecycle, India TRAI CP 30/04/2026 context.
 
