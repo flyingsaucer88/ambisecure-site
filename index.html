@@ -33,7 +33,6 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#E3222A" />
-<meta name="audit-yoast-word-max" content="2100" /><!-- content-rich landing; +FIDO/WebAuthn solution card -->
 
 <script type="application/ld+json">
 {
@@ -204,6 +203,7 @@
 
 <main id="main">
 
+
 <!-- ============== HERO ============== -->
 <section class="hero" aria-labelledby="hero-heading">
   <div class="hero-container">
@@ -256,6 +256,7 @@
   </div>
 </section>
 
+
 <!-- ============== ABOUT STRIP (Phase 22) — Who / What / Who-helps / How ============== -->
 <section class="alt" aria-labelledby="who-heading" style="padding-top:42px;padding-bottom:42px;">
   <div class="section-container">
@@ -289,77 +290,20 @@
   </div>
 </section>
 
-<!-- ============== HIGHLIGHT BANNER (Phase 22) — rotates daily across ecosystem ============== -->
-<section aria-labelledby="banner-heading" style="padding-top:8px;padding-bottom:24px;">
-  <div class="section-container">
-    <h2 id="banner-heading" class="visually-hidden" style="position:absolute;left:-10000px;">Featured highlights</h2>
-    <div class="hp-banner-slot" aria-live="polite">
-      <!-- Static fallback for JS-off; the rotating script replaces this slot in place. -->
-      <div class="hp-banner" style="border-left-color:var(--brand-red,#E3222A);">
-        <div class="hp-banner-track">
-          <article class="hp-banner-slide is-active" style="--banner-accent:var(--brand-red,#E3222A);">
-            <div class="hp-banner-body">
-              <div class="hp-banner-eyebrow">FEATURED &middot; OnePass platform</div>
-              <h2 class="hp-banner-title">One identity card. Phishing-resistant. Procurement-ready.</h2>
-              <p class="hp-banner-text">Replace badges and security keys with a single FIDO2 smart card &mdash; shipped under your issuer keys, brand artwork, and audit hooks.</p>
-            </div>
-            <div class="hp-banner-ctas">
-              <a href="/products/onepass-platform/" class="btn btn-primary" data-analytics-event="product_interest" data-analytics-value="onepass">Explore OnePass</a>
-              <a href="/contact/" class="btn btn-outline" data-analytics-event="request_demo">Request a pilot</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ============== FORM FACTOR FLEXIBILITY (Phase 28 — repositioned) ============== -->
-<section class="alt as-telco-section" aria-labelledby="forms-heading" style="padding-top:48px;padding-bottom:48px;">
-  <div class="section-container">
-    <div class="as-telco-card">
-      <div class="as-telco-body">
-        <span class="as-telco-eyebrow">Integration flexibility &middot; nano-card &middot; MFF2 solderable</span>
-        <h2 id="forms-heading" class="as-telco-title">Same applets. Card or solderable. Your choice of integration.</h2>
-        <p class="as-telco-desc">
-          FIDO2, PIV, OpenID Connect, and IoT-identity applets ship on the same CC EAL5+ secure-element
-          silicon in two packages: a <strong>nano-card form factor</strong> for issuance and handling,
-          and a <strong>solderable MFF2 module</strong> for embedding directly into connected-product
-          boards. Same applet code, same certifications, same personalisation pipeline.
-        </p>
-        <ul class="as-telco-points">
-          <li>FIDO2 / PIV / OIDC applets on CC EAL5+ silicon</li>
-          <li>Nano-card package for removable handling</li>
-          <li>MFF2 solderable for embedded OEM integration</li>
-          <li>SGP.22 / SGP.32 RSP supported via the SIMAuth sister platform</li>
-        </ul>
-      </div>
-      <div class="as-telco-ctas">
-        <a href="/products/iot-security-coprocessor/" class="btn btn-primary">IoT security co-processor</a>
-        <a href="/products/javacard-applets/" class="btn btn-outline">JavaCard applet portfolio</a>
-        <a href="https://esim.ambimat.com/" class="btn btn-outline" rel="noopener">SIMAuth (sister site)</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============== CORE PILLARS (Phase 9) ============== -->
-<section aria-labelledby="pillars-heading" style="padding-top:36px;padding-bottom:0;">
+<!-- ============== GATEWAY (Phase 30 reorg) ============== -->
+<section aria-labelledby="gateway-heading" style="padding-top:40px;padding-bottom:8px;">
   <div class="section-container">
     <div class="section-head left" style="margin-bottom:8px;">
-      <span class="eyebrow">Core pillars</span>
-      <h2 class="section-title" id="pillars-heading">Eight domains, one engineering team.</h2>
+      <span class="eyebrow">Where to start</span>
+      <h2 class="section-title" id="gateway-heading">Four ways in.</h2>
       <span class="section-line"></span>
     </div>
-    <div class="pillars-grid">
-      <a href="/industries/connected-mobility/" class="pillar-card"><h3>V2X / Connected Mobility</h3><p>Secure-element integration, V2X PKI architecture, and OBU/RSU hardware identity for ITS.</p></a>
-      <a href="/technologies/fido/" class="pillar-card"><h3>FIDO / WebAuthn</h3><p>Authenticators, validation server, attestation, MDS &mdash; with a public utility-tool surface.</p></a>
-      <a href="/technologies/javacard/" class="pillar-card"><h3>JavaCard</h3><p>Custom applets, CAP file delivery, SCP03 loading, JCOP 3.1, JavaCard 3.x.</p></a>
-      <a href="/technologies/desfire/" class="pillar-card"><h3>DESFire / Transit</h3><p>EV1 / EV2 / EV3, SAM-backed offline trust, low-latency fare validators.</p></a>
-      <a href="/products/digital-signature-token/" class="pillar-card"><h3>PKI / Certificates</h3><p>Hardware-protected signing keys, PKCS#11, eIDAS-compatible flows, audit-grade issuance.</p></a>
-      <a href="/technologies/secure-elements/" class="pillar-card"><h3>Secure Elements</h3><p>CC EAL5+ silicon, attestation, key rotation, signed update &mdash; the foundation beneath every pillar.</p></a>
-      <a href="/products/esim-solution/" class="pillar-card"><h3>eSIM Security</h3><p>SGP.22 / SGP.32 eUICC platform, OpenID Connect applet, automotive + M2M variants.</p></a>
-      <a href="/products/onepass-platform/" class="pillar-card"><h3>OnePass Ecosystem</h3><p>The flagship product family &mdash; Card, Bio Card, USB Key, BioKey, and Tappable.</p></a>
+    <div class="grid-4">
+      <a href="/products/" class="card"><div class="card-icon">AUTH</div><h3>Authenticators</h3><p>FIDO2 OnePass Card, USB Key, and the biometric BioKey &mdash; phishing-resistant, hardware-bound credentials.</p><div class="card-meta">Explore authenticators &rarr;</div></a>
+      <a href="/technologies/secure-elements/" class="card"><div class="card-icon">SE</div><h3>Secure-element engineering</h3><p>The AmbiSEC module, in-house Java Card platforms, and custom applets on tamper-resistant secure-element silicon.</p><div class="card-meta">Explore secure elements &rarr;</div></a>
+      <a href="/solutions/" class="card"><div class="card-icon">PKI</div><h3>Device identity &amp; PKI</h3><p>IoT device identity, attestation, and certificate lifecycle &mdash; keys generated and kept in hardware.</p><div class="card-meta">Explore solutions &rarr;</div></a>
+      <a href="/services/" class="card"><div class="card-icon">SVC</div><h3>Services</h3><p>Architecture, applet development, personalisation, and FIDO validation &mdash; from wafer to validation.</p><div class="card-meta">Explore services &rarr;</div></a>
     </div>
   </div>
 </section>
@@ -417,6 +361,7 @@
   </div>
 </section>
 
+
 <!-- ============== TRUST CHAIN ============== -->
 <section class="alt" aria-labelledby="trust-heading">
   <div class="section-container">
@@ -455,165 +400,6 @@
   </div>
 </section>
 
-<!-- ============== SOLUTIONS ============== -->
-<section aria-labelledby="solutions-heading">
-  <div class="section-container">
-    <div class="section-head left">
-      <span class="eyebrow">Solutions</span>
-      <h2 class="section-title" id="solutions-heading">Problems we are good at.</h2>
-      <span class="section-line"></span>
-    </div>
-    <div class="grid-3">
-      <a href="/solutions/passwordless-mfa/" class="card">
-        <h3>Passwordless &amp; MFA</h3>
-        <p>Replace shared-secret passwords with hardware-bound FIDO2 credentials. Phishing-resistant by construction.</p>
-        <div class="card-meta">View solution &rarr;</div>
-      </a>
-      <a href="/solutions/secure-element-integration/" class="card">
-        <h3>Secure-element integration</h3>
-        <p>Adding a secure element to a connected-device BOM &mdash; from silicon selection to SMT-line personalisation.</p>
-        <div class="card-meta">View solution &rarr;</div>
-      </a>
-      <a href="/solutions/smart-card-personalization/" class="card">
-        <h3>Smart-card personalisation</h3>
-        <p>Personalisation lines for cards and devices &mdash; key splits, HSM-backed custody, audit trails, batch APDUs.</p>
-        <div class="card-meta">View solution &rarr;</div>
-      </a>
-      <a href="/solutions/government-identity/" class="card">
-        <h3>Government identity</h3>
-        <p>PIV, OpenPGP, and eID applets on smart cards and tokens &mdash; issuance and revocation that holds up to audit.</p>
-        <div class="card-meta">View solution &rarr;</div>
-      </a>
-      <a href="/solutions/closed-loop-ticketing/" class="card">
-        <h3>Closed-loop ticketing</h3>
-        <p>SAM-backed transit and access systems with offline trust and audit-grade tap journals.</p>
-        <div class="card-meta">View solution &rarr;</div>
-      </a>
-      <a href="/solutions/secure-validator-platforms/" class="card">
-        <h3>Secure validator platforms</h3>
-        <p>Reader-and-SAM platforms for fare collection and access &mdash; built to keep working when the backend doesn&rsquo;t.</p>
-        <div class="card-meta">View solution &rarr;</div>
-      </a>
-      <a href="/solutions/phishing-resistant-authentication/" class="card">
-        <h3>Passwordless with FIDO / WebAuthn</h3>
-        <p>Phishing-resistant login on public-key cryptography &mdash; the private key never leaves the authenticator. Walk a full ceremony in the live demo.</p>
-        <div class="card-meta">See how it works &amp; try the demo &rarr;</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ============== ECOSYSTEM MAP (Phase 15) ============== -->
-<section aria-labelledby="ecosystem-heading">
-  <div class="section-container">
-    <div class="section-head left">
-      <span class="eyebrow">Ecosystem map</span>
-      <h2 class="section-title" id="ecosystem-heading">Explore the platform.</h2>
-      <span class="section-line"></span>
-      <p class="section-desc" style="margin:0;">Four ways into the same trust chain &mdash; by product, by audience, by standard, or by stack layer.</p>
-    </div>
-    <div class="grid-4" style="margin-top:32px;">
-      <a href="/products/" class="card">
-        <div class="card-icon">PROD</div>
-        <h3>By product</h3>
-        <p>Cards, USB keys, biometric tokens, secure-element applets, IoT applets, signature suites &mdash; all the hardware AmbiSecure ships.</p>
-        <div class="card-meta">12 products &rarr;</div>
-      </a>
-      <a href="/services/" class="card">
-        <div class="card-icon">SVC</div>
-        <h3>By service</h3>
-        <p>JavaCard development, FIDO validation server, tool-chain engineering, ePassport platform &mdash; engineering work AmbiSecure does directly.</p>
-        <div class="card-meta">4 services &rarr;</div>
-      </a>
-      <a href="/solutions/" class="card">
-        <div class="card-icon">SOL</div>
-        <h3>By solution</h3>
-        <p>Passwordless workforce, closed-loop transit, government identity, IoT trust, phishing-resistant MFA &mdash; problem-shaped views.</p>
-        <div class="card-meta">14 solutions &rarr;</div>
-      </a>
-      <a href="/technologies/" class="card">
-        <div class="card-icon">TECH</div>
-        <h3>By technology</h3>
-        <p>FIDO2, WebAuthn, CTAP2, passkeys, JavaCard, DESFire, secure elements, SAMs, attestation &mdash; the standards layer.</p>
-        <div class="card-meta">12 technologies &rarr;</div>
-      </a>
-      <a href="/industries/" class="card">
-        <div class="card-icon">IND</div>
-        <h3>By industry</h3>
-        <p>Government, enterprise IT, transit, IoT/industrial, telecom &mdash; vertical-specific deployment shapes and constraints.</p>
-        <div class="card-meta">5 industries &rarr;</div>
-      </a>
-      <a href="/references/" class="card">
-        <div class="card-icon cyan">REF</div>
-        <h3>By reference</h3>
-        <p>AAGUIDs, APDU status, ASN.1, ISO 7816, COSE, X.509, GlobalPlatform, EMV, NFC, CAP files, DESFire &mdash; searchable databases.</p>
-        <div class="card-meta">12 references &rarr;</div>
-      </a>
-      <a href="/resources/" class="card">
-        <div class="card-icon cyan">TOOL</div>
-        <h3>By tool</h3>
-        <p>54 client-side utilities for parsing, decoding, building, and signing &mdash; the engineer&rsquo;s toolbox.</p>
-        <div class="card-meta">54 tools &rarr;</div>
-      </a>
-      <a href="/blog/" class="card">
-        <div class="card-icon cyan">READ</div>
-        <h3>By article</h3>
-        <p>21 modern engineering deep-dives plus 24 archived posts &mdash; cornerstone reading on FIDO, JavaCard, PKI, transit, IoT.</p>
-        <div class="card-meta">45 articles &rarr;</div>
-      </a>
-    </div>
-    <div class="featured-strip-row" style="margin-top:30px;">
-      <a href="/case-studies/"><span class="fs-tag">CASES</span><span class="fs-label">Anonymised case studies &rarr;</span></a>
-      <a href="/brochures/"><span class="fs-tag">PDFS</span><span class="fs-label">Platform brochures &rarr;</span></a>
-      <a href="/engagement-models/"><span class="fs-tag">SCOPE</span><span class="fs-label">Engagement models &rarr;</span></a>
-      <a href="/videos/"><span class="fs-tag">VIDEO</span><span class="fs-label">Walkthroughs &rarr;</span></a>
-      <a href="/about/certifications/"><span class="fs-tag">TRUST</span><span class="fs-label">Certifications &rarr;</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- ============== RESOURCES STRIP ============== -->
-<section class="alt" aria-labelledby="resources-heading">
-  <div class="section-container">
-    <div class="section-head left">
-      <span class="eyebrow">Resources</span>
-      <h2 class="section-title" id="resources-heading">A toolbox for the engineers building this stack.</h2>
-      <span class="section-line"></span>
-      <p class="section-desc">
-        Free, client-side utilities for parsing the hex you stare at every day.
-        Nothing leaves your browser. No accounts, no ads.
-      </p>
-    </div>
-    <div class="grid-4">
-      <a href="/resources/tools/atr-parser/" class="card">
-        <div class="card-icon cyan">ATR</div>
-        <h3>ATR Parser</h3>
-        <p>Decode Answer-To-Reset bytes &mdash; TS, T0, interface bytes, historical bytes, TCK.</p>
-      </a>
-      <a href="/resources/tools/apdu-parser/" class="card">
-        <div class="card-icon cyan">APDU</div>
-        <h3>APDU Parser</h3>
-        <p>Decode CLA / INS / P1 / P2 / Lc / Le for Case 1&ndash;4, short and extended.</p>
-      </a>
-      <a href="/resources/tools/tlv-parser/" class="card">
-        <div class="card-icon cyan">TLV</div>
-        <h3>TLV Parser</h3>
-        <p>Walk BER-TLV, EMV TLV, and DGI-TLV trees with tag dictionary lookup.</p>
-      </a>
-      <a href="/resources/" class="card">
-        <div class="card-icon">39</div>
-        <h3>Browse all 39+ tools</h3>
-        <p>Utilities for ASN.1, CBOR, COSE, AAGUID, X.509, SCP03, NDEF, DESFire, EMV, and more.</p>
-      </a>
-    </div>
-    <div class="featured-strip-row" style="margin-top:24px;">
-      <a href="/references/"><span class="fs-tag">REFS</span><span class="fs-label">Searchable reference databases &rarr;</span></a>
-      <a href="/resources/timelines/"><span class="fs-tag">TIMELINE</span><span class="fs-label">Standards evolution timelines &rarr;</span></a>
-      <a href="/resources/webauthn/"><span class="fs-tag">DOCS</span><span class="fs-label">WebAuthn engineering reference &rarr;</span></a>
-      <a href="/blog/"><span class="fs-tag">BLOG</span><span class="fs-label">Engineering blog &rarr;</span></a>
-    </div>
-  </div>
-</section>
 
 <!-- ============== EXPLORE BY USE CASE (Phase 5) ============== -->
 <section aria-labelledby="explore-heading">
@@ -639,174 +425,21 @@
   </div>
 </section>
 
-<!-- ============== WHY AMBISECURE ============== -->
-<section aria-labelledby="why-heading">
-  <div class="section-container">
-    <div class="section-head left">
-      <span class="eyebrow">Why AmbiSecure</span>
-      <h2 class="section-title" id="why-heading">An embedded team, not a security boutique.</h2>
-      <span class="section-line"></span>
-    </div>
-    <div class="feature-row">
-      <div>
-        <h3 style="font-family:'Montserrat',sans-serif;font-size:24px;font-weight:700;margin-bottom:14px;color:var(--ink);letter-spacing:-0.2px;">
-          Forty years of shipping hardware that survives the field.
-        </h3>
-        <p style="color:var(--brand-grey);font-size:16px;line-height:1.75;">
-          AmbiSecure is the security business unit of Ambimat Electronics &mdash; established 1982.
-          We have shipped firmware, contactless modules, and GSM/Bluetooth platforms for medical
-          devices, wearables, and utilities. Security is engineered into that DNA, not layered over
-          someone else&rsquo;s reference design.
-        </p>
-        <ul class="bullet-list" style="margin-top:24px;">
-          <li>One point of contact from spec to shipment.</li>
-          <li>In-house JavaCard, FIDO, and personalisation expertise.</li>
-          <li>Real vendor relationships across silicon, contactless, and biometrics.</li>
-        </ul>
-      </div>
-      <div class="feature-visual" aria-hidden="true">
-        <div>
-          <div style="font-family:'Montserrat',sans-serif;font-weight:700;font-size:48px;color:var(--brand-red);">40+</div>
-          <div style="font-size:13px;color:var(--brand-grey);letter-spacing:0.4px;">YEARS · EMBEDDED · SHIPPING</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ============== ENGINEERING BLOG SPOTLIGHT (rotates daily) ============== -->
-<section class="alt" aria-labelledby="blog-heading">
+<!-- ============== FEATURED RESOURCES (Phase 30 reorg) ============== -->
+<section class="alt" aria-labelledby="featured-resources-heading" style="padding-top:44px;padding-bottom:44px;">
   <div class="section-container">
-    <div class="section-head left">
-      <span class="eyebrow">From the engineering blog &middot; rotates daily</span>
-      <h2 class="section-title" id="blog-heading">Featured technical reads.</h2>
+    <div class="section-head left" style="margin-bottom:8px;">
+      <span class="eyebrow">Featured resources</span>
+      <h2 class="section-title" id="featured-resources-heading">Go deeper.</h2>
       <span class="section-line"></span>
-    </div>
-    <div class="grid-3 hp-spotlight-featured">
-      <a href="/blog/implementing-fido2-developer-guide/" class="blog-card">
-        <span class="chip">FIDO2</span>
-        <h3>Implementing FIDO2 Authentication: A Complete Developer Guide</h3>
-        <p>A walkthrough of the FIDO2 stack &mdash; CTAP2, WebAuthn, attestation &mdash; with code that compiles.</p>
-        <span class="read-more">Read &rarr;</span>
-      </a>
-      <a href="/blog/why-use-multi-factor-authentication/" class="blog-card">
-        <span class="chip">MFA</span>
-        <h3>Why use Multi-factor Authentication?</h3>
-        <p>Cybercriminals have billions of leaked records. Why a second factor &mdash; especially a hardware-bound one &mdash; cuts off the long tail.</p>
-        <span class="read-more">Read &rarr;</span>
-      </a>
-      <a href="/blog/top-3-benefits-of-mfa/" class="blog-card">
-        <span class="chip">MFA</span>
-        <h3>Top 3 Benefits of Multi-factor Authentication</h3>
-        <p>The three reasons MFA isn&rsquo;t optional any more &mdash; and what changes when the second factor is hardware.</p>
-        <span class="read-more">Read &rarr;</span>
-      </a>
-    </div>
-    <p style="text-align:center; margin-top: 36px;">
-      <a href="/blog/" class="btn btn-outline">Browse all posts</a>
-      &nbsp;
-      <a href="/blog/categories/" class="btn btn-outline">By topic</a>
-      &nbsp;
-      <a href="/blog/archive/" class="btn btn-outline">Engineering archive</a>
-    </p>
-  </div>
-</section>
-
-<!-- ============== VIDEOS TEASER (Phase 9) ============== -->
-<section aria-labelledby="videos-heading">
-  <div class="section-container">
-    <div class="section-head left">
-      <span class="eyebrow">Videos</span>
-      <h2 class="section-title" id="videos-heading">See it in action.</h2>
-      <span class="section-line"></span>
-      <p class="section-desc" style="margin:0;">FIDO setup walkthroughs, multi-application card use cases, and product loops &mdash; under 90 seconds each.</p>
-    </div>
-    <div class="video-grid">
-      <article class="video-card">
-        <div class="yt-facade" data-yt-id="uInKs6D_t-U" data-title="AmbiSecure card — all use cases">
-          <img class="yt-facade-poster" src="/assets/img/videos/uInKs6D_t-U.webp" alt="AmbiSecure card — all use cases" loading="lazy" decoding="async" width="1280" height="720" />
-          <button class="yt-facade-play" aria-label="Play AmbiSecure card use cases">&#9658;</button>
-        </div>
-        <div class="video-card-body">
-          <div class="video-card-meta"><span>1:27</span><span>Product overview</span></div>
-          <h3>AmbiSecure card &mdash; all use cases</h3>
-          <p class="video-card-desc">FIDO, PIV, door access, NDEF, and OpenPGP roles on a single multi-application card.</p>
-          <a class="video-card-cta" href="/videos/ambisecure-card-use-cases/" aria-label="View page: AmbiSecure card use cases">View page &rarr;</a>
-        </div>
-      </article>
-      <article class="video-card">
-        <div class="yt-facade" data-yt-id="bo9VA5AWuKQ" data-title="Set up the AmbiSecure card on Gmail">
-          <img class="yt-facade-poster" src="/assets/img/videos/bo9VA5AWuKQ.webp" alt="Set up the AmbiSecure card on Gmail" loading="lazy" decoding="async" width="1280" height="720" />
-          <button class="yt-facade-play" aria-label="Play Gmail setup">&#9658;</button>
-        </div>
-        <div class="video-card-body">
-          <div class="video-card-meta"><span>1:21</span><span>FIDO setup</span></div>
-          <h3>Set up the AmbiSecure card on Gmail</h3>
-          <p class="video-card-desc">Adding the card as a FIDO security key on a Google account, on desktop.</p>
-          <a class="video-card-cta" href="/videos/setup-ambisecure-card-gmail/" aria-label="View page: AmbiSecure card on Gmail">View page &rarr;</a>
-        </div>
-      </article>
-      <article class="video-card">
-        <video class="video-self-hosted" controls preload="none" poster="/assets/img/videos/biokey-loop-poster.jpg" playsinline muted>
-          <source src="/assets/video/biokey-loop.mp4" type="video/mp4" />
-          <track kind="captions" src="/assets/video/biokey-loop.vtt" srclang="en" label="English captions" default />
-        </video>
-        <div class="video-card-body">
-          <div class="video-card-meta"><span>0:05</span><span>Product demo</span></div>
-          <h3>AmbiSecure BioKey &mdash; product loop</h3>
-          <p class="video-card-desc">Short hero loop showing the biometric USB security key.</p>
-          <a class="video-card-cta" href="/videos/biokey-product-loop/" aria-label="View page: AmbiSecure BioKey product loop">View page &rarr;</a>
-        </div>
-      </article>
-    </div>
-    <p style="text-align:center;margin-top:32px;">
-      <a href="/videos/" class="btn btn-outline">All AmbiSecure videos &rarr;</a>
-    </p>
-  </div>
-</section>
-
-<!-- ============== WHERE AMBISECURE FITS (Phase 9 trust + storytelling) ============== -->
-<section aria-labelledby="fit-heading">
-  <div class="section-container">
-    <div class="section-head left">
-      <span class="eyebrow">Where AmbiSecure fits</span>
-      <h2 class="section-title" id="fit-heading">From wafer to user, in one stack.</h2>
-      <span class="section-line"></span>
-      <p class="section-desc" style="margin:0;max-width:880px;">AmbiSecure sits between the silicon vendor and the application developer &mdash; picking the chip, writing the applet, running personalisation, shipping the authenticator, and standing up the validation server. Steps that are usually each their own RFP.</p>
-    </div>
-    <div class="arch">
-      <div class="arch-node"><span class="arch-tag">01</span><h3>Silicon</h3><p>CC EAL5+ secure element from a partner vendor.</p></div>
-      <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">02</span><h3>Applet</h3><p>FIDO, PIV, OpenPGP, NDEF, OIDC, IoT &mdash; AID-selectable on one chip.</p></div>
-      <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node accent"><span class="arch-tag">03</span><h3>Personalise</h3><p>SCP03 loading, per-card key derivation, AAGUID + attestation cert injection.</p></div>
-      <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">04</span><h3>Form factor</h3><p>Card, USB key, biometric variant, NFC fob &mdash; brandable.</p></div>
-      <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">05</span><h3>Validate</h3><p>FIDO Validation Server with REST + JS API &mdash; or your own RP.</p></div>
-    </div>
-    <div class="grid-3" style="margin-top:36px;">
-      <a href="/trust/" class="card"><h3>Trust center</h3><p>Certification posture, standards conformance, security model, and vulnerability disclosure.</p><div class="card-meta">Open trust center &rarr;</div></a>
-      <a href="/about/certifications/" class="card"><h3>Certifications</h3><p>What we are certified for, the standards we build to, and what we are targeting &mdash; with explicit disclaimers.</p><div class="card-meta">View certifications &rarr;</div></a>
-      <a href="/partners/" class="card"><h3>Partners</h3><p>Resellers, OEMs, system integrators, MSSPs, and consultancies &mdash; the partner programme front door.</p><div class="card-meta">Become a partner &rarr;</div></a>
-    </div>
-  </div>
-</section>
-
-<!-- ============== PHASE 10: COMMERCIAL SURFACES ============== -->
-<section class="alt" aria-labelledby="commercial-heading">
-  <div class="section-container">
-    <div class="section-head left">
-      <span class="eyebrow">How engagements work</span>
-      <h2 class="section-title" id="commercial-heading">Three places to go next.</h2>
-      <span class="section-line"></span>
-      <p class="section-desc" style="margin:0;max-width:880px;">Evaluating whether AmbiSecure fits your deployment? These three surfaces are the most useful next step &mdash; architecture studies, platform overviews, and engagement-model shapes.</p>
     </div>
     <div class="grid-3">
-      <a href="/case-studies/" class="card"><h3>Case studies</h3><p>Three anonymised deployments &mdash; passwordless workforce, closed-loop transit ticketing, IoT device identity. Architecture-led.</p><div class="card-meta">Read case studies &rarr;</div></a>
-      <a href="/brochures/" class="card"><h3>Brochures</h3><p>Six platform overviews &mdash; OnePass, FIDO, transit, JavaCard, PKI, device identity. Printable, no lead-capture wall.</p><div class="card-meta">Browse brochures &rarr;</div></a>
-      <a href="/engagement-models/" class="card"><h3>Engagement models</h3><p>How engagements are scoped &mdash; architecture review, pilot, rollout, integration, secure manufacturing, custom JavaCard.</p><div class="card-meta">See engagement shapes &rarr;</div></a>
+      <a href="/resources/ambisecure-deck/" class="card"><h3>AmbiSecure deck</h3><p>A concise 17-slide overview of the hardware-rooted trust platform &mdash; authenticators, secure elements, Java Card services, PKI, and IoT identity.</p><div class="card-meta">View the deck &rarr;</div></a>
+      <a href="/products/biokey-on-device-totp/" class="card"><h3>BioKey on-device TOTP &amp; HOTP</h3><p>Hardware-sealed OATH one-time passwords on BioKey &mdash; seeds stay in the secure element, every code is fingerprint-gated, alongside FIDO2.</p><div class="card-meta">Read the concept &rarr;</div></a>
+      <a href="/technologies/fido2/" class="card"><h3>FIDO2 &amp; WebAuthn</h3><p>Phishing-resistant authentication on public-key cryptography &mdash; the private key never leaves the device.</p><div class="card-meta">Explore FIDO2 &rarr;</div></a>
     </div>
+    <p style="margin-top:18px;font-size:14px;"><a href="/resources/" style="color:var(--brand-red);font-weight:600;">Browse the full engineer&rsquo;s toolbox &mdash; 39+ utilities &amp; references &rarr;</a></p>
   </div>
 </section>
 
@@ -856,6 +489,7 @@
   </div>
 </section>
 
+
 <!-- ============== CALLOUT ============== -->
 <section>
   <div class="section-container">
@@ -870,6 +504,7 @@
     </div>
   </div>
 </section>
+
 
 </main>
 
@@ -970,12 +605,7 @@
 <script src="/assets/js/site-search.js?v=31" defer></script>
 <script src="/assets/js/analytics-config.js?v=31" defer></script>
 <script src="/assets/js/cookie-consent.js?v=31" defer></script>
-<script src="/assets/js/blog-pool.js?v=31" defer></script>
-<script src="/assets/js/blog-spotlight.js?v=31" defer></script>
-<script src="/assets/js/highlight-banner-config.js?v=31" defer></script>
-<script src="/assets/js/highlight-banner.js?v=31" defer></script>
 <script src="/assets/js/hero-visual-config.js?v=31" defer></script>
 <script src="/assets/js/hero-visual.js?v=31" defer></script>
-<script src="/assets/js/video-facade.js?v=31" defer></script>
 </body>
 </html>
