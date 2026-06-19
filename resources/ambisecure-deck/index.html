@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AmbiSecure deck &mdash; hardware-rooted trust platform (slideshow) | AmbiSecure</title>
+<meta name="description" content="A 17-slide overview of the AmbiSecure hardware-rooted trust platform: FIDO authenticators, secure-element engineering, Java Card services, PKI, IoT identity and engagement model." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/resources/ambisecure-deck/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="AmbiSecure deck &mdash; hardware-rooted trust platform" />
+<meta property="og:description" content="A 17-slide overview of the AmbiSecure hardware-rooted trust platform: authenticators, secure-element engineering, Java Card services, PKI, IoT identity and engagement model." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/resources/ambisecure-deck/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=31" />
+<link rel="stylesheet" href="/assets/css/main.css?v=31" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
+    { "@type": "ListItem", "position": 3, "name": "AmbiSecure deck", "item": "https://ambisecure.ambimat.com/resources/ambisecure-deck/" }
+   ]
+  },
+  {
+   "@type": "PresentationDigitalDocument",
+   "name": "AmbiSecure \u2014 hardware-rooted trust platform",
+   "description": "A 17-slide overview of the AmbiSecure hardware-rooted trust platform: FIDO authenticators, secure-element engineering, Java Card applet services, PKI and attestation, IoT device identity, SIMAuth eSIM trust, and the services and engagement model.",
+   "url": "https://ambisecure.ambimat.com/resources/ambisecure-deck/",
+   "publisher": { "@type": "Organization", "name": "AmbiSecure", "url": "https://ambisecure.ambimat.com/" },
+   "associatedMedia": { "@type": "MediaObject", "contentUrl": "https://ambisecure.ambimat.com/assets/deck/ambisecure-deck.pdf", "encodingFormat": "application/pdf" }
+  }
+ ]
+}
+</script>
+<style>
+  .deck { margin: 0; }
+  .deck-stage { position: relative; width: 100%; max-width: 540px; margin: 0 auto; aspect-ratio: 1080 / 1920; max-height: 78vh; background: var(--brand-soft); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .deck-slide { margin: 0; }
+  .deck-slide img { display: block; width: 100%; height: auto; }
+  /* Enhanced (JS) carousel: stack slides, show only the active one. */
+  .deck.is-enhanced .deck-stage { display: grid; }
+  .deck.is-enhanced .deck-slide { grid-area: 1 / 1; display: none; }
+  .deck.is-enhanced .deck-slide.is-active { display: block; }
+  .deck.is-enhanced .deck-slide img { width: 100%; height: 100%; object-fit: contain; }
+  .deck-controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin: 18px auto 0; max-width: 540px; }
+  .deck-counter { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 14px; color: var(--brand-grey); margin: 0; min-width: 64px; text-align: center; }
+  .deck-btn { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 6px; border: 1px solid var(--line); background: #fff; color: var(--ink); cursor: pointer; }
+  .deck-btn:hover { border-color: var(--brand-red); color: var(--brand-red); }
+  .deck-btn:disabled { opacity: .4; cursor: not-allowed; color: var(--brand-grey); border-color: var(--line); }
+  /* No-JS fallback: slides stack vertically with spacing. */
+  .deck:not(.is-enhanced) .deck-stage { aspect-ratio: auto; max-height: none; max-width: 620px; padding: 8px; }
+  .deck:not(.is-enhanced) .deck-slide { margin-bottom: 10px; }
+  .deck-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1982</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/resources/">Resources</a><span class="sep">/</span><span class="current">AmbiSecure deck</span></nav>
+
+<main id="main">
+
+<section style="padding: 56px 80px 24px;">
+  <div class="prose">
+    <span class="eyebrow">Resource &middot; Deck</span>
+    <h1>The AmbiSecure deck</h1>
+    <p class="dek">A concise overview of AmbiSecure&rsquo;s hardware-rooted trust platform, authenticators, secure-element engineering, Java Card services, PKI, IoT identity, and engagement model.</p>
+  </div>
+</section>
+
+<section style="padding: 0 40px 20px;">
+  <div class="section-container">
+    <div class="deck" id="deck" data-count="17">
+      <div class="deck-stage">
+        <figure class="deck-slide is-active" data-index="1" aria-hidden="false"><img src="/assets/img/deck/slide-01.webp" width="1080" height="1920" loading="eager" decoding="async" alt="Slide 1 of 17 &mdash; AmbiSecure title slide — embedded security, identity and hardware-rooted trust; FIDO authenticators, JavaCard applets, secure elements and PKI engineered by the Ambimat Electronics team." /></figure>
+        <figure class="deck-slide" data-index="2" aria-hidden="true"><img src="/assets/img/deck/slide-02.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 2 of 17 &mdash; AmbiSecure within the Ambimat Group — the security and trusted-identity business unit of Ambimat Electronics, an embedded-engineering team shipping identity systems since 2017." /></figure>
+        <figure class="deck-slide" data-index="3" aria-hidden="true"><img src="/assets/img/deck/slide-03.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 3 of 17 &mdash; The AmbiSecure security stack — from EAL6+ secure silicon up through the AmbiSEC module, JavaCard applets and OnePass device identity to enterprise, telecom and IoT systems." /></figure>
+        <figure class="deck-slide" data-index="4" aria-hidden="true"><img src="/assets/img/deck/slide-04.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 4 of 17 &mdash; Hardware-rooted trust — a chain that begins below the OS: root of trust in an EAL6+ secure element, verified boot ROM and signed bootloader, measured anti-rollback firmware." /></figure>
+        <figure class="deck-slide" data-index="5" aria-hidden="true"><img src="/assets/img/deck/slide-05.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 5 of 17 &mdash; Product and service portfolio — authenticators (OnePass Card, OnePass Bio Card, OnePass USB Key, BioKey, Tappable) and platforms and applets (AmbiSEC module, Java Card applet services, IoT Security Co-Processor, FIDO Validation Server)." /></figure>
+        <figure class="deck-slide" data-index="6" aria-hidden="true"><img src="/assets/img/deck/slide-06.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 6 of 17 &mdash; OnePass Card — one phishing-resistant FIDO2 identity card with PIV and OpenPGP roles, door access and NDEF, on an EAL6+ secure element." /></figure>
+        <figure class="deck-slide" data-index="7" aria-hidden="true"><img src="/assets/img/deck/slide-07.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 7 of 17 &mdash; OnePass USB Key and BioKey — FIDO2 / U2F USB security keys, including a biometric fingerprint-gated variant." /></figure>
+        <figure class="deck-slide" data-index="8" aria-hidden="true"><img src="/assets/img/deck/slide-08.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 8 of 17 &mdash; FIDO2 and modern authentication — public-key cryptography replaces shared-secret passwords; the private key never leaves the device across the authenticator, relying party and validation server." /></figure>
+        <figure class="deck-slide" data-index="9" aria-hidden="true"><img src="/assets/img/deck/slide-09.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 9 of 17 &mdash; AmbiSEC module and Java Card engineering — AmbiSecure's secure-element module and in-house Java Card platform engineering." /></figure>
+        <figure class="deck-slide" data-index="10" aria-hidden="true"><img src="/assets/img/deck/slide-10.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 10 of 17 &mdash; Java Card applet development services — custom applet design for authentication, identity and IoT on secure elements." /></figure>
+        <figure class="deck-slide" data-index="11" aria-hidden="true"><img src="/assets/img/deck/slide-11.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 11 of 17 &mdash; IoT device identity lifecycle — provisioning, attestation and lifecycle management of hardware-rooted device identities." /></figure>
+        <figure class="deck-slide" data-index="12" aria-hidden="true"><img src="/assets/img/deck/slide-12.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 12 of 17 &mdash; Embedded PKI and attestation — root CA and trust anchor, issuing CA, device or credential certificates with keys generated in the EAL6+ secure element, attestation validated by the relying party." /></figure>
+        <figure class="deck-slide" data-index="13" aria-hidden="true"><img src="/assets/img/deck/slide-13.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 13 of 17 &mdash; SIMAuth / eSIM trust — telecom-grade eSIM / eUICC and SIM applet trust on the Ambimat SIMAuth platform." /></figure>
+        <figure class="deck-slide" data-index="14" aria-hidden="true"><img src="/assets/img/deck/slide-14.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 14 of 17 &mdash; Services and engagement model — how AmbiSecure engages on architecture, applet development, personalization and validation." /></figure>
+        <figure class="deck-slide" data-index="15" aria-hidden="true"><img src="/assets/img/deck/slide-15.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 15 of 17 &mdash; Target sectors — government, enterprise IT, fintech, IoT and mobility, telecom and transit." /></figure>
+        <figure class="deck-slide" data-index="16" aria-hidden="true"><img src="/assets/img/deck/slide-16.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 16 of 17 &mdash; Differentiation — an embedded team, not a software-only security vendor: embedded engineering, secure-element development and hardware-rooted identity in one group." /></figure>
+        <figure class="deck-slide" data-index="17" aria-hidden="true"><img src="/assets/img/deck/slide-17.webp" width="1080" height="1920" loading="lazy" decoding="async" alt="Slide 17 of 17 &mdash; Next steps — talk to AmbiSecure engineers about hardware-rooted security; links to ambisecure.ambimat.com and the SIMAuth eSIM platform; Ambimat Electronics, Ahmedabad, India." /></figure>
+      </div>
+      <div class="deck-controls" hidden>
+        <button type="button" class="deck-btn deck-prev" aria-label="Previous slide">&larr; Prev</button>
+        <p class="deck-counter"><span class="deck-cur">1</span> / 17</p>
+        <button type="button" class="deck-btn deck-next" aria-label="Next slide">Next &rarr;</button>
+      </div>
+      <p class="deck-sr deck-live" aria-live="polite" role="status">Slide 1 of 17</p>
+    </div>
+    <p style="text-align:center; margin-top:18px; font-size:14px;"><a class="btn btn-outline" href="/assets/deck/ambisecure-deck.pdf" download>Download the deck (PDF)</a></p>
+    <p style="max-width:760px; margin:18px auto 0; border-left:3px solid var(--brand-red); background:var(--brand-soft); padding:12px 16px; border-radius:0 6px 6px 0; color:var(--brand-grey); font-size:13.5px;"><b style="color:var(--ink);">Note:</b> AmbiSecure / Ambimat Electronics was established in <b style="color:var(--ink);">1982</b>. Slides&nbsp;1&ndash;2 of the current deck artwork still show the earlier founding-year text; the source deck is pending regeneration to read &ldquo;Est.&nbsp;1982&rdquo;. The text on this page is authoritative.</p>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Slide-by-slide</span>
+      <h2 class="section-title">Deck transcript</h2>
+      <span class="section-line"></span>
+    </div>
+    <details class="faq-q">
+      <summary><h3>Read the 17 slides as text</h3></summary>
+      <div class="faq-a">
+        <ol style="padding-left:20px; color:var(--brand-grey); font-size:15px; line-height:1.7;">
+          <li><strong>AmbiSecure.</strong> Embedded security, identity and hardware-rooted trust. FIDO authenticators, JavaCard applets, secure elements, PKI and IoT trust, engineered by the Ambimat Electronics team (established 1982).</li>
+          <li><strong>AmbiSecure within the Ambimat Group.</strong> The security and trusted-identity business unit of Ambimat Electronics, an embedded-engineering team (established 1982) that has shipped identity systems since 2017. AmbiSecure is the embedded security and identity layer across the Group's connected products.</li>
+          <li><strong>The AmbiSecure security stack.</strong> A layered platform: EAL6+ Secure Element silicon (root) to the AmbiSEC module (nano-card / MFF2 package) to JavaCard applets (FIDO, PIV, OpenPGP, IoT) to OnePass device identity and authenticators, consumed by enterprise, telecom and IoT systems.</li>
+          <li><strong>A chain that begins below the OS.</strong> Trust is anchored in an EAL6+ secure element and carried up through verified boot: root of trust in the secure element, a verified boot ROM and signed bootloader, and measured, signed, anti-rollback firmware, rather than inherited from software that can be cloned or spoofed.</li>
+          <li><strong>Product &amp; service portfolio.</strong> Authenticators: OnePass Card (multi-application FIDO2 smart card), OnePass Bio Card (on-card fingerprint), OnePass USB Key (FIDO2 / U2F), BioKey and Tappable. Platforms &amp; applets: AmbiSEC module (nano-card / MFF2, EAL6+ SE), Java Card applet services, IoT Security Co-Processor, and the FIDO Validation Server (multi-tenant WebAuthn SaaS).</li>
+          <li><strong>One identity card, phishing-resistant.</strong> The OnePass Card replaces badges and separate security keys with a single FIDO2 smart card: FIDO2 / U2F passwordless, PIV and OpenPGP roles, door access and NDEF, and issuer keys with brand artwork, on one EAL6+ secure element. Built for enterprise, government and secure access.</li>
+          <li><strong>OnePass USB Key &amp; BioKey.</strong> FIDO-certified USB security keys: the OnePass USB Key (FIDO2 / U2F, no battery, durable) and BioKey, the biometric variant with on-device fingerprint user verification for the highest-assurance tier.</li>
+          <li><strong>FIDO2 &amp; modern authentication.</strong> Public-key cryptography replaces shared-secret passwords, making authentication phishing-resistant by construction. The ceremony spans the authenticator (card, USB, BioKey), the relying party (app or service) and a validation server (attestation, MDS), and the private key never leaves the device.</li>
+          <li><strong>AmbiSEC module &amp; Java Card engineering.</strong> The AmbiSEC module packages an EAL6+ secure element as a nano-card or MFF2 part, programmed with in-house Java Card engineering so keys, credentials, identity and policy are enforced inside the secure element.</li>
+          <li><strong>Java Card applet development services.</strong> Custom Java Card applet design, SCP03 loading and personalization tooling for authentication, identity and IoT use cases, delivered on AmbiSecure secure elements.</li>
+          <li><strong>IoT device identity lifecycle.</strong> Hardware-rooted device identity across its lifecycle: key generation inside the secure element, provisioning, attestation, and ongoing lifecycle management for connected and IoT devices.</li>
+          <li><strong>Embedded PKI, attestation &amp; key management.</strong> A certificate chain anchored in hardware: a root CA / trust anchor, an issuing CA, and device or credential certificates whose keys are generated inside the EAL6+ secure element, with attestation that the relying party validates.</li>
+          <li><strong>SIMAuth / eSIM trust.</strong> Telecom-grade embedded identity: eSIM / eUICC and SIM applets engineered on the dedicated Ambimat SIMAuth property, extending hardware-rooted trust to the SIM domain.</li>
+          <li><strong>Services &amp; engagement model.</strong> How AmbiSecure engages: security architecture, custom applet development, personalization, and validation, working as an embedded engineering partner rather than a one-size product vendor.</li>
+          <li><strong>Target sectors.</strong> Where this work ships: government, enterprise IT, fintech, IoT and mobility, telecom, and transit, each with distinct identity and secure-element requirements.</li>
+          <li><strong>An embedded team, not a software security vendor.</strong> AmbiSecure combines embedded engineering, secure-element development, and hardware-rooted identity and authentication in one team. A generic IoT or software-security vendor ships apps and agents where trust stops at the software layer and integrates someone else's secure element; AmbiSecure owns the silicon-to-application chain.</li>
+          <li><strong>A security problem that lives in hardware?.</strong> Talk to engineers, not BDRs: tell AmbiSecure what you are building and get a path that is realistic, standards-aware and shipped before. Links to ambisecure.ambimat.com and the SIMAuth eSIM platform. Ambimat Electronics, Ahmedabad, India.</li>
+        </ol>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left">
+      <span class="eyebrow">Go deeper</span>
+      <h2 class="section-title">From the deck to the detail</h2>
+      <span class="section-line"></span>
+    </div>
+    <div class="grid-3">
+      <a href="/products/" class="card"><h3>Products</h3><p>The full catalogue: OnePass authenticators, BioKey, IoT security co-processor, JavaCard applets.</p><div class="card-meta">View products &rarr;</div></a>
+      <a href="/technologies/fido2/" class="card"><h3>FIDO2 &amp; WebAuthn</h3><p>Phishing-resistant authentication on public-key cryptography &mdash; the private key never leaves the device.</p><div class="card-meta">Explore FIDO2 &rarr;</div></a>
+      <a href="/products/biokey/" class="card"><h3>BioKey &amp; OnePass USB Key</h3><p>Biometric and FIDO2 USB security keys, including <a href="/products/biokey-on-device-totp/">on-device TOTP / HOTP</a>.</p><div class="card-meta">View authenticators &rarr;</div></a>
+      <a href="/products/javacard-applets/" class="card"><h3>Java Card applets</h3><p>Custom applet design, SCP03 loading and personalization &mdash; see <a href="/services/javacard-development/">JavaCard development services</a>.</p><div class="card-meta">View applets &rarr;</div></a>
+      <a href="/technologies/secure-elements/" class="card"><h3>Secure elements &amp; AmbiSEC</h3><p>EAL6+ secure-element silicon and the <a href="/products/iot-security-coprocessor/">AmbiSEC IoT co-processor</a> module.</p><div class="card-meta">Explore secure elements &rarr;</div></a>
+      <a href="/contact/" class="card"><h3>Talk to AmbiSecure</h3><p>Building a product where keys must stay in hardware? Talk to engineers, not BDRs.</p><div class="card-meta">Contact us &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Resources</h3><ul><li><a href="/resources/">Tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/timelines/">Standards timelines</a></li><li><a href="/blog/">Engineering blog</a></li><li><a href="/case-studies/">Case studies</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+
+<script src="/assets/js/nav.js?v=31" defer></script>
+<script src="/assets/js/web-vitals.js?v=31" defer></script>
+<script src="/assets/js/site-search.js?v=31" defer></script>
+<script src="/assets/js/analytics-config.js?v=31" defer></script>
+<script src="/assets/js/cookie-consent.js?v=31" defer></script>
+<script src="/assets/js/ambisecure-deck.js?v=31" defer></script>
+</body>
+</html>
