@@ -164,6 +164,7 @@
   <url><loc>https://ambisecure.ambimat.com/references/webauthn-cose/</loc><lastmod>2026-05-26</lastmod><priority>0.85</priority></url>
   <url><loc>https://ambisecure.ambimat.com/references/aaguids/</loc><lastmod>2026-05-26</lastmod><priority>0.85</priority></url>
   <url><loc>https://ambisecure.ambimat.com/references/desfire/</loc><lastmod>2026-05-26</lastmod><priority>0.85</priority></url>
+  <url><loc>https://ambisecure.ambimat.com/references/desfire-commands/</loc><lastmod>2026-06-29</lastmod><priority>0.85</priority></url>
   <url><loc>https://ambisecure.ambimat.com/references/globalplatform/</loc><lastmod>2026-05-26</lastmod><priority>0.8</priority></url>
   <url><loc>https://ambisecure.ambimat.com/references/asn1/</loc><lastmod>2026-05-26</lastmod><priority>0.8</priority></url>
   <url><loc>https://ambisecure.ambimat.com/references/nfc/</loc><lastmod>2026-05-26</lastmod><priority>0.8</priority></url>

@@ -109,7 +109,10 @@
       <tr><th>Secure messaging</th><td>Optional plain / MACed / fully enciphered modes per command.</td><td>EV2-SM: per-session keys, command counter, integrated CMAC. Default for new deployments.</td><td>EV2-SM &middot; latency optimisations.</td></tr>
       <tr><th>Transaction integrity</th><td>Per-file commit / abort. Backup files for atomic update.</td><td>+ Transaction MAC (TMAC) per commit. Issuer can verify transaction authenticity offline.</td><td>+ Transaction Timer for replay-window control.</td></tr>
       <tr><th>Key diversification</th><td>Application-level key (one per slot).</td><td>+ recommended diversified keys per UID.</td><td>+ recommended diversified per UID with hardware-backed derivation in the SAM.</td></tr>
-      <tr><th>Capacity</th><td>2 / 4 / 8 KB EEPROM</td><td>2 / 4 / 8 KB</td><td>2 / 4 / 8 KB; some variants higher.</td></tr>
+      <tr><th>NV memory</th><td>256 B &middot; 2 / 4 / 8 KB</td><td>2 / 4 / 8 / 16 / 32 KB</td><td>2 / 4 / 8 KB</td></tr>
+      <tr><th>Applications per card</th><td>Up to 28</td><td>No fixed limit &mdash; memory-bound</td><td>No fixed limit &mdash; memory-bound</td></tr>
+      <tr><th>Files &amp; file types</th><td>32 files per application &middot; 5 file types</td><td>32 files per application &middot; 6 file types (adds Transaction MAC file)</td><td>32 files per application &middot; 6 file types</td></tr>
+      <tr><th>ISO 14443-4 ATS</th><td>Configurable ATS</td><td>Configurable, buffer up to 128 bytes</td><td>Configurable, buffer up to 256 bytes</td></tr>
       </tbody>
     </table>
     <p style="font-family:'Source Sans 3',sans-serif; color:var(--brand-grey); margin-top:14px; max-width:880px;">All three generations remain in deployed production fleets. Practical migrations involve <strong>EV3 cards</strong> personalised in <strong>EV2 mode</strong> for back-compat with installed validator estates, with EV3-only features unlocked as the validator firmware and SAM stack catches up.</p>
@@ -264,6 +267,7 @@
     <div class="grid-3">
       <a href="/resources/tools/desfire-status/" class="card"><h3>DESFire Status Decoder</h3><p>Look up DESFire response status bytes &mdash; OPERATION_OK, AUTHENTICATION_ERROR, etc.</p><div class="card-meta">Open tool &rarr;</div></a>
       <a href="/resources/tools/desfire-access-rights/" class="card"><h3>DESFire Access-Rights Decoder</h3><p>Decode the 16-bit access-rights word into Read / Write / Read+Write / Change keys.</p><div class="card-meta">Open tool &rarr;</div></a>
+      <a href="/references/desfire-commands/" class="card"><h3>DESFire Command Set</h3><p>Searchable command / code reference with EV1 / EV2 / EV3 support, grouped by class.</p><div class="card-meta">Open reference &rarr;</div></a>
       <a href="/blog/desfire-ev1-vs-ev2-vs-ev3/" class="card"><h3>Pillar: EV1 vs EV2 vs EV3</h3><p>The deep technical evolution &mdash; what changed and what to deploy on greenfield.</p><div class="card-meta">Read &rarr;</div></a>
     </div>
   </div>

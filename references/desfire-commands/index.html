@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DESFire Command Set Reference — EV1/EV2/EV3 — AmbiSecure</title>
+<meta name="description" content="Searchable MIFARE DESFire command reference — command name, code, and EV1/EV2/EV3 support, grouped by class. Native and ISO 7816-4 wrapped commands." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/references/desfire-commands/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="DESFire Command Set" />
+<meta property="og:description" content="Searchable MIFARE DESFire command reference — command name, code, and EV1/EV2/EV3 support, grouped by class. Native and ISO 7816-4 wrapped commands." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/references/desfire-commands/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/references.png" />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "References",
+     "item": "/references/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "DESFire Command Set",
+     "item": "https://ambisecure.ambimat.com/references/desfire-commands/"
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "DESFire Command Set",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   }
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1982</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">DESFire Command Set</span></nav>
+
+<main id="main">
+<header class="tool-header" style="padding-bottom:18px;">
+  <span class="eyebrow">NXP DESFire</span>
+  <h1>DESFire Command Set</h1>
+  <p>MIFARE DESFire command names, command codes, and which generation supports each &mdash; EV1, EV2, and EV3. Search by command or code, or filter by class. Native application-layer commands and their ISO 7816-4 wrapped equivalents are both listed.</p>
+</header>
+<div class="ref-shell">
+  <div class="ref-search-bar">
+    <input id="ref-search" type="search" placeholder="Search by command or code…" autocomplete="off" />
+    <span class="ref-count" id="ref-count"></span>
+  </div>
+  <div class="ref-tag-filter" id="ref-tag-filter"></div>
+  <div class="ref-table-wrap" id="ref-output"></div>
+</div>
+<section class="tool-reference">
+  <h2>How to read this</h2>
+  <div class="prose" style="max-width:880px;">
+    <p>DESFire exposes a <strong>native application-layer command set</strong> on top of ISO/IEC 14443-4. Each command has a one-byte code. The <strong>EV1 / EV2 / EV3</strong> columns show whether a command exists on that generation &mdash; <em>Yes</em>, <em>No</em>, or <em>Yes</em> with a noted behavioural difference. A handful of commands gained their first support in EV2 (delegated applications, multiple key sets, Transaction MAC, Proximity Check), and EV3 mostly refines existing commands rather than adding many new ones.</p>
+    <p>Where two codes are shown (for example <span class="ref-key">0xBD / 0xAD</span>), the command has more than one documented opcode form. The <strong>ISO 7816-4</strong> class lists the standards-wrapped equivalents (SELECT, READ BINARY, READ RECORD, INTERNAL / EXTERNAL AUTHENTICATE) that let a DESFire card be driven by a generic ISO 7816-4 stack. This is an architecture-level interface reference: byte-level framing, secure-messaging payloads, and exploit-relevant detail are intentionally out of scope.</p>
+  </div>
+  <h2 style="margin-top:26px;">About this reference</h2>
+  <div class="ref-grid">
+    <div class="ref-card"><h3>Source</h3><p>Summarised from public NXP MIFARE DESFire EV1 / EV2 / EV3 datasheets. Command names and codes are factual interface data; difference notes are our own wording.</p></div>
+    <div class="ref-card"><h3>Companion tools</h3><p><a href="/resources/tools/desfire-status/">DESFire status decoder</a> &middot; <a href="/resources/tools/desfire-file-settings/">File settings parser</a> &middot; <a href="/resources/tools/desfire-access-rights/">Access-rights decoder</a></p></div>
+    <div class="ref-card"><h3>Related reference</h3><p><a href="/references/desfire/">DESFire status codes</a> &middot; <a href="/references/iso7816/">ISO 7816 CLA values</a></p></div>
+    <div class="ref-card"><h3>Reading</h3><p><a href="/technologies/desfire/">DESFire architecture (EV1/EV2/EV3)</a> &middot; <a href="/blog/desfire-ev1-vs-ev2-vs-ev3/">Generation differences</a></p></div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://esim.ambimat.com/">SIMAuth</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Develop</h3><ul><li><a href="/resources/">Utility tools</a></li><li><a href="/references/">References</a></li><li><a href="/resources/webauthn/">WebAuthn reference</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Solutions</h3><ul><li><a href="/solutions/passwordless-enterprise/">Passwordless enterprise</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant MFA</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/solutions/">All solutions</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
+<script>window.AS_REF = {"slug": "desfire-commands", "idCol": "name", "columns": [{"field": "name", "label": "Command", "cls": "ref-key", "width": "230px"}, {"field": "code", "label": "Code", "cls": "ref-meta", "width": "120px"}, {"field": "ev1", "label": "EV1", "cls": "ref-meta", "width": "62px"}, {"field": "ev2", "label": "EV2", "cls": "ref-meta", "width": "62px"}, {"field": "ev3", "label": "EV3", "cls": "ref-detail"}], "rows": [
+{"tag": "Auth & keys", "name": "Authenticate", "code": "0x0A", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "AuthenticateISO", "code": "0x1A", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "AuthenticateAES", "code": "0xAA", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "AuthenticateEV2First", "code": "0x71", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "AuthenticateEV2NonFirst", "code": "0x77", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "ChangeKey", "code": "0xC4", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "ChangeKeyEV2", "code": "0xC6", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "InitializeKeySet", "code": "0x56", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "FinalizeKeySet", "code": "0x57", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "RollKeySet", "code": "0x55", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "GetKeySettings", "code": "0x45", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "ChangeKeySettings", "code": "0x54", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Auth & keys", "name": "GetKeyVersion", "code": "0x64", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "PICC & config", "name": "FreeMem", "code": "0x6E", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "PICC & config", "name": "Format", "code": "0xFC", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "PICC & config", "name": "SetConfiguration", "code": "0x5C", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes — behavioural differences"},
+{"tag": "PICC & config", "name": "GetVersion", "code": "0x60", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "PICC & config", "name": "GetCardUID", "code": "0x51", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes — behavioural differences"},
+{"tag": "Applications", "name": "CreateApplication", "code": "0xCA", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes — differs in the KeySett3 parameter"},
+{"tag": "Applications", "name": "DeleteApplication", "code": "0xDA", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes — differs for delegated applications"},
+{"tag": "Applications", "name": "CreateDelegatedApplication", "code": "0xC9", "ev1": "No", "ev2": "Yes", "ev3": "Yes — differs in the KeySett3 parameter"},
+{"tag": "Applications", "name": "SelectApplication", "code": "0x5A", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Applications", "name": "GetApplicationIDs", "code": "0x6A", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Applications", "name": "GetDFNames", "code": "0x6D", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Applications", "name": "GetDelegatedInfo", "code": "0x69", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "File management", "name": "CreateStdDataFile", "code": "0xCD", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes — differs in FileOption"},
+{"tag": "File management", "name": "CreateBackupDataFile", "code": "0xCB", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes — differs in FileOption"},
+{"tag": "File management", "name": "CreateValueFile", "code": "0xCC", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes — differs in FileOption"},
+{"tag": "File management", "name": "CreateLinearRecordFile", "code": "0xC1", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "File management", "name": "CreateCyclicRecordFile", "code": "0xC0", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "File management", "name": "CreateTransactionMACFile", "code": "0xCE", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "File management", "name": "DeleteFile", "code": "0xDF", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "File management", "name": "GetFileIDs", "code": "0x6F", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "File management", "name": "GetISOFileIDs", "code": "0x61", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "File management", "name": "GetFileSettings", "code": "0xF5", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes — response differs for Standard, Backup and Value files"},
+{"tag": "File management", "name": "GetFileCounters", "code": "0xF6", "ev1": "Yes", "ev2": "No", "ev3": "Yes — new command form"},
+{"tag": "File management", "name": "ChangeFileSettings", "code": "0x5F", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes — differs in FileOption, with additional parameters"},
+{"tag": "Data & value", "name": "ReadData", "code": "0xBD / 0xAD", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Data & value", "name": "WriteData", "code": "0x3D / 0x8D", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Data & value", "name": "GetValue", "code": "0x6C", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Data & value", "name": "Credit", "code": "0x0C", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Data & value", "name": "Debit", "code": "0xDC", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Data & value", "name": "LimitedCredit", "code": "0x1C", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Data & value", "name": "ReadRecords", "code": "0xBB / 0xAB", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Data & value", "name": "WriteRecord", "code": "0x3B / 0x8B", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Data & value", "name": "UpdateRecord", "code": "0xDB / 0xBA", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Data & value", "name": "ClearRecordFile", "code": "0xEB", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Transactions", "name": "CommitTransaction", "code": "0xC7", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Transactions", "name": "AbortTransaction", "code": "0xA7", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Transactions", "name": "CommitReaderID", "code": "0xC8", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "ISO 7816-4", "name": "ISOSelectFile", "code": "0xA4", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "ISO 7816-4", "name": "ISOReadBinary", "code": "0xB0", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "ISO 7816-4", "name": "ISOUpdateBinary", "code": "0xD6", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "ISO 7816-4", "name": "ISOReadRecord", "code": "0xB2", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "ISO 7816-4", "name": "ISOAppendRecord", "code": "0xE2", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "ISO 7816-4", "name": "ISOGetChallenge", "code": "0x84", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "ISO 7816-4", "name": "ISOExternalAuthenticate", "code": "0x82", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "ISO 7816-4", "name": "ISOInternalAuthenticate", "code": "0x88", "ev1": "Yes", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Virtual Card & PC", "name": "ISOSelectFile (VC)", "code": "0xA4", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Virtual Card & PC", "name": "ISOExternalAuthenticate (VC)", "code": "0x82", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Virtual Card & PC", "name": "PreparePC", "code": "0xF0", "ev1": "No", "ev2": "Yes", "ev3": "Yes — new response parameters depending on the Option byte"},
+{"tag": "Virtual Card & PC", "name": "ProximityCheck", "code": "0xF2", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Virtual Card & PC", "name": "VerifyPC", "code": "0xFD", "ev1": "No", "ev2": "Yes", "ev3": "Yes"},
+{"tag": "Originality", "name": "Read_Sig", "code": "0x3C", "ev1": "—", "ev2": "Yes", "ev3": "Yes"}
+]};</script>
+<script src="/assets/js/refs/refs-page.js" defer></script>
+</body>
+</html>
