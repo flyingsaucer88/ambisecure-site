@@ -141,7 +141,11 @@ Redirect 301 /security/disclosure /trust/
 Redirect 301 /partner /partners/
 Redirect 301 /partner-program /partners/
 Redirect 301 /reseller /partners/
-Redirect 301 /faqs /support/
+# NOTE: no /faqs -> /support redirect. /faqs/ is a distinct, indexable page
+# (linked from the primary nav, self-canonical, in the sitemap). mod_alias
+# Redirect is prefix-based, so "Redirect 301 /faqs /support/" also shadowed
+# the real /faqs/ directory and 301'd it away. Bare /faqs now normalises to
+# /faqs/ via DirectorySlash, exactly like every other directory.
 
 # Solution-slug aliases (legacy / interlinked references)
 Redirect 301 /solutions/iot-root-of-trust /solutions/secure-element-integration/
@@ -172,13 +176,15 @@ Redirect 301 /blog/category/apdu /blog/categories/javacard/
 Redirect 301 /blog/category/cryptography /blog/categories/cryptography/
 Redirect 301 /blog/category/secure-manufacturing /blog/
 
-# Tool aliases (tools that were referenced but not yet built; map to nearest existing tool)
+# Tool aliases (tools that were referenced but not yet built; map to nearest existing tool).
+# Only keep aliases for tools that DON'T exist as real pages — a prefix-based
+# mod_alias Redirect for a slug that now has its own /index.html would shadow
+# the real, indexable, in-sitemap tool and 301 it away. scp03-helper,
+# iccid-decoder and euicc-eid-decoder have since been built, so their aliases
+# were removed.
 Redirect 301 /resources/tools/cap-inspector /resources/tools/javacard-cap/
-Redirect 301 /resources/tools/scp03-helper /resources/tools/cmac-length/
 Redirect 301 /resources/tools/webauthn-attestation-decoder /resources/tools/cose-key/
 Redirect 301 /resources/tools/cose-key-decoder /resources/tools/cose-key/
-Redirect 301 /resources/tools/iccid-decoder /resources/
-Redirect 301 /resources/tools/euicc-eid-decoder /resources/
 
 # Pending blog slugs -> blog index (until written)
 Redirect 301 /blog/javacard-from-first-principles /blog/

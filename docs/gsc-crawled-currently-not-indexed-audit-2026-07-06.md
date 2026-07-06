@@ -1,5 +1,24 @@
 # GSC "Crawled – currently not indexed" — remediation audit
 
+> **Addendum — 2026-07-06 (verification pass, claude-seo tool).** A re-audit before deploy
+> found that three redirect-alias bugs in `.htaccess` were **shadowing real, indexable,
+> in-sitemap pages** (mod_alias `Redirect` is prefix-based, so an alias for a slug that now
+> has its own `index.html` 301s the real page away). Fixed by removing the stale aliases:
+>
+> | URL | Was (live/committed) | `.htaccess` alias removed | Now |
+> |---|---|---|---|
+> | `/faqs/` | 301 → `/support/` (yet in sitemap, self-canonical, nav-linked, 2374w) | `Redirect 301 /faqs /support/` | 200 real page |
+> | `/resources/tools/scp03-helper/` | committed alias would 301 → `cmac-length` on deploy | `…/scp03-helper …/cmac-length/` | 200 real page |
+> | `/resources/tools/iccid-decoder/` | live 301 → `/resources/` (yet in sitemap, 1284w) | `…/iccid-decoder /resources/` | 200 real page |
+> | `/resources/tools/euicc-eid-decoder/` | committed alias would 301 → `/resources/` on deploy | `…/euicc-eid-decoder /resources/` | 200 real page |
+>
+> Root cause: these were "referenced but not yet built" placeholder aliases from Phase 6;
+> the tools were later built but the aliases were never removed. The intentional `noindex`
+> "page moved" stub `/products/iot-security-chipset/` is correctly left in place (it is not in
+> the sitemap). Bare `/faqs` now normalises to `/faqs/` via DirectorySlash like every other
+> directory. All audits still pass; sitemap drift = 0 (319/319). This corrects the previous
+> pass, which added `/faqs/` to the sitemap without noticing the live redirect that shadowed it.
+
 - **Property:** `https://ambisecure.ambimat.com/`
 - **GSC issue:** Page indexing → *Crawled – currently not indexed*
 - **Export:** `docs/ambisecure.ambimat.com-Coverage-Validation-2026-07-06.zip` (Table.csv, 71 URLs)
