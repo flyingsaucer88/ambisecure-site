@@ -177,7 +177,7 @@
     </table>
 
     <h2 id="apdus">A note on the APDU envelope</h2>
-    <p>DESFire commands ride on top of standard ISO 7816-4 APDUs over the 14443-4 transport. The application-select uses <code>SELECT (CLA=00 INS=A4)</code>; subsequent DESFire-native commands are wrapped with proprietary CLA <code>0x90</code>. We have a free <a href="/resources/tools/apdu-parser/">APDU parser</a> that handles the envelope, and a dedicated <a href="/resources/tools/desfire-status/">DESFire status decoder</a> for the response status bytes (OPERATION_OK, AUTHENTICATION_ERROR, ADDITIONAL_FRAME, etc.).</p>
+    <p>DESFire commands ride on top of standard ISO 7816-4 APDUs over the 14443-4 transport. The application-select uses <code>SELECT (CLA=00 INS=A4)</code>; subsequent DESFire-native commands are wrapped with proprietary CLA <code>0x90</code>. We have a free <a href="/resources/tools/apdu-parser/">APDU parser</a> that handles the envelope, and a dedicated <a href="/resources/tools/desfire-status/">DESFire status decoder</a> for the response status bytes (OPERATION_OK, AUTHENTICATION_ERROR, ADDITIONAL_FRAME, etc.). For the opcodes themselves, our <a href="/references/desfire-commands/">DESFire command set reference</a> lists every native command, its code, and which generation (EV1/EV2/EV3) supports it.</p>
 
     <h2 id="migration">Migration paths that have shipped</h2>
     <ol>
@@ -201,6 +201,7 @@
     <h2 id="related">Related reading</h2>
     <ul>
       <li><a href="/technologies/desfire/">Technology: DESFire architecture</a></li>
+      <li><a href="/references/desfire-commands/">Reference: DESFire command set (EV1/EV2/EV3)</a></li>
       <li><a href="/technologies/sam/">Technology: SAM architecture</a></li>
       <li><a href="/technologies/card-reader-sam-flow/">Architecture: Card &harr; Reader &harr; SAM flow</a></li>
       <li><a href="/solutions/closed-loop-ticketing/">Solution: Closed-loop ticketing knowledge center</a></li>

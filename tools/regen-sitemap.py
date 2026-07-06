@@ -77,6 +77,15 @@ def walk_pages():
         for name in files:
             if name != "index.html":
                 continue
+            # Skip noindex pages (redirect / "page moved" stubs). They 301 or
+            # carry <meta robots noindex> and must never enter the sitemap.
+            try:
+                with open(os.path.join(dirpath, name), encoding="utf-8") as fh:
+                    head = fh.read(4096)
+                if re.search(r'name=["\']robots["\']\s+content=["\'][^"\']*noindex', head, re.I):
+                    continue
+            except OSError:
+                pass
             page_rel = os.path.relpath(os.path.join(dirpath, name), ROOT)
             if page_rel == "index.html":
                 url = SITE + "/"
