@@ -38,7 +38,11 @@
         "uses-responsive-images":   "warn",
         "modern-image-formats":     "warn",
         "render-blocking-resources":"warn",
-        "server-response-time":     "warn"
+        "server-response-time":     "warn",
+
+        "bootup-time":                 "warn",
+        "dom-size":                    "warn",
+        "mainthread-work-breakdown":   "warn"
       }
     },
     "upload": {
