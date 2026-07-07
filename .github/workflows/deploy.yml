@@ -4,14 +4,26 @@ name: Deploy to Hostinger
 #   - workflow_dispatch → manual button in the GitHub Actions UI
 #
 # NOTE: automatic continuous deployment on push to main is intentionally
-# DISABLED. The site-search/assistant work was merged with a "push without
-# deploying" decision, so this push must not auto-deploy to Hostinger.
-# Re-enable CD by uncommenting the `push:` block below.
+# DISABLED. Re-enable CD by uncommenting the `push:` block below.
+#
+# PROTOCOL: this deploys over SFTP (SSH), NOT FTP/FTPS. Hostinger shared
+# hosting exposes SFTP on port 65002; plain FTP/FTPS (port 21) was timing out
+# ("Failed to connect ... server only supports SFTP"). We upload with lftp's
+# `mirror -R` rather than a Node-based deploy action because:
+#   • lftp mirror uploads DOTFILES (.htaccess is critical — it carries every
+#     redirect, the 410 rules and the security headers). Glob-based actions
+#     (e.g. wlixcc/SFTP-Deploy-Action with `*`) silently skip dotfiles.
+#   • it runs as a shell step, so it does not depend on a bundled Node 20/24
+#     runtime and needs no ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION.
+#   • the password is fed to lftp on stdin, so it never appears in argv/ps
+#     or the logs (GitHub also masks the secret values).
+#
+# This is a static site (no package.json / no npm build): the deployable tree
+# is produced by tools/build-hostinger-package.sh, not by a bundler.
 on:
   # push:
   #   branches: [main]
   #   paths-ignore:
-  #     # Don't waste CI minutes on doc-only commits.
   #     - 'docs/**'
   #     - '.claude/**'
   #     - 'README.md'
@@ -26,12 +38,8 @@ concurrency:
 
 jobs:
   deploy:
-    name: Build and deploy to Hostinger public_html
+    name: Build and deploy to Hostinger public_html (SFTP)
     runs-on: ubuntu-latest
-    # 30 min covers the first-time full upload (~760 files, ~17 MB, single
-    # connection, sequential). Subsequent runs use the persisted state file
-    # to upload only diffs and complete in under 2 min — the 30 min ceiling
-    # is just first-deploy headroom.
     timeout-minutes: 30
     permissions:
       contents: read
@@ -40,59 +48,71 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install audit dependencies
-        # xmllint (libxml2-utils) is used by tools/audit-all.sh + audit-seo.py
-        # to validate sitemap.xml. macOS ships with it; ubuntu-latest does not.
-        run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+      - name: Install tooling (xmllint for audits, lftp for SFTP)
+        # xmllint (libxml2-utils) validates sitemap.xml in the audit suite.
+        # lftp is the SFTP client used for the upload.
+        run: sudo apt-get update && sudo apt-get install -y libxml2-utils lftp
 
       - name: Build deployable tree
-        # Produces dist/ambisecure-hostinger/ — the exact tree that
-        # should land in public_html. Excludes tools/, docs/, dist/,
-        # Logos/, scripts/, _internal/, legacysitedata/, .git*, etc.
+        # Produces dist/ambisecure-hostinger/ — the exact tree that lands in
+        # public_html. Excludes tools/, docs/, dist/, Logos/, scripts/,
+        # _internal/, legacysitedata/, .git*, etc.
         run: bash tools/build-hostinger-package.sh
 
-      - name: Run site audits (safety net)
-        # Hard gate. If any audit fails, the deploy never starts.
-        # Pre-commit hook should have caught this locally, but a hostile
-        # network push could bypass that — this is the belt to the
-        # local suspenders.
+      - name: Run site audits (hard gate)
+        # If any audit fails the deploy never starts.
         run: bash tools/audit-all.sh
 
-      - name: Deploy via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
-          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          # Hostinger's FTPS server presents a shared *.hstgr.io cert
-          # that doesn't match our connection hostname / IP. The TLS
-          # handshake still encrypts the channel; we skip the hostname-
-          # to-cert binding check that would otherwise reject the cert.
-          # See MASTER_OPS §53.7 ("TLS hostname mismatch") for context.
-          security: loose
-          # local-dir must end with a slash so the action treats it
-          # as "copy contents of this dir" not "copy this dir itself".
-          local-dir: ./dist/ambisecure-hostinger/
-          # The github-deploy FTP account lands directly inside
-          # public_html (its scope was set during account creation),
-          # so we mirror to "./" — the FTP user's home.
-          server-dir: ./
-          # Persisted on the FTP server; lets subsequent deploys upload
-          # only the diff instead of the full 17 MB tree.
-          state-name: .github-deploy-state.json
-          # 60s per command — Hostinger's FTP can be sluggish under load.
-          timeout: 60000
-          log-level: standard
-          # The build script already excludes everything we don't want
-          # to ship; no further excludes needed.
-          exclude: |
-            **/.DS_Store
-            **/.git*
+      - name: Verify build output
+        # Fail fast if the build tree is missing key files (incl. the dotfile
+        # .htaccess, which the upload must ship).
+        run: |
+          set -euo pipefail
+          test -d dist/ambisecure-hostinger
+          test -f dist/ambisecure-hostinger/index.html
+          test -f dist/ambisecure-hostinger/.htaccess
+          test -f dist/ambisecure-hostinger/sitemap.xml
+          test -f dist/ambisecure-hostinger/robots.txt
+          echo "file count: $(find dist/ambisecure-hostinger -type f | wc -l)"
+          find dist/ambisecure-hostinger -maxdepth 2 -type f | head -50
+
+      - name: Test SFTP port is reachable
+        # Non-secret-leaking connectivity check (host/port only; nc never
+        # prints credentials). Confirms the SFTP port answers before we try
+        # to authenticate.
+        run: nc -vz -w 10 "${{ secrets.HOSTINGER_HOST }}" "${{ secrets.HOSTINGER_PORT }}"
+
+      - name: Deploy via SFTP (lftp mirror)
+        env:
+          SFTP_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SFTP_USER: ${{ secrets.HOSTINGER_USERNAME }}
+          SFTP_PASS: ${{ secrets.HOSTINGER_PASSWORD }}
+          SFTP_PORT: ${{ secrets.HOSTINGER_PORT }}
+          SFTP_REMOTE: ${{ secrets.HOSTINGER_REMOTE_PATH }}
+        run: |
+          set -euo pipefail
+          : "${SFTP_HOST:?HOSTINGER_HOST secret is not set}"
+          : "${SFTP_USER:?HOSTINGER_USERNAME secret is not set}"
+          : "${SFTP_PASS:?HOSTINGER_PASSWORD secret is not set}"
+          : "${SFTP_REMOTE:?HOSTINGER_REMOTE_PATH secret is not set}"
+          PORT="${SFTP_PORT:-65002}"
+          # Do NOT enable `set -x` here — it would echo the password.
+          # lftp reads its program from stdin (heredoc), so the password is
+          # never passed on the command line / process list.
+          lftp <<LFTP
+          set cmd:fail-exit yes
+          set net:timeout 30
+          set net:max-retries 2
+          set net:reconnect-interval-base 5
+          set sftp:auto-confirm yes
+          set sftp:connect-program "ssh -a -x -p ${PORT} -o StrictHostKeyChecking=accept-new"
+          open -u "${SFTP_USER}","${SFTP_PASS}" sftp://${SFTP_HOST}
+          mirror -R --only-newer --no-perms --parallel=2 --exclude-glob .DS_Store --exclude-glob .git* "dist/ambisecure-hostinger/" "${SFTP_REMOTE}"
+          bye
+          LFTP
 
       - name: Success summary
         if: success()
         run: |
-          echo "::notice title=Deploy succeeded::Mirrored dist/ambisecure-hostinger/ → public_html via FTPS to ${{ secrets.HOSTINGER_FTP_SERVER }}"
+          echo "::notice title=Deploy succeeded::Mirrored dist/ambisecure-hostinger/ → Hostinger via SFTP."
           echo "Verify with: curl -sI https://ambisecure.ambimat.com/ | head -3"
