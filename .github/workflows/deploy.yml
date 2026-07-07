@@ -79,8 +79,17 @@ jobs:
       - name: Test SFTP port is reachable
         # Non-secret-leaking connectivity check (host/port only; nc never
         # prints credentials). Confirms the SFTP port answers before we try
-        # to authenticate.
-        run: nc -vz -w 10 "${{ secrets.HOSTINGER_HOST }}" "${{ secrets.HOSTINGER_PORT }}"
+        # to authenticate. Guards first so a missing secret gives a clear
+        # message instead of a cryptic "nc: port number invalid".
+        env:
+          SFTP_HOST: ${{ secrets.HOSTINGER_HOST }}
+          SFTP_PORT: ${{ secrets.HOSTINGER_PORT }}
+        run: |
+          set -euo pipefail
+          : "${SFTP_HOST:?HOSTINGER_HOST secret is empty/unset — add it in repo Settings → Secrets and variables → Actions}"
+          : "${SFTP_PORT:?HOSTINGER_PORT secret is empty/unset (Hostinger SFTP is usually 65002) — add it in repo Settings → Secrets}"
+          echo "Testing SFTP reachability on the configured host:port…"
+          nc -vz -w 10 "$SFTP_HOST" "$SFTP_PORT"
 
       - name: Deploy via SFTP (lftp mirror)
         env:
