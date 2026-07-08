@@ -169,13 +169,13 @@
       <span class="section-line"></span>
     </div>
     <div class="arch">
-      <div class="arch-node"><span class="arch-tag">EA</span><h4>Enrolment</h4><p>SE produces hardware attestation; EA verifies SE is MTCTE-certified hardware; EA issues EC.</p></div>
+      <div class="arch-node"><span class="arch-tag">EA</span><h3>Enrolment</h3><p>SE produces hardware attestation; EA verifies SE is MTCTE-certified hardware; EA issues EC.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node accent"><span class="arch-tag">AA</span><h4>PC issuance</h4><p>Vehicle sends anonymised request signed under EC; AA issues PC batch via Butterfly Key Expansion.</p></div>
+      <div class="arch-node accent"><span class="arch-tag">AA</span><h3>PC issuance</h3><p>Vehicle sends anonymised request signed under EC; AA issues PC batch via Butterfly Key Expansion.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">SE</span><h4>Rotation</h4><p>SE rotates the active PC every 5&ndash;10 minutes (configurable). Older PCs go to history, then discarded after a retention window.</p></div>
+      <div class="arch-node"><span class="arch-tag">SE</span><h3>Rotation</h3><p>SE rotates the active PC every 5&ndash;10 minutes (configurable). Older PCs go to history, then discarded after a retention window.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">RA</span><h4>Revocation</h4><p>CRL deltas distributed: pull-OCSP for connected, RSU broadcast for offline OBUs. SE rejects messages signed under a revoked certificate.</p></div>
+      <div class="arch-node"><span class="arch-tag">RA</span><h3>Revocation</h3><p>CRL deltas distributed: pull-OCSP for connected, RSU broadcast for offline OBUs. SE rejects messages signed under a revoked certificate.</p></div>
     </div>
     <div class="prose" style="max-width:880px;margin:0;margin-top:24px;">
       <p>Re-enrolment is rare. An EC is replaced only on incident (suspected SE compromise, hardware fault, change of ownership). PC refresh is continuous and automatic: when the SE&rsquo;s reserve PC pool dips below threshold, it asynchronously requests a new batch from the AA over the authenticated channel. The user, the OBU firmware, and the application layer are not involved.</p>
@@ -270,7 +270,7 @@
     </div>
     <div class="footer-base">
       <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
-      <div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
+      <div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
     </div>
   </div>
 </footer>

@@ -115,10 +115,10 @@
     <p>The CA structure for a serious deployment is usually a two-tier offline-root hierarchy:</p>
 
     <div class="arch-row">
-      <div class="arch-cell"><span class="arch-tag">TIER 1</span><h4>Offline root CA</h4><p>Signs the issuing CA(s) only. Hardware lives in an air-gapped HSM, vault-stored, ceremony-only. May sign once a year.</p></div>
-      <div class="arch-cell accent"><span class="arch-tag">TIER 2</span><h4>Issuing CA(s)</h4><p>Signs end-entity certificates. Networked, HSM-backed, online during issuance windows. Owns the day-to-day issuance throughput.</p></div>
-      <div class="arch-cell"><span class="arch-tag">VA</span><h4>OCSP / CRL</h4><p>Publishes revocation status for issued certificates. Operationally separate from the issuing CA.</p></div>
-      <div class="arch-cell cyan"><span class="arch-tag">RA</span><h4>Registration Authority</h4><p>The identity-verification and policy-enforcement layer in front of the issuing CA.</p></div>
+      <div class="arch-cell"><span class="arch-tag">TIER 1</span><h3>Offline root CA</h3><p>Signs the issuing CA(s) only. Hardware lives in an air-gapped HSM, vault-stored, ceremony-only. May sign once a year.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">TIER 2</span><h3>Issuing CA(s)</h3><p>Signs end-entity certificates. Networked, HSM-backed, online during issuance windows. Owns the day-to-day issuance throughput.</p></div>
+      <div class="arch-cell"><span class="arch-tag">VA</span><h3>OCSP / CRL</h3><p>Publishes revocation status for issued certificates. Operationally separate from the issuing CA.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">RA</span><h3>Registration Authority</h3><p>The identity-verification and policy-enforcement layer in front of the issuing CA.</p></div>
     </div>
 
     <p>The reason for the offline root: if the issuing CA is compromised, you revoke and re-issue from the root without rebuilding trust roots in every relying party. If the root is compromised, every certificate downstream is suspect, and you would have to redistribute trust anchors to every relying party. That&rsquo;s a programme-level disaster you isolate the root to prevent.</p>
@@ -263,7 +263,7 @@
     <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
     <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
   </div>
-  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
 </div></footer>
 <script src="/assets/js/nav.js?v=32" defer></script>
 <script src="/assets/js/web-vitals.js?v=32" defer></script>

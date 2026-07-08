@@ -195,15 +195,15 @@
       <p class="section-desc" style="margin:0;">A credential injected at the factory is the start of the lifecycle, not the end. The patterns below are the credential-management operations a fleet PKI has to perform indefinitely, on a population it cannot recall.</p>
     </div>
     <div class="arch">
-      <div class="arch-node"><span class="arch-tag">A</span><h4>Mint</h4><p>Per-device root identity injected once at the factory. Hardware-bound, attested, immovable.</p></div>
+      <div class="arch-node"><span class="arch-tag">A</span><h3>Mint</h3><p>Per-device root identity injected once at the factory. Hardware-bound, attested, immovable.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node accent"><span class="arch-tag">B</span><h4>Enrol</h4><p>Device authenticates to a fleet authority using the factory identity; receives a deployment-scoped credential (operator profile, EC, PIV cert).</p></div>
+      <div class="arch-node accent"><span class="arch-tag">B</span><h3>Enrol</h3><p>Device authenticates to a fleet authority using the factory identity; receives a deployment-scoped credential (operator profile, EC, PIV cert).</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">C</span><h4>Refresh</h4><p>Short-lived operational credentials (PCs, session keys, ephemeral certs) rotate on a cadence driven by policy, not by recall.</p></div>
+      <div class="arch-node"><span class="arch-tag">C</span><h3>Refresh</h3><p>Short-lived operational credentials (PCs, session keys, ephemeral certs) rotate on a cadence driven by policy, not by recall.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">D</span><h4>Re-key</h4><p>Long-lived credentials roll over before expiry or after policy change. New credential proves itself under cryptographic continuity with the previous one.</p></div>
+      <div class="arch-node"><span class="arch-tag">D</span><h3>Re-key</h3><p>Long-lived credentials roll over before expiry or after policy change. New credential proves itself under cryptographic continuity with the previous one.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">E</span><h4>Revoke</h4><p>Compromised device is marked in the revocation channel appropriate to its connectivity profile. Lifecycle ends without a return-to-base step.</p></div>
+      <div class="arch-node"><span class="arch-tag">E</span><h3>Revoke</h3><p>Compromised device is marked in the revocation channel appropriate to its connectivity profile. Lifecycle ends without a return-to-base step.</p></div>
     </div>
     <p style="color:var(--brand-grey);font-size:14px;line-height:1.7;margin-top:20px;max-width:880px;">The five operations are universal across V2X, eSIM, FIDO, and PIV. What differs is the timescale &mdash; V2X PCs refresh in minutes, FIDO credentials last the life of the authenticator &mdash; and the channel &mdash; eSIM uses SM-DP+ HTTPS, V2X OBUs use RSU broadcast for revocation distribution. The architectural shape is the same.</p>
   </div>
@@ -435,7 +435,7 @@
     </div>
     <div class="footer-base">
       <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
-      <div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
+      <div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
     </div>
   </div>
 </footer>

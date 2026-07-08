@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Base64 Encoder / Decoder — AmbiSecure | Standard &amp; URL-safe variants</title>
+<title>Base64 Encoder / Decoder &mdash; standard &amp; URL-safe</title>
 <meta name="description" content="Encode or decode base64 (standard and URL-safe variants). Client-side, copy-friendly, sample inputs." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/base64/" />
 <meta property="og:type" content="website" />
@@ -31,44 +31,73 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@graph": [
-{
-"@type": "BreadcrumbList",
-"itemListElement": [
-{
-"@type": "ListItem",
-"position": 1,
-"name": "Home",
-"item": "https://ambisecure.ambimat.com/"
-},
-{
-"@type": "ListItem",
-"position": 2,
-"name": "Resources",
-"item": "https://ambisecure.ambimat.com/resources/"
-},
-{
-"@type": "ListItem",
-"position": 3,
-"name": "Base64 Encoder / Decoder",
-"item": "https://ambisecure.ambimat.com/resources/tools/base64/"
-}
-]
-},
-{
-"@type": "SoftwareApplication",
-"name": "Base64 Encoder / Decoder",
-"applicationCategory": "DeveloperApplication",
-"operatingSystem": "Web",
-"url": "https://ambisecure.ambimat.com/resources/tools/base64/",
-"offers": {
-"@type": "Offer",
-"price": "0",
-"priceCurrency": "USD"
-}
-}
-]
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "https://ambisecure.ambimat.com/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Base64 Encoder / Decoder",
+     "item": "https://ambisecure.ambimat.com/resources/tools/base64/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "Base64 Encoder / Decoder",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/base64/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Is base64 a form of encryption?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Base64 is a reversible encoding with no key, so it provides zero confidentiality. Use it only for transport/representation, never to protect secrets."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between standard and URL-safe base64?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Standard base64 uses + and / and keeps = padding; URL-safe base64 (base64url) uses - and _ and typically omits padding so the value is safe in URLs and JSON. FIDO2/WebAuthn and JWT use base64url."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does this tool send my data anywhere?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Encoding and decoding run entirely in your browser; nothing is uploaded to a server."
+     }
+    }
+   ]
+  }
+ ]
 }
 </script>
 </head>
@@ -117,6 +146,17 @@
   </div>
 </section>
 
+<section class="tool-reference" aria-labelledby="tool-explainer">
+  <h2 id="tool-explainer">What is Base64 encoding?</h2>
+  <div class="prose" style="max-width:760px;">
+    <p>Base64 (RFC 4648) represents arbitrary binary data as ASCII text using 64 printable characters, so bytes can travel safely through channels that expect text — HTTP headers, JSON, XML, email (MIME) and <code>data:</code> URIs. It is an <strong>encoding, not encryption</strong>: anyone can decode it, and it adds roughly one third to the size of the original data.</p>
+    <p>Reach for this tool when you need to eyeball a base64 blob from a config file, a JWT segment, or a WebAuthn response, or when you need to produce a base64 string to paste into a request. Worked example: the text <code>hello</code> encodes to <code>aGVsbG8=</code> in standard base64. The trailing <code>=</code> is padding. The URL-safe variant used by JWT and WebAuthn replaces <code>+/</code> with <code>-_</code> and usually drops the padding, so the same bytes become <code>aGVsbG8</code>.</p>
+  </div>
+  <h2 style="margin-top:28px;">Frequently asked questions</h2>
+  <details class="faq-q"><summary><h3>Is base64 a form of encryption?</h3></summary><div class="faq-a"><p>No. Base64 is a reversible encoding with no key, so it provides zero confidentiality. Use it only for transport/representation, never to protect secrets.</p></div></details>
+  <details class="faq-q"><summary><h3>What is the difference between standard and URL-safe base64?</h3></summary><div class="faq-a"><p>Standard base64 uses <code>+</code> and <code>/</code> and keeps <code>=</code> padding; URL-safe base64 (base64url) uses <code>-</code> and <code>_</code> and typically omits padding so the value is safe in URLs and JSON. FIDO2/WebAuthn and JWT use base64url.</p></div></details>
+  <details class="faq-q"><summary><h3>Does this tool send my data anywhere?</h3></summary><div class="faq-a"><p>No. Encoding and decoding run entirely in your browser; nothing is uploaded to a server.</p></div></details>
+</section>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">
@@ -127,7 +167,7 @@
     <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
     <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
   </div>
-  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
 </div></footer>
 <script src="/assets/js/nav.js?v=32" defer></script>
 <script src="/assets/js/web-vitals.js?v=32" defer></script>

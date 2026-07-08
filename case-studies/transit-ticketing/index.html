@@ -114,10 +114,10 @@
     <p>The deployment is a textbook SAM-backed DESFire architecture, sized for a real metropolitan fleet:</p>
 
     <div class="arch-row">
-      <div class="arch-cell"><span class="arch-tag">CARD</span><h4>DESFire EV2 (closed-loop)</h4><p>Per-card diversified keys derived from a master key held inside the SAM. AES-128 mutual authentication. Encrypted, MAC&rsquo;d value-file fare purse.</p></div>
-      <div class="arch-cell accent"><span class="arch-tag">VALIDATOR</span><h4>Reader + SAM module</h4><p>Each validator contains a SAM (Secure Access Module) that holds the master keys. The reader CPU never sees a master key in cleartext. SAM is the only authority that can derive a per-card diversified key.</p></div>
-      <div class="arch-cell"><span class="arch-tag">EDGE</span><h4>Local tap journal</h4><p>Every tap is logged locally with a monotonically-increasing sequence + SAM-signed MAC. Survives backend outages; reconciles on reconnection.</p></div>
-      <div class="arch-cell cyan"><span class="arch-tag">BACKEND</span><h4>Reconciliation &amp; revocation</h4><p>Hot list of revoked cards is pushed to validators on connectivity. Used for cards reported lost / cloned / disputed.</p></div>
+      <div class="arch-cell"><span class="arch-tag">CARD</span><h3>DESFire EV2 (closed-loop)</h3><p>Per-card diversified keys derived from a master key held inside the SAM. AES-128 mutual authentication. Encrypted, MAC&rsquo;d value-file fare purse.</p></div>
+      <div class="arch-cell accent"><span class="arch-tag">VALIDATOR</span><h3>Reader + SAM module</h3><p>Each validator contains a SAM (Secure Access Module) that holds the master keys. The reader CPU never sees a master key in cleartext. SAM is the only authority that can derive a per-card diversified key.</p></div>
+      <div class="arch-cell"><span class="arch-tag">EDGE</span><h3>Local tap journal</h3><p>Every tap is logged locally with a monotonically-increasing sequence + SAM-signed MAC. Survives backend outages; reconciles on reconnection.</p></div>
+      <div class="arch-cell cyan"><span class="arch-tag">BACKEND</span><h3>Reconciliation &amp; revocation</h3><p>Hot list of revoked cards is pushed to validators on connectivity. Used for cards reported lost / cloned / disputed.</p></div>
     </div>
 
     <p>The design points the operator cared about:</p>
@@ -254,7 +254,7 @@ Worst case (cold SAM session): ~260 ms.
     <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
     <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
   </div>
-  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
 </div></footer>
 <script src="/assets/js/nav.js?v=32" defer></script>
 <script src="/assets/js/web-vitals.js?v=32" defer></script>

@@ -96,15 +96,15 @@
       <p class="section-desc" style="margin:0;">The V2X PKI structurally separates "which device am I?" from "what certificate did I just sign this message with?" &mdash; so the device is authenticated without being identified per message.</p>
     </div>
     <div class="arch">
-      <div class="arch-node"><span class="arch-tag">01</span><h4>Manufacturing</h4><p>SE generates EC key pair inside tamper boundary; public key + attestation sent to EA.</p></div>
+      <div class="arch-node"><span class="arch-tag">01</span><h3>Manufacturing</h3><p>SE generates EC key pair inside tamper boundary; public key + attestation sent to EA.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node accent"><span class="arch-tag">02</span><h4>Enrolment Authority</h4><p>Verifies hardware attestation; issues long-lived Enrolment Credential (EC).</p></div>
+      <div class="arch-node accent"><span class="arch-tag">02</span><h3>Enrolment Authority</h3><p>Verifies hardware attestation; issues long-lived Enrolment Credential (EC).</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">03</span><h4>Authorisation Authority</h4><p>Receives anonymised request signed under EC; issues batch of short-lived Pseudonymous Certificates (PC). Does not learn vehicle identity.</p></div>
+      <div class="arch-node"><span class="arch-tag">03</span><h3>Authorisation Authority</h3><p>Receives anonymised request signed under EC; issues batch of short-lived Pseudonymous Certificates (PC). Does not learn vehicle identity.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">04</span><h4>Field signing</h4><p>OBU signs each V2X message with the currently-active PC. SE rotates PCs on schedule.</p></div>
+      <div class="arch-node"><span class="arch-tag">04</span><h3>Field signing</h3><p>OBU signs each V2X message with the currently-active PC. SE rotates PCs on schedule.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">05</span><h4>Verification</h4><p>Receivers verify the signature against PC; chain back to AA root; check revocation locally.</p></div>
+      <div class="arch-node"><span class="arch-tag">05</span><h3>Verification</h3><p>Receivers verify the signature against PC; chain back to AA root; check revocation locally.</p></div>
     </div>
     <p style="color:var(--brand-grey);font-size:14px;line-height:1.7;margin-top:20px;max-width:880px;">Reference: ETSI TS 102 941 trust and privacy management framework defines this split. The EA knows "this is a genuine certified-hardware device" but never sees signed messages. The AA issues the PCs that sign messages but never learns which EC requested them. Even an attacker who compromised both authorities could not by themselves link a message back to a specific vehicle.</p>
   </div>
@@ -296,7 +296,7 @@
     </div>
     <div class="footer-base">
       <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
-      <div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
+      <div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
     </div>
   </div>
 </footer>

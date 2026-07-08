@@ -31,44 +31,73 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@graph": [
-{
-"@type": "BreadcrumbList",
-"itemListElement": [
-{
-"@type": "ListItem",
-"position": 1,
-"name": "Home",
-"item": "https://ambisecure.ambimat.com/"
-},
-{
-"@type": "ListItem",
-"position": 2,
-"name": "Resources",
-"item": "https://ambisecure.ambimat.com/resources/"
-},
-{
-"@type": "ListItem",
-"position": 3,
-"name": "ASCII \u2194 HEX Converter",
-"item": "https://ambisecure.ambimat.com/resources/tools/ascii-hex/"
-}
-]
-},
-{
-"@type": "SoftwareApplication",
-"name": "ASCII \u2194 HEX Converter",
-"applicationCategory": "DeveloperApplication",
-"operatingSystem": "Web",
-"url": "https://ambisecure.ambimat.com/resources/tools/ascii-hex/",
-"offers": {
-"@type": "Offer",
-"price": "0",
-"priceCurrency": "USD"
-}
-}
-]
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "https://ambisecure.ambimat.com/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "ASCII \u2194 HEX Converter",
+     "item": "https://ambisecure.ambimat.com/resources/tools/ascii-hex/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "ASCII \u2194 HEX Converter",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/ascii-hex/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why do I get more hex bytes than characters?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because non-ASCII characters are multi-byte in UTF-8. An emoji or an accented letter expands to several bytes, so the hex output is longer than the visible character count."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I paste hex with spaces or 0x prefixes?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes \u2014 the parser tolerates spaces and common separators. If you need strict byte grouping or prefixing, use the companion Hex \u2194 Bytes formatter."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is my input uploaded?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. The conversion is done locally in your browser."
+     }
+    }
+   ]
+  }
+ ]
 }
 </script>
 </head>
@@ -117,6 +146,17 @@
   </div>
 </section>
 
+<section class="tool-reference" aria-labelledby="tool-explainer">
+  <h2 id="tool-explainer">ASCII ↔ hex, and why it matters</h2>
+  <div class="prose" style="max-width:760px;">
+    <p>This tool converts between human-readable text and its byte values shown in hexadecimal. Every character maps to one or more bytes; the hex view shows those bytes explicitly, which is invaluable when you are reading a protocol trace, a smart-card APDU log, or a hex dump and need to know what the bytes actually spell.</p>
+    <p>Worked example: the text <code>AB</code> is the two bytes <code>41 42</code> in hex (ASCII 0x41 = 'A', 0x42 = 'B'). Going the other way, <code>48 69</code> decodes to <code>Hi</code>. Note that non-ASCII characters depend on the text encoding — a character like <code>é</code> is one byte in Latin-1 but two bytes (<code>C3 A9</code>) in UTF-8, so confirm the encoding before trusting a conversion.</p>
+  </div>
+  <h2 style="margin-top:28px;">Frequently asked questions</h2>
+  <details class="faq-q"><summary><h3>Why do I get more hex bytes than characters?</h3></summary><div class="faq-a"><p>Because non-ASCII characters are multi-byte in UTF-8. An emoji or an accented letter expands to several bytes, so the hex output is longer than the visible character count.</p></div></details>
+  <details class="faq-q"><summary><h3>Can I paste hex with spaces or 0x prefixes?</h3></summary><div class="faq-a"><p>Yes — the parser tolerates spaces and common separators. If you need strict byte grouping or prefixing, use the companion Hex ↔ Bytes formatter.</p></div></details>
+  <details class="faq-q"><summary><h3>Is my input uploaded?</h3></summary><div class="faq-a"><p>No. The conversion is done locally in your browser.</p></div></details>
+</section>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">
@@ -127,7 +167,7 @@
     <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
     <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
   </div>
-  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
 </div></footer>
 <script src="/assets/js/nav.js?v=32" defer></script>
 <script src="/assets/js/web-vitals.js?v=32" defer></script>

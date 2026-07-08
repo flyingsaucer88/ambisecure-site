@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>X.509 Certificate Viewer — AmbiSecure | Decode certs in your browser</title>
+<title>X.509 Certificate Viewer &mdash; decode certs in-browser</title>
 <meta name="description" content="Decode an X.509 certificate (or chain) into subject, issuer, validity, public key, signature algorithm, and all extensions — fully client-side, no upload." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/x509-viewer/" />
 <meta property="og:type" content="website" />
@@ -31,44 +31,73 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@graph": [
-{
-"@type": "BreadcrumbList",
-"itemListElement": [
-{
-"@type": "ListItem",
-"position": 1,
-"name": "Home",
-"item": "https://ambisecure.ambimat.com/"
-},
-{
-"@type": "ListItem",
-"position": 2,
-"name": "Resources",
-"item": "https://ambisecure.ambimat.com/resources/"
-},
-{
-"@type": "ListItem",
-"position": 3,
-"name": "X.509 Certificate Viewer",
-"item": "https://ambisecure.ambimat.com/resources/tools/x509-viewer/"
-}
-]
-},
-{
-"@type": "SoftwareApplication",
-"name": "X.509 Certificate Viewer",
-"applicationCategory": "DeveloperApplication",
-"operatingSystem": "Web",
-"url": "https://ambisecure.ambimat.com/resources/tools/x509-viewer/",
-"offers": {
-"@type": "Offer",
-"price": "0",
-"priceCurrency": "USD"
-}
-}
-]
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "https://ambisecure.ambimat.com/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "X.509 Certificate Viewer",
+     "item": "https://ambisecure.ambimat.com/resources/tools/x509-viewer/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "X.509 Certificate Viewer",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/x509-viewer/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why is a valid-looking certificate still rejected?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Common causes visible in the viewer: the hostname is not in the SANs, the validity window has expired, or the key usage/EKU does not permit the intended use (e.g. server authentication)."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does basic constraints matter?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. A certificate with CA:TRUE can sign other certificates; a leaf should be CA:FALSE. Misconfigured basic constraints break chain building."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is my certificate uploaded?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. It is parsed locally in your browser."
+     }
+    }
+   ]
+  }
+ ]
 }
 </script>
 </head>
@@ -117,6 +146,17 @@
   </div>
 </section>
 
+<section class="tool-reference" aria-labelledby="tool-explainer">
+  <h2 id="tool-explainer">Reading an X.509 certificate</h2>
+  <div class="prose" style="max-width:760px;">
+    <p>X.509 is the certificate format behind TLS, PIV/CAC identity cards, code signing and device attestation. This viewer decodes a certificate and lays out the fields that matter when you are debugging: subject and issuer, validity window, serial number, public-key algorithm, key usage and extended key usage, Subject Alternative Names, and basic constraints (is it a CA?).</p>
+    <p>Use it to answer questions like "why is this certificate being rejected?" — an expired validity window, a missing SAN, or a leaf certificate wrongly marked as a CA are all visible here. It is an inspection tool: it renders what the certificate asserts but does not validate the signature, chain, or revocation status.</p>
+  </div>
+  <h2 style="margin-top:28px;">Frequently asked questions</h2>
+  <details class="faq-q"><summary><h3>Why is a valid-looking certificate still rejected?</h3></summary><div class="faq-a"><p>Common causes visible in the viewer: the hostname is not in the SANs, the validity window has expired, or the key usage/EKU does not permit the intended use (e.g. server authentication).</p></div></details>
+  <details class="faq-q"><summary><h3>Does basic constraints matter?</h3></summary><div class="faq-a"><p>Yes. A certificate with <code>CA:TRUE</code> can sign other certificates; a leaf should be <code>CA:FALSE</code>. Misconfigured basic constraints break chain building.</p></div></details>
+  <details class="faq-q"><summary><h3>Is my certificate uploaded?</h3></summary><div class="faq-a"><p>No. It is parsed locally in your browser.</p></div></details>
+</section>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">
@@ -127,7 +167,7 @@
     <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
     <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
   </div>
-  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
 </div></footer>
 <script src="/assets/js/nav.js?v=32" defer></script>
 <script src="/assets/js/web-vitals.js?v=32" defer></script>

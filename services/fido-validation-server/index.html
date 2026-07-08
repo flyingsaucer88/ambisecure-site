@@ -118,7 +118,7 @@
       <span class="section-line"></span>
       <p class="section-desc" style="margin:0;">Two API calls per registration. Two per authentication. The credential never leaves the authenticator.</p>
     </div>
-    <div class="arch"><div class="arch-node"><span class="arch-tag">01</span><h4>API key</h4><p>Issued to your tenant. Scopes the API calls.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">02</span><h4>Begin</h4><p>Webapp calls the server to start a registration or authentication.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node accent"><span class="arch-tag">03</span><h4>Browser</h4><p>JS API talks to the WebAuthn / CTAP2 authenticator.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">04</span><h4>Verify</h4><p>Server verifies the signed assertion against your tenant policy.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">05</span><h4>Done</h4><p>User is logged in. No password. No phishable seed.</p></div></div>
+    <div class="arch"><div class="arch-node"><span class="arch-tag">01</span><h3>API key</h3><p>Issued to your tenant. Scopes the API calls.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">02</span><h3>Begin</h3><p>Webapp calls the server to start a registration or authentication.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node accent"><span class="arch-tag">03</span><h3>Browser</h3><p>JS API talks to the WebAuthn / CTAP2 authenticator.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">04</span><h3>Verify</h3><p>Server verifies the signed assertion against your tenant policy.</p></div><div class="arch-arrow">&rarr;</div><div class="arch-node"><span class="arch-tag">05</span><h3>Done</h3><p>User is logged in. No password. No phishable seed.</p></div></div>
   </div>
 </section>
 
@@ -196,13 +196,13 @@
       <p class="section-desc" style="margin:0;">A FIDO deployment has three actors &mdash; authenticator, relying party, validation server. The server is the load-bearing piece in the middle: it owns policy, verifies attestation, and produces the cryptographic decision the relying party trusts.</p>
     </div>
     <div class="arch">
-      <div class="arch-node"><span class="arch-tag">01</span><h4>Authenticator</h4><p>OnePass Card, FIDO2 nano-card, USB key, or platform authenticator. Holds the private key.</p></div>
+      <div class="arch-node"><span class="arch-tag">01</span><h3>Authenticator</h3><p>OnePass Card, FIDO2 nano-card, USB key, or platform authenticator. Holds the private key.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">02</span><h4>Browser / OS</h4><p>WebAuthn client talks to the authenticator over CTAP2.1. Origin-bound by construction.</p></div>
+      <div class="arch-node"><span class="arch-tag">02</span><h3>Browser / OS</h3><p>WebAuthn client talks to the authenticator over CTAP2.1. Origin-bound by construction.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node accent"><span class="arch-tag">03</span><h4>Validation Server</h4><p>Verifies attestation, applies tenant policy, persists credentials. The cryptographic decision lives here.</p></div>
+      <div class="arch-node accent"><span class="arch-tag">03</span><h3>Validation Server</h3><p>Verifies attestation, applies tenant policy, persists credentials. The cryptographic decision lives here.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">04</span><h4>Relying party</h4><p>The application doing the sign-in. Trusts the server's decision; never touches a key.</p></div>
+      <div class="arch-node"><span class="arch-tag">04</span><h3>Relying party</h3><p>The application doing the sign-in. Trusts the server's decision; never touches a key.</p></div>
     </div>
   </div>
 </section>
@@ -216,15 +216,15 @@
       <p class="section-desc" style="margin:0;">Every registration produces an attestation statement. The Validation Server walks this chain on every accepted credential.</p>
     </div>
     <div class="arch">
-      <div class="arch-node"><span class="arch-tag">01</span><h4>Authenticator key</h4><p>Per-credential keypair generated inside the secure boundary.</p></div>
+      <div class="arch-node"><span class="arch-tag">01</span><h3>Authenticator key</h3><p>Per-credential keypair generated inside the secure boundary.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">02</span><h4>Attestation key</h4><p>Per-batch authenticator-issuer key. Signs the registration attestation.</p></div>
+      <div class="arch-node"><span class="arch-tag">02</span><h3>Attestation key</h3><p>Per-batch authenticator-issuer key. Signs the registration attestation.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">03</span><h4>Attestation CA</h4><p>The vendor / programme CA that signed the attestation key.</p></div>
+      <div class="arch-node"><span class="arch-tag">03</span><h3>Attestation CA</h3><p>The vendor / programme CA that signed the attestation key.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node accent"><span class="arch-tag">04</span><h4>MDS BLOB</h4><p>FIDO Metadata Service entry binding AAGUID to certification, transports, advisories.</p></div>
+      <div class="arch-node accent"><span class="arch-tag">04</span><h3>MDS BLOB</h3><p>FIDO Metadata Service entry binding AAGUID to certification, transports, advisories.</p></div>
       <div class="arch-arrow">&rarr;</div>
-      <div class="arch-node"><span class="arch-tag">05</span><h4>Tenant policy</h4><p>Allow-listed AAGUIDs + UV / attestation conveyance requirements. The policy gate.</p></div>
+      <div class="arch-node"><span class="arch-tag">05</span><h3>Tenant policy</h3><p>Allow-listed AAGUIDs + UV / attestation conveyance requirements. The policy gate.</p></div>
     </div>
   </div>
 </section>
@@ -315,7 +315,7 @@
     </div>
     <div class="footer-base">
       <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
-      <div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
+      <div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
     </div>
   </div>
 </footer>

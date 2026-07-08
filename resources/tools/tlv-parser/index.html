@@ -30,14 +30,75 @@
 <link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[
- {"@type":"BreadcrumbList","itemListElement":[
-   {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
-   {"@type":"ListItem","position":2,"name":"Resources","item":"https://ambisecure.ambimat.com/resources/"},
-   {"@type":"ListItem","position":3,"name":"TLV Parser","item":"https://ambisecure.ambimat.com/resources/tools/tlv-parser/"}
- ]},
- {"@type":"SoftwareApplication","name":"TLV Parser","applicationCategory":"DeveloperApplication","operatingSystem":"Web","url":"https://ambisecure.ambimat.com/resources/tools/tlv-parser/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}
-]}
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "https://ambisecure.ambimat.com/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "TLV Parser",
+     "item": "https://ambisecure.ambimat.com/resources/tools/tlv-parser/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "TLV Parser",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/tlv-parser/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What makes a tag 'constructed'?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Bit 6 of the first tag byte. A constructed tag (e.g. 0x6F, 0xA5) contains nested TLV objects; a primitive tag holds a raw value. The parser recurses into constructed tags."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is a tag shown as hex with no name?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It is a proprietary or less-common tag not in the built-in EMV/7816 dictionary. The structure is still decoded correctly; only the friendly label is missing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does my data leave the browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Parsing is entirely client-side."
+     }
+    }
+   ]
+  }
+ ]
+}
 </script>
 </head>
 <body>
@@ -88,6 +149,17 @@
   </div>
 </section>
 
+<section class="tool-reference" aria-labelledby="tool-explainer">
+  <h2 id="tool-explainer">Parsing BER-TLV (EMV / ISO 7816)</h2>
+  <div class="prose" style="max-width:760px;">
+    <p>BER-TLV (tag-length-value) is how payment and smart-card data is structured: EMV chip transactions, ISO 7816-4 file contents and many personalisation payloads are all nested TLV objects. This parser walks the structure, decodes each tag's length, and shows the nesting of constructed tags so you can find the data object you care about.</p>
+    <p>Worked example: <code>6F</code> is the EMV File Control Information template — a constructed tag whose value contains further TLV objects such as <code>84</code> (DF Name) and <code>A5</code> (FCI proprietary template). Use it to debug a card-reader trace or an EMV response. Tag names come from the common EMV/7816 dictionary; unknown proprietary tags are shown by their hex tag.</p>
+  </div>
+  <h2 style="margin-top:28px;">Frequently asked questions</h2>
+  <details class="faq-q"><summary><h3>What makes a tag 'constructed'?</h3></summary><div class="faq-a"><p>Bit 6 of the first tag byte. A constructed tag (e.g. 0x6F, 0xA5) contains nested TLV objects; a primitive tag holds a raw value. The parser recurses into constructed tags.</p></div></details>
+  <details class="faq-q"><summary><h3>Why is a tag shown as hex with no name?</h3></summary><div class="faq-a"><p>It is a proprietary or less-common tag not in the built-in EMV/7816 dictionary. The structure is still decoded correctly; only the friendly label is missing.</p></div></details>
+  <details class="faq-q"><summary><h3>Does my data leave the browser?</h3></summary><div class="faq-a"><p>No. Parsing is entirely client-side.</p></div></details>
+</section>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">
@@ -98,7 +170,7 @@
     <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/contact/">Contact</a></li></ul></div>
     <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>
   </div>
-  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://www.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://twitter.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/Ambimat-Electronics-213415895353632/" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
 </div></footer>
 <script src="/assets/js/nav.js?v=32" defer></script>
 <script src="/assets/js/web-vitals.js?v=32" defer></script>
