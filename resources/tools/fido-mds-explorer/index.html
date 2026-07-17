@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>FIDO Metadata Explorer — AmbiSecure | AAGUID directory</title>
-<meta name="description" content="Browse the AAGUID directory in metadata-style cards — vendor, model, transports, BE=0 posture. Searchable. Production should fetch the FIDO MDS BLOB." />
+<meta name="description" content="Browse the AAGUID directory in metadata-style cards — vendor, model, transports, form factor and documented credential class. Searchable. Production should fetch the FIDO MDS BLOB." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/resources/tools/fido-mds-explorer/" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="FIDO Metadata Explorer" />
-<meta property="og:description" content="Browse the AAGUID directory in metadata-style cards — vendor, model, transports, BE=0 posture. Searchable. Production should fetch the FIDO MDS BLOB; this is an offline stand-in." />
+<meta property="og:description" content="Browse the AAGUID directory in metadata-style cards — vendor, model, transports, form factor and documented credential class. Searchable. Production should fetch the FIDO MDS BLOB; this is an offline stand-in." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/resources/tools/fido-mds-explorer/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/resources.png" />
 <meta property="og:image:type" content="image/png" />
@@ -82,7 +82,8 @@
 <header class="tool-header">
   <span class="eyebrow">FIDO MDS</span>
   <h1>FIDO Metadata Explorer</h1>
-  <p>Browse the curated AAGUID directory in metadata-style cards: vendor, model, transports (USB / NFC), and BE=0 posture for shipped devices. Searchable. For production attestation policy, fetch and verify the FIDO MDS BLOB.</p>
+  <p>Browse the curated AAGUID directory in metadata-style cards: vendor, model, transports (USB / NFC), form factor, and the credential class each provider documents. Searchable. For production attestation policy, fetch and verify the FIDO MDS BLOB.</p>
+  <p class="ref-callout">Credential class here reflects each provider&rsquo;s documented behaviour for the model &mdash; it is a directory, not a measurement. Backup Eligible (BE) and Backup State (BS) live in <code>authenticatorData</code> and are only known from a real registration, so read them there rather than inferring them from an AAGUID or a vendor name. Platform authenticators are not automatically synced, and a synced passkey is not a hardware security key.</p>
 </header>
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Filter</h2></div><label for="mds-search" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Search vendor / model / AAGUID.</label><input id="mds-search" class="hex-input" style="min-height:46px;" placeholder="Yubico, Titan, AmbiSecure, …" /><label for="mds-transport" style="font-size:13px;color:var(--brand-grey);margin:14px 0 6px;">Filter by transport.</label><div class="tool-options"><select id="mds-transport"><option value="all">All</option><option value="usb">USB</option><option value="nfc">NFC</option></select></div><div id="mds-count" style="margin-top:14px;font-family:Montserrat,sans-serif;font-size:11px;letter-spacing:0.4px;text-transform:uppercase;color:var(--brand-grey);"></div></div><div class="tool-panel"><div class="tool-panel-head"><h2>Authenticators</h2></div><div class="tool-output" id="mds-output" style="overflow-y:auto;max-height:600px;"></div></div>

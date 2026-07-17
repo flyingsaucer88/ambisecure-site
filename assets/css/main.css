@@ -2109,6 +2109,17 @@ footer.site-footer a:hover { color: var(--brand-red); }
   font-style: italic;
 }
 
+.ref-callout {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--secure-cyan);
+  background: var(--secure-cyan-soft);
+  color: var(--brand-grey);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 760px;
+}
+
 .ref-tag-filter {
   display: flex;
   flex-wrap: wrap;

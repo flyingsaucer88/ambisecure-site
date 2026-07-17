@@ -204,6 +204,7 @@
 .tech-badge--info  { background: var(--secure-cyan-soft); color: var(--secure-cyan-dark); border-color: #bfe1e6; }
 .tech-badge--warn  { background: var(--secure-amber-soft); color: #8a5300; border-color: #f1d6a5; }
 .tech-badge--err   { background: rgba(227,34,42,0.08); color: var(--brand-red-dark); border-color: rgba(227,34,42,0.20); }
+.tech-badge--muted { background: var(--brand-soft); color: var(--brand-grey); border-color: var(--line); }
 
 .tlv-tree { font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.65; }
 .tlv-tree .node { padding: 4px 0 4px 14px; border-left: 2px solid var(--line); margin-left: 4px; }

@@ -1,8 +1,9 @@
 (function () {
   'use strict';
 
-  function badge(text, cls) {
-    return '<span class="tech-badge ' + (cls || '') + '">' + AS.escHTML(text) + '</span>';
+  function badge(text, cls, title) {
+    return '<span class="tech-badge ' + (cls || '') + '"' +
+      (title ? ' title="' + AS.escHTML(title) + '"' : '') + '>' + AS.escHTML(text) + '</span>';
   }
 
   function init() {
@@ -39,10 +40,17 @@
           var transports = [];
           if (e.usb) transports.push(badge('USB', 'tech-badge--info'));
           if (e.nfc) transports.push(badge('NFC', 'tech-badge--info'));
+          // Classification comes from the entry's documented metadata, never from
+          // the vendor name, and degrades to Unclassified rather than guessing.
+          var cb = AmbiSecureAAGUID.credBadge(e.cred);
+          var badges = transports.concat([
+            badge(AmbiSecureAAGUID.formLabel(e.form), 'tech-badge--muted'),
+            badge(cb.label, cb.cls, cb.title)
+          ]);
           html += '<div class="fido-card">' +
             '<span class="fc-tag mono" style="font-size:9.5px;">' + e.aaguid + '</span>' +
             '<h3>' + AS.escHTML(e.model) + '</h3>' +
-            '<p style="margin-top:8px;">' + transports.join(' ') + ' ' + badge('BE=0', 'tech-badge--ok') + '</p>' +
+            '<p style="margin-top:8px;">' + badges.join(' ') + '</p>' +
             '</div>';
         });
         html += '</div>';
