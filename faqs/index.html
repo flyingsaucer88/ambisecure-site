@@ -58,10 +58,10 @@
     },
     {
       "@type": "Question",
-      "name": "What happens if my AmbiSecure key or card is lost or stolen?",
+      "name": "What happens if my OnePass USB Key or OnePass Card is lost or stolen?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Register at least two authenticators per account so a lost device never locks you out. Revoke the lost credential at the identity provider; the private key on the lost device is useless without your account context, the per-origin binding, and (for Bio variants) your fingerprint. PIN-protected variants additionally lock out after a small number of failed attempts. The credential cannot be cloned or extracted from the secure element."
+        "text": "Register at least two authenticators per account so a lost device never locks you out. Revoke the lost credential at the identity provider; the private key on the lost device is useless without your account context, the per-origin binding, and (for Bio variants) your fingerprint. PIN-protected variants additionally lock out after a small number of failed attempts. The credential is non-exportable: it is generated inside the secure element and there is no interface to read it out."
       }
     },
     {
@@ -109,7 +109,7 @@
       "name": "Is FIDO2 / a hardware security key really more secure than SMS-based two-factor authentication?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Significantly more secure. SMS OTP is intercepted via SIM-swap, SS7 routing attacks, mobile-malware screen-readers, and phishing pages that proxy the OTP in real time. FIDO2 / WebAuthn binds the credential cryptographically to the origin domain — a phishing site at a similar URL receives an invalid signature. Google and Microsoft both publish data showing FIDO2 stops 100% of bulk phishing attacks against their workforce, where SMS OTP stops well below that."
+        "text": "Significantly more secure. SMS OTP is intercepted via SIM-swap, SS7 routing attacks, mobile-malware screen-readers, and phishing pages that proxy the OTP in real time. FIDO2 / WebAuthn binds the credential cryptographically to the origin domain — a phishing site at a similar URL receives an invalid signature. Google has reported that moving its workforce to security keys eliminated credential phishing takeovers across that population; SMS OTP offers no equivalent origin binding."
       }
     },
     {
@@ -242,9 +242,9 @@
     </details>
 
     <details class="faq-q">
-      <summary><h3>What happens if my AmbiSecure key or card is lost or stolen?</h3></summary>
+      <summary><h3>What happens if my OnePass USB Key or OnePass Card is lost or stolen?</h3></summary>
       <div class="faq-a">
-        <p>Register at least two authenticators per account so a lost device never locks you out. Revoke the lost credential at the identity provider; the private key on the lost device is useless without your account context, the per-origin binding, and (for Bio variants) your fingerprint. PIN-protected variants additionally lock out after a small number of failed attempts. The credential <strong>cannot be cloned or extracted</strong> from the secure element.</p>
+        <p>Register at least two authenticators per account so a lost device never locks you out. Revoke the lost credential at the identity provider; the private key on the lost device is useless without your account context, the per-origin binding, and (for Bio variants) your fingerprint. PIN-protected variants additionally lock out after a small number of failed attempts. The credential is <strong>non-exportable</strong>: it is generated inside the secure element and there is no interface to read it out.</p>
         <p>Related: <a href="/blog/credential-lifecycle-management/">credential lifecycle management</a>.</p>
       </div>
     </details>

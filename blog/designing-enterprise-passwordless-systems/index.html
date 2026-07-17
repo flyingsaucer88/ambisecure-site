@@ -223,9 +223,9 @@
       <li>Document the deployment for onboarding the next cohort of users.</li>
     </ul>
 
-    <h2>What we got wrong, what we learned</h2>
-    <p>From real deployments, three lessons that are not in the protocol spec:</p>
-    <p><strong>Lesson 1: do not skip the second authenticator.</strong> Cost-conscious deployments sometimes ship one authenticator per user. The result is a doubling of lost-key incidents, a recovery flow that becomes the user-experience bottleneck, and a de-facto fallback to less-secure recovery paths. The second authenticator is not optional.</p>
+    <h2>Three lessons that are not in the protocol spec</h2>
+    <p>The specification tells you how the ceremony works. It does not tell you any of the following:</p>
+    <p><strong>Lesson 1: do not skip the second authenticator.</strong> Cost-conscious deployments sometimes ship one authenticator per user. The result is that every loss becomes an incident, the recovery flow turns into the user-experience bottleneck, and the programme drifts into a de-facto fallback on less-secure recovery paths. The second authenticator is not optional.</p>
     <p><strong>Lesson 2: the IdP is the lever.</strong> Apps that integrate with WebAuthn directly become a maintenance burden. IdP federation is the right abstraction; pay the cost upfront.</p>
     <p><strong>Lesson 3: comms before crypto.</strong> A 30-minute user-comms investment per cohort prevents weeks of confused support tickets. The cryptography is there to make the protocol work; the comms is there to make the deployment work.</p>
 

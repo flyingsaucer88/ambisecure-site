@@ -138,7 +138,7 @@
     <p>Roaming authenticators are external hardware that connects to the host via USB-HID, NFC, or BLE. They contain a secure element dedicated to FIDO operations. They are not bound to any single device; tap or insert into whichever host the user is at.</p>
     <p>The major implementations:</p>
     <ul>
-      <li><strong>USB security keys</strong> (YubiKey 5, Token2 T2F2, OnePass USB Key, Feitian K9) &mdash; USB-A or USB-C, optional NFC. Battery-free; the host powers them. FIDO L2 is typical; CC EAL6+ secure elements available.</li>
+      <li><strong>USB security keys</strong> (YubiKey 5, Token2 T2F2, OnePass USB Key, Feitian K9) &mdash; USB-A or USB-C, optional NFC. Battery-free; the host powers them. FIDO certification levels vary by vendor and model; CC EAL6+ secure elements available.</li>
       <li><strong>FIDO smart cards</strong> (OnePass Card, IDEMIA, Thales) &mdash; ISO 7810 ID-1 form factor. NFC + USB-C; brandable. Often combined with PIV for legacy compatibility and with employee-ID printing for badge use.</li>
       <li><strong>Bluetooth security keys</strong> (Token2 T2F2 BLE, Feitian Multipass) &mdash; rare; mostly relevant for tablet / phone use cases without an NFC reader. Battery-powered; pair / unpair management overhead.</li>
       <li><strong>Mobile-as-roaming-authenticator</strong> &mdash; via the WebAuthn hybrid transport (caBLE), the user's phone can act as a roaming authenticator for sessions on another device. QR-code initiated, BLE proximity-checked.</li>
@@ -168,12 +168,12 @@
     <h2>Form-factor specifics</h2>
     <h3>Smart cards</h3>
     <p>The strongest form factor for an enterprise that already issues badges. The card serves three roles &mdash; physical-access badge, FIDO authenticator, ID photo &mdash; on one piece of plastic. Issuance integrates with badge printing; lifecycle management ties into existing badge workflows. NFC + USB-C means the card works at every reader the user encounters.</p>
-    <p>OnePass Card ships with this posture. CC EAL6+ secure element, FIDO L2 certification, ISO 7810 ID-1 dimensions. PIV-compatible for legacy systems that haven't migrated to FIDO yet.</p>
+    <p>OnePass Card ships with this posture. CC EAL6+ secure element, FIDO Level 1 certified through a customer-branded implementation, ISO 7810 ID-1 dimensions. PIV-compatible for legacy systems that haven't migrated to FIDO yet.</p>
     <h3>USB keys</h3>
     <p>The simplest form factor. Plug it in, tap when prompted. Less ceremonial than smart cards; less brand-able. Works great for engineers who live in laptops. Less great for environments where the laptop port is occupied or where the user is mobile across many hosts (think: nurses moving between hospital workstations).</p>
     <p>OnePass USB Key, USB-A and USB-C variants. Battery-free. NFC variants available for phone-tap.</p>
     <h3>Biometric smart cards</h3>
-    <p>An emerging form factor: a smart card with an on-card fingerprint sensor. The fingerprint is matched on-card; the card emits the UV flag once matched. CTAP2.1 bio-enrolment; CC EAL6+ certified.</p>
+    <p>An emerging form factor: a smart card with an on-card fingerprint sensor. The fingerprint is matched on-card; the card emits the UV flag once matched. CTAP2.1 bio-enrolment; built on a CC EAL6+ secure element.</p>
     <p>Use case: environments where typing a PIN is impractical (gloved hands, public areas with shoulder-surfing concern). The card is a single tap; the fingerprint is the UV. Slightly more expensive ($60-$80 per unit); better UX for the right context.</p>
 
     <h2>Provisioning paths by form factor</h2>
@@ -205,11 +205,11 @@
 
     <h2>Operational considerations</h2>
     <h3>Lost-and-found rates</h3>
-    <p>Real-world lost-key rates: 1.5-3% of authenticators per year, depending on form factor. Smart cards are lost more often than USB keys (left in slot reader at desk overnight, taken home in pocket, run through the wash). USB keys are lost less often but break more often (USB connector damage). Plan for both.</p>
+    <p>Loss and damage rates vary by form factor, and the failure modes differ. Smart cards are lost more often than USB keys (left in slot reader at desk overnight, taken home in pocket, run through the wash). USB keys are lost less often but break more often (USB connector damage). Plan for both.</p>
     <h3>Battery considerations</h3>
     <p>Smart cards and USB keys are passive (powered by the host). No battery management. BLE keys have batteries; budget for 2-year battery life and pre-emptive replacement. Bio cards may have a small capacitor for the sensor; check vendor specs.</p>
     <h3>Compliance posture</h3>
-    <p>Roaming hardware authenticators with FIDO L2 certification satisfy NIST AAL3 phishing-resistance requirements (provided UV is required). Platform authenticators on TPM 2.0 / Strongbox / Secure Enclave also satisfy AAL3 in most assessments. Confirm with your auditor whether attestation-pinning is required for your specific compliance regime.</p>
+    <p>Roaming hardware authenticators satisfy NIST AAL3 phishing-resistance requirements (provided UV is required). Platform authenticators on TPM 2.0 / Strongbox / Secure Enclave also satisfy AAL3 in most assessments. Confirm with your auditor whether attestation-pinning is required for your specific compliance regime.</p>
 
     <h2>Three deployment archetypes</h2>
     <h3>Archetype 1: Tech company, 5,000 engineers</h3>

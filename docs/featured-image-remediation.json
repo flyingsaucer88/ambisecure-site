@@ -831,7 +831,7 @@
   "new_image": "ambisecure-resources-tools-base64-1200x630.png",
   "archetype": "COMPARISON",
   "vsg": "VSG-ENCODING-CONVERTER",
-  "alt": "Two encoding tracks off one byte source — padded base64 beside padding-free base64url — marked with an open, keyless padlock: neither hides anything.",
+  "alt": "Two-column comparison of standard base64 against base64url, contrasting their alphabets, padding and RFC 4648 sections.",
   "briefed": true,
   "reason": "generic shared image replaced with page-specific artwork"
  },
@@ -1150,7 +1150,7 @@
   "new_image": "ambisecure-resources-tools-rp-id-validator-1200x630.png",
   "archetype": "CONCEPTUAL ILLUSTRATION",
   "vsg": "VSG-FIDO-CEREMONY",
-  "alt": "Domain-suffix tree from the AmbiSecure RP ID validator showing how an rpId scopes a WebAuthn credential across subdomains and why non-suffix pairs are rejected.",
+  "alt": "Layered diagram from the AmbiSecure RP ID validator tracing an origin down to its rpId suffix, with the key held in the authenticator.",
   "briefed": true,
   "reason": "generic shared image replaced with page-specific artwork"
  },
@@ -1942,7 +1942,7 @@
   "new_image": "ambisecure-blog-archive-public-transport-ticketing-part-3-1200x630.png",
   "archetype": "DEVICE NETWORK",
   "vsg": "VSG-TRANSIT",
-  "alt": "Singapore, Jakarta and Hong Kong closed-loop fare cards radiating past the gate into retail, with SAM-backed offline trust behind each validator.",
+  "alt": "Hub-and-spoke diagram placing an EZ-Link transit card at the centre, linked to MRT/LRT, bus, taxi and ERP gantry payment points.",
   "briefed": true,
   "reason": "generic shared image replaced with page-specific artwork"
  },

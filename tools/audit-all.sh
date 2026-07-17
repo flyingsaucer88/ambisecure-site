@@ -26,6 +26,8 @@ run "audit-yoast"       python3 tools/audit-yoast.py --strict
 run "audit-circular"    python3 tools/audit-circular-links.py --hard-only
 run "audit-spam-seo"    python3 tools/audit-spam-seo.py
 run "audit-search"      python3 tools/audit-search.py
+run "audit-counts"      python3 tools/audit-counts.py
+run "audit-og-images"   python3 tools/audit-og-images.py
 
 echo
 if [ "$fail" -eq 0 ]; then

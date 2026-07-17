@@ -154,14 +154,14 @@
 
     <h2>The threat model gain</h2>
     <p>Platform authenticators on consumer phones rely on the phone vendor's secure enclave. That is fine for most threat models, but the credential is then bound to the vendor's lifecycle: a vendor breach, a forced OS update, or a lost device with the credential synced through the vendor's cloud all become operational concerns. Embedded secure-element FIDO2 changes the trust root: the credential lives on a CC EAL6+ chip whose attestation chain runs through an issuance CA the issuing organisation controls, not the device vendor.</p>
-    <p>For an enterprise or OEM that wants a phishing-resistant credential <em>and</em> wants the credential's trust root inside its own custody rather than the platform vendor's, embedded secure-element FIDO2 is the only widely deployable option. The next-cheapest alternative is a dedicated USB security key with its own issuance line: more hardware to ship, more cards to replace, more help-desk tickets when one goes missing.</p>
+    <p>For an enterprise or OEM that wants a phishing-resistant credential <em>and</em> wants the credential's trust root inside its own custody rather than the platform vendor's, embedded secure-element FIDO2 is one of the few widely deployable options. The next-cheapest alternative is a dedicated USB security key with its own issuance line: more hardware to ship, more cards to replace, more help-desk tickets when one goes missing.</p>
 
     <h2>How the credential flows in production</h2>
     <p>End-to-end, the registration ceremony on an embedded secure-element FIDO2 authenticator looks like this:</p>
     <ol>
       <li>The relying party (running the <a href="/services/fido-validation-server/">FIDO Validation Server</a>) emits a <code>PublicKeyCredentialCreationOptions</code> challenge scoped to the tenant.</li>
       <li>The host device's WebAuthn client passes the challenge to the nano-card or MFF2 secure-element authenticator over CTAP2.1.</li>
-      <li>The applet generates an ECC P-256 keypair, scoped to the relying-party origin, inside the secure element. The private key is non-extractable.</li>
+      <li>The applet generates an ECC P-256 keypair, scoped to the relying-party origin, inside the secure element. The private key is non-exportable, with no supported interface for reading it out.</li>
       <li>The applet returns an attestation statement signed by the per-batch attestation key. The attestation includes an AAGUID identifying the applet model + firmware.</li>
       <li>The validation server verifies the attestation, checks the AAGUID against the FIDO Metadata Service, applies the tenant's AAGUID allow-list, and persists the credential.</li>
     </ol>

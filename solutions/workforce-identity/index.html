@@ -109,7 +109,7 @@
   <div class="section-container">
     <div class="section-head left"><h2 class="section-title">Security model</h2><span class="section-line"></span></div>
     <div class="fido-grid">
-      <div class="fido-card"><span class="fc-tag">Phishing-resistant</span><h3>Origin-bound credentials</h3><p>WebAuthn binds every credential to the registered origin. Phishing attacks against workforce identity become structurally impossible.</p></div>
+      <div class="fido-card"><span class="fc-tag">Phishing-resistant</span><h3>Origin-bound credentials</h3><p>WebAuthn binds every credential to the registered origin, so a phished sign-in on a look-alike domain yields no usable signature.</p></div>
       <div class="fido-card"><span class="fc-tag">BE = 0</span><h3>Device-bound by construction</h3><p>OnePass authenticators ship with BE=0. Compromise requires physical possession of the hardware.</p></div>
       <div class="fido-card"><span class="fc-tag">Attestation-anchored</span><h3>AAGUID allow-listing</h3><p>RP enforces an explicit allow-list of certified AAGUIDs, sourced from the FIDO MDS BLOB.</p></div>
       <div class="fido-card"><span class="fc-tag">Auditable</span><h3>Per-ceremony logging</h3><p>AAGUID + serial + signCount logged on every registration / assertion. Anomalies feed SOC.</p></div>

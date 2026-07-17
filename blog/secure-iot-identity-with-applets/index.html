@@ -137,7 +137,7 @@
       <li>Personalisation line injects the Master Key into the secure element's secure domain over SCP03.</li>
       <li>Device powers on at the customer site.</li>
       <li>The provisioning applet computes <code>identity_key = KDF(master_key, UID, "identity-v1")</code>.</li>
-      <li>The applet stores the identity key in a non-extractable slot, exports the public key for the fleet platform to ingest, and sets a "provisioned" flag.</li>
+      <li>The applet stores the identity key in a non-exportable slot, exports the public key for the fleet platform to ingest, and sets a "provisioned" flag.</li>
       <li>The "provisioned" flag refuses further provisioning until an admin re-key ceremony.</li>
     </ol>
     <p>The point of this dance: extraction of one device's key tells the attacker nothing about any other device's key, because each is derived from the unique UID. Compromise of one device is bounded by that one device.</p>

@@ -620,7 +620,7 @@ window.AS_BLOG_POOL = [
   "title": "Public Transport Ticketing System (Part-3)",
   "url": "/blog/archive/public-transport-ticketing-part-3/",
   "date": "2020-05-26",
-  "summary": "Part three of the AFC series \u2014 comparative notes across the analysed countries, what was common in mature ticketing architectures, and where hardware-rooted secure access modules sit in the stack.",
+  "summary": "Part three of a 2020 survey of public transport ticketing \u2014 how fare collection worked in Singapore, Indonesia and Hong Kong.",
   "categories": [
    "Transit"
   ],
@@ -630,7 +630,7 @@ window.AS_BLOG_POOL = [
   "title": "Public Transport Ticketing System (Part-2)",
   "url": "/blog/archive/public-transport-ticketing-part-2/",
   "date": "2020-05-18",
-  "summary": "Part two of the AFC series \u2014 how Ambimat Electronics has approached automated fare collection: validators, SAM-backed offline trust, and revenue assurance.",
+  "summary": "Part two of a 2020 survey of public transport ticketing \u2014 how fare collection worked in the United Kingdom, Germany, Russia, Brazil and Mexico.",
   "categories": [
    "Transit"
   ],
@@ -650,7 +650,7 @@ window.AS_BLOG_POOL = [
   "title": "Challenges to IoT Security (Part 2)",
   "url": "/blog/archive/iot-security-challenges-part-2/",
   "date": "2020-04-27",
-  "summary": "Second of a two-part look at IoT security \u2014 practical mitigations: hardware root of trust, signed firmware update, attestation, and device identity carried in a secure element.",
+  "summary": "Second of a 2020 two-part look at IoT security \u2014 further challenges: infrequent firmware updates, small-scale attacks, autonomous systems and user privacy.",
   "categories": [
    "IoT Security"
   ],

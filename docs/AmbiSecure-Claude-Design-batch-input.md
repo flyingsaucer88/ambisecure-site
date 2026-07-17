@@ -468,7 +468,7 @@ Global rules that apply to every image in this batch:
     - Do not show URL-safe base64 retaining = padding or using + and / characters
     - Do not present base64 as compression — it grows the payload by roughly one third
     - Do not show the blob being decoded on an AmbiSecure or third-party server
-- **Alt text:** Two encoding tracks off one byte source — padded base64 beside padding-free base64url — marked with an open, keyless padlock: neither hides anything.
+- **Alt text:** Two-column comparison of standard base64 against base64url, contrasting their alphabets, padding and RFC 4648 sections.
 - **Export filename:** `ambisecure-resources-tools-base64-1200x630.png`
 - **Visual similarity group:** VSG-ENCODING-CONVERTER
 - **Currently uses:** resources.png
@@ -1300,7 +1300,7 @@ Global rules that apply to every image in this batch:
     - Do not draw an rpId with a scheme, port or path — rpId is a bare domain
     - Do not present an ALLOWED verdict as phishing protection in itself
     - Do not mark http://localhost as invalid, it is the one HTTP exception
-- **Alt text:** Domain-suffix tree from the AmbiSecure RP ID validator showing how an rpId scopes a WebAuthn credential across subdomains and why non-suffix pairs are rejected.
+- **Alt text:** Layered diagram from the AmbiSecure RP ID validator tracing an origin down to its rpId suffix, with the key held in the authenticator.
 - **Export filename:** `ambisecure-resources-tools-rp-id-validator-1200x630.png`
 - **Visual similarity group:** VSG-FIDO-CEREMONY
 - **Currently uses:** resources.png
@@ -3192,7 +3192,7 @@ Global rules that apply to every image in this batch:
     - Do not show SAM keys leaving the validator's secure module
     - Do not imply AmbiSecure supplied or operates EZ-Link, TransJakarta, or Octopus
     - Do not present the body's 2020 adoption figures (Octopus at 99% of residents) as current on-image text
-- **Alt text:** Singapore, Jakarta and Hong Kong closed-loop fare cards radiating past the gate into retail, with SAM-backed offline trust behind each validator.
+- **Alt text:** Hub-and-spoke diagram placing an EZ-Link transit card at the centre, linked to MRT/LRT, bus, taxi and ERP gantry payment points.
 - **Export filename:** `ambisecure-blog-archive-public-transport-ticketing-part-3-1200x630.png`
 - **Visual similarity group:** VSG-TRANSIT
 - **Currently uses:** blog-archive.png

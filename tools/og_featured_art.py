@@ -219,3 +219,66 @@ ARCHETYPES = {
     'CONCEPTUAL ILLUSTRATION': stack,
     'TOPIC INDEX': topic_index,
 }
+
+
+def card_reader_setup(d):
+    """Desktop enrolment: card in a reader, wired to a browser window.
+
+    Deliberately generic: the browser pane carries the account-security label
+    supplied per page rather than a reproduced third-party interface.
+    """
+    o = []
+    # card sitting in a reader
+    o.append(f'<rect x="656" y="292" width="150" height="96" rx="8" fill="{PANEL}" stroke="{INK}" stroke-width="2.2"/>')
+    o.append(f'<rect x="672" y="312" width="26" height="20" rx="2.5" fill="{PANEL_2}" stroke="{INK}" stroke-width="1.4"/>')
+    o.append(f'<line x1="672" y1="322" x2="698" y2="322" stroke="{INK}" stroke-width="1"/>')
+    o.append(f'<text x="672" y="360" fill="{INK}" font-family="Montserrat" font-size="13" font-weight="700">{_esc(d.get("card","OnePass Card"))}</text>')
+    o.append(f'<rect x="648" y="388" width="166" height="22" rx="3" fill="{PANEL_2}" stroke="{INK}" stroke-width="2"/>')
+    o.append(_cap(731, 403, d.get('reader', 'card reader'), size=9))
+    o += arrow(822, 340, 866, d.get('link', 'ctap'))
+    # browser window
+    o.append(panel(874, 262, 258, 150, WHITE, INK, 2))
+    o.append(f'<rect x="874" y="262" width="258" height="26" fill="{PANEL_2}" stroke="{INK}" stroke-width="2"/>')
+    for i, cx in enumerate((10, 20, 30)):
+        o.append(f'<circle cx="{874+cx}" cy="275" r="3.2" fill="{RED if i==0 else "#C9C6C0"}"/>')
+    o.append(f'<text x="{874+48}" y="280" fill="{GREY}" font-family="{MONO}" font-size="10" letter-spacing="1.2">{_esc(d.get("pane","account security").upper())}</text>')
+    ry = 312
+    for row in d.get('rows', [])[:3]:
+        o.append(f'<rect x="890" y="{ry-9}" width="7" height="7" fill="{RED}"/>')
+        o.append(f'<text x="906" y="{ry}" fill="{INK}" font-family="{MONO}" font-size="11.5">{_esc(row)}</text>')
+        ry += 26
+    o.append(_cap(1003, 428, d.get('foot', 'webauthn registration'), size=9))
+    return o
+
+
+def phone_nfc_setup(d):
+    """Mobile enrolment: card tapped to a phone, NFC arcs between them."""
+    o = []
+    # phone
+    o.append(f'<rect x="890" y="212" width="150" height="240" rx="16" fill="{WHITE}" stroke="{INK}" stroke-width="2.4"/>')
+    o.append(f'<rect x="906" y="240" width="118" height="184" rx="4" fill="{PANEL}" stroke="{LINE}" stroke-width="1.4"/>')
+    o.append(f'<circle cx="965" cy="226" r="3" fill="{LINE}"/>')
+    o.append(f'<text x="965" y="270" fill="{GREY}" font-family="{MONO}" font-size="9" letter-spacing="1.1" text-anchor="middle">{_esc(d.get("pane","account security").upper())}</text>')
+    ry = 296
+    for row in d.get('rows', [])[:3]:
+        o.append(f'<rect x="918" y="{ry-8}" width="6" height="6" fill="{RED}"/>')
+        o.append(f'<text x="932" y="{ry}" fill="{INK}" font-family="{MONO}" font-size="9.5">{_esc(row)}</text>')
+        ry += 22
+    o.append(f'<rect x="918" y="392" width="94" height="20" rx="3" fill="{RED_TINT}" stroke="{RED}" stroke-width="1.4"/>')
+    o.append(_cap(965, 406, d.get('cta', 'tap card'), fill=RED, size=8))
+    # NFC arcs from card to phone
+    for r in (18, 28, 38):
+        o.append(f'<path d="M 862 {332-r*0.62} A {r} {r} 0 0 1 862 {332+r*0.62}" fill="none" stroke="{RED}" stroke-width="2.2"/>')
+    o.append(_cap(846, 400, 'nfc', fill=RED, size=9))
+    # card
+    o.append(f'<g transform="rotate(-8 752 332)">')
+    o.append(f'<rect x="672" y="288" width="152" height="96" rx="8" fill="{PANEL}" stroke="{INK}" stroke-width="2.2"/>')
+    o.append(f'<rect x="688" y="308" width="24" height="19" rx="2.5" fill="{PANEL_2}" stroke="{INK}" stroke-width="1.4"/>')
+    o.append(f'<text x="688" y="358" fill="{INK}" font-family="Montserrat" font-size="12.5" font-weight="700">{_esc(d.get("card","OnePass Card"))}</text>')
+    o.append('</g>')
+    o.append(_cap(752, 412, d.get('foot', 'fido2 credential'), size=9))
+    return o
+
+
+ARCHETYPES['CARD READER SETUP'] = card_reader_setup
+ARCHETYPES['PHONE NFC SETUP'] = phone_nfc_setup

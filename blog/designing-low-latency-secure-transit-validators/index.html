@@ -127,7 +127,7 @@
     </ul>
 
     <h2 id="fare">The fare-logic stage</h2>
-    <p>Fare logic seems like it should be cheap &mdash; it&rsquo;s just a state machine over a few values from the card. It isn&rsquo;t cheap when the fare-rule engine is interpreted, when it pulls from disk for fare-table lookups, or when it goes through an OS layer that doesn&rsquo;t have a hard real-time path. We have seen 200 ms on a fresh box drop to 80 ms simply by precomputing the fare table at depot-sync time and pinning it in RAM. That is now most of your budget back.</p>
+    <p>Fare logic seems like it should be cheap &mdash; it&rsquo;s just a state machine over a few values from the card. It isn&rsquo;t cheap when the fare-rule engine is interpreted, when it pulls from disk for fare-table lookups, or when it goes through an OS layer that doesn&rsquo;t have a hard real-time path. An interpreted rule engine reading its tables off disk can consume a large share of the tap budget on its own &mdash; and precomputing the fare table at depot-sync time and pinning it in RAM gives most of that back for very little engineering effort. Measure the stage before and after; the difference is usually the cheapest latency you will ever recover.</p>
     <p>The implementation rule we settle on: <strong>everything the validator needs to make a fare decision must be in RAM at tap time.</strong> Fare tables, time-of-day rules, station-pair tariff matrices, blacklist, transfer windows. Disk reads in the tap path are a bug.</p>
 
     <h2 id="commit">The commit stage</h2>

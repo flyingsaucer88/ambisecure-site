@@ -150,7 +150,7 @@
     <p>Passkeys are public-key credentials. The private key never leaves the authenticator (hardware token, smart card, TPM, secure enclave). The relying party stores only the public key. Authentication is a digital signature ceremony: the RP issues a fresh challenge, the authenticator signs it (after the user's local UV), the RP verifies the signature.</p>
     <p>Three structural properties drop out:</p>
     <ol>
-      <li><strong>Origin binding.</strong> The browser scopes credentials to the registered origin. A phishing site at <code>logIn.example.com</code> cannot trick the authenticator into signing for <code>login.example.com</code>; the browser computes <code>SHA-256(rpId)</code> and refuses to find a credential. Phishing as an attack class becomes structurally impossible.</li>
+      <li><strong>Origin binding.</strong> The browser scopes credentials to the registered origin. A phishing site at <code>logIn.example.com</code> cannot trick the authenticator into signing for <code>login.example.com</code>; the browser computes <code>SHA-256(rpId)</code> and refuses to find a credential. Credential phishing stops working against that ceremony.</li>
       <li><strong>No replayable secret.</strong> The shared secret is the public key &mdash; freely publishable. There is nothing to leak in a server breach beyond the public material.</li>
       <li><strong>Hardware boundary.</strong> The private key sits in a secure element / TPM / smart card. Compromise requires physical access (or a hardware-level attack against the secure element, which costs orders of magnitude more than software-level extraction).</li>
     </ol>

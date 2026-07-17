@@ -87,7 +87,7 @@
     </div>
 
     <h1>Device Identity at Manufacturing Scale</h1>
-    <p class="dek">A deployment of one device with one credential is an engineering exercise. A deployment of a million devices, each with a non-clonable identity, each provisioned on a factory line, each able to rotate credentials in the field without recall, is an architectural problem with a small set of correct answers and a large set of expensive wrong ones. This is the engineering walk-through of the correct answers, from the personalisation line through OTA rotation to revocation across connectivity tiers, and the convergence between V2X, eSIM, and embedded IoT credential lifecycles.</p>
+    <p class="dek">A deployment of one device with one credential is an engineering exercise. A deployment of a million devices, each with a hardware-bound identity, each provisioned on a factory line, each able to rotate credentials in the field without recall, is an architectural problem with a small set of correct answers and a large set of expensive wrong ones. This is the engineering walk-through of the correct answers, from the personalisation line through OTA rotation to revocation across connectivity tiers, and the convergence between V2X, eSIM, and embedded IoT credential lifecycles.</p>
 
     <p>If you have provisioned hardware at any volume, the surface symptoms of getting this wrong are familiar: a forensic investigation reveals plaintext keys in a manufacturing log; an OTA rotation campaign drops 12% of devices for reasons no one can reconstruct; a CRL bloats past the working memory of the verifier population; a regulator asks how per-device identities are protected on the line and the procurement team has nothing in writing. This piece is the architecture that prevents those outcomes.</p>
 
@@ -250,16 +250,16 @@
     </ul>
     <p>What the log contains per injection: per-device serial, AID and key handle of the injected key, operator badge (or shift identifier), HSM session ID, programmer station ID, timestamp, attestation hash, and a hash of the previous entry. If a forensic investigator asks "when was device serial X injected, on what station, by whom, and with what attestation" five years from now, the log answers.</p>
 
-    <h2 id="operational-numbers">Operational numbers from real lines</h2>
-    <p>From production deployments (figures approximate, anonymised):</p>
+    <h2 id="operational-numbers">What to measure on the line</h2>
+    <p>Personalisation throughput is a budgeting exercise, and the inputs are line-specific. Characterise each of these against your own hardware rather than assuming a published figure transfers:</p>
     <ul>
-      <li>Personalisation cycle time per device, single SE programmer: 1.5&ndash;3 seconds for a single applet, 4&ndash;8 seconds for a four-applet card.</li>
-      <li>Parallelism: 8&ndash;32 SE programmers per line is typical; throughput scales near-linearly until HSM session limits dominate.</li>
-      <li>HSM session pool: 200&ndash;1000 concurrent sessions for an enterprise-grade cluster; tune per derivation cost.</li>
-      <li>Audit log volume: 1&ndash;3 KB per injection; a year of high-volume production produces tens to hundreds of GB.</li>
-      <li>Yield loss specifically attributable to personalisation: under 0.5% in a stable line; spikes above 1% indicate an HSM session issue, a programmer firmware mismatch, or a wrapping-key rotation problem.</li>
+      <li>Personalisation cycle time per device on a single SE programmer, measured separately for a single applet and for a multi-applet card. Each additional applet adds a load-and-verify pass.</li>
+      <li>Parallelism: how many SE programmers the line runs. Throughput scales near-linearly with programmer count until HSM session limits dominate, and that crossover is the number worth knowing.</li>
+      <li>HSM session pool size, tuned against your derivation cost. The pool, not the programmers, is usually the ceiling.</li>
+      <li>Audit log volume per injection, multiplied out to a year of production. Size the retention estimate before the first run, not after the disk fills.</li>
+      <li>Yield loss specifically attributable to personalisation. Track it as its own series: a spike against your established baseline points at an HSM session issue, a programmer firmware mismatch, or a wrapping-key rotation problem.</li>
     </ul>
-    <p>None of these are aspirational. They are the order of magnitude. Plan for them.</p>
+    <p>Baseline each of these on your own line before committing to a production schedule, and re-baseline after any change to the HSM, the programmer firmware, or the applet set.</p>
 
     <h2 id="india-context">India context</h2>
     <p>India hosts manufacturing for multiple device classes covered by this architecture: connected vehicles, smart-meter endpoints, fleet trackers, payment terminals. The Telecom Regulatory Authority of India&rsquo;s Consultation Paper of 30 April 2026 raises questions about how device-identity provisioning should be regulated under the proposed V2X security framework; the paper is a public document, referenced here factually. The architectural answer is the one this piece walks through &mdash; hardware-rooted identity, HSM-backed personalisation, OTA rotation, connectivity-tier-aware revocation &mdash; applied uniformly across V2X and the adjacent device populations a coherent national approach would address together.</p>

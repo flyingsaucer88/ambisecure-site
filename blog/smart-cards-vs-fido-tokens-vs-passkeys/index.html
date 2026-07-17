@@ -165,7 +165,7 @@
     <p>A smart card can host a FIDO2 applet, a PIV applet for SSH and code-signing, a closed-loop transit applet, and a building-access applet on the same chip with separate AIDs. One card replaces three things to lose.</p>
 
     <h3>2. You need device-bound credentials for compliance reasons</h3>
-    <p>Some regulatory frameworks &mdash; NIST 800-63B AAL3, eIDAS QSCD, certain national-ID schemes &mdash; require that the authenticator be a single physical device that cannot be cloned to a second device. A synced passkey does not meet that bar by definition. A smart card or a device-bound FIDO key does.</p>
+    <p>Some regulatory frameworks &mdash; NIST 800-63B AAL3, eIDAS QSCD, certain national-ID schemes &mdash; require that the authenticator be a single physical device that resists cloning to a second device. A synced passkey does not meet that bar by definition. A smart card or a device-bound FIDO key does.</p>
 
     <h3>3. You already issue badges</h3>
     <p>If your facilities team prints employee photo ID on a card, the marginal cost of adding a FIDO applet to that card is small. The marginal cost of issuing a separate hardware key is the full BOM of the key plus the issuance time. Bundling pays back fast.</p>
@@ -185,7 +185,7 @@
     <p>Even in a smart-card deployment, privileged users typically also get a backup USB key, sealed and locked in a safe, with its private key registered as a second authenticator. When the primary card is lost, the backup unblocks the user before re-issuance.</p>
 
     <h3>4. You don&rsquo;t need badge functionality</h3>
-    <p>If your workforce already has its physical-access story figured out separately, the smart-card form factor adds cost for nothing. A FIDO key is the cheapest hardware-rooted credential per seat.</p>
+    <p>If your workforce already has its physical-access story figured out separately, the smart-card form factor buys you less, and a USB key or tappable form factor may fit better. A FIDO key is the cheapest hardware-rooted credential per seat.</p>
 
     <h2 id="when-passkey">When passkeys are the right choice</h2>
 

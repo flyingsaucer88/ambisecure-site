@@ -55,7 +55,7 @@
      "name": "Are all second factors equal?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "No. SMS-OTP is vulnerable to SIM swap. Authenticator-app TOTP is vulnerable to phishing-page relay. Push notifications are vulnerable to push fatigue. Hardware-bound WebAuthn credentials are vulnerable to none of these classes."
+      "text": "No. SMS-OTP is vulnerable to SIM swap. Authenticator-app TOTP is vulnerable to phishing-page relay. Push notifications are vulnerable to push fatigue. Hardware-bound WebAuthn credentials are resistant to all of these classes: the credential is origin-bound, so there is nothing for the attacker to replay."
      }
     }
    ]
@@ -101,7 +101,7 @@
     <p>Even an SMS OTP raises the cost of credential-stuffing dramatically: the attacker now needs to also intercept (or social-engineer) a code in real time, per account. Most stop trying.</p>
 
     <h2>Not all second factors are equal</h2>
-    <p>OTPs delivered by SMS or app are vulnerable to phishing pages: the attacker shows a fake login, harvests password + OTP, and replays them within the OTP&rsquo;s 30-second window. <strong>Hardware-bound</strong> factors &mdash; <a href="/technologies/fido2/">FIDO2</a> security keys, smart cards, biometric tokens &mdash; are not vulnerable, because the cryptographic challenge is bound to the real origin. The phishing page can&rsquo;t replay it.</p>
+    <p>OTPs delivered by SMS or app are vulnerable to phishing pages: the attacker shows a fake login, harvests password + OTP, and replays them within the OTP&rsquo;s 30-second window. <strong>Hardware-bound</strong> factors &mdash; <a href="/technologies/fido2/">FIDO2</a> security keys, smart cards, biometric tokens &mdash; are phishing-resistant, because the cryptographic challenge is bound to the real origin. The phishing page can&rsquo;t replay it to the genuine site.</p>
 
     <h2>What this means for you</h2>
     <p>If you are protecting an enterprise: your password-based auth has already been bypassed. The question is whether you know it yet. Layer on <a href="/solutions/phishing-resistant-authentication/">hardware-bound MFA</a> &mdash; FIDO2 cards or USB keys &mdash; for any account that touches money, identity, or production access.</p>

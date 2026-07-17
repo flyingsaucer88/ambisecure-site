@@ -82,7 +82,7 @@
      "name": "What is hardware-rooted device identity?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "A unique device key generated and stored inside a tamper-resistant secure element, non-extractable by design and bound to a specific piece of silicon. The device proves it is itself by signing a challenge with that key; the back end verifies the signature against an attestation chain that goes back to AmbiSecure's issuance CA. There is no shared secret to leak, no factory-default password to brute-force, and no way to clone the identity without the physical part."
+      "text": "A unique device key generated and stored inside a tamper-resistant secure element, non-exportable by design with no supported interface for reading it out, and bound to a specific piece of silicon. The device proves it is itself by signing a challenge with that key; the back end verifies the signature against an attestation chain that goes back to AmbiSecure's issuance CA. There is no shared secret to leak, no factory-default password to brute-force, and no way to clone the identity without the physical part."
      }
     },
     {
@@ -234,7 +234,7 @@
 
           <g font-family="'Source Sans 3', sans-serif" font-size="13" fill="#3a3f40">
             <rect x="634" y="190" width="502" height="64" rx="6" fill="#ffffff" stroke="#f3c9cb"/>
-            <text x="650" y="212" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Key storage &middot; non-extractable</text>
+            <text x="650" y="212" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Key storage &middot; non-exportable</text>
             <text x="650" y="234" font-size="12.5" fill="#5b6163">128-bit device identity burned at factory. Hardware-isolated key vault.</text>
 
             <rect x="634" y="270" width="240" height="64" rx="6" fill="#ffffff" stroke="#f3c9cb"/>
@@ -330,7 +330,7 @@
     </div>
     <table class="spec-table">
       <tr><th>No default passwords</th><td>Unique 128-bit device identity burned at factory. There is no factory-default credential to brute-force.</td></tr>
-      <tr><th>TEE credential store</th><td>Hardware-isolated key vault inside the cryptographic security domain &mdash; secure-element-class storage, non-extractable by design.</td></tr>
+      <tr><th>TEE credential store</th><td>Hardware-isolated key vault inside the cryptographic security domain &mdash; secure-element-class storage, non-exportable by design.</td></tr>
       <tr><th>Secure boot</th><td>Image signature verified by the co-processor before the MCU executes the new firmware. Boot is gated on the verdict.</td></tr>
       <tr><th>Multi-hop encryption</th><td>Three deployment models &mdash; hop-by-hop, end-to-end, hybrid &mdash; selected to match the trust geometry of the link layer.</td></tr>
       <tr><th>Secure OTA</th><td>OTA verification applet inside the security domain. Credential rotation under the same root identity.</td></tr>
@@ -350,7 +350,7 @@
     <div class="grid-3">
       <div class="card-soft">
         <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Secure by design &amp; by default</h3>
-        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A hardware root of trust, non-extractable key storage, and per-device identity burned at factory give a manufacturer a defensible answer to &ldquo;where do the keys live&rdquo; &mdash; the question secure-by-design starts from. No default passwords, no shared fleet secret.</p>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A hardware root of trust, non-exportable key storage, and per-device identity burned at factory give a manufacturer a defensible answer to &ldquo;where do the keys live&rdquo; &mdash; the question secure-by-design starts from. No default passwords, no shared fleet secret.</p>
       </div>
       <div class="card-soft">
         <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Vulnerability handling &amp; updates</h3>
@@ -572,7 +572,7 @@
       </div>
       <div class="card-soft">
         <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">What is hardware-rooted device identity?</h3>
-        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A unique key generated and stored inside a tamper-resistant secure element, non-extractable by design and bound to a specific piece of silicon. The device proves it is itself by signing a challenge with that key.</p>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">A unique key generated and stored inside a tamper-resistant secure element, non-exportable by design with no supported interface for reading it out, and bound to a specific piece of silicon. The device proves it is itself by signing a challenge with that key.</p>
       </div>
       <div class="card-soft">
         <h3 style="font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);">Why use MFF2 secure-element deployments?</h3>

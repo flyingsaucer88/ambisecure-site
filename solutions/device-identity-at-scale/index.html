@@ -59,7 +59,7 @@
      "name": "Why is hardware identity preferred over software-only device identity?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "In field-deployed devices subject to physical access and firmware tampering, software-stored keys can be extracted from flash, cloned, and replayed. A hardware root of trust holds private key material inside a tamper-resistant boundary, performs cryptographic operations in hardware isolation, and never exposes key bytes to the host operating system. This is what makes a device identity non-clonable in the field rather than only in the lab."
+      "text": "In field-deployed devices subject to physical access and firmware tampering, software-stored keys can be extracted from flash, cloned, and replayed. A hardware root of trust holds private key material inside a tamper-resistant boundary, performs cryptographic operations in hardware isolation, and never exposes key bytes to the host operating system. This is what makes a device identity impractical to clone in the field rather than only in the lab."
      }
     },
     {
@@ -112,7 +112,7 @@
   <div class="prose">
     <span class="eyebrow">Architecture</span>
     <h1>Device identity at scale.</h1>
-    <p class="dek">Millions of devices, each with a non-clonable identity, each provisioned at manufacturing, each rotating credentials in the field without recall, each revocable on a per-device basis. The cryptography is settled; what determines whether a deployment survives a decade is the architecture around the keys &mdash; the hardware root, the provisioning line, the lifecycle authority, the revocation channel.</p>
+    <p class="dek">Millions of devices, each with a hardware-bound identity, each provisioned at manufacturing, each rotating credentials in the field without recall, each revocable on a per-device basis. The cryptography is settled; what determines whether a deployment survives a decade is the architecture around the keys &mdash; the hardware root, the provisioning line, the lifecycle authority, the revocation channel.</p>
     <div class="hero-cta-row" style="margin-top:22px;">
       <a href="/contact/" class="btn btn-primary" data-analytics-event="request_demo">Discuss a deployment</a>
       <a href="/products/iot-security-coprocessor/" class="btn btn-outline">Co-processor spec</a>
@@ -271,7 +271,7 @@
       <p>The threat model for an in-laboratory device is not the threat model for a field-deployed device. The first assumes a controlled adversary on a controlled network; the second assumes physical access and indefinite time. Four failure modes recur across every deployment that tried software-only identity and ended up replacing it.</p>
       <p><strong>Flash extraction.</strong> A microcontroller's external SPI flash &mdash; or its internal flash via a debug interface left enabled or recoverable &mdash; can be read out by an attacker with bench-top equipment. A private key stored as bytes in flash is bytes in an attacker's possession. Encryption-at-rest of the flash with a key derived from a hardware-fused root is the minimum bar; what a secure element gives is one level above: the key never reaches flash at all.</p>
       <p><strong>Firmware extraction with key reuse.</strong> Extracting one device's firmware reveals the cryptographic patterns the entire fleet uses. If the per-device key is derived from a shared master in firmware, the firmware extract yields the master. Once the master is out, the entire fleet's identity is reproducible by anyone. A hardware-rooted per-device identity has no master to leak.</p>
-      <p><strong>Key cloning.</strong> A device whose identity is software-stored can be cloned: the bytes are copied to a second device, and now two devices present the same identity to the fleet PKI. A pseudonymous V2X deployment with cloned keys allows a single attacker to amplify a hazard signal across geographies it does not occupy. A hardware-bound identity cannot be cloned without copying the silicon &mdash; an attack that costs more than the deployment.</p>
+      <p><strong>Key cloning.</strong> A device whose identity is software-stored can be cloned: the bytes are copied to a second device, and now two devices present the same identity to the fleet PKI. A pseudonymous V2X deployment with cloned keys allows a single attacker to amplify a hazard signal across geographies it does not occupy. A hardware-bound identity resists cloning short of a physical attack on the silicon &mdash; an attack that costs more than the deployment.</p>
       <p><strong>Fleet compromise from a single device.</strong> The compounding failure mode. A successful extract on one device, given software-only identity, yields the cryptographic technique used across the fleet. The marginal cost of compromising the second device is near zero. Hardware identity inverts this property: every device requires its own attack, against its own silicon, with no scaling discount. Whether the fleet is one device or one million, the per-device attack cost is the same.</p>
     </div>
   </div>

@@ -251,16 +251,16 @@
     </ol>
     <p>If you can&rsquo;t answer "when was this credential issued and to whom" in under a minute, you don&rsquo;t have an audit log; you have a database.</p>
 
-    <h2 id="operational-numbers">Operational numbers we&rsquo;ve seen in practice</h2>
-    <p>From real deployments (numbers approximate, anonymised):</p>
+    <h2 id="operational-numbers">What drives lifecycle cost</h2>
+    <p>Before issuance starts, budget for the recurring costs a credential programme carries. Measure each one against your own fleet rather than assuming a published figure applies to it:</p>
     <ul>
-      <li>Issuance time per user, in-person: 4-7 minutes at a well-trained IT desk. Slower in the first month.</li>
-      <li>Recovery time per user, in-person backup-credential model: 8-15 minutes including identity re-verification.</li>
-      <li>Loss / damage rate per year, smart card with badge artwork: 4-7% annual replacement.</li>
-      <li>Loss / damage rate per year, FIDO USB key: 8-12% annual replacement (smaller form factor, easier to lose).</li>
-      <li>Helpdesk ticket rate per user per year, first year: 0.3-0.5. Second year and after: 0.1-0.2.</li>
+      <li>Issuance time per user, in-person. A well-trained IT desk gets faster with repetition; the first month is the slowest.</li>
+      <li>Recovery time per user under an in-person backup-credential model, including identity re-verification. This is usually the most expensive interaction in the programme.</li>
+      <li>Loss and damage rate per year for smart cards with badge artwork. Cards double as visible ID, so they travel everywhere the user does.</li>
+      <li>Loss and damage rate per year for FIDO USB keys. The smaller form factor is easier to lose and its connector is the part that fails.</li>
+      <li>Helpdesk ticket rate per user per year. Expect a first-year peak while users learn the flow, then a lower steady state.</li>
     </ul>
-    <p>None of this is invented; it&rsquo;s the order of magnitude. Plan for it.</p>
+    <p>Instrument these from day one. A programme that cannot report its own replacement and recovery rates cannot forecast its budget.</p>
 
     <h2 id="programme-design">Putting it together: programme design</h2>
     <p>A defensible credential programme answers, in writing, before issuance starts:</p>
