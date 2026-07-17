@@ -35,6 +35,24 @@ RewriteRule ^[0-9]{6,10}\.htm$ - [G,L]
 RewriteRule ^[a-z]{5}/[a-z][0-9]{6,8}\.html$ - [G,L]
 
 # =============================================================
+# Retired content — 410 Gone.
+# /blog/archive/security-future-for-government/ was withdrawn: its
+# body copy described smart cards as "expensive and cumbersome to
+# deploy" (against our own product line) and promoted a
+# discontinued SKU. No equivalent replacement page exists, so this
+# is deliberately NOT redirected — pointing a retired URL at an
+# unrelated page is worse for users and for search than being
+# honest that the content is gone. 410 (not 404) tells Google the
+# removal is permanent.
+#
+# The second rule is the pre-migration WordPress URL, which used to
+# 301 into the archive page below. With the target gone that
+# redirect would only chain into a 410, so it serves 410 directly.
+# =============================================================
+RewriteRule ^blog/archive/security-future-for-government/?$ - [G,L]
+RewriteRule ^taking-security-future-for-government/?$ - [G,L]
+
+# =============================================================
 # Phase 40 — Defensive hardening
 # Static-site posture: NO server-side code is shipped. These rules
 # are defence-in-depth so an accidental FTP upload of a .env/.git
@@ -233,7 +251,6 @@ Redirect 301 /enterprise-security-threats /blog/archive/enterprise-security-thre
 Redirect 301 /what-is-passwordless-authentication /blog/archive/what-is-passwordless-authentication/
 Redirect 301 /is-passwordless-the-future /blog/archive/is-passwordless-the-future/
 Redirect 301 /sms-based-otp-authentication-and-its-disadvantages /blog/archive/sms-otp-disadvantages/
-Redirect 301 /taking-security-future-for-government /blog/archive/security-future-for-government/
 Redirect 301 /e-passport-and-how-will-chip-based-e-passports-work /blog/archive/how-chip-based-epassports-work/
 Redirect 301 /e-passport-and-its-application /blog/archive/epassport-applications/
 Redirect 301 /an-introduction-to-java-card-technology /blog/archive/introduction-to-java-card/

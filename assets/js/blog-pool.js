@@ -528,17 +528,6 @@ window.AS_BLOG_POOL = [
   "type": "archive"
  },
  {
-  "title": "Taking security future for Government",
-  "url": "/blog/archive/security-future-for-government/",
-  "date": "2021-03-25",
-  "summary": "How governments are moving from password-only access to multi-factor authentication for citizen and employee identity \u2014 and where hardware-rooted credentials reshape the threat model.",
-  "categories": [
-   "Government Identity",
-   "MFA"
-  ],
-  "type": "archive"
- },
- {
   "title": "E-passport and How will chip-based e-Passports work",
   "url": "/blog/archive/how-chip-based-epassports-work/",
   "date": "2021-01-28",
