@@ -43,6 +43,23 @@ CATEGORY_IMAGE = {
 # Real video thumbnails: the frame IS the page-specific image. 16:9, not 1200x630.
 VIDEO_DIR = 'assets/img/videos/'
 
+# Indexable pages whose og:image is deliberately NOT on the featured-art system.
+# Two documented category/utility images, plus five legacy product/service OG
+# covers in the older dark template that are pending a Claude Design redesign
+# (tracked in docs/site-integrity-audit/claude-design-handoff.md). Listed
+# explicitly so the brand-system guard catches any NEW off-brand page without
+# breaking the build on this known, documented debt. Remove an entry once the
+# page moves onto the featured-art system.
+NON_FEATURED_ALLOWED = {
+    'assets/img/og/blog.png',              # /blog/page/2/ — pagination branding
+    'assets/img/og/search.png',            # /search/ — utility branding
+    'assets/img/og/fido2-nano-sim-applet.png',   # /products/fido2-nano-sim-applet/
+    'assets/img/og/iot-security-applets.png',    # /products/iot-security-applets/
+    'assets/img/og/pkcs-signature-suite.png',    # /products/pkcs-signature-suite/
+    'assets/img/og/secure-mail-suite.png',       # /products/secure-mail-suite/
+    'assets/img/og/epassport-platform.png',      # /services/epassport-platform/
+}
+
 # Perceptual-duplicate detection.
 #
 # Byte-uniqueness is not enough: five setup-video thumbnails were five different
@@ -179,6 +196,7 @@ def main():
         og = meta(h, prop='og:image')
         tw = meta(h, name='twitter:image')
         alt = meta(h, prop='og:image:alt')
+        tw_alt = meta(h, name='twitter:image:alt')
         title = (re.search(r'<title>(.*?)</title>', h, re.S) or [None, ''])
         title = re.sub(r'\s+', ' ', title.group(1)).strip() if hasattr(title, 'group') else ''
 
@@ -191,6 +209,12 @@ def main():
             problems.append((url, f'twitter:image diverges from og:image'))
 
         relimg = og.replace(SITE + '/', '')
+        # Brand-system guard: an indexable page should carry featured-art (or a
+        # real video thumbnail). NON_FEATURED_ALLOWED tracks the known
+        # exceptions so a NEW off-brand page is caught while documented debt
+        # (pending Claude Design redesign) does not break the build.
+        if '/og/featured/' not in og and VIDEO_DIR not in og and relimg not in NON_FEATURED_ALLOWED:
+            problems.append((url, f'off-brand og:image (not in featured/ set, not allow-listed): {relimg}'))
         exists = relimg in files                     # case-sensitive on purpose
         if not exists:
             ci = [f for f in files if f.lower() == relimg.lower()]
@@ -215,6 +239,12 @@ def main():
             for b in BANNED_ALT:
                 if b in alt_plain or b in alt:
                     problems.append((url, f'known-inaccurate or placeholder alt: "{b}"'))
+            # twitter:image:alt must exist and match og:image:alt: the social
+            # card should announce the same picture to both crawlers.
+            if tw and not (tw_alt and tw_alt.strip()):
+                problems.append((url, 'twitter:image:alt missing (og:image:alt present)'))
+            elif tw_alt and html_mod.unescape(tw_alt) != alt_plain:
+                problems.append((url, 'twitter:image:alt differs from og:image:alt'))
 
         fn = os.path.basename(og)
         usage.setdefault(fn, []).append(url)

@@ -1,0 +1,117 @@
+{
+  "meta": {
+    "audit": "AmbiSecure site-integrity audit",
+    "crawl_timestamp_utc": "2026-07-18T07:30:45Z",
+    "audited_commit": "c739bbfde6c19f048137acaf087dcdc778a8a9a7",
+    "live_site": "https://ambisecure.ambimat.com/",
+    "approved_package": "docs/AmbiSecure LinkedIn image brief.zip (27 Claude Design featured images)",
+    "reference_dimensions": "1200x630 PNG"
+  },
+  "summary_totals": {
+    "indexable_pages": 318,
+    "noindex_excluded": 1,
+    "pages_with_valid_featured_image": 318,
+    "pages_missing_image": 0,
+    "approved_reference_images_used": 27,
+    "approved_mapping_ok": 27,
+    "approved_mapping_bad": 0,
+    "brand_consistent_generated": 284,
+    "off_brand_old_template": 7,
+    "off_brand_content_pages_needing_design": 5,
+    "shared_images": 0,
+    "unique_images": 318,
+    "technically_invalid": 0,
+    "broken_image_urls_live": 0,
+    "image_dimension_failures": 0,
+    "twitter_image_alt_gap_before_fix": 291,
+    "twitter_image_alt_gap_after_fix": 0,
+    "contradictions_found": 0,
+    "contradictions_fixed": 0,
+    "contradictions_unresolved_human_review": 0
+  },
+  "live_verification": {
+    "pages_checked": 318,
+    "pages_non_200": [],
+    "images_checked": 318,
+    "images_non_200": [],
+    "image_contentlength_vs_local_mismatch": [],
+    "md5_sample_size": 44,
+    "md5_sample_mismatches": [],
+    "deployment_integrity": "live images byte-identical to local build (44-image md5 sample, 0 mismatch; 318/318 content-length match)"
+  },
+  "image_classifications": {
+    "approved_reference": [
+      "https://ambisecure.ambimat.com/about/",
+      "https://ambisecure.ambimat.com/brochures/",
+      "https://ambisecure.ambimat.com/case-studies/",
+      "https://ambisecure.ambimat.com/",
+      "https://ambisecure.ambimat.com/industries/connected-mobility/",
+      "https://ambisecure.ambimat.com/industries/enterprise-access/",
+      "https://ambisecure.ambimat.com/industries/government-and-defence/",
+      "https://ambisecure.ambimat.com/industries/",
+      "https://ambisecure.ambimat.com/industries/smart-cities/",
+      "https://ambisecure.ambimat.com/industries/transportation/",
+      "https://ambisecure.ambimat.com/products/biokey/",
+      "https://ambisecure.ambimat.com/products/",
+      "https://ambisecure.ambimat.com/products/iot-security-coprocessor/",
+      "https://ambisecure.ambimat.com/products/javacard-applets/",
+      "https://ambisecure.ambimat.com/products/onepass-bio-card/",
+      "https://ambisecure.ambimat.com/products/onepass-card/",
+      "https://ambisecure.ambimat.com/products/onepass-usb-key/",
+      "https://ambisecure.ambimat.com/resources/",
+      "https://ambisecure.ambimat.com/services/fido-validation-server/",
+      "https://ambisecure.ambimat.com/services/",
+      "https://ambisecure.ambimat.com/solutions/",
+      "https://ambisecure.ambimat.com/solutions/passwordless-enterprise/",
+      "https://ambisecure.ambimat.com/solutions/phishing-resistant-authentication/",
+      "https://ambisecure.ambimat.com/solutions/secure-element-integration/",
+      "https://ambisecure.ambimat.com/solutions/v2x-security/",
+      "https://ambisecure.ambimat.com/technologies/fido2/",
+      "https://ambisecure.ambimat.com/technologies/"
+    ],
+    "brand_consistent_generated_count": 284,
+    "off_brand_old_template": [
+      "https://ambisecure.ambimat.com/blog/page/2/",
+      "https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/",
+      "https://ambisecure.ambimat.com/products/iot-security-applets/",
+      "https://ambisecure.ambimat.com/products/pkcs-signature-suite/",
+      "https://ambisecure.ambimat.com/products/secure-mail-suite/",
+      "https://ambisecure.ambimat.com/search/",
+      "https://ambisecure.ambimat.com/services/epassport-platform/"
+    ],
+    "off_brand_content_pages_needing_new_design": [
+      "https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/",
+      "https://ambisecure.ambimat.com/products/iot-security-applets/",
+      "https://ambisecure.ambimat.com/products/pkcs-signature-suite/",
+      "https://ambisecure.ambimat.com/products/secure-mail-suite/",
+      "https://ambisecure.ambimat.com/services/epassport-platform/"
+    ]
+  },
+  "corrections_made": [
+    {
+      "type": "twitter:image:alt added",
+      "count": 291,
+      "evidence": "mirrored existing vetted og:image:alt verbatim",
+      "live_status": "local only \u2014 not yet deployed",
+      "deployment_required": true
+    },
+    {
+      "type": "audit hardening: twitter:image:alt consistency check",
+      "file": "tools/audit-og-images.py",
+      "deployment_required": false
+    },
+    {
+      "type": "audit hardening: off-brand og:image guard w/ documented allowlist",
+      "file": "tools/audit-og-images.py",
+      "deployment_required": false
+    }
+  ],
+  "unresolved_decisions": [],
+  "handoff_pages_needing_new_design": [
+    "https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/",
+    "https://ambisecure.ambimat.com/products/iot-security-applets/",
+    "https://ambisecure.ambimat.com/products/pkcs-signature-suite/",
+    "https://ambisecure.ambimat.com/products/secure-mail-suite/",
+    "https://ambisecure.ambimat.com/services/epassport-platform/"
+  ]
+}
