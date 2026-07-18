@@ -1,0 +1,10 @@
+# Python dependencies for tools/audit-all.sh (the CI/deploy safety-net suite).
+#
+# Only tools/audit-og-images.py needs a third-party package: Pillow, to open the
+# featured PNGs and read their real dimensions + perceptual hashes. Every other
+# audit is stdlib-only. Keep this file narrow — it is the source of truth for
+# what `python -m pip install -r tools/requirements-audit.txt` must provide.
+#
+# Compatible-release range: floor guarantees the APIs used (Image.open, convert,
+# crop, resize with LANCZOS); upper bound guards against an unvetted major bump.
+Pillow>=11.0,<13

@@ -150,6 +150,14 @@ def main():
     ap.add_argument('--inventory')
     a = ap.parse_args()
 
+    try:
+        from PIL import Image  # noqa: F401  (real use is inside phash()/main loop)
+    except ModuleNotFoundError:
+        print('ERROR: Pillow is required for the OG-image audit.\n'
+              'Install audit dependencies with:\n'
+              '    python -m pip install -r tools/requirements-audit.txt')
+        return 2
+
     if not os.path.isdir(BUILD):
         print('build tree missing — run tools/build-hostinger-package.sh first')
         return 2

@@ -40,10 +40,23 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install audit dependencies
+      - name: Install audit system tools
         # xmllint (libxml2-utils) is used by tools/audit-all.sh + audit-seo.py
         # to validate sitemap.xml. macOS ships with it; ubuntu-latest does not.
         run: sudo apt-get update && sudo apt-get install -y libxml2-utils
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: tools/requirements-audit.txt
+
+      - name: Install audit Python dependencies
+        # audit-og-images.py imports Pillow to open the featured PNGs and read
+        # their real dimensions. Without this the OG audit reports "No module
+        # named 'PIL'" for every image and blocks the deploy.
+        run: python -m pip install -r tools/requirements-audit.txt
 
       - name: Build deployable tree
         # Produces dist/ambisecure-hostinger/ — the exact tree that
