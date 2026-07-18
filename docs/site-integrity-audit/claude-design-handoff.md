@@ -1,8 +1,8 @@
 # Claude Design Handoff — pages needing new/redesigned featured images
 
-> **STATUS 2026-07-18: ALL 5 REQUESTED IMAGES COMPLETED AND INTEGRATED LOCALLY.** Delivered in `docs/Shared design link.zip → ambisecure-featured-images-new/final/`, validated, and wired into their pages. See the **Completed** section immediately below. The original open-queue entries are retained further down for full traceability. **Deployment status: not pushed, not deployed** — live pages still show the previous images until the Deploy to Hostinger workflow is triggered.
+> **✅ STATUS 2026-07-18T09:19Z: ALL 5 REQUESTED IMAGES COMPLETED, INTEGRATED, DEPLOYED, AND LIVE-VERIFIED.** Delivered in `docs/Shared design link.zip → ambisecure-featured-images-new/final/`, validated, wired into their pages, committed as `736e2e6`, pushed, and deployed via Deploy to Hostinger. Post-deployment verification confirms all five live pages reference the correct new images (byte-identical live↔committed by SHA-256/MD5/`cmp`), the five old covers now return 404, and the full 318-page live re-crawl passes. See the **Completed** section immediately below and [live-verification.md](live-verification.md). The original open-queue entries are retained further down for full traceability.
 
-## Completed — integrated locally (deployment pending)
+## Completed — deployed and live-verified (2026-07-18T09:19Z)
 
 | # | Page | Final filename | Repo destination | Previous image | Validation | Local integration | Deploy |
 |---|---|---|---|---|---|---|---|

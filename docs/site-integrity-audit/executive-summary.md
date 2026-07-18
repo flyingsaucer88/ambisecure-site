@@ -1,11 +1,12 @@
 # AmbiSecure — Site-Integrity Audit — Executive Summary
 
-> **UPDATE 2026-07-18 (5-image integration).** The 5 pages previously flagged as off-brand have been migrated to approved Claude Design featured art (second package `docs/Shared design link.zip → ambisecure-featured-images-new/final/`). Post-integration local state:
+> **✅ UPDATE 2026-07-18T09:19Z — DEPLOYED AND LIVE-VERIFIED. Verdict: Pass — live verified.** The 5 pages previously flagged as off-brand have been migrated to approved Claude Design featured art (second package `docs/Shared design link.zip → ambisecure-featured-images-new/final/`), pushed (deployed commit `736e2e6`), and confirmed on production:
 > - **Approved Claude Design images: 32** (27 original + 5 new), all byte-identical to their packages and correctly mapped.
-> - **Off-brand content pages: 0** (was 5). Old dark-template images deleted from `assets/img/og/`.
+> - **Off-brand content pages: 0** (was 5). Old dark-template images deleted from `assets/img/og/`; all five old `assets/img/og/<slug>.png` URLs now return **404** on live.
 > - **Utility/pagination exceptions still documented: 2** (`/blog/page/2/`, `/search/`).
 > - 318/318 valid featured images; 0 missing; 0 broken; 0 incorrect mappings; 0 shared; all audits pass; built output independently verified; audit negative-tested.
-> - **Revised verdict: Pass with minor review note** (FIDO2 "WebAuthn verified" checkmark sits close to its label — design-cleared, non-blocking). **Not pushed, not deployed** — live site still shows previous images (and still lacks the 291-page `twitter:image:alt` fix) until deployment. The original audit narrative below is retained for history.
+> - **Live verified:** fresh no-cache re-crawl of all 318 indexable pages — 318/318 pages HTTP 200, 318/318 og:image 200, 0 redirects, 0 metadata failures, 0 dimension failures, 0 missing `og:image:alt`/`twitter:image:alt`. The five new live images are byte-identical (SHA-256 + MD5 + `cmp`) to the committed files. The 291-page `twitter:image:alt` fix (commit `9b9de48`) is **now live** (0/318 missing). See [live-verification.md](live-verification.md) for full hashes and per-page evidence.
+> - **Verdict: Pass — live verified.** (Prior local-only note about the FIDO2 "WebAuthn verified" checkmark spacing remains design-cleared, non-blocking.) The original audit narrative below is retained for history.
 
 ---
 

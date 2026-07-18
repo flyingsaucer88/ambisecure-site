@@ -1,5 +1,7 @@
 # Changes Made
 
+> **✅ UPDATE 2026-07-18T09:19Z — DEPLOYED AND LIVE-VERIFIED.** The 5-image change set below was committed as `736e2e6`, pushed to `origin/main`, and deployed via **Deploy to Hostinger**. Post-deployment verification (fresh no-cache crawl) confirms: all 5 live pages reference the correct new images; each live image is byte-identical (SHA-256 + MD5 + `cmp`) to the committed file; all 5 old `assets/img/og/<slug>.png` covers return 404; the 291-page `twitter:image:alt` fix (`9b9de48`) is live; the full 318-page live re-crawl passes with zero defects. No source changes were required by verification. Full evidence in [live-verification.md](live-verification.md) and [site-integrity-results.json](site-integrity-results.json).
+>
 > **UPDATE 2026-07-18 (5-image integration) — second change set (separate commit).**
 >
 > **Added (5 assets):** `assets/img/og/featured/ambisecure-products-fido2-nano-sim-applet-1200x630.png`, `…-products-iot-security-applets-…`, `…-products-pkcs-signature-suite-…`, `…-products-secure-mail-suite-…`, `…-services-epassport-platform-1200x630.png` — the approved Claude Design images from `docs/Shared design link.zip`, copied byte-identically.
