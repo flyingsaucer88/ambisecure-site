@@ -6,6 +6,14 @@
 User-agent: *
 Allow: /
 
+# Rendering assets must stay crawlable. All CSS/JS/font/image assets live
+# under /assets/ and are referenced with a ?v=NN cache-busting query string
+# (e.g. /assets/css/main.css?v=32). Without this rule the broad
+# "Disallow: /*?" below would block every stylesheet and script from
+# Googlebot and break rendering. "/assets/" (longer path) is more specific
+# than "/*?", so Google's longest-match rule keeps these Allowed.
+Allow: /assets/
+
 # Operator-only dashboards (denied at server level, double-belt here).
 Disallow: /_internal/
 
