@@ -1,5 +1,18 @@
 # Live Verification
 
+> **UPDATE 2026-07-18 (5-image integration).** The 5 new images and page edits are **integrated locally and validated in the built output only**. They are **not pushed and not deployed**. State distinction:
+>
+> | Item | Live (deployed) | Local (working tree) | Status |
+> |---|---|---|---|
+> | 5 new featured images + page metadata | old dark-template images still live | new approved art wired in, built, verified | **Fixed locally — deployment required** |
+> | 5 old dark-template images | still live | deleted from repo | Removed locally — deployment required |
+> | 291-page `twitter:image:alt` (commit `9b9de48`) | still absent on non-original-27 pages | present | Still local-only — deployment required |
+>
+> No live re-crawl of the 5 pages was performed for the new images because they are not deployed; claiming live correctness would be inaccurate. Post-deployment, re-crawl the 5 URLs, confirm each image returns HTTP 200, compare live bytes to the committed source, and confirm the old `assets/img/og/*.png` images 404/are absent. The earlier live crawl below (deployed state) remains valid for the other 313 pages.
+
+---
+
+
 - **Crawl timestamp (UTC):** 2026-07-18T07:13Z – 07:31Z
 - **Audited commit (working tree):** `c739bbf` + uncommitted audit corrections
 - **Deployed version identifier:** live `/` `Last-Modified: Fri, 17 Jul 2026 10:10:32 GMT`, `ETag: "8584-6a59ff98-…"`, `server: LiteSpeed`, `platform: hostinger`. The deployed tree predates this audit's local corrections.

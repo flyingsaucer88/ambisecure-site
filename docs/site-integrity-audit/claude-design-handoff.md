@@ -1,6 +1,33 @@
 # Claude Design Handoff — pages needing new/redesigned featured images
 
-These pages carry a valid but **off-brand (older dark title-card)** OG image and have **no approved or brand-consistent alternative in the repo**. They need new featured art in the approved AmbiSecure system. **No artwork was generated for this audit** (per task rules).
+> **STATUS 2026-07-18: ALL 5 REQUESTED IMAGES COMPLETED AND INTEGRATED LOCALLY.** Delivered in `docs/Shared design link.zip → ambisecure-featured-images-new/final/`, validated, and wired into their pages. See the **Completed** section immediately below. The original open-queue entries are retained further down for full traceability. **Deployment status: not pushed, not deployed** — live pages still show the previous images until the Deploy to Hostinger workflow is triggered.
+
+## Completed — integrated locally (deployment pending)
+
+| # | Page | Final filename | Repo destination | Previous image | Validation | Local integration | Deploy |
+|---|---|---|---|---|---|---|---|
+| 1 | [/products/fido2-nano-sim-applet/](https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/) | `ambisecure-products-fido2-nano-sim-applet-1200x630.png` | `assets/img/og/featured/` | `assets/img/og/fido2-nano-sim-applet.png` (deleted) | 1200×630 PNG, opaque, unique md5, byte-identical to package | ✅ og/twitter + secure_url + alt updated | ❌ pending |
+| 2 | [/products/iot-security-applets/](https://ambisecure.ambimat.com/products/iot-security-applets/) | `ambisecure-products-iot-security-applets-1200x630.png` | `assets/img/og/featured/` | `assets/img/og/iot-security-applets.png` (deleted) | 1200×630 PNG, opaque, unique md5 | ✅ | ❌ pending |
+| 3 | [/products/pkcs-signature-suite/](https://ambisecure.ambimat.com/products/pkcs-signature-suite/) | `ambisecure-products-pkcs-signature-suite-1200x630.png` | `assets/img/og/featured/` | `assets/img/og/pkcs-signature-suite.png` (deleted) | 1200×630 PNG, opaque, unique md5 | ✅ | ❌ pending |
+| 4 | [/products/secure-mail-suite/](https://ambisecure.ambimat.com/products/secure-mail-suite/) | `ambisecure-products-secure-mail-suite-1200x630.png` | `assets/img/og/featured/` | `assets/img/og/secure-mail-suite.png` (deleted) | 1200×630 PNG, opaque, unique md5 | ✅ | ❌ pending |
+| 5 | [/services/epassport-platform/](https://ambisecure.ambimat.com/services/epassport-platform/) | `ambisecure-services-epassport-platform-1200x630.png` | `assets/img/og/featured/` | `assets/img/og/epassport-platform.png` (deleted) | 1200×630 PNG, opaque, unique md5; no national emblem/seal | ✅ | ❌ pending |
+
+Final alt text applied (identical in `og:image:alt` and `twitter:image:alt`):
+1. "AmbiSecure FIDO2 nano-card applet holding a hardware-backed credential inside a 4FF secure element, signing a WebAuthn assertion."
+2. "AmbiSecure IoT security applets — provisioning, attestation, mTLS, signed update and key rotation — co-resident on one CC EAL6+ secure element."
+3. "AmbiSecure PKCS Signature Suite — a hardware token with PKCS#11 middleware signing across Acrobat, Office, Mozilla, OpenSC and Windows BaseCSP."
+4. "AmbiSecure Secure Mail Suite — white-label S/MIME email and PDF/PKCS#7 document signing backed by a hardware secure element."
+5. "AmbiSecure ePassport platform engineering — an ICAO 9303 pipeline spanning enrolment, personalisation and CSCA/DSC PKI."
+
+The five pages were removed from `NON_FEATURED_ALLOWED` in `tools/audit-og-images.py`; the two utility exceptions (`/blog/page/2/`, `/search/`) are retained.
+
+**Review note (non-blocking):** on image #1 the small "WebAuthn verified" checkmark sits close to its label. Design review pre-cleared this as acceptable at thumbnail size; text is not clipped, correctly spelled, and legible. Not a defect.
+
+---
+
+## Original open-queue entries (historical — now resolved)
+
+These pages carried a valid but **off-brand (older dark title-card)** OG image and had **no approved or brand-consistent alternative in the repo**. They needed new featured art in the approved AmbiSecure system. **No artwork was generated for this audit** (per task rules).
 
 **Shared spec for all entries below**
 - **Dimensions:** 1200×630 PNG (the confirmed AmbiSecure OG standard)

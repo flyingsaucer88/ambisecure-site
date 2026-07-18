@@ -1,5 +1,22 @@
 # Changes Made
 
+> **UPDATE 2026-07-18 (5-image integration) — second change set (separate commit).**
+>
+> **Added (5 assets):** `assets/img/og/featured/ambisecure-products-fido2-nano-sim-applet-1200x630.png`, `…-products-iot-security-applets-…`, `…-products-pkcs-signature-suite-…`, `…-products-secure-mail-suite-…`, `…-services-epassport-platform-1200x630.png` — the approved Claude Design images from `docs/Shared design link.zip`, copied byte-identically.
+>
+> **Deleted (5 old off-brand assets):** `assets/img/og/{fido2-nano-sim-applet,iot-security-applets,pkcs-signature-suite,secure-mail-suite,epassport-platform}.png`.
+>
+> **Edited (5 pages):** `products/fido2-nano-sim-applet/`, `products/iot-security-applets/`, `products/pkcs-signature-suite/`, `products/secure-mail-suite/`, `services/epassport-platform/` `index.html` — repointed `og:image` + `twitter:image` to the new `/assets/img/og/featured/…` URL, added `og:image:secure_url` (approved-27 convention), and replaced `og:image:alt` + `twitter:image:alt` with the final vetted alt text. No visible-hero change (the OG image is social-only; the on-page hero is a separate product SVG). No JSON-LD `image` field exists on these pages.
+>
+> **Edited (audit script):** `tools/audit-og-images.py` — removed the 5 pages from `NON_FEATURED_ALLOWED`, keeping only the 2 documented utility exceptions (`blog.png`, `search.png`). The five pages are now subject to normal featured-image checks (negative-tested).
+>
+> **Docs updated:** all files in `docs/site-integrity-audit/` (this file, executive summary, brand review, handoff, live verification, inventory CSV, results JSON).
+>
+> Why: fulfils the approved handoff; brings all content pages onto the featured-art brand system; removes now-unnecessary audit exceptions. `dist/` gitignored; the two prior commits (`c739bbf`, `9b9de48`) are untouched. Full original change log below.
+
+---
+
+
 One focused change set. No deployment config, secrets, domains, FTPS, analytics, Lighthouse CI, or page content/claims were altered. `dist/` is gitignored and not committed.
 
 ## 1. `twitter:image:alt` added to 291 source pages

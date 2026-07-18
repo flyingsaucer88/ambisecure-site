@@ -1,5 +1,19 @@
 # Brand-Consistency Review
 
+> **UPDATE 2026-07-18 (5-image integration).** The 5 old dark-template images below have been replaced with approved Claude Design featured art. Post-integration classification of all 318 indexable pages:
+>
+> | Class | Count |
+> |---|---|
+> | Approved reference image (27 original + 5 new, byte-identical to packages) | **32** |
+> | Brand-consistent generated featured art | **284** |
+> | Utility/category documented exception (`/blog/page/2/`, `/search/`) | **2** |
+> | Off-brand old-template | **0** |
+>
+> The 5 new images were visually verified to match the derived design system (off-white grid canvas, mono kicker, red rule + Montserrat headline with red accent word, right-side thin-line diagram pane, AmbiSecure flame+wordmark lockup, red corner wedge). The ePassport image uses a generic ICAO-9303 booklet icon with **no national emblem, seal, or flag**. EAL6+ appears only scoped to "SECURE ELEMENT" (silicon). The "7 inconsistent images" table below is retained for history; its 5 content-page rows are now **resolved**.
+
+---
+
+
 Method: extracted every indexable page's `og:image` from the **built** tree, hashed each image (md5) against the 27 approved package files, verified dimensions/format with Pillow, and visually inspected representative images plus all off-brand candidates via contact sheets (`scratchpad/sheet_approved_gen.png`, `scratchpad/sheet_oldstyle.png`). Perceptual de-duplication was cross-checked against the repo's own dHash audit (`tools/audit-og-images.py`, 50k+ pairs, threshold 12/4096).
 
 ## Derived design system (from the 27 approved images)

@@ -44,20 +44,15 @@ CATEGORY_IMAGE = {
 VIDEO_DIR = 'assets/img/videos/'
 
 # Indexable pages whose og:image is deliberately NOT on the featured-art system.
-# Two documented category/utility images, plus five legacy product/service OG
-# covers in the older dark template that are pending a Claude Design redesign
-# (tracked in docs/site-integrity-audit/claude-design-handoff.md). Listed
-# explicitly so the brand-system guard catches any NEW off-brand page without
-# breaking the build on this known, documented debt. Remove an entry once the
-# page moves onto the featured-art system.
+# Only two documented category/utility images remain: a paginated blog index and
+# the search page inherit their section branding rather than earning bespoke
+# artwork. Listed explicitly so the brand-system guard catches any NEW off-brand
+# page without breaking the build. (The five legacy product/service pages that
+# were here have been migrated to approved Claude Design featured art and are now
+# subject to the normal featured-image checks.)
 NON_FEATURED_ALLOWED = {
     'assets/img/og/blog.png',              # /blog/page/2/ — pagination branding
     'assets/img/og/search.png',            # /search/ — utility branding
-    'assets/img/og/fido2-nano-sim-applet.png',   # /products/fido2-nano-sim-applet/
-    'assets/img/og/iot-security-applets.png',    # /products/iot-security-applets/
-    'assets/img/og/pkcs-signature-suite.png',    # /products/pkcs-signature-suite/
-    'assets/img/og/secure-mail-suite.png',       # /products/secure-mail-suite/
-    'assets/img/og/epassport-platform.png',      # /services/epassport-platform/
 }
 
 # Perceptual-duplicate detection.

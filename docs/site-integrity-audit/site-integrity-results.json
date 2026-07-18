@@ -1,117 +1,116 @@
 {
   "meta": {
-    "audit": "AmbiSecure site-integrity audit",
-    "crawl_timestamp_utc": "2026-07-18T07:30:45Z",
-    "audited_commit": "c739bbfde6c19f048137acaf087dcdc778a8a9a7",
+    "audit": "AmbiSecure site-integrity \u2014 5-image integration update",
+    "update_timestamp_utc": "2026-07-18T14:10Z",
+    "audited_commit": "9b9de48 (working tree with integration applied on top)",
     "live_site": "https://ambisecure.ambimat.com/",
-    "approved_package": "docs/AmbiSecure LinkedIn image brief.zip (27 Claude Design featured images)",
+    "second_package": "docs/Shared design link.zip -> ambisecure-featured-images-new/final/ (5 Claude Design images)",
     "reference_dimensions": "1200x630 PNG"
   },
   "summary_totals": {
     "indexable_pages": 318,
     "noindex_excluded": 1,
     "pages_with_valid_featured_image": 318,
-    "pages_missing_image": 0,
-    "approved_reference_images_used": 27,
-    "approved_mapping_ok": 27,
-    "approved_mapping_bad": 0,
+    "missing": 0,
+    "technically_invalid": 0,
+    "approved_original_images": 27,
+    "newly_approved_images": 5,
+    "approved_claude_design_total": 32,
     "brand_consistent_generated": 284,
-    "off_brand_old_template": 7,
-    "off_brand_content_pages_needing_design": 5,
+    "utility_category_exceptions": 2,
+    "off_brand_content_pages": 0,
     "shared_images": 0,
     "unique_images": 318,
-    "technically_invalid": 0,
-    "broken_image_urls_live": 0,
-    "image_dimension_failures": 0,
-    "twitter_image_alt_gap_before_fix": 291,
-    "twitter_image_alt_gap_after_fix": 0,
-    "contradictions_found": 0,
-    "contradictions_fixed": 0,
-    "contradictions_unresolved_human_review": 0
+    "broken_images": 0,
+    "incorrect_mappings": 0,
+    "pages_with_problems": 0,
+    "total_problems": 0,
+    "classification_breakdown": {
+      "Brand-consistent (generated featured art)": 284,
+      "Approved reference image": 32,
+      "Utility/category (documented)": 2
+    }
   },
-  "live_verification": {
-    "pages_checked": 318,
-    "pages_non_200": [],
-    "images_checked": 318,
-    "images_non_200": [],
-    "image_contentlength_vs_local_mismatch": [],
-    "md5_sample_size": 44,
-    "md5_sample_mismatches": [],
-    "deployment_integrity": "live images byte-identical to local build (44-image md5 sample, 0 mismatch; 318/318 content-length match)"
-  },
-  "image_classifications": {
-    "approved_reference": [
-      "https://ambisecure.ambimat.com/about/",
-      "https://ambisecure.ambimat.com/brochures/",
-      "https://ambisecure.ambimat.com/case-studies/",
-      "https://ambisecure.ambimat.com/",
-      "https://ambisecure.ambimat.com/industries/connected-mobility/",
-      "https://ambisecure.ambimat.com/industries/enterprise-access/",
-      "https://ambisecure.ambimat.com/industries/government-and-defence/",
-      "https://ambisecure.ambimat.com/industries/",
-      "https://ambisecure.ambimat.com/industries/smart-cities/",
-      "https://ambisecure.ambimat.com/industries/transportation/",
-      "https://ambisecure.ambimat.com/products/biokey/",
-      "https://ambisecure.ambimat.com/products/",
-      "https://ambisecure.ambimat.com/products/iot-security-coprocessor/",
-      "https://ambisecure.ambimat.com/products/javacard-applets/",
-      "https://ambisecure.ambimat.com/products/onepass-bio-card/",
-      "https://ambisecure.ambimat.com/products/onepass-card/",
-      "https://ambisecure.ambimat.com/products/onepass-usb-key/",
-      "https://ambisecure.ambimat.com/resources/",
-      "https://ambisecure.ambimat.com/services/fido-validation-server/",
-      "https://ambisecure.ambimat.com/services/",
-      "https://ambisecure.ambimat.com/solutions/",
-      "https://ambisecure.ambimat.com/solutions/passwordless-enterprise/",
-      "https://ambisecure.ambimat.com/solutions/phishing-resistant-authentication/",
-      "https://ambisecure.ambimat.com/solutions/secure-element-integration/",
-      "https://ambisecure.ambimat.com/solutions/v2x-security/",
-      "https://ambisecure.ambimat.com/technologies/fido2/",
-      "https://ambisecure.ambimat.com/technologies/"
-    ],
-    "brand_consistent_generated_count": 284,
-    "off_brand_old_template": [
-      "https://ambisecure.ambimat.com/blog/page/2/",
-      "https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/",
-      "https://ambisecure.ambimat.com/products/iot-security-applets/",
-      "https://ambisecure.ambimat.com/products/pkcs-signature-suite/",
-      "https://ambisecure.ambimat.com/products/secure-mail-suite/",
-      "https://ambisecure.ambimat.com/search/",
-      "https://ambisecure.ambimat.com/services/epassport-platform/"
-    ],
-    "off_brand_content_pages_needing_new_design": [
-      "https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/",
-      "https://ambisecure.ambimat.com/products/iot-security-applets/",
-      "https://ambisecure.ambimat.com/products/pkcs-signature-suite/",
-      "https://ambisecure.ambimat.com/products/secure-mail-suite/",
-      "https://ambisecure.ambimat.com/services/epassport-platform/"
-    ]
-  },
-  "corrections_made": [
+  "integration": [
     {
-      "type": "twitter:image:alt added",
-      "count": 291,
-      "evidence": "mirrored existing vetted og:image:alt verbatim",
-      "live_status": "local only \u2014 not yet deployed",
-      "deployment_required": true
+      "page_title": "FIDO2 Nano-Card Applet",
+      "page_url": "https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/",
+      "source_file": "products/fido2-nano-sim-applet/index.html",
+      "previous_image": "assets/img/og/fido2-nano-sim-applet.png",
+      "new_image": "assets/img/og/featured/ambisecure-products-fido2-nano-sim-applet-1200x630.png",
+      "package_source": "ambisecure-featured-images-new/final/ambisecure-products-fido2-nano-sim-applet-1200x630.png",
+      "exception_removed": true,
+      "local_build_result": "PASS"
     },
     {
-      "type": "audit hardening: twitter:image:alt consistency check",
-      "file": "tools/audit-og-images.py",
-      "deployment_required": false
+      "page_title": "IoT Security Applets",
+      "page_url": "https://ambisecure.ambimat.com/products/iot-security-applets/",
+      "source_file": "products/iot-security-applets/index.html",
+      "previous_image": "assets/img/og/iot-security-applets.png",
+      "new_image": "assets/img/og/featured/ambisecure-products-iot-security-applets-1200x630.png",
+      "package_source": "ambisecure-featured-images-new/final/ambisecure-products-iot-security-applets-1200x630.png",
+      "exception_removed": true,
+      "local_build_result": "PASS"
     },
     {
-      "type": "audit hardening: off-brand og:image guard w/ documented allowlist",
-      "file": "tools/audit-og-images.py",
-      "deployment_required": false
+      "page_title": "PKCS Signature Suite",
+      "page_url": "https://ambisecure.ambimat.com/products/pkcs-signature-suite/",
+      "source_file": "products/pkcs-signature-suite/index.html",
+      "previous_image": "assets/img/og/pkcs-signature-suite.png",
+      "new_image": "assets/img/og/featured/ambisecure-products-pkcs-signature-suite-1200x630.png",
+      "package_source": "ambisecure-featured-images-new/final/ambisecure-products-pkcs-signature-suite-1200x630.png",
+      "exception_removed": true,
+      "local_build_result": "PASS"
+    },
+    {
+      "page_title": "Secure Mail Suite",
+      "page_url": "https://ambisecure.ambimat.com/products/secure-mail-suite/",
+      "source_file": "products/secure-mail-suite/index.html",
+      "previous_image": "assets/img/og/secure-mail-suite.png",
+      "new_image": "assets/img/og/featured/ambisecure-products-secure-mail-suite-1200x630.png",
+      "package_source": "ambisecure-featured-images-new/final/ambisecure-products-secure-mail-suite-1200x630.png",
+      "exception_removed": true,
+      "local_build_result": "PASS"
+    },
+    {
+      "page_title": "ePassport Platform Engineering",
+      "page_url": "https://ambisecure.ambimat.com/services/epassport-platform/",
+      "source_file": "services/epassport-platform/index.html",
+      "previous_image": "assets/img/og/epassport-platform.png",
+      "new_image": "assets/img/og/featured/ambisecure-services-epassport-platform-1200x630.png",
+      "package_source": "ambisecure-featured-images-new/final/ambisecure-services-epassport-platform-1200x630.png",
+      "exception_removed": true,
+      "local_build_result": "PASS"
     }
   ],
-  "unresolved_decisions": [],
-  "handoff_pages_needing_new_design": [
-    "https://ambisecure.ambimat.com/products/fido2-nano-sim-applet/",
-    "https://ambisecure.ambimat.com/products/iot-security-applets/",
-    "https://ambisecure.ambimat.com/products/pkcs-signature-suite/",
-    "https://ambisecure.ambimat.com/products/secure-mail-suite/",
-    "https://ambisecure.ambimat.com/services/epassport-platform/"
-  ]
+  "exception_list": {
+    "file": "tools/audit-og-images.py var NON_FEATURED_ALLOWED",
+    "removed": [
+      "fido2-nano-sim-applet.png",
+      "iot-security-applets.png",
+      "pkcs-signature-suite.png",
+      "secure-mail-suite.png",
+      "epassport-platform.png"
+    ],
+    "retained": [
+      "assets/img/og/blog.png (/blog/page/2/)",
+      "assets/img/og/search.png (/search/)"
+    ]
+  },
+  "validation": {
+    "build": "exit 0",
+    "audit_all": "ALL AUDITS PASSED (exit 0)",
+    "git_diff_check": "clean",
+    "built_output_checks": "5/5 pages PASS (image exists, 1200x630, src==built md5, og==secure_url==twitter==prod URL, alt==manifest, twitter:alt==og:alt, no old refs)",
+    "negative_test": "rc=1 on missing-image, wrong-dims, missing-twitter-alt, reverted-off-brand; clean build rc=0"
+  },
+  "deployment": {
+    "pushed": false,
+    "deployed": false,
+    "live_site_changed": false,
+    "note": "Integrated locally + validated in built output; live still shows previous images until push + Deploy to Hostinger + cache TTL."
+  },
+  "prior_pending": {
+    "twitter_image_alt_291": "local-only from commit 9b9de48; still not deployed; preserved"
+  }
 }

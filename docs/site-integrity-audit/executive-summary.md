@@ -1,5 +1,15 @@
 # AmbiSecure — Site-Integrity Audit — Executive Summary
 
+> **UPDATE 2026-07-18 (5-image integration).** The 5 pages previously flagged as off-brand have been migrated to approved Claude Design featured art (second package `docs/Shared design link.zip → ambisecure-featured-images-new/final/`). Post-integration local state:
+> - **Approved Claude Design images: 32** (27 original + 5 new), all byte-identical to their packages and correctly mapped.
+> - **Off-brand content pages: 0** (was 5). Old dark-template images deleted from `assets/img/og/`.
+> - **Utility/pagination exceptions still documented: 2** (`/blog/page/2/`, `/search/`).
+> - 318/318 valid featured images; 0 missing; 0 broken; 0 incorrect mappings; 0 shared; all audits pass; built output independently verified; audit negative-tested.
+> - **Revised verdict: Pass with minor review note** (FIDO2 "WebAuthn verified" checkmark sits close to its label — design-cleared, non-blocking). **Not pushed, not deployed** — live site still shows previous images (and still lacks the 291-page `twitter:image:alt` fix) until deployment. The original audit narrative below is retained for history.
+
+---
+
+
 - **Live site:** https://ambisecure.ambimat.com/
 - **Crawl (UTC):** 2026-07-18T07:30Z (live HTTP/image checks); local build re-crawled from `dist/ambisecure-hostinger/`
 - **Audited commit:** `c739bbf` (working tree with corrections applied on top)
