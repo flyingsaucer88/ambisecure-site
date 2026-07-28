@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Is all multi-factor authentication equally secure?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. SMS and app OTPs are phishable and interceptable; phishing-resistant factors such as FIDO2 security keys and smart cards bind the credential to the origin and hardware, resisting real-time proxy phishing that defeats OTP-based MFA."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What are the main benefits of MFA?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "MFA blocks the large class of attacks that rely on a stolen or guessed password alone, dramatically reducing account-takeover risk — especially when the second factor is a hardware, phishing-resistant credential."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is phishing-resistant MFA?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "MFA where the second factor cannot be relayed to a fake site — typically FIDO2/WebAuthn or PIV smart cards — because the credential is bound to the legitimate origin and signed by a non-exportable hardware key."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "MFA &mdash; AmbiSecure Blog"
   }
@@ -81,10 +110,13 @@
     <span class="eyebrow">Category</span>
     <h1>MFA</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>MFA</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Multi-factor authentication (MFA) combines two or more independent factors — something you know, have, or are — so a stolen password alone cannot grant access. But not all MFA is equal: SMS and app one-time passwords remain phishable, while phishing-resistant hardware factors (FIDO2 security keys, smart cards) resist adversary-in-the-middle attacks entirely.</p>
+    <p>This category collects engineering and decision-maker writing on MFA: why it matters, the benefits and limits of each factor, and how hardware-backed, phishing-resistant MFA raises assurance for enterprise and government. The recurring argument is that the choice of factor — not merely the presence of a second step — determines the real security gain.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged MFA</h2>
     <div class="grid-3">
 <a href="/blog/passkeys-vs-traditional-mfa/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2026-01-10</div><h3>Passkeys vs Traditional MFA</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/top-3-benefits-of-mfa/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-11-15</div><h3>Top 3 Benefits of MFA</h3><div class="card-meta">Read article &rarr;</div></a>
@@ -94,6 +126,20 @@
 <a href="/blog/archive/mfa-in-government/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-08-19</div><h3>Multi-factor Authentication in Government Sector</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/sms-otp-disadvantages/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-06-01</div><h3>SMS-based OTP Authentication and Its Disadvantages</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is all multi-factor authentication equally secure?</h3><p style="margin:0;">No. SMS and app OTPs are phishable and interceptable; phishing-resistant factors such as FIDO2 security keys and smart cards bind the credential to the origin and hardware, resisting real-time proxy phishing that defeats OTP-based MFA.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What are the main benefits of MFA?</h3><p style="margin:0;">MFA blocks the large class of attacks that rely on a stolen or guessed password alone, dramatically reducing account-takeover risk — especially when the second factor is a hardware, phishing-resistant credential.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is phishing-resistant MFA?</h3><p style="margin:0;">MFA where the second factor cannot be relayed to a fake site — typically FIDO2/WebAuthn or PIV smart cards — because the credential is bound to the legitimate origin and signed by a non-exportable hardware key.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related MFA resources</h2>
+    <ul class="related-links"><li><a href="/blog/why-use-multi-factor-authentication/">Why use multi-factor authentication</a></li><li><a href="/blog/top-3-benefits-of-mfa/">Top 3 benefits of MFA</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant authentication</a></li><li><a href="/solutions/workforce-identity/">Workforce identity</a></li></ul>
   </div>
 </section>
 </main>

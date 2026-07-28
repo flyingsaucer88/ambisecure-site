@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why are one-time passwords no longer enough?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "OTPs are phishable and interceptable: an adversary-in-the-middle proxy or SIM-swap can relay or capture the code in real time. They raise the bar over passwords alone but do not resist a determined phishing attack."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What makes FIDO2 phishing-resistant?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "FIDO2/WebAuthn credentials are bound to the origin (relying-party ID) and signed by a key that never leaves the authenticator. A look-alike phishing domain cannot elicit a valid signature, so the credential simply does not work for the attacker."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do hardware credentials stop malware?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "They contain it. Malware cannot extract a non-exportable key from a secure element, so even a compromised host cannot clone the credential or authenticate elsewhere without the physical device."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Cyber Threats &mdash; AmbiSecure Blog"
   }
@@ -81,10 +110,13 @@
     <span class="eyebrow">Category</span>
     <h1>Cyber Threats</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Cyber Threats</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Cyber threats against identity systems span credential phishing, adversary-in-the-middle proxies, SIM-swap and OTP interception, malware that scrapes software-held keys, and physical attacks on devices. Understanding the threat model is what separates security theatre from engineering: each control should map to a concrete adversary capability it removes.</p>
+    <p>This category tracks the threat landscape relevant to authentication and connected-device security — how attacks actually work, which are rising, and why phishing-resistant, hardware-bound credentials neutralise entire attack classes. The consistent lesson is that shared secrets (passwords, OTPs) are the attacker's easiest path, and origin-bound hardware credentials close it.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Cyber Threats</h2>
     <div class="grid-3 is-centered">
 <a href="/blog/archive/cyber-attacks-in-india-part-3/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-08-05</div><h3>Cyber Attacks in India – Part 3</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/cyber-attacks-in-india-part-2/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-07-28</div><h3>Cyber Attacks in India – Part 2</h3><div class="card-meta">Read article &rarr;</div></a>
@@ -92,6 +124,20 @@
 <a href="/blog/archive/enterprise-security-threats/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-07-06</div><h3>Enterprise Security Threats</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/sms-otp-disadvantages/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-06-01</div><h3>SMS-based OTP Authentication and Its Disadvantages</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why are one-time passwords no longer enough?</h3><p style="margin:0;">OTPs are phishable and interceptable: an adversary-in-the-middle proxy or SIM-swap can relay or capture the code in real time. They raise the bar over passwords alone but do not resist a determined phishing attack.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What makes FIDO2 phishing-resistant?</h3><p style="margin:0;">FIDO2/WebAuthn credentials are bound to the origin (relying-party ID) and signed by a key that never leaves the authenticator. A look-alike phishing domain cannot elicit a valid signature, so the credential simply does not work for the attacker.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Do hardware credentials stop malware?</h3><p style="margin:0;">They contain it. Malware cannot extract a non-exportable key from a secure element, so even a compromised host cannot clone the credential or authenticate elsewhere without the physical device.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Cyber Threats resources</h2>
+    <ul class="related-links"><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant authentication</a></li><li><a href="/blog/categories/mfa/">MFA</a></li><li><a href="/industries/enterprise-access/">Enterprise access</a></li><li><a href="/blog/archive/cyber-attacks-in-india-part-1/">Cyber attacks in India (part 1)</a></li></ul>
   </div>
 </section>
 </main>

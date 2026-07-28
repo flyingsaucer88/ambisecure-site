@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why is DESFire common in transit?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "DESFire offers fast contactless transactions, AES secure messaging, per-application keys, and clonability resistance — the combination fare systems need for high-throughput gates and large card fleets."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between closed-loop and open-loop ticketing?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Closed-loop uses an operator-issued card (e.g., a DESFire transit card) validated offline; open-loop accepts general-purpose EMV bank cards. Many networks run both, with different trust and settlement models."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do gates authenticate cards offline?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Gates hold diversified keys or trusted signatures and validate the card cryptographically on the spot, so a tap completes within the latency budget without an online round-trip."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Transit &mdash; AmbiSecure Blog"
   }
@@ -81,10 +110,13 @@
     <span class="eyebrow">Category</span>
     <h1>Transit</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Transit</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Transit fare systems are one of the largest deployments of contactless secure-element technology, moving millions of riders through gates in the sub-300-millisecond window a tap allows. They demand offline-capable validation, clonability resistance, and per-card key diversification — which is why DESFire and secure-element ticketing dominate closed-loop systems.</p>
+    <p>This category covers transit and ticketing engineering: DESFire-based fare media, closed-loop versus open-loop models, offline validation at the gate, EMV in transit, and the key management that keeps a large fare fleet secure. The recurring focus is meeting hard latency and connectivity constraints without weakening cryptographic assurance.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Transit</h2>
     <div class="grid-3 is-centered">
 <a href="/blog/desfire-ev1-vs-ev2-vs-ev3/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-12-05</div><h3>DESFire EV1 vs EV2 vs EV3</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/designing-low-latency-secure-transit-validators/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-11-28</div><h3>Designing Low-Latency Secure Transit Validators</h3><div class="card-meta">Read article &rarr;</div></a>
@@ -94,6 +126,20 @@
 <a href="/blog/archive/public-transport-ticketing-part-2/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-05-18</div><h3>Public Transport Ticketing System (Part-2)</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/public-transport-ticketing-part-1/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-05-12</div><h3>Public Transport Ticketing System (Part-1)</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why is DESFire common in transit?</h3><p style="margin:0;">DESFire offers fast contactless transactions, AES secure messaging, per-application keys, and clonability resistance — the combination fare systems need for high-throughput gates and large card fleets.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between closed-loop and open-loop ticketing?</h3><p style="margin:0;">Closed-loop uses an operator-issued card (e.g., a DESFire transit card) validated offline; open-loop accepts general-purpose EMV bank cards. Many networks run both, with different trust and settlement models.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How do gates authenticate cards offline?</h3><p style="margin:0;">Gates hold diversified keys or trusted signatures and validate the card cryptographically on the spot, so a tap completes within the latency budget without an online round-trip.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Transit resources</h2>
+    <ul class="related-links"><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/technologies/desfire/">DESFire</a></li><li><a href="/blog/why-sams-matter-in-closed-loop-transit/">Why SAMs matter in closed-loop transit</a></li><li><a href="/industries/transportation/">Transportation</a></li></ul>
   </div>
 </section>
 </main>

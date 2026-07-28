@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why do IoT devices need a hardware root of trust?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "IoT devices are physically accessible and long-lived, so software-only keys can be extracted and cloned. A secure element holds a non-exportable device key and enables attestation and signed-update verification that survive host compromise."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is device attestation?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Attestation lets a device cryptographically prove its identity and, often, its firmware/configuration state to a backend, so only genuine, untampered devices are trusted on the network."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does the CRA affect IoT security?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The Cyber Resilience Act makes secure-by-design, security updates over a defined support period, and vulnerability handling mandatory for connected products in the EU — obligations that a hardware root of trust helps satisfy."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "IoT Security &mdash; AmbiSecure Blog"
   }
@@ -81,15 +110,32 @@
     <span class="eyebrow">Category</span>
     <h1>IoT Security</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>IoT Security</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>IoT security is the discipline of giving connected devices a trustworthy identity and protecting them across a long, unattended lifecycle. Because IoT devices operate outside physical control and ship in large fleets, their security rests on a hardware root of trust: a secure element that provisions a unique device key, attests device state, and protects signed firmware updates.</p>
+    <p>This category covers connected-device security engineering — provisioning and attestation, mutually authenticated TLS, key rotation, secure updates, and how a co-resident secure element anchors all of it. The recurring theme is lifecycle: identity established at manufacture and defended through every update until decommissioning.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged IoT Security</h2>
     <div class="grid-3">
 <a href="/blog/archive/securing-iiot-infrastructure/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-06-08</div><h3>Securing your IIoT infrastructure</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/iot-security-challenges-part-2/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-04-27</div><h3>Challenges to IoT Security (Part 2)</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/iot-security-challenges-part-1/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-04-20</div><h3>Challenges to IoT Security (Part 1)</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why do IoT devices need a hardware root of trust?</h3><p style="margin:0;">IoT devices are physically accessible and long-lived, so software-only keys can be extracted and cloned. A secure element holds a non-exportable device key and enables attestation and signed-update verification that survive host compromise.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is device attestation?</h3><p style="margin:0;">Attestation lets a device cryptographically prove its identity and, often, its firmware/configuration state to a backend, so only genuine, untampered devices are trusted on the network.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How does the CRA affect IoT security?</h3><p style="margin:0;">The Cyber Resilience Act makes secure-by-design, security updates over a defined support period, and vulnerability handling mandatory for connected products in the EU — obligations that a hardware root of trust helps satisfy.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related IoT Security resources</h2>
+    <ul class="related-links"><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/secure-element-integration/">Secure element integration</a></li><li><a href="/blog/secure-iot-identity-with-applets/">Secure IoT identity with applets</a></li><li><a href="/blog/categories/cyber-resilience/">Cyber resilience</a></li></ul>
   </div>
 </section>
 </main>

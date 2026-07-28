@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What happens during a WebAuthn registration ceremony?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The relying party issues a challenge; the authenticator creates a new key pair scoped to the origin, stores the private key, and returns an attestation object containing the public key and (optionally) proof of the authenticator model."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is authenticatorData?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "authenticatorData is the signed structure the authenticator returns, carrying the relying-party ID hash, flags (user presence/verification), a signature counter, and — at registration — the new credential's public key."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is attestation verified?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The server parses the attestation statement, checks the format and certificate chain, and confirms the authenticator meets policy — for example that it is a certified model — before trusting the credential."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "WebAuthn &mdash; AmbiSecure Blog"
   }
@@ -81,15 +110,32 @@
     <span class="eyebrow">Category</span>
     <h1>WebAuthn</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>WebAuthn</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>WebAuthn (Web Authentication) is the W3C browser API behind FIDO2: it lets a website register and authenticate a user with a public-key credential created and held by an authenticator. Paired with CTAP2 for external devices, it delivers phishing-resistant login because credentials are scoped to the relying-party origin and signed by a non-exportable key.</p>
+    <p>This category covers WebAuthn engineering: the registration and authentication ceremonies, attestation objects, authenticatorData and clientDataJSON, and how COSE keys and CBOR encode the credential material. The emphasis is on getting the ceremony and attestation verification right on the server side.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged WebAuthn</h2>
     <div class="grid-3">
 <a href="/blog/implementing-fido2-developer-guide/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2026-01-20</div><h3>Implementing FIDO2 Authentication — A Complete Developer Guide</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/platform-vs-roaming-authenticators/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2026-01-05</div><h3>Platform vs Roaming Authenticators</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/understanding-webauthn-attestation-objects/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-12-28</div><h3>Understanding WebAuthn Attestation Objects</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What happens during a WebAuthn registration ceremony?</h3><p style="margin:0;">The relying party issues a challenge; the authenticator creates a new key pair scoped to the origin, stores the private key, and returns an attestation object containing the public key and (optionally) proof of the authenticator model.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is authenticatorData?</h3><p style="margin:0;">authenticatorData is the signed structure the authenticator returns, carrying the relying-party ID hash, flags (user presence/verification), a signature counter, and — at registration — the new credential's public key.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is attestation verified?</h3><p style="margin:0;">The server parses the attestation statement, checks the format and certificate chain, and confirms the authenticator meets policy — for example that it is a certified model — before trusting the credential.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related WebAuthn resources</h2>
+    <ul class="related-links"><li><a href="/technologies/webauthn/">WebAuthn technology</a></li><li><a href="/resources/webauthn/">WebAuthn engineering reference</a></li><li><a href="/blog/understanding-webauthn-attestation-objects/">Understanding WebAuthn attestation objects</a></li><li><a href="/resources/tools/cose-key/">COSE key decoder</a></li></ul>
   </div>
 </section>
 </main>

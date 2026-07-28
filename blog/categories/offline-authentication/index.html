@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "How can authentication work offline?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The verifier holds trusted public keys or certificates and checks a signature the credential produces locally — for example ePassport Passive Authentication or a signed transit token — so no online lookup is required to establish authenticity."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is revocation handled offline?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Through periodically distributed revocation lists or short-lived credentials: the system trades some freshness for availability, refreshing trust data when connectivity is available rather than per-transaction."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why are secure elements important for offline use?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Offline verification cannot rely on a server to protect secrets, so the credential's key must be non-exportable and held in tamper-resistant hardware to resist cloning in the field."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Offline Authentication &mdash; AmbiSecure Blog"
   }
@@ -81,14 +110,31 @@
     <span class="eyebrow">Category</span>
     <h1>Offline Authentication</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Offline Authentication</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Offline authentication proves identity without a live connection to a central server — essential for transit gates, border control, and field access where latency or connectivity cannot be assumed. It relies on cryptographic verification against locally held trust anchors (public keys or certificates) rather than an online lookup.</p>
+    <p>This category covers the engineering of offline-capable credentials: how a reader validates a card or document using signatures and pre-distributed keys, how revocation is handled without constant connectivity, and where secure elements make offline trust possible. The emphasis is on designing for intermittent or absent connectivity without weakening assurance.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Offline Authentication</h2>
     <div class="grid-3">
 <a href="/blog/designing-low-latency-secure-transit-validators/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-11-28</div><h3>Designing Low-Latency Secure Transit Validators</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/why-sams-matter-in-closed-loop-transit/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-11-20</div><h3>Why SAMs Matter in Closed-Loop Transit</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How can authentication work offline?</h3><p style="margin:0;">The verifier holds trusted public keys or certificates and checks a signature the credential produces locally — for example ePassport Passive Authentication or a signed transit token — so no online lookup is required to establish authenticity.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is revocation handled offline?</h3><p style="margin:0;">Through periodically distributed revocation lists or short-lived credentials: the system trades some freshness for availability, refreshing trust data when connectivity is available rather than per-transaction.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why are secure elements important for offline use?</h3><p style="margin:0;">Offline verification cannot rely on a server to protect secrets, so the credential's key must be non-exportable and held in tamper-resistant hardware to resist cloning in the field.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Offline Authentication resources</h2>
+    <ul class="related-links"><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li><li><a href="/technologies/desfire/">DESFire</a></li><li><a href="/blog/categories/transit/">Transit</a></li><li><a href="/solutions/smart-access-control/">Smart access control</a></li></ul>
   </div>
 </section>
 </main>

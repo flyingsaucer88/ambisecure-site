@@ -72,6 +72,11 @@
 <a href="#main" class="skip-link">Skip to main content</a>
 <div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1982</span></div></div>
 <header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<section class="ref-intro">
+  <div class="section-container" style="max-width:880px;">
+    <p>WebAuthn and FIDO2 encode public keys and signature algorithms using <strong>COSE</strong> (CBOR Object Signing and Encryption, RFC&nbsp;9052). Each algorithm has a signed integer identifier registered in the IANA COSE Algorithms registry — for example <code>-7</code> is ES256 (ECDSA&nbsp;P-256 with SHA-256), <code>-257</code> is RS256 (RSASSA-PKCS1-v1_5 with SHA-256), and <code>-8</code> is EdDSA. This reference lists the algorithm identifiers a relying party is likely to encounter in an attestation or assertion.</p>
+  </div>
+</section>
 <nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">WebAuthn COSE Algorithms</span></nav>
 
 <main id="main">
@@ -91,6 +96,11 @@
 <section class="tool-reference">
   <h2>About this reference</h2>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>RFC 8152 / IANA COSE Algorithms registry.</p></div><div class="ref-card"><h3>Companion tool</h3><p><a href="/resources/tools/cose-key/">COSE Key inspector</a> &middot; <a href="/resources/tools/attestation-decoder/">Attestation decoder</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Attestation objects</a></p></div></div>
+</section>
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Usage notes</h2><p>During registration a relying party advertises the algorithms it accepts as a list of these identifiers (<code>pubKeyCredParams</code>), most-preferred first; the authenticator picks one and returns the credential public key as a COSE_Key map inside the attestation object. At authentication time you verify the assertion signature with that stored key and algorithm.</p><ul><li>ES256 (<code>-7</code>) is the near-universal default; include RS256 (<code>-257</code>) for older platform authenticators and TPMs.</li><li>The COSE_Key map carries the key type (<code>kty</code>), curve (<code>crv</code>), and coordinates — decode it rather than assuming a format.</li><li>Inspect a real credential with the <a href="/resources/tools/cose-key/">COSE key decoder</a> and the <a href="/resources/tools/authdata-parser/">authenticatorData parser</a>.</li></ul>
+  </div>
 </section>
 </main>
 

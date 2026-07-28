@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why does key storage matter more than the algorithm?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Standard algorithms like AES-128 and ECDSA are not the weak point — extractable keys are. A key held in a secure element that never exposes it to software resists both malware and physical attack, whereas the same algorithm with a key in application memory can be dumped."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a key-derivation function used for?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A KDF (for example the SP 800-108 counter-mode KDF used in SCP03) turns a long-term static key plus context into fresh per-session keys, so a compromise of one session's keys does not reveal the master key or other sessions."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is hardware entropy really necessary?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Deterministic or low-entropy random number generation has broken real deployments (predictable keys, repeated nonces). A hardware TRNG in the secure element provides the unpredictability that key generation and challenge freshness depend on."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Cryptography &mdash; AmbiSecure Blog"
   }
@@ -81,13 +110,30 @@
     <span class="eyebrow">Category</span>
     <h1>Cryptography</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Cryptography</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Cryptography is the mathematical foundation under every credential AmbiSecure ships: symmetric ciphers (AES) for secure messaging, asymmetric algorithms (RSA, ECC) for signatures and key agreement, hashes and MACs for integrity, and key-derivation functions for session keys. In embedded identity the interesting problems are rarely the primitives themselves — they are key storage, entropy, side-channel resistance, and protocol composition.</p>
+    <p>This category gathers practical engineering notes on applied cryptography for smart cards and secure elements: how session keys are derived, why hardware entropy matters, how secure channels such as SCP03 are constructed, and where naive implementations leak. The guiding principle is that a correct algorithm on an insecure substrate is still insecure — the key must live in tamper-resistant silicon.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Cryptography</h2>
     <div class="grid-3">
 <a href="/blog/understanding-webauthn-attestation-objects/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-12-28</div><h3>Understanding WebAuthn Attestation Objects</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does key storage matter more than the algorithm?</h3><p style="margin:0;">Standard algorithms like AES-128 and ECDSA are not the weak point — extractable keys are. A key held in a secure element that never exposes it to software resists both malware and physical attack, whereas the same algorithm with a key in application memory can be dumped.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is a key-derivation function used for?</h3><p style="margin:0;">A KDF (for example the SP 800-108 counter-mode KDF used in SCP03) turns a long-term static key plus context into fresh per-session keys, so a compromise of one session's keys does not reveal the master key or other sessions.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is hardware entropy really necessary?</h3><p style="margin:0;">Yes. Deterministic or low-entropy random number generation has broken real deployments (predictable keys, repeated nonces). A hardware TRNG in the secure element provides the unpredictability that key generation and challenge freshness depend on.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Cryptography resources</h2>
+    <ul class="related-links"><li><a href="/resources/tools/scp03-helper/">SCP03 helper</a></li><li><a href="/resources/tools/key-diversification/">Key diversification</a></li><li><a href="/references/x509-oids/">X.509 OIDs reference</a></li><li><a href="/blog/lava-lamps-and-cryptographic-entropy/">Lava lamps & entropy</a></li></ul>
   </div>
 </section>
 </main>

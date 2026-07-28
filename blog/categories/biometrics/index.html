@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Is match-on-device more secure than match-on-server?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Generally yes for privacy and breach exposure: match-on-device keeps the enrolled template inside a secure element and returns only a yes/no decision, so a server compromise never exposes raw biometric data. Match-on-server centralises templates, which simplifies large fleets but concentrates risk."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can a biometric replace a cryptographic key?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. A biometric is best used to unlock or gate access to a hardware-held key, not to replace it. Biometrics are non-secret and non-revocable, so the actual authentication secret should remain a key inside a secure element that the biometric merely releases."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is presentation-attack detection?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Presentation-attack detection (liveness) checks that the sample comes from a live person rather than a photo, mould, or replay. It is a distinct problem from matching accuracy and is essential wherever unsupervised capture is possible."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Biometrics &mdash; AmbiSecure Blog"
   }
@@ -81,14 +110,31 @@
     <span class="eyebrow">Category</span>
     <h1>Biometrics</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Biometrics</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Biometrics authenticate a person by a physical or behavioural trait — fingerprint, face, palm vein, or iris — rather than something they know or carry. In hardware-rooted identity systems the decisive engineering question is <em>where the match happens</em>: match-on-device (or match-on-card) compares the live sample against a template that never leaves a secure element, whereas match-on-server centralises templates and creates a high-value breach target.</p>
+    <p>This category collects AmbiSecure engineering writing on biometric modalities, template protection, liveness and presentation-attack detection, and the privacy trade-offs of consumer biometric deployments. The recurring theme is that a biometric is an identifier, not a secret: it cannot be rotated if leaked, so the template store and the matcher must be protected in tamper-resistant hardware.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Biometrics</h2>
     <div class="grid-3">
 <a href="/blog/archive/workplace-biometrics/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-07-30</div><h3>Workplace Security — How Biometrics Is the Key to the New Normal</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/consumer-biometrics-and-privacy/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-06-29</div><h3>Consumer Biometrics in the Data Privacy Age</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is match-on-device more secure than match-on-server?</h3><p style="margin:0;">Generally yes for privacy and breach exposure: match-on-device keeps the enrolled template inside a secure element and returns only a yes/no decision, so a server compromise never exposes raw biometric data. Match-on-server centralises templates, which simplifies large fleets but concentrates risk.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can a biometric replace a cryptographic key?</h3><p style="margin:0;">No. A biometric is best used to unlock or gate access to a hardware-held key, not to replace it. Biometrics are non-secret and non-revocable, so the actual authentication secret should remain a key inside a secure element that the biometric merely releases.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is presentation-attack detection?</h3><p style="margin:0;">Presentation-attack detection (liveness) checks that the sample comes from a live person rather than a photo, mould, or replay. It is a distinct problem from matching accuracy and is essential wherever unsupervised capture is possible.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Biometrics resources</h2>
+    <ul class="related-links"><li><a href="/blog/categories/passwordless/">Passwordless authentication</a></li><li><a href="/technologies/fido/">FIDO & WebAuthn</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/blog/categories/privacy/">Privacy</a></li></ul>
   </div>
 </section>
 </main>

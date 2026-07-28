@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Is passwordless authentication actually more secure?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, when built on hardware-bound public-key credentials: there is no shared secret to phish or leak, and the authenticating key never leaves the device, which eliminates password reuse and most phishing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a passkey?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A passkey is a FIDO2/WebAuthn credential used in place of a password. It can be synced across a user's devices or bound to a single hardware authenticator; the hardware-bound form is the strongest."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do I still need a second factor if I go passwordless?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A hardware passkey is itself a strong, phishing-resistant factor combining possession with a local user gesture (PIN or biometric), so it can satisfy multi-factor requirements on its own."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Passwordless &mdash; AmbiSecure Blog"
   }
@@ -81,10 +110,13 @@
     <span class="eyebrow">Category</span>
     <h1>Passwordless</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Passwordless</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Passwordless authentication removes the shared secret entirely, replacing it with a cryptographic credential the user proves possession of — a passkey, FIDO2 security key, or smart card. Because there is no password to phish, reuse, or leak, passwordless done with hardware-bound credentials closes the most exploited attack path in enterprise security.</p>
+    <p>This category collects writing on passwordless architecture: FIDO2 and passkeys, platform versus roaming authenticators, credential lifecycle, and the migration path from passwords and OTPs. The recurring theme is that passwordless is only as strong as the credential's binding — hardware-held, origin-bound keys deliver the full benefit.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Passwordless</h2>
     <div class="grid-3">
 <a href="/blog/implementing-fido2-developer-guide/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2026-01-20</div><h3>Implementing FIDO2 Authentication — A Complete Developer Guide</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/designing-enterprise-passwordless-systems/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2026-01-15</div><h3>Designing Enterprise Passwordless Systems</h3><div class="card-meta">Read article &rarr;</div></a>
@@ -93,6 +125,20 @@
 <a href="/blog/archive/is-passwordless-the-future/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-06-01</div><h3>Is Passwordless the future?</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/fast-identity-online/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-12-15</div><h3>Fast Identity Online (FIDO)</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is passwordless authentication actually more secure?</h3><p style="margin:0;">Yes, when built on hardware-bound public-key credentials: there is no shared secret to phish or leak, and the authenticating key never leaves the device, which eliminates password reuse and most phishing.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is a passkey?</h3><p style="margin:0;">A passkey is a FIDO2/WebAuthn credential used in place of a password. It can be synced across a user's devices or bound to a single hardware authenticator; the hardware-bound form is the strongest.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Do I still need a second factor if I go passwordless?</h3><p style="margin:0;">A hardware passkey is itself a strong, phishing-resistant factor combining possession with a local user gesture (PIN or biometric), so it can satisfy multi-factor requirements on its own.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Passwordless resources</h2>
+    <ul class="related-links"><li><a href="/solutions/phishing-resistant-authentication/">Passwordless authentication solution</a></li><li><a href="/blog/archive/is-passwordless-the-future/">Is passwordless the future</a></li><li><a href="/blog/categories/fido/">FIDO</a></li><li><a href="/blog/smart-cards-vs-fido-tokens-vs-passkeys/">Smart cards vs FIDO tokens vs passkeys</a></li></ul>
   </div>
 </section>
 </main>

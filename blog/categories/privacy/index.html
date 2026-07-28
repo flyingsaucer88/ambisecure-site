@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "How do FIDO credentials protect privacy?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "FIDO generates a distinct key pair per relying-party origin, so credentials cannot be used to correlate a user across sites, and no shared identifier is handed to every service."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What are pseudonymous certificates?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "In V2X (vehicle-to-everything) systems, vehicles use short-lived pseudonymous certificates so messages are authenticated without exposing a persistent identifier that would let observers track a specific vehicle."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why keep biometric templates on the device?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Match-on-device keeps the template in a secure element and never transmits it, so there is no central biometric database to breach and no raw biometric to leak."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Privacy &mdash; AmbiSecure Blog"
   }
@@ -81,13 +110,30 @@
     <span class="eyebrow">Category</span>
     <h1>Privacy</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Privacy</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Privacy in identity engineering is about proving what is necessary and revealing nothing more. Techniques such as match-on-device biometrics, pseudonymous certificates, selective disclosure, and origin-scoped credentials let a system authenticate a user without building a central pool of linkable personal data.</p>
+    <p>This category covers privacy-preserving design for credentials and connected systems: how biometric templates stay on-device, how V2X pseudonymous certificates prevent vehicle tracking, and how FIDO's per-origin credentials avoid cross-site correlation. The guiding principle is data minimisation enforced by architecture, not policy.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Privacy</h2>
     <div class="grid-3">
 <a href="/blog/archive/consumer-biometrics-and-privacy/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-06-29</div><h3>Consumer Biometrics in the Data Privacy Age</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How do FIDO credentials protect privacy?</h3><p style="margin:0;">FIDO generates a distinct key pair per relying-party origin, so credentials cannot be used to correlate a user across sites, and no shared identifier is handed to every service.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What are pseudonymous certificates?</h3><p style="margin:0;">In V2X (vehicle-to-everything) systems, vehicles use short-lived pseudonymous certificates so messages are authenticated without exposing a persistent identifier that would let observers track a specific vehicle.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why keep biometric templates on the device?</h3><p style="margin:0;">Match-on-device keeps the template in a secure element and never transmits it, so there is no central biometric database to breach and no raw biometric to leak.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Privacy resources</h2>
+    <ul class="related-links"><li><a href="/blog/pseudonymous-certificates-and-privacy/">Pseudonymous certificates and privacy</a></li><li><a href="/blog/categories/biometrics/">Biometrics</a></li><li><a href="/solutions/v2x-security/">V2X security</a></li><li><a href="/blog/archive/consumer-biometrics-and-privacy/">Consumer biometrics and privacy</a></li></ul>
   </div>
 </section>
 </main>

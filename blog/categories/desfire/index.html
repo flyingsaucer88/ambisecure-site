@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What changed between DESFire EV1, EV2, and EV3?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "EV1 introduced AES-128 and the file-level key model; EV2 added Secure Messaging mode and Transaction MAC for tamper-evident sessions; EV3 added Secure Dynamic Messaging (SDM) for NDEF and tightened side-channel posture. Each is a real protocol delta."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is key diversification and why is it needed?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Diversification derives a unique per-card key from a master key and the card's UID, so recovering one card's key does not compromise the whole fleet. It is essential for any large ticketing or access deployment."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is DESFire suitable for transit ticketing?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes — it is one of the most common transit card technologies, offering fast contactless transactions, per-application keys, and secure messaging that resists cloning and replay."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "DESFire &mdash; AmbiSecure Blog"
   }
@@ -81,14 +110,31 @@
     <span class="eyebrow">Category</span>
     <h1>DESFire</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>DESFire</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>MIFARE DESFire is a contactless smart-card family widely used in transit ticketing, access control, and closed-loop payment. It provides file-based application storage, AES-128 cryptography, and mutually authenticated Secure Messaging — the reason it displaced memory cards in fare systems that need clonability resistance and per-application keys.</p>
+    <p>This category covers DESFire engineering: the EV1/EV2/EV3 generational deltas, secure messaging modes, key management and diversification, and how DESFire fits transit and smart-city deployments. The practical focus is on getting authentication, file access rights, and key diversification correct, because those — not the cipher — are where real systems fail.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged DESFire</h2>
     <div class="grid-3">
 <a href="/blog/desfire-ev1-vs-ev2-vs-ev3/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-12-05</div><h3>DESFire EV1 vs EV2 vs EV3</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/designing-low-latency-secure-transit-validators/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-11-28</div><h3>Designing Low-Latency Secure Transit Validators</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What changed between DESFire EV1, EV2, and EV3?</h3><p style="margin:0;">EV1 introduced AES-128 and the file-level key model; EV2 added Secure Messaging mode and Transaction MAC for tamper-evident sessions; EV3 added Secure Dynamic Messaging (SDM) for NDEF and tightened side-channel posture. Each is a real protocol delta.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is key diversification and why is it needed?</h3><p style="margin:0;">Diversification derives a unique per-card key from a master key and the card's UID, so recovering one card's key does not compromise the whole fleet. It is essential for any large ticketing or access deployment.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is DESFire suitable for transit ticketing?</h3><p style="margin:0;">Yes — it is one of the most common transit card technologies, offering fast contactless transactions, per-application keys, and secure messaging that resists cloning and replay.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related DESFire resources</h2>
+    <ul class="related-links"><li><a href="/technologies/desfire/">DESFire technology</a></li><li><a href="/references/desfire-commands/">DESFire commands reference</a></li><li><a href="/blog/desfire-ev1-vs-ev2-vs-ev3/">DESFire EV1 vs EV2 vs EV3</a></li><li><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></li></ul>
   </div>
 </section>
 </main>

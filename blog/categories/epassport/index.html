@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What secures the data on an ePassport chip?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ICAO 9303 defines the model: access control (BAC/PACE) gates reads, Passive Authentication verifies a country-signed hash of the data groups, and Chip/Active Authentication proves the chip is genuine and not cloned."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the CSCA/DSC hierarchy?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Each country runs a Country Signing Certificate Authority (CSCA) that certifies Document Signer Certificates (DSC); the DSC signs the data on each passport, and inspection systems verify that chain to trust the document."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where does personalisation fit?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Personalisation writes the holder's data groups and cryptographic keys into the chip during issuance; it must run inside a secure, audited pipeline because it establishes the document's trust anchor."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "ePassport &mdash; AmbiSecure Blog"
   }
@@ -81,14 +110,31 @@
     <span class="eyebrow">Category</span>
     <h1>ePassport</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>ePassport</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>An electronic passport (ePassport) is a travel document with an embedded contactless chip holding the holder's data and a portrait, protected by an ICAO 9303 security architecture: Basic/PACE access control, Passive Authentication for data integrity, and Active/Chip Authentication against cloning. It is one of the largest deployments of secure-element identity in the world.</p>
+    <p>This category covers ePassport engineering end to end — the ICAO 9303 chip application, the CSCA/DSC public-key infrastructure that signs and verifies document data, and the enrolment and personalisation pipelines that issue documents at national scale. The emphasis is on the PKI and personalisation plumbing that make chip authentication trustworthy.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged ePassport</h2>
     <div class="grid-3">
 <a href="/blog/archive/how-chip-based-epassports-work/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-01-28</div><h3>ePassport and How will chip-based e-Passports work</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/epassport-applications/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-01-28</div><h3>ePassport and Its Application</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What secures the data on an ePassport chip?</h3><p style="margin:0;">ICAO 9303 defines the model: access control (BAC/PACE) gates reads, Passive Authentication verifies a country-signed hash of the data groups, and Chip/Active Authentication proves the chip is genuine and not cloned.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the CSCA/DSC hierarchy?</h3><p style="margin:0;">Each country runs a Country Signing Certificate Authority (CSCA) that certifies Document Signer Certificates (DSC); the DSC signs the data on each passport, and inspection systems verify that chain to trust the document.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Where does personalisation fit?</h3><p style="margin:0;">Personalisation writes the holder's data groups and cryptographic keys into the chip during issuance; it must run inside a secure, audited pipeline because it establishes the document's trust anchor.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related ePassport resources</h2>
+    <ul class="related-links"><li><a href="/services/epassport-platform/">ePassport Platform Engineering</a></li><li><a href="/blog/archive/how-chip-based-epassports-work/">How chip-based ePassports work</a></li><li><a href="/blog/engineering-epassport-issuance-platforms/">Engineering ePassport issuance platforms</a></li><li><a href="/industries/government-and-defence/">Government identity</a></li></ul>
   </div>
 </section>
 </main>

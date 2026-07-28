@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is a JavaCard applet?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A JavaCard applet is a small application written to the JavaCard API that runs inside a secure element — for example a FIDO2, PIV, or payment applet — isolated from other applets by the platform firewall."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does GlobalPlatform provide?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "GlobalPlatform defines how applets are securely loaded, installed, and managed on a card, including the SCP secure channels used to authenticate the management session and protect CAP-file loading."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can multiple applets coexist on one chip?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes — a core strength of JavaCard is hosting several isolated applets on one certified secure element, each with its own keys and access rules, sharing the hardware but not the security domain."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "JavaCard &mdash; AmbiSecure Blog"
   }
@@ -81,14 +110,31 @@
     <span class="eyebrow">Category</span>
     <h1>JavaCard</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>JavaCard</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>JavaCard is the runtime and application model for programmable secure elements: applets written to the JavaCard API run inside a certified chip, managed through GlobalPlatform, giving one piece of tamper-resistant silicon multiple independent security applications. It is the substrate behind FIDO applets, PIV, payment, transit, and ePassport chips.</p>
+    <p>This category covers JavaCard engineering — the applet development lifecycle, the JavaCard 3.x platform, GlobalPlatform card management and secure channels, and CAP file loading. The practical emphasis is on building and provisioning applets that run on certified secure elements rather than on the language itself.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged JavaCard</h2>
     <div class="grid-3">
 <a href="/blog/apdu-from-first-principles/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-12-12</div><h3>APDU From First Principles</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/introduction-to-java-card/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-12-15</div><h3>An Introduction to Java Card Technology</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is a JavaCard applet?</h3><p style="margin:0;">A JavaCard applet is a small application written to the JavaCard API that runs inside a secure element — for example a FIDO2, PIV, or payment applet — isolated from other applets by the platform firewall.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What does GlobalPlatform provide?</h3><p style="margin:0;">GlobalPlatform defines how applets are securely loaded, installed, and managed on a card, including the SCP secure channels used to authenticate the management session and protect CAP-file loading.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can multiple applets coexist on one chip?</h3><p style="margin:0;">Yes — a core strength of JavaCard is hosting several isolated applets on one certified secure element, each with its own keys and access rules, sharing the hardware but not the security domain.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related JavaCard resources</h2>
+    <ul class="related-links"><li><a href="/technologies/javacard/">JavaCard technology</a></li><li><a href="/products/javacard-applets/">JavaCard Applets product</a></li><li><a href="/services/javacard-development/">JavaCard development service</a></li><li><a href="/references/javacard-cap/">JavaCard CAP reference</a></li></ul>
   </div>
 </section>
 </main>

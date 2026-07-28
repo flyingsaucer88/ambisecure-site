@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is a hardware root of trust?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A hardware root of trust is a tamper-resistant component (a secure element) that stores keys and performs cryptographic operations without exposing secrets to software, providing an anchor for boot integrity, attestation, and authentication."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does software-only device trust fail?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Keys held in software can be read by malware, copied between devices, and are hard to attest reliably. Without hardware isolation there is no strong binding between a credential and a specific physical device."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is multi-factor authentication still worthwhile?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes — but the factors matter. Phishing-resistant hardware factors (FIDO2 security keys, smart cards) deliver far more protection than SMS or app OTPs, which remain phishable."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Cybersecurity &mdash; AmbiSecure Blog"
   }
@@ -81,15 +110,32 @@
     <span class="eyebrow">Category</span>
     <h1>Cybersecurity</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Cybersecurity</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Cybersecurity, for a hardware-identity vendor, is less about perimeter defence and more about making credentials unclonable and authentication phishing-resistant. The strongest control you can give an organisation is a secret that cannot be extracted, phished, or replayed — which is exactly what a key bound to a secure element provides.</p>
+    <p>This category collects broader security engineering writing: authentication architecture, why software-only device trust fails, and how hardware roots of trust change the economics for attackers. The recurring argument is that moving the authentication secret into tamper-resistant hardware removes whole categories of attack rather than merely detecting them.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Cybersecurity</h2>
     <div class="grid-3">
 <a href="/blog/top-3-benefits-of-mfa/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-11-15</div><h3>Top 3 Benefits of MFA</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/why-use-multi-factor-authentication/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-11-10</div><h3>Why Use Multi-Factor Authentication</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/common-misconceptions-about-2fa/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-08-19</div><h3>Common Misconceptions about Two-Factor Authentication</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is a hardware root of trust?</h3><p style="margin:0;">A hardware root of trust is a tamper-resistant component (a secure element) that stores keys and performs cryptographic operations without exposing secrets to software, providing an anchor for boot integrity, attestation, and authentication.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does software-only device trust fail?</h3><p style="margin:0;">Keys held in software can be read by malware, copied between devices, and are hard to attest reliably. Without hardware isolation there is no strong binding between a credential and a specific physical device.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is multi-factor authentication still worthwhile?</h3><p style="margin:0;">Yes — but the factors matter. Phishing-resistant hardware factors (FIDO2 security keys, smart cards) deliver far more protection than SMS or app OTPs, which remain phishable.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Cybersecurity resources</h2>
+    <ul class="related-links"><li><a href="/blog/why-software-only-device-trust-fails/">Why software-only device trust fails</a></li><li><a href="/solutions/phishing-resistant-authentication/">Phishing-resistant authentication</a></li><li><a href="/technologies/secure-elements/">Secure elements</a></li><li><a href="/about/certifications/">Certifications</a></li></ul>
   </div>
 </section>
 </main>

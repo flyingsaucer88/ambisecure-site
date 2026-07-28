@@ -186,6 +186,11 @@ Redirect 301 /industries/healthcare /industries/
 Redirect 301 /industries/iot-and-industrial /industries/
 Redirect 301 /industries/retail-and-hospitality /industries/
 
+# Duplicate-intent consolidation: the narrow "enterprise-mfa" category was a
+# subset of "mfa" (same query). Redirect it to the broader canonical category.
+# RedirectMatch (anchored) so it cannot shadow /blog/categories/mfa/.
+RedirectMatch 301 ^/blog/categories/enterprise-mfa/?$ /blog/categories/mfa/
+
 # Blog category landings (singular -> plural; categories not in Phase 7 set fall back to /blog/)
 Redirect 301 /blog/category/secure-elements /blog/
 Redirect 301 /blog/category/nfc-desfire /blog/categories/desfire/

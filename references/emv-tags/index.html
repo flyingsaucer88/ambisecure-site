@@ -72,6 +72,11 @@
 <a href="#main" class="skip-link">Skip to main content</a>
 <div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1982</span></div></div>
 <header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<section class="ref-intro">
+  <div class="section-container" style="max-width:880px;">
+    <p>EMV data is encoded as <strong>BER-TLV</strong> — each field is a Tag, a Length, and a Value. The tag identifies the data element (for example <code>0x5A</code> is the Application PAN, <code>0x9F26</code> is the Application Cryptogram, <code>0x82</code> is the Application Interchange Profile), and tags may be <em>primitive</em> (a value) or <em>constructed</em> (nesting more TLV objects). This reference lists the common EMV tags seen in contact and contactless transaction flows across the EMV Books and the contactless kernels.</p>
+  </div>
+</section>
 <nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">EMV Tags</span></nav>
 
 <main id="main">
@@ -91,6 +96,11 @@
 <section class="tool-reference">
   <h2>About this reference</h2>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>EMV Books 3 and 4; EMV Contactless C-2 / C-3.</p></div><div class="ref-card"><h3>Companion tool</h3><p><a href="/resources/tools/emv-tag-dict/">EMV tag dictionary tool</a> &middot; <a href="/resources/tools/tlv-tree-viz/">TLV tree visualizer</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/apdu-from-first-principles/">APDU from first principles</a></p></div></div>
+</section>
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Usage notes</h2><p>A tag's first byte tells you its shape: bit&nbsp;6 (0x20) set means the object is constructed and its value is itself TLV; a low nibble of <code>0x1F</code> in the first byte means the tag continues into further bytes (two-byte tags like <code>0x9F02</code>). Parse length first, then read exactly that many value bytes before moving to the next tag.</p><ul><li>Templates such as <code>0x70</code> (READ RECORD) and <code>0x77</code> (response message template) are constructed — decode their contents recursively.</li><li>Proprietary tags in the <code>0x9Fxx</code> and <code>0xDFxx</code> space are kernel- and issuer-specific; confirm meaning against the relevant EMV kernel specification.</li><li>Use the <a href="/resources/tools/tlv-parser/">TLV parser</a> to expand a full record and the <a href="/resources/tools/emv-tag-dict/">EMV tag dictionary</a> tool for quick lookups.</li></ul>
+  </div>
 </section>
 </main>
 

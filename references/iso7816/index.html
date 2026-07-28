@@ -72,6 +72,11 @@
 <a href="#main" class="skip-link">Skip to main content</a>
 <div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad · India · Est. 1982</span></div></div>
 <header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/" class="active">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<section class="ref-intro">
+  <div class="section-container" style="max-width:880px;">
+    <p>ISO/IEC&nbsp;7816 is the foundational standard family for contact smart cards. Part&nbsp;4 defines the <strong>APDU</strong> — the command/response unit exchanged with the card. A command APDU begins with a four-byte header: <code>CLA</code> (class), <code>INS</code> (instruction), and <code>P1</code>/<code>P2</code> (parameters), optionally followed by <code>Lc</code>, a data field, and <code>Le</code> (expected response length). This reference collects the common CLA/INS values and interindustry commands (SELECT, READ&nbsp;BINARY, GET&nbsp;RESPONSE, VERIFY, and the rest).</p>
+  </div>
+</section>
 <nav class="breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/references/">References</a><span class="sep">/</span><span class="current">ISO 7816 CLA Values</span></nav>
 
 <main id="main">
@@ -91,6 +96,11 @@
 <section class="tool-reference">
   <h2>About this reference</h2>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>ISO/IEC 7816-4 §5.4.1.</p></div><div class="ref-card"><h3>Companion tool</h3><p><a href="/resources/tools/iso7816-cla/">CLA decoder</a> &middot; <a href="/resources/tools/apdu-script-validator/">APDU script validator</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/apdu-from-first-principles/">APDU from first principles</a></p></div></div>
+</section>
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Usage notes</h2><p>The four command <em>cases</em> describe whether data is sent, expected, both, or neither: Case&nbsp;1 (header only), Case&nbsp;2 (expect response, <code>Le</code>), Case&nbsp;3 (send data, <code>Lc</code>), and Case&nbsp;4 (both). Short-length encoding uses one byte for <code>Lc</code>/<code>Le</code>; extended length uses three. The <code>CLA</code> byte also signals secure messaging and logical-channel selection.</p><ul><li><code>0x00 A4</code> is SELECT; <code>0x00 B0</code> is READ&nbsp;BINARY; <code>0x00 C0</code> is GET&nbsp;RESPONSE — the command you issue after a <code>0x61xx</code> status word.</li><li>Proprietary classes (<code>CLA</code> with the top bits set) fall outside the interindustry set and follow the card's own specification.</li><li>Decode the status word a command returns with the <a href="/references/apdu-status/">APDU status-word reference</a>, and build or inspect commands with the <a href="/resources/tools/apdu-parser/">APDU parser</a>.</li></ul>
+  </div>
 </section>
 </main>
 

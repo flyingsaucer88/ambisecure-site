@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why do government IDs use secure elements?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Public-sector credentials must resist cloning and physical attack over long lifetimes and high stakes, which requires tamper-resistant secure-element hardware with certified assurance rather than software key storage."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What role does PKI play in national identity?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "PKI signs and verifies credential data (for example the CSCA/DSC chain for ePassports), so any inspection system can validate a document's authenticity offline against a trusted national signer."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is smart-card personalisation at national scale?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It is the audited process of loading each citizen's data and keys into a card or chip during issuance, run through hardened tooling because it establishes the credential's root of trust."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Government Identity &mdash; AmbiSecure Blog"
   }
@@ -81,15 +110,32 @@
     <span class="eyebrow">Category</span>
     <h1>Government Identity</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Government Identity</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Government identity systems issue and verify credentials for citizens and officials — national IDs, ePassports, PIV/CAC smart cards, and mobile driving licences. They are defined by scale, long lifecycles, and strict assurance requirements, which is why they are built on certified secure-element hardware and national PKI rather than software credentials.</p>
+    <p>This category covers engineering for public-sector identity: smart-card personalisation, the PKI that underpins document trust, standards conformance, and the operational realities of issuing credentials to millions of holders. The emphasis is on assurance, interoperability, and lifecycle management.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Government Identity</h2>
     <div class="grid-3">
 <a href="/blog/archive/mfa-in-government/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-08-19</div><h3>Multi-factor Authentication in Government Sector</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/how-chip-based-epassports-work/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-01-28</div><h3>ePassport and How will chip-based e-Passports work</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/epassport-applications/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-01-28</div><h3>ePassport and Its Application</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why do government IDs use secure elements?</h3><p style="margin:0;">Public-sector credentials must resist cloning and physical attack over long lifetimes and high stakes, which requires tamper-resistant secure-element hardware with certified assurance rather than software key storage.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What role does PKI play in national identity?</h3><p style="margin:0;">PKI signs and verifies credential data (for example the CSCA/DSC chain for ePassports), so any inspection system can validate a document's authenticity offline against a trusted national signer.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is smart-card personalisation at national scale?</h3><p style="margin:0;">It is the audited process of loading each citizen's data and keys into a card or chip during issuance, run through hardened tooling because it establishes the credential's root of trust.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Government Identity resources</h2>
+    <ul class="related-links"><li><a href="/industries/government-and-defence/">Government & defence</a></li><li><a href="/solutions/government-identity/">Government identity solution</a></li><li><a href="/services/epassport-platform/">ePassport platform</a></li><li><a href="/solutions/smart-card-personalization/">Smart-card personalisation</a></li></ul>
   </div>
 </section>
 </main>

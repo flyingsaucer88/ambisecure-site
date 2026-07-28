@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What makes a digital identity strong?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A non-exportable key in a secure element, bound to the correct origin or relying party and exercised through a phishing-resistant protocol, so the credential cannot be phished, replayed, or cloned."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is device identity different from user identity?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Device identity authenticates a thing (via an attestation or device key in a secure element) rather than a person; both rely on hardware-held keys, but device identity is provisioned at manufacture and used for machine-to-machine trust."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is credential lifecycle management?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It is the end-to-end handling of a credential — enrolment, issuance, renewal, and revocation — which must be governed carefully because a credential is only as trustworthy as its issuance and revocation process."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Identity &mdash; AmbiSecure Blog"
   }
@@ -81,14 +110,31 @@
     <span class="eyebrow">Category</span>
     <h1>Identity</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Identity</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>Digital identity is the binding between a real-world entity — a person, device, or service — and the credentials that authenticate it. Strong identity depends on where the authenticating secret lives and how it is proven: a key in tamper-resistant hardware, exercised through a phishing-resistant protocol, is far stronger than a shared secret in software.</p>
+    <p>This category collects writing on identity architecture across people and devices: credential lifecycle, hardware-bound authentication, and device identity for IoT and connected products. The unifying idea is that trustworthy identity is rooted in hardware and proven cryptographically, not asserted by a password.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Identity</h2>
     <div class="grid-3">
 <a href="/blog/why-hardware-backed-identity-matters/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-12-20</div><h3>Why Hardware-Backed Identity Matters</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/single-sign-on-vs-mfa/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2021-08-19</div><h3>Single Sign-On Vs. Multi-Factor Authentication</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What makes a digital identity strong?</h3><p style="margin:0;">A non-exportable key in a secure element, bound to the correct origin or relying party and exercised through a phishing-resistant protocol, so the credential cannot be phished, replayed, or cloned.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is device identity different from user identity?</h3><p style="margin:0;">Device identity authenticates a thing (via an attestation or device key in a secure element) rather than a person; both rely on hardware-held keys, but device identity is provisioned at manufacture and used for machine-to-machine trust.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is credential lifecycle management?</h3><p style="margin:0;">It is the end-to-end handling of a credential — enrolment, issuance, renewal, and revocation — which must be governed carefully because a credential is only as trustworthy as its issuance and revocation process.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Identity resources</h2>
+    <ul class="related-links"><li><a href="/blog/credential-lifecycle-management/">Credential lifecycle management</a></li><li><a href="/solutions/workforce-identity/">Workforce identity</a></li><li><a href="/solutions/secure-element-integration/">Device identity</a></li><li><a href="/blog/categories/passwordless/">Passwordless</a></li></ul>
   </div>
 </section>
 </main>

@@ -63,6 +63,35 @@
    ]
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What makes a card 'smart'?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An embedded secure-element chip that stores keys and performs cryptography on-card, rather than a magnetic stripe or memory chip that merely holds static data."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between contact and contactless cards?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Contact cards (ISO 7816) communicate through the metal pads when inserted; contactless cards (ISO 14443) use RF at short range; dual-interface cards support both from one secure element."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do smart cards compare with FIDO security keys?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Both hold non-exportable keys in hardware. Smart cards suit issuance-based, PIV-style deployments and physical access; FIDO keys suit self-service web authentication — and modern smart cards can host FIDO applets too."
+     }
+    }
+   ]
+  },
+  {
    "@type": "CollectionPage",
    "name": "Smart Cards &mdash; AmbiSecure Blog"
   }
@@ -81,10 +110,13 @@
     <span class="eyebrow">Category</span>
     <h1>Smart Cards</h1>
     <p class="dek">All AmbiSecure engineering content tagged <strong>Smart Cards</strong>, newest first. Newer entries reflect current thinking; earlier entries come from the engineering archive.</p>
+    <p>A smart card is a credential built around a secure-element chip — contact (ISO 7816), contactless (ISO 14443), or dual-interface — that stores keys and runs cryptographic operations in tamper-resistant hardware. Smart cards underpin payment, national ID, PIV/CAC workforce access, transit, and increasingly FIDO authentication.</p>
+    <p>This category covers smart-card engineering: the JavaCard/GlobalPlatform stack, contact and contactless interfaces, personalisation, and how smart cards compare with FIDO tokens and passkeys for different deployments. The emphasis is on the practical trade-offs — form factor, interface, and lifecycle — behind choosing a card-based credential.</p>
   </div>
 </section>
 <section>
   <div class="section-container">
+    <h2>Articles tagged Smart Cards</h2>
     <div class="grid-3">
 <a href="/blog/why-hardware-backed-identity-matters/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-12-20</div><h3>Why Hardware-Backed Identity Matters</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/apdu-from-first-principles/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2025-12-12</div><h3>APDU From First Principles</h3><div class="card-meta">Read article &rarr;</div></a>
@@ -95,6 +127,20 @@
 <a href="/blog/archive/introduction-to-java-card/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-12-15</div><h3>An Introduction to Java Card Technology</h3><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/emv-certification-in-public-transport/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;"><span style="background:#FFF6E5;color:#7A4A00;border:1px solid #F0C040;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-right:8px;">ARCHIVE</span>2020-08-28</div><h3>Understanding EMV certification In Public Transportation</h3><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What makes a card 'smart'?</h3><p style="margin:0;">An embedded secure-element chip that stores keys and performs cryptography on-card, rather than a magnetic stripe or memory chip that merely holds static data.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between contact and contactless cards?</h3><p style="margin:0;">Contact cards (ISO 7816) communicate through the metal pads when inserted; contactless cards (ISO 14443) use RF at short range; dual-interface cards support both from one secure element.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How do smart cards compare with FIDO security keys?</h3><p style="margin:0;">Both hold non-exportable keys in hardware. Smart cards suit issuance-based, PIV-style deployments and physical access; FIDO keys suit self-service web authentication — and modern smart cards can host FIDO applets too.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <h2>Related Smart Cards resources</h2>
+    <ul class="related-links"><li><a href="/blog/smart-cards-vs-fido-tokens-vs-passkeys/">Smart cards vs FIDO tokens vs passkeys</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/technologies/javacard/">JavaCard</a></li><li><a href="/solutions/smart-card-personalization/">Smart-card personalisation</a></li></ul>
   </div>
 </section>
 </main>
