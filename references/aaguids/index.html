@@ -103,6 +103,12 @@
     <h2>Usage notes</h2><p>The AAGUID is only present when attestation is conveyed and the authenticator chooses to identify itself; platform authenticators often report an all-zero AAGUID for privacy. To map an AAGUID to a product name and its certification status, cross-reference the FIDO Alliance Metadata Service (MDS), which publishes authenticator metadata keyed by AAGUID.</p><ul><li>Do not treat the AAGUID as a per-user or per-device secret — it identifies a model, not an individual authenticator, and many devices share one.</li><li>Enforce model policy against verified MDS metadata, not the self-reported AAGUID alone, unless attestation is validated.</li><li>Look up an AAGUID with the <a href="/resources/tools/aaguid-lookup/">AAGUID lookup</a> tool and explore metadata with the <a href="/resources/tools/fido-mds-explorer/">FIDO MDS explorer</a>.</li></ul>
   </div>
 </section>
+<nav class="related-cross" aria-label="Related references">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related references</h2>
+    <ul><li><a href="/references/apdu-status/">APDU Status Words</a></li><li><a href="/references/asn1/">ASN.1 Universal Tags</a></li><li><a href="/references/desfire-commands/">DESFire Command Set</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

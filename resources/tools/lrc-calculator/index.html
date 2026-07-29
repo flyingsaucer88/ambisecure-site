@@ -98,6 +98,18 @@
   <p>Compute a <strong>longitudinal redundancy check</strong> over text or hex bytes: XOR parity, 8-bit and 16-bit additive <strong>two’s-complement</strong> and <strong>modulo</strong> sums, with optional <code>STX</code>/<code>ETX</code> framing and a step-by-step running-accumulator table.</p>
   <div class="tool-meta"><span>Client-side</span><span>Serial / ISO 8583 / Modbus ASCII</span><span>XOR &amp; additive</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Computes the longitudinal redundancy check (XOR of all bytes) used by several card and terminal protocols.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a message ends in an LRC byte and you need to validate or generate it.</p>
+    <h3>Worked example</h3>
+    <p>XOR every byte of a command to derive its trailing LRC.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -157,6 +169,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/sha-hash-generator/">SHA Hash Generator</a></li><li><a href="/resources/tools/ecc-curve-reference/">ECC Curve Reference</a></li><li><a href="/resources/tools/rsa-key-formats/">RSA Key Formats</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

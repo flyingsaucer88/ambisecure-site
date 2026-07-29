@@ -85,6 +85,18 @@
   <h1>Secure Messaging Field Visualizer</h1>
   <p>Walk the BER-TLV body of an ISO/IEC 7816-4 secure-messaging APDU: 87 (encrypted with padding indicator), 97 (Le), 99 (status), 8E (MAC), 84 (legacy cryptogram). The companion to the SCP03 walkthrough.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Visualises smart-card secure messaging — how command and response APDUs are wrapped, MACed and encrypted.</p>
+    <h3>When to use it</h3>
+    <p>Use it to understand how a secure channel protects each APDU once a session is established.</p>
+    <h3>Worked example</h3>
+    <p>Walk a wrapped command to see which parts are encrypted and where the C-MAC is appended.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="sm-sample">Sample</button><button class="tool-action" id="sm-clear">Clear</button></div></div><label for="sm-cla" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">CLA byte (optional, for SM-bit confirmation).</label><input id="sm-cla" class="hex-input" style="min-height:46px;" /><label for="sm-input" style="font-size:13px;color:var(--brand-grey);margin:14px 0 6px;">SM body (BER-TLV bytes, hex).</label><textarea id="sm-input" class="hex-input" rows="5" spellcheck="false"></textarea></div><div class="tool-panel"><div class="tool-panel-head"><h2>Decoded</h2></div><div class="tool-output" id="sm-output"><div class="placeholder">Paste the SM-wrapped APDU body.</div></div></div>
 </div>
@@ -94,6 +106,12 @@
   <p>ISO/IEC 7816-4 §6 defines a BER-TLV encoding where data objects in the body of an APDU describe encrypted payloads (87/86), expected-length (97), processing status (99), and a cryptographic checksum (8E) over the command. The CLA byte signals SM is in effect via bits b3..b2.</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>ISO/IEC 7816-4 §6 and Annex A.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/sequence-diagram-generator/">Sequence diagram generator</a> &middot; <a href="/resources/tools/iso7816-cla/">CLA decoder</a> &middot; <a href="/resources/tools/scp03-walkthrough/">SCP03 walkthrough</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/apdu-from-first-principles/">APDU from first principles</a></p></div></div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/apdu-builder/">APDU Builder</a></li><li><a href="/resources/tools/scp03-helper/">SCP03 Helper</a></li><li><a href="/resources/tools/iso7816-cla/">ISO 7816-4 CLA Decoder</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

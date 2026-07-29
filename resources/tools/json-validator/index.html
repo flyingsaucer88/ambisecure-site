@@ -93,6 +93,18 @@
   <p>Check whether a document is <strong>well-formed JSON</strong> — with the exact line and column on failure — and optionally validate it against a <strong>JSON Schema</strong>. Every schema violation is reported with its JSON Pointer path. Runs entirely in your browser.</p>
   <div class="tool-meta"><span>Client-side</span><span>JSON Schema 2020-12 subset</span><span>No upload</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Validates JSON and pinpoints the location of a syntax error.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a payload is rejected and you need to find the exact trailing comma, unquoted key or mismatched bracket.</p>
+    <h3>Worked example</h3>
+    <p>Paste a broken config and the validator flags the line and column of the first parse error.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -149,6 +161,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/xml-formatter/">XML Formatter and Validator</a></li><li><a href="/resources/tools/binary-calculator/">Binary Calculator</a></li><li><a href="/resources/tools/byte-offset-calculator/">Byte Offset Calculator</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

@@ -85,6 +85,18 @@
   <h1>CBOR Decoder</h1>
   <p>Walk a CBOR (RFC 8949) blob into a structural tree. Accepts hex or base64url. Built for WebAuthn attestation objects, COSE keys, and CTAP2 messages — but works for any CBOR.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Decodes CBOR (RFC 8949) into readable structure — the binary format under CTAP2 and COSE.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a CTAP2 message or attestation object is CBOR-encoded and you need to see its map.</p>
+    <h3>Worked example</h3>
+    <p>Decode a CTAP2 response to read its numeric keys and nested values.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="cbor-sample">Sample</button><button class="tool-action" id="cbor-clear">Clear</button></div></div><label for="cbor-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">CBOR bytes (hex or base64url).</label><textarea id="cbor-input" class="hex-input" rows="8" spellcheck="false" autocomplete="off"></textarea></div><div class="tool-panel"><div class="tool-panel-head"><h2>Decoded</h2></div><div class="tool-output" id="cbor-output"><div class="placeholder">Paste CBOR bytes to decode.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>RFC 8949 (CBOR data model and encoding).</p></div><div class="ref-card"><h3>Companion tools</h3><p><a href="/resources/tools/cose-key/">COSE key inspector</a> &middot; <a href="/resources/tools/attestation-decoder/">attestation decoder</a></p></div><div class="ref-card"><h3>Pillar reading</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Understanding WebAuthn attestation objects</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/attestation-decoder/">WebAuthn Attestation Decoder</a></li><li><a href="/resources/tools/euicc-eid-decoder/">eUICC EID Decoder</a></li><li><a href="/resources/tools/iccid-decoder/">ICCID Decoder</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

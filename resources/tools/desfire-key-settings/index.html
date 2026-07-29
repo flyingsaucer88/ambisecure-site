@@ -85,6 +85,18 @@
   <h1>DESFire Key Settings Interpreter</h1>
   <p>Decode the 2-byte DESFire GetKeySettings (0x45) response: keySettings byte (ChangeKey access, config flags, master-key changeable), and the numKeys / crypto-type byte.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Decodes DESFire key-settings and key-configuration bytes into their individual flags.</p>
+    <h3>When to use it</h3>
+    <p>Use it when reviewing a DESFire application's key policy — whether keys can be changed, listed, or the master settings frozen.</p>
+    <h3>Worked example</h3>
+    <p>Decode a key-settings byte to see whether the change-key and configuration-change permissions are set.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="dks-sample">Sample</button><button class="tool-action" id="dks-clear">Clear</button></div></div><label for="dks-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">2 hex bytes (keySettings + numKeys/cryptoType).</label><input id="dks-input" class="hex-input" style="min-height:48px;" /></div><div class="tool-panel"><div class="tool-panel-head"><h2>Decoded</h2></div><div class="tool-output" id="dks-output"><div class="placeholder">Paste 2 hex bytes.</div></div></div>
 </div>
@@ -94,6 +106,12 @@
   <p>The keySettings byte governs ChangeKey privilege, configuration freeze, and whether the application master key can be rolled. The companion byte carries the crypto type (DES / 3DES / AES-128) and the number of application keys (0–14).</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>NXP DESFire EV1/EV2/EV3 datasheet.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/desfire-file-settings/">File settings parser</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/technologies/sam/">SAM architecture</a></p></div></div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/tmac-visualizer/">Transaction MAC Field Visualizer</a></li><li><a href="/resources/tools/desfire-access-rights/">DESFire Access-Rights Decoder</a></li><li><a href="/resources/tools/desfire-status/">DESFire Status Decoder</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

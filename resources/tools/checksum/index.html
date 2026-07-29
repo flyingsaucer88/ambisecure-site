@@ -98,6 +98,18 @@
   <p>Compute every common non-cryptographic <strong>checksum</strong> over the same input at once: 8/16/32-bit sums, one&rsquo;s- and two&rsquo;s-complement, XOR (LRC), <strong>Fletcher-16/32</strong>, <strong>Adler-32</strong>, and the <strong>Internet checksum</strong> (RFC 1071). Feed it text, hex, or binary, toggle endianness for the word sums, and read the result in hex, decimal, or binary.</p>
   <div class="tool-meta"><span>Client-side</span><span>RFC 1071</span><span>Fletcher · Adler-32</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Computes common checksums over input bytes for quick integrity comparison.</p>
+    <h3>When to use it</h3>
+    <p>Use it to confirm a payload matches an expected value or to reproduce a checksum a device reports.</p>
+    <h3>Worked example</h3>
+    <p>Paste a record and compare its checksum against the value printed by your reader.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -153,6 +165,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/crc-calculator/">CRC Calculator</a></li><li><a href="/resources/tools/lrc-calculator/">LRC Calculator</a></li><li><a href="/resources/tools/sha-hash-generator/">SHA Hash Generator</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

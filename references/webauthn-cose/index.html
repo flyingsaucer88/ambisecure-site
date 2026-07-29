@@ -102,6 +102,12 @@
     <h2>Usage notes</h2><p>During registration a relying party advertises the algorithms it accepts as a list of these identifiers (<code>pubKeyCredParams</code>), most-preferred first; the authenticator picks one and returns the credential public key as a COSE_Key map inside the attestation object. At authentication time you verify the assertion signature with that stored key and algorithm.</p><ul><li>ES256 (<code>-7</code>) is the near-universal default; include RS256 (<code>-257</code>) for older platform authenticators and TPMs.</li><li>The COSE_Key map carries the key type (<code>kty</code>), curve (<code>crv</code>), and coordinates — decode it rather than assuming a format.</li><li>Inspect a real credential with the <a href="/resources/tools/cose-key/">COSE key decoder</a> and the <a href="/resources/tools/authdata-parser/">authenticatorData parser</a>.</li></ul>
   </div>
 </section>
+<nav class="related-cross" aria-label="Related references">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related references</h2>
+    <ul><li><a href="/references/x509-extensions/">X.509 Extensions</a></li><li><a href="/references/x509-oids/">X.509 / Certificate OIDs</a></li><li><a href="/references/aaguids/">FIDO AAGUIDs</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

@@ -34,6 +34,35 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Are my biometrics stored on the device or on a server?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It depends on the design: match-on-device keeps the template inside a secure element and never transmits it, whereas match-on-server centralises templates and creates a breach target."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can a leaked biometric be changed?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No — a biometric is not revocable, which is why templates should stay in tamper-resistant hardware and not be centralised unnecessarily."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the most privacy-preserving biometric design?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Match-on-device, where the sensor and secure element compare the sample locally and only a yes/no decision leaves the chip."
+     }
+    }
+   ]
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {
@@ -157,6 +186,14 @@
   </div>
 </section>
 
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Are my biometrics stored on the device or on a server?</h3><p style="margin:0;">It depends on the design: match-on-device keeps the template inside a secure element and never transmits it, whereas match-on-server centralises templates and creates a breach target.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can a leaked biometric be changed?</h3><p style="margin:0;">No — a biometric is not revocable, which is why templates should stay in tamper-resistant hardware and not be centralised unnecessarily.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the most privacy-preserving biometric design?</h3><p style="margin:0;">Match-on-device, where the sensor and secure element compare the sample locally and only a yes/no decision leaves the chip.</p></div>
+  </div>
+</section>
 </main>
 
 <footer class="site-footer">

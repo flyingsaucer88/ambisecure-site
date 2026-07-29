@@ -85,6 +85,18 @@
   <h1>TLV Tree Visualizer</h1>
   <p>Visualise BER-TLV / EMV TLV bytes as a collapsible nested tree with tag-name lookup. The visual companion to the existing TLV parser, focused on hierarchy.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Renders nested BER-TLV as an expandable tree, showing how constructed objects contain primitive ones.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a record nests templates several levels deep and a flat list is hard to follow.</p>
+    <h3>Worked example</h3>
+    <p>Expand a <code>0x70</code> template to see the primitive tags it wraps.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="tlv-sample">Sample</button><button class="tool-action" id="tlv-clear">Clear</button></div></div><label for="tlv-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">BER-TLV bytes (hex).</label><textarea id="tlv-input" class="hex-input" rows="6" spellcheck="false"></textarea></div><div class="tool-panel"><div class="tool-panel-head"><h2>Tree</h2></div><div class="tool-output" id="tlv-output"><div class="placeholder">Paste BER-TLV bytes.</div></div></div>
 </div>
@@ -94,6 +106,12 @@
   <p>BER-TLV (ISO 7816-4 / EMV) encodes structured data with Tag, Length, Value triples. Tags can be primitive or constructed; constructed tags contain nested TLVs. EMV uses BER-TLV throughout the contact and contactless protocols.</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>ISO/IEC 7816-4 §5.2; EMV Books 3 + 4.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/ber-length/">BER length calculator</a> &middot; <a href="/resources/tools/tlv-parser/">TLV parser (linear)</a> &middot; <a href="/resources/tools/emv-tag-dict/">EMV tag dictionary</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/apdu-from-first-principles/">APDU from first principles</a></p></div></div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/key-diversification/">Key Diversification Visualizer</a></li><li><a href="/resources/tools/scp03-walkthrough/">SCP03 Session Walkthrough</a></li><li><a href="/resources/tools/base64url/">Base64URL Converter</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

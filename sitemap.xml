@@ -257,7 +257,6 @@
   <url><loc>https://ambisecure.ambimat.com/blog/categories/desfire/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/categories/epassport/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/categories/fido/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/blog/categories/government-identity/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/categories/identity/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/categories/iot-security/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://ambisecure.ambimat.com/blog/categories/javacard/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -339,8 +338,6 @@
   <url><loc>https://ambisecure.ambimat.com/tags/epassport/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/fido/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/government-identity/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/identity/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
-  <url><loc>https://ambisecure.ambimat.com/tags/iot/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/javacard/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/mfa/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>
   <url><loc>https://ambisecure.ambimat.com/tags/passkeys/</loc><lastmod>2026-06-19</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>

@@ -87,6 +87,18 @@
   <p>Read the structure of a <strong>.pfx / .p12</strong> archive: outer ContentInfo, SafeContents, bag types (cert / shrouded key / friendly name), and which encryption schemes are in use. Unencrypted certificate bags are decoded into their X.509 contents. <strong>Password-decryption of encrypted bags is not implemented in this client-side tool</strong> — that is a deliberate scope limit; we will not silently leak your private key.</p>
   <div class="tool-meta"><span>Client-side</span><span>RFC 7292</span><span>Structure-only</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Inspects a PKCS#12 / PFX container — the bundle of a certificate, its chain and (optionally) a private key.</p>
+    <h3>When to use it</h3>
+    <p>Use it to see what a <code>.pfx</code> or <code>.p12</code> actually contains before importing it.</p>
+    <h3>Worked example</h3>
+    <p>Open a PFX to list its certificate chain and confirm whether a key bag is present.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel" id="pfx-drop">
@@ -116,6 +128,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/x509-viewer/">X.509 Certificate Viewer</a></li><li><a href="/resources/tools/secure-messaging-viz/">Secure Messaging Field Visualizer</a></li><li><a href="/resources/tools/apdu-builder/">APDU Builder</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

@@ -85,6 +85,18 @@
   <h1>RP ID / Origin Validator</h1>
   <p>Test whether a WebAuthn rpId is allowed for a given origin. Encodes the §5.1.3 registrable-domain-suffix rule, the HTTPS requirement, and PSL constraints — useful when planning multi-host SSO with shared passkeys.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Checks whether a WebAuthn relying-party ID is valid for a given origin.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a registration fails with an RP ID mismatch and you need to confirm the domain scoping rules.</p>
+    <h3>Worked example</h3>
+    <p>Test whether <code>login.example.com</code> is a valid RP ID for the origin <code>https://www.example.com</code>.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="rp-sample">Sample</button><button class="tool-action" id="rp-clear">Clear</button></div></div><label for="rp-origin" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Origin (e.g. https://login.example.com)</label><input id="rp-origin" class="hex-input" style="min-height:46px;" /><label for="rp-rpid" style="font-size:13px;color:var(--brand-grey);margin:14px 0 6px;">rpId (e.g. example.com — leave blank to default to origin host)</label><input id="rp-rpid" class="hex-input" style="min-height:46px;" /></div><div class="tool-panel"><div class="tool-panel-head"><h2>Verdict</h2></div><div class="tool-output" id="rp-output"><div class="placeholder">Enter origin and rpId.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §5.1.3.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/credential-id/">credentialId decoder</a> &middot; <a href="/resources/tools/clientdata-decoder/">clientDataJSON decoder</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/designing-enterprise-passwordless-systems/">Designing enterprise passwordless systems</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/cbor-decoder/">CBOR Decoder</a></li><li><a href="/resources/tools/attestation-decoder/">WebAuthn Attestation Decoder</a></li><li><a href="/resources/tools/euicc-eid-decoder/">eUICC EID Decoder</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

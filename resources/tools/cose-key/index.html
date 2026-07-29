@@ -85,6 +85,18 @@
   <h1>COSE Key Inspector</h1>
   <p>COSE_Key (RFC 8152) is the format WebAuthn uses for credentialPublicKey. Paste a CBOR map and this tool surfaces kty / alg / crv / x / y (or n / e for RSA) with field-by-field meaning.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Decodes a COSE_Key (RFC 8152) CBOR map — the format WebAuthn uses for a credential public key.</p>
+    <h3>When to use it</h3>
+    <p>Use it when verifying a WebAuthn registration and you need the key type, curve and coordinates.</p>
+    <h3>Worked example</h3>
+    <p>Paste the credentialPublicKey CBOR to read <code>kty</code>, <code>alg</code> and the <code>x</code>/<code>y</code> coordinates.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="cose-sample">Sample</button><button class="tool-action" id="cose-clear">Clear</button></div></div><label for="cose-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">COSE_Key as CBOR (hex or base64url).</label><textarea id="cose-input" class="hex-input" rows="6" spellcheck="false"></textarea></div><div class="tool-panel"><div class="tool-panel-head"><h2>Decoded</h2></div><div class="tool-output" id="cose-output"><div class="placeholder">Paste a COSE_Key.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>RFC 8152 §7 (COSE Key Objects).</p></div><div class="ref-card"><h3>IANA registry</h3><p>COSE algorithm and curve identifiers are tracked in the IANA <em>COSE Algorithms</em> registry.</p></div><div class="ref-card"><h3>Use</h3><p>WebAuthn credentialPublicKey · CTAP2 messages · CWT (CBOR Web Tokens).</p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/credential-id/">Credential ID Inspector</a></li><li><a href="/resources/tools/passkey-flow-viz/">Passkey Flow Visualizer</a></li><li><a href="/resources/tools/rp-id-validator/">RP ID / Origin Validator</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

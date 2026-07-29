@@ -102,6 +102,12 @@
     <h2>Usage notes</h2><p>The four command <em>cases</em> describe whether data is sent, expected, both, or neither: Case&nbsp;1 (header only), Case&nbsp;2 (expect response, <code>Le</code>), Case&nbsp;3 (send data, <code>Lc</code>), and Case&nbsp;4 (both). Short-length encoding uses one byte for <code>Lc</code>/<code>Le</code>; extended length uses three. The <code>CLA</code> byte also signals secure messaging and logical-channel selection.</p><ul><li><code>0x00 A4</code> is SELECT; <code>0x00 B0</code> is READ&nbsp;BINARY; <code>0x00 C0</code> is GET&nbsp;RESPONSE — the command you issue after a <code>0x61xx</code> status word.</li><li>Proprietary classes (<code>CLA</code> with the top bits set) fall outside the interindustry set and follow the card's own specification.</li><li>Decode the status word a command returns with the <a href="/references/apdu-status/">APDU status-word reference</a>, and build or inspect commands with the <a href="/resources/tools/apdu-parser/">APDU parser</a>.</li></ul>
   </div>
 </section>
+<nav class="related-cross" aria-label="Related references">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related references</h2>
+    <ul><li><a href="/references/javacard-cap/">JavaCard CAP Components</a></li><li><a href="/references/nfc/">NDEF TNF Types</a></li><li><a href="/references/sgp-32/">GSMA SGP.32 IoT eSIM Reference</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

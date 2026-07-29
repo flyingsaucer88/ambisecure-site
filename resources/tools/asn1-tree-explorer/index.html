@@ -85,6 +85,18 @@
   <h1>ASN.1 Tree Explorer</h1>
   <p>Walk DER-encoded ASN.1 bytes as a collapsible tree. Recognises primitive types (BOOLEAN, INTEGER, OID, OCTET STRING, UTF8String, etc.), surfaces OID names, and supports PEM input.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Shows DER/ASN.1 as an interactive tree with tag classes, lengths and decoded values.</p>
+    <h3>When to use it</h3>
+    <p>Use it when an ASN.1 structure is deeply nested and you want to navigate rather than scroll.</p>
+    <h3>Worked example</h3>
+    <p>Expand a certificate's <em>extensions</em> node to inspect each OID and its value.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="asne-sample">Sample</button><button class="tool-action" id="asne-clear">Clear</button></div></div><label for="asne-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">DER bytes (hex) or PEM.</label><textarea id="asne-input" class="hex-input" rows="8" spellcheck="false"></textarea></div><div class="tool-panel"><div class="tool-panel-head"><h2>Tree</h2></div><div class="tool-output" id="asne-output"><div class="placeholder">Paste DER hex or a PEM block.</div></div></div>
 </div>
@@ -94,6 +106,12 @@
   <p>ASN.1 (ITU-T X.680) is the data-description language behind X.509, PKCS, CMS, SNMP, LDAP, and many telecom protocols. DER (X.690 §10) is the canonical binary encoding used in PKI and FIDO attestation.</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>ITU-T X.680 / X.690.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/pfx-inspector/">PFX / PKCS#12 inspector</a> &middot; <a href="/resources/tools/asn1-parser/">ASN.1 parser (linear)</a> &middot; <a href="/resources/tools/x509-viewer/">X.509 viewer</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Attestation objects (uses ASN.1 in x5c)</a></p></div></div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/cmac-length/">CMAC Length Calculator</a></li><li><a href="/resources/tools/checksum/">Checksum Calculator</a></li><li><a href="/resources/tools/crc-calculator/">CRC Calculator</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

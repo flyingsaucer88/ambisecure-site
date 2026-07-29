@@ -98,6 +98,18 @@
   <p>Compute a <strong>cyclic redundancy check</strong> over text, hex, or binary input using 70+ catalogue presets (<code>CRC-8/16/32/64</code>, CCITT, XMODEM, MODBUS, CRC-32C and more) or a fully custom width, polynomial, init, reflection, and xorout. The engine verifies each preset against its documented check value.</p>
   <div class="tool-meta"><span>Client-side</span><span>Widths 3–64</span><span>reveng catalogue</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Computes CRC values across common polynomials (CRC-16, CRC-32 and variants).</p>
+    <h3>When to use it</h3>
+    <p>Use it when a frame carries a CRC and you need to verify or reproduce it for a specific polynomial.</p>
+    <h3>Worked example</h3>
+    <p>Select CRC-16/CCITT and compute the FCS over a frame body to check it against the trailer.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -170,6 +182,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/lrc-calculator/">LRC Calculator</a></li><li><a href="/resources/tools/sha-hash-generator/">SHA Hash Generator</a></li><li><a href="/resources/tools/ecc-curve-reference/">ECC Curve Reference</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

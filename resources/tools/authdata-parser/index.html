@@ -85,6 +85,18 @@
   <h1>authenticatorData Parser</h1>
   <p>Walk WebAuthn authenticatorData (§6.1). Splits rpIdHash | flags | signCount | AAGUID | credentialId | credentialPublicKey | extensions, and surfaces the BE / BS passkey state flags.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Parses WebAuthn authenticatorData — the RP ID hash, flags, signature counter and attested credential data.</p>
+    <h3>When to use it</h3>
+    <p>Use it when validating a registration or assertion and you need each field of authenticatorData.</p>
+    <h3>Worked example</h3>
+    <p>Parse an authenticatorData blob to read the UP/UV flags and the credential's public key.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="ad-sample">Sample</button><button class="tool-action" id="ad-clear">Clear</button></div></div><label for="ad-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">authenticatorData (hex or base64url).</label><textarea id="ad-input" class="hex-input" rows="8" spellcheck="false"></textarea></div><div class="tool-panel"><div class="tool-panel-head"><h2>Decoded</h2></div><div class="tool-output" id="ad-output"><div class="placeholder">Paste authenticatorData.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §6.1.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/credential-id/">credentialId decoder</a> &middot; <a href="/resources/tools/cose-key/">COSE Key inspector</a> &middot; <a href="/resources/tools/aaguid-lookup/">AAGUID lookup</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/passkeys-vs-traditional-mfa/">Passkeys vs traditional MFA</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/challenge-viewer/">WebAuthn Challenge Viewer</a></li><li><a href="/resources/tools/clientdata-decoder/">clientDataJSON Decoder</a></li><li><a href="/resources/tools/cose-key/">COSE Key Inspector</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

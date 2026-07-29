@@ -85,6 +85,18 @@
   <h1>Credential ID Inspector</h1>
   <p>Inspect a WebAuthn credentialId. Reports length, Shannon entropy, common envelope shapes, and any AAGUID-shaped prefix vendors prepend. Diagnostic only — credentialIds are opaque to the RP.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Decodes a WebAuthn credential ID and shows its length and encoding.</p>
+    <h3>When to use it</h3>
+    <p>Use it when matching a returned credential to a stored one, or checking an ID's size limits.</p>
+    <h3>Worked example</h3>
+    <p>Decode a credential ID from an assertion to compare it against your stored allow-list entry.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="cid-sample">Sample</button><button class="tool-action" id="cid-clear">Clear</button></div></div><label for="cid-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">credentialId (hex or base64url).</label><textarea id="cid-input" class="hex-input" rows="5" spellcheck="false"></textarea></div><div class="tool-panel"><div class="tool-panel-head"><h2>Inspection</h2></div><div class="tool-output" id="cid-output"><div class="placeholder">Paste a credentialId.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §5.1.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/challenge-viewer/">Challenge viewer</a> &middot; <a href="/resources/tools/base64url/">base64url</a> &middot; <a href="/resources/tools/aaguid-lookup/">AAGUID lookup</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/platform-vs-roaming-authenticators/">Platform vs roaming authenticators</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/passkey-flow-viz/">Passkey Flow Visualizer</a></li><li><a href="/resources/tools/rp-id-validator/">RP ID / Origin Validator</a></li><li><a href="/resources/tools/cbor-decoder/">CBOR Decoder</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

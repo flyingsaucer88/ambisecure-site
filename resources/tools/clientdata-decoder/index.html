@@ -85,6 +85,18 @@
   <h1>clientDataJSON Decoder</h1>
   <p>Decode the base64url-encoded clientDataJSON sent in WebAuthn registration and assertion ceremonies. Surfaces type, challenge, origin, crossOrigin, and computes the SHA-256 the authenticator signs over.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Decodes WebAuthn clientDataJSON — the type, challenge and origin the browser signed over.</p>
+    <h3>When to use it</h3>
+    <p>Use it to confirm a ceremony's challenge and origin match what your server issued.</p>
+    <h3>Worked example</h3>
+    <p>Decode a clientDataJSON to check its <code>origin</code> and that the <code>challenge</code> matches.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="cd-sample">Sample</button><button class="tool-action" id="cd-clear">Clear</button></div></div><label for="cd-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">clientDataJSON (base64url) or raw JSON.</label><textarea id="cd-input" class="hex-input" rows="6" spellcheck="false"></textarea></div><div class="tool-panel"><div class="tool-panel-head"><h2>Decoded</h2></div><div class="tool-output" id="cd-output"><div class="placeholder">Paste clientDataJSON.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §5.8.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/rp-id-validator/">RP ID validator</a> &middot; <a href="/resources/tools/challenge-viewer/">Challenge viewer</a> &middot; <a href="/resources/tools/base64url/">base64url</a> &middot; <a href="/resources/tools/authdata-parser/">authenticatorData parser</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/technologies/webauthn/">WebAuthn — registration & authentication</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/cose-key/">COSE Key Inspector</a></li><li><a href="/resources/tools/credential-id/">Credential ID Inspector</a></li><li><a href="/resources/tools/passkey-flow-viz/">Passkey Flow Visualizer</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

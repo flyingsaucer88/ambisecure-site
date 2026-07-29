@@ -85,6 +85,18 @@
   <h1>WebAuthn Challenge Viewer</h1>
   <p>Validate a WebAuthn challenge. Reports length, Shannon entropy, and warns about common mistakes (under-length, ASCII-shaped strings, Math.random output). Can also generate fresh 32-byte challenges using the platform CSPRNG.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Decodes and inspects a WebAuthn challenge value from its URL-safe base64 form.</p>
+    <h3>When to use it</h3>
+    <p>Use it to confirm the challenge in a ceremony is the random value your server generated.</p>
+    <h3>Worked example</h3>
+    <p>Paste a <code>challenge</code> field to recover and compare its raw bytes.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="chal-sample">Sample</button><button class="tool-action" id="chal-generate">Generate</button><button class="tool-action" id="chal-clear">Clear</button></div></div><label for="chal-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Challenge (base64url or hex).</label><textarea id="chal-input" class="hex-input" rows="4" spellcheck="false"></textarea></div><div class="tool-panel"><div class="tool-panel-head"><h2>Inspection</h2></div><div class="tool-output" id="chal-output"><div class="placeholder">Paste a challenge or click Generate.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §13.4.3.</p></div><div class="ref-card"><h3>Pitfall</h3><p>Never use Math.random or string concatenation. Use crypto.randomBytes / crypto.getRandomValues / SecureRandom.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/clientdata-decoder/">clientDataJSON decoder</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/clientdata-decoder/">clientDataJSON Decoder</a></li><li><a href="/resources/tools/cose-key/">COSE Key Inspector</a></li><li><a href="/resources/tools/credential-id/">Credential ID Inspector</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

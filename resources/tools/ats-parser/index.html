@@ -86,6 +86,18 @@
   <p>Decode the ISO/IEC 14443-4 Answer-To-Select (ATS) response: TL, T0, optional TA(1) / TB(1) / TC(1), and historical bytes. Useful for diagnosing reader compatibility issues.</p>
   <div class="tool-meta"><span>Client-side</span><span>ISO 14443-4 §5.2.1</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Decodes an ISO 14443-4 Answer To Select (ATS) into its capabilities and timing bytes.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a Type A card returns an ATS and you need its frame size and protocol options.</p>
+    <h3>Worked example</h3>
+    <p>Parse an ATS to read the card's maximum frame size and startup frame guard time.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
   <div class="tool-panel">
     <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="ats-sample">Sample</button><button class="tool-action" id="ats-clear">Clear</button></div></div>
@@ -108,6 +120,12 @@
     <div class="ref-card"><h3>Reference</h3><p><a href="/resources/tools/iso14443-ref/">ISO 14443 quick reference</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/ndef-decoder/">NDEF Decoder</a></li><li><a href="/resources/tools/uid-analyzer/">UID Analyzer</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 BER/DER Parser</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

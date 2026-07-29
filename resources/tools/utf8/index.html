@@ -87,6 +87,18 @@
   <p>Type or paste any string and see how UTF-8 encodes it: codepoints (U+xxxx), byte counts per character, BOM detection, per-character byte breakdown. Useful when an APDU or NDEF record is misrendering and you need to know if it&rsquo;s a UTF-8, UTF-16, or BMPString issue.</p>
   <div class="tool-meta"><span>Client-side</span><span>Per-char view</span><span>BOM aware</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Shows how UTF-8 encodes any string: codepoints, per-character byte counts, BOM detection and a byte-by-byte breakdown.</p>
+    <h3>When to use it</h3>
+    <p>Use it when an APDU, NDEF record or certificate field carries text and you need to see the exact bytes on the wire — especially with emoji, accents or a stray byte-order mark.</p>
+    <h3>Worked example</h3>
+    <p>Paste <code>café</code> and see the <em>é</em> expand to two bytes (<code>C3 A9</code>), so the four characters occupy five bytes.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -111,6 +123,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/sequence-diagram-generator/">Sequence Diagram Generator</a></li><li><a href="/resources/tools/fido-mds-explorer/">FIDO Metadata Explorer</a></li><li><a href="/resources/tools/aaguid-lookup/">AAGUID Lookup</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

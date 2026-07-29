@@ -191,6 +191,13 @@ Redirect 301 /industries/retail-and-hospitality /industries/
 # RedirectMatch (anchored) so it cannot shadow /blog/categories/mfa/.
 RedirectMatch 301 ^/blog/categories/enterprise-mfa/?$ /blog/categories/mfa/
 
+# Duplicate-intent consolidation (2026-07-29): overlapping identity/iot taxonomy
+# terms folded into their canonical counterparts. Anchored so they cannot shadow
+# the surviving pages.
+RedirectMatch 301 ^/blog/categories/government-identity/?$ /blog/categories/identity/
+RedirectMatch 301 ^/tags/identity/?$ /tags/device-identity/
+RedirectMatch 301 ^/tags/iot/?$ /tags/iot-security/
+
 # Blog category landings (singular -> plural; categories not in Phase 7 set fall back to /blog/)
 Redirect 301 /blog/category/secure-elements /blog/
 Redirect 301 /blog/category/nfc-desfire /blog/categories/desfire/

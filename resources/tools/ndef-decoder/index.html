@@ -86,6 +86,18 @@
   <p>Walk an NDEF (NFC Data Exchange Format) message into individual records and decode the well-known types: URI, Text, Smart Poster, MIME, External (including Android AAR). Client-side only.</p>
   <div class="tool-meta"><span>Client-side</span><span>NFC Forum NDEF 1.0</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Decodes NFC Forum NDEF messages into their records — type, payload and flags.</p>
+    <h3>When to use it</h3>
+    <p>Use it when reading an NFC tag or an SDM message and you need to interpret its NDEF content.</p>
+    <h3>Worked example</h3>
+    <p>Decode a URI record to recover the encoded link and its abbreviation prefix.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
   <div class="tool-panel">
     <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="nd-sample">Sample</button><button class="tool-action" id="nd-clear">Clear</button></div></div>
@@ -108,6 +120,12 @@
     <div class="ref-card"><h3>Architecture</h3><p><a href="/technologies/desfire/">DESFire</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/uid-analyzer/">UID Analyzer</a></li><li><a href="/resources/tools/asn1-parser/">ASN.1 BER/DER Parser</a></li><li><a href="/resources/tools/base64-cert/">Base64 Certificate Decoder</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

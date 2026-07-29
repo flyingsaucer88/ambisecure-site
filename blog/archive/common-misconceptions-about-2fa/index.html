@@ -34,6 +34,35 @@
  "@context": "https://schema.org",
  "@graph": [
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Is SMS two-factor authentication secure?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "SMS one-time passwords are better than a password alone but remain phishable and interceptable — through SIM-swap or a real-time proxy — so they do not resist a determined phishing attack."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does turning on 2FA make an account unphishable?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Not by itself. Only phishing-resistant factors, such as FIDO2 security keys bound to the origin, resist real-time proxy phishing; OTP-based 2FA can still be relayed."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is any second factor good enough?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The factor matters: a hardware, origin-bound credential is far stronger than an app or SMS one-time password."
+     }
+    }
+   ]
+  },
+  {
    "@type": "BreadcrumbList",
    "itemListElement": [
     {
@@ -156,6 +185,14 @@
   </div>
 </section>
 
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is SMS two-factor authentication secure?</h3><p style="margin:0;">SMS one-time passwords are better than a password alone but remain phishable and interceptable — through SIM-swap or a real-time proxy — so they do not resist a determined phishing attack.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does turning on 2FA make an account unphishable?</h3><p style="margin:0;">Not by itself. Only phishing-resistant factors, such as FIDO2 security keys bound to the origin, resist real-time proxy phishing; OTP-based 2FA can still be relayed.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is any second factor good enough?</h3><p style="margin:0;">The factor matters: a hardware, origin-bound credential is far stronger than an app or SMS one-time password.</p></div>
+  </div>
+</section>
 </main>
 
 <footer class="site-footer">

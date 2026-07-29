@@ -98,6 +98,18 @@
   <p>A side-by-side reference for <strong>PKCS#1</strong>, <strong>PKCS#8</strong>, <strong>SubjectPublicKeyInfo</strong>, <strong>PEM vs DER</strong>, and <strong>JWK</strong> — plus an in-browser demo generator that exports a real RSA key pair using the Web Crypto API. Private keys never leave your browser.</p>
   <div class="tool-meta"><span>Client-side</span><span>Web Crypto</span><span>PKCS#1 / PKCS#8 / SPKI / JWK</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Explains RSA key encodings — PKCS#1 vs PKCS#8, PEM vs DER — and how modulus and exponent are laid out.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a library rejects a key and you need to identify which RSA format you actually have.</p>
+    <h3>Worked example</h3>
+    <p>Recognise a <code>-----BEGIN RSA PRIVATE KEY-----</code> header as PKCS#1, not PKCS#8.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -166,6 +178,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/desfire-file-settings/">DESFire File Settings Parser</a></li><li><a href="/resources/tools/desfire-key-settings/">DESFire Key Settings Interpreter</a></li><li><a href="/resources/tools/tmac-visualizer/">Transaction MAC Field Visualizer</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

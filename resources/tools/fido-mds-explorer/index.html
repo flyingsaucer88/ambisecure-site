@@ -86,6 +86,18 @@
   <p>Browse the curated AAGUID directory in metadata-style cards: vendor, model, transports (USB / NFC), form factor, and the credential class each provider documents. Searchable. For production attestation policy, fetch and verify the FIDO MDS BLOB.</p>
   <p class="ref-callout">Credential class here reflects each provider&rsquo;s documented behaviour for the model &mdash; it is a directory, not a measurement. Backup Eligible (BE) and Backup State (BS) live in <code>authenticatorData</code> and are only known from a real registration, so read them there rather than inferring them from an AAGUID or a vendor name. Platform authenticators are not automatically synced, and a synced passkey is not a hardware security key.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Explores FIDO Alliance Metadata Service (MDS) entries — authenticator metadata keyed by AAGUID.</p>
+    <h3>When to use it</h3>
+    <p>Use it to check an authenticator's certification status and supported algorithms before allow-listing it.</p>
+    <h3>Worked example</h3>
+    <p>Search an AAGUID to read its MDS entry, including certification level and key protection.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Filter</h2></div><label for="mds-search" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Search vendor / model / AAGUID.</label><input id="mds-search" class="hex-input" style="min-height:46px;" placeholder="Yubico, Titan, AmbiSecure, …" /><label for="mds-transport" style="font-size:13px;color:var(--brand-grey);margin:14px 0 6px;">Filter by transport.</label><div class="tool-options"><select id="mds-transport"><option value="all">All</option><option value="usb">USB</option><option value="nfc">NFC</option></select></div><div id="mds-count" style="margin-top:14px;font-family:Montserrat,sans-serif;font-size:11px;letter-spacing:0.4px;text-transform:uppercase;color:var(--brand-grey);"></div></div><div class="tool-panel"><div class="tool-panel-head"><h2>Authenticators</h2></div><div class="tool-output" id="mds-output" style="overflow-y:auto;max-height:600px;"></div></div>
 </div>
@@ -95,6 +107,12 @@
   <p>The FIDO Metadata Service publishes a JWS-signed BLOB at <code>https://mds.fidoalliance.org/</code> listing every certified authenticator. Production RPs should fetch and verify on a daily schedule, then enforce AAGUID policy at registration time.</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>FIDO Metadata Service v3.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/aaguid-lookup/">AAGUID lookup</a> &middot; <a href="/resources/tools/attestation-decoder/">Attestation decoder</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Understanding attestation objects</a></p></div></div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/aaguid-lookup/">AAGUID Lookup</a></li><li><a href="/resources/tools/apdu-script-validator/">APDU Script Validator</a></li><li><a href="/resources/tools/json-bin-builder/">JSON Bin Builder and Validator</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

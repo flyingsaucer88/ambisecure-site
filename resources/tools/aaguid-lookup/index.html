@@ -85,6 +85,18 @@
   <h1>AAGUID Lookup</h1>
   <p>An AAGUID identifies the make and model of a FIDO2 authenticator. Paste an AAGUID (canonical form or 32 hex characters) and this tool maps it to vendor and model from a curated offline directory. For production validation you should fetch the FIDO Metadata Service (MDS) BLOB.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Maps a FIDO2 authenticator AAGUID to its make and model.</p>
+    <h3>When to use it</h3>
+    <p>Use it when an attestation carries an AAGUID and you want to name the authenticator, for policy or display.</p>
+    <h3>Worked example</h3>
+    <p>Paste an AAGUID from attested credential data to identify the authenticator model.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="aaguid-sample">Sample</button><button class="tool-action" id="aaguid-clear">Clear</button></div></div><label for="aaguid-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">AAGUID (8-4-4-4-12 form or 32 hex chars).</label><input id="aaguid-input" class="hex-input" style="min-height:48px;" spellcheck="false" autocomplete="off" /></div><div class="tool-panel"><div class="tool-panel-head"><h2>Match</h2></div><div class="tool-output" id="aaguid-output"><div class="placeholder">Paste an AAGUID.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn §5.4 / FIDO Metadata Service v3.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></p></div><div class="ref-card"><h3>Pillar reading</h3><p><a href="/blog/why-hardware-backed-identity-matters/">Why hardware-backed identity matters</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/apdu-script-validator/">APDU Script Validator</a></li><li><a href="/resources/tools/json-bin-builder/">JSON Bin Builder and Validator</a></li><li><a href="/resources/tools/javacard-cap/">JavaCard CAP Structure Explorer</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

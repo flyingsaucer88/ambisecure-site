@@ -93,6 +93,18 @@
   <p>Encode and decode <strong>Base32</strong> and <strong>base32hex</strong> per RFC 4648. Handles UTF-8 text or raw hex bytes, toggles <code>=</code> padding, and decodes case-insensitively — the shape TOTP / 2FA secrets ship in.</p>
   <div class="tool-meta"><span>Client-side</span><span>RFC 4648</span><span>TOTP-friendly</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Encodes and decodes RFC 4648 base32, the alphabet used by TOTP seeds and some provisioning URIs.</p>
+    <h3>When to use it</h3>
+    <p>Use it when handling an authenticator secret or an otpauth URI that stores its key in base32 rather than hex or base64.</p>
+    <h3>Worked example</h3>
+    <p>Decode a TOTP secret like <code>JBSWY3DPEHPK3PXP</code> to recover its raw key bytes.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -149,6 +161,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/base64/">Base64 Encoder / Decoder</a></li><li><a href="/resources/tools/endian/">Endian Converter</a></li><li><a href="/resources/tools/hex-bytes/">HEX ↔ Byte-Array</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

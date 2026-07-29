@@ -102,6 +102,12 @@
     <h2>Usage notes</h2><p>A tag's first byte tells you its shape: bit&nbsp;6 (0x20) set means the object is constructed and its value is itself TLV; a low nibble of <code>0x1F</code> in the first byte means the tag continues into further bytes (two-byte tags like <code>0x9F02</code>). Parse length first, then read exactly that many value bytes before moving to the next tag.</p><ul><li>Templates such as <code>0x70</code> (READ RECORD) and <code>0x77</code> (response message template) are constructed — decode their contents recursively.</li><li>Proprietary tags in the <code>0x9Fxx</code> and <code>0xDFxx</code> space are kernel- and issuer-specific; confirm meaning against the relevant EMV kernel specification.</li><li>Use the <a href="/resources/tools/tlv-parser/">TLV parser</a> to expand a full record and the <a href="/resources/tools/emv-tag-dict/">EMV tag dictionary</a> tool for quick lookups.</li></ul>
   </div>
 </section>
+<nav class="related-cross" aria-label="Related references">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related references</h2>
+    <ul><li><a href="/references/etsi-ts-102-941/">ETSI TS 102 941 Trust &amp; Privacy Management</a></li><li><a href="/references/etsi-ts-103-097/">ETSI TS 103 097 Secured-Message Reference</a></li><li><a href="/references/globalplatform/">GlobalPlatform Status Words</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

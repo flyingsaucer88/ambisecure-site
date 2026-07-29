@@ -98,6 +98,18 @@
   <p>Assemble a valid <strong>ISO/IEC 7816-4</strong> command APDU from <code>CLA</code>, <code>INS</code>, <code>P1</code>, <code>P2</code>, optional command data and <code>Le</code>. The tool detects the case, computes <code>Lc</code>, and picks short or extended length for you — or paste an APDU back in to break it into fields.</p>
   <div class="tool-meta"><span>Client-side</span><span>ISO 7816-4</span><span>Short &amp; extended</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Assembles a command APDU from CLA/INS/P1/P2, data and Le, showing the exact bytes.</p>
+    <h3>When to use it</h3>
+    <p>Use it to hand-craft a command for a card without writing code, or to sanity-check field placement.</p>
+    <h3>Worked example</h3>
+    <p>Build a SELECT by AID (<code>00 A4 04 00</code>) with a data field and read off the full command.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -188,6 +200,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/scp03-helper/">SCP03 Helper</a></li><li><a href="/resources/tools/iso7816-cla/">ISO 7816-4 CLA Decoder</a></li><li><a href="/resources/tools/apdu-status-dict/">APDU Status Dictionary</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

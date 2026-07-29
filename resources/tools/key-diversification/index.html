@@ -85,6 +85,18 @@
   <h1>Key Diversification Visualizer</h1>
   <p>Educational visualizer for AES-CMAC-based key diversification (NXP AN10922 / AV2). Demonstrates the SHAPE of the derivation — a unique per-card key from a master key plus the card UID — without producing a production-equivalent value.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Demonstrates how a per-card key is derived from a master key and card data, the pattern behind large card fleets.</p>
+    <h3>When to use it</h3>
+    <p>Use it to understand or teach why one leaked card key does not compromise a whole deployment.</p>
+    <h3>Worked example</h3>
+    <p>Diversify a master key with a sample UID to see a unique card key derived from it.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="kd-sample">Sample</button><button class="tool-action" id="kd-clear">Clear</button></div></div><label for="kd-uid" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Card UID (hex).</label><input id="kd-uid" class="hex-input" style="min-height:48px;" /><label for="kd-master" style="font-size:13px;color:var(--brand-grey);margin:14px 0 6px;"><strong>Placeholder</strong> master key (16 bytes hex). NEVER paste a real key here.</label><input id="kd-master" class="hex-input" style="min-height:48px;" /></div><div class="tool-panel"><div class="tool-panel-head"><h2>Derived (educational)</h2></div><div class="tool-output" id="kd-output"><div class="placeholder">Enter UID and a placeholder master.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>NXP AN10922 / AV2 application note.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/technologies/sam/">SAM architecture</a> &middot; <a href="/technologies/desfire/">DESFire reference</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/why-sams-matter-in-closed-loop-transit/">Why SAMs matter in closed-loop transit</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/scp03-walkthrough/">SCP03 Session Walkthrough</a></li><li><a href="/resources/tools/base64url/">Base64URL Converter</a></li><li><a href="/resources/tools/ascii-hex/">ASCII ↔ HEX Converter</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

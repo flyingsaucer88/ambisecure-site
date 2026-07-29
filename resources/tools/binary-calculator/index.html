@@ -98,6 +98,18 @@
   <p>Convert between <strong>binary</strong>, <strong>decimal</strong>, <strong>hex</strong>, and <strong>octal</strong>, then run bitwise <code>AND</code>, <code>OR</code>, <code>XOR</code>, <code>NOT</code> and shifts at a chosen 8/16/32/64-bit width — with signed/unsigned and two&rsquo;s-complement views. BigInt-backed so 64-bit math stays exact.</p>
   <div class="tool-meta"><span>Client-side</span><span>BigInt</span><span>8/16/32/64-bit</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Performs bitwise and base conversions — AND/OR/XOR/shift across binary, hex and decimal.</p>
+    <h3>When to use it</h3>
+    <p>Use it when composing a flags byte or masking a field and you want to see the result in every base at once.</p>
+    <h3>Worked example</h3>
+    <p>XOR <code>0xF0</code> with <code>0x0F</code> to get <code>0xFF</code>, shown in binary and decimal too.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -175,6 +187,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/byte-offset-calculator/">Byte Offset Calculator</a></li><li><a href="/resources/tools/emv-tag-dict/">EMV Tag Dictionary Explorer</a></li><li><a href="/resources/tools/tlv-tree-viz/">TLV Tree Visualizer</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

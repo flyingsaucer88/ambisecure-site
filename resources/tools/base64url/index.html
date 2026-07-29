@@ -85,6 +85,18 @@
   <h1>Base64URL Converter</h1>
   <p>Bidirectional conversion between base64url, base64 (standard), hex, and UTF-8 text. base64url is the form WebAuthn / JOSE / CTAP2 use everywhere.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Encodes and decodes URL-safe base64 (RFC 4648 §5) — the unpadded, <code>-_</code> alphabet WebAuthn, JWS and CTAP2 use.</p>
+    <h3>When to use it</h3>
+    <p>Use it when decoding a WebAuthn challenge, credential ID, or JWS segment that arrives URL-safe and would break a standard base64 decoder.</p>
+    <h3>Worked example</h3>
+    <p>Decode a WebAuthn <code>challenge</code> value straight from a JSON payload without first converting <code>-_</code> back to <code>+/</code>.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="b64u-sample">Sample</button><button class="tool-action" id="b64u-clear">Clear</button></div></div><label for="b64u-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Paste base64url, base64, hex, or text. Mode below.</label><textarea id="b64u-input" class="hex-input" rows="6" spellcheck="false"></textarea><div class="tool-options"><label>Direction <select id="b64u-mode"><option value="auto">Auto-detect</option><option value="fromB64URL">from base64url</option><option value="fromB64">from base64 (standard)</option><option value="fromHex">from hex</option><option value="fromText">from UTF-8 text</option></select></label></div></div><div class="tool-panel"><div class="tool-panel-head"><h2>All representations</h2></div><div class="tool-output" id="b64u-output"><div class="placeholder">Paste a value to convert.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>RFC 4648 §5.</p></div><div class="ref-card"><h3>Use</h3><p>WebAuthn challenge, credentialId · JWS signatures · CTAP2 messages · OAuth2 PKCE.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/base64-cert/">base64 certificate decoder</a> &middot; <a href="/resources/tools/base64/">base64 (standard)</a> &middot; <a href="/resources/tools/hex-bytes/">hex/bytes</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/ascii-hex/">ASCII ↔ HEX Converter</a></li><li><a href="/resources/tools/base32/">Base32 Encoder and Decoder</a></li><li><a href="/resources/tools/base64/">Base64 Encoder / Decoder</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

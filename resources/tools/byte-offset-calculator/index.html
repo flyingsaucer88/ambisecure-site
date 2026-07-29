@@ -93,6 +93,18 @@
   <p>Paste hex bytes and read them back as an <strong>indexed offset table</strong> — decimal and hex offsets, selectable grouping, and a printable-ASCII preview. Then pick any slice and see its <strong>unsigned and signed</strong> value in both <strong>little-endian</strong> and <strong>big-endian</strong>. Built for APDU, TLV, and binary-protocol debugging.</p>
   <div class="tool-meta"><span>Client-side</span><span>Hex in</span><span>LE / BE integers</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Maps byte offsets within a hex buffer, with a printable-ASCII preview, so you can slice a field by position.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a spec describes a structure by offset and length and you need to pull the right bytes out of a capture.</p>
+    <h3>Worked example</h3>
+    <p>Select offset 4, length 8 in a buffer to isolate an 8-byte serial number and see its ASCII rendering.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -163,6 +175,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/emv-tag-dict/">EMV Tag Dictionary Explorer</a></li><li><a href="/resources/tools/tlv-tree-viz/">TLV Tree Visualizer</a></li><li><a href="/resources/tools/key-diversification/">Key Diversification Visualizer</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

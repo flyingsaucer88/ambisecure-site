@@ -86,6 +86,18 @@
   <p>Decode the 16-bit DESFire access-rights word into the four key references it controls: Read, Write, Read+Write, and ChangeAccessRights. Reference content based on public ISO/IEC 14443-4 framing and NXP application notes.</p>
   <div class="tool-meta"><span>Client-side</span><span>16-bit AR word</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Expands a DESFire access-rights value into the four key references it encodes (read, write, read&write, change).</p>
+    <h3>When to use it</h3>
+    <p>Use it when a file's two access-rights bytes need translating into which key authorises each operation.</p>
+    <h3>Worked example</h3>
+    <p>Enter <code>0x1234</code> to map each nibble to its authorising key number.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
   <div class="tool-panel">
     <div class="tool-panel-head"><h2>Input</h2><div class="tool-panel-actions"><button class="tool-action" id="dar-sample">Sample</button><button class="tool-action" id="dar-clear">Clear</button></div></div>
@@ -109,6 +121,12 @@
     <div class="ref-card"><h3>Closed-loop</h3><p><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/desfire-status/">DESFire Status Decoder</a></li><li><a href="/resources/tools/json-formatter/">JSON Formatter and Minifier</a></li><li><a href="/resources/tools/json-validator/">JSON Validator</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

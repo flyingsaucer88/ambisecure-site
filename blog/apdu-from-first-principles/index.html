@@ -33,6 +33,35 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an APDU?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An Application Protocol Data Unit is the command/response message exchanged with a smart card, defined by ISO/IEC 7816-4."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What are the parts of a command APDU?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A four-byte header — CLA, INS, P1, P2 — optionally followed by Lc, a data field, and Le (the expected response length)."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What are status words?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The two trailing bytes (SW1 SW2) a card returns after a command; 0x9000 means normal completion, and other ranges signal warnings or errors."
+     }
+    }
+   ]
+  },
  {"@type":"BreadcrumbList","itemListElement":[
    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
@@ -263,6 +292,14 @@ SW1 SW2</code></pre>
   </div>
 </section>
 
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is an APDU?</h3><p style="margin:0;">An Application Protocol Data Unit is the command/response message exchanged with a smart card, defined by ISO/IEC 7816-4.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What are the parts of a command APDU?</h3><p style="margin:0;">A four-byte header — CLA, INS, P1, P2 — optionally followed by Lc, a data field, and Le (the expected response length).</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What are status words?</h3><p style="margin:0;">The two trailing bytes (SW1 SW2) a card returns after a command; 0x9000 means normal completion, and other ranges signal warnings or errors.</p></div>
+  </div>
+</section>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

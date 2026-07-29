@@ -93,6 +93,18 @@
   <p>Percent-encode and decode URLs and URL components with the browser's own <code>encodeURIComponent</code>, <code>encodeURI</code>, <code>decodeURIComponent</code>, and <code>decodeURI</code>. Toggle space as <code>%20</code> or <code>+</code>, and see malformed input flagged instead of silently mangled.</p>
   <div class="tool-meta"><span>Client-side</span><span>RFC 3986</span><span>UTF-8</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Percent-encodes and decodes URL components per RFC 3986.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a redirect URI, deep link or query parameter carries reserved characters and you need the exact encoded or decoded form.</p>
+    <h3>Worked example</h3>
+    <p>Encode <code>a b&c</code> to <code>a%20b%26c</code>, or decode a percent-escaped callback URL.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -147,6 +159,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/utf8/">UTF-8 Inspector</a></li><li><a href="/resources/tools/sequence-diagram-generator/">Sequence Diagram Generator</a></li><li><a href="/resources/tools/fido-mds-explorer/">FIDO Metadata Explorer</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

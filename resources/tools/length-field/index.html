@@ -87,6 +87,18 @@
   <p>Convert an integer length into the binary length field used by various protocols: BER long-form (X.690), GP DGI long-form, plain u8, and u16 in big-endian and little-endian. The right format the first time saves a lot of debugging.</p>
   <div class="tool-meta"><span>Client-side</span><span>BER / DGI / u8 / u16</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Converts an integer length into the binary length field used by BER long-form (X.690), GlobalPlatform DGI long-form, and plain u8/u16 in both byte orders.</p>
+    <h3>When to use it</h3>
+    <p>Use it when hand-building a TLV or DGI structure and you need the exact length prefix bytes for a value, rather than guessing the long-form encoding.</p>
+    <h3>Worked example</h3>
+    <p>Enter <code>300</code> and BER long-form renders <code>82 01 2C</code> (two length bytes flagged by <code>0x82</code>).</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -111,6 +123,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/url-encoder/">URL Encoder and Decoder</a></li><li><a href="/resources/tools/utf8/">UTF-8 Inspector</a></li><li><a href="/resources/tools/sequence-diagram-generator/">Sequence Diagram Generator</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

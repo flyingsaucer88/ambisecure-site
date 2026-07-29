@@ -93,6 +93,18 @@
   <p>Split a 32-digit <strong>eUICC EID</strong> into its documented fields per <strong>GSMA SGP.02 / SGP.22</strong> and <strong>ITU-T E.118</strong>, and validate the trailing <strong>Luhn</strong> check digits — the identifier eSIM remote provisioning uses to address an embedded SIM.</p>
   <div class="tool-meta"><span>Client-side</span><span>GSMA SGP.02</span><span>ITU-T E.118</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Decodes an eUICC EID — the 32-digit identifier of an eSIM chip — into its structured fields.</p>
+    <h3>When to use it</h3>
+    <p>Use it when provisioning or auditing eSIMs and you need to read an EID's issuer and manufacturer data.</p>
+    <h3>Worked example</h3>
+    <p>Paste a 32-digit EID to break out its industry identifier and manufacturer fields.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell">
   <div class="tool-panel">
@@ -140,6 +152,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/iccid-decoder/">ICCID Decoder</a></li><li><a href="/resources/tools/imsi-decoder/">IMSI Decoder</a></li><li><a href="/resources/tools/ber-length/">BER Length Visualizer</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

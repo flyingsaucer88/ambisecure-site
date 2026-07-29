@@ -85,6 +85,18 @@
   <h1>EMV Tag Dictionary Explorer</h1>
   <p>Filterable EMV tag directory — every tag you encounter in SELECT, GET PROCESSING OPTIONS, READ RECORD, GENERATE AC, and the terminal/card capability fields. Type a hex tag or a substring of the name.</p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Looks up EMV BER-TLV tags by hex or description across the EMV Books and contactless kernels.</p>
+    <h3>When to use it</h3>
+    <p>Use it while decoding a transaction trace to name the data elements a terminal and card exchange.</p>
+    <h3>Worked example</h3>
+    <p>Search <code>9F26</code> to identify the Application Cryptogram, or <code>82</code> for the Application Interchange Profile.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel"><div class="tool-panel-head"><h2>Filter</h2></div><label for="emv-input" style="font-size:13px;color:var(--brand-grey);margin-bottom:6px;">Type a hex prefix or a name fragment.</label><input id="emv-input" class="hex-input" style="min-height:48px;" /></div><div class="tool-panel"><div class="tool-panel-head"><h2>Tags</h2></div><div class="tool-output" id="emv-output" style="overflow-x:auto;"><div class="placeholder">Type to filter.</div></div></div>
 </div>
@@ -96,6 +108,12 @@
     <div class="ref-card"><h3>Spec</h3><p>EMV Books 3 and 4; EMV Contactless C-2 / C-3.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/tlv-parser/">TLV parser</a></p></div><div class="ref-card"><h3>Reading</h3><p>Future cornerstone: <em>EMV transaction flow from first principles</em>.</p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/tlv-tree-viz/">TLV Tree Visualizer</a></li><li><a href="/resources/tools/key-diversification/">Key Diversification Visualizer</a></li><li><a href="/resources/tools/scp03-walkthrough/">SCP03 Session Walkthrough</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

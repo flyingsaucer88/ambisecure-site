@@ -87,6 +87,18 @@
   <p>The full reference table of smart-card status words (SW1 SW2). Filter by source (ISO 7816-4, GlobalPlatform, EMV, FIDO) and search by hex or by description. A bookmark-worthy quick reference.</p>
   <div class="tool-meta"><span>Reference</span><span>ISO + GP + EMV + FIDO</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Presents the full reference table of smart-card status words, filterable by source (ISO 7816-4, GlobalPlatform, EMV, FIDO) and searchable by hex or description.</p>
+    <h3>When to use it</h3>
+    <p>Use it when you want the whole status-word landscape in one place — for building a decoder, writing test assertions, or learning the ranges rather than one code at a time.</p>
+    <h3>Worked example</h3>
+    <p>Filter to <em>GlobalPlatform</em> and scan the <code>0x69xx</code> range to compare related security-condition codes side by side.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell stacked">
   <div class="tool-panel">
@@ -115,6 +127,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/gp-status/">GlobalPlatform Status Reference</a></li><li><a href="/resources/tools/iso7816-ref/">ISO/IEC 7816 Quick Reference</a></li><li><a href="/resources/tools/apdu-parser/">APDU Parser</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

@@ -98,6 +98,18 @@
   <p>A cheat sheet for the <strong>elliptic curves</strong> you meet in TLS, smart cards, Bitcoin, and FIDO — NIST P-curves, <code>secp256k1</code>, the Brainpool family, and the modern Edwards/Montgomery curves. Each row shows field size, security level, typical use, and whether your browser's <strong>Web Crypto</strong> can use it. For supported curves you can mint a throwaway demo key pair right here.</p>
   <div class="tool-meta"><span>Client-side</span><span>Web Crypto</span><span>Reference</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Summarises common elliptic curves (P-256, P-384, Ed25519…) with their parameters and typical uses.</p>
+    <h3>When to use it</h3>
+    <p>Use it to confirm which curve an algorithm identifier implies or to compare key and signature sizes when choosing one.</p>
+    <h3>Worked example</h3>
+    <p>Look up P-256 to confirm its 32-byte coordinates back the ES256 (COSE <code>-7</code>) algorithm.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell stacked">
   <div class="tool-panel">
@@ -148,6 +160,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/rsa-key-formats/">RSA Key Formats</a></li><li><a href="/resources/tools/desfire-file-settings/">DESFire File Settings Parser</a></li><li><a href="/resources/tools/desfire-key-settings/">DESFire Key Settings Interpreter</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

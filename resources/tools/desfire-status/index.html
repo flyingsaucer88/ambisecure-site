@@ -86,6 +86,18 @@
   <p>Look up DESFire response status bytes (OPERATION_OK, AUTHENTICATION_ERROR, ADDITIONAL_FRAME, etc.). Reference table from public NXP application notes &mdash; no exploit content, no proprietary keys.</p>
   <div class="tool-meta"><span>Client-side</span><span>NXP DESFire EV1/EV2/EV3 status set</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Looks up DESFire status and error codes returned by the PICC.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a DESFire command fails and you need the meaning of the returned status byte.</p>
+    <h3>Worked example</h3>
+    <p>Look up <code>0x9D</code> (permission denied) after an access-controlled command is rejected.</p>
+  </div>
+</section>
+
 <div class="tool-shell stacked">
   <div class="tool-panel">
     <div class="tool-panel-head"><h2>Search</h2><div class="tool-panel-actions"><button class="tool-action" id="ds-clear">Clear</button></div></div>
@@ -104,6 +116,12 @@
     <div class="ref-card"><h3>Architecture</h3><p><a href="/technologies/card-reader-sam-flow/">Card &harr; Reader &harr; SAM</a></p></div>
   </div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/json-formatter/">JSON Formatter and Minifier</a></li><li><a href="/resources/tools/json-validator/">JSON Validator</a></li><li><a href="/resources/tools/xml-formatter/">XML Formatter and Validator</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

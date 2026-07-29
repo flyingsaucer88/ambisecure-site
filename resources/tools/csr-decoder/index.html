@@ -158,6 +158,12 @@
   <details class="faq-q"><summary><h3>Will decoding my CSR expose my private key?</h3></summary><div class="faq-a"><p>No. A CSR never contains the private key — only the public key. Decoding it is safe, and this tool works entirely in your browser.</p></div></details>
   <details class="faq-q"><summary><h3>Why are my Subject Alternative Names important?</h3></summary><div class="faq-a"><p>Modern clients validate the hostname against the SANs, not the Common Name. If a hostname is missing from the SAN list, browsers will reject the issued certificate.</p></div></details>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/pem-der/">PEM ↔ DER Converter</a></li><li><a href="/resources/tools/pfx-inspector/">PFX / PKCS#12 Inspector</a></li><li><a href="/resources/tools/x509-viewer/">X.509 Certificate Viewer</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

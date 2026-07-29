@@ -57,6 +57,18 @@
     <span>Client-side</span><span>WebCrypto SHA-256</span><span>IEEE 1609.2 + ETSI TS 103 097</span><span>Updated 2026-05</span>
   </div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Validates an IEEE 1609.2 certificate chain up to a trusted V2X root.</p>
+    <h3>When to use it</h3>
+    <p>Use it when a V2X message fails verification and you need to see where the certificate chain breaks.</p>
+    <h3>Worked example</h3>
+    <p>Load a pseudonym, its issuer and the root to confirm each link and its permissions.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell stacked">
   <div class="tool-panel">
@@ -141,6 +153,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/authdata-parser/">authenticatorData Parser</a></li><li><a href="/resources/tools/challenge-viewer/">WebAuthn Challenge Viewer</a></li><li><a href="/resources/tools/clientdata-decoder/">clientDataJSON Decoder</a></li></ul>
+  </div>
+</nav>
 </main>
 <footer class="site-footer">
   <div class="footer-inner">

@@ -85,6 +85,18 @@
   <h1>Passkey Flow Visualizer</h1>
   <p>Step-by-step walkthrough of WebAuthn registration and authentication ceremonies. Each step is annotated with the relevant byte structures and the AmbiSecure decoder you would use to inspect them. <strong>Annotation only — no live ceremony runs.</strong></p>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Visualises the passkey registration and authentication ceremonies end to end.</p>
+    <h3>When to use it</h3>
+    <p>Use it to learn or explain how a passkey is created and later used, including the server's role.</p>
+    <h3>Worked example</h3>
+    <p>Step through a registration to see the challenge, attestation and stored public key.</p>
+  </div>
+</section>
+
 <div class="tool-shell">
 <div class="tool-panel" style="grid-column: 1 / -1;"><div class="tool-panel-head"><h2>Ceremony</h2><div class="tool-panel-actions"><button class="tool-action tool-action--primary" data-pf-mode="register">Registration</button><button class="tool-action" data-pf-mode="auth">Authentication</button></div></div><div id="pf-output"></div></div>
 </div>
@@ -94,6 +106,12 @@
   <p>Two ceremonies make up the WebAuthn surface: <code>navigator.credentials.create()</code> for registration (fresh keypair + attestation) and <code>.get()</code> for authentication (signed assertion). The browser binds both to the relying-party origin; that binding is what kills the entire phishing class.</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>W3C WebAuthn Level 2 §4–6.</p></div><div class="ref-card"><h3>Companion tools</h3><p><a href="/resources/tools/clientdata-decoder/">clientDataJSON</a> &middot; <a href="/resources/tools/authdata-parser/">authenticatorData</a> &middot; <a href="/resources/tools/attestation-decoder/">attestation</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/passkeys-vs-traditional-mfa/">Passkeys vs Traditional MFA</a></p></div></div>
 </section>
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/rp-id-validator/">RP ID / Origin Validator</a></li><li><a href="/resources/tools/cbor-decoder/">CBOR Decoder</a></li><li><a href="/resources/tools/attestation-decoder/">WebAuthn Attestation Decoder</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

@@ -87,6 +87,18 @@
   <p>Type a status word (e.g. <code>9000</code>, <code>6A82</code>, <code>63CX</code>) or a phrase (e.g. <em>"file not found"</em>, <em>"security status"</em>). Returns matching entries from ISO/IEC 7816-4, GlobalPlatform, EMV, and common FIDO conventions.</p>
   <div class="tool-meta"><span>Client-side</span><span>ISO 7816-4 + GP + EMV + FIDO</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Looks up smart-card status words (SW1 SW2) by hex code or by phrase across ISO/IEC 7816-4, GlobalPlatform, EMV and FIDO conventions.</p>
+    <h3>When to use it</h3>
+    <p>Reach for it while debugging an APDU exchange when a card returns two trailing status bytes and you need to know what they mean without paging through four specifications.</p>
+    <h3>Worked example</h3>
+    <p>Type <code>6A82</code> and you get “File or application not found”; search the phrase <em>security status</em> to surface <code>6982</code> (security status not satisfied).</p>
+  </div>
+</section>
+
 
 <div class="tool-shell stacked">
   <div class="tool-panel">
@@ -106,6 +118,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/tlv-parser/">BER-TLV Parser</a></li><li><a href="/resources/tools/ieee-1609-2-parser/">IEEE 1609.2 V2X Certificate Parser</a></li><li><a href="/resources/tools/v2x-cert-chain-validator/">V2X Certificate Chain Validator</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

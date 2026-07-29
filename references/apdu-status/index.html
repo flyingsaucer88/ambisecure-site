@@ -102,6 +102,12 @@
     <h2>Usage notes</h2><p>Read SW1&nbsp;SW2 as one 16-bit value. SW1 broadly classifies the outcome and SW2 refines it: <code>0x9000</code> is success, <code>0x61xx</code> tells you SW2 bytes are still waiting (issue a GET&nbsp;RESPONSE), and <code>0x6Cxx</code> tells you to re-issue the command with SW2 as the expected length. The <code>0x62xx</code>/<code>0x63xx</code> ranges are warnings — the command completed but with a caveat (e.g. <code>0x63Cx</code> reports <code>x</code> verification attempts remaining).</p><ul><li>Codes are card- and applet-dependent: the same <code>0x6A80</code> can mean different things across ISO, EMV, and vendor definitions, so always check against the card's specification.</li><li>Never log a raw PIN or key when decoding a <code>0x63Cx</code> retry-counter response.</li><li>Pair this reference with the <a href="/resources/tools/sw-lookup/">SW1/SW2 lookup</a> and the <a href="/references/iso7816/">ISO&nbsp;7816 reference</a> when debugging a command exchange.</li></ul>
   </div>
 </section>
+<nav class="related-cross" aria-label="Related references">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related references</h2>
+    <ul><li><a href="/references/asn1/">ASN.1 Universal Tags</a></li><li><a href="/references/desfire-commands/">DESFire Command Set</a></li><li><a href="/references/desfire/">DESFire Status Codes</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

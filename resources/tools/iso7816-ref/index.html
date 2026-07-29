@@ -87,6 +87,18 @@
   <p>A condensed, bookmark-friendly view of the parts of ISO/IEC 7816 you reach for most often: APDU structure, common INS bytes, file/record types, and the secure-messaging bits in CLA.</p>
   <div class="tool-meta"><span>Reference</span><span>ISO/IEC 7816-4 / -8 / -9</span></div>
 </header>
+<section class="tool-explainer">
+  <div class="section-container" style="max-width:880px;">
+    <h2>How to use this tool</h2>
+    <h3>What it does</h3>
+    <p>Provides a quick reference to ISO 7816-4 interindustry commands and their CLA/INS values.</p>
+    <h3>When to use it</h3>
+    <p>Use it to recall the instruction byte for SELECT, READ BINARY, VERIFY and the rest without opening the standard.</p>
+    <h3>Worked example</h3>
+    <p>Confirm that GET RESPONSE is <code>0xC0</code>, the command you issue after a <code>0x61xx</code> status.</p>
+  </div>
+</section>
+
 
 <div class="tool-shell stacked">
   <div class="tool-panel">
@@ -136,6 +148,12 @@
   </div>
 </section>
 
+<nav class="related-tools" aria-label="Related tools">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Related tools</h2>
+    <ul><li><a href="/resources/tools/apdu-parser/">APDU Parser</a></li><li><a href="/resources/tools/atr-parser/">ATR Parser</a></li><li><a href="/resources/tools/sw-lookup/">SW1/SW2 Lookup</a></li></ul>
+  </div>
+</nav>
 </main>
 
 <footer class="site-footer"><div class="footer-inner">
