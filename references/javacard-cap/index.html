@@ -65,6 +65,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is a CAP file?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The deployment unit of a JavaCard applet: a set of components carrying converted class data in the form the card installer consumes."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why twelve components?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "So the card can load selectively. Header and Directory describe the package, Applet and Method carry executable content, Import and ConstantPool carry linkage, Descriptor and Debug are optional metadata."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which components can be omitted in production?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Descriptor and Debug. They are stripped to save scarce on-card storage and are not needed to install or run the applet."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does the Import component do?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Lists the packages this one depends on by AID and version. A version mismatch against the card is a common cause of installation failures that look like file corruption."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does a CAP file differ from a JAR?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A JAR holds class files for a full JVM. A CAP file holds a converted, linked, space-optimised form for the JavaCard VM, which has no class loader and very little memory."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -240,12 +285,33 @@
   <h2>What this reference covers</h2>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>JavaCard Virtual Machine Specification 3.x §6.</p></div><div class="ref-card"><h3>Companion tool</h3><p><a href="/resources/tools/javacard-cap/">CAP structure explorer</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/technologies/javacard/">JavaCard reference</a></p></div></div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2>What this reference does not cover</h2>
+    <p>The component list describes the CAP file format, not the loading process. How a package actually reaches a card is a GlobalPlatform matter: INSTALL for load, a sequence of LOAD blocks, then INSTALL for install, all inside an authenticated secure channel. A structurally valid CAP file will still be refused if that sequence or its keys are wrong.</p>
+    <p>Nor does it cover on-card resource limits, which are what most deployment problems come down to. Persistent storage is small and has finite write endurance, transient memory is smaller still, and a package that converts cleanly can exhaust either. Size the applet against the target chip before treating a failed install as a format problem.</p>
+  </div>
+</section>
+
 <nav class="related-cross" aria-label="Related references">
   <div class="section-container" style="max-width:880px;">
     <h2>Related references</h2>
     <ul><li><a href="/references/nfc/">NDEF TNF Types</a></li><li><a href="/references/sgp-32/">GSMA SGP.32 IoT eSIM Reference</a></li><li><a href="/references/webauthn-cose/">WebAuthn COSE Algorithms</a></li></ul>
   </div>
 </nav>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is a CAP file?</h3></summary><div class="faq-a"><p>The deployment unit of a JavaCard applet: a set of components carrying converted class data in the form the card installer consumes.</p></div></details>
+    <details class="faq-q"><summary><h3>Why twelve components?</h3></summary><div class="faq-a"><p>So the card can load selectively. Header and Directory describe the package, Applet and Method carry executable content, Import and ConstantPool carry linkage, Descriptor and Debug are optional metadata.</p></div></details>
+    <details class="faq-q"><summary><h3>Which components can be omitted in production?</h3></summary><div class="faq-a"><p>Descriptor and Debug. They are stripped to save scarce on-card storage and are not needed to install or run the applet.</p></div></details>
+    <details class="faq-q"><summary><h3>What does the Import component do?</h3></summary><div class="faq-a"><p>Lists the packages this one depends on by AID and version. A version mismatch against the card is a common cause of installation failures that look like file corruption.</p></div></details>
+    <details class="faq-q"><summary><h3>How does a CAP file differ from a JAR?</h3></summary><div class="faq-a"><p>A JAR holds class files for a full JVM. A CAP file holds a converted, linked, space-optimised form for the JavaCard VM, which has no class loader and very little memory.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

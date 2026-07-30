@@ -87,6 +87,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is in a command APDU?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A four-byte header of CLA, INS, P1 and P2, then optionally Lc with command data, and optionally Le giving the expected response length."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What are the common INS bytes?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A4 SELECT, B0 READ BINARY, D0 WRITE BINARY, B2 READ RECORD, E2 APPEND RECORD, 20 VERIFY, 88 INTERNAL AUTHENTICATE, 84 GET CHALLENGE, C0 GET RESPONSE."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What file types does ISO 7816 define?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The master file, dedicated files as directories, and elementary files holding data — transparent, linear fixed, linear variable and cyclic."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "When are extended-length APDUs needed?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Above 255 bytes of command data or 256 of response. Both card and reader must support it, and Lc and Le then occupy three bytes each."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -310,6 +355,18 @@
   <p>ISO/IEC 7816 has 15+ parts; the ones smart-card developers reach for most: <strong>-3</strong> (electrical, ATR), <strong>-4</strong> (organisation, security, commands), <strong>-8</strong> (commands for security operations), <strong>-9</strong> (commands for card management), <strong>-15</strong> (cryptographic information application).</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Spec</h3><p>ISO 7816-4 (the one to read first).</p></div><div class="ref-card"><h3>Companion tool</h3><p>Decode an APDU you have on hand.</p><p><a href="/resources/tools/apdu-parser/">APDU parser →</a></p></div><div class="ref-card"><h3>Pillar post</h3><p>A practical introduction with examples.</p><p><a href="/blog/apdu-from-first-principles/">APDU from first principles →</a></p></div>
+  </div>
+</section>
+
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is in a command APDU?</h3></summary><div class="faq-a"><p>A four-byte header of CLA, INS, P1 and P2, then optionally Lc with command data, and optionally Le giving the expected response length.</p></div></details>
+    <details class="faq-q"><summary><h3>What are the common INS bytes?</h3></summary><div class="faq-a"><p>A4 SELECT, B0 READ BINARY, D0 WRITE BINARY, B2 READ RECORD, E2 APPEND RECORD, 20 VERIFY, 88 INTERNAL AUTHENTICATE, 84 GET CHALLENGE, C0 GET RESPONSE.</p></div></details>
+    <details class="faq-q"><summary><h3>What file types does ISO 7816 define?</h3></summary><div class="faq-a"><p>The master file, dedicated files as directories, and elementary files holding data — transparent, linear fixed, linear variable and cyclic.</p></div></details>
+    <details class="faq-q"><summary><h3>When are extended-length APDUs needed?</h3></summary><div class="faq-a"><p>Above 255 bytes of command data or 256 of response. Both card and reader must support it, and Lc and Le then occupy three bytes each.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
   </div>
 </section>
 

@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does CMAC padding do?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "If the message is not an exact multiple of the block size, a single 0x80 byte followed by zeros is appended and the second subkey K2 is used. An exact multiple is processed with K1 and no padding."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why do SCP03 and DESFire truncate the MAC?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "To save bytes on a constrained channel. SCP03 carries 8 bytes of a 16-byte CMAC; truncation reduces forgery resistance proportionally, which is why the remaining length is specified rather than chosen."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What block size applies?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "16 bytes for AES and 8 bytes for TDES, which is why the same message length gives different block counts depending on the cipher."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is this a production MAC implementation?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. It computes lengths, block counts and truncation only — it performs no keyed cryptography and is intended for sizing buffers and checking a specification against an implementation."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "CMAC Length Calculator",
+   "description": "Compute CMAC block count, padded length, and output truncation for AES / TDES. Practical companion for SCP03, DESFire EV2/EV3, and EMV CDA implementers.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/cmac-length/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -254,6 +316,18 @@
   <p>CMAC (NIST SP 800-38B) is a Cipher-based MAC built on a block cipher. It uses two derived subkeys (K1, K2) selected by message length to handle padding without ambiguity. Common deployments truncate the 16-byte output to 8 bytes for transport efficiency.</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>NIST SP 800-38B; ISO/IEC 9797-1.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/scp03-walkthrough/">SCP03 walkthrough</a> &middot; <a href="/resources/tools/secure-messaging-viz/">Secure messaging visualizer</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/why-sams-matter-in-closed-loop-transit/">Why SAMs matter</a></p></div></div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What does CMAC padding do?</h3></summary><div class="faq-a"><p>If the message is not an exact multiple of the block size, a single 0x80 byte followed by zeros is appended and the second subkey K2 is used. An exact multiple is processed with K1 and no padding.</p></div></details>
+    <details class="faq-q"><summary><h3>Why do SCP03 and DESFire truncate the MAC?</h3></summary><div class="faq-a"><p>To save bytes on a constrained channel. SCP03 carries 8 bytes of a 16-byte CMAC; truncation reduces forgery resistance proportionally, which is why the remaining length is specified rather than chosen.</p></div></details>
+    <details class="faq-q"><summary><h3>What block size applies?</h3></summary><div class="faq-a"><p>16 bytes for AES and 8 bytes for TDES, which is why the same message length gives different block counts depending on the cipher.</p></div></details>
+    <details class="faq-q"><summary><h3>Is this a production MAC implementation?</h3></summary><div class="faq-a"><p>No. It computes lengths, block counts and truncation only — it performs no keyed cryptography and is intended for sizing buffers and checking a specification against an implementation.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

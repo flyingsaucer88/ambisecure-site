@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is clientDataJSON?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The browser's record of the ceremony: the type, the challenge it was given, the origin it ran on, and a crossOrigin flag. The authenticator signs a SHA-256 hash of these exact bytes."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does the SHA-256 hash matter?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because that hash — not the JSON — is what goes into the signed data. A relying party must hash the bytes it received rather than re-serialising the parsed object, since any whitespace difference changes the hash."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What should the type field contain?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "webauthn.create for registration and webauthn.get for authentication. A mismatch between the expected ceremony and this field is a signal the response has been replayed from a different flow."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is checking origin so important?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It is the anti-phishing property. The browser writes the true origin, so a relying party that verifies it will reject an assertion produced on a look-alike domain even if the user was fully deceived."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "clientDataJSON decoder for WebAuthn",
+   "description": "Decode a base64url clientDataJSON. Verifies type, extracts challenge / origin / crossOrigin, and computes SHA-256 — what the authenticator actually signs.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/clientdata-decoder/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -230,7 +292,7 @@
 <main id="main">
 <header class="tool-header">
   <span class="eyebrow">WebAuthn</span>
-  <h1>clientDataJSON Decoder</h1>
+  <h1>clientDataJSON decoder for WebAuthn</h1>
   <p>Decode the base64url-encoded clientDataJSON sent in WebAuthn registration and assertion ceremonies. Surfaces type, challenge, origin, crossOrigin, and computes the SHA-256 the authenticator signs over.</p>
 </header>
 <section class="tool-explainer">
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §5.8.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/rp-id-validator/">RP ID validator</a> &middot; <a href="/resources/tools/challenge-viewer/">Challenge viewer</a> &middot; <a href="/resources/tools/base64url/">base64url</a> &middot; <a href="/resources/tools/authdata-parser/">authenticatorData parser</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/technologies/webauthn/">WebAuthn — registration & authentication</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is clientDataJSON?</h3></summary><div class="faq-a"><p>The browser's record of the ceremony: the type, the challenge it was given, the origin it ran on, and a crossOrigin flag. The authenticator signs a SHA-256 hash of these exact bytes.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does the SHA-256 hash matter?</h3></summary><div class="faq-a"><p>Because that hash — not the JSON — is what goes into the signed data. A relying party must hash the bytes it received rather than re-serialising the parsed object, since any whitespace difference changes the hash.</p></div></details>
+    <details class="faq-q"><summary><h3>What should the type field contain?</h3></summary><div class="faq-a"><p>webauthn.create for registration and webauthn.get for authentication. A mismatch between the expected ceremony and this field is a signal the response has been replayed from a different flow.</p></div></details>
+    <details class="faq-q"><summary><h3>Why is checking origin so important?</h3></summary><div class="faq-a"><p>It is the anti-phishing property. The browser writes the true origin, so a relying party that verifies it will reject an assertion produced on a look-alike domain even if the user was fully deceived.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

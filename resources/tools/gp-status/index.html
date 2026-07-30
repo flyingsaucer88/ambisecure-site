@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What are GlobalPlatform card lifecycle states?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "OP_READY, INITIALIZED, SECURED, CARD_LOCKED and TERMINATED. Production cards ship in SECURED; TERMINATED is irreversible and permanently ends the card's life."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What are application lifecycle states?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "INSTALLED, SELECTABLE, and application-specific states such as PERSONALIZED, plus LOCKED. An applet must be SELECTABLE before it can be chosen by AID."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the Issuer Security Domain?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The on-card representation of the issuer, holding the keys that authorise card-management commands. Its privileges determine what may be loaded, installed or deleted."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does INSTALL fail with a security status error?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because no authenticated secure channel is in place, or the security domain lacks the privilege for the operation. Card management requires a mutually authenticated SCP session first."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "GlobalPlatform Status Reference",
+   "description": "Reference for GlobalPlatform 2.3.1 — card lifecycle states, application lifecycle states, ISD permissions.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/gp-status/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -284,6 +346,18 @@
   <p>When a GET STATUS APDU returns lifecycle bytes you don&rsquo;t recognise, or when you&rsquo;re trying to figure out why your applet isn&rsquo;t selectable, this table is the fast answer.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Spec</h3><p>GlobalPlatform Card Specification 2.3.1.</p></div><div class="ref-card"><h3>Companion tool</h3><p>Decode the actual APDUs.</p><p><a href="/resources/tools/apdu-parser/">APDU parser →</a></p></div><div class="ref-card"><h3>Service</h3><p>Building applets on a GP card?</p><p><a href="/services/javacard-development/">JavaCard development →</a></p></div>
+  </div>
+</section>
+
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What are GlobalPlatform card lifecycle states?</h3></summary><div class="faq-a"><p>OP_READY, INITIALIZED, SECURED, CARD_LOCKED and TERMINATED. Production cards ship in SECURED; TERMINATED is irreversible and permanently ends the card's life.</p></div></details>
+    <details class="faq-q"><summary><h3>What are application lifecycle states?</h3></summary><div class="faq-a"><p>INSTALLED, SELECTABLE, and application-specific states such as PERSONALIZED, plus LOCKED. An applet must be SELECTABLE before it can be chosen by AID.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the Issuer Security Domain?</h3></summary><div class="faq-a"><p>The on-card representation of the issuer, holding the keys that authorise card-management commands. Its privileges determine what may be loaded, installed or deleted.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does INSTALL fail with a security status error?</h3></summary><div class="faq-a"><p>Because no authenticated secure channel is in place, or the security domain lacks the privilege for the operation. Card management requires a mutually authenticated SCP session first.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
   </div>
 </section>
 

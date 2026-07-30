@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "How long should a WebAuthn challenge be?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "At least 16 bytes; 32 is the common choice. The requirement that matters more is that it comes from a cryptographically secure random source and is never reused."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does the entropy reading tell me?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Shannon entropy over the decoded bytes, used as a smell test. A low value on a long input usually means the challenge is ASCII text, a counter, or the output of a non-cryptographic generator."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is Math.random() unsafe for challenges?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It is a fast non-cryptographic generator with predictable internal state. An attacker who observes enough output can predict future values; use crypto.getRandomValues() or a server-side CSPRNG."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does the challenge need to be stored server-side?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. The relying party must remember the challenge it issued and compare it against the one echoed in clientDataJSON, otherwise the anti-replay property is lost entirely."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "WebAuthn Challenge Viewer",
+   "description": "Inspect a WebAuthn challenge — length, Shannon entropy, common pitfalls. Generate fresh 32-byte challenges with the platform CSPRNG.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/challenge-viewer/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -231,7 +293,7 @@
 <header class="tool-header">
   <span class="eyebrow">WebAuthn</span>
   <h1>WebAuthn Challenge Viewer</h1>
-  <p>Validate a WebAuthn challenge. Reports length, Shannon entropy, and warns about common mistakes (under-length, ASCII-shaped strings, Math.random output). Can also generate fresh 32-byte challenges using the platform CSPRNG.</p>
+  <p>Validate a WebAuthn challenge. Reports length, Shannon entropy, and warns about common mistakes (under-length, ASCII-shaped strings, Math.random output). Can also generate fresh 32-byte challenges using the platform CSPRNG. For where that randomness comes from, see <a href="/blog/lava-lamps-and-cryptographic-entropy/">lava lamps and cryptographic entropy</a>.</p>
 </header>
 <section class="tool-explainer">
   <div class="section-container" style="max-width:880px;">
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §13.4.3.</p></div><div class="ref-card"><h3>Pitfall</h3><p>Never use Math.random or string concatenation. Use crypto.randomBytes / crypto.getRandomValues / SecureRandom.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/clientdata-decoder/">clientDataJSON decoder</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>How long should a WebAuthn challenge be?</h3></summary><div class="faq-a"><p>At least 16 bytes; 32 is the common choice. The requirement that matters more is that it comes from a cryptographically secure random source and is never reused.</p></div></details>
+    <details class="faq-q"><summary><h3>What does the entropy reading tell me?</h3></summary><div class="faq-a"><p>Shannon entropy over the decoded bytes, used as a smell test. A low value on a long input usually means the challenge is ASCII text, a counter, or the output of a non-cryptographic generator.</p></div></details>
+    <details class="faq-q"><summary><h3>Why is Math.random() unsafe for challenges?</h3></summary><div class="faq-a"><p>It is a fast non-cryptographic generator with predictable internal state. An attacker who observes enough output can predict future values; use crypto.getRandomValues() or a server-side CSPRNG.</p></div></details>
+    <details class="faq-q"><summary><h3>Does the challenge need to be stored server-side?</h3></summary><div class="faq-a"><p>Yes. The relying party must remember the challenge it issued and compare it against the one echoed in clientDataJSON, otherwise the anti-replay property is lost entirely.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the difference between big and little endian?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Byte order within a multi-byte integer. Big-endian stores the most significant byte first, which is how network protocols and most card specifications write values; little-endian reverses it, which is what x86 and ARM use in memory."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which order do smart-card specifications use?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Big-endian almost universally — ISO 7816, EMV and ASN.1 all write the most significant byte first. DESFire is the notable exception, using little-endian for several of its native fields."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does endianness affect a byte array?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. It only matters when a sequence of bytes is interpreted as a number. A hash, a key or a certificate is a byte string and must never be byte-swapped."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my value look wrong by orders of magnitude?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Almost always the wrong width rather than the wrong order — reading a u16 as a u32 pulls in two adjacent bytes. Check the field length before suspecting endianness."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "Endian converter for byte order",
+   "description": "Convert between big-endian (BE) and little-endian (LE) for u16 / u32 / u64 hex blocks. Shows unsigned numeric value too.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/endian/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -231,7 +293,7 @@
 
 <header class="tool-header">
   <span class="eyebrow">Encoding utility</span>
-  <h1>Endian Converter</h1>
+  <h1>Endian converter for byte order</h1>
   <p>Take a hex stream, group it by chosen width (u16 / u32 / u64), and see big-endian and little-endian renderings side by side, plus the unsigned numeric value of each. Crucial when reading length fields, TLV lengths, or numeric IDs in mixed-endian protocol stacks.</p>
   <div class="tool-meta"><span>Client-side</span><span>u16 / u32 / u64</span></div>
 </header>
@@ -272,6 +334,18 @@
   <p>Big-endian writes the most-significant byte first. Little-endian writes the least-significant byte first. Smart-card / banking / network protocols typically use BE; x86, ARM, and most file formats use LE. Mixing them is a common source of bugs.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Spec</h3><p>RFC 1700 (legacy network byte order).</p></div><div class="ref-card"><h3>Companion tool</h3><p>Need length-field formats?</p><p><a href="/resources/tools/length-field/">Length-field encoder →</a></p></div><div class="ref-card"><h3>Smart-card hint</h3><p>ATR / APDU length encodings are BE.</p><p><a href="/resources/tools/apdu-parser/">APDU parser →</a></p></div>
+  </div>
+</section>
+
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is the difference between big and little endian?</h3></summary><div class="faq-a"><p>Byte order within a multi-byte integer. Big-endian stores the most significant byte first, which is how network protocols and most card specifications write values; little-endian reverses it, which is what x86 and ARM use in memory.</p></div></details>
+    <details class="faq-q"><summary><h3>Which order do smart-card specifications use?</h3></summary><div class="faq-a"><p>Big-endian almost universally — ISO 7816, EMV and ASN.1 all write the most significant byte first. DESFire is the notable exception, using little-endian for several of its native fields.</p></div></details>
+    <details class="faq-q"><summary><h3>Does endianness affect a byte array?</h3></summary><div class="faq-a"><p>No. It only matters when a sequence of bytes is interpreted as a number. A hash, a key or a certificate is a byte string and must never be byte-swapped.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does my value look wrong by orders of magnitude?</h3></summary><div class="faq-a"><p>Almost always the wrong width rather than the wrong order — reading a u16 as a u32 pulls in two adjacent bytes. Check the field length before suspecting endianness.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
   </div>
 </section>
 

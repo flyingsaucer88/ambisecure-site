@@ -65,6 +65,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does a DESFire status byte look like?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A single byte rather than the two-byte SW1/SW2 of ISO 7816-4 — 0x00 for OPERATION_OK, and specific codes for each error condition."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is ADDITIONAL_FRAME?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Status 0xAF, meaning the card has more to send or expects more from you. Continue the exchange rather than treating it as a failure."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What causes AUTHENTICATION_ERROR?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The wrong key, wrong key number, or wrong crypto type for the application — or issuing a command that requires a session before authenticating."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why do I see PERMISSION_DENIED on a readable file?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The access-rights word names a key you have not authenticated with in this session. Selecting an application clears authentication state."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do status codes differ between EV1, EV2 and EV3?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The common set is stable across generations; later generations add codes for the features they introduce, such as transaction MAC and proximity check."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -240,12 +285,33 @@
   <h2>What this reference covers</h2>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>NXP DESFire EV1 / EV2 / EV3 datasheets.</p></div><div class="ref-card"><h3>Companion tool</h3><p><a href="/resources/tools/desfire-status/">DESFire status decoder</a> &middot; <a href="/resources/tools/desfire-file-settings/">File settings parser</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/references/desfire-commands/">DESFire command set</a> &middot; <a href="/blog/desfire-ev1-vs-ev2-vs-ev3/">DESFire generation differences</a></p></div></div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2>What this reference does not cover</h2>
+    <p>These are native DESFire status bytes &mdash; the single byte a native command returns. If your reader stack wraps commands in ISO 7816-4 APDUs, you will see two-byte SW1/SW2 values instead, and 91xx is the usual carrier for a native status inside a wrapped response. Check which framing you are using before looking a value up here.</p>
+    <p>Coverage is the documented EV1, EV2 and EV3 set. Later generations add codes for the features they introduce, and some readers surface their own transport-level errors that never came from the card at all &mdash; a timeout or a field drop is not a DESFire status.</p>
+  </div>
+</section>
+
 <nav class="related-cross" aria-label="Related references">
   <div class="section-container" style="max-width:880px;">
     <h2>Related references</h2>
     <ul><li><a href="/references/emv-tags/">EMV Tags</a></li><li><a href="/references/etsi-ts-102-941/">ETSI TS 102 941 Trust &amp; Privacy Management</a></li><li><a href="/references/etsi-ts-103-097/">ETSI TS 103 097 Secured-Message Reference</a></li></ul>
   </div>
 </nav>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What does a DESFire status byte look like?</h3></summary><div class="faq-a"><p>A single byte rather than the two-byte SW1/SW2 of ISO 7816-4 — 0x00 for OPERATION_OK, and specific codes for each error condition.</p></div></details>
+    <details class="faq-q"><summary><h3>What is ADDITIONAL_FRAME?</h3></summary><div class="faq-a"><p>Status 0xAF, meaning the card has more to send or expects more from you. Continue the exchange rather than treating it as a failure.</p></div></details>
+    <details class="faq-q"><summary><h3>What causes AUTHENTICATION_ERROR?</h3></summary><div class="faq-a"><p>The wrong key, wrong key number, or wrong crypto type for the application — or issuing a command that requires a session before authenticating.</p></div></details>
+    <details class="faq-q"><summary><h3>Why do I see PERMISSION_DENIED on a readable file?</h3></summary><div class="faq-a"><p>The access-rights word names a key you have not authenticated with in this session. Selecting an application clears authentication state.</p></div></details>
+    <details class="faq-q"><summary><h3>Do status codes differ between EV1, EV2 and EV3?</h3></summary><div class="faq-a"><p>The common set is stable across generations; later generations add codes for the features they introduce, such as transaction MAC and proximity check.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

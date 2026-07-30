@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is a COSE_Key?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A CBOR map describing a public key, defined in RFC 8152. WebAuthn puts the credential public key in this form inside attested credential data, so a relying party parses COSE rather than SPKI."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What do kty and alg mean?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "kty is the key type — 2 for EC2, 1 for OKP, 3 for RSA. alg is the COSE algorithm identifier, and it is negative for the common signature algorithms: -7 for ES256, -8 for EdDSA, -257 for RS256."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why are the labels negative numbers?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "COSE reserves negative labels for key-type-specific parameters. For an EC2 key, -1 is the curve, -2 the x coordinate and -3 the y coordinate; the same numbers mean different things under a different kty."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do I convert this to a normal public key?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Read kty and crv, then rebuild an SPKI structure from the coordinate byte strings. Most server libraries do this for you; the failure mode to watch for is dropping a leading zero from x or y."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "COSE Key Inspector",
+   "description": "Inspect COSE_Key blobs (RFC 8152) — kty, alg, crv, x, y, n, e. Decode the credentialPublicKey from any WebAuthn attestation.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/cose-key/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>RFC 8152 §7 (COSE Key Objects).</p></div><div class="ref-card"><h3>IANA registry</h3><p>COSE algorithm and curve identifiers are tracked in the IANA <em>COSE Algorithms</em> registry.</p></div><div class="ref-card"><h3>Use</h3><p>WebAuthn credentialPublicKey · CTAP2 messages · CWT (CBOR Web Tokens).</p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is a COSE_Key?</h3></summary><div class="faq-a"><p>A CBOR map describing a public key, defined in RFC 8152. WebAuthn puts the credential public key in this form inside attested credential data, so a relying party parses COSE rather than SPKI.</p></div></details>
+    <details class="faq-q"><summary><h3>What do kty and alg mean?</h3></summary><div class="faq-a"><p>kty is the key type — 2 for EC2, 1 for OKP, 3 for RSA. alg is the COSE algorithm identifier, and it is negative for the common signature algorithms: -7 for ES256, -8 for EdDSA, -257 for RS256.</p></div></details>
+    <details class="faq-q"><summary><h3>Why are the labels negative numbers?</h3></summary><div class="faq-a"><p>COSE reserves negative labels for key-type-specific parameters. For an EC2 key, -1 is the curve, -2 the x coordinate and -3 the y coordinate; the same numbers mean different things under a different kty.</p></div></details>
+    <details class="faq-q"><summary><h3>How do I convert this to a normal public key?</h3></summary><div class="faq-a"><p>Read kty and crv, then rebuild an SPKI structure from the coordinate byte strings. Most server libraries do this for you; the failure mode to watch for is dropping a leading zero from x or y.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

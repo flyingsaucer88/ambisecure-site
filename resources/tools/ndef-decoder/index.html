@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is NDEF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The NFC Data Exchange Format — a lightweight record structure for carrying URIs, text, MIME payloads and custom types on NFC tags."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is TNF?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Type Name Format: the 3-bit field that says how to interpret the record type — well-known, MIME media, absolute URI, external, or empty."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my URI record look truncated at the start?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because well-known URI records compress the scheme into a single prefix byte. 0x01 means http://www., 0x03 http://, 0x04 https:// — the tool expands it for you."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can NDEF records be trusted?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Not by themselves. NDEF has no integrity or authenticity guarantee, so anything read from a tag is untrusted input. Signed records exist but are rarely deployed."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "NDEF decoder for NFC records",
+   "description": "Decode NFC Data Exchange Format (NDEF) messages — URI, Text, Smart Poster, MIME, External records.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/ndef-decoder/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -230,7 +292,7 @@
 <main id="main">
 <header class="tool-header">
   <span class="eyebrow">NFC utility</span>
-  <h1>NDEF Decoder</h1>
+  <h1>NDEF decoder for NFC records</h1>
   <p>Walk an NDEF (NFC Data Exchange Format) message into individual records and decode the well-known types: URI, Text, Smart Poster, MIME, External (including Android AAR). Client-side only.</p>
   <div class="tool-meta"><span>Client-side</span><span>NFC Forum NDEF 1.0</span></div>
 </header>
@@ -268,6 +330,18 @@
     <div class="ref-card"><h3>Architecture</h3><p><a href="/technologies/desfire/">DESFire</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is NDEF?</h3></summary><div class="faq-a"><p>The NFC Data Exchange Format — a lightweight record structure for carrying URIs, text, MIME payloads and custom types on NFC tags.</p></div></details>
+    <details class="faq-q"><summary><h3>What is TNF?</h3></summary><div class="faq-a"><p>Type Name Format: the 3-bit field that says how to interpret the record type — well-known, MIME media, absolute URI, external, or empty.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does my URI record look truncated at the start?</h3></summary><div class="faq-a"><p>Because well-known URI records compress the scheme into a single prefix byte. 0x01 means http://www., 0x03 http://, 0x04 https:// — the tool expands it for you.</p></div></details>
+    <details class="faq-q"><summary><h3>Can NDEF records be trusted?</h3></summary><div class="faq-a"><p>Not by themselves. NDEF has no integrity or authenticity guarantee, so anything read from a tag is untrusted input. Signed records exist but are rarely deployed.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

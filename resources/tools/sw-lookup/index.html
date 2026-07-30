@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is a status word?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The two trailing bytes of every APDU response, SW1 and SW2. 9000 means success; everything else is a warning or an error whose meaning depends on the specification in force."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What do 61xx and 6Cxx mean?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Neither is an error. 61xx says XX more bytes are available and you should issue GET RESPONSE; 6Cxx says your Le was wrong and XX is the correct value to re-send."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why do the same bytes mean different things on different cards?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because ISO 7816-4 defines a common set and then leaves ranges to the application. GlobalPlatform, EMV and FIDO each define their own, so the context decides the meaning."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between 6A82 and 6A83?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "6A82 is file or application not found — usually a SELECT against a missing AID. 6A83 is record not found, meaning the file exists but the record index does not."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "SW1/SW2 status word lookup",
+   "description": "Look up smart-card status words (SW1 SW2) by hex or by phrase. ISO 7816-4, GlobalPlatform, EMV, FIDO common returns.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/sw-lookup/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -231,7 +293,7 @@
 
 <header class="tool-header">
   <span class="eyebrow">Smart-card utility</span>
-  <h1>SW1/SW2 Lookup</h1>
+  <h1>SW1/SW2 status word lookup</h1>
   <p>Type a status word (e.g. <code>9000</code>, <code>6A82</code>, <code>63CX</code>) or a phrase (e.g. <em>"file not found"</em>, <em>"security status"</em>). Returns matching entries from ISO/IEC 7816-4, GlobalPlatform, EMV, and common FIDO conventions.</p>
   <div class="tool-meta"><span>Client-side</span><span>ISO 7816-4 + GP + EMV + FIDO</span></div>
 </header>
@@ -263,6 +325,18 @@
   <p>A smart card ends every response APDU with two bytes — SW1 SW2 — that say what happened. <code>9000</code> is the universal &ldquo;OK&rdquo;. The 6XYY range covers warnings (62/63), state errors (64/65), wrong-length (67), command-not-allowed (69), wrong-parameters (6A), and proprietary (6F). The full table lives in ISO/IEC 7816-4, with extensions in GlobalPlatform and per-application standards.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Spec</h3><p>ISO/IEC 7816-4 §5.1.4.</p></div><div class="ref-card"><h3>Companion tool</h3><p>See the full table at once.</p><p><a href="/resources/tools/apdu-status-dict/">APDU status dictionary →</a></p></div><div class="ref-card"><h3>Pillar post</h3><p>A practical introduction to APDUs.</p><p><a href="/blog/apdu-from-first-principles/">APDU from first principles →</a></p></div>
+  </div>
+</section>
+
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is a status word?</h3></summary><div class="faq-a"><p>The two trailing bytes of every APDU response, SW1 and SW2. 9000 means success; everything else is a warning or an error whose meaning depends on the specification in force.</p></div></details>
+    <details class="faq-q"><summary><h3>What do 61xx and 6Cxx mean?</h3></summary><div class="faq-a"><p>Neither is an error. 61xx says XX more bytes are available and you should issue GET RESPONSE; 6Cxx says your Le was wrong and XX is the correct value to re-send.</p></div></details>
+    <details class="faq-q"><summary><h3>Why do the same bytes mean different things on different cards?</h3></summary><div class="faq-a"><p>Because ISO 7816-4 defines a common set and then leaves ranges to the application. GlobalPlatform, EMV and FIDO each define their own, so the context decides the meaning.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the difference between 6A82 and 6A83?</h3></summary><div class="faq-a"><p>6A82 is file or application not found — usually a SELECT against a missing AID. 6A83 is record not found, meaning the file exists but the record index does not.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
   </div>
 </section>
 

@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why are there several length encodings?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because different layers chose differently. BER uses short and long form, DGI uses its own long form, and many proprietary protocols just use a fixed one- or two-byte field."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is DGI long form?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A Data Grouping Identifier convention where a length of 255 or more is written as 0xFF followed by two big-endian bytes. It appears throughout card personalisation payloads."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "When do I need two bytes rather than one?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "As soon as the value can reach 256. Sizing a field to the maximum the specification allows rather than to today's data is what prevents a silent truncation later."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does byte order matter for a length field?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, and it is protocol-specific. BER and DGI are big-endian; several proprietary formats are little-endian, which is why this tool shows both."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "Length-field encoder for BER-TLV",
+   "description": "Encode an integer length in BER long-form, DGI long-form, 1-byte, and 2-byte BE/LE. Useful for APDU and TLV building.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/length-field/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -231,7 +293,7 @@
 
 <header class="tool-header">
   <span class="eyebrow">Encoding utility</span>
-  <h1>Length-Field Encoder</h1>
+  <h1>Length-field encoder for BER-TLV</h1>
   <p>Convert an integer length into the binary length field used by various protocols: BER long-form (X.690), GP DGI long-form, plain u8, and u16 in big-endian and little-endian. The right format the first time saves a lot of debugging.</p>
   <div class="tool-meta"><span>Client-side</span><span>BER / DGI / u8 / u16</span></div>
 </header>
@@ -268,6 +330,18 @@
   <p>BER (X.690) length: short form when ≤ 127; long form is <code>0x80|N</code> followed by <code>N</code> length bytes. DGI (GlobalPlatform Data Group Identifier) length: short when &lt; 0xFF; long form is <code>0xFF</code> followed by 2 length bytes. Raw u8/u16 just write the value at the chosen width.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Spec</h3><p>X.690 (BER lengths) and GP Card Specification 2.3.1 (DGI).</p></div><div class="ref-card"><h3>Companion tool</h3><p>TLV parsing of what you just wrote.</p><p><a href="/resources/tools/tlv-parser/">TLV parser →</a></p></div><div class="ref-card"><h3>Companion tool</h3><p>Need BE/LE for raw fields?</p><p><a href="/resources/tools/endian/">Endian converter →</a></p></div>
+  </div>
+</section>
+
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>Why are there several length encodings?</h3></summary><div class="faq-a"><p>Because different layers chose differently. BER uses short and long form, DGI uses its own long form, and many proprietary protocols just use a fixed one- or two-byte field.</p></div></details>
+    <details class="faq-q"><summary><h3>What is DGI long form?</h3></summary><div class="faq-a"><p>A Data Grouping Identifier convention where a length of 255 or more is written as 0xFF followed by two big-endian bytes. It appears throughout card personalisation payloads.</p></div></details>
+    <details class="faq-q"><summary><h3>When do I need two bytes rather than one?</h3></summary><div class="faq-a"><p>As soon as the value can reach 256. Sizing a field to the maximum the specification allows rather than to today's data is what prevents a silent truncation later.</p></div></details>
+    <details class="faq-q"><summary><h3>Does byte order matter for a length field?</h3></summary><div class="faq-a"><p>Yes, and it is protocol-specific. BER and DGI are big-endian; several proprietary formats are little-endian, which is why this tool shows both.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
   </div>
 </section>
 

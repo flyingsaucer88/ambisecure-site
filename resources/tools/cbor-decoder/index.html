@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is CBOR?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A binary serialisation format defined in RFC 8949 with a data model close to JSON but a compact binary encoding. WebAuthn, COSE and CTAP2 all use it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does CBOR encode a value?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The initial byte carries a 3-bit major type and a 5-bit argument. The major type says whether the item is an integer, a byte string, a text string, an array, a map, a tag or a simple value; the argument gives the length or value, possibly in following bytes."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my WebAuthn blob decode as a map with three keys?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because it is an attestationObject: fmt, attStmt and authData. The authData value is a byte string that needs parsing separately as a fixed-layout structure, not as CBOR."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does CBOR guarantee one encoding per value?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Not in general, but WebAuthn requires the CTAP2 canonical form — deterministic map ordering and shortest-form arguments — because signatures are computed over the encoded bytes."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "CBOR decoder for WebAuthn payloads",
+   "description": "Decode CBOR (RFC 8949) blobs in your browser — integers, byte / text strings, arrays, maps, tags. Friendly for WebAuthn attestation objects, COSE keys, CTAP2 messages.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/cbor-decoder/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -230,7 +292,7 @@
 <main id="main">
 <header class="tool-header">
   <span class="eyebrow">WebAuthn / CTAP2</span>
-  <h1>CBOR Decoder</h1>
+  <h1>CBOR decoder for WebAuthn payloads</h1>
   <p>Walk a CBOR (RFC 8949) blob into a structural tree. Accepts hex or base64url. Built for WebAuthn attestation objects, COSE keys, and CTAP2 messages — but works for any CBOR.</p>
 </header>
 <section class="tool-explainer">
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>RFC 8949 (CBOR data model and encoding).</p></div><div class="ref-card"><h3>Companion tools</h3><p><a href="/resources/tools/cose-key/">COSE key inspector</a> &middot; <a href="/resources/tools/attestation-decoder/">attestation decoder</a></p></div><div class="ref-card"><h3>Pillar reading</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Understanding WebAuthn attestation objects</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is CBOR?</h3></summary><div class="faq-a"><p>A binary serialisation format defined in RFC 8949 with a data model close to JSON but a compact binary encoding. WebAuthn, COSE and CTAP2 all use it.</p></div></details>
+    <details class="faq-q"><summary><h3>How does CBOR encode a value?</h3></summary><div class="faq-a"><p>The initial byte carries a 3-bit major type and a 5-bit argument. The major type says whether the item is an integer, a byte string, a text string, an array, a map, a tag or a simple value; the argument gives the length or value, possibly in following bytes.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does my WebAuthn blob decode as a map with three keys?</h3></summary><div class="faq-a"><p>Because it is an attestationObject: fmt, attStmt and authData. The authData value is a byte string that needs parsing separately as a fixed-layout structure, not as CBOR.</p></div></details>
+    <details class="faq-q"><summary><h3>Does CBOR guarantee one encoding per value?</h3></summary><div class="faq-a"><p>Not in general, but WebAuthn requires the CTAP2 canonical form — deterministic map ordering and shortest-form arguments — because signatures are computed over the encoded bytes.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

@@ -73,6 +73,51 @@
    "contentUrl": "https://ambisecure.ambimat.com/assets/video/biokey-loop.mp4"
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the AmbiSecure BioKey?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A USB security key with an on-device fingerprint sensor, so user verification happens on the authenticator itself rather than through a PIN typed on the host."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where is the fingerprint stored?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "In the secure element on the key. Matching happens on the device and the template never leaves it, so there is no central biometric database to breach."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does the biometric replace?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The PIN, not the cryptographic key. It is the user-verification step that unlocks the credential; the private key itself never leaves the secure element either way."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens if the sensor fails to read?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The key falls back to PIN verification, which is why a PIN is still enrolled during setup. A biometric that cannot be read must never mean an account that cannot be reached."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does the fingerprint work across different computers?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Verification is performed by the key, so it behaves identically on any host without drivers, enrolment, or per-machine setup."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -290,6 +335,18 @@
     <ul><li><a href="/videos/setup-ambisecure-card-desktop/">Setting up the AmbiSecure card on desktop</a></li><li><a href="/videos/setup-ambisecure-card-facebook/">Adding the AmbiSecure card as a FIDO security key in Facebook Accounts Center</a></li><li><a href="/videos/setup-ambisecure-card-gmail/">Adding the AmbiSecure card as a FIDO security key in Google 2-Step Verification</a></li></ul>
   </div>
 </nav>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is the AmbiSecure BioKey?</h3></summary><div class="faq-a"><p>A USB security key with an on-device fingerprint sensor, so user verification happens on the authenticator itself rather than through a PIN typed on the host.</p></div></details>
+    <details class="faq-q"><summary><h3>Where is the fingerprint stored?</h3></summary><div class="faq-a"><p>In the secure element on the key. Matching happens on the device and the template never leaves it, so there is no central biometric database to breach.</p></div></details>
+    <details class="faq-q"><summary><h3>What does the biometric replace?</h3></summary><div class="faq-a"><p>The PIN, not the cryptographic key. It is the user-verification step that unlocks the credential; the private key itself never leaves the secure element either way.</p></div></details>
+    <details class="faq-q"><summary><h3>What happens if the sensor fails to read?</h3></summary><div class="faq-a"><p>The key falls back to PIN verification, which is why a PIN is still enrolled during setup. A biometric that cannot be read must never mean an account that cannot be reached.</p></div></details>
+    <details class="faq-q"><summary><h3>Does the fingerprint work across different computers?</h3></summary><div class="faq-a"><p>Yes. Verification is performed by the key, so it behaves identically on any host without drivers, enrolment, or per-machine setup.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer">

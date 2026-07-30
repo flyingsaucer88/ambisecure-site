@@ -63,6 +63,51 @@
    "name": "Government &amp; Defence — AmbiSecure"
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What makes government identity issuance different from enterprise?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The audit trail. A government programme has to prove, years later, who was issued what credential, on which hardware, under which policy, and who authorised it. That requirement shapes the whole architecture, not just the record-keeping."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is PIV mandatory for government deployments?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Not universally. PIV and its derivatives are the US federal baseline; other jurisdictions define their own profiles. What is common is the requirement for a hardware-held credential with a documented issuance chain."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can FIDO2 be used alongside an existing PIV estate?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, and it usually is. FIDO2 covers surfaces PIV never reached — web applications, mobile, contractor access — without retiring the card estate already deployed."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What form factors are available for embedded government identity?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Beyond conventional cards, secure-element PIV applets ship in nano-card and MFF2 form factors for OEM and embedded programmes where a card slot is not practical."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does AmbiSecure operate the certificate authority?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. AmbiSecure supplies the silicon, the applets and the personalisation tooling. The CA and its policy stay with the issuing authority, which is where they belong."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -258,6 +303,18 @@
     </div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What makes government identity issuance different from enterprise?</h3></summary><div class="faq-a"><p>The audit trail. A government programme has to prove, years later, who was issued what credential, on which hardware, under which policy, and who authorised it. That requirement shapes the whole architecture, not just the record-keeping.</p></div></details>
+    <details class="faq-q"><summary><h3>Is PIV mandatory for government deployments?</h3></summary><div class="faq-a"><p>Not universally. PIV and its derivatives are the US federal baseline; other jurisdictions define their own profiles. What is common is the requirement for a hardware-held credential with a documented issuance chain.</p></div></details>
+    <details class="faq-q"><summary><h3>Can FIDO2 be used alongside an existing PIV estate?</h3></summary><div class="faq-a"><p>Yes, and it usually is. FIDO2 covers surfaces PIV never reached — web applications, mobile, contractor access — without retiring the card estate already deployed.</p></div></details>
+    <details class="faq-q"><summary><h3>What form factors are available for embedded government identity?</h3></summary><div class="faq-a"><p>Beyond conventional cards, secure-element PIV applets ship in nano-card and MFF2 form factors for OEM and embedded programmes where a card slot is not practical.</p></div></details>
+    <details class="faq-q"><summary><h3>Does AmbiSecure operate the certificate authority?</h3></summary><div class="faq-a"><p>No. AmbiSecure supplies the silicon, the applets and the personalisation tooling. The CA and its policy stay with the issuing authority, which is where they belong.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

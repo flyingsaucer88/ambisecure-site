@@ -237,7 +237,7 @@
   <div class="section-container">
     <div class="section-head left"><h2 class="section-title">What is in the FIDO2 family?</h2><span class="section-line"></span></div>
     <div class="fido-grid">
-      <div class="fido-card"><span class="fc-tag">W3C</span><h3>WebAuthn</h3><p>JavaScript API on the relying-party page. <code>navigator.credentials.create()</code> and <code>.get()</code> &mdash; that's the entire surface area.</p></div>
+      <div class="fido-card"><span class="fc-tag">W3C</span><h3>WebAuthn</h3><p>JavaScript API on the relying-party page. <code>navigator.credentials.create()</code> and <code>.get()</code> &mdash; that's the entire surface area. You can watch both ceremonies run against our <a href="/services/fido-validation-server/demo/">FIDO validation server demo</a>.</p></div>
       <div class="fido-card"><span class="fc-tag">FIDO Alliance</span><h3>CTAP2 (Client-To-Authenticator)</h3><p>USB-HID, NFC, BLE wire format the browser uses to talk to a roaming authenticator. Platform authenticators bypass CTAP and use OS-native APIs.</p></div>
       <div class="fido-card"><span class="fc-tag">Standards</span><h3>COSE / CBOR</h3><p>RFC 8152 / RFC 8949 &mdash; the binary structures FIDO2 uses for keys and messages. Compact enough to run on small MCUs.</p></div>
       <div class="fido-card"><span class="fc-tag">FIDO MDS</span><h3>Metadata Service</h3><p>Signed JSON BLOB published by the Alliance, listing every certified authenticator (AAGUID, certification level, attestation root). Production RPs verify against MDS.</p></div>

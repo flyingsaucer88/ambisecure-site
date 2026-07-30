@@ -73,6 +73,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is in the AmbiSecure reference section?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Searchable databases for the values engineers look up repeatedly: APDU status words, EMV tags, ISO 7816 CLA bytes, COSE algorithms, FIDO AAGUIDs, DESFire commands and status, GlobalPlatform status, ASN.1 tags, X.509 extensions and OIDs, and the V2X and eSIM standards."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is a reference different from a tool?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A reference is a lookup table you search; a tool takes your bytes and decodes them. Most references have a companion tool, and the pages link across to each other."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Are these references authoritative?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No — they are working aids. The standards documents are authoritative, and each page names the specification it summarises so you can check a value against the source."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Do these pages work offline?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. The data ships with the page and searching happens in your browser, so once loaded they keep working without a connection."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How current are these references?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "They track the published specifications named on each page. Where a standard has been superseded, the page says so rather than silently presenting the old value."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -234,7 +279,7 @@
 <section style="padding: 60px 80px 30px;">
   <div class="prose">
     <span class="eyebrow">Engineering references</span>
-    <h1>Searchable reference databases for the bytes you stare at every day.</h1>
+    <h1>Engineering references &mdash; searchable smart-card, FIDO and V2X PKI databases for the bytes you stare at every day.</h1>
     <p class="dek">18 engineering references &mdash; searchable status-word and tag databases for smart-card / FIDO work, plus structured standards summaries for the V2X / ITS PKI stack (IEEE 1609.2, ETSI TS 103 097 / 102 941, ISO 21177, GSMA SGP.32). Client-side search on the database pages; deep-linkable structure on every page. No accounts. No ads. <strong>Nothing leaves your browser.</strong></p>
     <p style="margin-top:14px; color:var(--brand-grey); font-size:14.5px;">Pair with the <a href="/resources/" style="color:var(--brand-red); font-weight:600;">tool catalogue</a> when you need to walk live bytes.</p>
   </div>
@@ -385,6 +430,18 @@
     <p style="margin-top:24px;"><a href="/contact/" class="btn btn-outline">Request a reference</a></p>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is in the AmbiSecure reference section?</h3></summary><div class="faq-a"><p>Searchable databases for the values engineers look up repeatedly: APDU status words, EMV tags, ISO 7816 CLA bytes, COSE algorithms, FIDO AAGUIDs, DESFire commands and status, GlobalPlatform status, ASN.1 tags, X.509 extensions and OIDs, and the V2X and eSIM standards.</p></div></details>
+    <details class="faq-q"><summary><h3>How is a reference different from a tool?</h3></summary><div class="faq-a"><p>A reference is a lookup table you search; a tool takes your bytes and decodes them. Most references have a companion tool, and the pages link across to each other.</p></div></details>
+    <details class="faq-q"><summary><h3>Are these references authoritative?</h3></summary><div class="faq-a"><p>No — they are working aids. The standards documents are authoritative, and each page names the specification it summarises so you can check a value against the source.</p></div></details>
+    <details class="faq-q"><summary><h3>Do these pages work offline?</h3></summary><div class="faq-a"><p>Yes. The data ships with the page and searching happens in your browser, so once loaded they keep working without a connection.</p></div></details>
+    <details class="faq-q"><summary><h3>How current are these references?</h3></summary><div class="faq-a"><p>They track the published specifications named on each page. Where a standard has been superseded, the page says so rather than silently presenting the old value.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "How does UTF-8 encode a codepoint?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "In one to four bytes. ASCII stays one byte; anything above U+007F uses a lead byte marking the length followed by continuation bytes of the form 10xxxxxx."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a BOM and should I keep one?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A byte-order mark, EF BB BF at the start of a file. UTF-8 has no byte order, so it carries no information and mainly breaks strict parsers — JSON in particular. Strip it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my string length differ between languages?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because they count different things: bytes, UTF-16 code units, or codepoints. An emoji is commonly 4 bytes, 2 UTF-16 units and 1 codepoint, so all three answers differ."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a surrogate pair?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A UTF-16 mechanism for codepoints above U+FFFF. Encoded surrogates should never appear in UTF-8 bytes; if they do, the data went through a broken conversion."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "UTF-8 inspector for byte encoding",
+   "description": "See exactly how UTF-8 encodes a string — codepoints, byte counts, BOM detection, per-character breakdown.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/utf8/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -231,7 +293,7 @@
 
 <header class="tool-header">
   <span class="eyebrow">Encoding utility</span>
-  <h1>UTF-8 Inspector</h1>
+  <h1>UTF-8 inspector for byte encoding</h1>
   <p>Type or paste any string and see how UTF-8 encodes it: codepoints (U+xxxx), byte counts per character, BOM detection, per-character byte breakdown. Useful when an APDU or NDEF record is misrendering and you need to know if it&rsquo;s a UTF-8, UTF-16, or BMPString issue.</p>
   <div class="tool-meta"><span>Client-side</span><span>Per-char view</span><span>BOM aware</span></div>
 </header>
@@ -268,6 +330,18 @@
   <p>UTF-8 encodes Unicode codepoints in 1–4 bytes. ASCII (U+0000–U+007F) is 1 byte; common Latin / Greek / Cyrillic accents are 2 bytes; CJK and most BMP scripts are 3 bytes; emoji and astral characters are 4 bytes.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Spec</h3><p>RFC 3629 (UTF-8).</p></div><div class="ref-card"><h3>When you really wanted ASCII</h3><p>Use the ASCII converter for plain ASCII inputs.</p><p><a href="/resources/tools/ascii-hex/">ASCII ↔ HEX →</a></p></div><div class="ref-card"><h3>Smart-card use</h3><p>JavaCard <code>UTF8String</code> shows up in BER-TLV — see TLV parser.</p><p><a href="/resources/tools/tlv-parser/">TLV parser →</a></p></div>
+  </div>
+</section>
+
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>How does UTF-8 encode a codepoint?</h3></summary><div class="faq-a"><p>In one to four bytes. ASCII stays one byte; anything above U+007F uses a lead byte marking the length followed by continuation bytes of the form 10xxxxxx.</p></div></details>
+    <details class="faq-q"><summary><h3>What is a BOM and should I keep one?</h3></summary><div class="faq-a"><p>A byte-order mark, EF BB BF at the start of a file. UTF-8 has no byte order, so it carries no information and mainly breaks strict parsers — JSON in particular. Strip it.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does my string length differ between languages?</h3></summary><div class="faq-a"><p>Because they count different things: bytes, UTF-16 code units, or codepoints. An emoji is commonly 4 bytes, 2 UTF-16 units and 1 codepoint, so all three answers differ.</p></div></details>
+    <details class="faq-q"><summary><h3>What is a surrogate pair?</h3></summary><div class="faq-a"><p>A UTF-16 mechanism for codepoints above U+FFFF. Encoded surrogates should never appear in UTF-8 bytes; if they do, the data went through a broken conversion.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
   </div>
 </section>
 

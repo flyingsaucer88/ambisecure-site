@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What makes a TLV node constructed?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Bit 6 of the first tag byte. When set, the value is itself a sequence of TLV objects, which is what allows the nesting this tree renders."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is a tag shown as hex with no name?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because it is outside the EMV dictionary — a proprietary or issuer-specific object. The structure still parses; only the label is unknown."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How are multi-byte tags recognised?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "When the low five bits of the first byte are all set, the tag continues into further bytes, each signalling continuation in its top bit. That is why EMV has the 9Fxx family."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my tree end early?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A length that overruns the buffer, or a truncated capture. The last complete node marks the point where the encoding stops being consistent."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "TLV Tree Visualizer",
+   "description": "Visualise BER-TLV / EMV TLV trees as collapsible nested nodes with EMV tag-name lookup. The visual companion to the TLV parser.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/tlv-tree-viz/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -254,6 +316,18 @@
   <p>BER-TLV (ISO 7816-4 / EMV) encodes structured data with Tag, Length, Value triples. Tags can be primitive or constructed; constructed tags contain nested TLVs. EMV uses BER-TLV throughout the contact and contactless protocols.</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>ISO/IEC 7816-4 §5.2; EMV Books 3 + 4.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/ber-length/">BER length calculator</a> &middot; <a href="/resources/tools/tlv-parser/">TLV parser (linear)</a> &middot; <a href="/resources/tools/emv-tag-dict/">EMV tag dictionary</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/apdu-from-first-principles/">APDU from first principles</a></p></div></div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What makes a TLV node constructed?</h3></summary><div class="faq-a"><p>Bit 6 of the first tag byte. When set, the value is itself a sequence of TLV objects, which is what allows the nesting this tree renders.</p></div></details>
+    <details class="faq-q"><summary><h3>Why is a tag shown as hex with no name?</h3></summary><div class="faq-a"><p>Because it is outside the EMV dictionary — a proprietary or issuer-specific object. The structure still parses; only the label is unknown.</p></div></details>
+    <details class="faq-q"><summary><h3>How are multi-byte tags recognised?</h3></summary><div class="faq-a"><p>When the low five bits of the first byte are all set, the tag continues into further bytes, each signalling continuation in its top bit. That is why EMV has the 9Fxx family.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does my tree end early?</h3></summary><div class="faq-a"><p>A length that overruns the buffer, or a truncated capture. The last complete node marks the point where the encoding stops being consistent.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

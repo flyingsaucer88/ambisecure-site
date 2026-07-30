@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an AAGUID?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A 16-byte Authenticator Attestation GUID identifying the make and model of a FIDO2 authenticator — not the individual device. Every unit of the same model shares one AAGUID, which is what makes it usable for policy without identifying a user."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where do I find the AAGUID for my authenticator?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It sits inside the attested credential data of authenticatorData at registration, immediately after the 4-byte signCount. Paste that structure into the authenticatorData parser and it will surface the AAGUID for you."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is my AAGUID all zeros?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A 16-byte zero AAGUID means the authenticator deliberately withheld its identity — the usual case for platform authenticators, or any registration requested with attestation set to none. It is expected behaviour, not an error."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is my AAGUID not in this directory?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "This is a curated offline subset of well-known consumer and enterprise authenticators, not the full registry. For authoritative coverage a production relying party should fetch the FIDO Metadata Service BLOB and verify its signature."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "FIDO AAGUID lookup tool",
+   "description": "Look up FIDO2 / WebAuthn AAGUIDs against a curated offline directory of well-known consumer and enterprise authenticators.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/aaguid-lookup/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -230,7 +292,7 @@
 <main id="main">
 <header class="tool-header">
   <span class="eyebrow">FIDO2</span>
-  <h1>AAGUID Lookup</h1>
+  <h1>FIDO AAGUID lookup tool</h1>
   <p>An AAGUID identifies the make and model of a FIDO2 authenticator. Paste an AAGUID (canonical form or 32 hex characters) and this tool maps it to vendor and model from a curated offline directory. For production validation you should fetch the FIDO Metadata Service (MDS) BLOB.</p>
 </header>
 <section class="tool-explainer">
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn §5.4 / FIDO Metadata Service v3.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/attestation-decoder/">Attestation decoder</a></p></div><div class="ref-card"><h3>Pillar reading</h3><p><a href="/blog/why-hardware-backed-identity-matters/">Why hardware-backed identity matters</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is an AAGUID?</h3></summary><div class="faq-a"><p>A 16-byte Authenticator Attestation GUID identifying the make and model of a FIDO2 authenticator — not the individual device. Every unit of the same model shares one AAGUID, which is what makes it usable for policy without identifying a user.</p></div></details>
+    <details class="faq-q"><summary><h3>Where do I find the AAGUID for my authenticator?</h3></summary><div class="faq-a"><p>It sits inside the attested credential data of authenticatorData at registration, immediately after the 4-byte signCount. Paste that structure into the authenticatorData parser and it will surface the AAGUID for you.</p></div></details>
+    <details class="faq-q"><summary><h3>Why is my AAGUID all zeros?</h3></summary><div class="faq-a"><p>A 16-byte zero AAGUID means the authenticator deliberately withheld its identity — the usual case for platform authenticators, or any registration requested with attestation set to none. It is expected behaviour, not an error.</p></div></details>
+    <details class="faq-q"><summary><h3>Why is my AAGUID not in this directory?</h3></summary><div class="faq-a"><p>This is a curated offline subset of well-known consumer and enterprise authenticators, not the full registry. For authoritative coverage a production relying party should fetch the FIDO Metadata Service BLOB and verify its signature.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

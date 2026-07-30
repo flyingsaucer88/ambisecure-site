@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What do the four parts of ISO 14443 cover?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Part 1 physical characteristics, part 2 RF power and signal interface, part 3 initialisation and anti-collision, part 4 the transmission protocol."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between Type A and Type B?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Modulation and framing. Type A uses 100% ASK with a modified Miller code and bitwise anti-collision; Type B uses 10% ASK with NRZ and a slotted-ALOHA scheme. Both reach the same part-4 protocol."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the operating range?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Roughly 0 to 10 cm at 13.56 MHz by design. It is a proximity standard — greater range is a different technology, not a better implementation."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does anti-collision matter?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because more than one card can be in the field at once. Anti-collision singulates exactly one so the reader is never talking to two cards at the same time."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "ISO/IEC 14443 Quick Reference",
+   "description": "ISO/IEC 14443 contactless smart cards: parts, Type A vs B, anti-collision, framing, I/R/S blocks. One-page reference.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/iso14443-ref/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -293,6 +355,18 @@
     <div class="ref-card"><h3>Architecture</h3><p><a href="/technologies/desfire/">DESFire</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What do the four parts of ISO 14443 cover?</h3></summary><div class="faq-a"><p>Part 1 physical characteristics, part 2 RF power and signal interface, part 3 initialisation and anti-collision, part 4 the transmission protocol.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the difference between Type A and Type B?</h3></summary><div class="faq-a"><p>Modulation and framing. Type A uses 100% ASK with a modified Miller code and bitwise anti-collision; Type B uses 10% ASK with NRZ and a slotted-ALOHA scheme. Both reach the same part-4 protocol.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the operating range?</h3></summary><div class="faq-a"><p>Roughly 0 to 10 cm at 13.56 MHz by design. It is a proximity standard — greater range is a different technology, not a better implementation.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does anti-collision matter?</h3></summary><div class="faq-a"><p>Because more than one card can be in the field at once. Anti-collision singulates exactly one so the reader is never talking to two cards at the same time.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

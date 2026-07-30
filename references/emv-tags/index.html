@@ -65,6 +65,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an EMV tag?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A BER-TLV identifier for a data object defined in EMV Books 3 and 4 and the contactless specifications — 5A is the application PAN, 9F02 the authorised amount."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why are many EMV tags two bytes?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because the single-byte space ran out. A first byte with its low five bits set signals continuation, which is how the 9Fxx family exists."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a DOL?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A Data Object List such as PDOL or CDOL1 — the card lists tags and lengths, and the terminal returns the values concatenated in that exact order with no tags and no lengths."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between contact and contactless tag sets?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Contactless adds its own tags and profiles on top of the Book 3 set, which is why a tag present in a contactless flow may be absent from a contact transaction."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which tags must never be logged?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Anything carrying cardholder or cryptographic data — full PAN, track equivalents and key material. Logging findings are a common cause of certification failure."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -230,7 +275,7 @@
 <main id="main">
 <header class="tool-header" style="padding-bottom:18px;">
   <span class="eyebrow">EMV</span>
-  <h1>EMV Tags</h1>
+  <h1>EMV tag reference database</h1>
   <p>Searchable EMV tag reference. Books 3, 4, and Contactless. Filter by category to narrow down to the tags you need.</p>
 </header>
 <div class="ref-shell">
@@ -256,6 +301,18 @@
     <ul><li><a href="/references/etsi-ts-102-941/">ETSI TS 102 941 Trust &amp; Privacy Management</a></li><li><a href="/references/etsi-ts-103-097/">ETSI TS 103 097 Secured-Message Reference</a></li><li><a href="/references/globalplatform/">GlobalPlatform Status Words</a></li></ul>
   </div>
 </nav>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is an EMV tag?</h3></summary><div class="faq-a"><p>A BER-TLV identifier for a data object defined in EMV Books 3 and 4 and the contactless specifications — 5A is the application PAN, 9F02 the authorised amount.</p></div></details>
+    <details class="faq-q"><summary><h3>Why are many EMV tags two bytes?</h3></summary><div class="faq-a"><p>Because the single-byte space ran out. A first byte with its low five bits set signals continuation, which is how the 9Fxx family exists.</p></div></details>
+    <details class="faq-q"><summary><h3>What is a DOL?</h3></summary><div class="faq-a"><p>A Data Object List such as PDOL or CDOL1 — the card lists tags and lengths, and the terminal returns the values concatenated in that exact order with no tags and no lengths.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the difference between contact and contactless tag sets?</h3></summary><div class="faq-a"><p>Contactless adds its own tags and profiles on top of the Book 3 set, which is why a tag present in a contactless flow may be absent from a contact transaction.</p></div></details>
+    <details class="faq-q"><summary><h3>Which tags must never be logged?</h3></summary><div class="faq-a"><p>Anything carrying cardholder or cryptographic data — full PAN, track equivalents and key material. Logging findings are a common cause of certification failure.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

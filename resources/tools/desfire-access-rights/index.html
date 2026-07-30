@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does the access-rights word encode?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Four 4-bit key references packed into 16 bits: Read, Write, Read+Write and ChangeAccessRights, in that order from the high nibble down."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What do key references 0xE and 0xF mean?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "0xE means free access with no authentication required; 0xF means the operation is denied to everyone, permanently. Any other value is the number of the key that must be authenticated first."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between Read+Write and holding both?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Read+Write is a single key reference permitted to do either. It exists so one key can cover both operations without granting the separate Read and Write keys."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why can I no longer change a file's access rights?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because ChangeAccessRights was set to 0xF, which is irreversible for that file. This is the most common way to brick a file's configuration during development."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "DESFire Access-Rights Decoder",
+   "description": "Decode the 16-bit DESFire access-rights word into Read / Write / Read+Write / ChangeAccessRights key references.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/desfire-access-rights/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -269,6 +331,18 @@
     <div class="ref-card"><h3>Closed-loop</h3><p><a href="/solutions/closed-loop-ticketing/">Closed-loop ticketing</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What does the access-rights word encode?</h3></summary><div class="faq-a"><p>Four 4-bit key references packed into 16 bits: Read, Write, Read+Write and ChangeAccessRights, in that order from the high nibble down.</p></div></details>
+    <details class="faq-q"><summary><h3>What do key references 0xE and 0xF mean?</h3></summary><div class="faq-a"><p>0xE means free access with no authentication required; 0xF means the operation is denied to everyone, permanently. Any other value is the number of the key that must be authenticated first.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the difference between Read+Write and holding both?</h3></summary><div class="faq-a"><p>Read+Write is a single key reference permitted to do either. It exists so one key can cover both operations without granting the separate Read and Write keys.</p></div></details>
+    <details class="faq-q"><summary><h3>Why can I no longer change a file's access rights?</h3></summary><div class="faq-a"><p>Because ChangeAccessRights was set to 0xF, which is irreversible for that file. This is the most common way to brick a file's configuration during development.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

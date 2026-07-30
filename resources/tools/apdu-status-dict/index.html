@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Which specifications does this dictionary cover?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ISO/IEC 7816-4 as the base, plus the application-specific ranges defined by GlobalPlatform, EMV and FIDO U2F."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why can one status word appear more than once?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because ISO leaves ranges to the application. The same bytes carry different meanings depending on which specification the command belongs to, so context decides."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the general shape of the 6x family?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "62 and 63 are warnings where the command completed with qualification, 64 to 66 are execution errors, 67 to 6F are checking errors where the command was rejected before execution."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does 6982 mean in practice?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Security status not satisfied — the command is valid but the session lacks the required authentication. It is the usual response to acting before establishing a secure channel."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "APDU Status Dictionary",
+   "description": "Browseable, filterable dictionary of smart-card status words from ISO 7816-4, GlobalPlatform, EMV, and FIDO.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/apdu-status-dict/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -272,6 +334,18 @@
   <p>Status words are 2 bytes; we group <code>9XYY</code> as success/proprietary, <code>6XYY</code> as warnings or errors. <code>61XX</code> means &ldquo;more data&rdquo;; <code>6CXX</code> means &ldquo;wrong Le, exact length is XX&rdquo;. <code>63CX</code> is the PIN-retries-remaining encoding.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Search</h3><p>For a single SW lookup with multi-match support.</p><p><a href="/resources/tools/sw-lookup/">SW lookup →</a></p></div><div class="ref-card"><h3>Pillar post</h3><p>How APDUs work, with examples.</p><p><a href="/blog/apdu-from-first-principles/">APDU from first principles →</a></p></div><div class="ref-card"><h3>Companion tool</h3><p>Decode a full APDU including its SW.</p><p><a href="/resources/tools/apdu-parser/">APDU parser →</a></p></div>
+  </div>
+</section>
+
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>Which specifications does this dictionary cover?</h3></summary><div class="faq-a"><p>ISO/IEC 7816-4 as the base, plus the application-specific ranges defined by GlobalPlatform, EMV and FIDO U2F.</p></div></details>
+    <details class="faq-q"><summary><h3>Why can one status word appear more than once?</h3></summary><div class="faq-a"><p>Because ISO leaves ranges to the application. The same bytes carry different meanings depending on which specification the command belongs to, so context decides.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the general shape of the 6x family?</h3></summary><div class="faq-a"><p>62 and 63 are warnings where the command completed with qualification, 64 to 66 are execution errors, 67 to 6F are checking errors where the command was rejected before execution.</p></div></details>
+    <details class="faq-q"><summary><h3>What does 6982 mean in practice?</h3></summary><div class="faq-a"><p>Security status not satisfied — the command is valid but the session lacks the required authentication. It is the usual response to acting before establishing a secure channel.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
   </div>
 </section>
 

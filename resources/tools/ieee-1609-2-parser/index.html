@@ -88,6 +88,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an IEEE 1609.2 certificate?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The V2X credential format. It is not X.509 — it uses COER encoding and a compact structure designed for certificates broadcast in safety messages many times a second."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a HashedId8?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The low-order eight bytes of the SHA-256 hash of a certificate, used as a compact identifier. It is how a certificate references its issuer without carrying a full name."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between explicit and implicit certificates?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An explicit certificate carries a verification public key and a signature. An implicit certificate carries a reconstruction value from which the public key is derived, which is smaller but requires the issuer's key to reconstruct."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does a V2X certificate have such a short validity?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because pseudonym certificates rotate to limit how long a vehicle can be tracked. Short validity is a privacy control, not a security weakness."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -340,6 +385,18 @@
     <div class="ref-card"><h3>V2X chain validator</h3><p><a href="/resources/tools/v2x-cert-chain-validator/">Structural validation</a> of an end-entity &rarr; intermediate &rarr; root certificate chain. Linkage checks via WebCrypto SHA-256.</p></div>
     <div class="ref-card"><h3>V2X PKI reference</h3><p>The technical companion: <a href="/technologies/v2x-pki/">IEEE 1609.2 + ETSI TS 103 097 architecture</a>, EC vs PC, Butterfly Key Expansion, India TRAI CP 30/04/2026 context.</p></div>
     <div class="ref-card"><h3>Other AmbiSecure parsers</h3><p><a href="/resources/tools/tlv-parser/">BER-TLV parser</a> &middot; <a href="/resources/tools/asn1-parser/">ASN.1 parser</a> &middot; <a href="/resources/tools/x509-viewer/">X.509 viewer</a></p></div>
+  </div>
+</section>
+
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is an IEEE 1609.2 certificate?</h3></summary><div class="faq-a"><p>The V2X credential format. It is not X.509 — it uses COER encoding and a compact structure designed for certificates broadcast in safety messages many times a second.</p></div></details>
+    <details class="faq-q"><summary><h3>What is a HashedId8?</h3></summary><div class="faq-a"><p>The low-order eight bytes of the SHA-256 hash of a certificate, used as a compact identifier. It is how a certificate references its issuer without carrying a full name.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the difference between explicit and implicit certificates?</h3></summary><div class="faq-a"><p>An explicit certificate carries a verification public key and a signature. An implicit certificate carries a reconstruction value from which the public key is derived, which is smaller but requires the issuer's key to reconstruct.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does a V2X certificate have such a short validity?</h3></summary><div class="faq-a"><p>Because pseudonym certificates rotate to limit how long a vehicle can be tracked. Short validity is a privacy control, not a security weakness.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
   </div>
 </section>
 

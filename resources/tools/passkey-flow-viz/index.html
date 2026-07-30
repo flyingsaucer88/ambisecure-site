@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What are the two WebAuthn ceremonies?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Registration, which creates a credential and returns an attestationObject, and authentication, which proves possession and returns an assertion with a signature. They share structure but differ in what is signed and returned."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does the authenticator actually sign?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The concatenation of authenticatorData and the SHA-256 hash of clientDataJSON. Nothing else is covered, which is why both must be verified server-side rather than trusted from the client."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where does the phishing resistance come from?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The origin recorded in clientDataJSON is written by the browser and cannot be forged by the page. A relying party that checks it will reject an assertion produced on a look-alike domain."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a discoverable credential?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "One stored on the authenticator itself, so it can be presented without the relying party supplying a credential ID first. It is what makes usernameless sign-in possible."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "Passkey Flow Visualizer",
+   "description": "Step-by-step walkthrough of the WebAuthn registration and authentication ceremonies, with annotation linking to the relevant decoder tools.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/passkey-flow-viz/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -254,6 +316,18 @@
   <p>Two ceremonies make up the WebAuthn surface: <code>navigator.credentials.create()</code> for registration (fresh keypair + attestation) and <code>.get()</code> for authentication (signed assertion). The browser binds both to the relying-party origin; that binding is what kills the entire phishing class.</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>W3C WebAuthn Level 2 §4–6.</p></div><div class="ref-card"><h3>Companion tools</h3><p><a href="/resources/tools/clientdata-decoder/">clientDataJSON</a> &middot; <a href="/resources/tools/authdata-parser/">authenticatorData</a> &middot; <a href="/resources/tools/attestation-decoder/">attestation</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/passkeys-vs-traditional-mfa/">Passkeys vs Traditional MFA</a></p></div></div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What are the two WebAuthn ceremonies?</h3></summary><div class="faq-a"><p>Registration, which creates a credential and returns an attestationObject, and authentication, which proves possession and returns an assertion with a signature. They share structure but differ in what is signed and returned.</p></div></details>
+    <details class="faq-q"><summary><h3>What does the authenticator actually sign?</h3></summary><div class="faq-a"><p>The concatenation of authenticatorData and the SHA-256 hash of clientDataJSON. Nothing else is covered, which is why both must be verified server-side rather than trusted from the client.</p></div></details>
+    <details class="faq-q"><summary><h3>Where does the phishing resistance come from?</h3></summary><div class="faq-a"><p>The origin recorded in clientDataJSON is written by the browser and cannot be forged by the page. A relying party that checks it will reject an assertion produced on a look-alike domain.</p></div></details>
+    <details class="faq-q"><summary><h3>What is a discoverable credential?</h3></summary><div class="faq-a"><p>One stored on the authenticator itself, so it can be presented without the relying party supplying a credential ID first. It is what makes usernameless sign-in possible.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

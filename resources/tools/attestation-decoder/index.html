@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is in an attestationObject?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A CBOR map with three keys: fmt (the attestation statement format), attStmt (the format-specific signature and certificates) and authData (the authenticatorData bytes). Everything else is nested inside those."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which attestation formats will I see?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "packed is the most common for hardware authenticators, tpm for Windows platform credentials, android-key and android-safetynet on Android, apple on Apple platforms, and none when the relying party did not ask for attestation."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does attestation actually prove?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "That the credential was created by a genuine authenticator of a stated model. It says nothing about the user, and it is only produced at registration — later assertions carry no attestation."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Should a relying party require attestation?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Only when policy needs to restrict which authenticator models may enrol. It adds privacy considerations and metadata-verification work, so most consumer deployments request none."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "WebAuthn Attestation Decoder",
+   "description": "Decode WebAuthn attestationObject (CBOR with fmt, attStmt, authData). Walks attStmt and links into the authenticatorData parser.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/attestation-decoder/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §6.5 / FIDO 2.0 attestation formats.</p></div><div class="ref-card"><h3>Companion tools</h3><p><a href="/resources/tools/authdata-parser/">authenticatorData parser</a> &middot; <a href="/resources/tools/x509-viewer/">X.509 viewer</a></p></div><div class="ref-card"><h3>Pillar</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Understanding WebAuthn attestation objects</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is in an attestationObject?</h3></summary><div class="faq-a"><p>A CBOR map with three keys: fmt (the attestation statement format), attStmt (the format-specific signature and certificates) and authData (the authenticatorData bytes). Everything else is nested inside those.</p></div></details>
+    <details class="faq-q"><summary><h3>Which attestation formats will I see?</h3></summary><div class="faq-a"><p>packed is the most common for hardware authenticators, tpm for Windows platform credentials, android-key and android-safetynet on Android, apple on Apple platforms, and none when the relying party did not ask for attestation.</p></div></details>
+    <details class="faq-q"><summary><h3>What does attestation actually prove?</h3></summary><div class="faq-a"><p>That the credential was created by a genuine authenticator of a stated model. It says nothing about the user, and it is only produced at registration — later assertions carry no attestation.</p></div></details>
+    <details class="faq-q"><summary><h3>Should a relying party require attestation?</h3></summary><div class="faq-a"><p>Only when policy needs to restrict which authenticator models may enrol. It adds privacy considerations and metadata-verification work, so most consumer deployments request none.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

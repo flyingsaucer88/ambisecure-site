@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "How does base64url differ from standard base64?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It swaps the two URL-unsafe characters: + becomes - and / becomes _. Padding with = is usually omitted as well, which is why a base64url string often has a length that is not a multiple of four."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does WebAuthn use base64url everywhere?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because its binary fields travel in JSON and in URLs, where + and / need escaping. CTAP2 and JOSE made the same choice for the same reason."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my string fail to decode?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Usually it is standard base64 being decoded as base64url, or the reverse — the give-away is a + or / in the input. Stray whitespace from copying is the other common cause."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is base64url a form of encryption?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. It is a reversible encoding with no key and no secrecy. Anyone can decode it, which is exactly what this tool does."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "Base64URL converter and decoder",
+   "description": "Encode and decode base64url (RFC 4648 §5). The format WebAuthn, JOSE, and CTAP2 use everywhere. Bidirectional conversion — base64url, base64, hex, UTF-8.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/base64url/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -230,7 +292,7 @@
 <main id="main">
 <header class="tool-header">
   <span class="eyebrow">Encoding</span>
-  <h1>Base64URL Converter</h1>
+  <h1>Base64URL converter and decoder</h1>
   <p>Bidirectional conversion between base64url, base64 (standard), hex, and UTF-8 text. base64url is the form WebAuthn / JOSE / CTAP2 use everywhere.</p>
 </header>
 <section class="tool-explainer">
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>RFC 4648 §5.</p></div><div class="ref-card"><h3>Use</h3><p>WebAuthn challenge, credentialId · JWS signatures · CTAP2 messages · OAuth2 PKCE.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/base64-cert/">base64 certificate decoder</a> &middot; <a href="/resources/tools/base64/">base64 (standard)</a> &middot; <a href="/resources/tools/hex-bytes/">hex/bytes</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>How does base64url differ from standard base64?</h3></summary><div class="faq-a"><p>It swaps the two URL-unsafe characters: + becomes - and / becomes _. Padding with = is usually omitted as well, which is why a base64url string often has a length that is not a multiple of four.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does WebAuthn use base64url everywhere?</h3></summary><div class="faq-a"><p>Because its binary fields travel in JSON and in URLs, where + and / need escaping. CTAP2 and JOSE made the same choice for the same reason.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does my string fail to decode?</h3></summary><div class="faq-a"><p>Usually it is standard base64 being decoded as base64url, or the reverse — the give-away is a + or / in the input. Stray whitespace from copying is the other common cause.</p></div></details>
+    <details class="faq-q"><summary><h3>Is base64url a form of encryption?</h3></summary><div class="faq-a"><p>No. It is a reversible encoding with no key and no secrecy. Anyone can decode it, which is exactly what this tool does.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

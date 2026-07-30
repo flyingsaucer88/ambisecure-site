@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is a cascade level?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "How many anti-collision rounds are needed for the UID length: single for 4 bytes, double for 7, triple for 10. Each level after the first is prefixed by the 0x88 cascade tag."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do I tell a random UID from a fixed one?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A 4-byte UID beginning 0x08 is a random ID generated per activation. Any application keying off the UID will break against such cards, which is precisely why random UIDs exist."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can a UID be used as a security credential?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. UIDs are readable by any reader and cloneable onto programmable cards. They are an addressing mechanism, and the authentication has to come from card keys."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does the first byte tell me?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "On a fixed 7-byte UID it is the NXP-assigned manufacturer code. It identifies the chip vendor, not the card issuer or the application."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "UID analyzer for NFC tags",
+   "description": "Inspect ISO/IEC 14443 Type A UID — cascade level, manufacturer, fixed vs random.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/uid-analyzer/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -230,7 +292,7 @@
 <main id="main">
 <header class="tool-header">
   <span class="eyebrow">NFC utility</span>
-  <h1>UID Analyzer</h1>
+  <h1>UID analyzer for NFC tags</h1>
   <p>Inspect a 4 / 7 / 10-byte ISO/IEC 14443 Type A UID. Identifies cascade level, manufacturer ID, and whether the UID is fixed (unique) or random (RID).</p>
   <div class="tool-meta"><span>Client-side</span><span>ISO 14443-3 Type A</span></div>
 </header>
@@ -268,6 +330,18 @@
     <div class="ref-card"><h3>Architecture</h3><p><a href="/technologies/card-reader-sam-flow/">Card &harr; Reader &harr; SAM</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is a cascade level?</h3></summary><div class="faq-a"><p>How many anti-collision rounds are needed for the UID length: single for 4 bytes, double for 7, triple for 10. Each level after the first is prefixed by the 0x88 cascade tag.</p></div></details>
+    <details class="faq-q"><summary><h3>How do I tell a random UID from a fixed one?</h3></summary><div class="faq-a"><p>A 4-byte UID beginning 0x08 is a random ID generated per activation. Any application keying off the UID will break against such cards, which is precisely why random UIDs exist.</p></div></details>
+    <details class="faq-q"><summary><h3>Can a UID be used as a security credential?</h3></summary><div class="faq-a"><p>No. UIDs are readable by any reader and cloneable onto programmable cards. They are an addressing mechanism, and the authentication has to come from card keys.</p></div></details>
+    <details class="faq-q"><summary><h3>What does the first byte tell me?</h3></summary><div class="faq-a"><p>On a fixed 7-byte UID it is the NXP-assigned manufacturer code. It identifies the chip vendor, not the card issuer or the application.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

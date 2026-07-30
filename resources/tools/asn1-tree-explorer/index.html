@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What input does the explorer accept?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "DER-encoded bytes as hex, or a PEM block — the BEGIN/END wrapper is stripped and the base64 decoded for you before parsing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between BER and DER?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "BER allows several encodings of the same value; DER is the canonical subset that permits exactly one. Signatures are computed over DER precisely because it is unambiguous."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does the tree stop partway through my blob?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Almost always a length that overruns the remaining buffer, or a truncated file. The last node rendered marks where the encoding stops being self-consistent."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What do the tag numbers mean?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The identifier octet carries class, a constructed flag, and the tag number. 0x30 is a constructed SEQUENCE, 0x04 a primitive OCTET STRING, and 0xA0 a context-specific constructed element — the shape most certificate extensions use."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "ASN.1 Tree Explorer",
+   "description": "Walk DER-encoded ASN.1 as a collapsible tree with OID lookup, primitive type recognition, and per-node hex preview. PEM input accepted.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/asn1-tree-explorer/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -254,6 +316,18 @@
   <p>ASN.1 (ITU-T X.680) is the data-description language behind X.509, PKCS, CMS, SNMP, LDAP, and many telecom protocols. DER (X.690 §10) is the canonical binary encoding used in PKI and FIDO attestation.</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>ITU-T X.680 / X.690.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/pfx-inspector/">PFX / PKCS#12 inspector</a> &middot; <a href="/resources/tools/asn1-parser/">ASN.1 parser (linear)</a> &middot; <a href="/resources/tools/x509-viewer/">X.509 viewer</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Attestation objects (uses ASN.1 in x5c)</a></p></div></div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What input does the explorer accept?</h3></summary><div class="faq-a"><p>DER-encoded bytes as hex, or a PEM block — the BEGIN/END wrapper is stripped and the base64 decoded for you before parsing.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the difference between BER and DER?</h3></summary><div class="faq-a"><p>BER allows several encodings of the same value; DER is the canonical subset that permits exactly one. Signatures are computed over DER precisely because it is unambiguous.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does the tree stop partway through my blob?</h3></summary><div class="faq-a"><p>Almost always a length that overruns the remaining buffer, or a truncated file. The last node rendered marks where the encoding stops being self-consistent.</p></div></details>
+    <details class="faq-q"><summary><h3>What do the tag numbers mean?</h3></summary><div class="faq-a"><p>The identifier octet carries class, a constructed flag, and the tag number. 0x30 is a constructed SEQUENCE, 0x04 a primitive OCTET STRING, and 0xA0 a context-specific constructed element — the shape most certificate extensions use.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the FIDO Metadata Service?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A signed directory published by the FIDO Alliance describing certified authenticators — their AAGUIDs, certification status, key protection and transports. It is the authoritative source for attestation policy."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can I use this page as my metadata source in production?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. This is a browsable curated subset for orientation. A production relying party should fetch the MDS BLOB, verify its signature and certificate chain, and honour its expiry."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What can metadata tell me that an AAGUID alone cannot?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Whether the model is certified and to what level, how keys are protected, which transports it supports, and whether any status reports mark it as compromised — the last being the point of consulting metadata at all."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does an authenticator not appear here?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Either it is outside this curated subset, or it never registered metadata. Absence from the real MDS is itself policy-relevant: it means the model's claims cannot be independently verified."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "FIDO Metadata Explorer",
+   "description": "Browse the AAGUID directory in metadata-style cards — vendor, model, transports, form factor and documented credential class. Searchable. Production should fetch the FIDO MDS BLOB.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/fido-mds-explorer/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -255,6 +317,18 @@
   <p>The FIDO Metadata Service publishes a JWS-signed BLOB at <code>https://mds.fidoalliance.org/</code> listing every certified authenticator. Production RPs should fetch and verify on a daily schedule, then enforce AAGUID policy at registration time.</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>FIDO Metadata Service v3.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/aaguid-lookup/">AAGUID lookup</a> &middot; <a href="/resources/tools/attestation-decoder/">Attestation decoder</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Understanding attestation objects</a></p></div></div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is the FIDO Metadata Service?</h3></summary><div class="faq-a"><p>A signed directory published by the FIDO Alliance describing certified authenticators — their AAGUIDs, certification status, key protection and transports. It is the authoritative source for attestation policy.</p></div></details>
+    <details class="faq-q"><summary><h3>Can I use this page as my metadata source in production?</h3></summary><div class="faq-a"><p>No. This is a browsable curated subset for orientation. A production relying party should fetch the MDS BLOB, verify its signature and certificate chain, and honour its expiry.</p></div></details>
+    <details class="faq-q"><summary><h3>What can metadata tell me that an AAGUID alone cannot?</h3></summary><div class="faq-a"><p>Whether the model is certified and to what level, how keys are protected, which transports it supports, and whether any status reports mark it as compromised — the last being the point of consulting metadata at all.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does an authenticator not appear here?</h3></summary><div class="faq-a"><p>Either it is outside this curated subset, or it never registered metadata. Absence from the real MDS is itself policy-relevant: it means the model's claims cannot be independently verified.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

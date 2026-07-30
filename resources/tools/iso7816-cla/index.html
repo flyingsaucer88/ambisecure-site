@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does the CLA byte encode?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Whether the command is interindustry or proprietary, whether secure messaging applies and in which form, whether the command is chained, and which logical channel it targets."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do I tell interindustry from proprietary?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The high nibble. 0x0X, 0x1X and similar are interindustry as defined by ISO 7816-4; 0x8X and 0xAX are proprietary, which is why vendor documentation is required to interpret them."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which bits carry secure messaging?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Bits 3 and 4 of the interindustry CLA. They distinguish no secure messaging, proprietary secure messaging, and the standard form with or without the header being authenticated."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is command chaining?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Bit 5 set means more command data follows in the next APDU. It is how a payload larger than a single APDU is delivered when extended length is unavailable."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "ISO 7816-4 CLA Decoder",
+   "description": "Decode the ISO/IEC 7816-4 CLA byte — interindustry vs proprietary, secure messaging bits, command chaining, logical channel.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/iso7816-cla/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>ISO/IEC 7816-4 §5.4.1.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/references/apdu-status/">APDU status-word reference</a> &middot; <a href="/resources/tools/apdu-parser/">APDU parser</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/apdu-from-first-principles/">APDU from first principles</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What does the CLA byte encode?</h3></summary><div class="faq-a"><p>Whether the command is interindustry or proprietary, whether secure messaging applies and in which form, whether the command is chained, and which logical channel it targets.</p></div></details>
+    <details class="faq-q"><summary><h3>How do I tell interindustry from proprietary?</h3></summary><div class="faq-a"><p>The high nibble. 0x0X, 0x1X and similar are interindustry as defined by ISO 7816-4; 0x8X and 0xAX are proprietary, which is why vendor documentation is required to interpret them.</p></div></details>
+    <details class="faq-q"><summary><h3>Which bits carry secure messaging?</h3></summary><div class="faq-a"><p>Bits 3 and 4 of the interindustry CLA. They distinguish no secure messaging, proprietary secure messaging, and the standard form with or without the header being authenticated.</p></div></details>
+    <details class="faq-q"><summary><h3>What is command chaining?</h3></summary><div class="faq-a"><p>Bit 5 set means more command data follows in the next APDU. It is how a payload larger than a single APDU is delivered when extended length is unavailable.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

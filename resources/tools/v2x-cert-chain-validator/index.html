@@ -88,6 +88,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does this validator check?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Structure: that each certificate parses, that issuer linkage by HashedId8 resolves up the chain, that validity periods are coherent, and that signature schemes are consistent."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does it deliberately not check?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It does not verify signatures cryptographically and does not consult a CRL or CTL. A structurally valid chain can still be revoked or forged, so this is a diagnostic rather than a trust decision."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does the V2X chain look like?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Root CA, then an Enrolment Authority and an Authorisation Authority, then the end-entity credential — an enrolment credential from the EA or a pseudonym certificate from the AA."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my chain fail to link?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Almost always a HashedId8 that matches no supplied certificate, meaning an intermediate is missing from the bundle. Order does not matter here; presence does."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -348,6 +393,18 @@
     <div class="ref-card"><h3>IEEE 1609.2 parser</h3><p><a href="/resources/tools/ieee-1609-2-parser/">Full field-tree decoding</a> for a single certificate. Useful for inspecting a chain link in detail before running the validator.</p></div>
     <div class="ref-card"><h3>V2X PKI reference</h3><p><a href="/technologies/v2x-pki/">Technical companion</a>: certificate format, EC vs PC, Butterfly Key Expansion, India TRAI CP 30/04/2026 context.</p></div>
     <div class="ref-card"><h3>V2X security architecture</h3><p><a href="/solutions/v2x-security/">Solution view</a>: EA/AA, manufacturing-time provisioning, lifecycle, scope discipline.</p></div>
+  </div>
+</section>
+
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What does this validator check?</h3></summary><div class="faq-a"><p>Structure: that each certificate parses, that issuer linkage by HashedId8 resolves up the chain, that validity periods are coherent, and that signature schemes are consistent.</p></div></details>
+    <details class="faq-q"><summary><h3>What does it deliberately not check?</h3></summary><div class="faq-a"><p>It does not verify signatures cryptographically and does not consult a CRL or CTL. A structurally valid chain can still be revoked or forged, so this is a diagnostic rather than a trust decision.</p></div></details>
+    <details class="faq-q"><summary><h3>What does the V2X chain look like?</h3></summary><div class="faq-a"><p>Root CA, then an Enrolment Authority and an Authorisation Authority, then the end-entity credential — an enrolment credential from the EA or a pseudonym certificate from the AA.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does my chain fail to link?</h3></summary><div class="faq-a"><p>Almost always a HashedId8 that matches no supplied certificate, meaning an intermediate is missing from the bundle. Order does not matter here; presence does.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
   </div>
 </section>
 

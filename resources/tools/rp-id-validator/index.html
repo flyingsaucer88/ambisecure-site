@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an rpId?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The domain a WebAuthn credential is scoped to. It defaults to the origin's effective domain, and a credential is only usable on that domain or a subdomain of it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the registrable-suffix rule?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An rpId must be the origin's domain or a registrable parent of it. login.example.com may set example.com, but never com, and never a domain it does not control."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does the public suffix list matter?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because it stops a page setting an rpId that spans an entire registry. Without it, a site on a shared suffix could scope credentials across every unrelated site beneath it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does WebAuthn work over plain HTTP?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Only on localhost, which browsers treat as a secure context for development. Every other origin must be HTTPS."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "RP ID / Origin Validator",
+   "description": "Validate WebAuthn rpId / origin combinations. Confirms registrable-suffix rule, HTTPS posture, public-suffix-list constraints.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/rp-id-validator/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §5.1.3.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/credential-id/">credentialId decoder</a> &middot; <a href="/resources/tools/clientdata-decoder/">clientDataJSON decoder</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/designing-enterprise-passwordless-systems/">Designing enterprise passwordless systems</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is an rpId?</h3></summary><div class="faq-a"><p>The domain a WebAuthn credential is scoped to. It defaults to the origin's effective domain, and a credential is only usable on that domain or a subdomain of it.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the registrable-suffix rule?</h3></summary><div class="faq-a"><p>An rpId must be the origin's domain or a registrable parent of it. login.example.com may set example.com, but never com, and never a domain it does not control.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does the public suffix list matter?</h3></summary><div class="faq-a"><p>Because it stops a page setting an rpId that spans an entire registry. Without it, a site on a shared suffix could scope credentials across every unrelated site beneath it.</p></div></details>
+    <details class="faq-q"><summary><h3>Does WebAuthn work over plain HTTP?</h3></summary><div class="faq-a"><p>Only on localhost, which browsers treat as a secure context for development. Every other origin must be HTTPS.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

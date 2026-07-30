@@ -65,6 +65,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does GSMA SGP.32 cover?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Remote SIM provisioning for IoT — an architecture for devices that have no user interface and may be offline when a profile needs to change."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does SGP.32 differ from SGP.22?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "SGP.22 is the consumer profile and assumes a user can act on the device. SGP.32 adds the IoT Profile Assistant and a discovery flow so provisioning can be driven remotely without user interaction."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the IPA?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The IoT Profile Assistant — the on-device function that mediates between the eUICC and the remote provisioning servers in place of a user-driven LPA."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What do SM-DP+ and SM-DS do?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "SM-DP+ prepares and delivers the profile; SM-DS is the discovery service that tells a device where to look. Separating them means the discovery service never handles profile data."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does this compare to V2X PKI?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Structurally closely: both authenticate hardware-backed identity to a remote authority and rotate credentials without recall. SGP.32 separates discovery from preparation much as V2X separates enrolment from authorisation."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -346,6 +391,18 @@
     <ul><li><a href="/references/webauthn-cose/">WebAuthn COSE Algorithms</a></li><li><a href="/references/x509-extensions/">X.509 Extensions</a></li><li><a href="/references/x509-oids/">X.509 / Certificate OIDs</a></li></ul>
   </div>
 </nav>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What does GSMA SGP.32 cover?</h3></summary><div class="faq-a"><p>Remote SIM provisioning for IoT — an architecture for devices that have no user interface and may be offline when a profile needs to change.</p></div></details>
+    <details class="faq-q"><summary><h3>How does SGP.32 differ from SGP.22?</h3></summary><div class="faq-a"><p>SGP.22 is the consumer profile and assumes a user can act on the device. SGP.32 adds the IoT Profile Assistant and a discovery flow so provisioning can be driven remotely without user interaction.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the IPA?</h3></summary><div class="faq-a"><p>The IoT Profile Assistant — the on-device function that mediates between the eUICC and the remote provisioning servers in place of a user-driven LPA.</p></div></details>
+    <details class="faq-q"><summary><h3>What do SM-DP+ and SM-DS do?</h3></summary><div class="faq-a"><p>SM-DP+ prepares and delivers the profile; SM-DS is the discovery service that tells a device where to look. Separating them means the discovery service never handles profile data.</p></div></details>
+    <details class="faq-q"><summary><h3>How does this compare to V2X PKI?</h3></summary><div class="faq-a"><p>Structurally closely: both authenticate hardware-backed identity to a remote authority and rotate credentials without recall. SGP.32 separates discovery from preparation much as V2X separates enrolment from authorisation.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

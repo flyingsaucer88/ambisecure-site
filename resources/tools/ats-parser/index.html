@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the ATS?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The Answer To Select: the response a Type A card returns to a RATS command, describing the frame size, timing requirements and protocol options it supports for ISO 14443-4 communication."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does TL cover?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "TL is the length byte and counts itself along with every interface byte and historical byte that follows. A TL that disagrees with the actual response length means the capture is truncated."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What are TA(1), TB(1) and TC(1)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "TA(1) advertises supported bit rates in each direction, TB(1) carries the frame waiting time and start-up frame guard time, and TC(1) indicates whether NAD and CID are supported. Each is present only if the preceding T0 says so."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my ATS differ from the specification example?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because most of it is optional. Cards omit interface bytes they have no need to advertise, and historical bytes are card-specific, so two conformant cards can return very different ATS values."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "ATS parser for ISO 14443",
+   "description": "Decode ISO/IEC 14443-4 ATS bytes — TL, T0, TA(1)/TB(1)/TC(1), historical bytes. Client-side.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/ats-parser/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -230,7 +292,7 @@
 <main id="main">
 <header class="tool-header">
   <span class="eyebrow">NFC utility</span>
-  <h1>ATS Parser</h1>
+  <h1>ATS parser for ISO 14443</h1>
   <p>Decode the ISO/IEC 14443-4 Answer-To-Select (ATS) response: TL, T0, optional TA(1) / TB(1) / TC(1), and historical bytes. Useful for diagnosing reader compatibility issues.</p>
   <div class="tool-meta"><span>Client-side</span><span>ISO 14443-4 §5.2.1</span></div>
 </header>
@@ -268,6 +330,18 @@
     <div class="ref-card"><h3>Reference</h3><p><a href="/resources/tools/iso14443-ref/">ISO 14443 quick reference</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is the ATS?</h3></summary><div class="faq-a"><p>The Answer To Select: the response a Type A card returns to a RATS command, describing the frame size, timing requirements and protocol options it supports for ISO 14443-4 communication.</p></div></details>
+    <details class="faq-q"><summary><h3>What does TL cover?</h3></summary><div class="faq-a"><p>TL is the length byte and counts itself along with every interface byte and historical byte that follows. A TL that disagrees with the actual response length means the capture is truncated.</p></div></details>
+    <details class="faq-q"><summary><h3>What are TA(1), TB(1) and TC(1)?</h3></summary><div class="faq-a"><p>TA(1) advertises supported bit rates in each direction, TB(1) carries the frame waiting time and start-up frame guard time, and TC(1) indicates whether NAD and CID are supported. Each is present only if the preceding T0 says so.</p></div></details>
+    <details class="faq-q"><summary><h3>Why does my ATS differ from the specification example?</h3></summary><div class="faq-a"><p>Because most of it is optional. Cards omit interface bytes they have no need to advertise, and historical bytes are card-specific, so two conformant cards can return very different ATS values.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

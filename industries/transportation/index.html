@@ -63,6 +63,51 @@
    "name": "Transportation — AmbiSecure"
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Why does transit ticketing still authenticate offline?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because the gate has a few hundred milliseconds to decide, with no guarantee of connectivity. That budget rules out a network round trip, so the trust decision has to happen between the card and the validator."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a SAM and why does a validator need one?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A Secure Access Module holds the card keys inside tamper-resistant hardware at the reader. It lets the validator authenticate cards without master keys ever existing in terminal software or memory."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between closed-loop and open-loop ticketing?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Closed-loop uses an operator-issued card, typically DESFire, with fares and keys under the operator's control. Open-loop accepts bank cards over EMV contactless. Most large networks now run both on the same validator."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which DESFire generation should a new deployment use?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "EV2 or EV3. Both add transaction MAC, which lets a back office verify independently that a transaction occurred, and proximity checking against relay attacks. EV1 remains supported for existing estates."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens when the backend is unreachable?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing visible to the passenger. Validators keep operating on locally held keys and reconcile when connectivity returns — which is the point of designing for offline trust rather than treating it as a failure mode."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -224,7 +269,7 @@
 <section style="padding: 60px 80px 30px;">
   <div class="prose">
     <span class="eyebrow">Industry</span>
-    <h1>Transportation.</h1>
+    <h1>Transportation and transit ticketing</h1>
     <p class="dek">Metros, light rail, buses, BRT, ferries, and the kiosks that recharge them. The industry where security, throughput, and unattended-deployment economics all collide at the same gate.</p>
   </div>
 </section>
@@ -274,6 +319,18 @@
     </div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>Why does transit ticketing still authenticate offline?</h3></summary><div class="faq-a"><p>Because the gate has a few hundred milliseconds to decide, with no guarantee of connectivity. That budget rules out a network round trip, so the trust decision has to happen between the card and the validator.</p></div></details>
+    <details class="faq-q"><summary><h3>What is a SAM and why does a validator need one?</h3></summary><div class="faq-a"><p>A Secure Access Module holds the card keys inside tamper-resistant hardware at the reader. It lets the validator authenticate cards without master keys ever existing in terminal software or memory.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the difference between closed-loop and open-loop ticketing?</h3></summary><div class="faq-a"><p>Closed-loop uses an operator-issued card, typically DESFire, with fares and keys under the operator's control. Open-loop accepts bank cards over EMV contactless. Most large networks now run both on the same validator.</p></div></details>
+    <details class="faq-q"><summary><h3>Which DESFire generation should a new deployment use?</h3></summary><div class="faq-a"><p>EV2 or EV3. Both add transaction MAC, which lets a back office verify independently that a transaction occurred, and proximity checking against relay attacks. EV1 remains supported for existing estates.</p></div></details>
+    <details class="faq-q"><summary><h3>What happens when the backend is unreachable?</h3></summary><div class="faq-a"><p>Nothing visible to the passenger. Validators keep operating on locally held keys and reconcile when connectivity returns — which is the point of designing for offline trust rather than treating it as a failure mode.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

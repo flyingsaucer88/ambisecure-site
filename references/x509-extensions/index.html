@@ -65,6 +65,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an X.509 v3 extension?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An optional typed field carrying policy or identity information beyond the basic certificate fields, each identified by an OID and marked critical or non-critical."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does marking an extension critical mean?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "That a verifier which does not understand it must reject the certificate. Marking too much critical breaks interoperability; marking too little weakens the constraints you meant to impose."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between key usage and extended key usage?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Key usage constrains the cryptographic operations the key may perform; extended key usage constrains the purpose, such as TLS server or client authentication. A certificate can fail validation on either."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why do modern clients ignore Common Name?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because the Subject Alternative Name extension replaced it for identity. A certificate without SAN will not validate in any current browser regardless of its CN."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does Basic Constraints do?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Declares whether the subject is a CA and optionally limits the path length below it. A missing or false CA flag on an intermediate breaks the entire chain."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -225,7 +270,7 @@
 <main id="main">
 <header class="tool-header" style="padding-bottom:18px;">
   <span class="eyebrow">X.509 / PKIX</span>
-  <h1>X.509 Extensions</h1>
+  <h1>X.509 extension reference database</h1>
   <p>Common X.509 v3 extensions — what they are, criticality, and what they encode. Pair with the X.509 viewer to walk live certs.</p>
 </header>
 <div class="ref-shell">
@@ -240,12 +285,33 @@
   <h2>What this reference covers</h2>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>RFC 5280 §4.2.</p></div><div class="ref-card"><h3>Companion tool</h3><p><a href="/resources/tools/x509-viewer/">X.509 viewer</a> &middot; <a href="/resources/tools/cert-chain/">Cert chain viewer</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/understanding-webauthn-attestation-objects/">Attestation objects</a></p></div></div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2>What this reference does not cover</h2>
+    <p>This lists the extensions you will commonly meet and what they mean. It does not tell you which ones a given profile requires &mdash; that comes from the issuing CA's certificate policy, from CA/Browser Forum requirements for public TLS, or from a scheme profile such as PIV or eIDAS. The same extension can be mandatory in one profile and forbidden in another.</p>
+    <p>It is also not a validation guide. Path building, name constraints, policy mapping and revocation checking are where certificates actually fail, and a certificate whose extensions all look correct here can still be rejected for any of those reasons.</p>
+  </div>
+</section>
+
 <nav class="related-cross" aria-label="Related references">
   <div class="section-container" style="max-width:880px;">
     <h2>Related references</h2>
     <ul><li><a href="/references/x509-oids/">X.509 / Certificate OIDs</a></li><li><a href="/references/aaguids/">FIDO AAGUIDs</a></li><li><a href="/references/apdu-status/">APDU Status Words</a></li></ul>
   </div>
 </nav>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is an X.509 v3 extension?</h3></summary><div class="faq-a"><p>An optional typed field carrying policy or identity information beyond the basic certificate fields, each identified by an OID and marked critical or non-critical.</p></div></details>
+    <details class="faq-q"><summary><h3>What does marking an extension critical mean?</h3></summary><div class="faq-a"><p>That a verifier which does not understand it must reject the certificate. Marking too much critical breaks interoperability; marking too little weakens the constraints you meant to impose.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the difference between key usage and extended key usage?</h3></summary><div class="faq-a"><p>Key usage constrains the cryptographic operations the key may perform; extended key usage constrains the purpose, such as TLS server or client authentication. A certificate can fail validation on either.</p></div></details>
+    <details class="faq-q"><summary><h3>Why do modern clients ignore Common Name?</h3></summary><div class="faq-a"><p>Because the Subject Alternative Name extension replaced it for identity. A certificate without SAN will not validate in any current browser regardless of its CN.</p></div></details>
+    <details class="faq-q"><summary><h3>What does Basic Constraints do?</h3></summary><div class="faq-a"><p>Declares whether the subject is a CA and optionally limits the path length below it. A missing or false CA flag on an intermediate breaks the entire chain.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

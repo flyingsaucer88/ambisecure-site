@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an EMV tag?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A BER-TLV identifier for a data object defined across EMV Books 3 and 4 and the contactless specifications — for example 9F02 is the authorised amount and 5A the application PAN."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why are some tags two bytes?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because the first byte has its low five bits all set, which signals that the tag continues. That is why the 9Fxx family exists once the single-byte space was exhausted."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a DOL?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A Data Object List — a template such as PDOL or CDOL1 in which the card lists the tags it wants, with lengths but no values. The terminal concatenates the values in that exact order, with no tags and no lengths."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which tags should never be logged?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Anything carrying cardholder data or cryptographic material — track equivalents, the PAN in full, and any key-related object. Most acceptance failures during certification are logging findings rather than protocol errors."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "EMV Tag Dictionary Explorer",
+   "description": "Filterable directory of EMV (Books 3, 4, and CL) tags — SELECT, GET PROCESSING OPTIONS, READ RECORD, GENERATE AC, terminal capabilities.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/emv-tag-dict/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>EMV Books 3 and 4; EMV Contactless C-2 / C-3.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/tlv-parser/">TLV parser</a></p></div><div class="ref-card"><h3>Reading</h3><p>Future cornerstone: <em>EMV transaction flow from first principles</em>.</p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is an EMV tag?</h3></summary><div class="faq-a"><p>A BER-TLV identifier for a data object defined across EMV Books 3 and 4 and the contactless specifications — for example 9F02 is the authorised amount and 5A the application PAN.</p></div></details>
+    <details class="faq-q"><summary><h3>Why are some tags two bytes?</h3></summary><div class="faq-a"><p>Because the first byte has its low five bits all set, which signals that the tag continues. That is why the 9Fxx family exists once the single-byte space was exhausted.</p></div></details>
+    <details class="faq-q"><summary><h3>What is a DOL?</h3></summary><div class="faq-a"><p>A Data Object List — a template such as PDOL or CDOL1 in which the card lists the tags it wants, with lengths but no values. The terminal concatenates the values in that exact order, with no tags and no lengths.</p></div></details>
+    <details class="faq-q"><summary><h3>Which tags should never be logged?</h3></summary><div class="faq-a"><p>Anything carrying cardholder data or cryptographic material — track equivalents, the PAN in full, and any key-related object. Most acceptance failures during certification are logging findings rather than protocol errors.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

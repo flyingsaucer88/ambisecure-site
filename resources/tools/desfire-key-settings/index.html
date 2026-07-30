@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does GetKeySettings return?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Two bytes plus a crypto indicator: the keySettings byte of configuration flags, and a byte whose low nibble is the number of keys in the application and whose high bits indicate DES, 3DES or AES."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is in the keySettings byte?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Which key may change other keys, whether the configuration is still changeable, whether directory listing requires authentication, and whether the master key itself may be changed."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does 'configuration changeable' being cleared mean?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "That the settings are frozen for the life of the application. It is deliberately irreversible, so it belongs at the end of personalisation rather than during development."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How many keys can an application hold?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Up to 14, referenced 0 to 13. Key 0 is the application master key and is the one authenticated for most management operations."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "DESFire Key Settings Interpreter",
+   "description": "Decode the 2-byte DESFire GetKeySettings response — keySettings byte (ChangeKey / config / master-key flags), numKeys, and crypto type (DES / 3DES / AES).",
+   "url": "https://ambisecure.ambimat.com/resources/tools/desfire-key-settings/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -254,6 +316,18 @@
   <p>The keySettings byte governs ChangeKey privilege, configuration freeze, and whether the application master key can be rolled. The companion byte carries the crypto type (DES / 3DES / AES-128) and the number of application keys (0–14).</p>
   <div class="ref-grid"><div class="ref-card"><h3>Spec</h3><p>NXP DESFire EV1/EV2/EV3 datasheet.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/desfire-file-settings/">File settings parser</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/technologies/sam/">SAM architecture</a></p></div></div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What does GetKeySettings return?</h3></summary><div class="faq-a"><p>Two bytes plus a crypto indicator: the keySettings byte of configuration flags, and a byte whose low nibble is the number of keys in the application and whose high bits indicate DES, 3DES or AES.</p></div></details>
+    <details class="faq-q"><summary><h3>What is in the keySettings byte?</h3></summary><div class="faq-a"><p>Which key may change other keys, whether the configuration is still changeable, whether directory listing requires authentication, and whether the master key itself may be changed.</p></div></details>
+    <details class="faq-q"><summary><h3>What does 'configuration changeable' being cleared mean?</h3></summary><div class="faq-a"><p>That the settings are frozen for the life of the application. It is deliberately irreversible, so it belongs at the end of personalisation rather than during development.</p></div></details>
+    <details class="faq-q"><summary><h3>How many keys can an application hold?</h3></summary><div class="faq-a"><p>Up to 14, referenced 0 to 13. Key 0 is the application master key and is the one authenticated for most management operations.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

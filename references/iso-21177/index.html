@@ -65,6 +65,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does ISO 21177 define?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An ITS station security services architecture: how a station establishes authenticated, confidential sessions and how existing V2X PKI credentials are used to do it."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does it relate to 1609.2 and 102 941?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Those provide the certificates and the PKI. ISO 21177 is the bridge that lets session-oriented protocols consume those credentials rather than needing a separate trust system."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is a session protocol needed at all when V2X messages are broadcast?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because not all ITS communication is broadcast safety messaging. Management, provisioning and application traffic are point-to-point and need confidentiality and mutual authentication."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does the security subsystem provide?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Credential handling, policy enforcement and session establishment, exposed so applications do not each re-implement trust decisions."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where does this matter in practice?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Roadside and back-office interactions — provisioning, diagnostics and application data exchange — where a station must prove identity over a connection rather than in a broadcast."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -324,6 +369,18 @@
     <ul><li><a href="/references/iso7816/">ISO 7816 CLA Values</a></li><li><a href="/references/javacard-cap/">JavaCard CAP Components</a></li><li><a href="/references/nfc/">NDEF TNF Types</a></li></ul>
   </div>
 </nav>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What does ISO 21177 define?</h3></summary><div class="faq-a"><p>An ITS station security services architecture: how a station establishes authenticated, confidential sessions and how existing V2X PKI credentials are used to do it.</p></div></details>
+    <details class="faq-q"><summary><h3>How does it relate to 1609.2 and 102 941?</h3></summary><div class="faq-a"><p>Those provide the certificates and the PKI. ISO 21177 is the bridge that lets session-oriented protocols consume those credentials rather than needing a separate trust system.</p></div></details>
+    <details class="faq-q"><summary><h3>Why is a session protocol needed at all when V2X messages are broadcast?</h3></summary><div class="faq-a"><p>Because not all ITS communication is broadcast safety messaging. Management, provisioning and application traffic are point-to-point and need confidentiality and mutual authentication.</p></div></details>
+    <details class="faq-q"><summary><h3>What does the security subsystem provide?</h3></summary><div class="faq-a"><p>Credential handling, policy enforcement and session establishment, exposed so applications do not each re-implement trust decisions.</p></div></details>
+    <details class="faq-q"><summary><h3>Where does this matter in practice?</h3></summary><div class="faq-a"><p>Roadside and back-office interactions — provisioning, diagnostics and application data exchange — where a station must prove identity over a connection rather than in a broadcast.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

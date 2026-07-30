@@ -65,6 +65,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is ASN.1?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A notation for describing data structures independently of how they are encoded, with encoding rules such as BER and DER defining the bytes on the wire."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between BER and DER?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "BER permits several encodings of the same value; DER is the canonical subset allowing exactly one. Signatures are computed over DER because it is unambiguous."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What are the universal-class tags?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The base types: 01 BOOLEAN, 02 INTEGER, 03 BIT STRING, 04 OCTET STRING, 05 NULL, 06 OBJECT IDENTIFIER, 30 SEQUENCE, 31 SET, plus the string and time types."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What makes a tag constructed rather than primitive?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Bit 6 of the identifier octet. A constructed encoding contains further TLV elements, which is why SEQUENCE (0x30) nests and OCTET STRING (0x04) usually does not."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why do certificate extensions use context-specific tags?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because they are optional fields whose meaning comes from their position in the parent structure rather than from a universal type — which is what 0xA0-style tags express."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -307,6 +352,18 @@
     <ul><li><a href="/references/desfire-commands/">DESFire Command Set</a></li><li><a href="/references/desfire/">DESFire Status Codes</a></li><li><a href="/references/emv-tags/">EMV Tags</a></li></ul>
   </div>
 </nav>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is ASN.1?</h3></summary><div class="faq-a"><p>A notation for describing data structures independently of how they are encoded, with encoding rules such as BER and DER defining the bytes on the wire.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the difference between BER and DER?</h3></summary><div class="faq-a"><p>BER permits several encodings of the same value; DER is the canonical subset allowing exactly one. Signatures are computed over DER because it is unambiguous.</p></div></details>
+    <details class="faq-q"><summary><h3>What are the universal-class tags?</h3></summary><div class="faq-a"><p>The base types: 01 BOOLEAN, 02 INTEGER, 03 BIT STRING, 04 OCTET STRING, 05 NULL, 06 OBJECT IDENTIFIER, 30 SEQUENCE, 31 SET, plus the string and time types.</p></div></details>
+    <details class="faq-q"><summary><h3>What makes a tag constructed rather than primitive?</h3></summary><div class="faq-a"><p>Bit 6 of the identifier octet. A constructed encoding contains further TLV elements, which is why SEQUENCE (0x30) nests and OCTET STRING (0x04) usually does not.</p></div></details>
+    <details class="faq-q"><summary><h3>Why do certificate extensions use context-specific tags?</h3></summary><div class="faq-a"><p>Because they are optional fields whose meaning comes from their position in the parent structure rather than from a universal type — which is what 0xA0-style tags express.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is authenticatorData?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The fixed-layout byte structure an authenticator signs on every ceremony: a 32-byte rpIdHash, a flags byte, a 4-byte signature counter, and — at registration only — attested credential data and extensions."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What do the flags mean?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Bit 0 is user present (UP), bit 2 user verified (UV), bit 3 backup eligible (BE), bit 4 backup state (BS), bit 6 attested credential data included (AT) and bit 7 extension data included (ED)."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is signCount for and why is it often zero?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It is a replay signal: a counter that should increase each assertion, so a relying party can spot a cloned authenticator. Many modern authenticators, particularly synced passkeys, keep it permanently at zero, so treat a static counter as normal rather than as evidence."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is there no AAGUID in my authenticatorData?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because it is an authentication assertion rather than a registration. Attested credential data — which carries the AAGUID, credentialId and public key — is only present when the AT flag is set."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "authenticatorData parser for WebAuthn",
+   "description": "Walk WebAuthn authenticatorData — rpIdHash, flags, signCount, AAGUID, credentialId, COSE_Key, extensions.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/authdata-parser/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -230,7 +292,7 @@
 <main id="main">
 <header class="tool-header">
   <span class="eyebrow">WebAuthn</span>
-  <h1>authenticatorData Parser</h1>
+  <h1>authenticatorData parser for WebAuthn</h1>
   <p>Walk WebAuthn authenticatorData (§6.1). Splits rpIdHash | flags | signCount | AAGUID | credentialId | credentialPublicKey | extensions, and surfaces the BE / BS passkey state flags.</p>
 </header>
 <section class="tool-explainer">
@@ -256,6 +318,18 @@
     <div class="ref-card"><h3>Spec</h3><p>WebAuthn Level 2 §6.1.</p></div><div class="ref-card"><h3>Companion</h3><p><a href="/resources/tools/credential-id/">credentialId decoder</a> &middot; <a href="/resources/tools/cose-key/">COSE Key inspector</a> &middot; <a href="/resources/tools/aaguid-lookup/">AAGUID lookup</a></p></div><div class="ref-card"><h3>Reading</h3><p><a href="/blog/passkeys-vs-traditional-mfa/">Passkeys vs traditional MFA</a></p></div>
   </div>
 </section>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is authenticatorData?</h3></summary><div class="faq-a"><p>The fixed-layout byte structure an authenticator signs on every ceremony: a 32-byte rpIdHash, a flags byte, a 4-byte signature counter, and — at registration only — attested credential data and extensions.</p></div></details>
+    <details class="faq-q"><summary><h3>What do the flags mean?</h3></summary><div class="faq-a"><p>Bit 0 is user present (UP), bit 2 user verified (UV), bit 3 backup eligible (BE), bit 4 backup state (BS), bit 6 attested credential data included (AT) and bit 7 extension data included (ED).</p></div></details>
+    <details class="faq-q"><summary><h3>What is signCount for and why is it often zero?</h3></summary><div class="faq-a"><p>It is a replay signal: a counter that should increase each assertion, so a relying party can spot a cloned authenticator. Many modern authenticators, particularly synced passkeys, keep it permanently at zero, so treat a static counter as normal rather than as evidence.</p></div></details>
+    <details class="faq-q"><summary><h3>Why is there no AAGUID in my authenticatorData?</h3></summary><div class="faq-a"><p>Because it is an authentication assertion rather than a registration. Attested credential data — which carries the AAGUID, credentialId and public key — is only present when the AT flag is set.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
+  </div>
+</section>
+
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">
     <h2>Related tools</h2>

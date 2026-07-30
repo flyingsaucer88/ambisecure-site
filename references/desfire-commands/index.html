@@ -65,6 +65,51 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the difference between native and ISO-wrapped commands?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Native DESFire commands are a compact one-byte code with their own status byte. ISO 7816-4 wrapped commands carry the same operation inside a standard APDU with SW1/SW2, which is what most reader stacks send."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why do commands differ across EV1, EV2 and EV3?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Later generations added capability rather than replacing it. EV2 introduced transaction MAC, delegated application management and proximity checking; EV3 extended again. EV1 commands generally still work."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does status 0xAF mean mid-command?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Additional frame: the exchange is incomplete and the card expects a continuation. It is a normal part of multi-frame commands, not an error."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which commands need an authenticated session?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Anything the file or application access rights restrict. Authentication state resets when you select a different application, so it must be re-established each time."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the practical command sequence?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Select the application, authenticate with the appropriate key, then read or write files. Most integration failures are a missing or mis-ordered step in that sequence."
+     }
+    }
+   ]
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -268,6 +313,18 @@
     <ul><li><a href="/references/desfire/">DESFire Status Codes</a></li><li><a href="/references/emv-tags/">EMV Tags</a></li><li><a href="/references/etsi-ts-102-941/">ETSI TS 102 941 Trust &amp; Privacy Management</a></li></ul>
   </div>
 </nav>
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is the difference between native and ISO-wrapped commands?</h3></summary><div class="faq-a"><p>Native DESFire commands are a compact one-byte code with their own status byte. ISO 7816-4 wrapped commands carry the same operation inside a standard APDU with SW1/SW2, which is what most reader stacks send.</p></div></details>
+    <details class="faq-q"><summary><h3>Why do commands differ across EV1, EV2 and EV3?</h3></summary><div class="faq-a"><p>Later generations added capability rather than replacing it. EV2 introduced transaction MAC, delegated application management and proximity checking; EV3 extended again. EV1 commands generally still work.</p></div></details>
+    <details class="faq-q"><summary><h3>What does status 0xAF mean mid-command?</h3></summary><div class="faq-a"><p>Additional frame: the exchange is incomplete and the card expects a continuation. It is a normal part of multi-frame commands, not an error.</p></div></details>
+    <details class="faq-q"><summary><h3>Which commands need an authenticated session?</h3></summary><div class="faq-a"><p>Anything the file or application access rights restrict. Authentication state resets when you select a different application, so it must be re-established each time.</p></div></details>
+    <details class="faq-q"><summary><h3>What is the practical command sequence?</h3></summary><div class="faq-a"><p>Select the application, authenticate with the appropriate key, then read or write files. Most integration failures are a missing or mis-ordered step in that sequence.</p></div></details>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

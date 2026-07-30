@@ -70,6 +70,68 @@
    }
   },
   {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is a PKCS#12 file?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An archive format, with the .pfx or .p12 extension, bundling a private key with its certificate chain in one password-protected container."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a bag type?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "PKCS#12 stores content in typed bags: keyBag and pkcs8ShroudedKeyBag for private keys, certBag for certificates, and safeContents for nesting. The shrouded variant is the encrypted one."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can this tool decrypt my archive?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No — password-based decryption is not implemented. It reports structure only: bag types, algorithm identifiers and which certificates are present."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why do older archives fail to open in modern tools?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because they use legacy RC2 or 40-bit RC4 encryption that current libraries disable by default. Re-wrapping with AES is the usual fix."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "PFX / PKCS#12 Inspector",
+   "description": "Inspect the structure of a .pfx / .p12 PKCS#12 archive — bag types, encryption schemes, embedded certificates. Client-side; password-decryption is a TODO.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/pfx-inspector/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
    "@type": "Organization",
    "@id": "https://ambisecure.ambimat.com/#org",
    "name": "AmbiSecure",
@@ -273,6 +335,18 @@
   <p>PKCS#12 (a.k.a. PFX) is a password-protected container of certs and keys. <a href="https://datatracker.ietf.org/doc/html/rfc7292">RFC 7292</a> defines the structure: an outer SEQUENCE with version, an AuthenticatedSafe (one or more SafeContents), and an optional MAC. SafeContents are typically encrypted with PBE (PBES1 with SHA-1+3DES historically; PBES2 with PBKDF2 + AES today). This tool reads the public structure and shows what is in there; we do not implement password-based decryption client-side.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Spec</h3><p>RFC 7292 (PKCS#12), RFC 8018 (PKCS#5 v2.1, PBES2).</p></div><div class="ref-card"><h3>Roadmap</h3><p>Modern PBES2+AES decryption is on the roadmap. PBE-SHA1-3DES (legacy) requires a 3DES implementation Web Crypto does not expose.</p><p><a href="/blog/">Engineering blog →</a></p></div><div class="ref-card"><h3>Companion tool</h3><p>Inspect each cert once extracted.</p><p><a href="/resources/tools/x509-viewer/">X.509 viewer →</a></p></div>
+  </div>
+</section>
+
+
+<section class="tool-reference">
+  <div class="section-container" style="max-width:880px;">
+    <h2 style="margin-top:28px;">Frequently asked questions</h2>
+    <details class="faq-q"><summary><h3>What is a PKCS#12 file?</h3></summary><div class="faq-a"><p>An archive format, with the .pfx or .p12 extension, bundling a private key with its certificate chain in one password-protected container.</p></div></details>
+    <details class="faq-q"><summary><h3>What is a bag type?</h3></summary><div class="faq-a"><p>PKCS#12 stores content in typed bags: keyBag and pkcs8ShroudedKeyBag for private keys, certBag for certificates, and safeContents for nesting. The shrouded variant is the encrypted one.</p></div></details>
+    <details class="faq-q"><summary><h3>Can this tool decrypt my archive?</h3></summary><div class="faq-a"><p>No — password-based decryption is not implemented. It reports structure only: bag types, algorithm identifiers and which certificates are present.</p></div></details>
+    <details class="faq-q"><summary><h3>Why do older archives fail to open in modern tools?</h3></summary><div class="faq-a"><p>Because they use legacy RC2 or 40-bit RC4 encryption that current libraries disable by default. Re-wrapping with AES is the usual fix.</p></div></details>
+    <details class="faq-q"><summary><h3>Does anything I paste leave my browser?</h3></summary><div class="faq-a"><p>Nothing. The tool is entirely client-side: the page ships a static script, does no network calls, and never transmits what you paste. You can confirm it by opening the network tab, or by loading the page and then going offline.</p></div></details>
   </div>
 </section>
 
