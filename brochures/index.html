@@ -56,6 +56,154 @@
    "name": "AmbiSecure Brochures",
    "description": "One-page-feeling overviews of each AmbiSecure platform.",
    "url": "https://ambisecure.ambimat.com/brochures/"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -74,6 +222,24 @@
     <h1>Brochures &amp; downloadable overviews.</h1>
     <p class="dek">One-page-feeling overviews of each AmbiSecure platform, designed to be skimmed, shared, and printed. Each is a stand-alone HTML page &mdash; print to PDF from your browser if you need an offline copy.</p>
     <p style="margin-top:12px;">No registration wall, no lead-capture form. Everything that&rsquo;s on the rest of the site is on the brochures &mdash; in a denser format.</p>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="prose" style="max-width:900px;margin:0;">
+      <h2>What these are, and which one to open</h2>
+      <p>Each brochure is a condensed technical overview of one AmbiSecure platform: what it is, the hardware and protocols behind it, how it deploys, and what an integration actually involves. They are written for the engineer or architect doing the evaluation, not as marketing collateral &mdash; expect chip families, protocol names, and lifecycle detail rather than benefit bullets.</p>
+      <p>The six below split along two lines. Pick by the problem you are solving:</p>
+      <ul>
+        <li><strong>Authentication and workforce identity</strong> &mdash; start with <a href="/brochures/onepass/">OnePass platform</a> for the full picture, or <a href="/brochures/fido/">FIDO deployment</a> if you already know you need phishing-resistant login and want the AAGUID, attestation, and recovery detail.</li>
+        <li><strong>Credential issuance at scale</strong> &mdash; <a href="/brochures/pki/">PKI &amp; credential lifecycle</a> covers X.509 issuance, registration authority design, key custody, and audit for workforce and government programmes.</li>
+        <li><strong>Cards and applets</strong> &mdash; <a href="/brochures/javacard/">JavaCard platform</a> covers multi-applet card architecture where several credentials share one chip.</li>
+        <li><strong>Transit</strong> &mdash; <a href="/brochures/transit-security/">Transit security</a> covers DESFire EV2/EV3 with SAM-backed offline trust for closed-loop ticketing.</li>
+        <li><strong>Connected devices</strong> &mdash; <a href="/brochures/device-identity/">Device identity / IoT</a> covers putting a secure element on the device BOM, personalising it on the SMT line, and rotating credentials in the field.</li>
+      </ul>
+      <p>Every brochure is a normal HTML page, so it is searchable, linkable, and prints cleanly to PDF from the browser. If you need the underlying reasoning rather than the summary, each one links through to the relevant <a href="/solutions/">solution pages</a> and <a href="/blog/">engineering blog</a> posts.</p>
+    </div>
   </div>
 </section>
 

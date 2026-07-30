@@ -93,8 +93,189 @@
      "name": "Is my APDU trace uploaded?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "No \u2014 the APDU is parsed locally in your browser."
+      "text": "No — the APDU is parsed locally in your browser."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between a Case 3 and a Case 4 APDU?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Case 3 sends command data and expects no response body, so it carries Lc but no Le. Case 4 sends data and expects data back, so it carries both. Getting this wrong is the usual cause of a 6700 wrong-length reply."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What do status words beginning 61 or 6C mean?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "They are not errors. 61 XX means the card has XX more bytes waiting and you should issue GET RESPONSE; 6C XX means your Le was wrong and XX is the correct length to re-send."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "APDU Parser",
+   "description": "Free, client-side APDU parser. Decode CLA / INS / P1 / P2 / Lc / Le for Case 1-4 (short and extended length), or response APDUs with status word lookup.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/apdu-parser/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
     }
    ]
   }
@@ -173,6 +354,8 @@
   <details class="faq-q"><summary><h3>What does status word 90 00 mean?</h3></summary><div class="faq-a"><p><code>90 00</code> is the ISO 7816-4 status for "command completed successfully". Other common words include <code>6A 82</code> (not found) and <code>69 82</code> (security status not satisfied).</p></div></details>
   <details class="faq-q"><summary><h3>What is the difference between Lc and Le?</h3></summary><div class="faq-a"><p><code>Lc</code> is the number of data bytes you send to the card; <code>Le</code> is the maximum number of bytes you expect back. A case-4 APDU has both.</p></div></details>
   <details class="faq-q"><summary><h3>Is my APDU trace uploaded?</h3></summary><div class="faq-a"><p>No — the APDU is parsed locally in your browser.</p></div></details>
+  <details class="faq-q"><summary><h3>What is the difference between a Case 3 and a Case 4 APDU?</h3></summary><div class="faq-a"><p>Case 3 sends command data and expects no response body, so it carries Lc but no Le. Case 4 sends data and expects data back, so it carries both. Getting this wrong is the usual cause of a 6700 wrong-length reply.</p></div></details>
+  <details class="faq-q"><summary><h3>What do status words beginning 61 or 6C mean?</h3></summary><div class="faq-a"><p>They are not errors. 61 XX means the card has XX more bytes waiting and you should issue GET RESPONSE; 6C XX means your Le was wrong and XX is the correct length to re-send.</p></div></details>
 </section>
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">

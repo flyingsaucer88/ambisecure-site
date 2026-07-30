@@ -39,32 +39,244 @@
   {
    "@type": "FAQPage",
    "mainEntity": [
-    {"@type":"Question","name":"Why does a connected vehicle need a discrete secure element?","acceptedAnswer":{"@type":"Answer","text":"An OBU and an RSU are field-deployed devices subject to physical access and indefinite attacker dwell time. A private key stored in firmware can be extracted through debug interfaces, flash dumping, or firmware exfiltration; once extracted, the fleet's identity is clonable. A discrete tamper-resistant secure element holds the key inside a boundary that does not expose its contents to firmware or operating system layers, removing the entire firmware-extraction class of attack."}},
-    {"@type":"Question","name":"Does using a SIM-card form factor secure element mean the vehicle has a SIM service?","acceptedAnswer":{"@type":"Answer","text":"No. A 4FF nano-card secure element is the physical form factor; whether it carries an eUICC profile and connects to a mobile network is an entirely separate question. The same form factor can host a FIDO2 applet, a PIV applet, a V2X EC/PC management applet, an eUICC, or several of these in parallel. Form factor and applet content are decoupled."}},
-    {"@type":"Question","name":"What is the difference between removable nano-card and solderable MFF2 form factors?","acceptedAnswer":{"@type":"Answer","text":"The 4FF nano-card form factor is a removable SIM-shape card that can be inserted into a holder, allowing factory or field replacement of the identity. The MFF2 form factor is a solderable surface-mount package (DFN-8 or similar) that becomes a permanent part of the board assembly, suited for unattended industrial deployments where physical access to the device is rare. Same silicon class, different mechanical integration."}},
-    {"@type":"Question","name":"How does a secure element differ from a TPM or an HSM?","acceptedAnswer":{"@type":"Answer","text":"A TPM is a device-bound trust anchor with a TCG-defined command set, typically optimised for platform attestation. An HSM is a high-throughput cryptographic appliance used in datacentres for bulk-signing operations under strict key custody. A secure element is a small, low-power tamper-resistant device optimised for embedded integration with a host MCU, with an APDU command set, a JavaCard runtime in many cases, and a focus on per-device identity rather than platform measurement or bulk crypto."}},
-    {"@type":"Question","name":"What does CC EAL6+ actually certify in this context?","acceptedAnswer":{"@type":"Answer","text":"Common Criteria EAL6+ is a certification of the underlying secure-element silicon at the chip level: the side-channel-hardened design, the tamper-detection mesh, the cryptographic accelerators, the random-number generator. It does not certify the integrated device that the SE is soldered into, the applets running on top, or the system-level deployment. AmbiSecure references CC EAL6+ as a chip-level claim, never as a claim about the AmbiSEC Module integrated product."}},
-    {"@type":"Question","name":"What is signed boot, and where does the secure element fit?","acceptedAnswer":{"@type":"Answer","text":"Signed boot is the property that the host MCU refuses to execute firmware whose signature does not verify against a trusted public key. The secure element holds the verification key inside its tamper boundary; the boot ROM asks the SE 'does this firmware image hash match a signature signed under your key?' before transferring control to the image. Without the SE in this loop, the verification key would live in firmware-modifiable flash, where it could be replaced."}}
+    {
+     "@type": "Question",
+     "name": "Why does a connected vehicle need a discrete secure element?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An OBU and an RSU are field-deployed devices subject to physical access and indefinite attacker dwell time. A private key stored in firmware can be extracted through debug interfaces, flash dumping, or firmware exfiltration; once extracted, the fleet's identity is clonable. A discrete tamper-resistant secure element holds the key inside a boundary that does not expose its contents to firmware or operating system layers, removing the entire firmware-extraction class of attack."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does using a SIM-card form factor secure element mean the vehicle has a SIM service?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. A 4FF nano-card secure element is the physical form factor; whether it carries an eUICC profile and connects to a mobile network is an entirely separate question. The same form factor can host a FIDO2 applet, a PIV applet, a V2X EC/PC management applet, an eUICC, or several of these in parallel. Form factor and applet content are decoupled."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between removable nano-card and solderable MFF2 form factors?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The 4FF nano-card form factor is a removable SIM-shape card that can be inserted into a holder, allowing factory or field replacement of the identity. The MFF2 form factor is a solderable surface-mount package (DFN-8 or similar) that becomes a permanent part of the board assembly, suited for unattended industrial deployments where physical access to the device is rare. Same silicon class, different mechanical integration."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does a secure element differ from a TPM or an HSM?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A TPM is a device-bound trust anchor with a TCG-defined command set, typically optimised for platform attestation. An HSM is a high-throughput cryptographic appliance used in datacentres for bulk-signing operations under strict key custody. A secure element is a small, low-power tamper-resistant device optimised for embedded integration with a host MCU, with an APDU command set, a JavaCard runtime in many cases, and a focus on per-device identity rather than platform measurement or bulk crypto."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does CC EAL6+ actually certify in this context?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Common Criteria EAL6+ is a certification of the underlying secure-element silicon at the chip level: the side-channel-hardened design, the tamper-detection mesh, the cryptographic accelerators, the random-number generator. It does not certify the integrated device that the SE is soldered into, the applets running on top, or the system-level deployment. AmbiSecure references CC EAL6+ as a chip-level claim, never as a claim about the AmbiSEC Module integrated product."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is signed boot, and where does the secure element fit?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Signed boot is the property that the host MCU refuses to execute firmware whose signature does not verify against a trusted public key. The secure element holds the verification key inside its tamper boundary; the boot ROM asks the SE 'does this firmware image hash match a signature signed under your key?' before transferring control to the image. Without the SE in this loop, the verification key would live in firmware-modifiable flash, where it could be replaced."
+     }
+    }
    ]
   },
   {
    "@type": "BreadcrumbList",
    "itemListElement": [
-    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
-    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
-    {"@type":"ListItem","position":3,"name":"Secure Elements in Connected Vehicles","item":"https://ambisecure.ambimat.com/blog/secure-elements-in-connected-vehicles/"}
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Secure Elements in Connected Vehicles",
+     "item": "https://ambisecure.ambimat.com/blog/secure-elements-in-connected-vehicles/"
+    }
    ]
   },
   {
    "@type": "Article",
    "headline": "Secure Elements in Connected Vehicles: OBU, RSU, and the Hardware Root",
    "description": "An engineering view of the secure element in connected vehicles: key isolation, hardware-bound identity, anti-cloning, secure boot, OTA trust anchors. SIM form factor versus telecom service, removable nano-card versus solderable MFF2, TPM vs HSM vs secure element.",
-   "author": {"@type":"Organization","name":"AmbiSecure Engineering"},
-   "publisher": {"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
    "datePublished": "2026-05-26",
    "dateModified": "2026-05-26",
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/secure-elements-in-connected-vehicles/",
    "keywords": "secure element, connected vehicle, OBU, RSU, hardware root of trust, key isolation, secure boot, OTA trust, MFF2, nano-card, TPM vs HSM vs secure element, anti-cloning, IoT Security Co-Processor"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -287,6 +499,19 @@ host_mcu                                  secure_element
       </div>
       <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a><a href="/products/iot-security-coprocessor/" class="btn btn-outline" style="margin-left:8px;">Co-Processor spec</a></div>
     </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does a connected vehicle need a discrete secure element?</h3><p style="margin:0;">An OBU and an RSU are field-deployed devices subject to physical access and indefinite attacker dwell time. A private key stored in firmware can be extracted through debug interfaces, flash dumping, or firmware exfiltration; once extracted, the fleet's identity is clonable. A discrete tamper-resistant secure element holds the key inside a boundary that does not expose its contents to firmware or operating system layers, removing the entire firmware-extraction class of attack.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does using a SIM-card form factor secure element mean the vehicle has a SIM service?</h3><p style="margin:0;">No. A 4FF nano-card secure element is the physical form factor; whether it carries an eUICC profile and connects to a mobile network is an entirely separate question. The same form factor can host a FIDO2 applet, a PIV applet, a V2X EC/PC management applet, an eUICC, or several of these in parallel. Form factor and applet content are decoupled.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between removable nano-card and solderable MFF2 form factors?</h3><p style="margin:0;">The 4FF nano-card form factor is a removable SIM-shape card that can be inserted into a holder, allowing factory or field replacement of the identity. The MFF2 form factor is a solderable surface-mount package (DFN-8 or similar) that becomes a permanent part of the board assembly, suited for unattended industrial deployments where physical access to the device is rare. Same silicon class, different mechanical integration.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How does a secure element differ from a TPM or an HSM?</h3><p style="margin:0;">A TPM is a device-bound trust anchor with a TCG-defined command set, typically optimised for platform attestation. An HSM is a high-throughput cryptographic appliance used in datacentres for bulk-signing operations under strict key custody. A secure element is a small, low-power tamper-resistant device optimised for embedded integration with a host MCU, with an APDU command set, a JavaCard runtime in many cases, and a focus on per-device identity rather than platform measurement or bulk crypto.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What does CC EAL6+ actually certify in this context?</h3><p style="margin:0;">Common Criteria EAL6+ is a certification of the underlying secure-element silicon at the chip level: the side-channel-hardened design, the tamper-detection mesh, the cryptographic accelerators, the random-number generator. It does not certify the integrated device that the SE is soldered into, the applets running on top, or the system-level deployment. AmbiSecure references CC EAL6+ as a chip-level claim, never as a claim about the AmbiSEC Module integrated product.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is signed boot, and where does the secure element fit?</h3><p style="margin:0;">Signed boot is the property that the host MCU refuses to execute firmware whose signature does not verify against a trusted public key. The secure element holds the verification key inside its tamper boundary; the boot ROM asks the SE 'does this firmware image hash match a signature signed under your key?' before transferring control to the image. Without the SE in this loop, the verification key would live in firmware-modifiable flash, where it could be replaced.</p></div>
   </div>
 </section>
 

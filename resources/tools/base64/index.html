@@ -95,6 +95,187 @@
       "@type": "Answer",
       "text": "No. Encoding and decoding run entirely in your browser; nothing is uploaded to a server."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does base64 make my data about a third larger?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It encodes three bytes as four characters, so output is roughly 133% of input size before padding. That is the cost of making arbitrary bytes safe to carry in text."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my base64 string fail to decode?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Usually stray whitespace or newlines from copying, a URL-safe string being decoded as standard (- and _ instead of + and /), or missing = padding."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "Base64 Encoder / Decoder",
+   "description": "Encode or decode base64 (standard and URL-safe variants). Client-side, copy-friendly, sample inputs.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/base64/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
     }
    ]
   }
@@ -157,6 +338,8 @@
   <details class="faq-q"><summary><h3>Is base64 a form of encryption?</h3></summary><div class="faq-a"><p>No. Base64 is a reversible encoding with no key, so it provides zero confidentiality. Use it only for transport/representation, never to protect secrets.</p></div></details>
   <details class="faq-q"><summary><h3>What is the difference between standard and URL-safe base64?</h3></summary><div class="faq-a"><p>Standard base64 uses <code>+</code> and <code>/</code> and keeps <code>=</code> padding; URL-safe base64 (base64url) uses <code>-</code> and <code>_</code> and typically omits padding so the value is safe in URLs and JSON. FIDO2/WebAuthn and JWT use base64url.</p></div></details>
   <details class="faq-q"><summary><h3>Does this tool send my data anywhere?</h3></summary><div class="faq-a"><p>No. Encoding and decoding run entirely in your browser; nothing is uploaded to a server.</p></div></details>
+  <details class="faq-q"><summary><h3>Why does base64 make my data about a third larger?</h3></summary><div class="faq-a"><p>It encodes three bytes as four characters, so output is roughly 133% of input size before padding. That is the cost of making arbitrary bytes safe to carry in text.</p></div></details>
+  <details class="faq-q"><summary><h3>Why does my base64 string fail to decode?</h3></summary><div class="faq-a"><p>Usually stray whitespace or newlines from copying, a URL-safe string being decoded as standard (- and _ instead of + and /), or missing = padding.</p></div></details>
 </section>
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">

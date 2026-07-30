@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Smart Cards — AmbiSecure Blog</title>
-<meta name="description" content="All AmbiSecure engineering blog content under Smart Cards, modern and archive." />
+<meta name="description" content="AmbiSecure engineering writing on smart cards: ISO 7816 and ISO 14443, contact versus contactless, APDU command structure, and cards versus FIDO tokens." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/blog/categories/smart-cards/" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Smart Cards — AmbiSecure Blog" />
-<meta property="og:description" content="All AmbiSecure engineering blog content under Smart Cards, modern and archive." />
+<meta property="og:description" content="AmbiSecure engineering writing on smart cards: ISO 7816 and ISO 14443, contact versus contactless, APDU command structure, and cards versus FIDO tokens." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/blog/categories/smart-cards/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-blog-categories-smart-cards-1200x630.png" />
 <meta property="og:image:type" content="image/png" />
@@ -88,12 +88,176 @@
       "@type": "Answer",
       "text": "Both hold non-exportable keys in hardware. Smart cards suit issuance-based, PIV-style deployments and physical access; FIDO keys suit self-service web authentication — and modern smart cards can host FIDO applets too."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What do ISO/IEC 7816 and ISO/IEC 14443 each cover?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "7816 defines contact cards, including the electrical interface and the APDU command structure. 14443 defines the contactless interface at 13.56 MHz. A dual-interface card implements both."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is an APDU?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The Application Protocol Data Unit — the command and response format a reader uses to talk to a card. Every operation on a smart card is ultimately a sequence of APDUs."
+     }
     }
    ]
   },
   {
    "@type": "CollectionPage",
    "name": "Smart Cards &mdash; AmbiSecure Blog"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -135,6 +299,8 @@
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What makes a card 'smart'?</h3><p style="margin:0;">An embedded secure-element chip that stores keys and performs cryptography on-card, rather than a magnetic stripe or memory chip that merely holds static data.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between contact and contactless cards?</h3><p style="margin:0;">Contact cards (ISO 7816) communicate through the metal pads when inserted; contactless cards (ISO 14443) use RF at short range; dual-interface cards support both from one secure element.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How do smart cards compare with FIDO security keys?</h3><p style="margin:0;">Both hold non-exportable keys in hardware. Smart cards suit issuance-based, PIV-style deployments and physical access; FIDO keys suit self-service web authentication — and modern smart cards can host FIDO applets too.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What do ISO/IEC 7816 and ISO/IEC 14443 each cover?</h3><p style="margin:0;">7816 defines contact cards, including the electrical interface and the APDU command structure. 14443 defines the contactless interface at 13.56 MHz. A dual-interface card implements both.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is an APDU?</h3><p style="margin:0;">The Application Protocol Data Unit — the command and response format a reader uses to talk to a card. Every operation on a smart card is ultimately a sequence of APDUs.</p></div>
   </div>
 </section>
 <section>
@@ -145,7 +311,7 @@
 </section>
 <nav class="related-cross" aria-label="More blog topics">
   <div class="section-container" style="max-width:880px;">
-    <h2>More blog topics</h2>
+    <h2>Where to read more</h2>
     <ul><li><a href="/blog/categories/transit/">Transit</a></li><li><a href="/blog/categories/webauthn/">WebAuthn</a></li><li><a href="/blog/categories/biometrics/">Biometrics</a></li></ul>
   </div>
 </nav>

@@ -32,50 +32,254 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@graph": [
-{
-"@type": "BreadcrumbList",
-"itemListElement": [
-{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
-{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
-{ "@type": "ListItem", "position": 3, "name": "URL Encoder and Decoder", "item": "https://ambisecure.ambimat.com/resources/tools/url-encoder/" }
-]
-},
-{
-"@type": "SoftwareApplication",
-"name": "URL Encoder and Decoder",
-"applicationCategory": "DeveloperApplication",
-"operatingSystem": "Web",
-"url": "https://ambisecure.ambimat.com/resources/tools/url-encoder/",
-"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-},
-{
-"@type": "FAQPage",
-"mainEntity": [
-{
-"@type": "Question",
-"name": "What is the difference between encoding a full URL and a URL component?",
-"acceptedAnswer": { "@type": "Answer", "text": "Encoding a full URL (encodeURI) leaves the characters that hold a URL together — such as the colon, slash, question mark, ampersand, and hash — untouched so the address still works. Encoding a component (encodeURIComponent) escapes those same characters too, because a single query value or path segment must not be allowed to contain delimiters that would change the URL's structure. Use component encoding for individual query values and path pieces; use full-URL encoding only on an already-assembled address." }
-},
-{
-"@type": "Question",
-"name": "When should a space become %20 instead of +?",
-"acceptedAnswer": { "@type": "Answer", "text": "Inside the path of a URL a space must be %20, and JavaScript's encodeURIComponent always emits %20. The plus sign only means space in the application/x-www-form-urlencoded format used by HTML form submissions and many query strings. This tool offers a toggle so you can produce + for form-style query values, but %20 is the safer default for paths and for servers that do not apply form decoding." }
-},
-{
-"@type": "Question",
-"name": "Why does decoding throw a 'malformed URI' error?",
-"acceptedAnswer": { "@type": "Answer", "text": "decodeURIComponent throws a URIError when it meets a percent sign that is not followed by two valid hexadecimal digits, or a percent sequence that does not form valid UTF-8. A lone % from human-typed text, or a value that was double-encoded and then partially decoded, are the usual causes. This tool catches the error and shows exactly what failed instead of returning a wrong value." }
-},
-{
-"@type": "Question",
-"name": "Does anything I paste leave my browser?",
-"acceptedAnswer": { "@type": "Answer", "text": "No. All percent-encoding and decoding runs locally in JavaScript on this page using the browser's built-in encodeURIComponent, encodeURI, decodeURIComponent, and decodeURI functions. Nothing is uploaded, logged, or sent to a server, so it is safe to process URLs that carry tokens or session identifiers." }
-}
-]
-}
-]
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "https://ambisecure.ambimat.com/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "URL Encoder and Decoder",
+     "item": "https://ambisecure.ambimat.com/resources/tools/url-encoder/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "URL Encoder and Decoder",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/url-encoder/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the difference between encoding a full URL and a URL component?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Encoding a full URL (encodeURI) leaves the characters that hold a URL together — such as the colon, slash, question mark, ampersand, and hash — untouched so the address still works. Encoding a component (encodeURIComponent) escapes those same characters too, because a single query value or path segment must not be allowed to contain delimiters that would change the URL's structure. Use component encoding for individual query values and path pieces; use full-URL encoding only on an already-assembled address."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "When should a space become %20 instead of +?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Inside the path of a URL a space must be %20, and JavaScript's encodeURIComponent always emits %20. The plus sign only means space in the application/x-www-form-urlencoded format used by HTML form submissions and many query strings. This tool offers a toggle so you can produce + for form-style query values, but %20 is the safer default for paths and for servers that do not apply form decoding."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does decoding throw a 'malformed URI' error?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "decodeURIComponent throws a URIError when it meets a percent sign that is not followed by two valid hexadecimal digits, or a percent sequence that does not form valid UTF-8. A lone % from human-typed text, or a value that was double-encoded and then partially decoded, are the usual causes. This tool catches the error and shows exactly what failed instead of returning a wrong value."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. All percent-encoding and decoding runs locally in JavaScript on this page using the browser's built-in encodeURIComponent, encodeURI, decodeURIComponent, and decodeURI functions. Nothing is uploaded, logged, or sent to a server, so it is safe to process URLs that carry tokens or session identifiers."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which characters never need percent-encoding?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The unreserved set: A-Z, a-z, 0-9, hyphen, period, underscore and tilde. Everything else is either reserved with a structural meaning or must be encoded to appear literally."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "URL Encoder and Decoder",
+   "description": "Percent-encode and decode URLs and URL components in your browser. Toggle space as %20 or +, encode full URLs vs components, handle malformed input. Client-side.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/url-encoder/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
 }
 </script>
 </head>
@@ -165,6 +369,18 @@
     <ul><li><a href="/resources/tools/utf8/">UTF-8 Inspector</a></li><li><a href="/resources/tools/sequence-diagram-generator/">Sequence Diagram Generator</a></li><li><a href="/resources/tools/fido-mds-explorer/">FIDO Metadata Explorer</a></li></ul>
   </div>
 </nav>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between encoding a full URL and a URL component?</h3><p style="margin:0;">Encoding a full URL (encodeURI) leaves the characters that hold a URL together — such as the colon, slash, question mark, ampersand, and hash — untouched so the address still works. Encoding a component (encodeURIComponent) escapes those same characters too, because a single query value or path segment must not be allowed to contain delimiters that would change the URL's structure. Use component encoding for individual query values and path pieces; use full-URL encoding only on an already-assembled address.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">When should a space become %20 instead of +?</h3><p style="margin:0;">Inside the path of a URL a space must be %20, and JavaScript's encodeURIComponent always emits %20. The plus sign only means space in the application/x-www-form-urlencoded format used by HTML form submissions and many query strings. This tool offers a toggle so you can produce + for form-style query values, but %20 is the safer default for paths and for servers that do not apply form decoding.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does decoding throw a 'malformed URI' error?</h3><p style="margin:0;">decodeURIComponent throws a URIError when it meets a percent sign that is not followed by two valid hexadecimal digits, or a percent sequence that does not form valid UTF-8. A lone % from human-typed text, or a value that was double-encoded and then partially decoded, are the usual causes. This tool catches the error and shows exactly what failed instead of returning a wrong value.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does anything I paste leave my browser?</h3><p style="margin:0;">No. All percent-encoding and decoding runs locally in JavaScript on this page using the browser's built-in encodeURIComponent, encodeURI, decodeURIComponent, and decodeURI functions. Nothing is uploaded, logged, or sent to a server, so it is safe to process URLs that carry tokens or session identifiers.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Which characters never need percent-encoding?</h3><p style="margin:0;">The unreserved set: A-Z, a-z, 0-9, hyphen, period, underscore and tilde. Everything else is either reserved with a structural meaning or must be encoded to appear literally.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

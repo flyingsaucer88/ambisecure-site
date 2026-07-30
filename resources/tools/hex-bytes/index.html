@@ -52,14 +52,14 @@
     {
      "@type": "ListItem",
      "position": 3,
-     "name": "HEX \u2194 Byte-Array Converter",
+     "name": "HEX ↔ Byte-Array Converter",
      "item": "https://ambisecure.ambimat.com/resources/tools/hex-bytes/"
     }
    ]
   },
   {
    "@type": "SoftwareApplication",
-   "name": "HEX \u2194 Byte-Array Converter",
+   "name": "HEX ↔ Byte-Array Converter",
    "applicationCategory": "DeveloperApplication",
    "operatingSystem": "Web",
    "url": "https://ambisecure.ambimat.com/resources/tools/hex-bytes/",
@@ -77,7 +77,7 @@
      "name": "Why does an odd number of hex digits fail?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Each byte is exactly two hex digits, so a valid byte string is always even-length. An odd count means a digit is missing \u2014 recheck the source."
+      "text": "Each byte is exactly two hex digits, so a valid byte string is always even-length. An odd count means a digit is missing — recheck the source."
      }
     },
     {
@@ -95,6 +95,187 @@
       "@type": "Answer",
       "text": "No. Formatting and counting happen locally."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does my byte array show negative numbers in Java?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Java's byte type is signed, so any value above 0x7F appears negative. The underlying byte is unchanged; only the display differs, which is why 0xFF reads as -1."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does byte order matter when converting hex to an array?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Not for the conversion itself, which preserves the sequence exactly. It matters when those bytes are interpreted as a number, where little-endian and big-endian give different results from the same array."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "HEX ↔ Byte-Array",
+   "description": "Convert hex strings into C / Java / Python / JS byte arrays — and back. Multiple programmer formats. Client-side only.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/hex-bytes/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
     }
    ]
   }
@@ -147,7 +328,7 @@
 <div class="tool-privacy">All conversion runs locally.</div>
 
 <section class="tool-reference">
-  <h2>About this tool</h2>
+  <h2>What does this tool do?</h2>
   <p>Logs from PC/SC, Wireshark, gpshell, OpenSC, etc. all use slightly different hex formats. This tool normalises and re-emits in the format your code expects.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>ASCII pairing</h3><p>Need text-to-hex?</p><p><a href="/resources/tools/ascii-hex/">ASCII ↔ HEX →</a></p></div><div class="ref-card"><h3>Companion tool</h3><p>Decode an APDU you just normalised.</p><p><a href="/resources/tools/apdu-parser/">APDU parser →</a></p></div><div class="ref-card"><h3>Endian flip</h3><p>Need to swap byte order?</p><p><a href="/resources/tools/endian/">Endian converter →</a></p></div>
@@ -164,6 +345,8 @@
   <details class="faq-q"><summary><h3>Why does an odd number of hex digits fail?</h3></summary><div class="faq-a"><p>Each byte is exactly two hex digits, so a valid byte string is always even-length. An odd count means a digit is missing — recheck the source.</p></div></details>
   <details class="faq-q"><summary><h3>What byte count should I expect for a key or hash?</h3></summary><div class="faq-a"><p>A SHA-256 value is 32 bytes (64 hex chars); an AES-128 key is 16 bytes. The byte counter helps confirm you pasted the whole value.</p></div></details>
   <details class="faq-q"><summary><h3>Does anything leave my browser?</h3></summary><div class="faq-a"><p>No. Formatting and counting happen locally.</p></div></details>
+  <details class="faq-q"><summary><h3>Why does my byte array show negative numbers in Java?</h3></summary><div class="faq-a"><p>Java's byte type is signed, so any value above 0x7F appears negative. The underlying byte is unchanged; only the display differs, which is why 0xFF reads as -1.</p></div></details>
+  <details class="faq-q"><summary><h3>Does byte order matter when converting hex to an array?</h3></summary><div class="faq-a"><p>Not for the conversion itself, which preserves the sequence exactly. It matters when those bytes are interpreted as a number, where little-endian and big-endian give different results from the same array.</p></div></details>
 </section>
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">

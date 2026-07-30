@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>DESFire — AmbiSecure Blog</title>
-<meta name="description" content="All AmbiSecure engineering blog content under DESFire, modern and archive." />
+<meta name="description" content="AmbiSecure engineering writing on MIFARE DESFire: EV1 to EV3 differences, key diversification, SAM-backed authentication, and transit ticketing deployment." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/blog/categories/desfire/" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="DESFire — AmbiSecure Blog" />
-<meta property="og:description" content="All AmbiSecure engineering blog content under DESFire, modern and archive." />
+<meta property="og:description" content="AmbiSecure engineering writing on MIFARE DESFire: EV1 to EV3 differences, key diversification, SAM-backed authentication, and transit ticketing deployment." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/blog/categories/desfire/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-blog-categories-desfire-1200x630.png" />
 <meta property="og:image:type" content="image/png" />
@@ -88,12 +88,176 @@
       "@type": "Answer",
       "text": "Yes — it is one of the most common transit card technologies, offering fast contactless transactions, per-application keys, and secure messaging that resists cloning and replay."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a SAM and why does DESFire need one?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A Secure Access Module holds the card keys inside tamper-resistant hardware at the reader, so a validator can authenticate cards offline without exposing master keys in terminal software or memory."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can DESFire and EMV coexist on the same validator?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, and in most large networks they now do. Open-loop EMV handles bank cards while DESFire handles the closed-loop product, sharing one gate without sharing a trust model."
+     }
     }
    ]
   },
   {
    "@type": "CollectionPage",
    "name": "DESFire &mdash; AmbiSecure Blog"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -129,6 +293,8 @@
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What changed between DESFire EV1, EV2, and EV3?</h3><p style="margin:0;">EV1 introduced AES-128 and the file-level key model; EV2 added Secure Messaging mode and Transaction MAC for tamper-evident sessions; EV3 added Secure Dynamic Messaging (SDM) for NDEF and tightened side-channel posture. Each is a real protocol delta.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is key diversification and why is it needed?</h3><p style="margin:0;">Diversification derives a unique per-card key from a master key and the card's UID, so recovering one card's key does not compromise the whole fleet. It is essential for any large ticketing or access deployment.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is DESFire suitable for transit ticketing?</h3><p style="margin:0;">Yes — it is one of the most common transit card technologies, offering fast contactless transactions, per-application keys, and secure messaging that resists cloning and replay.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is a SAM and why does DESFire need one?</h3><p style="margin:0;">A Secure Access Module holds the card keys inside tamper-resistant hardware at the reader, so a validator can authenticate cards offline without exposing master keys in terminal software or memory.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can DESFire and EMV coexist on the same validator?</h3><p style="margin:0;">Yes, and in most large networks they now do. Open-loop EMV handles bank cards while DESFire handles the closed-loop product, sharing one gate without sharing a trust model.</p></div>
   </div>
 </section>
 <section>
@@ -139,7 +305,7 @@
 </section>
 <nav class="related-cross" aria-label="More blog topics">
   <div class="section-container" style="max-width:880px;">
-    <h2>More blog topics</h2>
+    <h2>Where to read more</h2>
     <ul><li><a href="/blog/categories/epassport/">ePassport</a></li><li><a href="/blog/categories/fido/">FIDO</a></li><li><a href="/blog/categories/identity/">Identity</a></li></ul>
   </div>
 </nav>

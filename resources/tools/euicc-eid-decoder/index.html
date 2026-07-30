@@ -32,50 +32,254 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@graph": [
-{
-"@type": "BreadcrumbList",
-"itemListElement": [
-{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
-{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
-{ "@type": "ListItem", "position": 3, "name": "eUICC EID Decoder", "item": "https://ambisecure.ambimat.com/resources/tools/euicc-eid-decoder/" }
-]
-},
-{
-"@type": "SoftwareApplication",
-"name": "eUICC EID Decoder",
-"applicationCategory": "DeveloperApplication",
-"operatingSystem": "Web",
-"url": "https://ambisecure.ambimat.com/resources/tools/euicc-eid-decoder/",
-"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-},
-{
-"@type": "FAQPage",
-"mainEntity": [
-{
-"@type": "Question",
-"name": "What is an eUICC EID?",
-"acceptedAnswer": { "@type": "Answer", "text": "The EID (eUICC Identifier) is a globally unique 32-decimal-digit number burned into an embedded SIM (eSIM) during manufacture. It identifies the eUICC chip itself — not a subscription — and is used by GSMA SGP.22 / SGP.02 remote SIM provisioning systems to address the device when downloading a carrier profile. Unlike an ICCID, which belongs to a specific profile, the EID stays constant for the life of the chip." }
-},
-{
-"@type": "Question",
-"name": "How is the EID check digit calculated?",
-"acceptedAnswer": { "@type": "Answer", "text": "The full 32-digit EID is constructed so that it passes a Luhn (mod-10) check. The first 30 digits carry the structure (industry identifier, version, manufacturer, serial) and the last two digits are check digits chosen so the whole value is Luhn-valid. This tool recomputes the expected check over the first 30 digits and flags a mismatch, the same way a provisioning server would reject a malformed EID." }
-},
-{
-"@type": "Question",
-"name": "Why are some EID fields shown as issuer-specific?",
-"acceptedAnswer": { "@type": "Answer", "text": "GSMA and ITU-T E.118 fix the leading Major Industry Identifier (89) and the overall 32-digit, Luhn-checked layout, but the internal allocation of the manufacturer-specific and serial-number portions is assigned by each eUICC manufacturer (EUM). Those sub-fields are not publicly specified, so this decoder labels them as issuer-specific rather than inventing meanings for bytes that are proprietary." }
-},
-{
-"@type": "Question",
-"name": "Does this tool send my EID anywhere?",
-"acceptedAnswer": { "@type": "Answer", "text": "No. All parsing, field splitting, and Luhn validation run locally in JavaScript on this page. Nothing is uploaded, logged, or transmitted. Even so, the samples provided here are dummy values — avoid pasting a real subscriber device identifier into any web tool you do not control." }
-}
-]
-}
-]
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "https://ambisecure.ambimat.com/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "eUICC EID Decoder",
+     "item": "https://ambisecure.ambimat.com/resources/tools/euicc-eid-decoder/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "eUICC EID Decoder",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/euicc-eid-decoder/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an eUICC EID?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The EID (eUICC Identifier) is a globally unique 32-decimal-digit number burned into an embedded SIM (eSIM) during manufacture. It identifies the eUICC chip itself — not a subscription — and is used by GSMA SGP.22 / SGP.02 remote SIM provisioning systems to address the device when downloading a carrier profile. Unlike an ICCID, which belongs to a specific profile, the EID stays constant for the life of the chip."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is the EID check digit calculated?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The full 32-digit EID is constructed so that it passes a Luhn (mod-10) check. The first 30 digits carry the structure (industry identifier, version, manufacturer, serial) and the last two digits are check digits chosen so the whole value is Luhn-valid. This tool recomputes the expected check over the first 30 digits and flags a mismatch, the same way a provisioning server would reject a malformed EID."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why are some EID fields shown as issuer-specific?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "GSMA and ITU-T E.118 fix the leading Major Industry Identifier (89) and the overall 32-digit, Luhn-checked layout, but the internal allocation of the manufacturer-specific and serial-number portions is assigned by each eUICC manufacturer (EUM). Those sub-fields are not publicly specified, so this decoder labels them as issuer-specific rather than inventing meanings for bytes that are proprietary."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does this tool send my EID anywhere?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. All parsing, field splitting, and Luhn validation run locally in JavaScript on this page. Nothing is uploaded, logged, or transmitted. Even so, the samples provided here are dummy values — avoid pasting a real subscriber device identifier into any web tool you do not control."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How long is an EID and what happens if a digit is wrong?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It is 32 decimal digits, and the trailing Luhn check digits will fail if any digit is mistyped. That check catches most transcription errors before you go looking for a provisioning fault."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "eUICC EID Decoder",
+   "description": "Decode a 32-digit eUICC EID into its issuer/version fields per GSMA SGP.02 / ITU-T E.118 and validate the trailing Luhn check digits — client-side, dummy examples only.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/euicc-eid-decoder/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
 }
 </script>
 </head>
@@ -158,6 +362,18 @@
     <ul><li><a href="/resources/tools/iccid-decoder/">ICCID Decoder</a></li><li><a href="/resources/tools/imsi-decoder/">IMSI Decoder</a></li><li><a href="/resources/tools/ber-length/">BER Length Visualizer</a></li></ul>
   </div>
 </nav>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is an eUICC EID?</h3><p style="margin:0;">The EID (eUICC Identifier) is a globally unique 32-decimal-digit number burned into an embedded SIM (eSIM) during manufacture. It identifies the eUICC chip itself — not a subscription — and is used by GSMA SGP.22 / SGP.02 remote SIM provisioning systems to address the device when downloading a carrier profile. Unlike an ICCID, which belongs to a specific profile, the EID stays constant for the life of the chip.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is the EID check digit calculated?</h3><p style="margin:0;">The full 32-digit EID is constructed so that it passes a Luhn (mod-10) check. The first 30 digits carry the structure (industry identifier, version, manufacturer, serial) and the last two digits are check digits chosen so the whole value is Luhn-valid. This tool recomputes the expected check over the first 30 digits and flags a mismatch, the same way a provisioning server would reject a malformed EID.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why are some EID fields shown as issuer-specific?</h3><p style="margin:0;">GSMA and ITU-T E.118 fix the leading Major Industry Identifier (89) and the overall 32-digit, Luhn-checked layout, but the internal allocation of the manufacturer-specific and serial-number portions is assigned by each eUICC manufacturer (EUM). Those sub-fields are not publicly specified, so this decoder labels them as issuer-specific rather than inventing meanings for bytes that are proprietary.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does this tool send my EID anywhere?</h3><p style="margin:0;">No. All parsing, field splitting, and Luhn validation run locally in JavaScript on this page. Nothing is uploaded, logged, or transmitted. Even so, the samples provided here are dummy values — avoid pasting a real subscriber device identifier into any web tool you do not control.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How long is an EID and what happens if a digit is wrong?</h3><p style="margin:0;">It is 32 decimal digits, and the trailing Luhn check digits will fail if any digit is mistyped. That check catches most transcription errors before you go looking for a provisioning fault.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

@@ -29,6 +29,8 @@ run "audit-search"      python3 tools/audit-search.py
 run "audit-nav"         python3 tools/audit-nav.py
 run "audit-counts"      python3 tools/audit-counts.py
 run "audit-og-images"   python3 tools/audit-og-images.py
+run "audit-dup-intent"  python3 tools/audit-duplicate-intent.py
+run "gen-tag-drift"     python3 tools/gen-tag-pages.py --check
 
 echo
 if [ "$fail" -eq 0 ]; then

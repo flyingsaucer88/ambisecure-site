@@ -88,12 +88,176 @@
       "@type": "Answer",
       "text": "Yes — but the factors matter. Phishing-resistant hardware factors (FIDO2 security keys, smart cards) deliver far more protection than SMS or app OTPs, which remain phishable."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What does defence in depth mean in practice?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Layering controls so no single failure is decisive. In hardware-rooted systems that means a tamper-resistant key store beneath signed firmware beneath authenticated communication, each assuming the layer above may fail."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where should an organisation start if it is early in this work?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "With the credential. Most incidents in this category begin with a stolen or replayable secret, so replacing shared secrets with hardware-bound credentials closes the widest gap for the least architectural change."
+     }
     }
    ]
   },
   {
    "@type": "CollectionPage",
    "name": "Cybersecurity &mdash; AmbiSecure Blog"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -130,6 +294,8 @@
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is a hardware root of trust?</h3><p style="margin:0;">A hardware root of trust is a tamper-resistant component (a secure element) that stores keys and performs cryptographic operations without exposing secrets to software, providing an anchor for boot integrity, attestation, and authentication.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does software-only device trust fail?</h3><p style="margin:0;">Keys held in software can be read by malware, copied between devices, and are hard to attest reliably. Without hardware isolation there is no strong binding between a credential and a specific physical device.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is multi-factor authentication still worthwhile?</h3><p style="margin:0;">Yes — but the factors matter. Phishing-resistant hardware factors (FIDO2 security keys, smart cards) deliver far more protection than SMS or app OTPs, which remain phishable.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What does defence in depth mean in practice?</h3><p style="margin:0;">Layering controls so no single failure is decisive. In hardware-rooted systems that means a tamper-resistant key store beneath signed firmware beneath authenticated communication, each assuming the layer above may fail.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Where should an organisation start if it is early in this work?</h3><p style="margin:0;">With the credential. Most incidents in this category begin with a stolen or replayable secret, so replacing shared secrets with hardware-bound credentials closes the widest gap for the least architectural change.</p></div>
   </div>
 </section>
 <section>
@@ -140,7 +306,7 @@
 </section>
 <nav class="related-cross" aria-label="More blog topics">
   <div class="section-container" style="max-width:880px;">
-    <h2>More blog topics</h2>
+    <h2>Where to read more</h2>
     <ul><li><a href="/blog/categories/desfire/">DESFire</a></li><li><a href="/blog/categories/epassport/">ePassport</a></li><li><a href="/blog/categories/fido/">FIDO</a></li></ul>
   </div>
 </nav>

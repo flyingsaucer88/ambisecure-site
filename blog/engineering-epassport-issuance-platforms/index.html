@@ -59,6 +59,22 @@
       "@type": "Answer",
       "text": "No. Platform engineering delivers the data-centre capability that supports an ePassport programme. The political and regulatory work of becoming an ICAO-recognised issuing authority is the operating authority's own programme. We build the system; the authority operates it under its own governance."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the Public Key Directory for?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It distributes the signer certificates states need to verify each other's documents. Without it, a border system has no trustworthy way to obtain the keys that validate a foreign passport."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is personalisation the hardest part of an issuance programme?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because it is where cryptographic key custody meets a physical production line. Every document is unique, every key injection must be recorded, and failures produce material that cannot simply be reprinted."
+     }
     }
    ]
   },
@@ -100,6 +116,154 @@
    },
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/engineering-epassport-issuance-platforms/",
    "keywords": "ePassport, ICAO 9303, CSCA, DSC, PKD, LDS, SOd, EAC, BAC, PACE, biometric passport"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -222,6 +386,18 @@
     </ul>
   </article>
 </section>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What does ICAO 9303 actually mandate?</h3><p style="margin:0;">ICAO 9303 specifies the data structure (LDS), the cryptographic envelope (SOd signed by a DSC issued under a CSCA), the access mechanisms (BAC/PACE), and optional EAC features for biometric protection. It is the interoperability standard that lets any ICAO-recognised verifier read any compliant passport.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How long do CSCA and DSC certificates live?</h3><p style="margin:0;">CSCA: typically 10 years, with a multi-year overlap with the next-generation CSCA. DSC: typically 3 months, intentionally short so a compromised DSC's blast radius is bounded. Passports signed by a retired DSC remain valid for their full lifetime because the retired DSC certificate stays in PKD.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can a platform engagement substitute for an ICAO membership programme?</h3><p style="margin:0;">No. Platform engineering delivers the data-centre capability that supports an ePassport programme. The political and regulatory work of becoming an ICAO-recognised issuing authority is the operating authority's own programme. We build the system; the authority operates it under its own governance.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the Public Key Directory for?</h3><p style="margin:0;">It distributes the signer certificates states need to verify each other's documents. Without it, a border system has no trustworthy way to obtain the keys that validate a foreign passport.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why is personalisation the hardest part of an issuance programme?</h3><p style="margin:0;">Because it is where cryptographic key custody meets a physical production line. Every document is unique, every key injection must be recorded, and failures produce material that cannot simply be reprinted.</p></div>
+  </div>
+</section>
+
 </main>
 <footer class="site-footer"><div class="footer-inner">
   <div class="footer-grid">

@@ -31,7 +31,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#E3222A" />
-<meta name="audit-yoast-word-max" content="3300" />
+<meta name="audit-yoast-word-max" content="4100" />
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -39,32 +39,244 @@
   {
    "@type": "FAQPage",
    "mainEntity": [
-    {"@type":"Question","name":"What is V2X PKI in one sentence?","acceptedAnswer":{"@type":"Answer","text":"V2X PKI is the public-key infrastructure that lets connected vehicles and roadside units sign and verify safety messages over open radio links, with a deliberate split between the authority that knows the device identity (Enrolment Authority) and the authority that issues the per-message credentials (Authorisation Authority) so that no single party can link a signed message back to a specific vehicle."}},
-    {"@type":"Question","name":"What is the difference between an Enrolment Credential (EC) and a Pseudonymous Certificate (PC)?","acceptedAnswer":{"@type":"Answer","text":"An Enrolment Credential is a long-lived, hardware-bound certificate issued once per device by the Enrolment Authority after hardware attestation. It is used only to prove entitlement when requesting Pseudonymous Certificates. A Pseudonymous Certificate is short-lived (minutes), issued in batches by the Authorisation Authority, carries no device identifier, and is the credential the OBU actually uses to sign V2X messages."}},
-    {"@type":"Question","name":"What is Butterfly Key Expansion and why does V2X need it?","acceptedAnswer":{"@type":"Answer","text":"Butterfly Key Expansion is a key-derivation technique that lets the Authorisation Authority issue a batch of unlinkable Pseudonymous Certificates from a single device-supplied seed, without learning the per-PC private keys. It is the mechanism that makes the EA/AA privacy split actually privacy-preserving in practice rather than only in theory."}},
-    {"@type":"Question","name":"How is revocation handled for V2X devices that have no network connectivity?","acceptedAnswer":{"@type":"Answer","text":"Revocation material (CRLs and CTLs) is distributed through the infrastructure side. Roadside Units cache the current revocation set and rebroadcast it over the V2X channel; OBUs passing an RSU refresh their CRL without needing a backhaul. Linkage-based PC revocation lets the AA revoke all of a compromised device's PCs by publishing a single linkage seed instead of listing every PC individually."}},
-    {"@type":"Question","name":"What is HashedId8 and how is it used?","acceptedAnswer":{"@type":"Answer","text":"HashedId8 is the last 8 bytes of the SHA-256 hash over a certificate's COER encoding. It is the compact identifier IEEE 1609.2 uses to reference an issuer (and thereby the next certificate in a chain) without including the issuer's full bytes inline. It is the V2X analogue of an X.509 Authority Key Identifier."}},
-    {"@type":"Question","name":"Does AmbiSecure operate a V2X Root CA?","acceptedAnswer":{"@type":"Answer","text":"No. AmbiSecure does not operate a V2X Root CA, an Enrolment Authority, or an Authorisation Authority. Root operation is the regulator-designated authority's job. AmbiSecure supplies the secure-element silicon, applet platform, and provisioning infrastructure that an OBU or RSU integrator uses to participate in an operator-run V2X PKI."}}
+    {
+     "@type": "Question",
+     "name": "What is V2X PKI in one sentence?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "V2X PKI is the public-key infrastructure that lets connected vehicles and roadside units sign and verify safety messages over open radio links, with a deliberate split between the authority that knows the device identity (Enrolment Authority) and the authority that issues the per-message credentials (Authorisation Authority) so that no single party can link a signed message back to a specific vehicle."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between an Enrolment Credential (EC) and a Pseudonymous Certificate (PC)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An Enrolment Credential is a long-lived, hardware-bound certificate issued once per device by the Enrolment Authority after hardware attestation. It is used only to prove entitlement when requesting Pseudonymous Certificates. A Pseudonymous Certificate is short-lived (minutes), issued in batches by the Authorisation Authority, carries no device identifier, and is the credential the OBU actually uses to sign V2X messages."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is Butterfly Key Expansion and why does V2X need it?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Butterfly Key Expansion is a key-derivation technique that lets the Authorisation Authority issue a batch of unlinkable Pseudonymous Certificates from a single device-supplied seed, without learning the per-PC private keys. It is the mechanism that makes the EA/AA privacy split actually privacy-preserving in practice rather than only in theory."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is revocation handled for V2X devices that have no network connectivity?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Revocation material (CRLs and CTLs) is distributed through the infrastructure side. Roadside Units cache the current revocation set and rebroadcast it over the V2X channel; OBUs passing an RSU refresh their CRL without needing a backhaul. Linkage-based PC revocation lets the AA revoke all of a compromised device's PCs by publishing a single linkage seed instead of listing every PC individually."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is HashedId8 and how is it used?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "HashedId8 is the last 8 bytes of the SHA-256 hash over a certificate's COER encoding. It is the compact identifier IEEE 1609.2 uses to reference an issuer (and thereby the next certificate in a chain) without including the issuer's full bytes inline. It is the V2X analogue of an X.509 Authority Key Identifier."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does AmbiSecure operate a V2X Root CA?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. AmbiSecure does not operate a V2X Root CA, an Enrolment Authority, or an Authorisation Authority. Root operation is the regulator-designated authority's job. AmbiSecure supplies the secure-element silicon, applet platform, and provisioning infrastructure that an OBU or RSU integrator uses to participate in an operator-run V2X PKI."
+     }
+    }
    ]
   },
   {
    "@type": "BreadcrumbList",
    "itemListElement": [
-    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
-    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
-    {"@type":"ListItem","position":3,"name":"How V2X PKI Works","item":"https://ambisecure.ambimat.com/blog/how-v2x-pki-works/"}
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "How V2X PKI Works",
+     "item": "https://ambisecure.ambimat.com/blog/how-v2x-pki-works/"
+    }
    ]
   },
   {
    "@type": "Article",
    "headline": "How V2X PKI Works: EA, AA, Pseudonymous Certificates, Lifecycle",
    "description": "An engineering walk-through of the V2X PKI: Root CA, Enrolment Authority, Authorisation Authority, Enrolment Credentials, Pseudonymous Certificates, HashedId8 linkage, Butterfly Key Expansion, CRL and CTL distribution. IEEE 1609.2 + ETSI TS 102 941 in practice.",
-   "author": {"@type":"Organization","name":"AmbiSecure Engineering"},
-   "publisher": {"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
    "datePublished": "2026-05-26",
    "dateModified": "2026-05-26",
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/how-v2x-pki-works/",
    "keywords": "V2X PKI, IEEE 1609.2, ETSI TS 102 941, Enrolment Authority, Authorisation Authority, Pseudonymous Certificate, Enrolment Credential, Butterfly Key Expansion, HashedId8, V2X revocation, ITS PKI"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -355,6 +567,19 @@ ITS-S                                                          AA
       </div>
       <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a><a href="/engagement-models/" class="btn btn-outline" style="margin-left:8px;">Engagement models</a></div>
     </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is V2X PKI in one sentence?</h3><p style="margin:0;">V2X PKI is the public-key infrastructure that lets connected vehicles and roadside units sign and verify safety messages over open radio links, with a deliberate split between the authority that knows the device identity (Enrolment Authority) and the authority that issues the per-message credentials (Authorisation Authority) so that no single party can link a signed message back to a specific vehicle.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between an Enrolment Credential (EC) and a Pseudonymous Certificate (PC)?</h3><p style="margin:0;">An Enrolment Credential is a long-lived, hardware-bound certificate issued once per device by the Enrolment Authority after hardware attestation. It is used only to prove entitlement when requesting Pseudonymous Certificates. A Pseudonymous Certificate is short-lived (minutes), issued in batches by the Authorisation Authority, carries no device identifier, and is the credential the OBU actually uses to sign V2X messages.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is Butterfly Key Expansion and why does V2X need it?</h3><p style="margin:0;">Butterfly Key Expansion is a key-derivation technique that lets the Authorisation Authority issue a batch of unlinkable Pseudonymous Certificates from a single device-supplied seed, without learning the per-PC private keys. It is the mechanism that makes the EA/AA privacy split actually privacy-preserving in practice rather than only in theory.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is revocation handled for V2X devices that have no network connectivity?</h3><p style="margin:0;">Revocation material (CRLs and CTLs) is distributed through the infrastructure side. Roadside Units cache the current revocation set and rebroadcast it over the V2X channel; OBUs passing an RSU refresh their CRL without needing a backhaul. Linkage-based PC revocation lets the AA revoke all of a compromised device's PCs by publishing a single linkage seed instead of listing every PC individually.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is HashedId8 and how is it used?</h3><p style="margin:0;">HashedId8 is the last 8 bytes of the SHA-256 hash over a certificate's COER encoding. It is the compact identifier IEEE 1609.2 uses to reference an issuer (and thereby the next certificate in a chain) without including the issuer's full bytes inline. It is the V2X analogue of an X.509 Authority Key Identifier.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does AmbiSecure operate a V2X Root CA?</h3><p style="margin:0;">No. AmbiSecure does not operate a V2X Root CA, an Enrolment Authority, or an Authorisation Authority. Root operation is the regulator-designated authority's job. AmbiSecure supplies the secure-element silicon, applet platform, and provisioning infrastructure that an OBU or RSU integrator uses to participate in an operator-run V2X PKI.</p></div>
   </div>
 </section>
 

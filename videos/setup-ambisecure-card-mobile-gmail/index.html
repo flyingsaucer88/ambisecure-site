@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Set up card on phone — Gmail | AmbiSecure Videos</title>
+<title>Tap-to-register by NFC — Google 2-Step Verification | AmbiSecure Videos</title>
 <meta name="description" content="A 1m 15s walkthrough of NFC-tap registration of the AmbiSecure card with a Google account from a mobile device." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/videos/setup-ambisecure-card-mobile-gmail/" />
 <meta property="og:type" content="video.other" />
-<meta property="og:title" content="Set up the AmbiSecure card on your phone — Gmail" />
+<meta property="og:title" content="NFC tap enrolment of the AmbiSecure card in Google 2-Step Verification" />
 <meta property="og:description" content="A 1m 15s walkthrough of NFC-tap registration of the AmbiSecure card with a Google account from a mobile device." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/videos/setup-ambisecure-card-mobile-gmail/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-videos-setup-mobile-gmail-1200x630.png" />
@@ -51,13 +51,13 @@
     {
      "@type": "ListItem",
      "position": 3,
-     "name": "Set up the AmbiSecure card on your phone \u2014 Gmail"
+     "name": "NFC tap enrolment of the AmbiSecure card in Google 2-Step Verification"
     }
    ]
   },
   {
    "@type": "VideoObject",
-   "name": "Set up the AmbiSecure card on your phone \u2014 Gmail",
+   "name": "NFC tap enrolment of the AmbiSecure card in Google 2-Step Verification",
    "description": "A 1m 15s walkthrough of NFC-tap registration of the AmbiSecure card with a Google account from a mobile device.",
    "thumbnailUrl": "https://ambisecure.ambimat.com/assets/img/videos/gSd5Nu2V0z8.webp",
    "duration": "PT1M15S",
@@ -72,6 +72,199 @@
    },
    "embedUrl": "https://www.youtube-nocookie.com/embed/gSd5Nu2V0z8",
    "contentUrl": "https://www.youtube.com/watch?v=gSd5Nu2V0z8"
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Do I need to register the AmbiSecure card separately for phone and desktop?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. NFC and USB are just transports. A credential registered by tapping the card on a phone authenticates over a USB reader on a desktop as well, and the other way round."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is my phone not detecting the AmbiSecure card over NFC?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Usually the antenna position or the case. NFC coils sit in different places on different handsets, and thick or metal cases block the field, so remove the case and move the card slowly across the back of the phone."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does the AmbiSecure card work with Google on iPhone?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. iOS supports NFC security keys through Safari, but the tap prompt comes from the system and the read window is short, so hold the card still against the top of the phone until the sheet closes."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is 2-Step Verification still required when registering from a phone?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. The prerequisite belongs to the Google account, not the device, so 2-Step Verification must be on before the security-key option appears in either flow."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does the AmbiSecure card need a battery, charging, or Bluetooth pairing?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. The card is passive: it draws power from the phone's NFC field during the tap and from the reader over USB on a desktop. There is nothing to charge and no pairing step."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -81,14 +274,14 @@
 <a href="#main" class="skip-link">Skip to main content</a>
 <div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1982</span></div></div>
 <header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
-<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/videos/">Videos</a><span class="sep">/</span><span class="current">Set up the AmbiSecure card on your phone — Gmail</span></nav>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/videos/">Videos</a><span class="sep">/</span><span class="current">NFC tap enrolment of the AmbiSecure card in Google 2-Step Verification</span></nav>
 
 <main id="main">
 
 <section style="padding: 60px 80px 24px;">
   <div class="prose">
     <span class="eyebrow">Video</span>
-    <h1>Phone-based AmbiSecure card setup on Gmail (NFC)</h1>
+    <h1>NFC tap enrolment of the AmbiSecure card in Google 2-Step Verification</h1>
     <p class="dek">A 1m 15s walkthrough of NFC-tap registration of the AmbiSecure card with a Google account from a mobile device.</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);">
       <span>DURATION &middot; 1:15</span>
@@ -100,7 +293,7 @@
 
 <section>
   <div class="section-container" style="max-width:960px;">
-    <div class="yt-facade" data-yt-id="gSd5Nu2V0z8" data-title="Set up the AmbiSecure card on your phone — Gmail" style="max-width:900px;margin:0 auto;border-radius:8px;">  <img class="yt-facade-poster" src="/assets/img/videos/gSd5Nu2V0z8.webp" alt="Set up the AmbiSecure card on your phone — Gmail" loading="eager" width="1280" height="720" />  <button class="yt-facade-play" aria-label="Play Set up the AmbiSecure card on your phone — Gmail">&#9658;</button></div><p style="text-align:center;margin-top:12px;font-size:13px;color:var(--brand-grey);">Hosted on YouTube. <a href="https://www.youtube.com/watch?v=gSd5Nu2V0z8" rel="noopener noreferrer">Open in YouTube &rarr;</a></p>
+    <div class="yt-facade" data-yt-id="gSd5Nu2V0z8" data-title="NFC tap enrolment of the AmbiSecure card in Google 2-Step Verification" style="max-width:900px;margin:0 auto;border-radius:8px;">  <img class="yt-facade-poster" src="/assets/img/videos/gSd5Nu2V0z8.webp" alt="NFC tap enrolment of the AmbiSecure card in Google 2-Step Verification" loading="eager" width="1280" height="720" />  <button class="yt-facade-play" aria-label="Play NFC tap enrolment of the AmbiSecure card in Google 2-Step Verification">&#9658;</button></div><p style="text-align:center;margin-top:12px;font-size:13px;color:var(--brand-grey);">Hosted on YouTube. <a href="https://www.youtube.com/watch?v=gSd5Nu2V0z8" rel="noopener noreferrer">Open in YouTube &rarr;</a></p>
   </div>
 </section>
 
@@ -115,6 +308,34 @@
       <li>Keep it still until the phone confirms the tap and reads the card.</li>
       <li>Name the key and save; it now works for NFC logins on that account.</li>
     </ol>
+  </div>
+</section>
+
+<section>
+  <div class="section-container" style="max-width:820px;">
+    <div class="prose" style="margin:0;">
+      <h2>Before you start</h2>
+      <p>The phone flow replaces the reader with an NFC tap, so the prerequisites are about the handset rather than about USB:</p>
+      <ul>
+        <li><strong>NFC must be switched on.</strong> On Android it is a system toggle; if it is off, Google's key prompt will simply never see the card.</li>
+        <li><strong>Know where your antenna is.</strong> NFC coils sit in different places on different handsets &mdash; often upper-centre on Android, near the top edge on iPhone. This is the single most common reason a tap fails.</li>
+        <li><strong>Thick or metal cases block the field.</strong> Take the case off for enrolment; you can usually put it back afterwards once you know the sweet spot.</li>
+        <li><strong>2-Step Verification must already be on</strong>, exactly as on <a href="/videos/setup-ambisecure-card-gmail/">the desktop flow</a> &mdash; the phone does not change Google's prerequisite.</li>
+      </ul>
+      <h2>What is specific to Google on a phone</h2>
+      <p>The credential the card creates over NFC is the same credential it would create over USB. There is no separate &ldquo;mobile registration&rdquo; &mdash; register once by tap and the card authenticates over USB on a desktop afterwards, and the reverse holds too. The transport changes; the credential does not.</p>
+      <p>Two platform differences are worth planning around:</p>
+      <ul>
+        <li><strong>Android</strong> handles the tap inside Chrome, and the system NFC service brokers it. You do not need the Google Smart Lock app for a hardware key.</li>
+        <li><strong>iOS</strong> supports NFC security keys through Safari, but the tap prompt is presented by the system rather than the page, and the reader window is short. Hold the card still against the top of the phone until the sheet dismisses itself.</li>
+      </ul>
+      <h2>If the tap is not detected</h2>
+      <ul>
+        <li><strong>Nothing happens at all</strong> &mdash; move the card slowly across the back of the phone. You are hunting for the antenna, not pressing a button.</li>
+        <li><strong>The tap registers and then fails</strong> &mdash; you moved the card too early. NFC ceremonies need the card held still for a beat after contact.</li>
+        <li><strong>&ldquo;NFC not supported&rdquo;</strong> &mdash; check the system toggle first; some Android battery-saver profiles disable NFC without making that obvious.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -156,6 +377,18 @@
     <ul><li><a href="/videos/ambisecure-card-use-cases/">Every use case the AmbiSecure card supports, in one walkthrough</a></li><li><a href="/videos/biokey-product-loop/">AmbiSecure BioKey product hero</a></li><li><a href="/videos/setup-ambisecure-card-desktop/">Setting up the AmbiSecure card on desktop</a></li></ul>
   </div>
 </nav>
+
+<section class="alt">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Do I need to register the AmbiSecure card separately for phone and desktop?</h3><p style="margin:0;">No. NFC and USB are just transports. A credential registered by tapping the card on a phone authenticates over a USB reader on a desktop as well, and the other way round.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why is my phone not detecting the AmbiSecure card over NFC?</h3><p style="margin:0;">Usually the antenna position or the case. NFC coils sit in different places on different handsets, and thick or metal cases block the field, so remove the case and move the card slowly across the back of the phone.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does the AmbiSecure card work with Google on iPhone?</h3><p style="margin:0;">Yes. iOS supports NFC security keys through Safari, but the tap prompt comes from the system and the read window is short, so hold the card still against the top of the phone until the sheet closes.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is 2-Step Verification still required when registering from a phone?</h3><p style="margin:0;">Yes. The prerequisite belongs to the Google account, not the device, so 2-Step Verification must be on before the security-key option appears in either flow.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does the AmbiSecure card need a battery, charging, or Bluetooth pairing?</h3><p style="margin:0;">No. The card is passive: it draws power from the phone's NFC field during the tap and from the reader over USB on a desktop. There is nothing to charge and no pairing step.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer">

@@ -31,7 +31,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#E3222A" />
-<meta name="audit-yoast-word-max" content="3300" />
+<meta name="audit-yoast-word-max" content="3700" />
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -39,32 +39,244 @@
   {
    "@type": "FAQPage",
    "mainEntity": [
-    {"@type":"Question","name":"What does 'device identity at manufacturing scale' actually mean?","acceptedAnswer":{"@type":"Answer","text":"A defensible per-device cryptographic identity, injected on the factory personalisation line under HSM-backed key custody, that holds for the device's operational lifetime and supports remote credential lifecycle (rotation, revocation, re-enrolment) without return-to-factory. Scale means the mechanism works identically for the first device and the millionth: no per-device manual operator step, no shared keys, full audit log per injection."}},
-    {"@type":"Question","name":"How does SCP03 protect the key-injection step?","acceptedAnswer":{"@type":"Answer","text":"SCP03 is the GlobalPlatform secure-channel protocol that wraps APDUs between the personalisation host and the secure element under session keys derived from card-resident base keys. The personalisation host receives wrapped APDUs from the HSM and forwards them to the SE; the SE unwraps under its base keys, processes the key-injection APDU, and the keys land inside the tamper boundary without ever appearing in plaintext on the host. The host sees only ciphertext."}},
-    {"@type":"Question","name":"Why is the eSIM / V2X / IoT convergence architecturally interesting?","acceptedAnswer":{"@type":"Answer","text":"All three architectures solve the same shape of problem — long-lived hardware-bound identity provisioned at factory, used to authenticate to a remote authority that issues operational credentials, rotated over the air, revoked when needed — under different protocol surfaces. eSIM SGP.32 uses IPA / SM-DP+ / SM-DS; V2X uses EA / AA; IoT may use EST or a vendor-specific flow. The structural lessons transpose across all three because the underlying architectural problem is identical."}},
-    {"@type":"Question","name":"What is the difference between factory injection and field provisioning?","acceptedAnswer":{"@type":"Answer","text":"Factory injection happens once, on the controlled personalisation line under HSM key custody. It establishes the device's root identity. Field provisioning happens many times over the device lifetime, over the air, under cryptographic continuity with the factory-injected root. Field provisioning never assumes a clean environment; it assumes the root is intact and uses it as the trust anchor to receive operational credentials."}},
-    {"@type":"Question","name":"How is revocation handled across always-connected, intermittent, and offline devices?","acceptedAnswer":{"@type":"Answer","text":"Three patterns, one architectural shape. Always-connected fleets pull OCSP-style status checks or rely on short-lived credentials that expire faster than the revocation propagation window. Intermittent fleets refresh CRLs on next contact. Offline fleets (notably V2X PC5 sidelink) receive CRL updates through infrastructure broadcast — RSUs rebroadcast the current CRL to passing OBUs. The cryptographic identity stays in the secure element; only the revocation distribution channel differs."}},
-    {"@type":"Question","name":"What goes wrong on a personalisation line that has not been engineered carefully?","acceptedAnswer":{"@type":"Answer","text":"Three recurring failures: keys appear in plaintext somewhere on the host because the SCP03 wrapping was implemented host-side instead of HSM-side; per-device serialisation drifts because the line lacks an authoritative serial counter; and the audit log is database rows rather than an append-only tamper-evident record. Each of these makes the entire deployment's identity story indefensible in a forensic review."}}
+    {
+     "@type": "Question",
+     "name": "What does 'device identity at manufacturing scale' actually mean?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A defensible per-device cryptographic identity, injected on the factory personalisation line under HSM-backed key custody, that holds for the device's operational lifetime and supports remote credential lifecycle (rotation, revocation, re-enrolment) without return-to-factory. Scale means the mechanism works identically for the first device and the millionth: no per-device manual operator step, no shared keys, full audit log per injection."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does SCP03 protect the key-injection step?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "SCP03 is the GlobalPlatform secure-channel protocol that wraps APDUs between the personalisation host and the secure element under session keys derived from card-resident base keys. The personalisation host receives wrapped APDUs from the HSM and forwards them to the SE; the SE unwraps under its base keys, processes the key-injection APDU, and the keys land inside the tamper boundary without ever appearing in plaintext on the host. The host sees only ciphertext."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is the eSIM / V2X / IoT convergence architecturally interesting?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "All three architectures solve the same shape of problem — long-lived hardware-bound identity provisioned at factory, used to authenticate to a remote authority that issues operational credentials, rotated over the air, revoked when needed — under different protocol surfaces. eSIM SGP.32 uses IPA / SM-DP+ / SM-DS; V2X uses EA / AA; IoT may use EST or a vendor-specific flow. The structural lessons transpose across all three because the underlying architectural problem is identical."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between factory injection and field provisioning?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Factory injection happens once, on the controlled personalisation line under HSM key custody. It establishes the device's root identity. Field provisioning happens many times over the device lifetime, over the air, under cryptographic continuity with the factory-injected root. Field provisioning never assumes a clean environment; it assumes the root is intact and uses it as the trust anchor to receive operational credentials."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is revocation handled across always-connected, intermittent, and offline devices?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Three patterns, one architectural shape. Always-connected fleets pull OCSP-style status checks or rely on short-lived credentials that expire faster than the revocation propagation window. Intermittent fleets refresh CRLs on next contact. Offline fleets (notably V2X PC5 sidelink) receive CRL updates through infrastructure broadcast — RSUs rebroadcast the current CRL to passing OBUs. The cryptographic identity stays in the secure element; only the revocation distribution channel differs."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What goes wrong on a personalisation line that has not been engineered carefully?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Three recurring failures: keys appear in plaintext somewhere on the host because the SCP03 wrapping was implemented host-side instead of HSM-side; per-device serialisation drifts because the line lacks an authoritative serial counter; and the audit log is database rows rather than an append-only tamper-evident record. Each of these makes the entire deployment's identity story indefensible in a forensic review."
+     }
+    }
    ]
   },
   {
    "@type": "BreadcrumbList",
    "itemListElement": [
-    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
-    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
-    {"@type":"ListItem","position":3,"name":"Device Identity at Manufacturing Scale","item":"https://ambisecure.ambimat.com/blog/device-identity-at-manufacturing-scale/"}
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Device Identity at Manufacturing Scale",
+     "item": "https://ambisecure.ambimat.com/blog/device-identity-at-manufacturing-scale/"
+    }
    ]
   },
   {
    "@type": "Article",
    "headline": "Device Identity at Manufacturing Scale",
    "description": "Engineering walk-through of provisioning device identity at scale: per-device keys generated inside a secure element on the personalisation line, HSM-backed SCP03 key custody, OTA credential rotation, revocation across connectivity tiers, and the architectural convergence between V2X EA/AA, eSIM SM-DP+, and IoT credential lifecycle.",
-   "author": {"@type":"Organization","name":"AmbiSecure Engineering"},
-   "publisher": {"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
    "datePublished": "2026-05-26",
    "dateModified": "2026-05-26",
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/device-identity-at-manufacturing-scale/",
    "keywords": "device identity at scale, manufacturing-time provisioning, SCP03, HSM-backed key custody, personalisation line, OTA credential rotation, revocation, V2X EA AA, eSIM SM-DP+, SGP.32, IoT credential lifecycle, embedded PKI"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -222,7 +434,7 @@
     <p>The architectural lesson is that revocation is a distribution problem more than a cryptographic problem. The signing of the CRL by the issuing authority is mechanical. The hard work is getting the CRL to every verifier in the fleet within a bounded window, against any connectivity profile the deployment has to support. <a href="/blog/pseudonymous-certificates-and-privacy/">Pseudonymous certificates and privacy</a> covers the linkage-based revocation mechanism in more detail.</p>
 
     <h2 id="convergence">eSIM / V2X / IoT convergence</h2>
-    <p>The three credential-lifecycle architectures most production engineering teams encounter today &mdash; eSIM SGP.32 for IoT connectivity, V2X EA/AA for safety messaging, and embedded IoT identity for the rest of the fleet &mdash; converge architecturally. They solve the same shape of problem under different protocol surfaces.</p>
+    <p>The three credential-lifecycle architectures most production engineering teams encounter today &mdash; <a href="/solutions/esim-security/">eSIM SGP.32</a> for IoT connectivity, V2X EA/AA for safety messaging, and embedded IoT identity for the rest of the fleet &mdash; converge architecturally. They solve the same shape of problem under different protocol surfaces.</p>
 
     <div class="ref-table-wrap">
     <table style="width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.65;">
@@ -301,6 +513,19 @@
       </div>
       <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a><a href="/solutions/smart-card-personalization/" class="btn btn-outline" style="margin-left:8px;">Personalisation solution</a></div>
     </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What does 'device identity at manufacturing scale' actually mean?</h3><p style="margin:0;">A defensible per-device cryptographic identity, injected on the factory personalisation line under HSM-backed key custody, that holds for the device's operational lifetime and supports remote credential lifecycle (rotation, revocation, re-enrolment) without return-to-factory. Scale means the mechanism works identically for the first device and the millionth: no per-device manual operator step, no shared keys, full audit log per injection.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How does SCP03 protect the key-injection step?</h3><p style="margin:0;">SCP03 is the GlobalPlatform secure-channel protocol that wraps APDUs between the personalisation host and the secure element under session keys derived from card-resident base keys. The personalisation host receives wrapped APDUs from the HSM and forwards them to the SE; the SE unwraps under its base keys, processes the key-injection APDU, and the keys land inside the tamper boundary without ever appearing in plaintext on the host. The host sees only ciphertext.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why is the eSIM / V2X / IoT convergence architecturally interesting?</h3><p style="margin:0;">All three architectures solve the same shape of problem — long-lived hardware-bound identity provisioned at factory, used to authenticate to a remote authority that issues operational credentials, rotated over the air, revoked when needed — under different protocol surfaces. eSIM SGP.32 uses IPA / SM-DP+ / SM-DS; V2X uses EA / AA; IoT may use EST or a vendor-specific flow. The structural lessons transpose across all three because the underlying architectural problem is identical.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between factory injection and field provisioning?</h3><p style="margin:0;">Factory injection happens once, on the controlled personalisation line under HSM key custody. It establishes the device's root identity. Field provisioning happens many times over the device lifetime, over the air, under cryptographic continuity with the factory-injected root. Field provisioning never assumes a clean environment; it assumes the root is intact and uses it as the trust anchor to receive operational credentials.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is revocation handled across always-connected, intermittent, and offline devices?</h3><p style="margin:0;">Three patterns, one architectural shape. Always-connected fleets pull OCSP-style status checks or rely on short-lived credentials that expire faster than the revocation propagation window. Intermittent fleets refresh CRLs on next contact. Offline fleets (notably V2X PC5 sidelink) receive CRL updates through infrastructure broadcast — RSUs rebroadcast the current CRL to passing OBUs. The cryptographic identity stays in the secure element; only the revocation distribution channel differs.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What goes wrong on a personalisation line that has not been engineered carefully?</h3><p style="margin:0;">Three recurring failures: keys appear in plaintext somewhere on the host because the SCP03 wrapping was implemented host-side instead of HSM-side; per-device serialisation drifts because the line lacks an authoritative serial counter; and the audit log is database rows rather than an append-only tamper-evident record. Each of these makes the entire deployment's identity story indefensible in a forensic review.</p></div>
   </div>
 </section>
 

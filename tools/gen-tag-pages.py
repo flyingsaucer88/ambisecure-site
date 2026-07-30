@@ -11,6 +11,13 @@ Scoped on purpose: it only writes the slugs listed in TAG_CONFIG, so the 24
 existing curated tag pages are left untouched. Add a new slug to TAG_CONFIG to
 generate another tag page.
 
+Individual tag archives emit <meta name="robots" content="noindex,follow">.
+Categories (/blog/categories/) are the indexed taxonomy; tags are a navigation
+aid over the same posts, so indexing both would put two thin, near-identical
+listing sets in the index. "follow" keeps equity flowing to the posts, and
+tools/regen-sitemap.py skips noindex pages, so these stay out of sitemap.xml
+automatically. See docs/taxonomy-indexing-decision.md.
+
 Usage:
     python3 tools/gen-tag-pages.py            # write pages
     python3 tools/gen-tag-pages.py --sitemap  # also print sitemap <url> lines
@@ -21,7 +28,25 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 BLOGS = ROOT / "assets" / "data" / "blogs.json"
-ASSET_V = "31"
+
+
+def canonical_org():
+    """The sitewide Organization node, read from the homepage.
+
+    Every page carries this node: it drives the structured_data and
+    entity_coverage components of the AI-readiness score (knowsAbout supplies
+    the entity terms). Reading it from index.html rather than duplicating it
+    here keeps a single source of truth.
+    """
+    import re as _re
+    home = (ROOT / "index.html").read_text(encoding="utf-8")
+    for b in _re.findall(r'<script type="application/ld\+json">\n(.*?)\n</script>',
+                         home, _re.S):
+        for n in json.loads(b).get("@graph", []):
+            if n.get("@type") == "Organization":
+                return n
+    raise SystemExit("gen-tag-pages: no Organization node on the homepage")
+ASSET_V = "32"
 BASE = "https://ambisecure.ambimat.com"
 
 # slug -> display name, tag names to match, intro/dek + meta description copy.
@@ -30,42 +55,50 @@ TAG_CONFIG = {
         name="Cyber Resilience Act",
         match=["Cyber Resilience Act"],
         intro="Articles covering the EU Cyber Resilience Act, connected-product security, vulnerability handling, and CRA-aligned security architecture.",
+        og_alt="AmbiSecure Cyber Resilience Act index collecting engineering writing on digital-element products, 11 sep 2026 reporting.",
     ),
     "cra": dict(
         name="CRA",
         match=["CRA"],
         intro="Practical AmbiSecure articles on CRA readiness, secure-by-design architecture, and product lifecycle security.",
+        og_alt="AmbiSecure CRA index collecting engineering writing on support periods, key rotation, updates.",
     ),
     "ambisec": dict(
         name="AmbiSEC",
         match=["AmbiSEC"],
         intro="Articles featuring AmbiSEC as a hardware-backed embedded security module for connected products, IoT, smart city systems, and device identity.",
+        og_alt="AmbiSecure AmbiSEC index collecting engineering writing on hardware root of trust, anti-cloning device id.",
     ),
     "embedded-security": dict(
         name="Embedded Security",
         match=["Embedded Security"],
         intro="Guides and product-security articles on embedded trust, secure key storage, hardware-backed identity, and connected-device protection.",
+        og_alt="AmbiSecure Embedded Security index collecting engineering writing on secure key storage, firmware identity.",
     ),
     "iot-security": dict(
         name="IoT Security",
         match=["IoT Security"],
         intro="Articles on securing connected devices, IoT infrastructure, smart city deployments, and lifecycle-ready device security.",
+        og_alt="AmbiSecure IoT Security index collecting engineering writing on cra for connected hardware, smart-city hardware.",
     ),
     "secure-by-design": dict(
         name="Secure by Design",
         match=["Secure by Design"],
         intro="Articles on building security into connected products from architecture through deployment and maintenance.",
+        og_alt="AmbiSecure Secure by Design index collecting engineering writing on cloned devices, key theft, insecure provisioning.",
     ),
     "secure-element": dict(
         name="Secure Element",
         # merge singular + plural variants — same concept, split only by spelling.
         match=["Secure Element", "Secure Elements"],
         intro="Technical articles on secure elements, protected key storage, smart cards, applets, and hardware-backed trust.",
+        og_alt="AmbiSecure Secure Element index collecting engineering writing on key isolation, secure boot, obu / rsu hardware root.",
     ),
     "device-identity": dict(
         name="Device Identity",
         match=["Device Identity"],
         intro="Articles on cryptographic device identity, secure provisioning, trust anchors, and lifecycle identity for connected products.",
+        og_alt="AmbiSecure Device Identity index collecting engineering writing on secure provisioning, trust anchors.",
     ),
 }
 
@@ -80,12 +113,12 @@ NAVBAR = (
     '<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text">'
     '<span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a>'
     '<nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li>'
-    '<li><a href="/technologies/">Technologies</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li>'
+    '<li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li>'
     '<li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav>'
     '<div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search">'
     '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
     '<circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>'
-    '<span class="nav-search-label">Search</span><kbd aria-hidden="true">⌘K</kbd></button>'
+    '<span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button>'
     '<a href="/contact/" class="nav-btn">Contact</a>'
     '<button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>'
 )
@@ -99,7 +132,7 @@ FOOTER = (
     '    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>\n'
     '    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: +91 79255 01989</li><li>US: +1 215 397 3819</li><li><a href="mailto:support@ambimat.com">support@ambimat.com</a></li></ul></div>\n'
     '  </div>\n'
-    '  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">fb</span></a></div></div>\n'
+    '  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>\n'
     '</div></footer>'
 )
 
@@ -170,11 +203,19 @@ def build_page(slug, conf, posts):
                 ],
             },
             {"@type": "CollectionPage", "name": f"Tag: {name}", "url": url},
+            canonical_org(),
         ],
     }
     ld = json.dumps(breadcrumb_json, indent=1, ensure_ascii=False)
     count = len(posts)
     plural = "post" if count == 1 else "posts"
+    # Per-tag featured card if one has been rendered, else the generic tag card.
+    featured = ROOT / "assets" / "img" / "og" / "featured" / f"ambisecure-tags-{slug}-1200x630.png"
+    if featured.is_file():
+        og_image = f"{BASE}/assets/img/og/featured/ambisecure-tags-{slug}-1200x630.png"
+    else:
+        og_image = f"{BASE}/assets/img/og/tags.png"
+    og_alt_attr = esc(conf.get("og_alt") or "AmbiSecure &mdash; Hardware-rooted security")
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -183,17 +224,19 @@ def build_page(slug, conf, posts):
 <title>{title}</title>
 <meta name="description" content="{esc(intro)}" />
 <link rel="canonical" href="{url}" />
+<meta name="robots" content="noindex,follow" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="{title_attr}" />
 <meta property="og:description" content="{esc(intro)}" />
 <meta property="og:url" content="{url}" />
-<meta property="og:image" content="{BASE}/assets/img/og/tags.png" />
+<meta property="og:image" content="{og_image}" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="AmbiSecure &mdash; Hardware-rooted security" />
+<meta property="og:image:alt" content="{og_alt_attr}" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:image" content="{BASE}/assets/img/og/tags.png" />
+<meta name="twitter:image" content="{og_image}" />
+<meta name="twitter:image:alt" content="{og_alt_attr}" />
 <link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="/assets/css/fonts.css?v={ASSET_V}" />
@@ -232,6 +275,7 @@ def build_page(slug, conf, posts):
 
 <section>
   <div class="section-container">
+    <h2>Tagged articles</h2>
     <div class="grid-3">
       {cards}
     </div>
@@ -248,6 +292,8 @@ def build_page(slug, conf, posts):
 
 
 def main():
+    check = "--check" in sys.argv
+    drift = []
     data = json.loads(BLOGS.read_text(encoding="utf-8"))
     entries = data["entries"]
     sitemap_lines = []
@@ -258,16 +304,36 @@ def main():
             continue
         page = build_page(slug, conf, posts)
         out_dir = ROOT / "tags" / slug
+        target = out_dir / "index.html"
+        if check:
+            # Drift guard. This generator has silently reverted hand-edits
+            # before (asset version, OG images, nav items). --check makes that
+            # a build failure instead of a surprise on the next regen.
+            current = target.read_text(encoding="utf-8") if target.is_file() else None
+            if current != page:
+                drift.append(slug)
+            continue
         out_dir.mkdir(parents=True, exist_ok=True)
-        (out_dir / "index.html").write_text(page, encoding="utf-8")
+        target.write_text(page, encoding="utf-8")
         print(f"wrote tags/{slug}/index.html  ({len(posts)} posts)")
         sitemap_lines.append(
             f'  <url><loc>{BASE}/tags/{slug}/</loc><lastmod>2026-06-02</lastmod><changefreq>monthly</changefreq><priority>0.55</priority></url>'
         )
+    if check:
+        if drift:
+            print(f"gen-tag-pages: DRIFT on {len(drift)} page(s): {', '.join(drift)}")
+            print("The generator no longer reproduces the on-disk pages. Either the")
+            print("pages were hand-edited, or the template is stale. Reconcile before")
+            print("running this generator, or the hand-edits will be reverted.")
+            return 1
+        print(f"gen-tag-pages: no drift ({len(TAG_CONFIG)} generated pages match disk)")
+        return 0
+
     if "--sitemap" in sys.argv:
         print("\n--- sitemap lines ---")
         print("\n".join(sitemap_lines))
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

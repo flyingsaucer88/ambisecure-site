@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Set up AmbiSecure card on Facebook (U2F/FIDO) | Videos</title>
+<title>Set up AmbiSecure card in Facebook Accounts Center (U2F/FIDO) | Videos</title>
 <meta name="description" content="Pair a hardware FIDO key with a Facebook account in under 90 seconds. Covers the security key tab under settings, registration, and verification." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/videos/setup-ambisecure-card-facebook/" />
 <meta property="og:type" content="video.other" />
-<meta property="og:title" content="How to set up the AmbiSecure card on Facebook (U2F / FIDO)" />
+<meta property="og:title" content="Adding the AmbiSecure card as a FIDO security key in Facebook Accounts Center" />
 <meta property="og:description" content="Pair a hardware FIDO key with a Facebook account in under 90 seconds. Covers the security key tab under settings, registration, and verification." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/videos/setup-ambisecure-card-facebook/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-videos-setup-facebook-1200x630.png" />
@@ -51,13 +51,13 @@
     {
      "@type": "ListItem",
      "position": 3,
-     "name": "How to set up the AmbiSecure card on Facebook (U2F / FIDO)"
+     "name": "Adding the AmbiSecure card as a FIDO security key in Facebook Accounts Center"
     }
    ]
   },
   {
    "@type": "VideoObject",
-   "name": "How to set up the AmbiSecure card on Facebook (U2F / FIDO)",
+   "name": "Adding the AmbiSecure card as a FIDO security key in Facebook Accounts Center",
    "description": "Pair a hardware FIDO key with a Facebook account in under 90 seconds. Covers the security key tab under settings, registration, and verification.",
    "thumbnailUrl": "https://ambisecure.ambimat.com/assets/img/videos/WfA_F03IOd8.webp",
    "duration": "PT1M8S",
@@ -72,6 +72,199 @@
    },
    "embedUrl": "https://www.youtube-nocookie.com/embed/WfA_F03IOd8",
    "contentUrl": "https://www.youtube.com/watch?v=WfA_F03IOd8"
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Do I need another two-factor method before adding a security key to Facebook?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Facebook generally requires an active authenticator app or SMS method before it will accept a security key, and it keeps that method enrolled as a fallback."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Where are Facebook's security key settings now?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "On current builds they sit under Accounts Center, reached from Settings & privacy; older builds place them under Password and security. Both routes reach the same two-factor page."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does registering a key on Facebook also protect my Instagram account?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Not automatically. If the accounts share an Accounts Center, the two-factor page asks which account you are configuring, so check the selector and enrol each account you want protected."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does Facebook sometimes ask for my authenticator app instead of the card?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "On surfaces that do not support security keys, Facebook falls back to your other enrolled two-factor method rather than blocking the login. That is expected behaviour, not a failed registration."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens if I lose the security key registered to Facebook?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Log in using the authenticator app or SMS method Facebook required you to keep enrolled, or use one of the recovery codes saved during setup, then remove the lost key from the two-factor settings."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -81,14 +274,14 @@
 <a href="#main" class="skip-link">Skip to main content</a>
 <div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1982</span></div></div>
 <header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
-<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/videos/">Videos</a><span class="sep">/</span><span class="current">How to set up the AmbiSecure card on Facebook (U2F / FIDO)</span></nav>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/videos/">Videos</a><span class="sep">/</span><span class="current">Adding the AmbiSecure card as a FIDO security key in Facebook Accounts Center</span></nav>
 
 <main id="main">
 
 <section style="padding: 60px 80px 24px;">
   <div class="prose">
     <span class="eyebrow">Video</span>
-    <h1>Adding the AmbiSecure card as a FIDO security key on Facebook</h1>
+    <h1>Adding the AmbiSecure card as a FIDO security key in Facebook Accounts Center</h1>
     <p class="dek">Pair a hardware FIDO key with a Facebook account in under 90 seconds. Covers the security key tab under settings, registration, and verification.</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);">
       <span>DURATION &middot; 1:08</span>
@@ -100,7 +293,7 @@
 
 <section>
   <div class="section-container" style="max-width:960px;">
-    <div class="yt-facade" data-yt-id="WfA_F03IOd8" data-title="How to set up the AmbiSecure card on Facebook (U2F / FIDO)" style="max-width:900px;margin:0 auto;border-radius:8px;">  <img class="yt-facade-poster" src="/assets/img/videos/WfA_F03IOd8.webp" alt="How to set up the AmbiSecure card on Facebook (U2F / FIDO)" loading="eager" width="1280" height="720" />  <button class="yt-facade-play" aria-label="Play How to set up the AmbiSecure card on Facebook (U2F / FIDO)">&#9658;</button></div><p style="text-align:center;margin-top:12px;font-size:13px;color:var(--brand-grey);">Hosted on YouTube. <a href="https://www.youtube.com/watch?v=WfA_F03IOd8" rel="noopener noreferrer">Open in YouTube &rarr;</a></p>
+    <div class="yt-facade" data-yt-id="WfA_F03IOd8" data-title="Adding the AmbiSecure card as a FIDO security key in Facebook Accounts Center" style="max-width:900px;margin:0 auto;border-radius:8px;">  <img class="yt-facade-poster" src="/assets/img/videos/WfA_F03IOd8.webp" alt="Adding the AmbiSecure card as a FIDO security key in Facebook Accounts Center" loading="eager" width="1280" height="720" />  <button class="yt-facade-play" aria-label="Play Adding the AmbiSecure card as a FIDO security key in Facebook Accounts Center">&#9658;</button></div><p style="text-align:center;margin-top:12px;font-size:13px;color:var(--brand-grey);">Hosted on YouTube. <a href="https://www.youtube.com/watch?v=WfA_F03IOd8" rel="noopener noreferrer">Open in YouTube &rarr;</a></p>
   </div>
 </section>
 
@@ -115,6 +308,34 @@
       <li>Insert the AmbiSecure card into a USB reader when prompted and touch it to register.</li>
       <li>Give the key a name and confirm — Facebook will ask for it on future logins.</li>
     </ol>
+  </div>
+</section>
+
+<section>
+  <div class="section-container" style="max-width:820px;">
+    <div class="prose" style="margin:0;">
+      <h2>Before you start</h2>
+      <p>Facebook treats a security key as an additional two-factor method rather than a standalone one, which shapes the setup order:</p>
+      <ul>
+        <li><strong>Enrol another 2FA method first.</strong> Facebook generally requires an authenticator app or SMS to be active before it will accept a security key, and it keeps that method as a fallback.</li>
+        <li><strong>Register from a desktop browser.</strong> The first enrolment is most reliable over USB on a desktop; the NFC tap flow is covered in <a href="/videos/setup-ambisecure-card-mobile-facebook/">the mobile walkthrough</a>.</li>
+        <li><strong>Save your recovery codes</strong> while you are in the two-factor settings. They are the escape hatch if the card and your fallback method are both unavailable.</li>
+        <li><strong>Have a USB smart-card reader</strong> connected before you begin, so the browser prompt does not time out while you hunt for one.</li>
+      </ul>
+      <h2>What is specific to Facebook accounts</h2>
+      <p>The setting has moved more than once. On current builds two-factor settings live under <strong>Accounts Center</strong>, reachable from <em>Settings &amp; privacy</em>, and older builds keep them under <em>Password and security</em>. Both routes land on the same two-factor page, and the security-key option behaves identically once you are there.</p>
+      <p>Two behaviours catch people out:</p>
+      <ul>
+        <li><strong>Accounts Center can span several profiles.</strong> If your Facebook and Instagram accounts share an Accounts Center, the two-factor page asks which account you are configuring. A key registered to one profile does not automatically protect the other &mdash; check the selector before enrolling.</li>
+        <li><strong>Facebook may not always prompt for the key.</strong> On surfaces where a security key is not supported, Facebook falls back to your authenticator app or SMS method rather than refusing the login. That is expected, and it is why the fallback method stays enrolled.</li>
+      </ul>
+      <h2>If the registration does not complete</h2>
+      <ul>
+        <li><strong>The security-key option is greyed out</strong> &mdash; two-factor authentication is not fully enabled yet. Finish enrolling an authenticator app first, then return.</li>
+        <li><strong>The browser prompt never appears</strong> &mdash; confirm you are on an HTTPS page in a WebAuthn-capable browser. Facebook's flow will not start over a proxied or downgraded connection.</li>
+        <li><strong>The tap is not registered</strong> &mdash; leave the card seated in the reader until Facebook confirms. Pulling it as soon as the reader LED changes aborts the ceremony.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -153,9 +374,21 @@
 <nav class="related-cross" aria-label="Related videos">
   <div class="section-container" style="max-width:880px;">
     <h2>Related videos</h2>
-    <ul><li><a href="/videos/setup-ambisecure-card-gmail/">Adding the AmbiSecure card as a FIDO security key on Gmail</a></li><li><a href="/videos/setup-ambisecure-card-mobile-facebook/">Phone-based AmbiSecure card setup on Facebook (NFC)</a></li><li><a href="/videos/setup-ambisecure-card-mobile-gmail/">Phone-based AmbiSecure card setup on Gmail (NFC)</a></li></ul>
+    <ul><li><a href="/videos/setup-ambisecure-card-gmail/">Adding the AmbiSecure card as a FIDO security key in Google 2-Step Verification</a></li><li><a href="/videos/setup-ambisecure-card-mobile-facebook/">NFC tap enrolment of the AmbiSecure card in Facebook Accounts Center</a></li><li><a href="/videos/setup-ambisecure-card-mobile-gmail/">NFC tap enrolment of the AmbiSecure card in Google 2-Step Verification</a></li></ul>
   </div>
 </nav>
+
+<section class="alt">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Do I need another two-factor method before adding a security key to Facebook?</h3><p style="margin:0;">Yes. Facebook generally requires an active authenticator app or SMS method before it will accept a security key, and it keeps that method enrolled as a fallback.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Where are Facebook's security key settings now?</h3><p style="margin:0;">On current builds they sit under Accounts Center, reached from Settings & privacy; older builds place them under Password and security. Both routes reach the same two-factor page.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does registering a key on Facebook also protect my Instagram account?</h3><p style="margin:0;">Not automatically. If the accounts share an Accounts Center, the two-factor page asks which account you are configuring, so check the selector and enrol each account you want protected.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does Facebook sometimes ask for my authenticator app instead of the card?</h3><p style="margin:0;">On surfaces that do not support security keys, Facebook falls back to your other enrolled two-factor method rather than blocking the login. That is expected behaviour, not a failed registration.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What happens if I lose the security key registered to Facebook?</h3><p style="margin:0;">Log in using the authenticator app or SMS method Facebook required you to keep enrolled, or use one of the recovery codes saved during setup, then remove the lost key from the two-factor settings.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer">

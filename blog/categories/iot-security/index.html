@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>IoT Security — AmbiSecure Blog</title>
-<meta name="description" content="All AmbiSecure engineering blog content under IoT Security, modern and archive." />
+<meta name="description" content="AmbiSecure engineering writing on IoT security: hardware roots of trust, device attestation, factory provisioning, firmware signing, and CRA obligations." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/blog/categories/iot-security/" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="IoT Security — AmbiSecure Blog" />
-<meta property="og:description" content="All AmbiSecure engineering blog content under IoT Security, modern and archive." />
+<meta property="og:description" content="AmbiSecure engineering writing on IoT security: hardware roots of trust, device attestation, factory provisioning, firmware signing, and CRA obligations." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/blog/categories/iot-security/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-blog-categories-iot-security-1200x630.png" />
 <meta property="og:image:type" content="image/png" />
@@ -88,12 +88,176 @@
       "@type": "Answer",
       "text": "The Cyber Resilience Act makes secure-by-design, security updates over a defined support period, and vulnerability handling mandatory for connected products in the EU — obligations that a hardware root of trust helps satisfy."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "When should a device identity be provisioned?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "At manufacture, on a controlled line under key custody. A device that leaves the factory without an identity has no trustworthy way to obtain one later, because there is nothing to authenticate the request."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is a credential rotated on a device already in the field?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Over an authenticated channel whose session keys derive from the factory-provisioned root. The root stays fixed in hardware; the operational credentials above it rotate without a recall."
+     }
     }
    ]
   },
   {
    "@type": "CollectionPage",
    "name": "IoT Security &mdash; AmbiSecure Blog"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -130,6 +294,8 @@
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why do IoT devices need a hardware root of trust?</h3><p style="margin:0;">IoT devices are physically accessible and long-lived, so software-only keys can be extracted and cloned. A secure element holds a non-exportable device key and enables attestation and signed-update verification that survive host compromise.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is device attestation?</h3><p style="margin:0;">Attestation lets a device cryptographically prove its identity and, often, its firmware/configuration state to a backend, so only genuine, untampered devices are trusted on the network.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How does the CRA affect IoT security?</h3><p style="margin:0;">The Cyber Resilience Act makes secure-by-design, security updates over a defined support period, and vulnerability handling mandatory for connected products in the EU — obligations that a hardware root of trust helps satisfy.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">When should a device identity be provisioned?</h3><p style="margin:0;">At manufacture, on a controlled line under key custody. A device that leaves the factory without an identity has no trustworthy way to obtain one later, because there is nothing to authenticate the request.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is a credential rotated on a device already in the field?</h3><p style="margin:0;">Over an authenticated channel whose session keys derive from the factory-provisioned root. The root stays fixed in hardware; the operational credentials above it rotate without a recall.</p></div>
   </div>
 </section>
 <section>
@@ -140,7 +306,7 @@
 </section>
 <nav class="related-cross" aria-label="More blog topics">
   <div class="section-container" style="max-width:880px;">
-    <h2>More blog topics</h2>
+    <h2>Where to read more</h2>
     <ul><li><a href="/blog/categories/javacard/">JavaCard</a></li><li><a href="/blog/categories/mfa/">MFA</a></li><li><a href="/blog/categories/offline-authentication/">Offline Authentication</a></li></ul>
   </div>
 </nav>

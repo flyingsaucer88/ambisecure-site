@@ -39,11 +39,23 @@ ORPHAN_EXEMPT = {
 }
 
 META_REFRESH_RE = re.compile(r'<meta\s+http-equiv="refresh"', re.IGNORECASE)
+NOINDEX_RE = re.compile(r'name=["\']robots["\']\s+content=["\'][^"\']*noindex',
+                        re.IGNORECASE)
 
 def is_redirect_stub(path):
     try:
         with open(path) as f:
             return bool(META_REFRESH_RE.search(f.read()))
+    except OSError:
+        return False
+
+def is_noindex(path):
+    """Pages carrying <meta robots noindex> are deliberately kept out of the
+    sitemap (see docs/taxonomy-indexing-decision.md), so they are not orphans.
+    Matches the exclusions in tools/regen-sitemap.py and scripts/audit-ai-seo.py."""
+    try:
+        with open(path) as f:
+            return bool(NOINDEX_RE.search(f.read(4096)))
     except OSError:
         return False
 
@@ -121,6 +133,8 @@ def main():
         if r in ORPHAN_EXEMPT:
             continue
         if is_redirect_stub(path):
+            continue
+        if is_noindex(path):
             continue
         top = r.split("/", 1)[0] if "/" in r else r
         # Only check top-level content folders + the homepage.

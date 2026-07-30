@@ -57,7 +57,23 @@
      "name": "What does an IoT attestation chain actually look like?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Device attestation signature \u2192 per-batch attestation CA \u2192 AmbiSecure issuance CA \u2192 HSM key ceremony record. The auditor walks that chain backwards from a deployed device to prove the credential came off the certified line. The whole chain is verifiable at any future point."
+      "text": "Device attestation signature → per-batch attestation CA → AmbiSecure issuance CA → HSM key ceremony record. The auditor walks that chain backwards from a deployed device to prove the credential came off the certified line. The whole chain is verifiable at any future point."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens if a device fails attestation in the field?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The policy decision belongs to the service, not the device: quarantine, restricted function, or a forced update path. The applet's job is to report state honestly, not to decide the consequence."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is the initial trust anchor placed on a device?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "During manufacture, under key custody on a controlled line. Anything provisioned later has to be authenticated by something already present, so the factory step is what the whole chain rests on."
      }
     }
    ]
@@ -100,6 +116,154 @@
    },
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/secure-iot-identity-with-applets/",
    "keywords": "IoT identity, secure element, attestation, mTLS, signed firmware, key rotation, JavaCard, provisioning"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -218,6 +382,18 @@
     </ul>
   </article>
 </section>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does the secure element verify firmware signatures instead of the host MCU?</h3><p style="margin:0;">Because an attacker who compromises the host MCU can lie about signature verification. Moving the verification inside the secure element means an attacker must also compromise the SE's burned-in issuance public key &amp;mdash; which is a different and considerably harder problem.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How often should IoT device keys rotate?</h3><p style="margin:0;">Operator policy. Monthly for high-assurance industrial control. Annually for consumer IoT. Never (or only on incident) for the long tail of disposable sensors. The rotation applet handles the cryptography; the cadence is a business decision.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What does an IoT attestation chain actually look like?</h3><p style="margin:0;">Device attestation signature → per-batch attestation CA → AmbiSecure issuance CA → HSM key ceremony record. The auditor walks that chain backwards from a deployed device to prove the credential came off the certified line. The whole chain is verifiable at any future point.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What happens if a device fails attestation in the field?</h3><p style="margin:0;">The policy decision belongs to the service, not the device: quarantine, restricted function, or a forced update path. The applet's job is to report state honestly, not to decide the consequence.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is the initial trust anchor placed on a device?</h3><p style="margin:0;">During manufacture, under key custody on a controlled line. Anything provisioned later has to be authenticated by something already present, so the factory step is what the whole chain rests on.</p></div>
+  </div>
+</section>
+
 </main>
 <footer class="site-footer"><div class="footer-inner">
   <div class="footer-grid">

@@ -32,55 +32,254 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@graph": [
-{
-"@type": "BreadcrumbList",
-"itemListElement": [
-{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
-{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
-{ "@type": "ListItem", "position": 3, "name": "ICCID Decoder", "item": "https://ambisecure.ambimat.com/resources/tools/iccid-decoder/" }
-]
-},
-{
-"@type": "SoftwareApplication",
-"name": "ICCID Decoder",
-"applicationCategory": "DeveloperApplication",
-"operatingSystem": "Web",
-"url": "https://ambisecure.ambimat.com/resources/tools/iccid-decoder/",
-"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-},
-{
-"@type": "FAQPage",
-"mainEntity": [
-{
-"@type": "Question",
-"name": "What is an ICCID?",
-"acceptedAnswer": { "@type": "Answer", "text": "The Integrated Circuit Card Identifier (ICCID) is the unique serial number printed on a SIM or eSIM profile and stored in the EF-ICCID file. It is defined by ITU-T E.118 and begins with the Major Industry Identifier 89 for telecommunications, followed by a country code, an issuer identifier, an individual account number, and an optional trailing Luhn check digit." }
-},
-{
-"@type": "Question",
-"name": "How long is an ICCID — 19 or 20 digits?",
-"acceptedAnswer": { "@type": "Answer", "text": "ITU-T E.118 allows up to 19 digits plus an optional Luhn check digit, so you commonly see 19-digit and 20-digit ICCIDs in the field. This tool accepts 18 to 20 digits, treats the last digit as the candidate check digit, and reports whether the value is Luhn-consistent. Some operators print the number without the check digit." }
-},
-{
-"@type": "Question",
-"name": "How is the Luhn check digit validated?",
-"acceptedAnswer": { "@type": "Answer", "text": "The Luhn (mod-10) algorithm doubles every second digit from the right, subtracts 9 from any result over 9, sums all digits, and requires the total to be a multiple of 10. The tool runs Luhn across the full ICCID including the trailing digit and shows pass or fail, plus the expected check digit so you can spot a single mistyped digit." }
-},
-{
-"@type": "Question",
-"name": "Why does the country code not always decode?",
-"acceptedAnswer": { "@type": "Answer", "text": "The country code follows ITU-T E.164 dialing codes and can be one, two, or three digits, with no length marker inside the ICCID. This tool uses a small built-in map of common codes and matches greedily; if the leading digits are not in the map it labels the country as unknown rather than guess. The issuer and account split also varies by operator." }
-},
-{
-"@type": "Question",
-"name": "Does the ICCID I paste leave my browser?",
-"acceptedAnswer": { "@type": "Answer", "text": "No. All parsing and Luhn validation run locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server. The built-in sample is a non-real dummy value generated in the browser, not a genuine SIM number." }
-}
-]
-}
-]
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "https://ambisecure.ambimat.com/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "ICCID Decoder",
+     "item": "https://ambisecure.ambimat.com/resources/tools/iccid-decoder/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "ICCID Decoder",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/iccid-decoder/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an ICCID?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The Integrated Circuit Card Identifier (ICCID) is the unique serial number printed on a SIM or eSIM profile and stored in the EF-ICCID file. It is defined by ITU-T E.118 and begins with the Major Industry Identifier 89 for telecommunications, followed by a country code, an issuer identifier, an individual account number, and an optional trailing Luhn check digit."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How long is an ICCID — 19 or 20 digits?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "ITU-T E.118 allows up to 19 digits plus an optional Luhn check digit, so you commonly see 19-digit and 20-digit ICCIDs in the field. This tool accepts 18 to 20 digits, treats the last digit as the candidate check digit, and reports whether the value is Luhn-consistent. Some operators print the number without the check digit."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How is the Luhn check digit validated?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The Luhn (mod-10) algorithm doubles every second digit from the right, subtracts 9 from any result over 9, sums all digits, and requires the total to be a multiple of 10. The tool runs Luhn across the full ICCID including the trailing digit and shows pass or fail, plus the expected check digit so you can spot a single mistyped digit."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does the country code not always decode?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The country code follows ITU-T E.164 dialing codes and can be one, two, or three digits, with no length marker inside the ICCID. This tool uses a small built-in map of common codes and matches greedily; if the leading digits are not in the map it labels the country as unknown rather than guess. The issuer and account split also varies by operator."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does the ICCID I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. All parsing and Luhn validation run locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server. The built-in sample is a non-real dummy value generated in the browser, not a genuine SIM number."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "ICCID Decoder",
+   "description": "Decode an ICCID into MII, country code, issuer identifier, and account number, and validate the Luhn check digit — 19/20-digit aware, whitespace-tolerant. Uses dummy examples only.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/iccid-decoder/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
 }
 </script>
 </head>
@@ -169,6 +368,18 @@
     <ul><li><a href="/resources/tools/imsi-decoder/">IMSI Decoder</a></li><li><a href="/resources/tools/ber-length/">BER Length Visualizer</a></li><li><a href="/resources/tools/asn1-tree-explorer/">ASN.1 Tree Explorer</a></li></ul>
   </div>
 </nav>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is an ICCID?</h3><p style="margin:0;">The Integrated Circuit Card Identifier (ICCID) is the unique serial number printed on a SIM or eSIM profile and stored in the EF-ICCID file. It is defined by ITU-T E.118 and begins with the Major Industry Identifier 89 for telecommunications, followed by a country code, an issuer identifier, an individual account number, and an optional trailing Luhn check digit.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How long is an ICCID — 19 or 20 digits?</h3><p style="margin:0;">ITU-T E.118 allows up to 19 digits plus an optional Luhn check digit, so you commonly see 19-digit and 20-digit ICCIDs in the field. This tool accepts 18 to 20 digits, treats the last digit as the candidate check digit, and reports whether the value is Luhn-consistent. Some operators print the number without the check digit.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is the Luhn check digit validated?</h3><p style="margin:0;">The Luhn (mod-10) algorithm doubles every second digit from the right, subtracts 9 from any result over 9, sums all digits, and requires the total to be a multiple of 10. The tool runs Luhn across the full ICCID including the trailing digit and shows pass or fail, plus the expected check digit so you can spot a single mistyped digit.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does the country code not always decode?</h3><p style="margin:0;">The country code follows ITU-T E.164 dialing codes and can be one, two, or three digits, with no length marker inside the ICCID. This tool uses a small built-in map of common codes and matches greedily; if the leading digits are not in the map it labels the country as unknown rather than guess. The issuer and account split also varies by operator.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does the ICCID I paste leave my browser?</h3><p style="margin:0;">No. All parsing and Luhn validation run locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server. The built-in sample is a non-real dummy value generated in the browser, not a genuine SIM number.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

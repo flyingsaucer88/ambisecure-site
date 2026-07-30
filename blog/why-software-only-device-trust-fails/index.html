@@ -31,7 +31,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#E3222A" />
-<meta name="audit-yoast-word-max" content="3300" />
+<meta name="audit-yoast-word-max" content="3900" />
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -39,32 +39,244 @@
   {
    "@type": "FAQPage",
    "mainEntity": [
-    {"@type":"Question","name":"What is software-only device trust?","acceptedAnswer":{"@type":"Answer","text":"An architecture in which a device's cryptographic identity — its private keys, attestation material, signing operations — lives entirely inside the host MCU's firmware and flash, without isolation from the application firmware or operating system. The keys may be encrypted at rest using a key also held in firmware, but every byte the system needs to operate is reachable by host code at some point. This is the architecture that fails predictably in field-deployed hardware."}},
-    {"@type":"Question","name":"Why is software-only trust a problem in field-deployed devices specifically?","acceptedAnswer":{"@type":"Answer","text":"Field-deployed devices are subject to physical access by parties who are not the OEM — owners, mechanics, attackers, repair shops. Time is on the attacker's side: a laboratory attacker who obtains one device has indefinite dwell time to extract its firmware, dump its flash, and analyse its key storage. The mitigations that work for cloud-hosted code (sandboxing, runtime isolation, network controls) do not apply to a device an attacker can disassemble on a workbench."}},
-    {"@type":"Question","name":"What does 'firmware extraction' actually mean operationally?","acceptedAnswer":{"@type":"Answer","text":"Recovering the readable contents of a device's flash memory, either by reading it through a debug interface that was left enabled or insufficiently locked, by reading external SPI flash with a logic analyser or bench programmer, or by physically decapsulating the MCU and reading the on-die flash. Once recovered, the firmware can be analysed to find the cryptographic key material, the key-derivation logic, and any operational secrets the firmware needs to function."}},
-    {"@type":"Question","name":"How does a secure element prevent this?","acceptedAnswer":{"@type":"Answer","text":"By moving the key material into a separate tamper-resistant chip whose internal contents are not exposed to firmware. The host MCU asks the secure element to sign or decrypt; the SE performs the operation inside its tamper boundary and returns the result. The host never holds the private key. An attacker who extracts the host firmware finds APDU command sequences and key handles — references to keys, not the keys themselves. The class of attack 'extract firmware → recover keys' becomes 'extract firmware → discover that the keys are not there'."}},
-    {"@type":"Question","name":"Doesn't TPM also keep keys out of the host firmware?","acceptedAnswer":{"@type":"Answer","text":"Yes, with caveats. A TPM is a hardware-rooted trust device with its own protected key store. The TPM ecosystem evolved primarily around platform attestation and measured boot for desktop and server systems; its applet model, form factor, and power envelope do not always fit embedded V2X and IoT contexts. A discrete secure element typically offers a JavaCard runtime, smaller power envelope, ISO 7816 / I²C / SPI interfaces, and an applet ecosystem aligned with smart-card and embedded use. For connected-vehicle OBUs and constrained IoT endpoints, the secure element is usually the right answer."}},
-    {"@type":"Question","name":"What about post-quantum cryptography — does that change the picture?","acceptedAnswer":{"@type":"Answer","text":"It changes which algorithms run inside the boundary, not whether a boundary is needed. The post-quantum migration replaces ECDSA / RSA with lattice-based signatures (CRYSTALS-Dilithium, FALCON) and KEMs (CRYSTALS-Kyber). The threat model that drives hardware-rooted identity — physical access, firmware extraction, fleet-scale cloning — is independent of which signature scheme is in use. A post-quantum software-only deployment fails for the same reasons a classical software-only deployment fails."}}
+    {
+     "@type": "Question",
+     "name": "What is software-only device trust?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An architecture in which a device's cryptographic identity — its private keys, attestation material, signing operations — lives entirely inside the host MCU's firmware and flash, without isolation from the application firmware or operating system. The keys may be encrypted at rest using a key also held in firmware, but every byte the system needs to operate is reachable by host code at some point. This is the architecture that fails predictably in field-deployed hardware."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why is software-only trust a problem in field-deployed devices specifically?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Field-deployed devices are subject to physical access by parties who are not the OEM — owners, mechanics, attackers, repair shops. Time is on the attacker's side: a laboratory attacker who obtains one device has indefinite dwell time to extract its firmware, dump its flash, and analyse its key storage. The mitigations that work for cloud-hosted code (sandboxing, runtime isolation, network controls) do not apply to a device an attacker can disassemble on a workbench."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does 'firmware extraction' actually mean operationally?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Recovering the readable contents of a device's flash memory, either by reading it through a debug interface that was left enabled or insufficiently locked, by reading external SPI flash with a logic analyser or bench programmer, or by physically decapsulating the MCU and reading the on-die flash. Once recovered, the firmware can be analysed to find the cryptographic key material, the key-derivation logic, and any operational secrets the firmware needs to function."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does a secure element prevent this?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "By moving the key material into a separate tamper-resistant chip whose internal contents are not exposed to firmware. The host MCU asks the secure element to sign or decrypt; the SE performs the operation inside its tamper boundary and returns the result. The host never holds the private key. An attacker who extracts the host firmware finds APDU command sequences and key handles — references to keys, not the keys themselves. The class of attack 'extract firmware → recover keys' becomes 'extract firmware → discover that the keys are not there'."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Doesn't TPM also keep keys out of the host firmware?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, with caveats. A TPM is a hardware-rooted trust device with its own protected key store. The TPM ecosystem evolved primarily around platform attestation and measured boot for desktop and server systems; its applet model, form factor, and power envelope do not always fit embedded V2X and IoT contexts. A discrete secure element typically offers a JavaCard runtime, smaller power envelope, ISO 7816 / I²C / SPI interfaces, and an applet ecosystem aligned with smart-card and embedded use. For connected-vehicle OBUs and constrained IoT endpoints, the secure element is usually the right answer."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What about post-quantum cryptography — does that change the picture?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It changes which algorithms run inside the boundary, not whether a boundary is needed. The post-quantum migration replaces ECDSA / RSA with lattice-based signatures (CRYSTALS-Dilithium, FALCON) and KEMs (CRYSTALS-Kyber). The threat model that drives hardware-rooted identity — physical access, firmware extraction, fleet-scale cloning — is independent of which signature scheme is in use. A post-quantum software-only deployment fails for the same reasons a classical software-only deployment fails."
+     }
+    }
    ]
   },
   {
    "@type": "BreadcrumbList",
    "itemListElement": [
-    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
-    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
-    {"@type":"ListItem","position":3,"name":"Why Software-Only Device Trust Fails","item":"https://ambisecure.ambimat.com/blog/why-software-only-device-trust-fails/"}
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Why Software-Only Device Trust Fails",
+     "item": "https://ambisecure.ambimat.com/blog/why-software-only-device-trust-fails/"
+    }
    ]
   },
   {
    "@type": "Article",
    "headline": "Why Software-Only Device Trust Fails",
    "description": "An engineering walk-through of the threat model that rules out software-only device identity in field-deployed hardware: firmware extraction, key cloning, replay, fleet-scale compromise. Comparison of software-only, TPM, and secure element. Why connected vehicles, industrial IoT, and edge infrastructure converge on hardware-backed identity.",
-   "author": {"@type":"Organization","name":"AmbiSecure Engineering"},
-   "publisher": {"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
    "datePublished": "2026-05-26",
    "dateModified": "2026-05-26",
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/why-software-only-device-trust-fails/",
    "keywords": "software-only device trust, firmware extraction, key cloning, replay attacks, fleet compromise, hardware root of trust, secure element, TPM, V2X, industrial IoT, edge infrastructure"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -270,6 +482,19 @@
       </div>
       <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a><a href="/products/iot-security-coprocessor/" class="btn btn-outline" style="margin-left:8px;">Co-Processor spec</a></div>
     </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is software-only device trust?</h3><p style="margin:0;">An architecture in which a device's cryptographic identity — its private keys, attestation material, signing operations — lives entirely inside the host MCU's firmware and flash, without isolation from the application firmware or operating system. The keys may be encrypted at rest using a key also held in firmware, but every byte the system needs to operate is reachable by host code at some point. This is the architecture that fails predictably in field-deployed hardware.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why is software-only trust a problem in field-deployed devices specifically?</h3><p style="margin:0;">Field-deployed devices are subject to physical access by parties who are not the OEM — owners, mechanics, attackers, repair shops. Time is on the attacker's side: a laboratory attacker who obtains one device has indefinite dwell time to extract its firmware, dump its flash, and analyse its key storage. The mitigations that work for cloud-hosted code (sandboxing, runtime isolation, network controls) do not apply to a device an attacker can disassemble on a workbench.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What does 'firmware extraction' actually mean operationally?</h3><p style="margin:0;">Recovering the readable contents of a device's flash memory, either by reading it through a debug interface that was left enabled or insufficiently locked, by reading external SPI flash with a logic analyser or bench programmer, or by physically decapsulating the MCU and reading the on-die flash. Once recovered, the firmware can be analysed to find the cryptographic key material, the key-derivation logic, and any operational secrets the firmware needs to function.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How does a secure element prevent this?</h3><p style="margin:0;">By moving the key material into a separate tamper-resistant chip whose internal contents are not exposed to firmware. The host MCU asks the secure element to sign or decrypt; the SE performs the operation inside its tamper boundary and returns the result. The host never holds the private key. An attacker who extracts the host firmware finds APDU command sequences and key handles — references to keys, not the keys themselves. The class of attack 'extract firmware → recover keys' becomes 'extract firmware → discover that the keys are not there'.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Doesn't TPM also keep keys out of the host firmware?</h3><p style="margin:0;">Yes, with caveats. A TPM is a hardware-rooted trust device with its own protected key store. The TPM ecosystem evolved primarily around platform attestation and measured boot for desktop and server systems; its applet model, form factor, and power envelope do not always fit embedded V2X and IoT contexts. A discrete secure element typically offers a JavaCard runtime, smaller power envelope, ISO 7816 / I²C / SPI interfaces, and an applet ecosystem aligned with smart-card and embedded use. For connected-vehicle OBUs and constrained IoT endpoints, the secure element is usually the right answer.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What about post-quantum cryptography — does that change the picture?</h3><p style="margin:0;">It changes which algorithms run inside the boundary, not whether a boundary is needed. The post-quantum migration replaces ECDSA / RSA with lattice-based signatures (CRYSTALS-Dilithium, FALCON) and KEMs (CRYSTALS-Kyber). The threat model that drives hardware-rooted identity — physical access, firmware extraction, fleet-scale cloning — is independent of which signature scheme is in use. A post-quantum software-only deployment fails for the same reasons a classical software-only deployment fails.</p></div>
   </div>
 </section>
 

@@ -59,6 +59,22 @@
       "@type": "Answer",
       "text": "The current engineering blog, with the latest posts, is at /blog/."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "Why keep archive posts online rather than deleting them?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because the background material is usually still sound even when the recommendations have moved on, and the URLs are referenced elsewhere. Each archive post is labelled and links forward to current coverage where it exists."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How can I tell whether an archive post has been superseded?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Each carries a dated historical-archive banner and, where the field has moved, a forward note summarising what changed and linking to the current article."
+     }
     }
    ]
   },
@@ -89,6 +105,154 @@
    "@type": "CollectionPage",
    "name": "AmbiSecure Engineering Archive",
    "description": "AmbiSecure engineering archive (2017-2025)."
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -106,13 +270,13 @@
     <span class="eyebrow">Engineering archive</span>
     <h1>AmbiSecure engineering writing &mdash; 2017 through today.</h1>
     <p class="dek">These pieces trace how we have thought about FIDO, smart cards, MFA, transit, and IoT security across nearly a decade of engineering. They sit alongside our newer cornerstone writing &mdash; the field has evolved, our thinking has evolved, and where a piece is older we link forward to current coverage of the same topic.</p>
-    <p style="margin-top:10px;font-size:14px;color:var(--brand-grey);">Showing 24 earlier engineering entries, newest first. For the latest engineering writing, see <a href="/blog/" style="color:var(--brand-red);font-weight:600;">the main blog</a>.</p>
+    <p style="margin-top:10px;font-size:14px;color:var(--brand-grey);">Showing 24 earlier engineering entries, newest first. For the latest engineering writing, see <a href="/blog/" style="color:var(--brand-red);font-weight:600;">the main blog</a> &mdash; its newest 24 posts sit on <a href="/blog/">page 1</a> and the older modern posts on <a href="/blog/page/2/">page 2</a>.</p>
   </div>
 </section>
 
 <section>
   <div class="section-container">
-    <div class="section-head left"><h2 class="section-title">All archive entries</h2><span class="section-line"></span></div>
+    <div class="section-head left"><h2 class="section-title">What is in the archive?</h2><span class="section-line"></span></div>
     <div class="grid-3">
 <a href="/blog/archive/common-misconceptions-about-2fa/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7A4A00;font-weight:600;letter-spacing:0.5px;margin-bottom:6px;">2021-08-19</div><h3>Common Misconceptions about Two-Factor Authentication</h3><p>Unpacks the most common misconceptions about two-factor authentication — what 2FA actually defends against, where SMS-based codes fall short, and why hardware-rooted second factors hold up under credential-theft attacks.</p><div class="card-meta">Read article &rarr; <span style="opacity:0.6;font-size:11.5px;">MFA &middot; Cybersecurity</span></div></a>
 <a href="/blog/archive/single-sign-on-vs-mfa/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#7A4A00;font-weight:600;letter-spacing:0.5px;margin-bottom:6px;">2021-08-19</div><h3>Single Sign-On Vs. Multi-Factor Authentication</h3><p>Compares single sign-on with multi-factor authentication — when each model fits, where they overlap, and how SSO + MFA combine for enterprise identity.</p><div class="card-meta">Read article &rarr; <span style="opacity:0.6;font-size:11.5px;">MFA &middot; Identity</span></div></a>
@@ -159,6 +323,8 @@
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is in the AmbiSecure engineering archive?</h3><p style="margin:0;">Earlier AmbiSecure engineering posts from 2017–2025, kept for reference and clearly labelled as archive content.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is archive content still accurate?</h3><p style="margin:0;">Archive entries reflect thinking at the time of writing and link forward to current coverage where it exists; newer posts supersede them where topics have moved on.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Where is the current blog?</h3><p style="margin:0;">The current engineering blog, with the latest posts, is at /blog/.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why keep archive posts online rather than deleting them?</h3><p style="margin:0;">Because the background material is usually still sound even when the recommendations have moved on, and the URLs are referenced elsewhere. Each archive post is labelled and links forward to current coverage where it exists.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How can I tell whether an archive post has been superseded?</h3><p style="margin:0;">Each carries a dated historical-archive banner and, where the field has moved, a forward note summarising what changed and linking to the current article.</p></div>
   </div>
 </section>
 </main>

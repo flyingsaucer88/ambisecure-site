@@ -93,8 +93,189 @@
      "name": "Is anything uploaded?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "No \u2014 the certificates are parsed in your browser and never sent anywhere."
+      "text": "No — the certificates are parsed in your browser and never sent anywhere."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What order should certificates appear in a chain file?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Leaf first, then each issuer in turn, with the root usually omitted because clients already trust it. Servers commonly fail validation because the intermediate is missing or the order is reversed."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a cross-signed intermediate?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An intermediate certified by more than one root so that clients with different trust stores can both build a path. It is why a chain can look duplicated yet still be correct."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "Certificate Chain Viewer",
+   "description": "Visualise a TLS / PKI certificate chain from a multi-cert PEM bundle. Each cert summarised; chain links validated by issuer ↔ subject. Client-side.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/cert-chain/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
     }
    ]
   }
@@ -140,7 +321,7 @@
 <div class="tool-privacy">All parsing runs locally.</div>
 
 <section class="tool-reference">
-  <h2>Reading a chain</h2>
+  <h2>How do you read a certificate chain?</h2>
   <p>Convention: leaf first, then any intermediates, then the root last. Each cert&rsquo;s <code>Issuer</code> must equal the next cert&rsquo;s <code>Subject</code>. The root is self-signed (subject = issuer). This tool verifies the linkage by name only — actual signature verification is left to your TLS stack, which is the right place for it.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Spec</h3><p>RFC 5280, §6 (Certification Path Validation).</p></div><div class="ref-card"><h3>Companion tool</h3><p>Inspect each individual cert.</p><p><a href="/resources/tools/x509-viewer/">X.509 viewer →</a></p></div><div class="ref-card"><h3>Companion tool</h3><p>Compute fingerprints for pinning.</p><p><a href="/resources/tools/cert-fingerprint/">Cert fingerprint →</a></p></div>
@@ -157,6 +338,8 @@
   <details class="faq-q"><summary><h3>Why does my server report a missing or untrusted chain?</h3></summary><div class="faq-a"><p>Almost always a missing intermediate or wrong order. Servers must send leaf first, then intermediates; this tool shows whether each certificate's issuer matches the next certificate's subject.</p></div></details>
   <details class="faq-q"><summary><h3>Does this tool verify signatures or revocation?</h3></summary><div class="faq-a"><p>No. It checks structural linkage (subject/issuer) only. Signature, validity-period and CRL/OCSP checks are separate.</p></div></details>
   <details class="faq-q"><summary><h3>Is anything uploaded?</h3></summary><div class="faq-a"><p>No — the certificates are parsed in your browser and never sent anywhere.</p></div></details>
+  <details class="faq-q"><summary><h3>What order should certificates appear in a chain file?</h3></summary><div class="faq-a"><p>Leaf first, then each issuer in turn, with the root usually omitted because clients already trust it. Servers commonly fail validation because the intermediate is missing or the order is reversed.</p></div></details>
+  <details class="faq-q"><summary><h3>What is a cross-signed intermediate?</h3></summary><div class="faq-a"><p>An intermediate certified by more than one root so that clients with different trust stores can both build a path. It is why a chain can look duplicated yet still be correct.</p></div></details>
 </section>
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">

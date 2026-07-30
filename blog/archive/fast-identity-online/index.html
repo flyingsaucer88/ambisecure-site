@@ -79,6 +79,199 @@
      "name": "Ambimat Electronics"
     }
    }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What problem does FIDO solve?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It removes the shared secret. Instead of storing passwords or OTP seeds centrally, FIDO binds credentials to hardware that signs challenges directly, leaving nothing useful for an attacker to phish or exfiltrate."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between U2F, FIDO2 and resident credentials?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "U2F provides second-factor authentication with a physical key; FIDO2 extends the model to full passwordless authentication; resident credentials store the credential on the authenticator itself so it can identify the user without a prior username."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How has FIDO evolved since this post?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "FIDO 1.0 became FIDO2 with WebAuthn, and then passkeys. The underlying public-key model is the same one described here."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does central storage of secrets create the vulnerability FIDO removes?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Anything stored centrally — a password hash database or a set of OTP seeds — is a single target whose compromise affects every user at once. FIDO leaves the server holding only public keys, which are useless to an attacker."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does FIDO link a user's accounts across services?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. FIDO generates a distinct key pair per relying party, so credentials cannot be correlated between services, while still sparing the user from managing a separate secret for each one."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -131,7 +324,7 @@
 </ul>
 <h2>Conclusion</h2>
 <p>The OnePass USB Key implements FIDO2 to help organizations transition toward password-less authentication, reducing security risks while improving user experience. The technology requires no battery or network connectivity.</p>
-<h2>About Ambimat Electronics</h2>
+<h2>Who is Ambimat Electronics?</h2>
 <p>Close to 4 decades of design experience.</p>
     </article>
   </div>
@@ -158,6 +351,17 @@
 <a href="/blog/archive/what-is-passwordless-authentication/" class="card"><h3>What is Passwordless Authentication?</h3><p>A primer on passwordless authentication — what it actually means, how FIDO and biometrics replace shared secrets, and why hardware-bound credentials sit at the centre of the model.</p><div class="card-meta">Read article &rarr;</div></a>
 <a href="/blog/archive/is-passwordless-the-future/" class="card"><h3>Is Passwordless the future?</h3><p>Examines whether passwordless authentication can scale beyond pilots — the standards, attack-surface trade-offs, and operational realities that decide its trajectory.</p><div class="card-meta">Read article &rarr;</div></a>
     </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What problem does FIDO solve?</h3><p style="margin:0;">It removes the shared secret. Instead of storing passwords or OTP seeds centrally, FIDO binds credentials to hardware that signs challenges directly, leaving nothing useful for an attacker to phish or exfiltrate.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between U2F, FIDO2 and resident credentials?</h3><p style="margin:0;">U2F provides second-factor authentication with a physical key; FIDO2 extends the model to full passwordless authentication; resident credentials store the credential on the authenticator itself so it can identify the user without a prior username.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How has FIDO evolved since this post?</h3><p style="margin:0;">FIDO 1.0 became FIDO2 with WebAuthn, and then passkeys. The underlying public-key model is the same one described here.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does central storage of secrets create the vulnerability FIDO removes?</h3><p style="margin:0;">Anything stored centrally — a password hash database or a set of OTP seeds — is a single target whose compromise affects every user at once. FIDO leaves the server holding only public keys, which are useless to an attacker.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does FIDO link a user's accounts across services?</h3><p style="margin:0;">No. FIDO generates a distinct key pair per relying party, so credentials cannot be correlated between services, while still sparing the user from managing a separate secret for each one.</p></div>
   </div>
 </section>
 

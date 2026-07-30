@@ -32,55 +32,254 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@graph": [
-{
-"@type": "BreadcrumbList",
-"itemListElement": [
-{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
-{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
-{ "@type": "ListItem", "position": 3, "name": "Checksum Calculator", "item": "https://ambisecure.ambimat.com/resources/tools/checksum/" }
-]
-},
-{
-"@type": "SoftwareApplication",
-"name": "Checksum Calculator",
-"applicationCategory": "DeveloperApplication",
-"operatingSystem": "Web",
-"url": "https://ambisecure.ambimat.com/resources/tools/checksum/",
-"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-},
-{
-"@type": "FAQPage",
-"mainEntity": [
-{
-"@type": "Question",
-"name": "Which checksum should I use to detect errors?",
-"acceptedAnswer": { "@type": "Answer", "text": "It depends on the threat. A plain 8-bit additive sum or XOR (LRC) catches single-bit and most burst errors and is trivial to compute on tiny micro-controllers, but it misses reordering and pairs of cancelling errors. Fletcher-16/32 and Adler-32 add a positional component so byte transpositions are detected, at very low cost. For Internet protocols the RFC 1071 16-bit one's-complement checksum is standard. None of these are cryptographic — for tamper resistance use a hash or a keyed MAC, not a checksum." }
-},
-{
-"@type": "Question",
-"name": "What is the difference between a one's-complement and two's-complement checksum?",
-"acceptedAnswer": { "@type": "Answer", "text": "Both are derived from the simple byte sum. The one's-complement checksum is the bitwise NOT of the truncated sum, so the sum plus the checksum equals all-ones. The two's-complement checksum is the arithmetic negation of the sum, so the sum plus the checksum wraps to zero — appending it makes the total of all bytes equal zero, which is convenient for verification. This tool reports both over an 8-bit accumulator." }
-},
-{
-"@type": "Question",
-"name": "Why does endianness matter for the 16-bit and 32-bit sums?",
-"acceptedAnswer": { "@type": "Answer", "text": "When bytes are grouped into 16-bit or 32-bit words before adding, the byte order inside each word changes the numeric value of every word and therefore the sum. Little-endian and big-endian grouping give different results for the same bytes. The 8-bit sum, XOR, Fletcher, Adler-32, and the Internet checksum are defined byte-by-byte or on a fixed word order, so the endian toggle does not change them; it only affects the 16-bit and 32-bit additive sums." }
-},
-{
-"@type": "Question",
-"name": "Are these checksums safe against deliberate tampering?",
-"acceptedAnswer": { "@type": "Answer", "text": "No. Sum, XOR, Fletcher, Adler-32, and the Internet checksum are integrity checks for accidental corruption only. An attacker can append or adjust bytes to force any target value, so they provide no authentication. For tamper detection use a cryptographic hash such as SHA-256, and for authenticity use a keyed MAC such as HMAC or CMAC verified by a secure element." }
-},
-{
-"@type": "Question",
-"name": "Does any of my data leave the browser?",
-"acceptedAnswer": { "@type": "Answer", "text": "No. Every checksum on this page is computed locally in JavaScript. Nothing you type or paste is uploaded, logged, or sent to a server, so it is safe to checksum sensitive payloads, firmware images, or APDU scripts." }
-}
-]
-}
-]
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "https://ambisecure.ambimat.com/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Checksum Calculator",
+     "item": "https://ambisecure.ambimat.com/resources/tools/checksum/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "Checksum Calculator",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/checksum/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Which checksum should I use to detect errors?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It depends on the threat. A plain 8-bit additive sum or XOR (LRC) catches single-bit and most burst errors and is trivial to compute on tiny micro-controllers, but it misses reordering and pairs of cancelling errors. Fletcher-16/32 and Adler-32 add a positional component so byte transpositions are detected, at very low cost. For Internet protocols the RFC 1071 16-bit one's-complement checksum is standard. None of these are cryptographic — for tamper resistance use a hash or a keyed MAC, not a checksum."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between a one's-complement and two's-complement checksum?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Both are derived from the simple byte sum. The one's-complement checksum is the bitwise NOT of the truncated sum, so the sum plus the checksum equals all-ones. The two's-complement checksum is the arithmetic negation of the sum, so the sum plus the checksum wraps to zero — appending it makes the total of all bytes equal zero, which is convenient for verification. This tool reports both over an 8-bit accumulator."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does endianness matter for the 16-bit and 32-bit sums?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "When bytes are grouped into 16-bit or 32-bit words before adding, the byte order inside each word changes the numeric value of every word and therefore the sum. Little-endian and big-endian grouping give different results for the same bytes. The 8-bit sum, XOR, Fletcher, Adler-32, and the Internet checksum are defined byte-by-byte or on a fixed word order, so the endian toggle does not change them; it only affects the 16-bit and 32-bit additive sums."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Are these checksums safe against deliberate tampering?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Sum, XOR, Fletcher, Adler-32, and the Internet checksum are integrity checks for accidental corruption only. An attacker can append or adjust bytes to force any target value, so they provide no authentication. For tamper detection use a cryptographic hash such as SHA-256, and for authenticity use a keyed MAC such as HMAC or CMAC verified by a secure element."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does any of my data leave the browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Every checksum on this page is computed locally in JavaScript. Nothing you type or paste is uploaded, logged, or sent to a server, so it is safe to checksum sensitive payloads, firmware images, or APDU scripts."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "Checksum Calculator",
+   "description": "Compute 8/16/32-bit sums, one’s/two’s-complement, XOR, Fletcher-16/32, Adler-32, and the Internet (RFC 1071) checksum over text or hex — all client-side with endian options.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/checksum/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
 }
 </script>
 </head>
@@ -171,6 +370,18 @@
     <ul><li><a href="/resources/tools/crc-calculator/">CRC Calculator</a></li><li><a href="/resources/tools/lrc-calculator/">LRC Calculator</a></li><li><a href="/resources/tools/sha-hash-generator/">SHA Hash Generator</a></li></ul>
   </div>
 </nav>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Which checksum should I use to detect errors?</h3><p style="margin:0;">It depends on the threat. A plain 8-bit additive sum or XOR (LRC) catches single-bit and most burst errors and is trivial to compute on tiny micro-controllers, but it misses reordering and pairs of cancelling errors. Fletcher-16/32 and Adler-32 add a positional component so byte transpositions are detected, at very low cost. For Internet protocols the RFC 1071 16-bit one's-complement checksum is standard. None of these are cryptographic — for tamper resistance use a hash or a keyed MAC, not a checksum.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between a one's-complement and two's-complement checksum?</h3><p style="margin:0;">Both are derived from the simple byte sum. The one's-complement checksum is the bitwise NOT of the truncated sum, so the sum plus the checksum equals all-ones. The two's-complement checksum is the arithmetic negation of the sum, so the sum plus the checksum wraps to zero — appending it makes the total of all bytes equal zero, which is convenient for verification. This tool reports both over an 8-bit accumulator.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does endianness matter for the 16-bit and 32-bit sums?</h3><p style="margin:0;">When bytes are grouped into 16-bit or 32-bit words before adding, the byte order inside each word changes the numeric value of every word and therefore the sum. Little-endian and big-endian grouping give different results for the same bytes. The 8-bit sum, XOR, Fletcher, Adler-32, and the Internet checksum are defined byte-by-byte or on a fixed word order, so the endian toggle does not change them; it only affects the 16-bit and 32-bit additive sums.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Are these checksums safe against deliberate tampering?</h3><p style="margin:0;">No. Sum, XOR, Fletcher, Adler-32, and the Internet checksum are integrity checks for accidental corruption only. An attacker can append or adjust bytes to force any target value, so they provide no authentication. For tamper detection use a cryptographic hash such as SHA-256, and for authenticity use a keyed MAC such as HMAC or CMAC verified by a secure element.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does any of my data leave the browser?</h3><p style="margin:0;">No. Every checksum on this page is computed locally in JavaScript. Nothing you type or paste is uploaded, logged, or sent to a server, so it is safe to checksum sensitive payloads, firmware images, or APDU scripts.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

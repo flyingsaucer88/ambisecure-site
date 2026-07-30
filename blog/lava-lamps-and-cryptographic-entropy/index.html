@@ -31,7 +31,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
 <meta name="theme-color" content="#E3222A" />
-<meta name="audit-yoast-word-max" content="3500" />
+<meta name="audit-yoast-word-max" content="4300" />
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -39,34 +39,260 @@
   {
    "@type": "FAQPage",
    "mainEntity": [
-    {"@type":"Question","name":"Are lava lamps truly random?","acceptedAnswer":{"@type":"Answer","text":"A lava lamp is a chaotic physical system: wax convection driven by heat is sensitive to initial conditions, so the position of the blobs at any future instant is computationally infeasible to predict from outside observation. That makes the photographed image a high-entropy input. The randomness lives in the underlying thermodynamics, not in the lamps themselves; any sufficiently chaotic physical process can serve the same role."}},
-    {"@type":"Question","name":"What is entropy in cryptography?","acceptedAnswer":{"@type":"Answer","text":"Entropy is the measure of unpredictability in a source of bits. A coin flip provides about one bit of entropy per flip if the coin is fair; a counter that increments by one provides zero entropy. Cryptographic keys, nonces, and session-establishment values must be drawn from sources with full entropy — otherwise an attacker who learns the source's bias can narrow the keyspace and brute-force what should have been infeasible."}},
-    {"@type":"Question","name":"Can software alone generate true randomness?","acceptedAnswer":{"@type":"Answer","text":"No. A CPU executing deterministic instructions on deterministic inputs produces deterministic outputs. Software randomness without hardware support has to scavenge for unpredictable inputs: interrupt timings, network packet arrival jitter, mouse movement on desktop systems. These can be enough on a busy host, and they collapse to almost zero on a freshly-booted embedded device. That is why production cryptography depends on hardware-backed entropy sources."}},
-    {"@type":"Question","name":"What is a TRNG?","acceptedAnswer":{"@type":"Answer","text":"A True Random Number Generator. A hardware circuit that samples a physical process — thermal noise across a resistor, jitter between independent oscillators, avalanche noise across a reverse-biased diode, or quantum-level effects — and extracts random bits from it. TRNGs sit inside secure-element silicon, TPMs, HSMs, and modern CPU instruction sets (Intel RDRAND, ARM RNDR). The output is whitened and tested before being used to seed cryptographic generators."}},
-    {"@type":"Question","name":"Why do HSMs need entropy?","acceptedAnswer":{"@type":"Answer","text":"An HSM generates keys, signs messages, and establishes secure sessions on behalf of operators who trust it as a root of cryptographic operations. Every one of those operations requires unpredictable randomness: the key-generation step needs entropy to pick a secret; the signing step needs entropy for ephemeral values in ECDSA / EdDSA; session establishment needs entropy for the ephemeral key contributions. An HSM with weak entropy is an HSM whose keys are predictable in ways that defeat the certifications it carries."}},
-    {"@type":"Question","name":"How do secure elements generate random numbers?","acceptedAnswer":{"@type":"Answer","text":"Secure-element silicon ships with an on-chip TRNG circuit that samples thermal or oscillator noise inside the tamper boundary. The output is whitened by an on-chip extractor (typically a hardware AES or SHA core) and exposed to applets through an APDU such as GET CHALLENGE. The randomness never leaves the boundary in raw form, and the TRNG is part of what Common Criteria evaluations test at chip level."}},
-    {"@type":"Question","name":"What happens if entropy is weak?","acceptedAnswer":{"@type":"Answer","text":"Predictable keys. The historical record is full of incidents — Debian's 2008 OpenSSL package shipped with only 32 768 distinct possible keys because of a removed initialisation line; the 2012 'factoring as a service' research showed that thousands of TLS certificates and SSH host keys on the internet shared prime factors because they were generated with insufficient entropy on freshly-booted embedded devices. Weak entropy is not an academic problem; it is the failure mode that ends fleets."}},
-    {"@type":"Question","name":"Why does TLS depend on randomness?","acceptedAnswer":{"@type":"Answer","text":"Every TLS handshake includes random nonces from both client and server, derives ephemeral keys from random ECDH contributions, and uses random padding in record framing. The session keys protecting the connection are derived from those random inputs. If either end uses predictable randomness, an attacker who recovered the predictability could derive the session keys and decrypt the traffic — without ever breaking the underlying cryptography."}}
+    {
+     "@type": "Question",
+     "name": "Are lava lamps truly random?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A lava lamp is a chaotic physical system: wax convection driven by heat is sensitive to initial conditions, so the position of the blobs at any future instant is computationally infeasible to predict from outside observation. That makes the photographed image a high-entropy input. The randomness lives in the underlying thermodynamics, not in the lamps themselves; any sufficiently chaotic physical process can serve the same role."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is entropy in cryptography?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Entropy is the measure of unpredictability in a source of bits. A coin flip provides about one bit of entropy per flip if the coin is fair; a counter that increments by one provides zero entropy. Cryptographic keys, nonces, and session-establishment values must be drawn from sources with full entropy — otherwise an attacker who learns the source's bias can narrow the keyspace and brute-force what should have been infeasible."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can software alone generate true randomness?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. A CPU executing deterministic instructions on deterministic inputs produces deterministic outputs. Software randomness without hardware support has to scavenge for unpredictable inputs: interrupt timings, network packet arrival jitter, mouse movement on desktop systems. These can be enough on a busy host, and they collapse to almost zero on a freshly-booted embedded device. That is why production cryptography depends on hardware-backed entropy sources."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a TRNG?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A True Random Number Generator. A hardware circuit that samples a physical process — thermal noise across a resistor, jitter between independent oscillators, avalanche noise across a reverse-biased diode, or quantum-level effects — and extracts random bits from it. TRNGs sit inside secure-element silicon, TPMs, HSMs, and modern CPU instruction sets (Intel RDRAND, ARM RNDR). The output is whitened and tested before being used to seed cryptographic generators."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why do HSMs need entropy?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An HSM generates keys, signs messages, and establishes secure sessions on behalf of operators who trust it as a root of cryptographic operations. Every one of those operations requires unpredictable randomness: the key-generation step needs entropy to pick a secret; the signing step needs entropy for ephemeral values in ECDSA / EdDSA; session establishment needs entropy for the ephemeral key contributions. An HSM with weak entropy is an HSM whose keys are predictable in ways that defeat the certifications it carries."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do secure elements generate random numbers?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Secure-element silicon ships with an on-chip TRNG circuit that samples thermal or oscillator noise inside the tamper boundary. The output is whitened by an on-chip extractor (typically a hardware AES or SHA core) and exposed to applets through an APDU such as GET CHALLENGE. The randomness never leaves the boundary in raw form, and the TRNG is part of what Common Criteria evaluations test at chip level."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens if entropy is weak?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Predictable keys. The historical record is full of incidents — Debian's 2008 OpenSSL package shipped with only 32 768 distinct possible keys because of a removed initialisation line; the 2012 'factoring as a service' research showed that thousands of TLS certificates and SSH host keys on the internet shared prime factors because they were generated with insufficient entropy on freshly-booted embedded devices. Weak entropy is not an academic problem; it is the failure mode that ends fleets."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does TLS depend on randomness?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Every TLS handshake includes random nonces from both client and server, derives ephemeral keys from random ECDH contributions, and uses random padding in record framing. The session keys protecting the connection are derived from those random inputs. If either end uses predictable randomness, an attacker who recovered the predictability could derive the session keys and decrypt the traffic — without ever breaking the underlying cryptography."
+     }
+    }
    ]
   },
   {
    "@type": "BreadcrumbList",
    "itemListElement": [
-    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
-    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
-    {"@type":"ListItem","position":3,"name":"Lava Lamps and Cryptographic Entropy","item":"https://ambisecure.ambimat.com/blog/lava-lamps-and-cryptographic-entropy/"}
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Lava Lamps and Cryptographic Entropy",
+     "item": "https://ambisecure.ambimat.com/blog/lava-lamps-and-cryptographic-entropy/"
+    }
    ]
   },
   {
    "@type": "Article",
    "headline": "Lava Lamps and Cryptographic Entropy: Inside the Wall of Entropy",
    "description": "How Cloudflare's 'Wall of Entropy' produces randomness — and why hardware TRNGs in secure-element silicon underpin TLS, FIDO, V2X PKI, and eSIM. An engineering-grade walk-through of cryptographic entropy from physical sources through CSPRNG to deployed device keys.",
-   "author": {"@type":"Organization","name":"AmbiSecure Engineering"},
-   "publisher": {"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
    "datePublished": "2026-05-28",
    "dateModified": "2026-05-28",
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/lava-lamps-and-cryptographic-entropy/",
    "keywords": "cryptographic entropy, true random number generator, TRNG, CSPRNG, Cloudflare Wall of Entropy, LavaRand, lava lamp randomness, hardware root of trust, secure element TRNG, HSM entropy, TLS randomness, FIDO key generation, V2X key generation, eSIM provisioning entropy"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -299,6 +525,21 @@
       </div>
       <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a><a href="/technologies/secure-elements/" class="btn btn-outline" style="margin-left:8px;">Secure elements</a></div>
     </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Are lava lamps truly random?</h3><p style="margin:0;">A lava lamp is a chaotic physical system: wax convection driven by heat is sensitive to initial conditions, so the position of the blobs at any future instant is computationally infeasible to predict from outside observation. That makes the photographed image a high-entropy input. The randomness lives in the underlying thermodynamics, not in the lamps themselves; any sufficiently chaotic physical process can serve the same role.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is entropy in cryptography?</h3><p style="margin:0;">Entropy is the measure of unpredictability in a source of bits. A coin flip provides about one bit of entropy per flip if the coin is fair; a counter that increments by one provides zero entropy. Cryptographic keys, nonces, and session-establishment values must be drawn from sources with full entropy — otherwise an attacker who learns the source's bias can narrow the keyspace and brute-force what should have been infeasible.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can software alone generate true randomness?</h3><p style="margin:0;">No. A CPU executing deterministic instructions on deterministic inputs produces deterministic outputs. Software randomness without hardware support has to scavenge for unpredictable inputs: interrupt timings, network packet arrival jitter, mouse movement on desktop systems. These can be enough on a busy host, and they collapse to almost zero on a freshly-booted embedded device. That is why production cryptography depends on hardware-backed entropy sources.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is a TRNG?</h3><p style="margin:0;">A True Random Number Generator. A hardware circuit that samples a physical process — thermal noise across a resistor, jitter between independent oscillators, avalanche noise across a reverse-biased diode, or quantum-level effects — and extracts random bits from it. TRNGs sit inside secure-element silicon, TPMs, HSMs, and modern CPU instruction sets (Intel RDRAND, ARM RNDR). The output is whitened and tested before being used to seed cryptographic generators.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why do HSMs need entropy?</h3><p style="margin:0;">An HSM generates keys, signs messages, and establishes secure sessions on behalf of operators who trust it as a root of cryptographic operations. Every one of those operations requires unpredictable randomness: the key-generation step needs entropy to pick a secret; the signing step needs entropy for ephemeral values in ECDSA / EdDSA; session establishment needs entropy for the ephemeral key contributions. An HSM with weak entropy is an HSM whose keys are predictable in ways that defeat the certifications it carries.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How do secure elements generate random numbers?</h3><p style="margin:0;">Secure-element silicon ships with an on-chip TRNG circuit that samples thermal or oscillator noise inside the tamper boundary. The output is whitened by an on-chip extractor (typically a hardware AES or SHA core) and exposed to applets through an APDU such as GET CHALLENGE. The randomness never leaves the boundary in raw form, and the TRNG is part of what Common Criteria evaluations test at chip level.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What happens if entropy is weak?</h3><p style="margin:0;">Predictable keys. The historical record is full of incidents — Debian's 2008 OpenSSL package shipped with only 32 768 distinct possible keys because of a removed initialisation line; the 2012 'factoring as a service' research showed that thousands of TLS certificates and SSH host keys on the internet shared prime factors because they were generated with insufficient entropy on freshly-booted embedded devices. Weak entropy is not an academic problem; it is the failure mode that ends fleets.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does TLS depend on randomness?</h3><p style="margin:0;">Every TLS handshake includes random nonces from both client and server, derives ephemeral keys from random ECDH contributions, and uses random padding in record framing. The session keys protecting the connection are derived from those random inputs. If either end uses predictable randomness, an attacker who recovered the predictability could derive the session keys and decrypt the traffic — without ever breaking the underlying cryptography.</p></div>
   </div>
 </section>
 

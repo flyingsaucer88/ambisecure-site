@@ -32,55 +32,254 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@graph": [
-{
-"@type": "BreadcrumbList",
-"itemListElement": [
-{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
-{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
-{ "@type": "ListItem", "position": 3, "name": "JSON Formatter and Minifier", "item": "https://ambisecure.ambimat.com/resources/tools/json-formatter/" }
-]
-},
-{
-"@type": "SoftwareApplication",
-"name": "JSON Formatter and Minifier",
-"applicationCategory": "DeveloperApplication",
-"operatingSystem": "Web",
-"url": "https://ambisecure.ambimat.com/resources/tools/json-formatter/",
-"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-},
-{
-"@type": "FAQPage",
-"mainEntity": [
-{
-"@type": "Question",
-"name": "What is the difference between pretty-printing and minifying JSON?",
-"acceptedAnswer": { "@type": "Answer", "text": "Pretty-printing re-emits the JSON with newlines and indentation so a human can read the structure. Minifying strips every optional space and newline to produce the smallest equivalent payload for transport or storage. Both parse the input first, so both also act as a validity check: invalid JSON cannot be formatted at all. The decoded value is identical either way." }
-},
-{
-"@type": "Question",
-"name": "Does sorting keys change the meaning of my JSON?",
-"acceptedAnswer": { "@type": "Answer", "text": "No. JSON objects are unordered by specification, so reordering keys produces an equivalent document. Sorting keys recursively gives a deterministic, canonical-looking output that is easy to diff across two payloads or commits. It does not reorder array elements, because arrays are ordered and their order is significant." }
-},
-{
-"@type": "Question",
-"name": "How does the line and column in an error get calculated?",
-"acceptedAnswer": { "@type": "Answer", "text": "The browser's JSON.parse reports a character position for a syntax error. This tool reads that position from the error message and walks the input up to that offset, counting newlines to derive a one-based line number and the column within that line. When a position is not available it falls back to the raw browser message so you still see why parsing failed." }
-},
-{
-"@type": "Question",
-"name": "Should I use this tool or the JSON validator?",
-"acceptedAnswer": { "@type": "Answer", "text": "Use this formatter when you want to transform output — pretty-print, minify, or sort keys — and copy or download the result. Use the JSON validator when you need to check a document against a JSON Schema or report multiple structural findings. Both run entirely in your browser." }
-},
-{
-"@type": "Question",
-"name": "Does anything I paste leave my browser?",
-"acceptedAnswer": { "@type": "Answer", "text": "No. All parsing, formatting, minifying, and key sorting run locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server, so it is safe to format JSON that contains tokens, keys, or other sensitive fields." }
-}
-]
-}
-]
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "https://ambisecure.ambimat.com/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "JSON Formatter and Minifier",
+     "item": "https://ambisecure.ambimat.com/resources/tools/json-formatter/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "JSON Formatter and Minifier",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/json-formatter/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is the difference between pretty-printing and minifying JSON?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Pretty-printing re-emits the JSON with newlines and indentation so a human can read the structure. Minifying strips every optional space and newline to produce the smallest equivalent payload for transport or storage. Both parse the input first, so both also act as a validity check: invalid JSON cannot be formatted at all. The decoded value is identical either way."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does sorting keys change the meaning of my JSON?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. JSON objects are unordered by specification, so reordering keys produces an equivalent document. Sorting keys recursively gives a deterministic, canonical-looking output that is easy to diff across two payloads or commits. It does not reorder array elements, because arrays are ordered and their order is significant."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How does the line and column in an error get calculated?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The browser's JSON.parse reports a character position for a syntax error. This tool reads that position from the error message and walks the input up to that offset, counting newlines to derive a one-based line number and the column within that line. When a position is not available it falls back to the raw browser message so you still see why parsing failed."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Should I use this tool or the JSON validator?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Use this formatter when you want to transform output — pretty-print, minify, or sort keys — and copy or download the result. Use the JSON validator when you need to check a document against a JSON Schema or report multiple structural findings. Both run entirely in your browser."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does anything I paste leave my browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. All parsing, formatting, minifying, and key sorting run locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server, so it is safe to format JSON that contains tokens, keys, or other sensitive fields."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "JSON Formatter and Minifier",
+   "description": "Pretty-print, minify, and sort-key JSON in your browser with 2/4/tab indentation and precise error location. Client-side, copy and download. Pairs with the JSON validator.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/json-formatter/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
 }
 </script>
 </head>
@@ -169,6 +368,18 @@
     <ul><li><a href="/resources/tools/json-validator/">JSON Validator</a></li><li><a href="/resources/tools/xml-formatter/">XML Formatter and Validator</a></li><li><a href="/resources/tools/binary-calculator/">Binary Calculator</a></li></ul>
   </div>
 </nav>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between pretty-printing and minifying JSON?</h3><p style="margin:0;">Pretty-printing re-emits the JSON with newlines and indentation so a human can read the structure. Minifying strips every optional space and newline to produce the smallest equivalent payload for transport or storage. Both parse the input first, so both also act as a validity check: invalid JSON cannot be formatted at all. The decoded value is identical either way.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does sorting keys change the meaning of my JSON?</h3><p style="margin:0;">No. JSON objects are unordered by specification, so reordering keys produces an equivalent document. Sorting keys recursively gives a deterministic, canonical-looking output that is easy to diff across two payloads or commits. It does not reorder array elements, because arrays are ordered and their order is significant.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How does the line and column in an error get calculated?</h3><p style="margin:0;">The browser's JSON.parse reports a character position for a syntax error. This tool reads that position from the error message and walks the input up to that offset, counting newlines to derive a one-based line number and the column within that line. When a position is not available it falls back to the raw browser message so you still see why parsing failed.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Should I use this tool or the JSON validator?</h3><p style="margin:0;">Use this formatter when you want to transform output — pretty-print, minify, or sort keys — and copy or download the result. Use the JSON validator when you need to check a document against a JSON Schema or report multiple structural findings. Both run entirely in your browser.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does anything I paste leave my browser?</h3><p style="margin:0;">No. All parsing, formatting, minifying, and key sorting run locally in JavaScript on this page. Nothing is uploaded, logged, or sent to a server, so it is safe to format JSON that contains tokens, keys, or other sensitive fields.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

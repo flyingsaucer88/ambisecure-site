@@ -32,55 +32,254 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@graph": [
-{
-"@type": "BreadcrumbList",
-"itemListElement": [
-{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ambisecure.ambimat.com/" },
-{ "@type": "ListItem", "position": 2, "name": "Resources", "item": "https://ambisecure.ambimat.com/resources/" },
-{ "@type": "ListItem", "position": 3, "name": "CRC Calculator", "item": "https://ambisecure.ambimat.com/resources/tools/crc-calculator/" }
-]
-},
-{
-"@type": "SoftwareApplication",
-"name": "CRC Calculator",
-"applicationCategory": "DeveloperApplication",
-"operatingSystem": "Web",
-"url": "https://ambisecure.ambimat.com/resources/tools/crc-calculator/",
-"offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-},
-{
-"@type": "FAQPage",
-"mainEntity": [
-{
-"@type": "Question",
-"name": "What do width, poly, init, refin, refout and xorout mean?",
-"acceptedAnswer": { "@type": "Answer", "text": "These six parameters fully define a CRC variant (the Rocksoft / reveng model). Width is the size of the CRC register in bits. Poly is the generator polynomial in normal (non-reflected) form. Init is the starting value of the register. RefIn reflects each input byte before it is processed, and RefOut reflects the final register. Xorout is XORed into the result at the very end. Two CRCs with the same polynomial but different reflection or xorout produce completely different values." }
-},
-{
-"@type": "Question",
-"name": "What is the check value and why verify it?",
-"acceptedAnswer": { "@type": "Answer", "text": "The check value is the CRC of the nine ASCII bytes \"123456789\" under a given parameter set, as published in Greg Cook's catalogue. It is a fingerprint for a CRC definition. When you pick a preset this tool recomputes that value with its own engine and shows a pass or fail badge, so you can confirm the implementation and the parameters match the documented algorithm before trusting any other result." }
-},
-{
-"@type": "Question",
-"name": "Why does CRC-32 of the same data differ between two libraries?",
-"acceptedAnswer": { "@type": "Answer", "text": "Almost always because of reflection or final XOR, not the polynomial. The common zlib CRC-32 reflects input and output and XORs the result with all ones; CRC-32/BZIP2 uses the same polynomial but does not reflect; CRC-32/MPEG-2 drops the final XOR. Always pin down all six parameters, not just the polynomial, when reproducing a value from another stack." }
-},
-{
-"@type": "Question",
-"name": "Can this tool handle non-standard widths like CRC-5 or CRC-24?",
-"acceptedAnswer": { "@type": "Answer", "text": "Yes. The engine is a generic bit-by-bit implementation using BigInt, so any width from 3 to 64 bits works, including CRC-3/GSM, CRC-5/USB, CRC-7/MMC, CRC-15/CAN, CRC-24 and the 64-bit variants. Pick a preset or switch to custom mode and set the width, polynomial, init, reflection flags and xorout yourself." }
-},
-{
-"@type": "Question",
-"name": "Does any of my input leave the browser?",
-"acceptedAnswer": { "@type": "Answer", "text": "No. The CRC is computed entirely in JavaScript on this page. Nothing you type as text, hex, or binary is uploaded, logged, or sent to a server, so it is safe for proprietary frame layouts and firmware payloads." }
-}
-]
-}
-]
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Resources",
+     "item": "https://ambisecure.ambimat.com/resources/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "CRC Calculator",
+     "item": "https://ambisecure.ambimat.com/resources/tools/crc-calculator/"
+    }
+   ]
+  },
+  {
+   "@type": "SoftwareApplication",
+   "name": "CRC Calculator",
+   "applicationCategory": "DeveloperApplication",
+   "operatingSystem": "Web",
+   "url": "https://ambisecure.ambimat.com/resources/tools/crc-calculator/",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What do width, poly, init, refin, refout and xorout mean?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "These six parameters fully define a CRC variant (the Rocksoft / reveng model). Width is the size of the CRC register in bits. Poly is the generator polynomial in normal (non-reflected) form. Init is the starting value of the register. RefIn reflects each input byte before it is processed, and RefOut reflects the final register. Xorout is XORed into the result at the very end. Two CRCs with the same polynomial but different reflection or xorout produce completely different values."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the check value and why verify it?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The check value is the CRC of the nine ASCII bytes \"123456789\" under a given parameter set, as published in Greg Cook's catalogue. It is a fingerprint for a CRC definition. When you pick a preset this tool recomputes that value with its own engine and shows a pass or fail badge, so you can confirm the implementation and the parameters match the documented algorithm before trusting any other result."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does CRC-32 of the same data differ between two libraries?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Almost always because of reflection or final XOR, not the polynomial. The common zlib CRC-32 reflects input and output and XORs the result with all ones; CRC-32/BZIP2 uses the same polynomial but does not reflect; CRC-32/MPEG-2 drops the final XOR. Always pin down all six parameters, not just the polynomial, when reproducing a value from another stack."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can this tool handle non-standard widths like CRC-5 or CRC-24?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. The engine is a generic bit-by-bit implementation using BigInt, so any width from 3 to 64 bits works, including CRC-3/GSM, CRC-5/USB, CRC-7/MMC, CRC-15/CAN, CRC-24 and the 64-bit variants. Pick a preset or switch to custom mode and set the width, polynomial, init, reflection flags and xorout yourself."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does any of my input leave the browser?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. The CRC is computed entirely in JavaScript on this page. Nothing you type as text, hex, or binary is uploaded, logged, or sent to a server, so it is safe for proprietary frame layouts and firmware payloads."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "CRC Calculator",
+   "description": "Compute CRCs with 70+ catalogue presets (CRC-8/16/32/64, CCITT, XMODEM, CRC-32C…) or a fully custom width/poly/init/refin/refout/xorout. Verifies the 0x check value. Client-side.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/crc-calculator/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
 }
 </script>
 </head>
@@ -188,6 +387,18 @@
     <ul><li><a href="/resources/tools/lrc-calculator/">LRC Calculator</a></li><li><a href="/resources/tools/sha-hash-generator/">SHA Hash Generator</a></li><li><a href="/resources/tools/ecc-curve-reference/">ECC Curve Reference</a></li></ul>
   </div>
 </nav>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What do width, poly, init, refin, refout and xorout mean?</h3><p style="margin:0;">These six parameters fully define a CRC variant (the Rocksoft / reveng model). Width is the size of the CRC register in bits. Poly is the generator polynomial in normal (non-reflected) form. Init is the starting value of the register. RefIn reflects each input byte before it is processed, and RefOut reflects the final register. Xorout is XORed into the result at the very end. Two CRCs with the same polynomial but different reflection or xorout produce completely different values.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the check value and why verify it?</h3><p style="margin:0;">The check value is the CRC of the nine ASCII bytes "123456789" under a given parameter set, as published in Greg Cook's catalogue. It is a fingerprint for a CRC definition. When you pick a preset this tool recomputes that value with its own engine and shows a pass or fail badge, so you can confirm the implementation and the parameters match the documented algorithm before trusting any other result.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does CRC-32 of the same data differ between two libraries?</h3><p style="margin:0;">Almost always because of reflection or final XOR, not the polynomial. The common zlib CRC-32 reflects input and output and XORs the result with all ones; CRC-32/BZIP2 uses the same polynomial but does not reflect; CRC-32/MPEG-2 drops the final XOR. Always pin down all six parameters, not just the polynomial, when reproducing a value from another stack.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can this tool handle non-standard widths like CRC-5 or CRC-24?</h3><p style="margin:0;">Yes. The engine is a generic bit-by-bit implementation using BigInt, so any width from 3 to 64 bits works, including CRC-3/GSM, CRC-5/USB, CRC-7/MMC, CRC-15/CAN, CRC-24 and the 64-bit variants. Pick a preset or switch to custom mode and set the width, polynomial, init, reflection flags and xorout yourself.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does any of my input leave the browser?</h3><p style="margin:0;">No. The CRC is computed entirely in JavaScript on this page. Nothing you type as text, hex, or binary is uploaded, logged, or sent to a server, so it is safe for proprietary frame layouts and firmware payloads.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

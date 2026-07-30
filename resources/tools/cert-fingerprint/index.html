@@ -74,7 +74,7 @@
    "mainEntity": [
     {
      "@type": "Question",
-     "name": "SHA-1 or SHA-256 \u2014 which should I use?",
+     "name": "SHA-1 or SHA-256 — which should I use?",
      "acceptedAnswer": {
       "@type": "Answer",
       "text": "SHA-256. SHA-1 is deprecated and collision-prone; only use a SHA-1 fingerprint when an older system explicitly requires it."
@@ -95,6 +95,187 @@
       "@type": "Answer",
       "text": "No. The hash is computed in your browser."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What exactly is being hashed to produce a fingerprint?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The complete DER encoding of the certificate, not the PEM text and not the public key alone. That is why the same certificate always produces the same fingerprint regardless of how it was stored."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is certificate pinning and how does a fingerprint relate to it?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Pinning hard-codes an expected certificate or key so that any substitution is rejected even if signed by a trusted CA. Fingerprints are the value usually pinned, which is why they must be compared exactly."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "Certificate Fingerprint Generator",
+   "description": "Compute SHA-1, SHA-256, SHA-384, and SHA-512 fingerprints of an X.509 certificate. Uses Web Crypto. Fully client-side.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/cert-fingerprint/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
     }
    ]
   }
@@ -140,7 +321,7 @@
 <div class="tool-privacy">All hashing runs in your browser via the Web Crypto API.</div>
 
 <section class="tool-reference">
-  <h2>About cert fingerprints</h2>
+  <h2>What is a certificate fingerprint?</h2>
   <p>A "fingerprint" or "thumbprint" of an X.509 certificate is the hash of its DER-encoded bytes. SHA-256 is the modern default; SHA-1 is shown for compatibility with older systems but should not be used for new pinning. Always verify which algorithm a remote system expects.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Algorithms</h3><p>SHA-1 (deprecated for security), SHA-256, SHA-384, SHA-512 — all from Web Crypto.</p></div><div class="ref-card"><h3>Companion tool</h3><p>Inspect what is actually inside the certificate.</p><p><a href="/resources/tools/x509-viewer/">X.509 viewer →</a></p></div><div class="ref-card"><h3>Use case</h3><p>Pinning AAGUIDs in FIDO MDS allow-lists.</p><p><a href="/blog/implementing-fido2-developer-guide/">Implementing FIDO2 →</a></p></div>
@@ -157,6 +338,8 @@
   <details class="faq-q"><summary><h3>SHA-1 or SHA-256 — which should I use?</h3></summary><div class="faq-a"><p>SHA-256. SHA-1 is deprecated and collision-prone; only use a SHA-1 fingerprint when an older system explicitly requires it.</p></div></details>
   <details class="faq-q"><summary><h3>Why does my fingerprint not match the other tool's?</h3></summary><div class="faq-a"><p>Usually because one hashes the DER certificate and another hashes the public key, or one uses SHA-1 and the other SHA-256. Compare like with like.</p></div></details>
   <details class="faq-q"><summary><h3>Is the certificate sent to a server to be hashed?</h3></summary><div class="faq-a"><p>No. The hash is computed in your browser.</p></div></details>
+  <details class="faq-q"><summary><h3>What exactly is being hashed to produce a fingerprint?</h3></summary><div class="faq-a"><p>The complete DER encoding of the certificate, not the PEM text and not the public key alone. That is why the same certificate always produces the same fingerprint regardless of how it was stored.</p></div></details>
+  <details class="faq-q"><summary><h3>What is certificate pinning and how does a fingerprint relate to it?</h3></summary><div class="faq-a"><p>Pinning hard-codes an expected certificate or key so that any substitution is rejected even if signed by a trusted CA. Fingerprints are the value usually pinned, which is why they must be compared exactly.</p></div></details>
 </section>
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">

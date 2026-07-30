@@ -59,6 +59,22 @@
       "@type": "Answer",
       "text": "It does not solve phishing of the human (social engineering), credential issuance fraud, lateral movement after authentication, or compromise of the relying-party server. Hardware moves the credential's threat surface; it does not eliminate the rest of the trust chain."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What threat does hardware binding actually remove?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Credential theft at scale. If the private key cannot leave the device, an attacker must have the physical authenticator, which turns a remote mass-compromise into a per-user physical problem."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does hardware-backed identity help against a compromised endpoint?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Partly. Malware on a host can ask the authenticator to sign while the user is present, but it cannot extract the key or use it later from elsewhere, which bounds the damage to the compromised session."
+     }
     }
    ]
   },
@@ -100,6 +116,154 @@
    },
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/why-hardware-backed-identity-matters/",
    "keywords": "hardware-backed identity, secure element, TPM, HSM, FIDO2, side-channel, supply chain"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -219,6 +383,18 @@
 
   </article>
 </section>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why isn't a software-only credential secure enough?</h3><p style="margin:0;">Software-only credentials live in memory or on disk where any code with the right privilege can read them — malware, browser extensions, sloppy memory dumps, OS exploits. Hardware-backed credentials make extraction physically expensive: the private key never leaves the secure boundary, even to the operating system that owns the device.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is the platform vendor's secure enclave good enough?</h3><p style="margin:0;">Often yes, for the threat model of a workforce daily-sign-in. It is not good enough when you need an independently certified boundary, when keys must survive a device-vendor breach, or when the credential needs to outlive the device. That is when an external secure element earns its keep.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What does hardware-backed identity not solve?</h3><p style="margin:0;">It does not solve phishing of the human (social engineering), credential issuance fraud, lateral movement after authentication, or compromise of the relying-party server. Hardware moves the credential's threat surface; it does not eliminate the rest of the trust chain.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What threat does hardware binding actually remove?</h3><p style="margin:0;">Credential theft at scale. If the private key cannot leave the device, an attacker must have the physical authenticator, which turns a remote mass-compromise into a per-user physical problem.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does hardware-backed identity help against a compromised endpoint?</h3><p style="margin:0;">Partly. Malware on a host can ask the authenticator to sign while the user is present, but it cannot extract the key or use it later from elsewhere, which bounds the damage to the compromised session.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

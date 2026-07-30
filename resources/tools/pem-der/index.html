@@ -52,14 +52,14 @@
     {
      "@type": "ListItem",
      "position": 3,
-     "name": "PEM \u2194 DER Converter",
+     "name": "PEM ↔ DER Converter",
      "item": "https://ambisecure.ambimat.com/resources/tools/pem-der/"
     }
    ]
   },
   {
    "@type": "SoftwareApplication",
-   "name": "PEM \u2194 DER Converter",
+   "name": "PEM ↔ DER Converter",
    "applicationCategory": "DeveloperApplication",
    "operatingSystem": "Web",
    "url": "https://ambisecure.ambimat.com/resources/tools/pem-der/",
@@ -77,7 +77,7 @@
      "name": "What actually differs between PEM and DER?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Nothing in the content \u2014 only the container. PEM is base64-armoured DER with header/footer lines; DER is the raw bytes. Converting is loss-free."
+      "text": "Nothing in the content — only the container. PEM is base64-armoured DER with header/footer lines; DER is the raw bytes. Converting is loss-free."
      }
     },
     {
@@ -95,6 +95,187 @@
       "@type": "Answer",
       "text": "No. Conversion runs entirely in your browser, so even private material stays local."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What does the PEM header have to match?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The BEGIN and END lines must name the same type and both be present. A mismatched or missing footer is the most common reason a valid-looking block fails to decode."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Are PKCS#1 and PKCS#8 private keys interchangeable?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Not directly. PKCS#1 blocks say RSA PRIVATE KEY and hold an algorithm-specific structure; PKCS#8 says PRIVATE KEY and wraps the key with an algorithm identifier. Software often accepts only one, so the header is worth checking first."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "PEM ↔ DER Converter",
+   "description": "Free, client-side PEM ↔ DER converter for certificates, CSRs, public/private keys. PEM block detection, multi-block support, downloadable output.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/pem-der/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
     }
    ]
   }
@@ -165,7 +346,7 @@
 <div class="tool-privacy">All conversion happens in your browser. No certificate or key bytes are sent to any server.</div>
 
 <section class="tool-reference">
-  <h2>PEM and DER in one line</h2>
+  <h2>What are PEM and DER, in one line?</h2>
   <p>DER is the raw binary encoding of an ASN.1 structure (per X.690). PEM is just DER inside <code>-----BEGIN/END LABEL-----</code> base64 armour, defined by <a href="https://datatracker.ietf.org/doc/html/rfc7468">RFC 7468</a>. The label tells you what is inside (<code>CERTIFICATE</code>, <code>CERTIFICATE REQUEST</code>, <code>PRIVATE KEY</code>, etc.) — but the content is the same DER bytes either way.</p>
   <div class="ref-grid">
     <div class="ref-card"><h3>Spec</h3><p>RFC 7468 (PEM textual encodings) and X.690 (BER/DER).</p></div><div class="ref-card"><h3>Companion tool</h3><p>Pair with the X.509 viewer to inspect the converted certificate.</p><p><a href="/resources/tools/x509-viewer/">Open X.509 viewer →</a></p></div><div class="ref-card"><h3>Related blog</h3><p>Coming soon: an embedded-engineer’s guide to PKI.</p><p><a href="/blog/">Engineering blog →</a></p></div>
@@ -182,6 +363,8 @@
   <details class="faq-q"><summary><h3>What actually differs between PEM and DER?</h3></summary><div class="faq-a"><p>Nothing in the content — only the container. PEM is base64-armoured DER with header/footer lines; DER is the raw bytes. Converting is loss-free.</p></div></details>
   <details class="faq-q"><summary><h3>Can it convert an encrypted private key?</h3></summary><div class="faq-a"><p>No. Encrypted PEM keys must be decrypted first (e.g. with the passphrase in your key tooling); this tool only changes the encoding container.</p></div></details>
   <details class="faq-q"><summary><h3>Is my key or certificate uploaded?</h3></summary><div class="faq-a"><p>No. Conversion runs entirely in your browser, so even private material stays local.</p></div></details>
+  <details class="faq-q"><summary><h3>What does the PEM header have to match?</h3></summary><div class="faq-a"><p>The BEGIN and END lines must name the same type and both be present. A mismatched or missing footer is the most common reason a valid-looking block fails to decode.</p></div></details>
+  <details class="faq-q"><summary><h3>Are PKCS#1 and PKCS#8 private keys interchangeable?</h3></summary><div class="faq-a"><p>Not directly. PKCS#1 blocks say RSA PRIVATE KEY and hold an algorithm-specific structure; PKCS#8 says PRIVATE KEY and wraps the key with an algorithm identifier. Software often accepts only one, so the header is worth checking first.</p></div></details>
 </section>
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">

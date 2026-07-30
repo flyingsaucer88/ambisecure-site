@@ -67,6 +67,14 @@
       "@type": "Answer",
       "text": "For most consumer and workforce flows the passkey is itself the phishing-resistant authentication ceremony — no extra factor is required. High-risk admin paths often pair a passkey with device-posture or step-up to a separate hardware key, but this is risk-tier policy, not a passkey limitation."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens to synced passkeys if a user loses access to their platform account?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "They lose the credentials with it, which is why the platform account's own recovery becomes part of your threat model. Deployments that cannot accept that dependency use device-bound credentials instead."
+     }
     }
    ]
   },
@@ -108,6 +116,154 @@
    },
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/passkeys-vs-traditional-mfa/",
    "keywords": "Passkeys, MFA, FIDO2, WebAuthn, phishing-resistant, BE/BS, syncable passkeys"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -225,6 +381,18 @@
 
   </article>
 </section>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Are passkeys just stronger MFA?</h3><p style="margin:0;">No. Passkeys are a different cryptographic primitive, not an additional factor. They are origin-bound public-key credentials stored in hardware, which retires phishing, replay, credential stuffing, and push fatigue as attack classes — outcomes traditional MFA cannot offer regardless of factor count.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can a phishing site capture a passkey the way it captures a TOTP code?</h3><p style="margin:0;">No. Passkey authentication is bound to the relying-party origin at the WebAuthn protocol layer. A phishing origin cannot ask the authenticator to sign for the legitimate origin, so adversary-in-the-middle proxy attacks (Modlishka, Evilginx) stop working.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What does the BE/BS distinction mean for an enterprise rollout?</h3><p style="margin:0;">BE (Backup Eligibility) marks a credential that can sync across the user's devices; BS (Backup State) marks one that already has. For workforce identity, many enterprises require BE=0 device-bound keys for privileged access and allow BE=1 syncable passkeys for general workforce sign-in.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Do we still need a second factor if we deploy passkeys?</h3><p style="margin:0;">For most consumer and workforce flows the passkey is itself the phishing-resistant authentication ceremony — no extra factor is required. High-risk admin paths often pair a passkey with device-posture or step-up to a separate hardware key, but this is risk-tier policy, not a passkey limitation.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What happens to synced passkeys if a user loses access to their platform account?</h3><p style="margin:0;">They lose the credentials with it, which is why the platform account's own recovery becomes part of your threat model. Deployments that cannot accept that dependency use device-bound credentials instead.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

@@ -37,130 +37,282 @@
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
     {
-      "@type": "Question",
-      "name": "Is an AmbiSecure FIDO security key really more secure than passwords or SMS OTP?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Passwords are shared secrets — anything stored on a server can be phished or leaked. SMS OTP is bound to a phone number, not a person, and is vulnerable to SIM-swap and SS7 attacks. AmbiSecure FIDO2 / WebAuthn keys carry a private key that never leaves a tamper-resistant CC EAL6+ secure element. The relying party only ever receives a per-origin signed challenge — phishing-resistant by construction."
-      }
+     "@type": "Question",
+     "name": "Is an AmbiSecure FIDO security key really more secure than passwords or SMS OTP?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Passwords are shared secrets — anything stored on a server can be phished or leaked. SMS OTP is bound to a phone number, not a person, and is vulnerable to SIM-swap and SS7 attacks. AmbiSecure FIDO2 / WebAuthn keys carry a private key that never leaves a tamper-resistant CC EAL6+ secure element. The relying party only ever receives a per-origin signed challenge — phishing-resistant by construction."
+     }
     },
     {
-      "@type": "Question",
-      "name": "Where can I use an AmbiSecure security key or smart card?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Any service that supports FIDO2 / WebAuthn / U2F: Google, Microsoft, GitHub, AWS, Okta, Azure AD, Ping, Auth0, and most modern identity providers. PIV-capable variants additionally work with Windows smart-card logon, macOS smart-card login, government PKI workflows (US FIPS 201 / eIDAS-compatible), VPN and SSH key storage, and PKCS#11 / minidriver flows."
-      }
+     "@type": "Question",
+     "name": "Where can I use an AmbiSecure security key or smart card?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Any service that supports FIDO2 / WebAuthn / U2F: Google, Microsoft, GitHub, AWS, Okta, Azure AD, Ping, Auth0, and most modern identity providers. PIV-capable variants additionally work with Windows smart-card logon, macOS smart-card login, government PKI workflows (US FIPS 201 / eIDAS-compatible), VPN and SSH key storage, and PKCS#11 / minidriver flows."
+     }
     },
     {
-      "@type": "Question",
-      "name": "What happens if my OnePass USB Key or OnePass Card is lost or stolen?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Register at least two authenticators per account so a lost device never locks you out. Revoke the lost credential at the identity provider; the private key on the lost device is useless without your account context, the per-origin binding, and (for Bio variants) your fingerprint. PIN-protected variants additionally lock out after a small number of failed attempts. The credential is non-exportable: it is generated inside the secure element and there is no interface to read it out."
-      }
+     "@type": "Question",
+     "name": "What happens if my OnePass USB Key or OnePass Card is lost or stolen?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Register at least two authenticators per account so a lost device never locks you out. Revoke the lost credential at the identity provider; the private key on the lost device is useless without your account context, the per-origin binding, and (for Bio variants) your fingerprint. PIN-protected variants additionally lock out after a small number of failed attempts. The credential is non-exportable: it is generated inside the secure element and there is no interface to read it out."
+     }
     },
     {
-      "@type": "Question",
-      "name": "Is the AmbiSecure card waterproof and durable enough for daily use?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. The card body is ISO/IEC 7810 ID-1 standard plastic and survives normal wallet conditions — rain, sweat, brief immersion. USB-key variants are ABS / metal-shell and survive keychain wear. The CC EAL6+ secure element inside has no battery, no firmware to die, and no moving parts."
-      }
+     "@type": "Question",
+     "name": "Is the AmbiSecure card waterproof and durable enough for daily use?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. The card body is ISO/IEC 7810 ID-1 standard plastic and survives normal wallet conditions — rain, sweat, brief immersion. USB-key variants are ABS / metal-shell and survive keychain wear. The CC EAL6+ secure element inside has no battery, no firmware to die, and no moving parts."
+     }
     },
     {
-      "@type": "Question",
-      "name": "How do I get started with AmbiSecure authenticators in my organisation?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Start with an architecture review — we map your current identity stack (IdP, AD/Entra, applications, PKI) against AmbiSecure form factors and applet combinations. Then a pilot batch of 50–500 cards / keys for a controlled rollout, followed by phased production. See the engagement models page for typical scope and timelines."
-      }
+     "@type": "Question",
+     "name": "How do I get started with AmbiSecure authenticators in my organisation?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Start with an architecture review — we map your current identity stack (IdP, AD/Entra, applications, PKI) against AmbiSecure form factors and applet combinations. Then a pilot batch of 50–500 cards / keys for a controlled rollout, followed by phased production. See the engagement models page for typical scope and timelines."
+     }
     },
     {
-      "@type": "Question",
-      "name": "How does AmbiSecure keep my information from getting hacked?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "AmbiSecure never stores account passwords. The hardware-bound private key signs a per-origin challenge from the website — so the server learns nothing about other services, the key learns nothing about the user, and phishing servers receive nothing useful. The secure element is hardware-isolated, side-channel resistant, and certified at CC EAL6+ or higher."
-      }
+     "@type": "Question",
+     "name": "How does AmbiSecure keep my information from getting hacked?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "AmbiSecure never stores account passwords. The hardware-bound private key signs a per-origin challenge from the website — so the server learns nothing about other services, the key learns nothing about the user, and phishing servers receive nothing useful. The secure element is hardware-isolated, side-channel resistant, and certified at CC EAL6+ or higher."
+     }
     },
     {
-      "@type": "Question",
-      "name": "How is AmbiSecure better than software authenticator apps (Google Authenticator, Authy, Microsoft Authenticator)?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Authenticator apps store TOTP seeds in software on a phone — recoverable via cloud backup, screen-recorded by malware, and phishable through fake-prompt fatigue attacks. AmbiSecure private keys never exist outside the secure element, are bound to the origin domain so phishing sites cannot trick them, and require physical possession plus (optionally) a PIN or fingerprint."
-      }
+     "@type": "Question",
+     "name": "How is AmbiSecure better than software authenticator apps (Google Authenticator, Authy, Microsoft Authenticator)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Authenticator apps store TOTP seeds in software on a phone — recoverable via cloud backup, screen-recorded by malware, and phishable through fake-prompt fatigue attacks. AmbiSecure private keys never exist outside the secure element, are bound to the origin domain so phishing sites cannot trick them, and require physical possession plus (optionally) a PIN or fingerprint."
+     }
     },
     {
-      "@type": "Question",
-      "name": "What about government backdoors or master keys in AmbiSecure devices?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "There are none. AmbiSecure secure elements are sourced from CC EAL6+ certified silicon vendors. The applet code is signed by the issuer, not by AmbiSecure. There is no extractable per-device master key, no remote update channel that bypasses the issuer, and no escrow of user credentials. The hardware certification reports for the underlying silicon are publicly available from the chip vendor."
-      }
+     "@type": "Question",
+     "name": "What about government backdoors or master keys in AmbiSecure devices?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "There are none. AmbiSecure secure elements are sourced from CC EAL6+ certified silicon vendors. The applet code is signed by the issuer, not by AmbiSecure. There is no extractable per-device master key, no remote update channel that bypasses the issuer, and no escrow of user credentials. The hardware certification reports for the underlying silicon are publicly available from the chip vendor."
+     }
     },
     {
-      "@type": "Question",
-      "name": "Is FIDO2 / a hardware security key really more secure than SMS-based two-factor authentication?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Significantly more secure. SMS OTP is intercepted via SIM-swap, SS7 routing attacks, mobile-malware screen-readers, and phishing pages that proxy the OTP in real time. FIDO2 / WebAuthn binds the credential cryptographically to the origin domain — a phishing site at a similar URL receives an invalid signature. Google has reported that moving its workforce to security keys eliminated credential phishing takeovers across that population; SMS OTP offers no equivalent origin binding."
-      }
+     "@type": "Question",
+     "name": "Is FIDO2 / a hardware security key really more secure than SMS-based two-factor authentication?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Significantly more secure. SMS OTP is intercepted via SIM-swap, SS7 routing attacks, mobile-malware screen-readers, and phishing pages that proxy the OTP in real time. FIDO2 / WebAuthn binds the credential cryptographically to the origin domain — a phishing site at a similar URL receives an invalid signature. Google has reported that moving its workforce to security keys eliminated credential phishing takeovers across that population; SMS OTP offers no equivalent origin binding."
+     }
     },
     {
-      "@type": "Question",
-      "name": "Why is an AmbiSecure security key or card more secure than an authenticator app on my phone?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Three reasons. (1) Hardware isolation — the private key is never readable by the OS, by malware, by a forensic dump, or by a stolen-phone attacker. (2) Origin binding — the credential only signs challenges from the website it was registered with, so phishing fails. (3) No backup channel — there is no cloud-sync path, no QR-code re-enrollment, no recovery codes to steal."
-      }
+     "@type": "Question",
+     "name": "Why is an AmbiSecure security key or card more secure than an authenticator app on my phone?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Three reasons. (1) Hardware isolation — the private key is never readable by the OS, by malware, by a forensic dump, or by a stolen-phone attacker. (2) Origin binding — the credential only signs challenges from the website it was registered with, so phishing fails. (3) No backup channel — there is no cloud-sync path, no QR-code re-enrollment, no recovery codes to steal."
+     }
     },
     {
-      "@type": "Question",
-      "name": "Does AmbiSecure work with eSIM and secure-element authentication?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. AmbiSecure ships FIDO2, PIV, and OpenID Connect applets on CC EAL6+ secure elements packaged as removable nano-cards (ISO/IEC 7810 4FF) and solderable MFF2 modules — for embedded identity, OEM device authentication, and enterprise rollouts. Telecom-grade eSIM / eUICC and SGP.22 / SGP.32 RSP lifecycle work is covered separately on the dedicated SIMAuth platform (esim.ambimat.com), where the same applet portfolio is integrated with operator profile management."
-      }
+     "@type": "Question",
+     "name": "Does AmbiSecure work with eSIM and secure-element authentication?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. AmbiSecure ships FIDO2, PIV, and OpenID Connect applets on CC EAL6+ secure elements packaged as removable nano-cards (ISO/IEC 7810 4FF) and solderable MFF2 modules — for embedded identity, OEM device authentication, and enterprise rollouts. Telecom-grade eSIM / eUICC and SGP.22 / SGP.32 RSP lifecycle work is covered separately on the dedicated SIMAuth platform (esim.ambimat.com), where the same applet portfolio is integrated with operator profile management."
+     }
     },
     {
-      "@type": "Question",
-      "name": "Can AmbiSecure JavaCard applets be loaded onto chips we already source ourselves?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, when the chip supports GlobalPlatform 2.3.1 SCP03 loading and runs JavaCard 3.x. AmbiSecure delivers CAP files, your provisioning line loads them under your issuer keys using your HSM custody. The applet runs entirely inside your chip with your AID, your branding, and your post-issuance update policy. The JavaCard development service covers the full delivery."
-      }
+     "@type": "Question",
+     "name": "Can AmbiSecure JavaCard applets be loaded onto chips we already source ourselves?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, when the chip supports GlobalPlatform 2.3.1 SCP03 loading and runs JavaCard 3.x. AmbiSecure delivers CAP files, your provisioning line loads them under your issuer keys using your HSM custody. The applet runs entirely inside your chip with your AID, your branding, and your post-issuance update policy. The JavaCard development service covers the full delivery."
+     }
     },
     {
-      "@type": "Question",
-      "name": "What does an AmbiSecure ePassport platform engagement cover?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "End-to-end ICAO 9303 platform delivery — enrolment frontend, biometric capture, CSCA / Document Signer / PKD PKI, personalisation line for booklets and ID-1 cards, BAC / PACE / Active Authentication / Chip Authentication, and the LDS structure. Anonymised case study and engagement model details are linked from the homepage."
-      }
+     "@type": "Question",
+     "name": "What does an AmbiSecure ePassport platform engagement cover?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "End-to-end ICAO 9303 platform delivery — enrolment frontend, biometric capture, CSCA / Document Signer / PKD PKI, personalisation line for booklets and ID-1 cards, BAC / PACE / Active Authentication / Chip Authentication, and the LDS structure. Anonymised case study and engagement model details are linked from the homepage."
+     }
     },
     {
-      "@type": "Question",
-      "name": "Where is AmbiSecure based and who can buy?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "AmbiSecure is the security business unit of Ambimat Electronics, based in Ahmedabad, India. We ship globally — including India PSUs, US enterprise and government accounts, EU identity programmes, and OEM customers in telecom, transit, and connected products. India and US sales contacts are listed on the contact page."
-      }
+     "@type": "Question",
+     "name": "Where is AmbiSecure based and who can buy?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "AmbiSecure is the security business unit of Ambimat Electronics, based in Ahmedabad, India. We ship globally — including India PSUs, US enterprise and government accounts, EU identity programmes, and OEM customers in telecom, transit, and connected products. India and US sales contacts are listed on the contact page."
+     }
     },
     {
-      "@type": "Question",
-      "name": "How does AmbiSecure compare with hosted MFA SaaS like Duo or Microsoft Authenticator?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Hosted MFA is mostly TOTP or push-based — the second factor lives in software on a phone. AmbiSecure is the hardware layer below: phishing-resistant FIDO2 credentials in a CC EAL6+ secure element, issuable under your branding and your keys, deployable alongside Duo/Microsoft as the second factor those services prefer. The two are complementary, not competing."
-      }
+     "@type": "Question",
+     "name": "How does AmbiSecure compare with hosted MFA SaaS like Duo or Microsoft Authenticator?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hosted MFA is mostly TOTP or push-based — the second factor lives in software on a phone. AmbiSecure is the hardware layer below: phishing-resistant FIDO2 credentials in a CC EAL6+ secure element, issuable under your branding and your keys, deployable alongside Duo/Microsoft as the second factor those services prefer. The two are complementary, not competing."
+     }
     }
-  ]
+   ]
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
 }
 </script>
 <script type="application/ld+json">
@@ -223,7 +375,7 @@
 
 <section aria-labelledby="faq-list-heading">
   <div class="section-container">
-    <h2 id="faq-list-heading" class="visually-hidden" style="position:absolute;left:-10000px;">FAQ list</h2>
+    <h2 id="faq-list-heading" class="visually-hidden" style="position:absolute;left:-10000px;">What do people ask most often?</h2>
 
     <details class="faq-q" open>
       <summary><h3>Is an AmbiSecure FIDO security key really more secure than passwords or SMS OTP?</h3></summary>
@@ -349,6 +501,18 @@
         <a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a>
       </div>
     </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How does AmbiSecure keep my information from getting hacked?</h3><p style="margin:0;">AmbiSecure never stores account passwords. The hardware-bound private key signs a per-origin challenge from the website — so the server learns nothing about other services, the key learns nothing about the user, and phishing servers receive nothing useful. The secure element is hardware-isolated, side-channel resistant, and certified at CC EAL6+ or higher.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is AmbiSecure better than software authenticator apps (Google Authenticator, Authy, Microsoft Authenticator)?</h3><p style="margin:0;">Authenticator apps store TOTP seeds in software on a phone — recoverable via cloud backup, screen-recorded by malware, and phishable through fake-prompt fatigue attacks. AmbiSecure private keys never exist outside the secure element, are bound to the origin domain so phishing sites cannot trick them, and require physical possession plus (optionally) a PIN or fingerprint.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is FIDO2 / a hardware security key really more secure than SMS-based two-factor authentication?</h3><p style="margin:0;">Significantly more secure. SMS OTP is intercepted via SIM-swap, SS7 routing attacks, mobile-malware screen-readers, and phishing pages that proxy the OTP in real time. FIDO2 / WebAuthn binds the credential cryptographically to the origin domain — a phishing site at a similar URL receives an invalid signature. Google has reported that moving its workforce to security keys eliminated credential phishing takeovers across that population; SMS OTP offers no equivalent origin binding.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why is an AmbiSecure security key or card more secure than an authenticator app on my phone?</h3><p style="margin:0;">Three reasons. (1) Hardware isolation — the private key is never readable by the OS, by malware, by a forensic dump, or by a stolen-phone attacker. (2) Origin binding — the credential only signs challenges from the website it was registered with, so phishing fails. (3) No backup channel — there is no cloud-sync path, no QR-code re-enrollment, no recovery codes to steal.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How does AmbiSecure compare with hosted MFA SaaS like Duo or Microsoft Authenticator?</h3><p style="margin:0;">Hosted MFA is mostly TOTP or push-based — the second factor lives in software on a phone. AmbiSecure is the hardware layer below: phishing-resistant FIDO2 credentials in a CC EAL6+ secure element, issuable under your branding and your keys, deployable alongside Duo/Microsoft as the second factor those services prefer. The two are complementary, not competing.</p></div>
   </div>
 </section>
 

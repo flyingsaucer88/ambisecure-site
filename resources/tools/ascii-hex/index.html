@@ -52,14 +52,14 @@
     {
      "@type": "ListItem",
      "position": 3,
-     "name": "ASCII \u2194 HEX Converter",
+     "name": "ASCII ↔ HEX Converter",
      "item": "https://ambisecure.ambimat.com/resources/tools/ascii-hex/"
     }
    ]
   },
   {
    "@type": "SoftwareApplication",
-   "name": "ASCII \u2194 HEX Converter",
+   "name": "ASCII ↔ HEX Converter",
    "applicationCategory": "DeveloperApplication",
    "operatingSystem": "Web",
    "url": "https://ambisecure.ambimat.com/resources/tools/ascii-hex/",
@@ -85,7 +85,7 @@
      "name": "Can I paste hex with spaces or 0x prefixes?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Yes \u2014 the parser tolerates spaces and common separators. If you need strict byte grouping or prefixing, use the companion Hex \u2194 Bytes formatter."
+      "text": "Yes — the parser tolerates spaces and common separators. If you need strict byte grouping or prefixing, use the companion Hex ↔ Bytes formatter."
      }
     },
     {
@@ -95,6 +95,187 @@
       "@type": "Answer",
       "text": "No. The conversion is done locally in your browser."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "Which text encoding does the conversion assume?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "UTF-8. That is why characters outside the ASCII range expand to more than one byte, and why a byte sequence that is not valid UTF-8 will not round-trip back to the same text."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does hex output preserve leading zeros?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Every byte is rendered as exactly two hex digits, so 0x0A stays 0a rather than collapsing to a. This matters when the result is compared byte-for-byte against a key or hash."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "TechArticle",
+   "headline": "ASCII ↔ HEX Converter",
+   "description": "Convert ASCII text to / from HEX. Multiple separator styles, copy-friendly. Client-side only.",
+   "url": "https://ambisecure.ambimat.com/resources/tools/ascii-hex/",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@id": "https://ambisecure.ambimat.com/#org"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ambisecure.ambimat.com/#site"
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
     }
    ]
   }
@@ -157,6 +338,8 @@
   <details class="faq-q"><summary><h3>Why do I get more hex bytes than characters?</h3></summary><div class="faq-a"><p>Because non-ASCII characters are multi-byte in UTF-8. An emoji or an accented letter expands to several bytes, so the hex output is longer than the visible character count.</p></div></details>
   <details class="faq-q"><summary><h3>Can I paste hex with spaces or 0x prefixes?</h3></summary><div class="faq-a"><p>Yes — the parser tolerates spaces and common separators. If you need strict byte grouping or prefixing, use the companion Hex ↔ Bytes formatter.</p></div></details>
   <details class="faq-q"><summary><h3>Is my input uploaded?</h3></summary><div class="faq-a"><p>No. The conversion is done locally in your browser.</p></div></details>
+  <details class="faq-q"><summary><h3>Which text encoding does the conversion assume?</h3></summary><div class="faq-a"><p>UTF-8. That is why characters outside the ASCII range expand to more than one byte, and why a byte sequence that is not valid UTF-8 will not round-trip back to the same text.</p></div></details>
+  <details class="faq-q"><summary><h3>Does hex output preserve leading zeros?</h3></summary><div class="faq-a"><p>Yes. Every byte is rendered as exactly two hex digits, so 0x0A stays 0a rather than collapsing to a. This matters when the result is compared byte-for-byte against a key or hash.</p></div></details>
 </section>
 <nav class="related-tools" aria-label="Related tools">
   <div class="section-container" style="max-width:880px;">

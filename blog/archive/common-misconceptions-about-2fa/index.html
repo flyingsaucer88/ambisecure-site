@@ -59,6 +59,22 @@
       "@type": "Answer",
       "text": "The factor matters: a hardware, origin-bound credential is far stronger than an app or SMS one-time password."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "Does 2FA protect an account whose session has already been stolen?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Authentication happens once; a stolen session token bypasses it entirely. That is why session binding and short session lifetimes matter alongside a strong second factor."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is an authenticator app equivalent to a hardware key?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. A TOTP code can be read and relayed by a convincing phishing page, whereas a hardware key verifies the origin cryptographically and simply will not sign for the wrong site."
+     }
     }
    ]
   },
@@ -108,6 +124,154 @@
      "name": "Ambimat Electronics"
     }
    }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -154,7 +318,7 @@
 <p><strong>Reality:</strong> While some methods involve costs, alternatives exist. Push notifications replace expensive SMS, and one-time password generators can be installed on smartphones.</p>
 <h2>AmbiSecure Solution</h2>
 <p>The post promotes FIDO2 standard authentication, describing it in absolute terms. The accurate description is phishing-resistant: origin binding stops the credential being replayed to a lookalike site, which is a specific and strong property rather than a guarantee against every attack. AmbiSecure products combine hardware-based authentication with public-key cryptography. The authentication method requires no battery or network connectivity.</p>
-<h2>About Ambimat Electronics</h2>
+<h2>Who is Ambimat Electronics?</h2>
 <p>Ambimat Electronics has nearly four decades of design experience. The company serves PSUs, private companies, and startups across industries including IoT, smartwatches, smart homes, medical devices, robotics, retail, and security sectors. Solutions include AmbiPay, AmbiPower, AmbiCon, AmbiSecure, AmbiSense, and AmbiAutomation.</p>
     </article>
   </div>
@@ -191,6 +355,8 @@
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is SMS two-factor authentication secure?</h3><p style="margin:0;">SMS one-time passwords are better than a password alone but remain phishable and interceptable — through SIM-swap or a real-time proxy — so they do not resist a determined phishing attack.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does turning on 2FA make an account unphishable?</h3><p style="margin:0;">Not by itself. Only phishing-resistant factors, such as FIDO2 security keys bound to the origin, resist real-time proxy phishing; OTP-based 2FA can still be relayed.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is any second factor good enough?</h3><p style="margin:0;">The factor matters: a hardware, origin-bound credential is far stronger than an app or SMS one-time password.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does 2FA protect an account whose session has already been stolen?</h3><p style="margin:0;">No. Authentication happens once; a stolen session token bypasses it entirely. That is why session binding and short session lifetimes matter alongside a strong second factor.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is an authenticator app equivalent to a hardware key?</h3><p style="margin:0;">No. A TOTP code can be read and relayed by a convincing phishing page, whereas a hardware key verifies the origin cryptographically and simply will not sign for the wrong site.</p></div>
   </div>
 </section>
 </main>

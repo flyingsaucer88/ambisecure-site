@@ -4,11 +4,11 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>WebAuthn — AmbiSecure Blog</title>
-<meta name="description" content="All AmbiSecure engineering blog content under WebAuthn, modern and archive." />
+<meta name="description" content="AmbiSecure engineering writing on WebAuthn: registration and authentication ceremonies, authenticatorData, clientDataJSON, attestation, and BE/BS flags." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/blog/categories/webauthn/" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="WebAuthn — AmbiSecure Blog" />
-<meta property="og:description" content="All AmbiSecure engineering blog content under WebAuthn, modern and archive." />
+<meta property="og:description" content="AmbiSecure engineering writing on WebAuthn: registration and authentication ceremonies, authenticatorData, clientDataJSON, attestation, and BE/BS flags." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/blog/categories/webauthn/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-blog-categories-webauthn-1200x630.png" />
 <meta property="og:image:type" content="image/png" />
@@ -88,12 +88,176 @@
       "@type": "Answer",
       "text": "The server parses the attestation statement, checks the format and certificate chain, and confirms the authenticator meets policy — for example that it is a certified model — before trusting the credential."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What is clientDataJSON and why is it signed?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It records the challenge, the origin and the ceremony type as the browser saw them. Signing it binds the assertion to a specific site and request, which is what makes WebAuthn resistant to relay and phishing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a resident or discoverable credential?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A credential stored on the authenticator itself, so it can identify the user without a username being supplied first. It is what enables a true usernameless login."
+     }
     }
    ]
   },
   {
    "@type": "CollectionPage",
    "name": "WebAuthn &mdash; AmbiSecure Blog"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -130,6 +294,8 @@
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What happens during a WebAuthn registration ceremony?</h3><p style="margin:0;">The relying party issues a challenge; the authenticator creates a new key pair scoped to the origin, stores the private key, and returns an attestation object containing the public key and (optionally) proof of the authenticator model.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is authenticatorData?</h3><p style="margin:0;">authenticatorData is the signed structure the authenticator returns, carrying the relying-party ID hash, flags (user presence/verification), a signature counter, and — at registration — the new credential's public key.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How is attestation verified?</h3><p style="margin:0;">The server parses the attestation statement, checks the format and certificate chain, and confirms the authenticator meets policy — for example that it is a certified model — before trusting the credential.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is clientDataJSON and why is it signed?</h3><p style="margin:0;">It records the challenge, the origin and the ceremony type as the browser saw them. Signing it binds the assertion to a specific site and request, which is what makes WebAuthn resistant to relay and phishing.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is a resident or discoverable credential?</h3><p style="margin:0;">A credential stored on the authenticator itself, so it can identify the user without a username being supplied first. It is what enables a true usernameless login.</p></div>
   </div>
 </section>
 <section>
@@ -140,7 +306,7 @@
 </section>
 <nav class="related-cross" aria-label="More blog topics">
   <div class="section-container" style="max-width:880px;">
-    <h2>More blog topics</h2>
+    <h2>Where to read more</h2>
     <ul><li><a href="/blog/categories/biometrics/">Biometrics</a></li><li><a href="/blog/categories/cryptography/">Cryptography</a></li><li><a href="/blog/categories/cyber-resilience/">Cyber Resilience</a></li></ul>
   </div>
 </nav>

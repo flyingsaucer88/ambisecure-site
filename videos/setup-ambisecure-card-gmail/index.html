@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Set up AmbiSecure card on Gmail (U2F/FIDO) | Videos</title>
+<title>Set up AmbiSecure card in Google 2-Step Verification (U2F/FIDO) | Videos</title>
 <meta name="description" content="Pair the AmbiSecure card with a Google account. Walkthrough of 2-step verification → security key registration on a desktop browser." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/videos/setup-ambisecure-card-gmail/" />
 <meta property="og:type" content="video.other" />
-<meta property="og:title" content="How to set up the AmbiSecure card on Gmail (U2F / FIDO)" />
+<meta property="og:title" content="Adding the AmbiSecure card as a FIDO security key in Google 2-Step Verification" />
 <meta property="og:description" content="Pair the AmbiSecure card with a Google account. Walkthrough of 2-step verification → security key registration on a desktop browser." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/videos/setup-ambisecure-card-gmail/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-videos-setup-gmail-1200x630.png" />
@@ -51,14 +51,14 @@
     {
      "@type": "ListItem",
      "position": 3,
-     "name": "How to set up the AmbiSecure card on Gmail (U2F / FIDO)"
+     "name": "Adding the AmbiSecure card as a FIDO security key in Google 2-Step Verification"
     }
    ]
   },
   {
    "@type": "VideoObject",
-   "name": "How to set up the AmbiSecure card on Gmail (U2F / FIDO)",
-   "description": "Pair the AmbiSecure card with a Google account. Walkthrough of 2-step verification \u2192 security key registration on a desktop browser.",
+   "name": "Adding the AmbiSecure card as a FIDO security key in Google 2-Step Verification",
+   "description": "Pair the AmbiSecure card with a Google account. Walkthrough of 2-step verification → security key registration on a desktop browser.",
    "thumbnailUrl": "https://ambisecure.ambimat.com/assets/img/videos/bo9VA5AWuKQ.webp",
    "duration": "PT1M21S",
    "uploadDate": "2021-09-01",
@@ -72,6 +72,199 @@
    },
    "embedUrl": "https://www.youtube-nocookie.com/embed/bo9VA5AWuKQ",
    "contentUrl": "https://www.youtube.com/watch?v=bo9VA5AWuKQ"
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Do I need 2-Step Verification enabled before adding the AmbiSecure card to Google?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. Google only exposes the security-key option on accounts that already have 2-Step Verification switched on, so enrol a phone or Google prompt as your first second factor, then add the card."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Is the AmbiSecure card a passkey or a security key on a Google account?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It enrols as a device-bound security key. The private key is generated inside the card's secure element and cannot be exported or synced, which is what distinguishes it from a passkey synced through a Google account or password manager."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How many security keys does Google's Advanced Protection Program require?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Two. Advanced Protection checks for two registered keys at enrolment, so register a second AmbiSecure card before enrolling the account in the programme."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can the same AmbiSecure card protect Google and other accounts at once?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes. The card stores multiple resident credentials, so one card can be registered to a Google account, a Facebook account, and other FIDO2 relying parties simultaneously."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens if I lose an AmbiSecure card registered to my Google account?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Sign in with another enrolled second factor or a saved backup code, then remove the lost key from the 2-Step Verification settings. This is why Google will not let you delete your last remaining second factor, and why a second registered key is worth having before you need it."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -81,14 +274,14 @@
 <a href="#main" class="skip-link">Skip to main content</a>
 <div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://esim.ambimat.com/" class="ext">SIMAuth</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1982</span></div></div>
 <header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
-<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/videos/">Videos</a><span class="sep">/</span><span class="current">How to set up the AmbiSecure card on Gmail (U2F / FIDO)</span></nav>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/videos/">Videos</a><span class="sep">/</span><span class="current">Adding the AmbiSecure card as a FIDO security key in Google 2-Step Verification</span></nav>
 
 <main id="main">
 
 <section style="padding: 60px 80px 24px;">
   <div class="prose">
     <span class="eyebrow">Video</span>
-    <h1>Adding the AmbiSecure card as a FIDO security key on Gmail</h1>
+    <h1>Adding the AmbiSecure card as a FIDO security key in Google 2-Step Verification</h1>
     <p class="dek">Pair the AmbiSecure card with a Google account. Walkthrough of 2-step verification → security key registration on a desktop browser.</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);">
       <span>DURATION &middot; 1:21</span>
@@ -100,7 +293,7 @@
 
 <section>
   <div class="section-container" style="max-width:960px;">
-    <div class="yt-facade" data-yt-id="bo9VA5AWuKQ" data-title="How to set up the AmbiSecure card on Gmail (U2F / FIDO)" style="max-width:900px;margin:0 auto;border-radius:8px;">  <img class="yt-facade-poster" src="/assets/img/videos/bo9VA5AWuKQ.webp" alt="How to set up the AmbiSecure card on Gmail (U2F / FIDO)" loading="eager" width="1280" height="720" />  <button class="yt-facade-play" aria-label="Play How to set up the AmbiSecure card on Gmail (U2F / FIDO)">&#9658;</button></div><p style="text-align:center;margin-top:12px;font-size:13px;color:var(--brand-grey);">Hosted on YouTube. <a href="https://www.youtube.com/watch?v=bo9VA5AWuKQ" rel="noopener noreferrer">Open in YouTube &rarr;</a></p>
+    <div class="yt-facade" data-yt-id="bo9VA5AWuKQ" data-title="Adding the AmbiSecure card as a FIDO security key in Google 2-Step Verification" style="max-width:900px;margin:0 auto;border-radius:8px;">  <img class="yt-facade-poster" src="/assets/img/videos/bo9VA5AWuKQ.webp" alt="Adding the AmbiSecure card as a FIDO security key in Google 2-Step Verification" loading="eager" width="1280" height="720" />  <button class="yt-facade-play" aria-label="Play Adding the AmbiSecure card as a FIDO security key in Google 2-Step Verification">&#9658;</button></div><p style="text-align:center;margin-top:12px;font-size:13px;color:var(--brand-grey);">Hosted on YouTube. <a href="https://www.youtube.com/watch?v=bo9VA5AWuKQ" rel="noopener noreferrer">Open in YouTube &rarr;</a></p>
   </div>
 </section>
 
@@ -115,6 +308,34 @@
       <li>Insert the AmbiSecure card into a USB reader when prompted and touch it to confirm presence.</li>
       <li>Name the key so you can recognise it later, then save.</li>
     </ol>
+  </div>
+</section>
+
+<section>
+  <div class="section-container" style="max-width:820px;">
+    <div class="prose" style="margin:0;">
+      <h2>Before you start</h2>
+      <p>Google will not offer the security-key option until the account is already using 2-Step Verification, so the order of operations matters:</p>
+      <ul>
+        <li><strong>Turn on 2-Step Verification first.</strong> Google requires an existing second factor &mdash; usually a phone number or the Google prompt &mdash; before it will let you enrol a key.</li>
+        <li><strong>Keep that first factor enrolled.</strong> Google blocks removing your last remaining second factor, and you will want a fallback while you are still testing the card.</li>
+        <li><strong>Use a USB smart-card reader</strong> for the desktop flow. The card presents as a FIDO2 / U2F authenticator over the reader; NFC is the phone flow, covered in <a href="/videos/setup-ambisecure-card-mobile-gmail/">the mobile walkthrough</a>.</li>
+        <li><strong>Any current desktop browser works</strong> &mdash; Chrome, Edge, Firefox, and Safari on macOS all speak WebAuthn. Chrome tends to give the clearest prompts for external keys.</li>
+      </ul>
+      <h2>What is specific to Google accounts</h2>
+      <p>Google folds passkeys and hardware security keys into a single list in the account UI, which is the most common source of confusion here. The AmbiSecure card enrols as a <em>device-bound security key</em> &mdash; the private key is generated inside the card's secure element and never leaves it. That is a different object from a synced passkey stored in a Google account or password manager, even though both appear under the same heading.</p>
+      <p>Two Google-specific behaviours worth knowing before you roll this out:</p>
+      <ul>
+        <li><strong>Advanced Protection Program.</strong> If the account enrols in Google APP, Google requires <em>two</em> registered security keys, not one. Two AmbiSecure cards satisfy this &mdash; register the second before enrolling, since APP enrolment checks at sign-up time.</li>
+        <li><strong>Workspace policy.</strong> Google Workspace administrators can require security keys for an organisational unit from the admin console. The card's AAGUID is what identifies the authenticator model in Workspace reporting and in any allow-list policy, so record it during your pilot &mdash; the <a href="/resources/tools/aaguid-lookup/">AAGUID lookup tool</a> resolves it.</li>
+      </ul>
+      <h2>If the registration does not complete</h2>
+      <ul>
+        <li><strong>&ldquo;Couldn't verify it's you&rdquo;</strong> almost always means the card left the field before the ceremony finished. Leave it seated in the reader until the browser confirms.</li>
+        <li><strong>Google only offers &ldquo;use your phone&rdquo;</strong> &mdash; choose <em>Try another way</em> and pick the USB security-key option explicitly; Google preferentially suggests phone-as-passkey.</li>
+        <li><strong>The reader is not detected</strong> &mdash; confirm the card enumerates at the OS level before blaming the browser. Our <a href="/resources/tools/atr-parser/">ATR parser</a> is a quick way to confirm the reader sees the card at all.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -153,9 +374,21 @@
 <nav class="related-cross" aria-label="Related videos">
   <div class="section-container" style="max-width:880px;">
     <h2>Related videos</h2>
-    <ul><li><a href="/videos/setup-ambisecure-card-mobile-facebook/">Phone-based AmbiSecure card setup on Facebook (NFC)</a></li><li><a href="/videos/setup-ambisecure-card-mobile-gmail/">Phone-based AmbiSecure card setup on Gmail (NFC)</a></li><li><a href="/videos/ambisecure-card-use-cases/">Every use case the AmbiSecure card supports, in one walkthrough</a></li></ul>
+    <ul><li><a href="/videos/setup-ambisecure-card-mobile-facebook/">NFC tap enrolment of the AmbiSecure card in Facebook Accounts Center</a></li><li><a href="/videos/setup-ambisecure-card-mobile-gmail/">NFC tap enrolment of the AmbiSecure card in Google 2-Step Verification</a></li><li><a href="/videos/ambisecure-card-use-cases/">Every use case the AmbiSecure card supports, in one walkthrough</a></li></ul>
   </div>
 </nav>
+
+<section class="alt">
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Do I need 2-Step Verification enabled before adding the AmbiSecure card to Google?</h3><p style="margin:0;">Yes. Google only exposes the security-key option on accounts that already have 2-Step Verification switched on, so enrol a phone or Google prompt as your first second factor, then add the card.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is the AmbiSecure card a passkey or a security key on a Google account?</h3><p style="margin:0;">It enrols as a device-bound security key. The private key is generated inside the card's secure element and cannot be exported or synced, which is what distinguishes it from a passkey synced through a Google account or password manager.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How many security keys does Google's Advanced Protection Program require?</h3><p style="margin:0;">Two. Advanced Protection checks for two registered keys at enrolment, so register a second AmbiSecure card before enrolling the account in the programme.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can the same AmbiSecure card protect Google and other accounts at once?</h3><p style="margin:0;">Yes. The card stores multiple resident credentials, so one card can be registered to a Google account, a Facebook account, and other FIDO2 relying parties simultaneously.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What happens if I lose an AmbiSecure card registered to my Google account?</h3><p style="margin:0;">Sign in with another enrolled second factor or a saved backup code, then remove the lost key from the 2-Step Verification settings. This is why Google will not let you delete your last remaining second factor, and why a second registered key is worth having before you need it.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer">

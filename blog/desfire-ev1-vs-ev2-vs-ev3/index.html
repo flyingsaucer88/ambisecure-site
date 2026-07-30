@@ -32,8 +32,8 @@
 <meta name="theme-color" content="#E3222A" />
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@graph": [
+ "@context": "https://schema.org",
+ "@graph": [
   {
    "@type": "FAQPage",
    "mainEntity": [
@@ -60,49 +60,213 @@
       "@type": "Answer",
       "text": "EV2 or EV3 — both give you Transaction MAC, which is the property you need for offline validators that must reconcile fare debits without trusting an attacker-controlled reader. EV1 lacks Transaction MAC and is best treated as legacy."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "Can EV1, EV2 and EV3 cards coexist in one estate?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, and most real deployments run mixed estates for years. Readers have to handle the oldest generation still in circulation, which is what makes the migration a reader-side problem rather than a card-side one."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is transaction MAC and why was it added?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It lets a card produce a cryptographic proof that a specific transaction occurred, which a back office can verify independently. It closes the gap where an offline validator's own record was the only evidence."
+     }
     }
    ]
   },
-{
-"@type": "BreadcrumbList",
-"itemListElement": [
-{
-"@type": "ListItem",
-"position": 1,
-"name": "Home",
-"item": "/"
-},
-{
-"@type": "ListItem",
-"position": 2,
-"name": "Blog",
-"item": "/blog/"
-},
-{
-"@type": "ListItem",
-"position": 3,
-"name": "DESFire EV1 vs EV2 vs EV3",
-"item": "https://ambisecure.ambimat.com/blog/desfire-ev1-vs-ev2-vs-ev3/"
-}
-]
-},
-{
-"@type": "Article",
-"headline": "DESFire EV1 vs EV2 vs EV3 \u2014 Architectural Evolution",
-"datePublished": "2026-05-09",
-"dateModified": "2026-05-09",
-"author": {
-"@type": "Organization",
-"name": "AmbiSecure Engineering"
-},
-"publisher": {
-"@type": "Organization",
-"name": "AmbiSecure"
-},
-"mainEntityOfPage": "https://ambisecure.ambimat.com/blog/desfire-ev1-vs-ev2-vs-ev3/",
-"keywords": "DESFire, EV1, EV2, EV3, secure messaging, TMAC, key diversification, smart card, transit, NXP"
-}
-]
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "DESFire EV1 vs EV2 vs EV3",
+     "item": "https://ambisecure.ambimat.com/blog/desfire-ev1-vs-ev2-vs-ev3/"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "DESFire EV1 vs EV2 vs EV3 — Architectural Evolution",
+   "datePublished": "2026-05-09",
+   "dateModified": "2026-05-09",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   },
+   "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/desfire-ev1-vs-ev2-vs-ev3/",
+   "keywords": "DESFire, EV1, EV2, EV3, secure messaging, TMAC, key diversification, smart card, transit, NXP"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
 }
 </script>
 </head>
@@ -221,6 +385,18 @@
     </div>
   </div>
 </section>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the practical difference between DESFire EV1, EV2, and EV3?</h3><p style="margin:0;">EV1 introduced AES-128 and the file-level key model; EV2 added Secure Messaging mode and Transaction MAC for tamper-evident sessions; EV3 added Secure Dynamic Messaging (SDM) for NDEF tags and tightened the side-channel posture. Each step is a real protocol delta, not a marketing version bump.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can I deploy EV3 cards into a system designed for EV1 readers?</h3><p style="margin:0;">Backward compatibility for legacy commands is good, but EV3-specific features (SDM, advanced Secure Messaging) require reader-side support. Plan a reader-firmware refresh in step with a card migration if you want the cryptographic improvements rather than just newer silicon.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Which EV generation is right for closed-loop transit?</h3><p style="margin:0;">EV2 or EV3 — both give you Transaction MAC, which is the property you need for offline validators that must reconcile fare debits without trusting an attacker-controlled reader. EV1 lacks Transaction MAC and is best treated as legacy.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can EV1, EV2 and EV3 cards coexist in one estate?</h3><p style="margin:0;">Yes, and most real deployments run mixed estates for years. Readers have to handle the oldest generation still in circulation, which is what makes the migration a reader-side problem rather than a card-side one.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is transaction MAC and why was it added?</h3><p style="margin:0;">It lets a card produce a cryptographic proof that a specific transaction occurred, which a back office can verify independently. It closes the gap where an offline validator's own record was the only evidence.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">

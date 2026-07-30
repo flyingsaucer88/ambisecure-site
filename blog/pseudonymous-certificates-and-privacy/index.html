@@ -39,32 +39,244 @@
   {
    "@type": "FAQPage",
    "mainEntity": [
-    {"@type":"Question","name":"Why is a static V2X identity dangerous?","acceptedAnswer":{"@type":"Answer","text":"A V2X message carries a signature plus a certificate or its digest. If every message from a given vehicle is signed under the same certificate, every receiver in radio range can identify which messages came from the same vehicle and reconstruct its route. The signed message data (position, speed, heading) plus a stable identifier is sufficient to track every vehicle on the road. Pseudonymous certificates prevent this by giving each vehicle a rotating, unlinkable identity for message signing."}},
-    {"@type":"Question","name":"What is the difference between authentication and identification in V2X?","acceptedAnswer":{"@type":"Answer","text":"Authentication establishes that a signer is a genuine, certified hardware-backed ITS station. Identification establishes which specific vehicle the signer is. V2X PKI provides authentication without identification: a receiver knows the signer is trusted (the PC chains to a known AA), but cannot tell whether the previous CAM ten seconds ago and the current CAM were signed by the same vehicle or two different vehicles."}},
-    {"@type":"Question","name":"How short is a Pseudonymous Certificate's lifetime?","acceptedAnswer":{"@type":"Answer","text":"Typical deployments target a few minutes to a few tens of minutes. The lifetime is a trade-off: shorter PCs limit the linkability window of any single PC, but require more frequent batch refresh from the AA. Profiles in current European deployments lean toward 5-10 minute lifetimes with batches sized for a week or month of operation."}},
-    {"@type":"Question","name":"Can the Authorisation Authority link the PCs it issues to the requesting vehicle?","acceptedAnswer":{"@type":"Answer","text":"Not by construction. Butterfly Key Expansion lets the AA issue a batch of PCs from a single device-supplied seed without learning the per-PC private keys, and the proof of Enrolment Credential possession is constructed so the AA validates entitlement without learning the EC identity. Even an AA operator keeping every record possible cannot reverse the binding from PC to EC after issuance."}},
-    {"@type":"Question","name":"How do you revoke a vehicle without breaking the privacy property?","acceptedAnswer":{"@type":"Answer","text":"Linkage-based revocation. Each PC carries a linkageData value derived from a per-device linkage seed held only by the linkage authority. To revoke a compromised vehicle, the linkage authority publishes that one seed; every verifier computes the linkage values for the affected PCs and rejects them. The seed publication identifies the linkage values, not the vehicle behind them, so revocation can be propagated through public CRL channels without disclosing which vehicle was revoked."}},
-    {"@type":"Question","name":"Does pseudonymity break in dense traffic where the same vehicle is the only nearby sender?","acceptedAnswer":{"@type":"Answer","text":"Pseudonymity is an architectural property, not a guarantee of anonymity. A receiver that observes only one vehicle in radio range can infer that successive messages from that range came from the same vehicle, regardless of the PC. The architectural protection is against an observer who cannot correlate at the radio level — the PKI does not advertise which vehicle is signing. Anonymity also depends on rotation cadence, radio-level mixing, and the absence of stable side-channel identifiers in the message payload itself."}}
+    {
+     "@type": "Question",
+     "name": "Why is a static V2X identity dangerous?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A V2X message carries a signature plus a certificate or its digest. If every message from a given vehicle is signed under the same certificate, every receiver in radio range can identify which messages came from the same vehicle and reconstruct its route. The signed message data (position, speed, heading) plus a stable identifier is sufficient to track every vehicle on the road. Pseudonymous certificates prevent this by giving each vehicle a rotating, unlinkable identity for message signing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the difference between authentication and identification in V2X?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Authentication establishes that a signer is a genuine, certified hardware-backed ITS station. Identification establishes which specific vehicle the signer is. V2X PKI provides authentication without identification: a receiver knows the signer is trusted (the PC chains to a known AA), but cannot tell whether the previous CAM ten seconds ago and the current CAM were signed by the same vehicle or two different vehicles."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How short is a Pseudonymous Certificate's lifetime?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Typical deployments target a few minutes to a few tens of minutes. The lifetime is a trade-off: shorter PCs limit the linkability window of any single PC, but require more frequent batch refresh from the AA. Profiles in current European deployments lean toward 5-10 minute lifetimes with batches sized for a week or month of operation."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can the Authorisation Authority link the PCs it issues to the requesting vehicle?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Not by construction. Butterfly Key Expansion lets the AA issue a batch of PCs from a single device-supplied seed without learning the per-PC private keys, and the proof of Enrolment Credential possession is constructed so the AA validates entitlement without learning the EC identity. Even an AA operator keeping every record possible cannot reverse the binding from PC to EC after issuance."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "How do you revoke a vehicle without breaking the privacy property?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Linkage-based revocation. Each PC carries a linkageData value derived from a per-device linkage seed held only by the linkage authority. To revoke a compromised vehicle, the linkage authority publishes that one seed; every verifier computes the linkage values for the affected PCs and rejects them. The seed publication identifies the linkage values, not the vehicle behind them, so revocation can be propagated through public CRL channels without disclosing which vehicle was revoked."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Does pseudonymity break in dense traffic where the same vehicle is the only nearby sender?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Pseudonymity is an architectural property, not a guarantee of anonymity. A receiver that observes only one vehicle in radio range can infer that successive messages from that range came from the same vehicle, regardless of the PC. The architectural protection is against an observer who cannot correlate at the radio level — the PKI does not advertise which vehicle is signing. Anonymity also depends on rotation cadence, radio-level mixing, and the absence of stable side-channel identifiers in the message payload itself."
+     }
+    }
    ]
   },
   {
    "@type": "BreadcrumbList",
    "itemListElement": [
-    {"@type":"ListItem","position":1,"name":"Home","item":"https://ambisecure.ambimat.com/"},
-    {"@type":"ListItem","position":2,"name":"Blog","item":"https://ambisecure.ambimat.com/blog/"},
-    {"@type":"ListItem","position":3,"name":"Pseudonymous Certificates and Privacy in V2X","item":"https://ambisecure.ambimat.com/blog/pseudonymous-certificates-and-privacy/"}
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Pseudonymous Certificates and Privacy in V2X",
+     "item": "https://ambisecure.ambimat.com/blog/pseudonymous-certificates-and-privacy/"
+    }
    ]
   },
   {
    "@type": "Article",
    "headline": "Pseudonymous Certificates and Privacy in V2X",
    "description": "The privacy property of V2X PKI in engineering depth: why static identities are dangerous, how Pseudonymous Certificates achieve unlinkability, how Butterfly Key Expansion makes the EA/AA split actually privacy-preserving, and how revocation works without de-anonymising the fleet.",
-   "author": {"@type":"Organization","name":"AmbiSecure Engineering"},
-   "publisher": {"@type":"Organization","name":"AmbiSecure","url":"https://ambisecure.ambimat.com/"},
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure Engineering"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "url": "https://ambisecure.ambimat.com/"
+   },
    "datePublished": "2026-05-26",
    "dateModified": "2026-05-26",
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/pseudonymous-certificates-and-privacy/",
    "keywords": "pseudonymous certificate, V2X privacy, unlinkability, Butterfly Key Expansion, linkageData, V2X revocation, ETSI TS 102 941, IEEE 1609.2, EA AA split, fleet privacy"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -288,6 +500,19 @@
       </div>
       <div><a href="/contact/" class="btn btn-primary" data-analytics-event="contact_engineering">Talk to engineering</a><a href="/solutions/v2x-security/" class="btn btn-outline" style="margin-left:8px;">V2X solution</a></div>
     </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why is a static V2X identity dangerous?</h3><p style="margin:0;">A V2X message carries a signature plus a certificate or its digest. If every message from a given vehicle is signed under the same certificate, every receiver in radio range can identify which messages came from the same vehicle and reconstruct its route. The signed message data (position, speed, heading) plus a stable identifier is sufficient to track every vehicle on the road. Pseudonymous certificates prevent this by giving each vehicle a rotating, unlinkable identity for message signing.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between authentication and identification in V2X?</h3><p style="margin:0;">Authentication establishes that a signer is a genuine, certified hardware-backed ITS station. Identification establishes which specific vehicle the signer is. V2X PKI provides authentication without identification: a receiver knows the signer is trusted (the PC chains to a known AA), but cannot tell whether the previous CAM ten seconds ago and the current CAM were signed by the same vehicle or two different vehicles.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How short is a Pseudonymous Certificate's lifetime?</h3><p style="margin:0;">Typical deployments target a few minutes to a few tens of minutes. The lifetime is a trade-off: shorter PCs limit the linkability window of any single PC, but require more frequent batch refresh from the AA. Profiles in current European deployments lean toward 5-10 minute lifetimes with batches sized for a week or month of operation.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can the Authorisation Authority link the PCs it issues to the requesting vehicle?</h3><p style="margin:0;">Not by construction. Butterfly Key Expansion lets the AA issue a batch of PCs from a single device-supplied seed without learning the per-PC private keys, and the proof of Enrolment Credential possession is constructed so the AA validates entitlement without learning the EC identity. Even an AA operator keeping every record possible cannot reverse the binding from PC to EC after issuance.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How do you revoke a vehicle without breaking the privacy property?</h3><p style="margin:0;">Linkage-based revocation. Each PC carries a linkageData value derived from a per-device linkage seed held only by the linkage authority. To revoke a compromised vehicle, the linkage authority publishes that one seed; every verifier computes the linkage values for the affected PCs and rejects them. The seed publication identifies the linkage values, not the vehicle behind them, so revocation can be propagated through public CRL channels without disclosing which vehicle was revoked.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Does pseudonymity break in dense traffic where the same vehicle is the only nearby sender?</h3><p style="margin:0;">Pseudonymity is an architectural property, not a guarantee of anonymity. A receiver that observes only one vehicle in radio range can infer that successive messages from that range came from the same vehicle, regardless of the PC. The architectural protection is against an observer who cannot correlate at the radio level — the PKI does not advertise which vehicle is signing. Anonymity also depends on rotation cadence, radio-level mixing, and the absence of stable side-channel identifiers in the message payload itself.</p></div>
   </div>
 </section>
 

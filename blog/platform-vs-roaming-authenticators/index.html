@@ -59,6 +59,22 @@
       "@type": "Answer",
       "text": "Hybrid transport (originally called caBLE) lets a phone act as a roaming authenticator over Bluetooth + a QR-code handshake. This is convenient as a recovery path but should not be the primary roaming credential for high-assurance access — the trust chain runs through the phone vendor's sync fabric."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "What happens to a platform authenticator when the device is replaced?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The credential does not move unless it is a synced passkey. Device refresh cycles therefore become re-enrolment events, which is a planning consideration rather than a technical obstacle."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can one user have both platform and roaming authenticators?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, and it is usually the right answer. A platform authenticator handles day-to-day convenience while a roaming one provides the portable, attestable credential for high-value access and recovery."
+     }
     }
    ]
   },
@@ -100,6 +116,154 @@
    },
    "mainEntityOfPage": "https://ambisecure.ambimat.com/blog/platform-vs-roaming-authenticators/",
    "keywords": "platform authenticator, roaming authenticator, FIDO2, smart card, USB security key, biometric card, hybrid transport"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "url": "https://ambimat.com/",
+    "foundingDate": "1982"
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
   }
  ]
 }
@@ -204,7 +368,7 @@
     <p>This is excellent UX for the "I'm at my colleague's machine and need to check email" scenario. The trust model is the platform authenticator's trust model on the phone &mdash; same as if the user were signing in directly on the phone.</p>
     <p>The friction: BLE pairing is sometimes finicky; the QR-scan ceremony has a learning curve; first-time hybrid use is slower than typing a password. After the first time, it becomes muscle memory.</p>
 
-    <h2>Operational considerations</h2>
+    <h2>What to consider in operation</h2>
     <h3>Lost-and-found rates</h3>
     <p>Loss and damage rates vary by form factor, and the failure modes differ. Smart cards are lost more often than USB keys (left in slot reader at desk overnight, taken home in pocket, run through the wash). USB keys are lost less often but break more often (USB connector damage). Plan for both.</p>
     <h3>Battery considerations</h3>
@@ -250,6 +414,18 @@
 
   </article>
 </section>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the difference between a platform and a roaming authenticator?</h3><p style="margin:0;">A platform authenticator is tied to a specific device (laptop TPM, phone secure enclave) and produces credentials that stay on that device. A roaming authenticator (USB / NFC / Bluetooth security key) is portable and can sign across multiple devices. Both implement WebAuthn; the operational properties differ.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Which authenticator type should we deploy for our workforce?</h3><p style="margin:0;">For most modern workforces the right answer is both. Platform authenticators give a frictionless daily-sign-in path on managed devices; roaming authenticators cover account recovery, BYOD, shared workstations, and high-assurance access. Treating them as substitutes leads to either UX friction or recovery dead-ends.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">How does caBLE / hybrid transport fit in?</h3><p style="margin:0;">Hybrid transport (originally called caBLE) lets a phone act as a roaming authenticator over Bluetooth + a QR-code handshake. This is convenient as a recovery path but should not be the primary roaming credential for high-assurance access — the trust chain runs through the phone vendor's sync fabric.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What happens to a platform authenticator when the device is replaced?</h3><p style="margin:0;">The credential does not move unless it is a synced passkey. Device refresh cycles therefore become re-enrolment events, which is a planning consideration rather than a technical obstacle.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can one user have both platform and roaming authenticators?</h3><p style="margin:0;">Yes, and it is usually the right answer. A platform authenticator handles day-to-day convenience while a roaming one provides the portable, attestable credential for high-value access and recovery.</p></div>
+  </div>
+</section>
+
 </main>
 
 <footer class="site-footer"><div class="footer-inner">
