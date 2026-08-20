@@ -365,14 +365,6 @@ if ($written === false) {
 $hits[] = time();
 @file_put_contents($rateFile, implode(',', $hits), LOCK_EX);
 
-// A no-PII operational counter, so lead volume can be read without opening
-// the store. This is the number that is independent of analytics consent.
-@file_put_contents(
-    $dir . '/count-' . gmdate('Y-m') . '.log',
-    $now . ' ' . $ref . ' ' . $purpose . "\n",
-    FILE_APPEND | LOCK_EX
-);
-
 // ---------------------------------------------------------------------------
 // Notification (best-effort — never changes the success outcome)
 // ---------------------------------------------------------------------------
@@ -405,6 +397,39 @@ $headers = [
     'MIME-Version: 1.0',
 ];
 
-@mail(NOTIFY_TO, $subject, $body, implode("\r\n", $headers), '-f' . MAIL_FROM);
+$mailOk = @mail(
+    NOTIFY_TO,
+    $subject,
+    $body,
+    implode("\r\n", $headers),
+    '-f' . MAIL_FROM
+);
 
+// ---------------------------------------------------------------------------
+// Operational status line — no PII
+// ---------------------------------------------------------------------------
+//
+// One line per enquiry, recording capture and notification separately. This is
+// how an operator answers "did we get the lead?" and "did the email go out?"
+// without opening the store or depending on analytics consent.
+//
+// LEAD_CAPTURED is unconditional here: we only reach this point after the
+// durable write succeeded, so capture is already guaranteed. MAIL_SENT means
+// the local MTA accepted the message for delivery — it does NOT mean the
+// message reached the inbox, which only the receiving server can confirm.
+//
+// Note that mail() returning true and the message actually arriving are
+// different things: ambimat.com publishes SPF `-all` for Microsoft 365, and
+// this host is not an authorised sender, so MAIL_SENT followed by no inbox
+// delivery is the expected failure signature until an authenticated transport
+// replaces mail().
+$status = 'LEAD_CAPTURED ' . ($mailOk ? 'MAIL_SENT' : 'MAIL_FAILED');
+@file_put_contents(
+    $dir . '/count-' . gmdate('Y-m') . '.log',
+    $now . ' ' . $ref . ' ' . $purpose . ' ' . $status . "\n",
+    FILE_APPEND | LOCK_EX
+);
+
+// Mail outcome deliberately does not affect the response: the enquiry is
+// already safely stored, and telling the visitor it failed would be false.
 respond_ok($ref, $purpose);
