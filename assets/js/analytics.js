@@ -61,6 +61,12 @@
         allow_google_signals: false,
         allow_ad_personalization_signals: false
       });
+
+      // Only now does window.gtag exist, so this is the first moment queued
+      // events can actually be delivered. Draining any earlier (e.g. at script
+      // parse) silently discards them — that is how the thank-you page's
+      // generate_lead was being lost.
+      if (typeof cfg.__drain === "function") { cfg.__drain(); }
     }, { once: true });
     return;
   }
@@ -97,18 +103,50 @@
       if (cfg.provider === "plausible" && typeof window.plausible === "function") {
         window.plausible("WebVital", { props: { metric: name, value: value, path: path } });
       } else if (cfg.provider === "ga4" && typeof window.gtag === "function") {
-        window.gtag("event", name, { value: value, page_path: path, metric_id: name });
+        var payloadOut = { value: value, page_path: path, metric_id: name };
+        // Extra, non-PII parameters (e.g. lead_type on generate_lead).
+        if (payload.params && typeof payload.params === "object") {
+          Object.keys(payload.params).forEach(function (k) {
+            payloadOut[k] = payload.params[k];
+          });
+        }
+        window.gtag("event", name, payloadOut);
       }
     } catch (_) {  }
   };
 
-  try {
-    var buf = window.AS_WEB_VITALS_BUFFER;
-    if (Array.isArray(buf) && buf.length) {
-      buf.forEach(function (p) { cfg.report(p); });
-      window.AS_WEB_VITALS_BUFFER = [];
-    }
-  } catch (_) {}
+  // Flush anything queued before the analytics provider was ready.
+  //
+  // Two things queue: web-vitals samples, and events fired on page load by
+  // other scripts — notably the thank-you page's generate_lead. Both can run
+  // before this file is even injected (cookie-consent.js injects it
+  // asynchronously, and only after consent), and for GA4 window.gtag does not
+  // exist until the googletagmanager script finishes loading. So this is
+  // called twice: once here, and again from the GA4 load handler above. It is
+  // idempotent — each buffer is emptied as it is drained.
+  cfg.__drain = function () {
+    // Do nothing until the provider can actually receive an event. Draining
+    // early would empty the buffers into a no-op cfg.report() and the events
+    // would be gone before the provider finished loading.
+    if (cfg.provider === "ga4" && typeof window.gtag !== "function") { return; }
+    if (cfg.provider === "plausible" && typeof window.plausible !== "function") { return; }
+    try {
+      var buf = window.AS_WEB_VITALS_BUFFER;
+      if (Array.isArray(buf) && buf.length) {
+        window.AS_WEB_VITALS_BUFFER = [];
+        buf.forEach(function (p) { cfg.report(p); });
+      }
+    } catch (_) {}
+    try {
+      var pend = window.AS_PENDING_EVENTS;
+      if (Array.isArray(pend) && pend.length) {
+        window.AS_PENDING_EVENTS = [];
+        pend.forEach(function (p) { cfg.report(p); });
+      }
+    } catch (_) {}
+  };
+
+  cfg.__drain();
 
   // ----------------------------------------------------------------------
   // Event-tracking helpers. Privacy-first: no PII, no payload exfiltration.
@@ -116,9 +154,19 @@
   // analytics opt-out, and provider="none".
   //
   // Documented event names (see docs/MASTER_OPS §50):
-  //   request_demo, contact_engineering, product_interest, service_interest,
-  //   search_query, tool_usage, timeline_view, video_play,
-  //   download_brochure, scroll_depth
+  //   CONVERSION (exactly one):
+  //     generate_lead        - fired ONLY by /contact/thank-you/, i.e. only
+  //                            after contact/submit.php durably accepted an
+  //                            enquiry. Never fired from a click.
+  //   SECONDARY INTERACTIONS (not conversions):
+  //     contact_cta_click, email_click, phone_click, request_demo,
+  //     service_interest, product_interest, download_brochure, deck_download,
+  //     search_query, tool_usage, timeline_view, case_study_view, scroll_depth
+  //
+  //   RETIRED: contact_engineering. It sat on 82 ordinary /contact/ navigation
+  //   links plus the old mailto submit button, so it measured intent to click,
+  //   not an enquiry. Renamed to contact_cta_click in Batch 1 rather than
+  //   reused, so historical data keeps one stable meaning.
   //
   // Tagging convention on the HTML side:
   //   <a data-analytics-event="contact_engineering" ...>
