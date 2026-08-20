@@ -265,6 +265,11 @@
 .form-grid input:invalid:not(:placeholder-shown),.form-grid textarea:invalid:not(:placeholder-shown){border-color:#b3261e}
 .form-grid input:focus-visible,.form-grid textarea:focus-visible,.form-grid select:focus-visible{outline:2px solid var(--brand-red);outline-offset:2px}
 #cf-submit[aria-disabled="true"]{opacity:.6;cursor:progress}
+/* main.css lays .form-grid out as two columns at every width, which
+   leaves ~180px fields on a phone. Collapsing to one column here keeps
+   the fix scoped to this page, so the sitewide ?v=32 cache-buster does
+   not need bumping across 316 files. */
+@media (max-width:560px){.form-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
