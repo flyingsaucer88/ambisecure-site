@@ -50,3 +50,7 @@ chrome/
 
 # Local deploy credentials — NEVER commit. Use deploy.example.env as the template.
 .deploy.env
+
+# Runtime lead store written by contact/submit.php. Contains enquiry PII.
+# Never commit; never build into the deploy package.
+.leads/

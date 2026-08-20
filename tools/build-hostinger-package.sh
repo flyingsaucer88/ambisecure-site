@@ -21,6 +21,11 @@ mkdir -p "${OUT}"
 
 # rsync everything except source/repo/dev files. Trailing slash on src
 # means "copy contents of repo into OUT", not "copy repo dir itself".
+# /.leads/ is the runtime lead store written by contact/submit.php. It holds
+# enquiry PII, exists only on the server, and must never be uploaded — deploys
+# are additive-only, so excluding it never deletes the live one.
+# /reports/ holds internal audit reports (GSC internals, spam URL patterns,
+# deploy toolchain) that were previously served publicly at /reports/*.md.
 # Anchor source-only excludes to the root with a leading slash so
 # `/tools/` does NOT also match `/resources/tools/` (which IS the
 # public utility-tool surface and must ship).
@@ -39,6 +44,8 @@ rsync -a \
   --exclude='/node_modules/' \
   --exclude='/dist/' \
   --exclude='/_internal/' \
+  --exclude='/.leads/' \
+  --exclude='/reports/' \
   --exclude='/Logos/' \
   --exclude='/.lighthouserc.json' \
   --exclude='/package.json' \

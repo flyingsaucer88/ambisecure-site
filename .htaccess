@@ -87,8 +87,15 @@ RewriteRule ^(wp-login\.php|wp-config\.php|wp-cron\.php|wp-mail\.php|wp-trackbac
 # Block other CMS probe surfaces (Joomla / Drupal / Magento fingerprints).
 RewriteRule ^(administrator|admin/login|user/login|configuration\.php|sites/default/files|magmi|joomla|drupal|typo3|phpmyadmin|pma|adminer|setup-config)(/|$) - [F,NC,L]
 
-# Block PHP / CGI / scripting execution. Site is fully static; any .php
-# that lands on disk must be treated as compromise, not feature.
+# Batch 1: one intentional server-side endpoint. The contact form posts here.
+# It must be listed BEFORE the blanket script block below, and [L] stops
+# further rewrite processing so the block rule never sees it. Everything else
+# ending in .php is still treated as compromise, not feature.
+RewriteRule ^contact/submit\.php$ - [L]
+
+# Block PHP / CGI / scripting execution. Aside from the single endpoint above,
+# the site is fully static; any other .php that lands on disk must be treated
+# as compromise, not feature.
 RewriteRule \.(php[0-9s]?|phtml|phar|cgi|pl|py|asp|aspx|jsp|jspx|war)$ - [F,NC,L]
 
 # Author-enumeration probe (?author=1 returns WP username on stock WP).
@@ -366,7 +373,7 @@ ErrorDocument 404 /404.html
   # GA4 origins added when provider flipped to "ga4" (Phase 37): gtag.js
   # loads from googletagmanager.com; collect beacons go to google-analytics.com
   # subdomains (regional endpoints use region1./region2./etc).
-  Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://i.ytimg.com https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' mailto:; object-src 'none'; media-src 'self'; upgrade-insecure-requests"
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https://i.ytimg.com https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; media-src 'self'; upgrade-insecure-requests"
 </IfModule>
 
 # Compression

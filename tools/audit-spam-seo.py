@@ -108,7 +108,14 @@ FORBIDDEN_FILES = re.compile(
 # Known-safe root files that match a forbidden extension but are never shipped
 # (build-hostinger-package.sh excludes them) and contain no secrets. The real
 # .deploy.env is gitignored and never present in a clean tree.
-FORBIDDEN_EXEMPT = {"deploy.example.env"}
+FORBIDDEN_EXEMPT = {
+    "deploy.example.env",
+    # Batch 1: the single intentional server-side endpoint (contact form
+    # handler). It IS shipped, unlike the entry above. Execution is
+    # allow-listed for this exact path in .htaccess; every other .php
+    # remains blocked at the server and flagged here.
+    "contact/submit.php",
+}
 
 # Sitemap must contain only ambisecure.ambimat.com or pre-approved peer
 # hosts (Ambimat parent, eSIM cousin). Anything else is poisoning.
