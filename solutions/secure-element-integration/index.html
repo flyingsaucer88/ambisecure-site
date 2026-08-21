@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Secure Element Integration — AmbiSecure | Silicon-to-cloud</title>
-<meta name="description" content="Secure-element integration into your product — chip selection, host driver, JavaCard applet, lifecycle. NXP, Infineon, STMicro families. CC EAL6+ secure elements." />
+<title>Embedded Secure Element Integration | AmbiSecure</title>
+<meta name="description" content="Embedded secure-element integration engineering: secure element IC selection, host driver, JavaCard applet and field lifecycle. NXP, Infineon, STMicro." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/solutions/secure-element-integration/" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Secure Element Integration — AmbiSecure" />
-<meta property="og:description" content="Secure-element integration into your product — chip selection, host driver, JavaCard applet, lifecycle. NXP, Infineon, STMicro families. CC EAL6+ secure elements." />
+<meta property="og:title" content="Embedded Secure Element Integration — AmbiSecure" />
+<meta property="og:description" content="Embedded secure-element integration engineering: secure element IC selection, host driver, JavaCard applet and field lifecycle. NXP, Infineon, STMicro." />
 <meta property="og:url" content="https://ambisecure.ambimat.com/solutions/secure-element-integration/" />
 <meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-solutions-secure-element-integration-1200x630.png" />
 <meta property="og:image:secure_url" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-solutions-secure-element-integration-1200x630.png" />
@@ -54,6 +54,43 @@
      "position": 3,
      "name": "Secure-element integration",
      "item": "https://ambisecure.ambimat.com/solutions/secure-element-integration/"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What is an embedded secure element?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "An embedded secure element is a tamper-resistant chip on a product's bill of materials whose only job is to store key material and perform cryptographic operations on it. The host MCU sends it operations to perform; the private keys never leave the chip. Secure elements are certified at the chip class level — Common Criteria EAL6+ is typical for the silicon and its operating system — and resist physical attacks such as differential power analysis, fault injection and microprobing."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is included in a secure-element integration project?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Four workstreams: chip selection against your security tier, interface and certification requirements; the host-side driver that talks to the secure element, including APDU framing and an SCP03 secure channel; the SE-side applet, either custom or an off-the-shelf FIDO, PIV or OpenPGP applet; and field lifecycle — issuance, key rotation and applet update under SCP03."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Which secure element families can AmbiSecure integrate?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "NXP SmartMX, Infineon SLE / SLJ and the STMicroelectronics ST33 family, all of which run JavaCard and GlobalPlatform. We also do vendor-agnostic integrations for customers who want to dual-source, handling the abstraction at the host-driver layer."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "When should a product use a secure element instead of a TPM or software key store?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Use a secure element when the device itself needs a hardware-bound identity that survives firmware extraction, and the operation rate is low. Use a TPM when you need to attest a PC or server platform's boot state. Use an HSM when the cryptography is server-side and high-throughput. A software key store is appropriate only where the threat model genuinely tolerates key extraction."
+     }
     }
    ]
   },
@@ -238,17 +275,18 @@
 <section style="padding: 60px 80px 30px;">
   <div class="prose">
     <span class="eyebrow">Solution</span>
-    <h1>Secure element integration &mdash; the chip in the product.</h1>
+    <h1>Embedded secure element integration &mdash; the chip in the product.</h1>
     <p class="dek">A secure element is the trust anchor. Picking the right one, integrating it into a product, and operating it through the product's lifecycle are three different problems. AmbiSecure handles all three &mdash; from chip selection through firmware, applet, personalisation, and field rotation.</p>
   </div>
 </section>
 
 <section>
   <div class="section-container">
-    <div class="section-head left"><h2 class="section-title">Why an SE</h2><span class="section-line"></span></div>
+    <div class="section-head left"><h2 class="section-title">What is an embedded secure element?</h2><span class="section-line"></span></div>
     <div class="prose" style="max-width:900px;margin:0;">
-      <p>A secure element is a tamper-resistant chip that holds keys and runs cryptographic operations without ever exposing the keys to the host. The chip's physical packaging, side-channel countermeasures, and on-die verifier resist attacks that would trivially break software-only crypto.</p>
-      <p>Use cases where an SE is the right choice:</p>
+      <p>An embedded secure element is a tamper-resistant chip that sits on your product's BOM and does one job: hold key material and run cryptographic operations on it without the keys ever crossing onto the host. The application MCU asks the secure element IC to sign, verify, or derive; it never sees the private key. That boundary is what makes the device identity survive firmware extraction.</p>
+      <p>The chip's physical packaging, side-channel countermeasures, and on-die verifier resist attacks &mdash; differential power analysis, fault injection, microprobing &mdash; that would trivially break software-only crypto. Secure elements are not general-purpose processors: they do a small number of operations very securely, and they do not run application code the way an MCU does.</p>
+      <p>Use cases where an embedded secure element is the right choice:</p>
       <ul>
         <li>FIDO2 / WebAuthn authenticators (smart card, USB key, embedded SE in phone).</li>
         <li>Payment terminals (EMV chip-and-PIN, EMV contactless).</li>
@@ -263,7 +301,7 @@
 
 <section class="alt">
   <div class="section-container">
-    <div class="section-head left"><h2 class="section-title">Integration scope</h2><span class="section-line"></span></div>
+    <div class="section-head left"><h2 class="section-title">What an embedded secure element integration covers</h2><span class="section-line"></span></div>
     <div class="arch-row">
       <div class="arch-cell"><span class="arch-tag">SELECTION</span><h3>Chip selection</h3><p>Match SE family to security tier (CC EAL6+ vs EAL4+), interface (ISO 7816, ISO 14443, SPI, I2C), throughput, certifications.</p></div>
       <div class="arch-cell accent"><span class="arch-tag">FIRMWARE</span><h3>Host driver</h3><p>Driver on the host MCU / SoC for talking to the SE. APDU framing, secure channel (SCP03), session management.</p></div>
@@ -275,12 +313,28 @@
 
 <section>
   <div class="section-container">
-    <div class="section-head left"><h2 class="section-title">SE families we ship</h2><span class="section-line"></span></div>
+    <div class="section-head left"><h2 class="section-title">Secure element families we integrate</h2><span class="section-line"></span></div>
     <div class="fido-grid">
       <div class="fido-card"><span class="fc-tag">NXP</span><h3>NXP SmartMX</h3><p>JavaCard 3.x, GlobalPlatform 2.3.1, CC EAL6+ on flagship variants. Used in OnePass Card.</p></div>
       <div class="fido-card"><span class="fc-tag">Infineon</span><h3>Infineon SLE / SLJ</h3><p>JavaCard, CC EAL6+ / EAL6+. Strong eID / payments deployment history.</p></div>
       <div class="fido-card"><span class="fc-tag">STMicro</span><h3>ST33 family</h3><p>CC EAL6+ secure microcontrollers. Embedded SE common in IoT root-of-trust.</p></div>
       <div class="fido-card"><span class="fc-tag">Multi-vendor</span><h3>Vendor-agnostic integration</h3><p>For customers wanting to dual-source. We handle abstraction at the host-driver layer.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Secure element vs TPM vs HSM</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>All three are &ldquo;hardware that stores keys&rdquo;, and they are not interchangeable. The question is not which is strongest &mdash; it is which one belongs in the architecture you are building.</p>
+      <ul>
+        <li><strong>Secure element</strong> &mdash; lives inside the device, on its BOM. Built for per-device identity at low throughput. This is the one you embed in a product.</li>
+        <li><strong>TPM</strong> &mdash; lives on a PC or server motherboard. Built for platform attestation and measured boot, binding keys to a machine's software state.</li>
+        <li><strong>HSM</strong> &mdash; lives in a rack. Built for bulk server-side crypto, CA roots and key-management systems, at thousands of operations per second.</li>
+      </ul>
+      <p>A connected product that needs its own identity wants a secure element; a fleet-management backend signing on behalf of that product wants an HSM. They frequently appear in the same system.</p>
+      <p><a href="/blog/secure-element-vs-tpm-vs-hsm/">Secure Element vs TPM vs HSM &mdash; where each fits</a> works through the boundaries, certifications and deployment contexts in full.</p>
     </div>
   </div>
 </section>
@@ -296,6 +350,18 @@
   </div>
 </section>
 
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Frequently asked questions</h2><span class="section-line"></span></div>
+    <div class="prose" style="max-width:900px;margin:0;">
+      <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is an embedded secure element?</h3><p style="margin:0;">An embedded secure element is a tamper-resistant chip on a product's bill of materials whose only job is to store key material and perform cryptographic operations on it. The host MCU sends it operations to perform; the private keys never leave the chip. Secure elements are certified at the chip class level — Common Criteria EAL6+ is typical for the silicon and its operating system — and resist physical attacks such as differential power analysis, fault injection and microprobing.</p></div>
+      <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is included in a secure-element integration project?</h3><p style="margin:0;">Four workstreams: chip selection against your security tier, interface and certification requirements; the host-side driver that talks to the secure element, including APDU framing and an SCP03 secure channel; the SE-side applet, either custom or an off-the-shelf FIDO, PIV or OpenPGP applet; and field lifecycle — issuance, key rotation and applet update under SCP03.</p></div>
+      <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Which secure element families can AmbiSecure integrate?</h3><p style="margin:0;">NXP SmartMX, Infineon SLE / SLJ and the STMicroelectronics ST33 family, all of which run JavaCard and GlobalPlatform. We also do vendor-agnostic integrations for customers who want to dual-source, handling the abstraction at the host-driver layer.</p></div>
+      <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">When should a product use a secure element instead of a TPM or software key store?</h3><p style="margin:0;">Use a secure element when the device itself needs a hardware-bound identity that survives firmware extraction, and the operation rate is low. Use a TPM when you need to attest a PC or server platform's boot state. Use an HSM when the cryptography is server-side and high-throughput. A software key store is appropriate only where the threat model genuinely tolerates key extraction.</p></div>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="section-container">
     <div class="callout">
@@ -303,7 +369,7 @@
         <h2>Embedding a secure element in your product?</h2>
         <p>We have shipped silicon-to-cloud integrations across smart cards, USB authenticators, payment terminals, IoT gateways, and connected vehicles. Tell us your platform and constraints.</p>
       </div>
-      <div><a href="/contact/?purpose=secure-element" class="btn btn-primary" data-analytics-event="contact_cta_click">Talk to engineers</a></div>
+      <div><a href="/contact/?purpose=secure-element" class="btn btn-primary" data-analytics-event="contact_cta_click">Discuss a secure-element integration</a></div>
     </div>
   </div>
 </section>
