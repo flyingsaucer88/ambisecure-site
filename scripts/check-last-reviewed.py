@@ -52,6 +52,46 @@ def editorial_body(html: str) -> str:
     return re.sub(r'\s+', ' ', html).strip()
 
 
+_TAGS      = re.compile(r'<[^>]+>')
+_SCRIPTISH = re.compile(r'<(script|style|template)\b[^>]*>.*?</\1>', re.S | re.I)
+
+
+def visible_text(html: str) -> str:
+    """Only what a reader actually sees: markup and scripts removed.
+
+    Deliberately stricter than editorial_body(). Sitewide mechanical sweeps
+    rewrite ATTRIBUTES on hundreds of pages — swapping a data-analytics-event
+    value, turning a plain phone number into a tel: link — without changing a
+    single rendered word. editorial_body() still sees those as a diff because
+    it preserves markup, which is right for a pre-commit guard (err toward
+    asking) but wrong for sitemap lastmod, where the question is strictly
+    "would a returning reader find anything new?".
+    """
+    html = _SCRIPTISH.sub(' ', html)
+    return re.sub(r'\s+', ' ', _TAGS.sub(' ', html)).strip()
+
+
+_MAIN = re.compile(r'<main\b[^>]*>(.*?)</main>', re.S | re.I)
+
+
+def main_text(html: str) -> str:
+    """Rendered text of the page's <main> region only.
+
+    The last step in narrowing what "the page changed" means. Rendered text
+    alone was still too broad: a sitewide sweep that adds a WhatsApp number to
+    the shared footer really does change visible text on all 284 pages, but no
+    reader of an article about DESFire keys learned anything new, and telling
+    Google otherwise is the fake-freshness signal we are trying to avoid.
+
+    Every page on the site carries exactly one <main>, so isolating it excludes
+    header, nav and footer boilerplate and leaves the content Google actually
+    evaluates. Falls back to the whole document for any historical revision
+    that predates the <main> landmark, which errs toward reporting a change.
+    """
+    m = _MAIN.search(html)
+    return visible_text(m.group(1) if m else html)
+
+
 def content_changed(path: str) -> bool:
     """True if the staged version differs from HEAD in visible content.
 
