@@ -14,7 +14,7 @@ Exit:
   0 — clean (or only warnings)
   1 — at least one modern blog needs its last_reviewed bumped
 """
-import argparse, json, os, subprocess, sys
+import argparse, json, os, re, subprocess, sys
 from datetime import date
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -33,6 +33,48 @@ def blog_url_for(path):
     if not (path.startswith("blog/") or path.startswith("blog/archive/")):
         return None
     return "/" + path[: -len("index.html")]
+
+# Machine-generated metadata that carries no editorial meaning: JSON-LD
+# graphs, <meta> tags, <link> tags and HTML comments. A change confined to
+# these is a technical correction, not a re-review of the article.
+_NOISE = [
+    re.compile(r'<script[^>]*application/ld\+json[^>]*>.*?</script>', re.S | re.I),
+    re.compile(r'<meta\b[^>]*>', re.I),
+    re.compile(r'<link\b[^>]*>', re.I),
+    re.compile(r'<!--.*?-->', re.S),
+]
+
+
+def editorial_body(html: str) -> str:
+    """The human-readable part of a page, with generated metadata stripped."""
+    for pattern in _NOISE:
+        html = pattern.sub('', html)
+    return re.sub(r'\s+', ' ', html).strip()
+
+
+def content_changed(path: str) -> bool:
+    """True if the staged version differs from HEAD in visible content.
+
+    WHY THIS EXISTS
+    ---------------
+    Sitewide structured-data sweeps (absolutising BreadcrumbList URLs, adding a
+    robots meta) touch many blog files without altering a word an author wrote.
+    Demanding a last_reviewed bump for those would put a false editorial
+    freshness date on the page and in its schema — precisely the fake-freshness
+    signal this repo avoids for sitemap lastmod. Comparing only the visible
+    body keeps the guard meaningful for real edits while staying silent for
+    generated-metadata changes.
+    """
+    head = subprocess.run(['git', 'show', f'HEAD:{path}'],
+                          cwd=ROOT, capture_output=True, text=True)
+    if head.returncode != 0:            # new file — treat as real content
+        return True
+    staged = subprocess.run(['git', 'show', f':{path}'],
+                            cwd=ROOT, capture_output=True, text=True)
+    if staged.returncode != 0:
+        return True
+    return editorial_body(head.stdout) != editorial_body(staged.stdout)
+
 
 def load_blogs():
     with open(BLOGS_JSON) as f:
@@ -70,7 +112,11 @@ def main():
 
         fails = []
         warns = []
+        metadata_only = []
         for path in modified_blogs:
+            if not content_changed(path):
+                metadata_only.append(path)
+                continue
             url = blog_url_for(path)
             entry = by_url.get(url)
             if not entry:
@@ -92,6 +138,10 @@ def main():
                    f"(today={today}). Bump it in assets/data/blogs.json.")
             (fails if is_modern else warns).append(msg)
 
+        if metadata_only:
+            print(f"check-last-reviewed: {len(metadata_only)} blog file(s) "
+                  "changed only in generated metadata (JSON-LD / meta / link) "
+                  "— no last_reviewed bump required.")
         for w in warns:
             print(f"WARN: {w}")
         for f in fails:

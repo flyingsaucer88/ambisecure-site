@@ -12,6 +12,7 @@ AmbiSecure is one of three sibling platforms inside the Ambimat Group. They shar
 - **SIMAuth** (`esim.ambimat.com`): telecom-grade eUICC / eSIM platform — SGP.22 consumer profiles, SGP.32 M2M / automotive, profile lifecycle, OpenID Connect applet for end-user identity verification.
 - **AmbiAutomation** (`ambiautomation.ambimat.com`): building-automation retrofit for existing VRV / VRF HVAC systems — on-site BACnet/MODBUS server plus mobile / web operator app for centralised control. Offices, hotels, hospitals, education, light industrial.
 - **Ambimat Electronics** (`ambimat.com`): the parent embedded-electronics firm. PCB design, contract manufacturing, and electronics engineering since 1982.
+- **FIDO Validation Server demo** (`fido.ambimat.com`): a live hosted WebAuthn/FIDO2 registration and authentication demo for the AmbiSecure FIDO Validation Server. It is a demonstration endpoint for the service documented at `ambisecure.ambimat.com/services/fido-validation-server/`, not a separate product or brand.
 
 Cross-link points where AmbiSecure and AmbiAutomation deployments naturally overlap: smart-city building access, commercial-real-estate access control + HVAC, BACnet/MODBUS controllers that need hardware-rooted device identity. They are separate products, not duplicate offerings.
 

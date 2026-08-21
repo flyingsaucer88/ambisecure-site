@@ -31,6 +31,8 @@ run "audit-counts"      python3 tools/audit-counts.py
 run "audit-og-images"   python3 tools/audit-og-images.py
 run "audit-dup-intent"  python3 tools/audit-duplicate-intent.py
 run "gen-tag-drift"     python3 tools/gen-tag-pages.py --check
+run "llms-full-drift"   python3 tools/build-llms-full.py --check
+run "breadcrumb-urls"   python3 tools/fix-breadcrumb-urls.py --check
 run "ai-readiness"      python3 tools/ai-readiness.py --check
 
 echo

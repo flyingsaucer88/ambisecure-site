@@ -6,6 +6,13 @@
 <title>Search AmbiSecure &mdash; products, services, technologies, blog</title>
 <meta name="description" content="Sitewide client-side search across products, services, technologies, solutions, industries, case studies, references, blog, and archive. No backend." />
 <link rel="canonical" href="https://ambisecure.ambimat.com/search/" />
+<!-- The site-search UI is a navigation tool, not a landing page: it has no
+     standalone content and its results are rendered client-side, so it is
+     worthless as a Google entry point. Kept crawlable (not robots.txt
+     blocked) so the noindex is actually seen, and "follow" so the internal
+     links it carries still pass through. Dropping it from the sitemap is
+     automatic: tools/regen-sitemap.py skips any page with a noindex meta. -->
+<meta name="robots" content="noindex,follow" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Search AmbiSecure &mdash; sitewide" />
 <meta property="og:description" content="Sitewide client-side search across products, services, technologies, references, and the engineering blog. No backend, no third-party tracking." />

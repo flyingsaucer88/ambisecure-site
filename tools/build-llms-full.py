@@ -7,7 +7,7 @@ references, timelines, tools — listing every page with title + one-line summar
 LLM crawlers can read this single file to understand the entire site without
 spidering 250+ HTML pages.
 """
-import os, json
+import os, json, sys
 from collections import OrderedDict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,9 +77,28 @@ def main():
                 lines.append(f'- [{title}]({url})')
         lines.append('')
 
+    body = '\n'.join(lines)
+
+    # --check: report drift instead of writing. llms-full.txt is a generated
+    # artefact committed to the repo, so it silently goes stale whenever a page
+    # title or summary changes. Batch 2 found it 85 lines behind reality. The
+    # audit suite now fails on drift rather than waiting for the next audit.
+    if '--check' in sys.argv:
+        current = ''
+        if os.path.exists(OUT):
+            with open(OUT, encoding='utf-8') as f:
+                current = f.read()
+        if current != body:
+            print('FAIL: llms-full.txt is stale — run tools/build-llms-full.py')
+            return 1
+        print(f'ok  llms-full.txt is in sync with the search index '
+              f'({len(pages)} pages)')
+        return 0
+
     with open(OUT, 'w', encoding='utf-8') as f:
-        f.write('\n'.join(lines))
+        f.write(body)
     print(f"wrote {OUT}: {len(pages)} pages, {os.path.getsize(OUT)} bytes")
+    return 0
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(main() or 0)
