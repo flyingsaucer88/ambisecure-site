@@ -122,7 +122,7 @@ def parse_existing(path):
 
 def render(urls, existing):
     out = ['<?xml version="1.0" encoding="UTF-8"?>',
-           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap-0.9">']
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for url in urls:
         cur_freq, cur_prio, cur_last = existing.get(url, (None, None, None))
         d_freq, d_prio = defaults_for(url)
