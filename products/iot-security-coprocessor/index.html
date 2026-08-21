@@ -110,6 +110,14 @@
       "@type": "Answer",
       "text": "MFF2 is the solderable, embedded secure-element form factor (8 × 6 mm, 8-pad). It lets OEMs treat the co-processor like any other surface-mount component in their PCB design, with no socket, no removable card, and no field-replaceable identity. For industrial and infrastructure deployments where the device must remain bound to its identity for its entire service life, MFF2 is the right answer. A removable nano-card form factor is also available for products where the identity moves with the user."
      }
+    },
+    {
+     "@type": "Question",
+     "name": "Is the AmbiSEC IoT Security Co-Processor an embedded secure element?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Yes, in silicon class. AmbiSEC is a hardware-isolated cryptographic execution environment — logically a JavaCard secure element running the AmbiSEC applet stack. The MFF2 variant is the solderable embedded secure-element form factor at 8 × 6 mm; the nano-card variant is a removable 4FF secure element. “Security co-processor” describes its role rather than a different class of silicon: it sits beside the host MCU and answers the cryptographic requests the MCU must not perform itself, which is why keys never reach application firmware. If you are specifying an embedded secure element or an IoT secure element for a connected product, this is that component, with the applet stack and provisioning already in place."
+     }
     }
    ]
   },
@@ -778,6 +786,7 @@
     <h2>Frequently asked questions</h2>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is secure OTA verification and where does it run?</h3><p style="margin:0;">Secure OTA verification means the cryptographic check on a firmware image happens inside the co-processor, against an issuance public key that was burned in at factory and is not modifiable by the MCU. The MCU may handle the download, but the boot gate is the co-processor's signature verdict. A malicious firmware image cannot lie its way past the gate, because the verifier is on the other side of the trust boundary.</p></div>
     <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why deploy as an MFF2 secure-element form factor instead of just a chip?</h3><p style="margin:0;">MFF2 is the solderable, embedded secure-element form factor (8 × 6 mm, 8-pad). It lets OEMs treat the co-processor like any other surface-mount component in their PCB design, with no socket, no removable card, and no field-replaceable identity. For industrial and infrastructure deployments where the device must remain bound to its identity for its entire service life, MFF2 is the right answer. A removable nano-card form factor is also available for products where the identity moves with the user.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Is the AmbiSEC IoT Security Co-Processor an embedded secure element?</h3><p style="margin:0;">Yes, in silicon class. AmbiSEC is a hardware-isolated cryptographic execution environment — logically a JavaCard secure element running the AmbiSEC applet stack. The MFF2 variant is the solderable embedded secure-element form factor at 8 × 6 mm; the nano-card variant is a removable 4FF secure element. “Security co-processor” describes its role rather than a different class of silicon: it sits beside the host MCU and answers the cryptographic requests the MCU must not perform itself, which is why keys never reach application firmware. If you are specifying an embedded secure element or an IoT secure element for a connected product, this is that component, with the applet stack and provisioning already in place.</p></div>
   </div>
 </section>
 
