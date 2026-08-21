@@ -115,6 +115,15 @@ FORBIDDEN_EXEMPT = {
     # allow-listed for this exact path in .htaccess; every other .php
     # remains blocked at the server and flagged here.
     "contact/submit.php",
+    # Batch 1: the Microsoft Graph notification transport required by
+    # submit.php. It is shipped but deliberately NOT allow-listed in
+    # .htaccess, so a direct HTTP request for it hits the blanket
+    # `RewriteRule \.(php[0-9s]?|...)$ - [F,NC,L]` and returns 403 — it can
+    # be neither executed nor read as source over HTTP. `require` from
+    # submit.php is a filesystem read and is unaffected by rewrite rules.
+    # It contains no credentials: those are read at runtime from a file
+    # above the web root that is never committed or packaged.
+    "contact/notify.php",
 }
 
 # Sitemap must contain only ambisecure.ambimat.com or pre-approved peer

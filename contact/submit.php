@@ -12,17 +12,26 @@
  * SUCCESS SEMANTICS (deliberate)
  * ------------------------------
  * An enquiry is "accepted" when it has been durably appended to the lead store.
- * Email notification is best-effort on top of that. Rationale: ambimat.com mail
- * is on Microsoft 365 with SPF `-all`, so this host is not an authorised sender
- * for @ambimat.com. Treating mail delivery as the success condition would
- * reintroduce exactly the silent-loss failure we are fixing. The lead store is
- * the authoritative record; see docs note in the Batch 1 report.
+ * Email notification is best-effort on top of that. Treating delivery as the
+ * success condition would reintroduce exactly the silent-loss failure we are
+ * fixing: the visitor would be told their enquiry failed when we already hold
+ * it. The lead store is the authoritative record.
+ *
+ * NOTIFICATION TRANSPORT
+ * ----------------------
+ * PHP mail() is gone. It returned false on this host — there is no local MTA,
+ * so no message was ever emitted (production evidence: a run of
+ * `LEAD_CAPTURED MAIL_FAILED` lines). That is a missing transport, not an SPF
+ * failure; nothing was ever sent for SPF to evaluate, and no DNS record was
+ * changed. Notification now goes out over authenticated Microsoft Graph —
+ * see contact/notify.php.
  *
  * The lead store lives at /.leads/ — a dotdir, already returned 403 by the
  * existing .htaccess rule `RewriteCond %{REQUEST_URI} ^/\.(?!well-known/)`.
  * FTP deploys are additive-only, so it survives releases.
  *
- * No secrets. No API keys. No external calls.
+ * No secret is stored in this file, in the repo, or anywhere under the web
+ * root. Credentials are read at runtime from outside public_html.
  */
 
 declare(strict_types=1);
@@ -32,29 +41,11 @@ declare(strict_types=1);
 // ---------------------------------------------------------------------------
 
 /**
- * Where enquiry notifications are sent. `ambisecure@ambimat.com` is the
- * AmbiSecure lead mailbox (Microsoft 365), confirmed by the operator.
- * This is the RECIPIENT only — it is deliberately not reused as the sending
- * identity, because this web host is not an authorised sender for
- * @ambimat.com (SPF `-all` via spf.protection.outlook.com).
+ * Notification recipient and sending identity now live in the credential file
+ * read by contact/notify.php, which is stored outside the web root. Nothing
+ * sender-related is configured here any more, and no secret is in this file.
  */
-const NOTIFY_TO = 'ambisecure@ambimat.com';
-
-/**
- * Envelope sender. MUST be on a domain this host is authorised to send for.
- * ambimat.com publishes `v=spf1 include:spf.protection.outlook.com -all`, so
- * sending as @ambimat.com from this host is a hard SPF fail.
- *
- * The subdomain publishes no SPF record, so SPF evaluates to `none` rather than
- * `fail`, and DMARC on ambimat.com is `p=none` with no `sp=` override — so this
- * mail is deliverable today (possibly to Junk).
- *
- * Do NOT add a subdomain SPF record until the real sending host is read from a
- * delivered message. Measured 2026-08-20: the web server IP (193.203.185.149)
- * is NOT inside `_spf.mail.hostinger.com`, so publishing that include blindly
- * would turn `none` into `softfail` — strictly worse than today.
- */
-const MAIL_FROM = 'no-reply@ambisecure.ambimat.com';
+require_once __DIR__ . '/notify.php';
 
 const MAX_BODY_BYTES   = 65536;   // 64 KB
 const MAX_NAME         = 120;
@@ -386,24 +377,16 @@ $body = "New AmbiSecure enquiry\n"
       . "--\nCaptured by contact/submit.php. Authoritative copy is in\n"
       . "/.leads/" . gmdate('Y-m') . ".jsonl on the web host.\n";
 
-// Every header value is scrubbed of CR/LF above, so header injection via
-// name/email/purpose is not possible.
-$headers = [
-    'From: AmbiSecure Website <' . MAIL_FROM . '>',
-    'Reply-To: ' . $email,
-    'Content-Type: text/plain; charset=UTF-8',
-    'Content-Transfer-Encoding: 8bit',
-    'X-AmbiSecure-Ref: ' . $ref,
-    'MIME-Version: 1.0',
-];
-
-$mailOk = @mail(
-    NOTIFY_TO,
-    $subject,
-    $body,
-    implode("\r\n", $headers),
-    '-f' . MAIL_FROM
-);
+// Every value below is scrubbed of CR/LF above, so header injection via
+// name/email/purpose is not possible. The customer's address is passed ONLY as
+// Reply-To — never as From, Sender, or envelope sender, which would forge their
+// domain and fail their SPF/DMARC.
+//
+// dirname(__DIR__) is the deployed web root (public_html); notify.php looks one
+// level above it for the credential file, which is unreachable over HTTP.
+$notify   = m365_notify(dirname(__DIR__), $subject, $body, $email, $ref);
+$mailOk   = $notify['ok'];
+$mailWhy  = $notify['detail'];
 
 // ---------------------------------------------------------------------------
 // Operational status line — no PII
@@ -415,15 +398,14 @@ $mailOk = @mail(
 //
 // LEAD_CAPTURED is unconditional here: we only reach this point after the
 // durable write succeeded, so capture is already guaranteed. MAIL_SENT means
-// the local MTA accepted the message for delivery — it does NOT mean the
-// message reached the inbox, which only the receiving server can confirm.
+// Microsoft Graph accepted the message (HTTP 202) — it does NOT prove inbox
+// delivery, which only the receiving mailbox can confirm.
 //
-// Note that mail() returning true and the message actually arriving are
-// different things: ambimat.com publishes SPF `-all` for Microsoft 365, and
-// this host is not an authorised sender, so MAIL_SENT followed by no inbox
-// delivery is the expected failure signature until an authenticated transport
-// replaces mail().
-$status = 'LEAD_CAPTURED ' . ($mailOk ? 'MAIL_SENT' : 'MAIL_FAILED');
+// The short reason code is appended so an operator can tell a missing
+// credential file (CONFIG_MISSING) from a rejected credential (TOKEN_DENIED)
+// from a network problem (SEND_TRANSPORT) without reading the lead store.
+// These codes never contain a secret, a token, or any customer data.
+$status = 'LEAD_CAPTURED ' . ($mailOk ? 'MAIL_SENT' : 'MAIL_FAILED ' . $mailWhy);
 @file_put_contents(
     $dir . '/count-' . gmdate('Y-m') . '.log',
     $now . ' ' . $ref . ' ' . $purpose . ' ' . $status . "\n",

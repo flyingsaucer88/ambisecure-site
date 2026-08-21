@@ -29,6 +29,13 @@ rm -f "$(php -r 'echo sys_get_temp_dir();')"/as-rate-*.txt
 
 mkdir -p "$WORK/contact"
 cp "$ROOT/contact/submit.php" "$WORK/contact/submit.php"
+# submit.php now requires the Microsoft Graph notification transport.
+cp "$ROOT/contact/notify.php" "$WORK/contact/notify.php"
+
+# Deliberately NO credential file is planted above the throwaway docroot. The
+# suite therefore exercises the fail-closed path: notification is skipped and
+# every enquiry must still be captured. That keeps these tests offline — no
+# token request, no mail, no Microsoft dependency in CI.
 
 php -S "127.0.0.1:${PORT}" -t "$WORK" >/dev/null 2>&1 &
 SRV_PID=$!
@@ -169,6 +176,40 @@ if [[ -s "$STORE" ]] && php -r '
   PASS=$((PASS+1)); printf '  PASS  %-38s\n' "every stored line is valid JSON"
 else
   FAIL=$((FAIL+1)); printf '  FAIL  %-38s\n' "every stored line is valid JSON"
+fi
+
+# --- notification transport: must fail closed, never taking the lead with it ---
+# With no credential file present the endpoint must still accept and store the
+# enquiry, and must record WHY notification did not happen. This is the exact
+# regression that PHP mail() produced silently.
+LOG="$WORK/.leads/count-$(date -u +%Y-%m).log"
+if [[ -s "$LOG" ]] && grep -q 'LEAD_CAPTURED MAIL_FAILED CONFIG_MISSING' "$LOG"; then
+  PASS=$((PASS+1)); printf '  PASS  %-38s\n' "notify fails closed, lead still kept"
+else
+  FAIL=$((FAIL+1)); printf '  FAIL  %-38s log=%s\n' "notify fails closed, lead still kept" "$(tail -1 "$LOG" 2>/dev/null)"
+fi
+
+# Every accepted enquiry must have produced a LEAD_CAPTURED line — capture and
+# notification are recorded independently, so a mail outage is never a lead loss.
+if [[ -s "$LOG" ]] && ! grep -qv 'LEAD_CAPTURED' "$LOG"; then
+  PASS=$((PASS+1)); printf '  PASS  %-38s (%s lines)\n' "every log line records capture" "$(wc -l <"$LOG" | tr -d ' ')"
+else
+  FAIL=$((FAIL+1)); printf '  FAIL  %-38s\n' "every log line records capture"
+fi
+
+# No secret, token, or credential may ever reach the operational log.
+if [[ -s "$LOG" ]] && ! grep -qiE 'secret|bearer|eyJ|client_id|password' "$LOG"; then
+  PASS=$((PASS+1)); printf '  PASS  %-38s\n' "no credential material in ops log"
+else
+  FAIL=$((FAIL+1)); printf '  FAIL  %-38s\n' "no credential material in ops log"
+fi
+
+echo
+echo "== notification transport unit tests =="
+if php "$ROOT/tools/test-m365-notify.php"; then
+  PASS=$((PASS+1))
+else
+  FAIL=$((FAIL+1))
 fi
 
 echo
