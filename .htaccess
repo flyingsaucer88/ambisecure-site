@@ -128,6 +128,10 @@ Redirect 301 /products/ambisecure-security-key /products/onepass-usb-key/
 Redirect 301 /products/ambisecure-card /products/onepass-card/
 Redirect 301 /ambisecure-iot-solution /products/iot-security-coprocessor/
 Redirect 301 /products/iot-security-chipset /products/iot-security-coprocessor/
+# JavaCard commercial-intent consolidation (Phase 2). These two lines only fire
+# because solutions/javacard-deployment/ no longer exists on disk: mod_dir
+# resolves a real directory before mod_alias applies a Redirect, so a retained
+# stub would silently mask them. Do not re-add a physical page at this path.
 Redirect 301 /solutions/javacard-deployment /services/javacard-development/
 Redirect 301 /solutions/javacard-deployment/ /services/javacard-development/
 Redirect 301 /products/iot-security-chipset/ /products/iot-security-coprocessor/
