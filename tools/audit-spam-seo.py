@@ -63,9 +63,6 @@ ALLOWLIST = {
     "robots.txt": {"wp-admin", "wp-login", "wp-content", "wp-includes", "xmlrpc"},
     # One legitimate meta-refresh stub for /products/iot-security-chipset/.
     "products/iot-security-chipset/index.html": {"meta-refresh"},
-    # Java Card commercial-intent consolidation (Phase 2): deployment folded
-    # into /services/javacard-development/, 301 in .htaccess, stub kept as fallback.
-    "solutions/javacard-deployment/index.html": {"meta-refresh"},
     # 404 page may name spam topics in copy.
     "404.html": {"japanese", "pharma"},
 }
