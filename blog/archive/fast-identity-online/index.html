@@ -327,14 +327,21 @@
 <h2>Introduction</h2>
 <p>FIDO replaces the shared-secret model that every legacy authentication system inherits. Instead of storing passwords or one-time-password seeds in a central database, FIDO binds credentials to hardware that signs challenges directly — leaving nothing useful for an attacker to phish or exfiltrate. Traditional authentication systems store confidential information centrally, creating vulnerability. "FIDO is already one of the pillars of web security of many international companies."</p>
 <p>FIDO enables phishing-resistant authentication through public-key encryption without requiring users to share physical devices. It reduces password fatigue while maintaining strong security across multiple services without linking accounts.</p>
-<h2>FIDO U2F, FIDO2 and FIDO Resident credentials</h2>
+
+<p>Most online tools/software today request for user’s identification and passwords based on different LDAPs. But all of them have a fundamental weakness, and that is that the service or website that performs the authentication stores the confidential information that it is provided. The fact that different remote points have this information is a great incentive for malicious agents who are interested in obtaining it.</p>
+<p><b>FIDO is already one of the pillars of web security of many international companies,</b> and one of the reasons for this is that registration and account retrieval processes, which are very agile, are preventing these agents from taking control of the accounts and accessing the organizations’ communication networks.</p>
+<p>In the case of accounts protected against phenomena such as phishing, and others based on FIDO authentication credentials, the account recovery process when a FIDO device is lost or stolen is fundamental in maintaining the integrity of the user’s account.</p>
+<p>FIDO protocols offer a simpler authentication, with a fast and comfortable sign-in, and minimize the constant need to remember and write passwords. They also work with the same devices that are commonly used in everyday life, and with all services. Fast Identity Online allows for strong authentication that is phishing-proof and can withstand other common attacks. All of this, based on public-key encryption and without the need to let go of the device that is being used at a given time. Another of its advantages is that it makes no links between different services or accounts that the user may have.</p><h2>FIDO U2F, FIDO2 and FIDO Resident credentials</h2>
 <p>Three authentication approaches:</p>
 <ul>
 <li><strong>U2F</strong> — second-factor authentication with physical keys</li>
 <li><strong>FIDO2</strong> — passwordless authentication</li>
 <li><strong>FIDO Resident Credentials</strong> — username-less login</li>
 </ul>
-<h2>Benefits of FIDO</h2>
+
+<p>One compelling use case for FIDO U2F is the second-factor authentication. Type in your username and password and use the FIDO U2F key (whether it is a USB drive or simply your employee ID card) on your personal reader or the back of an NFC enabled cell phone or simply plugging it into the USB port of your laptop/tablet or mobile device to authenticate yourself while you log in. So even if someone gets access to your user name and password in a malicious way there is no way they can log in without the physical key.</p>
+<p>Next is FIDO2 which is passwordless account management. Just add your username and following the same process that is suggested for the U2F key you get authenticated ‘passwordless’ into the intended system.</p>
+<p>The latest is to use FIDO Resident Credentials which will allow users to not only go passwordless but experience username-less login as well. While many other features are on the way, this development will further change the foundational steps of how we authenticate on the web and bears some further explanation.</p><h2>Benefits of FIDO</h2>
 <ul>
 <li><strong>Strong Security</strong> — Physical MFA resistant to interception, phishing, session hijacking, and MITM attacks. Lost tokens contain no identifying information.</li>
 <li><strong>Secure Recovery</strong> — Users register multiple devices; providers offer backup codes.</li>
@@ -345,9 +352,22 @@
 </ul>
 <h2>Conclusion</h2>
 <p>The OnePass USB Key implements FIDO2 to help organizations transition toward password-less authentication, reducing security risks while improving user experience. The technology requires no battery or network connectivity.</p>
-<h2>Who is Ambimat Electronics?</h2>
+
+<p>Corporations around the world and across many sectors can benefit from Fast Identity Online or Fast ID Online (FIDO) authentication, which their employees and users can use to <b>minimize security risks and improve the user experience.</b> We use FIDO for our AmbiSecure Key which offers superior security by combining hardware-based authentication and public key cryptography to effectively defend against phishing attacks and eliminate account takeovers.</p><h2>Who is Ambimat Electronics?</h2>
 <p>Close to 4 decades of design experience.</p>
-    </article>
+<h2>Strong Security</h2>
+<p>FIDO is a physical MFA method that cannot be intercepted or redirected. It is also not vulnerable to phishing attacks because the USB key only works with sites with which the user has registered. Additionally, it protects against session hijacking, man-in-the-middle, and malware attacks.</p>
+<p>If the USB token is lost or stolen, there is no username information to be obtained. Therefore, it’s impossible for an attacker to determine who it could be used for and on which apps.</p>
+<h2>Easy to Use</h2>
+<p>FIDO works out of the box with native support in platforms and all major browsers including Firefox, Safari, Chrome, Microsoft Edge, Opera, etc. Because FIDO U2F is a hardware-based authentication, there is no need to enter codes or install drivers (the USB key followed the USB HID protocol hence it is simply plugged and play into any personal device). Furthermore, a single token can have keys for many different sites and apps, so there’s no need for an individual to have multiple tokens.</p>
+<p>This ease of use makes FIDO an attractive option for young students who have trouble remembering passwords. Teachers can provide an enrolled FIDO U2F key at the beginning of each class that students can use to access their online resources. These keys are pretty affordable with some available at &lt;$10.</p>
+<h2>Strong Privacy Protections</h2>
+<p>With FIDO, users can choose and control their online identity. Users can choose to have multiple identities or even keep their identities anonymous with no personal information associated.</p>
+<p>Additionally, FIDO devices generate a new pair of keys for each service. Only the service stores the public key, so no secrets are shared between service providers.</p>
+<p>These privacy protections make employing FIDO U2F as a hardware authentication method on public or shared computers a smart choice. After all, login is secured by the device, nothing is cached, and the token can be carried around once the user logs out.</p>
+<h2>Flexibility in Choice</h2>
+<p>Finally, FIDO is designed for many authentication modalities, such as keychain devices or integration directly into computing devices.</p>
+</article>
   </div>
 </section>
 

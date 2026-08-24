@@ -342,7 +342,13 @@
 <li><strong>Social Engineering</strong> — psychological manipulation to obtain credentials</li>
 </ul>
 <p>The bottom line: Passwordless Authentication should be one of the most important New Year's Resolutions. Removing passwords helps Enterprises, businesses, and Individuals to reduce costs and attack risks.</p>
-<h2>Going beyond passwords</h2>
+
+<ul>
+<li>Password Spraying: It’s a type of cyber-attack where hackers try to log in to all the accounts possessing the same password credentials</li>
+<li>Brute Force Attacks: It’s a commonly used method by hackers where they try to guess the user’s login credential using the trial and error method. They try all the possible combinations until they successfully hack the account</li>
+<li>Spear Phishing: It’s an email spoofing attack to get sensitive information for financial or trade gains</li>
+<li>Social Engineering: It’s a psychological manipulation used by hackers to get into user’s sensitive information and critical resources</li>
+</ul><h2>Going beyond passwords</h2>
 <p>FIDO2 simplifies and secures user authentication. It uses public-key cryptography and origin binding to resist phishing: the authenticator only signs for the origin the credential was registered to. That makes FIDO2 phishing-resistant &mdash; one of several such factors, alongside certificate-based credentials like PIV. AmbiSecure cards and keys combine hardware-based authentication with public-key cryptography, keeping the private key inside the secure element where it cannot be exported.</p>
 <p>AmbiSecure helps organizations accelerate to a password-less future by providing support for the FIDO2 protocol. The OnePass USB Key and OnePass Card do not require a battery or network connectivity, making authentication always accessible.</p>
 <h2>About Ambimat Electronics</h2>
@@ -355,7 +361,28 @@
 <li>https://www.loginradius.com/blog/start-with-identity/2019/10/passwordless-authentication-the-future-of-identity-and-security/</li>
 <li>https://enterprise.verizon.com/en-au/resources/articles/analyzing-covid-19-data-breach-landscape/</li>
 </ul>
-    </article>
+<h2>A simple explanation for passwordless</h2>
+<p>We often talk about passwordless, and of course, some of us may wonder how going passwordless is more secure than having a password? Isn’t it like removing the combination to the safe for the sake of convenience? It is all about asymmetric cryptography, and for those who aren’t familiar with that term, this article is an easy explanation.</p>
+<h2>The purpose of passwords</h2>
+<p>Before we move to another alternative to passwords, we need to understand why we have passwords in the first place. Password is meant to identify an individual. They establish that a person is exactly who they claim to be. Unfortunately, there are several reasons why a password cannot be called a unique identifier.</p>
+<h2>What is Wrong with Passwords?</h2>
+<p>Passwords are generally stored in a service database. When a user enters their login credentials, it is cross-referenced and verified by the service — hence, the term “symmetric secret” as it shared on both sides. Most users can memorize their passwords while some may use password managers, sticky notes, or other means to remember them. When we hear about breaches and huge password leaks, that is because some malicious person intentionally accessed all the passwords stored within the database. Because of the symmetry, the password being known to both sides and having it stored is the primary reason why passwords are a major security challenge.</p>
+<p>Another password issue is that it doesn’t identify you as a person, it identifies what the user knows. Still, a user knowing something doesn’t necessarily mean that it cannot be known to others. For example, a user entering a password can become a victim of shoulder surfing without their knowledge. Anyone can look over a user&#8217;s shoulder and get hold of the password they are entering. On the other hand, if a user has something that they own, such as a hardware security key which is hard to replicate by others unless they have it in their possession. So why would anyone put their trust in passwords to protect their most critical and vital information? Password can easily be compromised.</p>
+<h2>Passwordless Logins</h2>
+<p>Rather than using a password that is a shared secret or “symmetric secret”, users should switch to “asymmetric secret”. In this method, the secret lies with the user trying to access a service and is never known to the service granting access</p>
+<h2>Two keys</h2>
+<p>Despite its name, the public key acts more as a keyhole rather than a key. The public key is unlocked with a digital signature, known as a certificate, created using the user&#8217;s private key,<br />
+and whether the digital certificate can unlock it or not is determined by the public key. The public key is incapable of viewing the user&#8217;s private key, and the private key cannot be replicated or obtained from the public key.</p>
+<p>With this method, the user password is never stored in a database for someone to access it. It is only stored locally on the user&#8217;s device. There is no way that someone can log in to the application unless they have access to the user&#8217;s device and can unlock the same.</p>
+<p>Additionally with “asymmetric secret” there is nothing to write down or accidentally reveal the same to others, which would allow them to access an individual account. An asymmetric secret is nothing like a password.</p>
+<h2>A reliable solution</h2>
+<p>As an approach to security verification, this method is known by the name of PKI (Public Key Infrastructure) and is nothing new. PKI is used to verify user identity and is a form to replace<br />
+passwords. However, the concept has been around for quite something as SSL/TLS certificates for secure online transactions.</p>
+<p>A TLS certificate and a PKI validate that the site, a user is visiting, is what it claims to be and is not a fraud. The same technology is applied with the use of hardware security to verify<br />
+that a user accessing a service or application is actually who they say they are.</p>
+<h2>Which is a better identifier?</h2>
+<p>So, the difference between a password and hardware security is that passwords are required to be stored, or need to be memorized by a user to identify themselves. On the other hand, the hardware security key is stored on a local device belonging to the user and nowhere else. It cannot be removed or viewed by others. Therefore, it can be established that not having a password is safe and secure than having one.</p>
+</article>
   </div>
 </section>
 

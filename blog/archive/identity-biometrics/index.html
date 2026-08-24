@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Identity biometrics: what it is and how it works (Archive 2023) — AmbiSecure Blog</title>
+<meta name="description" content="For good cause, biometric authentication has grown in popularity as a means of identity verification." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/archive/identity-biometrics/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Identity biometrics: what it is and how it works (Archive 2023) — AmbiSecure Blog" />
+<meta property="og:description" content="For good cause, biometric authentication has grown in popularity as a means of identity verification." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/archive/identity-biometrics/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-blog-archive-identity-biometrics-1200x630.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="A biometric template extracted at capture and matched inside the card secure element, with no central template store to breach." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-blog-archive-identity-biometrics-1200x630.png" />
+<meta name="twitter:image:alt" content="A biometric template extracted at capture and matched inside the card secure element, with no central template store to breach." />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Archive",
+     "item": "https://ambisecure.ambimat.com/blog/archive/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 4,
+     "name": "Identity biometrics: what it is and how it works"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Identity biometrics: what it is and how it works",
+   "description": "For good cause, biometric authentication has grown in popularity as a means of identity verification.",
+   "datePublished": "2023-05-15",
+   "articleSection": "Engineering archive",
+   "keywords": "Biometrics, Identity",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "parentOrganization": {
+     "@type": "Organization",
+     "name": "Ambimat Electronics",
+     "legalName": "Ambimat Technologies Pvt. Ltd.",
+     "foundingDate": "1982",
+     "url": "https://ambimat.com",
+     "sameAs": [
+      "https://ambimat.com",
+      "https://ambisecure.ambimat.com",
+      "https://v2x.ambimat.com",
+      "https://esim.ambimat.com",
+      "https://ambiautomation.ambimat.com",
+      "https://www.linkedin.com/company/ambimat-electronics"
+     ]
+    }
+   },
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://ambisecure.ambimat.com/blog/archive/identity-biometrics/"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "There are several types of biometric systems that are routinely used for authentication, each with their own set of pros and downsides. Among the most prevalent varieties are?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Fingerprint recognition: This sort of biometric identification uses an image of a user’s fingerprint to produce a template by studying the distinctive ridges and valleys. It’s a popular and reasonably priced choice, but it can be impacted by filthy or damp fingers, and it may not function for those who have certain skin diseases or injuries."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the main point of this 2023 piece?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "For good cause, biometric authentication has grown in popularity as a means of identity verification. Biometric authentication, unlike traditional authentication methods such as passwords, relies on unique physical characteristics to verify an individual’s identity, making it far more difficult to circumvent or replicate."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Has this changed since 2023?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Match-on-card and on-device matching are now the default deployment pattern, keeping the template inside the secure element rather than in a central store."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://v2x.ambimat.com/" class="ext">V2X</a><a href="https://esim.ambimat.com/" class="ext">eSIM &amp; eUICC</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1982</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><a href="/blog/archive/">Archive</a><span class="sep">/</span><span class="current">Identity biometrics: what it is and how it works</span></nav>
+<main id="main">
+<section style="padding: 60px 80px 24px;">
+  <div class="prose">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:#FFF6E5;border:1px solid #F0C040;color:#7A4A00;padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:14px;">
+      <span>HISTORICAL ARCHIVE</span>
+      <span style="opacity:0.65;">&middot;</span>
+      <span style="font-weight:500;text-transform:none;letter-spacing:0;">Originally published May 15, 2023</span>
+    </div>
+    <span class="eyebrow">Archive</span>
+    <h1>Identity biometrics: what it is and how it works</h1>
+    <p class="dek">For good cause, biometric authentication has grown in popularity as a means of identity verification.</p>
+    <div class="chip-row" style="margin-top:16px;"><a href="/blog/categories/biometrics/" class="chip" style="text-decoration:none;">Biometrics</a><a href="/blog/categories/identity/" class="chip" style="text-decoration:none;">Identity</a></div>
+    <p style="margin-top:18px;font-size:13.5px;color:var(--brand-grey);font-style:italic;line-height:1.7;">This is an earlier piece from the AmbiSecure engineering archive. Where the field has moved on, the link above points to current coverage of the same topic.</p>
+    <aside class="archive-update" style="margin-top:22px;padding:16px 20px;border-left:3px solid var(--brand-red);background:#FCEEEE;border-radius:0 6px 6px 0;"><strong style="font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--brand-red);display:block;margin-bottom:6px;">Biometrics in 2026</strong><span style="font-size:14.5px;color:var(--ink);line-height:1.65;">Match-on-card and on-device matching are now the default deployment pattern, keeping the template inside the secure element rather than in a central store. <a href="/blog/why-hardware-backed-identity-matters/">Why hardware-backed identity matters</a> covers the current position.</span></aside>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <article class="prose" style="max-width:880px;margin:0;font-size:16px;line-height:1.8;">
+<p>For good cause, biometric authentication has grown in popularity as a means of identity verification. Biometric authentication, unlike traditional authentication methods such as passwords, relies on unique physical characteristics to verify an individual&#8217;s identity, making it far more difficult to circumvent or replicate.</p>
+<p>So how does biometric authentication work, and why is it so effective? We&#8217;ll take a technical look at the field of identity biometrics in this blog.</p>
+<p>Let we first clarify what we mean by biometrics. Biometric authentication uses an individual&#8217;s unique physical or behavioral features to identify them. Fingerprints, iris, face traits, voice, and even typing patterns are examples of these qualities.</p>
+<p>When a user seeks to authenticate via biometric authentication, a biometric sensor or scanner captures and analyzes their biometric data. This data is then matched to the biometric data on file to confirm the user&#8217;s identification.</p>
+<p>So how does this comparison function in practice? A biometric system will essentially evaluate collected biometric data and translate it into a mathematical formula, or template. This template is a one-of-a-kind representation of the user&#8217;s biometric data that may be compared to the stored template to determine if there is a match.</p>
+<h2>There are several types of biometric systems that are routinely used for authentication, each with their own set of pros and downsides. Among the most prevalent varieties are:</h2>
+<p><strong>Fingerprint recognition:</strong> This sort of biometric identification uses an image of a user&#8217;s fingerprint to produce a template by studying the distinctive ridges and valleys. It&#8217;s a popular and reasonably priced choice, but it can be impacted by filthy or damp fingers, and it may not function for those who have certain skin diseases or injuries.</p>
+<p><strong>Iris recognition:</strong> This method of biometric verification captures a picture of a user&#8217;s iris with a high-resolution camera, which is then processed to build a template. Iris recognition is more accurate and less impacted by outside circumstances than other biometric kinds, although it is more costly and may need specialist technology.</p>
+<p><strong>Face recognition:</strong> To produce a template, a picture of a user&#8217;s face is captured and numerous aspects such as the distance between the eyes, the shape of the nose, and the curves of the cheekbones are analyzed. Although face recognition is simple to use and does not require any specialist technology, it can be influenced by changes in lighting, facial hair, and facial emotions.</p>
+<p><strong>Voice recognition:</strong> This method of biometric authentication creates a template by recording a user&#8217;s speech and analyzes numerous variables such as pitch, tone, and cadence. Although speech recognition is simple to use and does not require any specialist hardware, it can be hampered by background noise and changes in voice caused by illness or injury.</p>
+<p>So, what are the benefits of biometric authentication over other methods? To begin with, biometric authentication is significantly more difficult to circumvent or copy than traditional techniques like passwords or PINs. Because biometric data is unique to each person, it is considerably more difficult for a hacker to acquire or copy.</p>
+<p>Biometric authentication is also more convenient for consumers. There is no need to memorize passwords or carry physical tokens, and the authentication procedure is frequently rapid and painless.</p>
+<h2>Sources referenced in the original post</h2>
+<ul><li><a href="https://www.thalesgroup.com/en/markets/digital-identity-and-security/government/inspired/biometrics" rel="nofollow noopener" target="_blank">https://www.thalesgroup.com/en/markets/digital-identity-and-security/government/inspired/biometrics</a></li></ul>
+    </article>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Looking for the current take?</h2>
+        <p>This archive piece reflects thinking from <strong>May 15, 2023</strong>. For a current-generation treatment of the same topic, see our modern coverage.</p>
+      </div>
+      <div><a href="/blog/why-hardware-backed-identity-matters/" class="btn btn-primary">Read the current article</a></div>
+    </div>
+  </div>
+</section>
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Related historical reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+<a href="/blog/archive/consumer-biometrics-and-privacy/" class="card"><h3>Consumer Biometrics in the Data Privacy Age</h3><p>How organisations can deploy biometric authentication while still meeting modern privacy expectations — match-on-device versus match-on-server, template storage, and the regulatory shape of </p><div class="card-meta">Read article &rarr;</div></a>
+<a href="/blog/archive/workplace-biometrics/" class="card"><h3>Workplace Security — How Biometrics Is the Key to the New Normal</h3><p>How workplace biometrics layer additional security onto existing authentication methods — face / fingerprint / palm, the privacy controls that keep them defensible, and where they sit alongs</p><div class="card-meta">Read article &rarr;</div></a>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">There are several types of biometric systems that are routinely used for authentication, each with their own set of pros and downsides. Among the most prevalent varieties are?</h3><p style="margin:0;">Fingerprint recognition: This sort of biometric identification uses an image of a user’s fingerprint to produce a template by studying the distinctive ridges and valleys. It’s a popular and reasonably priced choice, but it can be impacted by filthy or damp fingers, and it may not function for those who have certain skin diseases or injuries.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the main point of this 2023 piece?</h3><p style="margin:0;">For good cause, biometric authentication has grown in popularity as a means of identity verification. Biometric authentication, unlike traditional authentication methods such as passwords, relies on unique physical characteristics to verify an individual’s identity, making it far more difficult to circumvent or replicate.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Has this changed since 2023?</h3><p style="margin:0;">Match-on-card and on-device matching are now the default deployment pattern, keeping the template inside the secure element rather than in a central store.</p></div>
+  </div>
+</section>
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>Browse more historical AmbiSecure writing.</h2>
+        <p>The full archive lists everything we have published, with the modern-equivalent counterpart linked wherever one exists.</p>
+      </div>
+      <div><a href="/blog/archive/" class="btn btn-outline">Open archive</a></div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div>
+        <p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p>
+        <div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://v2x.ambimat.com/">V2X</a> &middot; <a href="https://esim.ambimat.com/">eSIM &amp; eUICC</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div>
+      </div>
+      <div><h3>Products</h3><ul>
+        <li><a href="/products/onepass-card/">OnePass Card</a></li>
+        <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
+        <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="https://v2x.ambimat.com/">V2X and ITS</a></li>
+        <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
+        <li><a href="/products/">All products</a></li>
+      </ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+      <div><h3>Blog</h3><ul>
+        <li><a href="/blog/">Latest engineering</a></li>
+        <li><a href="/blog/categories/">Browse by topic</a></li>
+        <li><a href="/blog/archive/">Engineering archive</a></li>
+      </ul></div>
+      <div><h3>Company</h3><ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/about/certifications/">Certifications</a></li>
+        <li><a href="/trust/">Trust center</a></li>
+        <li><a href="/partners/">Partners</a></li>
+        <li><a href="/support/">Support</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul></div>
+      <div><h3>Contact</h3><ul>
+        <li>Ahmedabad, Gujarat 380015<br />India</li>
+        <li>India: <a href="tel:+917925501989" data-analytics-event="phone_click">+91 79255 01989</a></li><li><a href="https://wa.me/919727933488?text=Hello%20AmbiSecure%2C%20I%20would%20like%20to%20discuss%20a%20security%20project." data-analytics-event="whatsapp_click" rel="noopener" target="_blank">WhatsApp: +91 97279 33488</a></li>
+        <li>US: <a href="tel:+12153973819" data-analytics-event="phone_click">+1 215 397 3819</a></li>
+        <li><a href="mailto:support@ambimat.com" data-analytics-event="email_click">support@ambimat.com</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
+      <div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

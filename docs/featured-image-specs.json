@@ -8401,5 +8401,711 @@
    ]
   },
   "alt_final": "Lifecycle diagram for JavaCard Applet Development, following discover to design through ordered stages."
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/identity-biometrics/",
+  "source_path": "blog/archive/identity-biometrics/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/identity-biometrics",
+  "filename": "ambisecure-blog-archive-identity-biometrics-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "What identity biometrics actually binds",
+  "subtitle": "For good cause, biometric authentication has grown in popularity as a means of identity verification.",
+  "archetype": "SYSTEM ARCHITECTURE",
+  "alt": "A biometric template extracted at capture and matched inside the card secure element, with no central template store to breach.",
+  "vsg": "VSG-BIOMETRIC-MATCH",
+  "h1": "Identity biometrics: what it is and how it works",
+  "desc": "For good cause, biometric authentication has grown in popularity as a means of identity verification.",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Capture — finger, face, iris",
+    "Template extraction",
+    "Match-on-card secure element",
+    "Nothing central to breach"
+   ],
+   "foot": "the template never leaves the card"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/taking-security-future-for-government/",
+  "source_path": "blog/archive/taking-security-future-for-government/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/taking-security-future-for-government",
+  "filename": "ambisecure-blog-archive-taking-security-future-for-government-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Strong authentication for public-sector services",
+  "subtitle": "To put it more accurately, its governments are under attack, all the time, at every level — federal, state, and local — from opportunistic scammers,…",
+  "archetype": "PROTOCOL FLOW",
+  "alt": "A government-issued hardware credential signing an origin-bound challenge for an agency service, with the private key sealed on the device.",
+  "vsg": "VSG-GOV-IDENTITY",
+  "h1": "Taking security further for Government",
+  "desc": "To put it more accurately, its governments are under attack, all the time, at every level — federal, state, and local — from opportunistic scammers,…",
+  "briefed": true,
+  "art": {
+   "nodes": [
+    {
+     "label": "issued credential",
+     "sealed": "private key"
+    },
+    {
+     "label": "agency service",
+     "sub": "origin-bound"
+    },
+    {
+     "label": "identity provider",
+     "sub": "verifies",
+     "accent": true
+    }
+   ],
+   "labels": [
+    "touch + PIN",
+    "no shared secret"
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/features-to-consider-on-route-to-digital-transformation/",
+  "source_path": "blog/archive/features-to-consider-on-route-to-digital-transformation/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/features-to-consider-on-route-to-digital-transformation",
+  "filename": "ambisecure-blog-archive-features-to-consider-on-route-to-digital-transformation-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "What to settle before the migration starts",
+  "subtitle": "The use of multi-factor authentication is vital, as it ensures that information is only accessed by the intended person, making it harder for cybercriminals…",
+  "archetype": "SYSTEM ARCHITECTURE",
+  "alt": "Four architectural decisions stacked ahead of a digital transformation programme, with hardware-held keys at the base.",
+  "vsg": "VSG-COMPARISON-MATRIX",
+  "h1": "Features to consider on route to digital transformation",
+  "desc": "The use of multi-factor authentication is vital, as it ensures that information is only accessed by the intended person, making it harder for cybercriminals…",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Identity first, not last",
+    "Public-key credentials",
+    "Origin-bound by design",
+    "Secure element holds the key"
+   ],
+   "foot": "authentication is an architecture choice"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/security-tips/",
+  "source_path": "blog/archive/security-tips/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/security-tips",
+  "filename": "ambisecure-blog-archive-security-tips-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Practical habits for engineering teams",
+  "subtitle": "These are some facts on what the developer community can do to keep themselves cyber smart all year long, even with the end of National Cybersecurity…",
+  "archetype": "CONCEPTUAL ILLUSTRATION",
+  "alt": "Developer workstation practices — encrypted environments, guarded credentials, reviewed dependencies — with hardware-backed login underneath.",
+  "vsg": "VSG-THREAT-LANDSCAPE",
+  "h1": "Security Tips: For Developers, By Developers",
+  "desc": "These are some facts on what the developer community can do to keep themselves cyber smart all year long, even with the end of National Cybersecurity…",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Encrypt the build environment",
+    "Guard credentials at rest",
+    "Review the dependency tree",
+    "Hardware-backed developer login"
+   ],
+   "foot": "the workstation is part of the product"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/cyber-security-best-practices-with-the-proliferation-of-employees-working-from-home/",
+  "source_path": "blog/archive/cyber-security-best-practices-with-the-proliferation-of-employees-working-from-home/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/cyber-security-best-practices-with-the-proliferation-of-employees-working-from-home",
+  "filename": "ambisecure-blog-archive-cyber-security-best-practices-with-the-proliferation-of-employees-working-from-home-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Securing work that happens off the network",
+  "subtitle": "By being agile in adopting and deploying efficient security measures like MFA, you can help your business stay agile and competitive in a tight market.",
+  "archetype": "SYSTEM ARCHITECTURE",
+  "alt": "A home-office endpoint treated as untrusted, checked for posture and admitted per service with a phishing-resistant factor.",
+  "vsg": "VSG-COMPARISON-MATRIX",
+  "h1": "Cyber Security best practices for remote and hybrid work",
+  "desc": "By being agile in adopting and deploying efficient security measures like MFA, you can help your business stay agile and competitive in a tight market.",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Home network is untrusted",
+    "Device posture checked",
+    "Phishing-resistant second factor",
+    "Access scoped per service"
+   ],
+   "foot": "the perimeter moved into the house"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/debunking-3-misconception-about-cybersecurity/",
+  "source_path": "blog/archive/debunking-3-misconception-about-cybersecurity/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/debunking-3-misconception-about-cybersecurity",
+  "filename": "ambisecure-blog-archive-debunking-3-misconception-about-cybersecurity-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Three assumptions worth retiring",
+  "subtitle": "Online services have become a rage now. People are using online base services more than ever.",
+  "archetype": "COMPARISON",
+  "alt": "Three common cybersecurity assumptions set against what actually holds in practice, favouring hardware-backed credentials.",
+  "vsg": "VSG-COMPARISON-MATRIX",
+  "h1": "Debunking 3 Misconceptions about Cybersecurity",
+  "desc": "Online services have become a rage now. People are using online base services more than ever.",
+  "briefed": true,
+  "art": {
+   "cols": [
+    [
+     "The assumption",
+     [
+      "we are too small to target",
+      "MFA is inconvenient",
+      "antivirus is enough"
+     ],
+     false
+    ],
+    [
+     "What holds",
+     [
+      "size is not a filter",
+      "one touch, no code",
+      "credentials are the way in"
+     ],
+     true
+    ]
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/ransomware-anatomy/",
+  "source_path": "blog/archive/ransomware-anatomy/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/ransomware-anatomy",
+  "filename": "ambisecure-blog-archive-ransomware-anatomy-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "How a ransomware intrusion actually unfolds",
+  "subtitle": "It is becoming increasingly common to hear about ransomware in the media because it has been a scourge to enterprises for years.",
+  "archetype": "LIFECYCLE",
+  "alt": "The stages of a ransomware intrusion from credential-based initial access through escalation and exfiltration to the ransom demand.",
+  "vsg": "VSG-THREAT-LANDSCAPE",
+  "h1": "The anatomy of a ransomware attack",
+  "desc": "It is becoming increasingly common to hear about ransomware in the media because it has been a scourge to enterprises for years.",
+  "briefed": true,
+  "art": {
+   "stages": [
+    "Initial access",
+    "Escalation",
+    "Exfiltration",
+    "Encryption"
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/addressing-the-rise-of-social-engineering-attacks-against-remote-workers/",
+  "source_path": "blog/archive/addressing-the-rise-of-social-engineering-attacks-against-remote-workers/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/addressing-the-rise-of-social-engineering-attacks-against-remote-workers",
+  "filename": "ambisecure-blog-archive-addressing-the-rise-of-social-engineering-attacks-against-remote-workers-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Attacks that target the person, not the system",
+  "subtitle": "Cyber security threats of all kinds are on the rise. Still, as individuals and businesses become more aware of the various dangers, those with malicious…",
+  "archetype": "CONCEPTUAL ILLUSTRATION",
+  "alt": "A social-engineering pretext reaching a remote worker and failing at an origin-bound credential that cannot be handed over.",
+  "vsg": "VSG-THREAT-LANDSCAPE",
+  "h1": "Addressing the rise of social engineering attacks against remote workers",
+  "desc": "Cyber security threats of all kinds are on the rise. Still, as individuals and businesses become more aware of the various dangers, those with malicious…",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Pretext arrives by message",
+    "Urgency defeats process",
+    "A secret is handed over",
+    "Origin binding refuses"
+   ],
+   "foot": "remove what can be handed over"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/protecting-intellectual-property/",
+  "source_path": "blog/archive/protecting-intellectual-property/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/protecting-intellectual-property",
+  "filename": "ambisecure-blog-archive-protecting-intellectual-property-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Keeping the asset that is not on the balance sheet",
+  "subtitle": "Physical asset of an organization is important, and so is intellectual property (IP).",
+  "archetype": "SYSTEM ARCHITECTURE",
+  "alt": "Intellectual property protected through classified assets, per-person scoped access and revocable credentials with an audit trail.",
+  "vsg": "VSG-CREDENTIAL-LIFECYCLE",
+  "h1": "Protecting Intellectual Property",
+  "desc": "Physical asset of an organization is important, and so is intellectual property (IP).",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Classify what matters",
+    "Scope access per person",
+    "Revoke on exit",
+    "Auditable credential trail"
+   ],
+   "foot": "IP leaves through accounts, not doors"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/four-reasons-why-a-security-first-approach-to-product-development-should-be-considered/",
+  "source_path": "blog/archive/four-reasons-why-a-security-first-approach-to-product-development-should-be-considered/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/four-reasons-why-a-security-first-approach-to-product-development-should-be-considered",
+  "filename": "ambisecure-blog-archive-four-reasons-why-a-security-first-approach-to-product-development-should-be-considered-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Why security belongs at the design stage",
+  "subtitle": "Product development in today’s digital world entails more than just producing a novel product or service.",
+  "archetype": "LIFECYCLE",
+  "alt": "A product development lifecycle with threat modelling, a silicon root of trust, signed updates and vulnerability handling built in from the start.",
+  "vsg": "VSG-CRA-LIFECYCLE",
+  "h1": "Four reasons to take a security-first approach to product development",
+  "desc": "Product development in today’s digital world entails more than just producing a novel product or service.",
+  "briefed": true,
+  "art": {
+   "stages": [
+    "Threat model",
+    "Root of trust",
+    "Signed update",
+    "Vuln handling"
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/10-simple-tips-to-be-secure-online-and-preserve-your-identity/",
+  "source_path": "blog/archive/10-simple-tips-to-be-secure-online-and-preserve-your-identity/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/10-simple-tips-to-be-secure-online-and-preserve-your-identity",
+  "filename": "ambisecure-blog-archive-10-simple-tips-to-be-secure-online-and-preserve-your-identity-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Everyday habits that actually reduce risk",
+  "subtitle": "We now use the internet on a daily basis, and although it has given us many conveniences, it has also exposed us to several threats.",
+  "archetype": "CONCEPTUAL ILLUSTRATION",
+  "alt": "Personal online-safety habits centred on unique per-service credentials and a hardware key the person physically holds.",
+  "vsg": "VSG-THREAT-LANDSCAPE",
+  "h1": "Ten simple tips to be secure online and preserve your identity",
+  "desc": "We now use the internet on a daily basis, and although it has given us many conveniences, it has also exposed us to several threats.",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Unique credential per service",
+    "Update the device",
+    "Share less publicly",
+    "A key you hold"
+   ],
+   "foot": "most compromises start with reuse"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/a-close-examination-of-the-strategies-hackers-employ-to-start-effective-phishing-operations/",
+  "source_path": "blog/archive/a-close-examination-of-the-strategies-hackers-employ-to-start-effective-phishing-operations/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/a-close-examination-of-the-strategies-hackers-employ-to-start-effective-phishing-operations",
+  "filename": "ambisecure-blog-archive-a-close-examination-of-the-strategies-hackers-employ-to-start-effective-phishing-operations-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "How a phishing operation is actually built",
+  "subtitle": "Phishing is a type of cyberattack where a perpetrator attempts to get sensitive information from a victim by pretending to be a reputable company.",
+  "archetype": "PROTOCOL FLOW",
+  "alt": "A phishing operation harvesting a credential through a lookalike site and relay proxy, stopped by an origin check that refuses the mismatch.",
+  "vsg": "VSG-THREAT-LANDSCAPE",
+  "h1": "A close examination of the strategies hackers employ in phishing operations",
+  "desc": "Phishing is a type of cyberattack where a perpetrator attempts to get sensitive information from a victim by pretending to be a reputable company.",
+  "briefed": true,
+  "art": {
+   "nodes": [
+    {
+     "label": "lookalike site",
+     "sub": "harvests"
+    },
+    {
+     "label": "relay proxy",
+     "sub": "replays"
+    },
+    {
+     "label": "origin check",
+     "sub": "refuses",
+     "accent": true
+    }
+   ],
+   "labels": [
+    "credential captured",
+    "origin mismatch"
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/biometrics-airport-technologys-future/",
+  "source_path": "blog/archive/biometrics-airport-technologys-future/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/biometrics-airport-technologys-future",
+  "filename": "ambisecure-blog-archive-biometrics-airport-technologys-future-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Identity at the pace of a departure hall",
+  "subtitle": "Airports are among the busiest places on the globe, with millions of people passing through every day.",
+  "archetype": "IDENTITY FLOW",
+  "alt": "An ePassport chip authenticated at a gate and matched one-to-one against a live capture to clear a passenger.",
+  "vsg": "VSG-EPASSPORT-FLOW",
+  "h1": "Biometrics: airport technology's future",
+  "desc": "Airports are among the busiest places on the globe, with millions of people passing through every day.",
+  "briefed": true,
+  "art": {
+   "nodes": [
+    {
+     "label": "ePassport chip",
+     "sealed": "signed data"
+    },
+    {
+     "label": "gate capture",
+     "sub": "live face"
+    },
+    {
+     "label": "match + clear",
+     "sub": "verified",
+     "accent": true
+    }
+   ],
+   "labels": [
+    "chip authenticated",
+    "one-to-one match"
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/citizens-expectations-of-a-digital-identity-wallet/",
+  "source_path": "blog/archive/citizens-expectations-of-a-digital-identity-wallet/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/citizens-expectations-of-a-digital-identity-wallet",
+  "filename": "ambisecure-blog-archive-citizens-expectations-of-a-digital-identity-wallet-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "What people expect before they trust a wallet",
+  "subtitle": "As technology evolves and becomes more intertwined into our daily lives, the notion of a digital identity wallet is gaining traction.",
+  "archetype": "SYSTEM ARCHITECTURE",
+  "alt": "A digital identity wallet where the holder controls release, discloses selectively, and the issuer signature stays verifiable against a sealed key.",
+  "vsg": "VSG-GOV-IDENTITY",
+  "h1": "Citizens' expectations of a digital identity wallet",
+  "desc": "As technology evolves and becomes more intertwined into our daily lives, the notion of a digital identity wallet is gaining traction.",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Holder controls release",
+    "Selective disclosure",
+    "Issuer signature verifiable",
+    "Key sealed in the device"
+   ],
+   "foot": "consent is the product requirement"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/defending-the-healthcare-industry-from-cyber-threats/",
+  "source_path": "blog/archive/defending-the-healthcare-industry-from-cyber-threats/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/defending-the-healthcare-industry-from-cyber-threats",
+  "filename": "ambisecure-blog-archive-defending-the-healthcare-industry-from-cyber-threats-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Security that cannot get in the way of care",
+  "subtitle": "Due to the volume of private patient data handled often, the healthcare sector is a favourite target for hackers.",
+  "archetype": "CONCEPTUAL ILLUSTRATION",
+  "alt": "Healthcare security balancing high-value records and clinical uptime against shared workstations needing fast phishing-resistant login.",
+  "vsg": "VSG-THREAT-LANDSCAPE",
+  "h1": "Defending the healthcare industry from cyber threats",
+  "desc": "Due to the volume of private patient data handled often, the healthcare sector is a favourite target for hackers.",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Records are high value",
+    "Clinical uptime is critical",
+    "Shared workstations",
+    "Fast, phishing-resistant login"
+   ],
+   "foot": "security cannot slow down care"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/defending-your-company-against-ransomware-assaults/",
+  "source_path": "blog/archive/defending-your-company-against-ransomware-assaults/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/defending-your-company-against-ransomware-assaults",
+  "filename": "ambisecure-blog-archive-defending-your-company-against-ransomware-assaults-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "The controls that decide the outcome",
+  "subtitle": "Businesses must take proactive measures to safeguard themselves against financial losses as the frequency of ransomware attacks rises.",
+  "archetype": "LIFECYCLE",
+  "alt": "Ransomware defence built on closing the credential path, network segmentation, isolated tested backups and rehearsed recovery.",
+  "vsg": "VSG-THREAT-LANDSCAPE",
+  "h1": "Defending your company against ransomware assaults",
+  "desc": "Businesses must take proactive measures to safeguard themselves against financial losses as the frequency of ransomware attacks rises.",
+  "briefed": true,
+  "art": {
+   "stages": [
+    "Close access",
+    "Segment",
+    "Isolated backup",
+    "Rehearse"
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/how-can-water-utilities-be-protected-against-cybercrime/",
+  "source_path": "blog/archive/how-can-water-utilities-be-protected-against-cybercrime/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/how-can-water-utilities-be-protected-against-cybercrime",
+  "filename": "ambisecure-blog-archive-how-can-water-utilities-be-protected-against-cybercrime-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Protecting infrastructure nobody is watching",
+  "subtitle": "Water utilities are vital community services that supply safe drinking water and wastewater treatment.",
+  "archetype": "DEVICE NETWORK",
+  "alt": "Remote water-utility field assets given a per-device identity anchored in hardware where OT and IT networks converge.",
+  "vsg": "VSG-IOT-TRUST",
+  "h1": "How can water utilities be protected against cybercrime?",
+  "desc": "Water utilities are vital community services that supply safe drinking water and wastewater treatment.",
+  "briefed": true,
+  "art": {
+   "hub": "utility PKI",
+   "spokes": [
+    "pump station",
+    "reservoir",
+    "SCADA node",
+    "flow meter"
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/how-does-identity-verification-work-and-is-my-data-secure/",
+  "source_path": "blog/archive/how-does-identity-verification-work-and-is-my-data-secure/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/how-does-identity-verification-work-and-is-my-data-secure",
+  "filename": "ambisecure-blog-archive-how-does-identity-verification-work-and-is-my-data-secure-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "What verification checks, and what it keeps",
+  "subtitle": "Identity verification has become a crucial tool for many companies as the world gets more digital.",
+  "archetype": "IDENTITY FLOW",
+  "alt": "Identity verification checking document authenticity and liveness, then retaining only the minimum verified claim.",
+  "vsg": "VSG-IDENTITY-VERIFY",
+  "h1": "How does identity verification work, and is my data secure?",
+  "desc": "Identity verification has become a crucial tool for many companies as the world gets more digital.",
+  "briefed": true,
+  "art": {
+   "nodes": [
+    {
+     "label": "document",
+     "sealed": "signed chip"
+    },
+    {
+     "label": "liveness check",
+     "sub": "is it you"
+    },
+    {
+     "label": "verified claim",
+     "sub": "retained minimally",
+     "accent": true
+    }
+   ],
+   "labels": [
+    "authenticity",
+    "binding"
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/phishing-assaults-are-becoming-more-common-are-you-prepared/",
+  "source_path": "blog/archive/phishing-assaults-are-becoming-more-common-are-you-prepared/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/phishing-assaults-are-becoming-more-common-are-you-prepared",
+  "filename": "ambisecure-blog-archive-phishing-assaults-are-becoming-more-common-are-you-prepared-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Preparation that does not rely on vigilance",
+  "subtitle": "Cyber assaults have grown in popularity and complexity in recent years, with phishing being one of the most prominent ways used by hackers to get access to…",
+  "archetype": "COMPARISON",
+  "alt": "Phishing preparedness comparing awareness training against origin-bound credentials that refuse the wrong site outright.",
+  "vsg": "VSG-COMPARISON-MATRIX",
+  "h1": "Phishing assaults are becoming more common — are you prepared?",
+  "desc": "Cyber assaults have grown in popularity and complexity in recent years, with phishing being one of the most prominent ways used by hackers to get access to…",
+  "briefed": true,
+  "art": {
+   "cols": [
+    [
+     "Awareness alone",
+     [
+      "depends on attention",
+      "fails under urgency",
+      "one mistake is enough"
+     ],
+     false
+    ],
+    [
+     "Origin-bound credential",
+     [
+      "refuses the wrong site",
+      "nothing to retype",
+      "no secret to disclose"
+     ],
+     true
+    ]
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/quantum-computings-rising-cybersecurity-threat/",
+  "source_path": "blog/archive/quantum-computings-rising-cybersecurity-threat/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/quantum-computings-rising-cybersecurity-threat",
+  "filename": "ambisecure-blog-archive-quantum-computings-rising-cybersecurity-threat-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "What quantum computing breaks, and when",
+  "subtitle": "Quantum computing is the most modern and revolutionary data processing approach. But, the benefits come at a cost: increasing cybersecurity risks.",
+  "archetype": "STANDARD STACK",
+  "alt": "Quantum computing breaking factorisation-based encryption, with harvest-now-decrypt-later risk answered by quantum-safe algorithms.",
+  "vsg": "VSG-CRYPTO-STACK",
+  "h1": "Quantum computing's rising cybersecurity threat",
+  "desc": "Quantum computing is the most modern and revolutionary data processing approach. But, the benefits come at a cost: increasing cybersecurity risks.",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Qubits break factorisation",
+    "Harvest now, decrypt later",
+    "Quantum-safe algorithms",
+    "Key distribution options"
+   ],
+   "foot": "migration is a schedule, not a switch"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/rethink-your-companys-data-security-strategy/",
+  "source_path": "blog/archive/rethink-your-companys-data-security-strategy/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/rethink-your-companys-data-security-strategy",
+  "filename": "ambisecure-blog-archive-rethink-your-companys-data-security-strategy-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "A strategy, not another security product",
+  "subtitle": "A robust data security plan is an essential component of any company’s overall IT security strategy.",
+  "archetype": "SYSTEM ARCHITECTURE",
+  "alt": "A data security strategy built on knowing what is held, least privilege, strong access control and regular revocation.",
+  "vsg": "VSG-CREDENTIAL-LIFECYCLE",
+  "h1": "Rethink your company's data security strategy",
+  "desc": "A robust data security plan is an essential component of any company’s overall IT security strategy.",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Know what you hold",
+    "Least privilege by default",
+    "Strong access control",
+    "Review and revoke"
+   ],
+   "foot": "strategy beats another product"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/the-importance-of-digital-id-in-cybersecurity/",
+  "source_path": "blog/archive/the-importance-of-digital-id-in-cybersecurity/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/the-importance-of-digital-id-in-cybersecurity",
+  "filename": "ambisecure-blog-archive-the-importance-of-digital-id-in-cybersecurity-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Why identity became the control plane",
+  "subtitle": "Digital identities have become a critical component of cyber security in today’s digital age.",
+  "archetype": "TRUST CHAIN",
+  "alt": "Digital identity as the control plane, where assurance level and a hardware-bound credential decide every access decision.",
+  "vsg": "VSG-GOV-IDENTITY",
+  "h1": "The importance of digital ID in cybersecurity",
+  "desc": "Digital identities have become a critical component of cyber security in today’s digital age.",
+  "briefed": true,
+  "art": {
+   "tiers": [
+    "Issuing authority",
+    "Credential",
+    "Device key",
+    "Access decision"
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/the-risks-of-hybrid-employment-for-security/",
+  "source_path": "blog/archive/the-risks-of-hybrid-employment-for-security/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/the-risks-of-hybrid-employment-for-security",
+  "filename": "ambisecure-blog-archive-the-risks-of-hybrid-employment-for-security-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "When the office is no longer the boundary",
+  "subtitle": "While the world continues to react to the pandemic, hybrid employment, which allows individuals to work both remotely and in the office, has gained in…",
+  "archetype": "CONCEPTUAL ILLUSTRATION",
+  "alt": "Hybrid working across two networks with one identity, where location proves nothing and the credential proves everything.",
+  "vsg": "VSG-COMPARISON-MATRIX",
+  "h1": "The risks of hybrid employment for security",
+  "desc": "While the world continues to react to the pandemic, hybrid employment, which allows individuals to work both remotely and in the office, has gained in…",
+  "briefed": true,
+  "art": {
+   "layers": [
+    "Two networks, one identity",
+    "Devices move between them",
+    "Location proves nothing",
+    "Credential proves everything"
+   ],
+   "foot": "trust the credential, not the place"
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/convenience-security-and-privacy-are-the-three-pillars-of-digital-identity/",
+  "source_path": "blog/archive/convenience-security-and-privacy-are-the-three-pillars-of-digital-identity/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/convenience-security-and-privacy-are-the-three-pillars-of-digital-identity",
+  "filename": "ambisecure-blog-archive-convenience-security-and-privacy-are-the-three-pillars-of-digital-identity-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Three requirements that need not compete",
+  "subtitle": "The three pillars of digital identification are convenience, security, and privacy.",
+  "archetype": "COMPARISON",
+  "alt": "Convenience, security and privacy shown as a false trade-off, resolved by selective disclosure with a verifiable issuer signature.",
+  "vsg": "VSG-PRIVACY-TRADEOFF",
+  "h1": "Convenience, security and privacy: the three pillars of digital identity",
+  "desc": "The three pillars of digital identification are convenience, security, and privacy.",
+  "briefed": true,
+  "art": {
+   "cols": [
+    [
+     "Treated as a trade-off",
+     [
+      "more security, more friction",
+      "more privacy, less utility"
+     ],
+     false
+    ],
+    [
+     "Designed together",
+     [
+      "one touch to authenticate",
+      "disclose only what is needed",
+      "issuer still verifiable"
+     ],
+     true
+    ]
+   ]
+  }
+ },
+ {
+  "url": "https://ambisecure.ambimat.com/blog/archive/using-ethical-hackers-to-protect-firm-data-from-cybersecurity-concerns/",
+  "source_path": "blog/archive/using-ethical-hackers-to-protect-firm-data-from-cybersecurity-concerns/index.html",
+  "page_type": "blog-archive",
+  "slug": "blog/archive/using-ethical-hackers-to-protect-firm-data-from-cybersecurity-concerns",
+  "filename": "ambisecure-blog-archive-using-ethical-hackers-to-protect-firm-data-from-cybersecurity-concerns-1200x630.png",
+  "eyebrow": "Blog",
+  "title": "Testing your defences before someone else does",
+  "subtitle": "Cybersecurity assaults are becoming more numerous and complicated by the day, making it increasingly difficult for enterprises to protect themselves.",
+  "archetype": "LIFECYCLE",
+  "alt": "An ethical hacking engagement scoped and authorised, tested like an attacker, reported, prioritised, fixed and retested.",
+  "vsg": "VSG-THREAT-LANDSCAPE",
+  "h1": "Using ethical hackers to protect firm data",
+  "desc": "Cybersecurity assaults are becoming more numerous and complicated by the day, making it increasingly difficult for enterprises to protect themselves.",
+  "briefed": true,
+  "art": {
+   "stages": [
+    "Scope + authorise",
+    "Test",
+    "Report",
+    "Fix + retest"
+   ]
+  }
  }
 ]
