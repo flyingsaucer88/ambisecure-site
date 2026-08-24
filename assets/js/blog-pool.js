@@ -14,6 +14,17 @@ window.AS_BLOG_POOL = [
   "type": "modern"
  },
  {
+  "title": "CRA Vulnerability Handling and Product Lifecycle Security: What Manufacturers Need to Prepare",
+  "url": "/blog/cra-vulnerability-handling-product-lifecycle-security/",
+  "date": "2026-06-02",
+  "summary": "CRA vulnerability handling and lifecycle security in practice: reporting obligations from 11 September 2026, support-period communication, coordinated disclosure, security updates, and how secure elements support key rotation, credential lifecycle, device identity, and controlled updates.",
+  "categories": [
+   "Cyber Resilience",
+   "Regulation & Product Security"
+  ],
+  "type": "modern"
+ },
+ {
   "title": "Secure by Design Under the CRA: Why Hardware-Backed Trust Matters",
   "url": "/blog/cra-secure-by-design-hardware-backed-trust/",
   "date": "2026-06-02",
@@ -22,17 +33,6 @@ window.AS_BLOG_POOL = [
    "Cyber Resilience",
    "Secure by Design",
    "Embedded Security"
-  ],
-  "type": "modern"
- },
- {
-  "title": "CRA Vulnerability Handling and Product Lifecycle Security: What Manufacturers Need to Prepare",
-  "url": "/blog/cra-vulnerability-handling-product-lifecycle-security/",
-  "date": "2026-06-02",
-  "summary": "CRA vulnerability handling and lifecycle security in practice: reporting obligations from 11 September 2026, support-period communication, coordinated disclosure, security updates, and how secure elements support key rotation, credential lifecycle, device identity, and controlled updates.",
-  "categories": [
-   "Cyber Resilience",
-   "Regulation & Product Security"
   ],
   "type": "modern"
  },
@@ -61,14 +61,15 @@ window.AS_BLOG_POOL = [
   "type": "modern"
  },
  {
-  "title": "How V2X PKI Works: EA, AA, Pseudonymous Certificates, Lifecycle",
-  "url": "/blog/how-v2x-pki-works/",
+  "title": "Why Software-Only Device Trust Fails",
+  "url": "/blog/why-software-only-device-trust-fails/",
   "date": "2026-05-26",
-  "summary": "An engineering walk-through of the V2X PKI: Root CA, Enrolment Authority, Authorisation Authority, Enrolment Credentials, Pseudonymous Certificates, HashedId8 linkage, Butterfly Key Expansion, CRL and CTL distribution. IEEE 1609.2 + ETSI TS 102 941 in practice.",
+  "summary": "The threat model that rules out software-only device identity in field-deployed hardware: firmware extraction, key cloning, replay, fleet-scale compromise. Software vs TPM vs secure element comparison. Why connected vehicles, industrial IoT, and edge infrastructure converge on hardware-backed identity.",
   "categories": [
+   "Threat Model",
+   "Embedded Identity",
    "V2X",
-   "PKI",
-   "Connected Mobility"
+   "IoT"
   ],
   "type": "modern"
  },
@@ -97,6 +98,18 @@ window.AS_BLOG_POOL = [
   "type": "modern"
  },
  {
+  "title": "How V2X PKI Works: EA, AA, Pseudonymous Certificates, Lifecycle",
+  "url": "/blog/how-v2x-pki-works/",
+  "date": "2026-05-26",
+  "summary": "An engineering walk-through of the V2X PKI: Root CA, Enrolment Authority, Authorisation Authority, Enrolment Credentials, Pseudonymous Certificates, HashedId8 linkage, Butterfly Key Expansion, CRL and CTL distribution. IEEE 1609.2 + ETSI TS 102 941 in practice.",
+  "categories": [
+   "V2X",
+   "PKI",
+   "Connected Mobility"
+  ],
+  "type": "modern"
+ },
+ {
   "title": "Device Identity at Manufacturing Scale",
   "url": "/blog/device-identity-at-manufacturing-scale/",
   "date": "2026-05-26",
@@ -111,15 +124,26 @@ window.AS_BLOG_POOL = [
   "type": "modern"
  },
  {
-  "title": "Why Software-Only Device Trust Fails",
-  "url": "/blog/why-software-only-device-trust-fails/",
-  "date": "2026-05-26",
-  "summary": "The threat model that rules out software-only device identity in field-deployed hardware: firmware extraction, key cloning, replay, fleet-scale compromise. Software vs TPM vs secure element comparison. Why connected vehicles, industrial IoT, and edge infrastructure converge on hardware-backed identity.",
+  "title": "Why Transit Validators Need Offline Trust Architecture",
+  "url": "/blog/transit-validators-offline-trust-architecture/",
+  "date": "2026-05-11",
+  "summary": "Closed-loop transit ticketing has to keep collecting fares when the backend is unreachable.",
   "categories": [
-   "Threat Model",
-   "Embedded Identity",
-   "V2X",
-   "IoT"
+   "Transit",
+   "DESFire",
+   "Offline Authentication"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "How to Choose Between Smart Cards, FIDO Tokens and Passkeys",
+  "url": "/blog/smart-cards-vs-fido-tokens-vs-passkeys/",
+  "date": "2026-05-11",
+  "summary": "Decision-grade comparison of smart-card authenticators, dedicated FIDO security keys, and passkeys. Threat model, lifecycle, recovery.",
+  "categories": [
+   "FIDO",
+   "Passkeys",
+   "Smart Cards"
   ],
   "type": "modern"
  },
@@ -131,6 +155,39 @@ window.AS_BLOG_POOL = [
   "categories": [
    "FIDO",
    "Telecom Identity",
+   "Enterprise Identity"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "Building Secure IoT Identity with Security Applets",
+  "url": "/blog/secure-iot-identity-with-applets/",
+  "date": "2026-05-11",
+  "summary": "Five JavaCard applets for IoT device identity on a CC EAL6+ secure element: provisioning, attestation, mTLS, signed firmware, key rotation.",
+  "categories": [
+   "IoT",
+   "JavaCard"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "Secure Element vs TPM vs HSM \u2014 Where Each Fits",
+  "url": "/blog/secure-element-vs-tpm-vs-hsm/",
+  "date": "2026-05-11",
+  "summary": "Three classes of hardware key-storage everyone confuses. What each is for and what it refuses to do.",
+  "categories": [
+   "Cryptography",
+   "Hardware"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "PKI Credential Issuance for Workforce and Government Identity",
+  "url": "/blog/pki-credential-issuance-workforce-government/",
+  "date": "2026-05-11",
+  "summary": "RA, CA, key custody, attestation, lifecycle, audit. The PKI architecture decisions you can't put off.",
+  "categories": [
+   "PKI",
    "Enterprise Identity"
   ],
   "type": "modern"
@@ -148,85 +205,6 @@ window.AS_BLOG_POOL = [
   "type": "modern"
  },
  {
-  "title": "Designing Secure Email and Document Signing Platforms",
-  "url": "/blog/designing-email-document-signing-platforms/",
-  "date": "2026-05-11",
-  "summary": "Architecture for S/MIME email signing, PDF/PKCS#7 document signing, hardware-backed credentials, Long-Term Validation, and the trust-list problem.",
-  "categories": [
-   "PKI",
-   "Enterprise Identity"
-  ],
-  "type": "modern"
- },
- {
-  "title": "Building Secure IoT Identity with Security Applets",
-  "url": "/blog/secure-iot-identity-with-applets/",
-  "date": "2026-05-11",
-  "summary": "Five JavaCard applets for IoT device identity on a CC EAL6+ secure element: provisioning, attestation, mTLS, signed firmware, key rotation.",
-  "categories": [
-   "IoT",
-   "JavaCard"
-  ],
-  "type": "modern"
- },
- {
-  "title": "Engineering ePassport Issuance and Identity Platforms",
-  "url": "/blog/engineering-epassport-issuance-platforms/",
-  "date": "2026-05-11",
-  "summary": "Architecture of an ICAO 9303 ePassport platform. CSCA/DSC PKI, LDS generation, SOd signing, enrolment frontend, personalisation backbone, inspection-system reference.",
-  "categories": [
-   "Government Identity",
-   "PKI"
-  ],
-  "type": "modern"
- },
- {
-  "title": "How to Choose Between Smart Cards, FIDO Tokens and Passkeys",
-  "url": "/blog/smart-cards-vs-fido-tokens-vs-passkeys/",
-  "date": "2026-05-11",
-  "summary": "Decision-grade comparison of smart-card authenticators, dedicated FIDO security keys, and passkeys. Threat model, lifecycle, recovery.",
-  "categories": [
-   "FIDO",
-   "Passkeys",
-   "Smart Cards"
-  ],
-  "type": "modern"
- },
- {
-  "title": "Secure Element vs TPM vs HSM \u2014 Where Each Fits",
-  "url": "/blog/secure-element-vs-tpm-vs-hsm/",
-  "date": "2026-05-11",
-  "summary": "Three classes of hardware key-storage everyone confuses. What each is for and what it refuses to do.",
-  "categories": [
-   "Cryptography",
-   "Hardware"
-  ],
-  "type": "modern"
- },
- {
-  "title": "Designing Secure Credential Lifecycle Management",
-  "url": "/blog/credential-lifecycle-management/",
-  "date": "2026-05-11",
-  "summary": "Credentials don't just get issued \u2014 they get rotated, recovered, revoked. The operations-grade view.",
-  "categories": [
-   "Enterprise Identity",
-   "FIDO"
-  ],
-  "type": "modern"
- },
- {
-  "title": "Why Transit Validators Need Offline Trust Architecture",
-  "url": "/blog/transit-validators-offline-trust-architecture/",
-  "date": "2026-05-11",
-  "summary": "Closed-loop transit ticketing has to keep collecting fares when the backend is unreachable.",
-  "categories": [
-   "Transit",
-   "DESFire",
-   "Offline Authentication"
-  ],
-  "type": "modern"
- },
- {
   "title": "JavaCard Applet Development for Enterprise Identity",
   "url": "/blog/javacard-applet-development-enterprise-identity/",
   "date": "2026-05-11",
@@ -234,17 +212,6 @@ window.AS_BLOG_POOL = [
   "categories": [
    "JavaCard",
    "Smart Cards"
-  ],
-  "type": "modern"
- },
- {
-  "title": "PKI Credential Issuance for Workforce and Government Identity",
-  "url": "/blog/pki-credential-issuance-workforce-government/",
-  "date": "2026-05-11",
-  "summary": "RA, CA, key custody, attestation, lifecycle, audit. The PKI architecture decisions you can't put off.",
-  "categories": [
-   "PKI",
-   "Enterprise Identity"
   ],
   "type": "modern"
  },
@@ -271,6 +238,28 @@ window.AS_BLOG_POOL = [
   "type": "modern"
  },
  {
+  "title": "Engineering ePassport Issuance and Identity Platforms",
+  "url": "/blog/engineering-epassport-issuance-platforms/",
+  "date": "2026-05-11",
+  "summary": "Architecture of an ICAO 9303 ePassport platform. CSCA/DSC PKI, LDS generation, SOd signing, enrolment frontend, personalisation backbone, inspection-system reference.",
+  "categories": [
+   "Government Identity",
+   "PKI"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "Designing Secure Email and Document Signing Platforms",
+  "url": "/blog/designing-email-document-signing-platforms/",
+  "date": "2026-05-11",
+  "summary": "Architecture for S/MIME email signing, PDF/PKCS#7 document signing, hardware-backed credentials, Long-Term Validation, and the trust-list problem.",
+  "categories": [
+   "PKI",
+   "Enterprise Identity"
+  ],
+  "type": "modern"
+ },
+ {
   "title": "Cyber Security Threats \u2014 What Actually Matters in 2026",
   "url": "/blog/cyber-security-threats-overview/",
   "date": "2026-05-11",
@@ -278,6 +267,17 @@ window.AS_BLOG_POOL = [
   "categories": [
    "Cyber Security",
    "MFA"
+  ],
+  "type": "modern"
+ },
+ {
+  "title": "Designing Secure Credential Lifecycle Management",
+  "url": "/blog/credential-lifecycle-management/",
+  "date": "2026-05-11",
+  "summary": "Credentials don't just get issued \u2014 they get rotated, recovered, revoked. The operations-grade view.",
+  "categories": [
+   "Enterprise Identity",
+   "FIDO"
   ],
   "type": "modern"
  },
@@ -422,13 +422,252 @@ window.AS_BLOG_POOL = [
   "type": "modern"
  },
  {
-  "title": "Common Misconceptions about Two-Factor Authentication",
-  "url": "/blog/archive/common-misconceptions-about-2fa/",
-  "date": "2021-08-19",
-  "summary": "Unpacks the most common misconceptions about two-factor authentication \u2014 what 2FA actually defends against, where SMS-based codes fall short, and why hardware-rooted second factors hold up under credential-theft attacks.",
+  "title": "Using ethical hackers to protect firm data",
+  "url": "/blog/archive/using-ethical-hackers-to-protect-firm-data-from-cybersecurity-concerns/",
+  "date": "2023-05-15",
+  "summary": "Cybersecurity assaults are becoming more numerous and complicated by the day, making it increasingly difficult for enterprises to protect themselves.",
   "categories": [
-   "MFA",
    "Cybersecurity"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "The risks of hybrid employment for security",
+  "url": "/blog/archive/the-risks-of-hybrid-employment-for-security/",
+  "date": "2023-05-15",
+  "summary": "While the world continues to react to the pandemic, hybrid employment, which allows individuals to work both remotely and in the office, has gained in\u2026",
+  "categories": [
+   "Cybersecurity"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "The importance of digital ID in cybersecurity",
+  "url": "/blog/archive/the-importance-of-digital-id-in-cybersecurity/",
+  "date": "2023-05-15",
+  "summary": "Digital identities have become a critical component of cyber security in today\u2019s digital age.",
+  "categories": [
+   "Identity"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Rethink your company's data security strategy",
+  "url": "/blog/archive/rethink-your-companys-data-security-strategy/",
+  "date": "2023-05-15",
+  "summary": "A robust data security plan is an essential component of any company\u2019s overall IT security strategy.",
+  "categories": [
+   "Cybersecurity"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Quantum computing's rising cybersecurity threat",
+  "url": "/blog/archive/quantum-computings-rising-cybersecurity-threat/",
+  "date": "2023-05-15",
+  "summary": "Quantum computing is the most modern and revolutionary data processing approach. But, the benefits come at a cost: increasing cybersecurity risks.",
+  "categories": [
+   "Cryptography"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Phishing assaults are becoming more common \u2014 are you prepared?",
+  "url": "/blog/archive/phishing-assaults-are-becoming-more-common-are-you-prepared/",
+  "date": "2023-05-15",
+  "summary": "Cyber assaults have grown in popularity and complexity in recent years, with phishing being one of the most prominent ways used by hackers to get access to\u2026",
+  "categories": [
+   "Cyber Threats"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Identity biometrics: what it is and how it works",
+  "url": "/blog/archive/identity-biometrics/",
+  "date": "2023-05-15",
+  "summary": "For good cause, biometric authentication has grown in popularity as a means of identity verification.",
+  "categories": [
+   "Biometrics",
+   "Identity"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "How does identity verification work, and is my data secure?",
+  "url": "/blog/archive/how-does-identity-verification-work-and-is-my-data-secure/",
+  "date": "2023-05-15",
+  "summary": "Identity verification has become a crucial tool for many companies as the world gets more digital.",
+  "categories": [
+   "Identity",
+   "Privacy"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "How can water utilities be protected against cybercrime?",
+  "url": "/blog/archive/how-can-water-utilities-be-protected-against-cybercrime/",
+  "date": "2023-05-15",
+  "summary": "Water utilities are vital community services that supply safe drinking water and wastewater treatment.",
+  "categories": [
+   "IoT Security",
+   "Cyber Resilience"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Convenience, security and privacy: the three pillars of digital identity",
+  "url": "/blog/archive/convenience-security-and-privacy-are-the-three-pillars-of-digital-identity/",
+  "date": "2023-05-15",
+  "summary": "The three pillars of digital identification are convenience, security, and privacy.",
+  "categories": [
+   "Identity",
+   "Privacy"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Four reasons to take a security-first approach to product development",
+  "url": "/blog/archive/four-reasons-why-a-security-first-approach-to-product-development-should-be-considered/",
+  "date": "2023-04-17",
+  "summary": "Product development in today\u2019s digital world entails more than just producing a novel product or service.",
+  "categories": [
+   "Cyber Resilience"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Defending your company against ransomware assaults",
+  "url": "/blog/archive/defending-your-company-against-ransomware-assaults/",
+  "date": "2023-04-17",
+  "summary": "Businesses must take proactive measures to safeguard themselves against financial losses as the frequency of ransomware attacks rises.",
+  "categories": [
+   "Cyber Threats"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Defending the healthcare industry from cyber threats",
+  "url": "/blog/archive/defending-the-healthcare-industry-from-cyber-threats/",
+  "date": "2023-04-17",
+  "summary": "Due to the volume of private patient data handled often, the healthcare sector is a favourite target for hackers.",
+  "categories": [
+   "Cyber Threats"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Citizens' expectations of a digital identity wallet",
+  "url": "/blog/archive/citizens-expectations-of-a-digital-identity-wallet/",
+  "date": "2023-04-17",
+  "summary": "As technology evolves and becomes more intertwined into our daily lives, the notion of a digital identity wallet is gaining traction.",
+  "categories": [
+   "Identity",
+   "Privacy"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Biometrics: airport technology's future",
+  "url": "/blog/archive/biometrics-airport-technologys-future/",
+  "date": "2023-04-17",
+  "summary": "Airports are among the busiest places on the globe, with millions of people passing through every day.",
+  "categories": [
+   "Biometrics",
+   "ePassport"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "A close examination of the strategies hackers employ in phishing operations",
+  "url": "/blog/archive/a-close-examination-of-the-strategies-hackers-employ-to-start-effective-phishing-operations/",
+  "date": "2023-04-17",
+  "summary": "Phishing is a type of cyberattack where a perpetrator attempts to get sensitive information from a victim by pretending to be a reputable company.",
+  "categories": [
+   "Cyber Threats"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Ten simple tips to be secure online and preserve your identity",
+  "url": "/blog/archive/10-simple-tips-to-be-secure-online-and-preserve-your-identity/",
+  "date": "2023-04-17",
+  "summary": "We now use the internet on a daily basis, and although it has given us many conveniences, it has also exposed us to several threats.",
+  "categories": [
+   "Cybersecurity",
+   "Identity"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "The anatomy of a ransomware attack",
+  "url": "/blog/archive/ransomware-anatomy/",
+  "date": "2021-10-20",
+  "summary": "It is becoming increasingly common to hear about ransomware in the media because it has been a scourge to enterprises for years.",
+  "categories": [
+   "Cyber Threats"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Protecting Intellectual Property",
+  "url": "/blog/archive/protecting-intellectual-property/",
+  "date": "2021-10-20",
+  "summary": "Physical asset of an organization is important, and so is intellectual property (IP).",
+  "categories": [
+   "Cybersecurity"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Debunking 3 Misconceptions about Cybersecurity",
+  "url": "/blog/archive/debunking-3-misconception-about-cybersecurity/",
+  "date": "2021-10-20",
+  "summary": "Online services have become a rage now. People are using online base services more than ever.",
+  "categories": [
+   "Cybersecurity",
+   "MFA"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Cyber Security best practices for remote and hybrid work",
+  "url": "/blog/archive/cyber-security-best-practices-with-the-proliferation-of-employees-working-from-home/",
+  "date": "2021-10-20",
+  "summary": "By being agile in adopting and deploying efficient security measures like MFA, you can help your business stay agile and competitive in a tight market.",
+  "categories": [
+   "Cybersecurity",
+   "MFA"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Addressing the rise of social engineering attacks against remote workers",
+  "url": "/blog/archive/addressing-the-rise-of-social-engineering-attacks-against-remote-workers/",
+  "date": "2021-10-20",
+  "summary": "Cyber security threats of all kinds are on the rise. Still, as individuals and businesses become more aware of the various dangers, those with malicious\u2026",
+  "categories": [
+   "Cyber Threats"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Security Tips: For Developers, By Developers",
+  "url": "/blog/archive/security-tips/",
+  "date": "2021-10-12",
+  "summary": "These are some facts on what the developer community can do to keep themselves cyber smart all year long, even with the end of National Cybersecurity\u2026",
+  "categories": [
+   "Cybersecurity"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Features to consider on route to digital transformation",
+  "url": "/blog/archive/features-to-consider-on-route-to-digital-transformation/",
+  "date": "2021-10-12",
+  "summary": "The use of multi-factor authentication is vital, as it ensures that information is only accessed by the intended person, making it harder for cybercriminals\u2026",
+  "categories": [
+   "Passwordless",
+   "FIDO"
   ],
   "type": "archive"
  },
@@ -451,6 +690,17 @@ window.AS_BLOG_POOL = [
   "categories": [
    "MFA",
    "Government Identity"
+  ],
+  "type": "archive"
+ },
+ {
+  "title": "Common Misconceptions about Two-Factor Authentication",
+  "url": "/blog/archive/common-misconceptions-about-2fa/",
+  "date": "2021-08-19",
+  "summary": "Unpacks the most common misconceptions about two-factor authentication \u2014 what 2FA actually defends against, where SMS-based codes fall short, and why hardware-rooted second factors hold up under credential-theft attacks.",
+  "categories": [
+   "MFA",
+   "Cybersecurity"
   ],
   "type": "archive"
  },
@@ -507,6 +757,17 @@ window.AS_BLOG_POOL = [
   "type": "archive"
  },
  {
+  "title": "SMS-based OTP Authentication and Its Disadvantages",
+  "url": "/blog/archive/sms-otp-disadvantages/",
+  "date": "2021-06-01",
+  "summary": "Why SMS-based one-time passwords are no longer a defensible second factor \u2014 SIM-swap attacks, SS7 weaknesses, phishing-prone OTP relay, and the hardware-rooted alternatives.",
+  "categories": [
+   "MFA",
+   "Cyber Threats"
+  ],
+  "type": "archive"
+ },
+ {
   "title": "Is Passwordless the future?",
   "url": "/blog/archive/is-passwordless-the-future/",
   "date": "2021-06-01",
@@ -517,13 +778,13 @@ window.AS_BLOG_POOL = [
   "type": "archive"
  },
  {
-  "title": "SMS-based OTP Authentication and Its Disadvantages",
-  "url": "/blog/archive/sms-otp-disadvantages/",
-  "date": "2021-06-01",
-  "summary": "Why SMS-based one-time passwords are no longer a defensible second factor \u2014 SIM-swap attacks, SS7 weaknesses, phishing-prone OTP relay, and the hardware-rooted alternatives.",
+  "title": "Taking security further for Government",
+  "url": "/blog/archive/taking-security-future-for-government/",
+  "date": "2021-03-25",
+  "summary": "To put it more accurately, its governments are under attack, all the time, at every level \u2014 federal, state, and local \u2014 from opportunistic scammers,\u2026",
   "categories": [
    "MFA",
-   "Cyber Threats"
+   "Identity"
   ],
   "type": "archive"
  },
