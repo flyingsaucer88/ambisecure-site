@@ -301,6 +301,7 @@
     </div>
 
     <h1>Designing Secure Credential Lifecycle Management</h1>
+<p class="note" data-crossprop>This is the engineering treatment of the credential lifecycle. For the device-fleet view — how identities are provisioned, rotated and retired across deployed IoT hardware — see <a href="https://ambimat.com/iot-device-identity-lifecycle-management-best-practices/">IoT device identity lifecycle management</a> on Ambimat.</p>
     <p class="dek">Credential systems are usually designed around issuance. They fail in production around everything else &mdash; rotation, recovery, revocation, attestation drift. This post is the operations-grade view: what every state in a credential&rsquo;s life is, what has to happen in each, and where real deployments get hurt.</p>
 
     <p>Most credential programmes are written down as "we issue keys; users log in with them". The hardware vendor talks about cards and keys; the IdP vendor talks about WebAuthn and OIDC; nobody talks about the day an employee&rsquo;s card goes through the washing machine. This post is for the people who own the day after.</p>
