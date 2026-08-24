@@ -127,6 +127,10 @@ Redirect 301 /ambisecure-usb-key /products/onepass-usb-key/
 Redirect 301 /products/ambisecure-security-key /products/onepass-usb-key/
 Redirect 301 /products/ambisecure-card /products/onepass-card/
 Redirect 301 /ambisecure-iot-solution /products/iot-security-coprocessor/
+# The chipset slug redirects only because products/iot-security-chipset/ no
+# longer exists on disk: mod_dir resolves a real directory before mod_alias
+# applies a Redirect, so the retained stub silently masked these two lines and
+# the URL answered 200. Do not re-add a physical page at this path.
 Redirect 301 /products/iot-security-chipset /products/iot-security-coprocessor/
 # JavaCard commercial-intent consolidation (Phase 2). These two lines only fire
 # because solutions/javacard-deployment/ no longer exists on disk: mod_dir

@@ -53,8 +53,8 @@ def main():
         html = open(path, encoding='utf-8').read()
         m = NAV_RE.search(html)
         if not m:
-            # Pages without the primary nav are non-content stubs (e.g. the
-            # /products/iot-security-chipset/ redirect stub). Nothing to check.
+            # Pages without the primary nav are non-content stubs.
+            # Nothing to check.
             continue
         checked += 1
         nav = m.group(0)

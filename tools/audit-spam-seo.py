@@ -61,8 +61,6 @@ ALLOWLIST = {
                   "base64-doc-string"},
     # robots.txt INTENTIONALLY disallows wp- probe paths for crawler hygiene.
     "robots.txt": {"wp-admin", "wp-login", "wp-content", "wp-includes", "xmlrpc"},
-    # One legitimate meta-refresh stub for /products/iot-security-chipset/.
-    "products/iot-security-chipset/index.html": {"meta-refresh"},
     # 404 page may name spam topics in copy.
     "404.html": {"japanese", "pharma"},
 }

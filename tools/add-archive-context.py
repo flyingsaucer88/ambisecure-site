@@ -72,7 +72,7 @@ CONTEXT = {
     ),
     'iot-security-challenges-part-1': (
         'IoT identity in 2026',
-        'IoT-grade secure elements have shipped at scale; attestation is the default identity primitive. <a href="/products/iot-security-chipset/">IoT Security Chipset</a> and <a href="/blog/secure-iot-identity-with-applets/">Secure IoT identity with applets</a> document the production architecture. EU CRA baselines now apply.',
+        'IoT-grade secure elements have shipped at scale; attestation is the default identity primitive. <a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a> and <a href="/blog/secure-iot-identity-with-applets/">Secure IoT identity with applets</a> document the production architecture. EU CRA baselines now apply.',
     ),
     'iot-security-challenges-part-2': (
         'IoT identity in 2026',

@@ -45,7 +45,7 @@ KEYWORD_TARGETS = {
     "OnePass Bio":                "/products/onepass-bio-card/",
     "BioKey":                     "/products/biokey/",
     "JavaCard Applet":            "/products/javacard-applets/",
-    "IoT Security Chipset":       "/products/iot-security-chipset/",
+    "IoT Security Chipset":       "/products/iot-security-coprocessor/",
     # Services
     "FIDO validation server":     "/services/fido-validation-server/",
     "JavaCard development":       "/services/javacard-development/",
