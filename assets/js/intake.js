@@ -62,6 +62,10 @@
     // creating it, or the control would link visitors to a missing page.
     termsUrl: 'https://ambimat.com/terms-conditions/',
     termsVersion: '1.0',
+    // Which site-specific typed schema this form collects (runbook v1.5 §29.4).
+    // The registry itself is generated below; the server re-derives this from
+    // (sourceSite, sourceForm) and rejects a payload that disagrees.
+    schemaId: 'ambisecure-inquiry-v1',
     sourceSite: 'ambisecure.ambimat.com',
     mailto: 'support@ambimat.com',
     subjectPrefix: 'AmbiSecure enquiry'
@@ -76,6 +80,31 @@
   // The canonical intake schema. Anything else a form collects is preserved
   // under `extra` rather than dropped, so site-specific questions survive.
   var CANONICAL = ['name', 'email', 'phone', 'company', 'country', 'subject', 'message'];
+
+  // ── Site-specific typed details (runbook v1.5 §29) ───────────────────────
+  // Everything from here to END GENERATED is written by
+  // ambimat-site/central-intake/build-intake-schemas.mjs from
+  // central-intake/intake-schemas.json, which is the single source of truth
+  // this client, the Lambda validators and the parity test all read. Do not
+  // hand-edit it: `node build-intake-schemas.mjs --check` fails if you do.
+  //
+  // This region — and only this region — differs between sites: it carries just
+  // the one schema CONFIG.schemaId names, so RoboRacer's contact page does not
+  // ship AmbiPower's meter enums. Everything below it is byte-identical estate
+  // wide, which test-schema-parity.mjs asserts.
+  //
+  // The detail inputs are named d_<key> so they cannot collide with an
+  // envelope field and are never swept into `extra`. Only the fields whose
+  // condition currently holds are in the DOM as visible, required inputs, so a
+  // visitor sees a short form until they say what they are asking about.
+  /* BEGIN GENERATED SCHEMA REGISTRY */
+  var SCHEMAS = {
+    "ambisecure-inquiry-v1": {"schemaVersion":1,"notice":"Never send passwords, private keys, certificates, seed values, HSM material or any other secret through this form. Describe the requirement; we will arrange a secure channel.","inquiryType":{"key":"inquiryType","label":"Inquiry type","required":true,"options":[{"value":"GENERAL","legacy":"general","label":"General enquiry"},{"value":"PRODUCT_QUOTE","legacy":"product-quote","label":"Product enquiry / quote"},{"value":"PILOT","legacy":"pilot","label":"Pilot batch (cards / keys)"},{"value":"JAVACARD","legacy":"javacard","label":"JavaCard applet engagement"},{"value":"SECURE_ELEMENT","legacy":"secure-element","label":"Secure element integration"},{"value":"FIDO_SERVER","legacy":"fido-server","label":"FIDO Validation Server"},{"value":"OEM_AUTHENTICATOR","legacy":"oem-authenticator","label":"OEM / white-label authenticators"},{"value":"IOT_DEVICE_TRUST","legacy":"iot-device-trust","label":"IoT device identity"},{"value":"SECURE_OTA","legacy":"secure-ota","label":"Secure OTA / firmware update"},{"value":"PARTNERSHIP","legacy":"partnership","label":"Partnership"},{"value":"PRESS","legacy":"press","label":"Press / media"},{"value":"SUPPORT","legacy":"support","label":"Support"}]},"purposeAliases":{},"fields":[{"key":"pilotQuantity","label":"Pilot batch size (cards / keys)","type":"number","required":false,"min":1,"max":100000,"showWhen":{"inquiryType":["PILOT"]}},{"key":"deploymentStage","label":"Deployment stage","type":"select","required":false,"showWhen":{"inquiryType":["PRODUCT_QUOTE","PILOT","OEM_AUTHENTICATOR","IOT_DEVICE_TRUST","SECURE_OTA"]},"options":[{"value":"EVALUATING","label":"Evaluating"},{"value":"DESIGNING","label":"Designing"},{"value":"INTEGRATING","label":"Integrating"},{"value":"IN_PRODUCTION","label":"In production"}]}],"envelopeConditional":[{"field":"company","required":true,"unlessInquiryType":["PRESS","GENERAL","SUPPORT"]}]}
+  };
+  /* END GENERATED SCHEMA REGISTRY */
+
+  var SCHEMA = (CFG.schemaId && SCHEMAS[CFG.schemaId]) || null;
+  var DPREFIX = 'd_';
 
 
   // ── Marketing consent ────────────────────────────────────────────────────
@@ -192,6 +221,279 @@
     if (err) { err.hidden = !on; }
   }
 
+  // ── Typed details: render, reveal, read ──────────────────────────────────
+
+  function esc(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /** The subject <select> still carries the legacy lowercase option values that
+   *  every marketing deep-link uses, so the enum is resolved from them here
+   *  rather than by rewriting nine forms' markup. */
+  function inquiryTypeOf(form) {
+    if (!SCHEMA || !SCHEMA.inquiryType) { return ''; }
+    var sel = form.querySelector('select[name="subject"]');
+    var v = sel ? sel.value : '';
+    if (!v) { return ''; }
+    var opts = SCHEMA.inquiryType.options;
+    for (var i = 0; i < opts.length; i++) {
+      if (opts[i].legacy === v || opts[i].value === v) { return opts[i].value; }
+    }
+    return '';
+  }
+
+  /** Current value of one detail field: a string, or an array for a checkbox set. */
+  function detailValue(form, f) {
+    var els = form.querySelectorAll('[name="' + DPREFIX + f.key + '"]');
+    if (!els.length) { return f.type === 'multiselect' ? [] : ''; }
+    if (f.type === 'multiselect') {
+      var out = [];
+      Array.prototype.forEach.call(els, function (el) { if (el.checked) { out.push(el.value); } });
+      return out;
+    }
+    return (els[0].value || '').trim();
+  }
+
+  /** A field is shown when every clause of showWhen holds. No showWhen = always. */
+  function isShown(form, f, itype) {
+    var w = f.showWhen;
+    if (!w) { return true; }
+    var key;
+    for (key in w) {
+      if (!Object.prototype.hasOwnProperty.call(w, key)) { continue; }
+      var wanted = w[key];
+      if (key === 'inquiryType') {
+        if (wanted.indexOf(itype) === -1) { return false; }
+      } else if (key === 'inquiryTypeNot') {
+        if (!itype || wanted.indexOf(itype) !== -1) { return false; }
+      } else {
+        // Depends on another detail field, e.g. procurementNeeds on buyerType.
+        var dep = null;
+        for (var i = 0; i < SCHEMA.fields.length; i++) {
+          if (SCHEMA.fields[i].key === key) { dep = SCHEMA.fields[i]; break; }
+        }
+        if (!dep || !isShown(form, dep, itype)) { return false; }
+        var have = detailValue(form, dep);
+        var hit = false;
+        (typeof have === 'string' ? [have] : have).forEach(function (v) {
+          if (wanted.indexOf(v) !== -1) { hit = true; }
+        });
+        if (!hit) { return false; }
+      }
+    }
+    return true;
+  }
+
+  function fieldMarkup(f, idBase) {
+    var id = idBase + '-' + f.key;
+    var nm = DPREFIX + f.key;
+    var req = f.required
+      ? ' <span class="intake-req" aria-hidden="true">*</span>'
+      : ' <span class="intake-opt">(optional)</span>';
+    var describedBy = (f.hint ? id + '-hint ' : '') + id + '-err';
+    var h = '';
+
+    if (f.type === 'multiselect') {
+      h += '<div class="intake-row intake-row--full intake-consent" data-intake-detail="' + esc(f.key) + '" hidden style="display:none">';
+      h += '<p class="intake-consent-lead" id="' + id + '-legend">' + esc(f.label) + req + '</p>';
+      h += '<div role="group" aria-labelledby="' + id + '-legend">';
+      f.options.forEach(function (o, i) {
+        h += '<label class="intake-consent-item"><input type="checkbox" name="' + nm +
+             '" id="' + id + '-' + i + '" value="' + esc(o.value) + '"> <span>' + esc(o.label) + '</span></label>';
+      });
+      h += '</div>';
+    } else {
+      h += '<div class="intake-row" data-intake-detail="' + esc(f.key) + '" hidden style="display:none">';
+      h += '<label for="' + id + '">' + esc(f.label) + req + '</label>';
+      if (f.type === 'select') {
+        h += '<select id="' + id + '" name="' + nm + '" aria-describedby="' + describedBy + '">';
+        h += '<option value="">Select one</option>';
+        f.options.forEach(function (o) {
+          h += '<option value="' + esc(o.value) + '">' + esc(o.label) + '</option>';
+        });
+        h += '</select>';
+      } else {
+        var t = f.type === 'number' ? 'number' : (f.type === 'date' ? 'date' : (f.type === 'url' ? 'url' : 'text'));
+        h += '<input type="' + t + '" id="' + id + '" name="' + nm + '"';
+        if (f.maxlength) { h += ' maxlength="' + f.maxlength + '"'; }
+        if (f.min !== undefined) { h += ' min="' + f.min + '"'; }
+        if (f.max !== undefined) { h += ' max="' + f.max + '"'; }
+        if (f.step !== undefined) { h += ' step="' + f.step + '"'; }
+        h += ' aria-describedby="' + describedBy + '">';
+      }
+    }
+    if (f.hint) { h += '<p class="intake-hint" id="' + id + '-hint">' + esc(f.hint) + '</p>'; }
+    h += '<p class="intake-err" id="' + id + '-err" data-err-for="' + nm + '" hidden>Please complete this field.</p>';
+    h += '</div>';
+    return h;
+  }
+
+  /** Build every detail row once, hidden, immediately after the subject row. */
+  function renderDetails(form) {
+    if (!SCHEMA || !SCHEMA.fields || !SCHEMA.fields.length) { return; }
+    if (form.querySelector('[data-intake-detail]')) { return; }
+    var sel = form.querySelector('select[name="subject"]');
+    if (!sel) { return; }
+    var anchor = sel.closest ? sel.closest('.intake-row') : null;
+    if (!anchor || !anchor.parentNode) { return; }
+
+    var idBase = (form.getAttribute('data-intake-form') || 'intake') + '-d';
+    var html = '';
+    if (SCHEMA.notice) {
+      html += '<div class="intake-row intake-row--full"><p class="intake-hint"><strong>'
+           + esc(SCHEMA.notice) + '</strong></p></div>';
+    }
+    SCHEMA.fields.forEach(function (f) { html += fieldMarkup(f, idBase); });
+
+    // Each row is inserted as a DIRECT child of .intake-grid so it is a real
+    // grid item and inherits the form's own responsive two-column layout — and
+    // collapses to one column under the same 640px breakpoint as every field
+    // above it. A wrapper element with display:contents would do the same on
+    // paper, but Safari removed display:contents subtrees from the
+    // accessibility tree until 15.4, which would silently unlabel these inputs
+    // for a screen reader. No wrapper, no bug.
+    var tmp = d.createElement('div');
+    tmp.innerHTML = html;
+    var at = anchor;
+    while (tmp.firstElementChild) {
+      var row = tmp.firstElementChild;
+      at.parentNode.insertBefore(row, at.nextSibling);
+      at = row;
+    }
+
+    // Any change can change what is relevant, so one delegated listener covers
+    // the subject select and every detail control including ones revealed later.
+    form.addEventListener('change', function () { syncDetails(form); });
+    syncDetails(form);
+  }
+
+  /** Show or hide each row and keep `required` in step, so validate() — which
+   *  reads [required] — never demands a field the visitor cannot see. */
+  function syncDetails(form) {
+    if (!SCHEMA || !SCHEMA.fields) { return; }
+    var itype = inquiryTypeOf(form);
+    SCHEMA.fields.forEach(function (f) {
+      var row = form.querySelector('[data-intake-detail="' + f.key + '"]');
+      if (!row) { return; }
+      var show = isShown(form, f, itype);
+      // `hidden` alone is not enough: intake.css sets `.intake-row{display:flex}`
+      // in the author stylesheet, which outranks the user-agent's
+      // `[hidden]{display:none}`, so a hidden row would still be painted. The
+      // attribute is kept for assistive technology; the inline style is what
+      // actually removes it from the layout.
+      row.hidden = !show;
+      row.style.display = show ? '' : 'none';
+      var els = form.querySelectorAll('[name="' + DPREFIX + f.key + '"]');
+      Array.prototype.forEach.call(els, function (el) {
+        if (show && f.required && f.type !== 'multiselect') {
+          el.setAttribute('required', 'required');
+          el.setAttribute('aria-required', 'true');
+        } else {
+          el.removeAttribute('required');
+          el.removeAttribute('aria-required');
+        }
+        // A hidden control must not be reachable by keyboard or announced.
+        if (show) { el.removeAttribute('disabled'); } else { el.disabled = true; }
+      });
+      if (!show) { fieldErr(form, DPREFIX + f.key, false); }
+    });
+
+    // A schema may raise an ENVELOPE field to required for some intents only —
+    // AmbiSecure asks for a company on a pilot or a quotation but not on a press
+    // enquiry. Enforcing it here rather than in the markup keeps the rule in the
+    // one place Lambda will read it from, so the two cannot disagree.
+    (SCHEMA.envelopeConditional || []).forEach(function (rule) {
+      var el = form.querySelector('[name="' + rule.field + '"]');
+      if (!el) { return; }
+      var need = rule.required;
+      if (rule.unlessInquiryType) { need = need && !!itype && rule.unlessInquiryType.indexOf(itype) === -1; }
+      if (need) {
+        el.setAttribute('required', 'required');
+        el.setAttribute('aria-required', 'true');
+      } else {
+        el.removeAttribute('required');
+        el.removeAttribute('aria-required');
+        fieldErr(form, rule.field, false);
+      }
+      // Keep the visible required marker in step. Most of these labels carry no
+      // marker at all today, because the field was unconditionally optional, so
+      // one is created the first time it is needed — a field that is required
+      // without saying so is the version of this that loses enquiries.
+      var row = el.closest ? el.closest('.intake-row') : null;
+      var label = row ? row.querySelector('label') : null;
+      if (!label) { return; }
+      var mark = label.querySelector('.intake-req, .intake-opt');
+      if (!mark) {
+        mark = d.createElement('span');
+        label.appendChild(d.createTextNode(' '));
+        label.appendChild(mark);
+      }
+      mark.className = need ? 'intake-req' : 'intake-opt';
+      mark.textContent = need ? '*' : '(optional)';
+      if (need) { mark.setAttribute('aria-hidden', 'true'); } else { mark.removeAttribute('aria-hidden'); }
+    });
+  }
+
+  /** Required multiselects have no [required] to check, so they are checked here. */
+  function validateDetails(form) {
+    var bad = [];
+    if (!SCHEMA || !SCHEMA.fields) { return bad; }
+    var itype = inquiryTypeOf(form);
+    if (SCHEMA.inquiryType && SCHEMA.inquiryType.required && !itype) { bad.push('subject'); }
+    SCHEMA.fields.forEach(function (f) {
+      if (f.type !== 'multiselect' || !f.required) { return; }
+      if (!isShown(form, f, itype)) { return; }
+      if (!detailValue(form, f).length) { bad.push(DPREFIX + f.key); }
+    });
+    return bad;
+  }
+
+  /** The typed `details` map. Only currently-relevant fields are included, which
+   *  is the client half of the server rule that an irrelevant field is rejected
+   *  rather than stored (§29.3 rule 5). */
+  function detailsPayload(form) {
+    if (!SCHEMA) { return null; }
+    var out = {};
+    var itype = inquiryTypeOf(form);
+    if (itype) { out.inquiryType = itype; }
+    (SCHEMA.fields || []).forEach(function (f) {
+      if (!isShown(form, f, itype)) { return; }
+      var v = detailValue(form, f);
+      if (f.type === 'multiselect') { if (v.length) { out[f.key] = v; } return; }
+      if (v === '') { return; }
+      out[f.key] = (f.type === 'number') ? Number(v) : v;
+    });
+    return Object.keys(out).length ? out : null;
+  }
+
+  /** One human-readable rendering of `details`, shared by the mail-compose
+   *  fallback and by the legacy form-encoded endpoint, so no answer a visitor
+   *  gave is silently dropped on a site that has no central API yet. */
+  function detailsLines(details) {
+    var lines = [];
+    if (!details || !SCHEMA) { return lines; }
+    if (details.inquiryType && SCHEMA.inquiryType) {
+      SCHEMA.inquiryType.options.forEach(function (o) {
+        if (o.value === details.inquiryType) { lines.push(SCHEMA.inquiryType.label + ': ' + o.label); }
+      });
+    }
+    (SCHEMA.fields || []).forEach(function (f) {
+      if (!(f.key in details)) { return; }
+      var v = details[f.key];
+      if (f.options) {
+        var labels = (typeof v === 'string' ? [v] : v).map(function (val) {
+          var lbl = val;
+          f.options.forEach(function (o) { if (o.value === val) { lbl = o.label; } });
+          return lbl;
+        });
+        v = labels.join(', ');
+      } else if (Array.isArray(v)) { v = v.join(', '); }
+      lines.push(f.label + ': ' + v);
+    });
+    return lines;
+  }
+
   function collect(form) {
     var payload = {}, extra = {};
     Array.prototype.forEach.call(form.elements, function (el) {
@@ -201,6 +503,10 @@
       // its own evidence, never folded into `extra`.
       if (el.name === 'productUpdatesConsent' || el.name === 'jobAlertsConsent') { return; }
       if (el.name === 'termsAccepted') { return; }   // carried in payload.terms
+      // Typed details are read from the schema, never swept into `extra` —
+      // `extra` is the untyped safety net for legacy markup and must not become
+      // a second, unvalidated transport for a field that has a schema (§29.0).
+      if (el.name.indexOf(DPREFIX) === 0) { return; }
       var v = (el.value || '').trim();
       if (CANONICAL.indexOf(el.name) !== -1) { payload[el.name] = v; }
       else if (v) { extra[el.name] = v; }
@@ -216,6 +522,17 @@
     payload.idempotencyKey = (w.crypto && w.crypto.randomUUID)
       ? w.crypto.randomUUID()
       : String(Date.now()) + '-' + Math.random().toString(36).slice(2, 10);
+
+    // The typed layer. `schemaId` is a claim the server re-derives from
+    // (sourceSite, sourceForm) and rejects if it disagrees (§29.3), so nothing
+    // here is trusted; it exists so a mismatch is a 400 rather than a silent
+    // validation against the wrong schema.
+    if (SCHEMA) {
+      payload.schemaId = CFG.schemaId;
+      payload.schemaVersion = SCHEMA.schemaVersion;
+      var details = detailsPayload(form);
+      if (details) { payload.details = details; }
+    }
 
     var consent = consentPayload(form);
     if (consent) { payload.consent = consent; }
@@ -237,6 +554,7 @@
       if (ok && el.name === 'message') { ok = v.length >= 10; }
       if (!ok && bad.indexOf(el.name) === -1) { bad.push(el.name); }
     });
+    validateDetails(form).forEach(function (n) { if (bad.indexOf(n) === -1) { bad.push(n); } });
     return bad;
   }
 
@@ -252,7 +570,13 @@
       country: 'Country', subject: 'Subject', message: 'Message'
     };
     var lines = [];
-    CANONICAL.forEach(function (k) { if (payload[k]) { lines.push(LABEL[k] + ': ' + payload[k]); } });
+    CANONICAL.forEach(function (k) {
+      // With a schema the enquiry type is reported from `details` under its own
+      // human label, so the raw option value is never shown to anyone.
+      if (k === 'subject' && payload.details) { return; }
+      if (payload[k]) { lines.push(LABEL[k] + ': ' + payload[k]); }
+    });
+    detailsLines(payload.details).forEach(function (l) { lines.push(l); });
     if (payload.extra) {
       Object.keys(payload.extra).forEach(function (k) {
         lines.push(k.charAt(0).toUpperCase() + k.slice(1) + ': ' + payload.extra[k]);
@@ -270,8 +594,14 @@
     }
     lines.push('', '— sent from ' + payload.sourceUrl);
 
-    var subject = payload.subject
-      ? (CFG.subjectPrefix || 'Website enquiry') + ' (' + payload.subject + ')'
+    var tag = payload.subject;
+    if (payload.details && payload.details.inquiryType && SCHEMA) {
+      SCHEMA.inquiryType.options.forEach(function (o) {
+        if (o.value === payload.details.inquiryType) { tag = o.label; }
+      });
+    }
+    var subject = tag
+      ? (CFG.subjectPrefix || 'Website enquiry') + ' (' + tag + ')'
       : (CFG.subjectPrefix || 'Website enquiry');
 
     setStatus(form, 'info',
@@ -325,6 +655,20 @@
     if (tsEl) { flat.ts = tsEl.value || String(Math.floor(Date.now() / 1000)); }
 
     if (CFG.encoding === 'form') {
+      // A form-encoded body has no nested objects: URLSearchParams would send
+      // `details` as the string "[object Object]". It goes over as JSON, plus a
+      // rendered copy for the notification email, because the labels live in
+      // this file and the legacy endpoint has no way to know them.
+      //
+      // Deliberately NOT folded into `message`: that endpoint caps the message
+      // at 8,000 characters, so an appendix would turn a long-but-legal enquiry
+      // into a validation failure the visitor cannot diagnose.
+      if (payload.details) {
+        flat.details = JSON.stringify(payload.details);
+        flat.detailsText = detailsLines(payload.details).join('\n');
+      } else {
+        delete flat.details;
+      }
       return { body: new w.URLSearchParams(flat).toString(),
                headers: { 'Content-Type': 'application/x-www-form-urlencoded',
                           'Accept': 'application/json', 'X-Requested-With': 'fetch' } };
@@ -385,8 +729,37 @@
     var q = new w.URLSearchParams(w.location.search);
     var wanted = q.get('purpose') || q.get('subject');
     if (!wanted) { return; }
+
+    // A compound alias — /contact.html?purpose=quote-core-kit — preselects an
+    // enquiry type AND one detail. The alias table is a closed set defined in
+    // the schema, so the URL can only ever choose a value that already exists:
+    // nothing from the query string is written into the page, and every
+    // preselection stays editable. The server re-validates regardless (§29.4.2c).
+    var alias = SCHEMA && SCHEMA.purposeAliases ? SCHEMA.purposeAliases[wanted] : null;
+    if (alias) {
+      var legacy = '';
+      SCHEMA.inquiryType.options.forEach(function (o) {
+        if (o.value === alias.inquiryType) { legacy = o.legacy || o.value; }
+      });
+      for (var j = 0; j < sel.options.length; j++) {
+        if (sel.options[j].value === legacy) { sel.value = legacy; break; }
+      }
+      syncDetails(form);
+      var k;
+      for (k in alias.details || {}) {
+        if (!Object.prototype.hasOwnProperty.call(alias.details, k)) { continue; }
+        var el = form.querySelector('select[name="' + DPREFIX + k + '"]');
+        if (!el) { continue; }
+        for (var m = 0; m < el.options.length; m++) {
+          if (el.options[m].value === alias.details[k]) { el.value = alias.details[k]; break; }
+        }
+      }
+      syncDetails(form);
+      return;
+    }
+
     for (var i = 0; i < sel.options.length; i++) {
-      if (sel.options[i].value === wanted) { sel.value = wanted; return; }
+      if (sel.options[i].value === wanted) { sel.value = wanted; syncDetails(form); return; }
     }
   }
 
@@ -400,6 +773,7 @@
     var tsEl = form.querySelector('[name="ts"]');
     if (tsEl && !tsEl.value) { tsEl.value = String(Math.floor(Date.now() / 1000)); }
 
+    renderDetails(form);
     preselectSubject(form);
     injectConsent(form);
     injectTerms(form);
@@ -418,6 +792,9 @@
       if (hp && hp.value.trim() !== '') { return; }
 
       CANONICAL.forEach(function (f) { fieldErr(form, f, false); });
+      if (SCHEMA) {
+        (SCHEMA.fields || []).forEach(function (f) { fieldErr(form, DPREFIX + f.key, false); });
+      }
 
       var bad = validate(form);
       if (bad.length) {

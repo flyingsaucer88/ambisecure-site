@@ -55,6 +55,9 @@ const MAX_PHONE        = 40;
 const MAX_COUNTRY      = 60;
 const MAX_MESSAGE      = 8000;
 const MIN_MESSAGE      = 10;
+const MAX_DETAILS      = 4096;    // typed `details` JSON, before decoding
+const MAX_DETAIL_KEYS  = 24;
+const MAX_DETAIL_VALUE = 400;
 const RATE_MAX         = 5;       // submissions ...
 const RATE_WINDOW_SECS = 3600;    // ... per hour, per IP hash
 const MIN_FILL_SECONDS = 3;       // humans take longer than this
@@ -125,6 +128,67 @@ function field(string $k): string
 }
 
 /** Non-guessable reference, not derived from any submitted value. */
+/**
+ * The typed `details` map from the Central Intake schema (runbook v1.5 SS29.4).
+ *
+ * This endpoint predates the typed layer and must not start trusting it now:
+ * `details` is whatever a caller posted. It is accepted only as a FLAT map of
+ * short scalars or short string lists, and anything else is discarded rather
+ * than stored — an unbounded or nested structure written into a JSONL lead
+ * store is a way to make the store unreadable, not a feature.
+ *
+ * Nothing here is authoritative. The Central Intake Lambda validates `details`
+ * against the closed JSON Schema for the site's schemaId; this is a transitional
+ * store so the answers a visitor gave are not thrown away before that exists.
+ */
+function details_map(): array
+{
+    $raw = field('details');
+    if ($raw === '' || strlen($raw) > MAX_DETAILS) {
+        return [];
+    }
+    $decoded = json_decode($raw, true);
+    if (!is_array($decoded)) {
+        return [];
+    }
+    $out = [];
+    foreach ($decoded as $k => $v) {
+        if (count($out) >= MAX_DETAIL_KEYS) {
+            break;
+        }
+        if (!is_string($k) || !preg_match('/^[A-Za-z][A-Za-z0-9_]{0,39}$/', $k)) {
+            continue;
+        }
+        if (is_int($v) || is_float($v)) {
+            // Kept numeric so a quantity stays sortable in the store.
+            $out[$k] = $v;
+        } elseif (is_string($v)) {
+            $sv = scrub($v);
+            if ($sv !== '' && mb_strlen($sv) <= MAX_DETAIL_VALUE) {
+                $out[$k] = $sv;
+            }
+        } elseif (is_array($v) && array_keys($v) === range(0, count($v) - 1)) {
+            // A LIST only. A nested object is also is_array() in PHP, and
+            // flattening one would silently reshape the data into something the
+            // schema never described.
+            $list = [];
+            foreach ($v as $item) {
+                if (!is_string($item) && !is_int($item)) {
+                    continue;
+                }
+                $si = scrub((string) $item);
+                if ($si !== '' && mb_strlen($si) <= MAX_DETAIL_VALUE && count($list) < MAX_DETAIL_KEYS) {
+                    $list[] = $si;
+                }
+            }
+            if ($list) {
+                $out[$k] = $list;
+            }
+        }
+    }
+    return $out;
+}
+
 function make_ref(): string
 {
     return 'AS-' . gmdate('Ymd') . '-' . strtoupper(bin2hex(random_bytes(4)));
@@ -273,6 +337,13 @@ $phone   = scrub(field('phone'));
 $country = scrub(field('country'));
 $message = scrub_multiline(field('message'));
 $purpose = scrub(field('purpose'));
+$details = details_map();
+// The client renders the labels because only the client has them; this is for
+// the notification email and is never the authoritative copy.
+$detailsText = scrub_multiline(field('detailsText'));
+if (mb_strlen($detailsText) > MAX_DETAILS) {
+    $detailsText = '';
+}
 
 if (!array_key_exists($purpose, PURPOSES)) {
     $purpose = 'general';
@@ -336,6 +407,12 @@ $record = [
     'message'   => $message,
     'source'    => scrub((string) (parse_url((string) $originish, PHP_URL_PATH) ?? '')),
 ];
+// Omitted entirely when the form collected nothing typed, so an older record and
+// a schema-aware one stay distinguishable in the store.
+if ($details) {
+    $record['schemaId'] = scrub(field('schemaId'));
+    $record['details']  = $details;
+}
 
 $line = json_encode($record, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 if ($line === false) {
@@ -373,6 +450,7 @@ $body = "New AmbiSecure enquiry\n"
       . 'Email:          ' . $email . "\n"
       . 'Phone:          ' . ($phone !== '' ? $phone : '—') . "\n"
       . 'Country:        ' . ($country !== '' ? $country : '—') . "\n\n"
+      . ($detailsText !== '' ? "Enquiry details:\n----------------\n" . $detailsText . "\n\n" : '')
       . "Message:\n--------\n" . $message . "\n\n"
       . "--\nCaptured by contact/submit.php. Authoritative copy is in\n"
       . "/.leads/" . gmdate('Y-m') . ".jsonl on the web host.\n";
