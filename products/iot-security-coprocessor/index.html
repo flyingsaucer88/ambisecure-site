@@ -61,7 +61,7 @@
   {
    "@type": "Product",
    "name": "AmbiSEC Module — IoT Security Co-Processor",
-   "description": "Dual-domain IoT security co-processor. MCU domain runs the application; an isolated cryptographic security domain holds device identity, signs/verifies/encrypts, prevents replay, and authenticates secure OTA. Keys never reach application firmware.",
+   "description": "Dual-domain IoT security co-processor. The host MCU domain runs the application; an isolated cryptographic security domain holds device identity, signs/verifies/encrypts, prevents replay, and authenticates secure OTA. Keys never reach application firmware.",
    "brand": {
     "@type": "Brand",
     "name": "AmbiSecure"
@@ -298,7 +298,7 @@
         <h1 style="font-family:'Montserrat',sans-serif; font-size: 42px; font-weight:700; line-height:1.12; letter-spacing:-0.6px; color:var(--ink); margin-bottom:18px;">
           AmbiSEC IoT Security Co-Processor &mdash; <span style="color:var(--brand-red);">keys never reach application firmware</span>
         </h1>
-        <p style="font-size:17.5px; color:var(--brand-grey); line-height:1.65; margin-bottom:22px;">AmbiSEC Module is a dual-domain IoT security co-processor. The MCU domain runs the application &mdash; firmware, radios, sensor acquisition. The cryptographic security domain holds the device identity, signs and verifies, prevents replay, and authenticates every OTA image before it boots. The two domains share a bus, not a memory map.</p>
+        <p style="font-size:17.5px; color:var(--brand-grey); line-height:1.65; margin-bottom:22px;">AmbiSEC Module is a dual-domain IoT security co-processor. The host MCU domain runs the application &mdash; firmware, radios, sensor acquisition. The cryptographic security domain holds the device identity, signs and verifies, prevents replay, and authenticates every OTA image before it boots. The two domains share a bus, not a memory map.</p>
         <div class="chip-row"><span class="chip">Dual-domain</span><span class="chip">Hardware root of trust</span><span class="chip">Secure OTA</span><span class="chip">Anti-replay</span><span class="chip">Multi-hop encryption</span><span class="chip">JavaCard applet stack</span></div>
         <div class="hero-cta-row" style="margin-top:24px;">
           <a href="/contact/?purpose=iot-device-trust" class="btn btn-primary" data-analytics-event="request_demo">Request integration brief</a>
@@ -306,7 +306,7 @@
           <a href="/products/iot-solution/" class="btn btn-outline">IoT Solution overview</a>
         </div>
       </div>
-      <div class="feature-visual feature-visual-img"><img src="/assets/img/product-embedded-se.svg" alt="AmbiSEC Module — dual-domain IoT security co-processor pairing an MCU domain with an isolated cryptographic security domain" width="520" height="360" loading="lazy" decoding="async" /></div>
+      <div class="feature-visual feature-visual-img"><img src="/assets/img/product-embedded-se.svg" alt="AmbiSEC Module — the security domain of a dual-domain architecture, paired across a trust boundary with the host's MCU domain" width="520" height="360" loading="lazy" decoding="async" /></div>
     </div>
   </div>
 </section>
@@ -342,7 +342,7 @@
       <span class="eyebrow">The architecture</span>
       <h2 class="section-title">Dual-domain. Two pieces of silicon, one bus, one trust boundary.</h2>
       <span class="section-line"></span>
-      <p class="section-desc" style="margin:0;">The MCU domain handles everything that talks to the outside world. The cryptographic security domain holds the keys and does the operations the MCU is not allowed to do itself. The MCU asks; the security domain answers. Private material does not cross the boundary.</p>
+      <p class="section-desc" style="margin:0;">The host MCU domain handles everything that talks to the outside world. The cryptographic security domain holds the keys and does the operations the MCU is not allowed to do itself. The MCU asks; the security domain answers. Private material does not cross the boundary.</p>
     </div>
 
     <figure aria-labelledby="arch-caption" style="margin:8px 0 0;">
@@ -383,7 +383,7 @@
         <g>
           <rect x="40" y="130" width="500" height="380" rx="10" fill="#ffffff" stroke="#3a3f40" stroke-width="1.5"/>
           <rect x="40" y="130" width="500" height="38" rx="10" fill="#3a3f40"/>
-          <text x="60" y="155" font-family="Montserrat, sans-serif" font-size="14" font-weight="700" fill="#ffffff">MCU domain &middot; application execution</text>
+          <text x="60" y="155" font-family="Montserrat, sans-serif" font-size="14" font-weight="700" fill="#ffffff">Host MCU domain &middot; application execution</text>
 
           <g font-family="'Source Sans 3', sans-serif" font-size="13" fill="#3a3f40">
             <rect x="64" y="190" width="452" height="64" rx="6" fill="#f7f7f8" stroke="#dcdde0"/>
@@ -585,7 +585,7 @@
       <span class="eyebrow">Connectivity &amp; integration</span>
       <h2 class="section-title">The MCU side handles every radio you ship. The co-processor never has to.</h2>
       <span class="section-line"></span>
-      <p class="section-desc" style="margin:0;">Radios live in the MCU domain. Which radio technology a product uses is a system design decision, and the co-processor is deliberately independent of it &mdash; it talks only to the MCU, over a simple bus. That separation is what keeps the security boundary the same whatever the product ships, and what makes the cryptographic surface tractable to reason about.</p>
+      <p class="section-desc" style="margin:0;">Radios live in the host MCU domain. Which radio technology a product uses is a system design decision, and the co-processor is deliberately independent of it &mdash; it talks only to the MCU, over a simple bus. That separation is what keeps the security boundary the same whatever the product ships, and what makes the cryptographic surface tractable to reason about.</p>
     </div>
     <div class="grid-3">
       <div class="card-soft">

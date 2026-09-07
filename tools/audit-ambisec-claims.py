@@ -35,6 +35,27 @@ named in a <th> with the claim in the adjacent <td> is one surface, and cell-lev
 splitting misses it. (That failure mode was found by the v2x-site session by
 injecting into a real built page rather than by reading code.)
 
+KNOWN LIMIT -- READ THIS BEFORE TRUSTING A GREEN RUN.
+
+This guard catches protocol-as-feature by VOCABULARY. Both rules require a NAMED radio
+technology: rule 1 needs one coupled to a provisioning noun, rule 2 needs three families in a
+surface. It is therefore structurally blind to protocol-as-feature by FRAMING -- a
+communications function attributed to a domain without naming any technology:
+
+    "AmbiSEC Module is a dual-domain co-processor. The MCU domain runs the application --
+     firmware, radios, sensor acquisition."
+
+That says the module contains the MCU and therefore the radios, and it passes cleanly, because
+"radios" and "MCU domain" are not radio technologies. Widening the rules to fire on bare words
+like "connectivity", "radios" or "MCU domain" would flag most of this site's legitimate
+architecture prose, so the limit is deliberate rather than a defect to fix here.
+
+Consequence: a green run means no NAMED technology is attributed to AmbiSEC. It does NOT mean
+the architecture is framed correctly. That needs a human sweep -- the v2x-site session found
+one such page on its property and this one had six such surfaces, none of which either guard
+saw. When reviewing AmbiSEC copy, read for "does an unqualified domain sound like part of the
+product?" separately from running this.
+
 Usage:  python3 tools/audit-ambisec-claims.py [--strict] [PATH...]
         python3 tools/audit-ambisec-claims.py --selftest
 """
