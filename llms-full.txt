@@ -7,7 +7,7 @@ Each entry is `[title](url) — one-line summary`. Summaries come from the page 
 
 ## Products
 
-- [AmbiSEC IoT Security Co-Processor — dual-domain SE](https://ambisecure.ambimat.com/products/iot-security-coprocessor/) — AmbiSEC is a dual-domain IoT security co-processor: MCU runs the app, the crypto domain holds keys, signs, verifies, and authenticates secure OTA.
+- [AmbiSEC IoT Security Co-Processor — dual-domain SE](https://ambisecure.ambimat.com/products/iot-security-coprocessor/) — AmbiSEC is a dual-domain IoT security co-processor: the host MCU runs the app, the crypto domain holds keys, signs, verifies, and authenticates secure OTA.
 - [AmbiSecure BioKey — Biometric USB Security Key](https://ambisecure.ambimat.com/products/biokey/) — Biometric USB security key with on-device fingerprint sensor. FIDO2 + match-on-device. AAL3-eligible. USB-A or USB-C; NFC variant.
 - [AmbiSecure eSIM — SGP.22 / SGP.32 eUICC + OIDC](https://ambisecure.ambimat.com/products/esim-solution/) — Ambimat eSIM platform: SGP.22 consumer, SGP.32 M2M, automotive eUICC, with optional OpenID Connect applet for end-user identity verification.
 - [AmbiSecure IoT Security Applets — Secure-Element Applets](https://ambisecure.ambimat.com/products/iot-security-applets/) — JavaCard applets for IoT device identity. Provisioning, attestation, signed firmware update, mutual TLS credential storage. CC EAL6+ secure element.
