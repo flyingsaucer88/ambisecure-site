@@ -34,6 +34,7 @@ run "gen-tag-drift"     python3 tools/gen-tag-pages.py --check
 run "llms-full-drift"   python3 tools/build-llms-full.py --check
 run "breadcrumb-urls"   python3 tools/fix-breadcrumb-urls.py --check
 run "ai-readiness"      python3 tools/ai-readiness.py --check
+run "ambisec-claims"   python3 tools/audit-ambisec-claims.py .
 
 echo
 if [ "$fail" -eq 0 ]; then
