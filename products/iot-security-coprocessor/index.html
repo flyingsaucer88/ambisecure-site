@@ -84,7 +84,7 @@
      "name": "Why separate cryptographic execution from the MCU?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Because an MCU compromise should not equal a key compromise. Application firmware is large, frequently updated, and routinely exposed to untrusted input (BLE packets, OTA payloads, sensor data). If the private key lives in MCU memory it is one buffer overflow away from exfiltration. Moving the key into an isolated co-processor means an attacker who owns the MCU can ask the co-processor to sign things while the device is live, but cannot extract the key or impersonate the device once unplugged from the network."
+      "text": "Because an MCU compromise should not equal a key compromise. Application firmware is large, frequently updated, and routinely exposed to untrusted input (radio traffic, OTA payloads, sensor data). If the private key lives in MCU memory it is one buffer overflow away from exfiltration. Moving the key into an isolated co-processor means an attacker who owns the MCU can ask the co-processor to sign things while the device is live, but cannot extract the key or impersonate the device once unplugged from the network."
      }
     },
     {
@@ -348,7 +348,7 @@
     <figure aria-labelledby="arch-caption" style="margin:8px 0 0;">
       <svg viewBox="0 0 1200 560" role="img" aria-labelledby="arch-title arch-desc" style="width:100%;height:auto;display:block;background:#fafafa;border:1px solid var(--line);border-radius:8px;">
         <title id="arch-title">AmbiSEC Module dual-domain architecture</title>
-        <desc id="arch-desc">Two silicon domains share a single bus across a trust boundary. The MCU domain on the left runs application firmware, BLE / Wi-Fi / LoRa / Sub-GHz radios, and sensor acquisition. The cryptographic security domain on the right holds key storage, performs sign / verify / encrypt operations, enforces anti-replay counters, and runs the secure OTA verification applet. Keys never cross the boundary.</desc>
+        <desc id="arch-desc">Two silicon domains share a single bus across a trust boundary. The MCU domain on the left runs application firmware, the radio subsystem the product design selects, and sensor acquisition. The cryptographic security domain on the right holds key storage, performs sign / verify / encrypt operations, enforces anti-replay counters, and runs the secure OTA verification applet. Keys never cross the boundary.</desc>
 
         <defs>
           <pattern id="hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
@@ -391,7 +391,7 @@
             <text x="80" y="234" font-size="12.5" fill="#5b6163">Business logic, device lifecycle, OTA download path</text>
 
             <rect x="64" y="270" width="452" height="64" rx="6" fill="#f7f7f8" stroke="#dcdde0"/>
-            <text x="80" y="292" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Radios &middot; BLE &middot; Wi-Fi &middot; LoRa &middot; Sub-GHz</text>
+            <text x="80" y="292" font-family="Montserrat, sans-serif" font-size="13" font-weight="700">Radio subsystem &middot; selected by the product</text>
             <text x="80" y="314" font-size="12.5" fill="#5b6163">Untrusted I/O. Packets land here first.</text>
 
             <rect x="64" y="350" width="452" height="64" rx="6" fill="#f7f7f8" stroke="#dcdde0"/>
@@ -585,15 +585,15 @@
       <span class="eyebrow">Connectivity &amp; integration</span>
       <h2 class="section-title">The MCU side handles every radio you ship. The co-processor never has to.</h2>
       <span class="section-line"></span>
-      <p class="section-desc" style="margin:0;">Radios live in the MCU domain &mdash; BLE for proximity, Wi-Fi for premises connectivity, LoRa for long-range industrial telemetry, Sub-GHz for licensed bands. The co-processor talks only to the MCU, over a simple bus. That separation is what makes the cryptographic surface tractable to reason about.</p>
+      <p class="section-desc" style="margin:0;">Radios live in the MCU domain. Which radio technology a product uses is a system design decision, and the co-processor is deliberately independent of it &mdash; it talks only to the MCU, over a simple bus. That separation is what keeps the security boundary the same whatever the product ships, and what makes the cryptographic surface tractable to reason about.</p>
     </div>
     <div class="grid-3">
       <div class="card-soft">
-        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">BLE &amp; Wi-Fi</h3>
-        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Consumer-grade and premises-grade radios. Session keys derived inside the co-processor; the MCU handles framing.</p>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Short-range and premises radios</h3>
+        <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Whichever short-range or premises radio the product ships, session keys are derived inside the co-processor; the MCU handles framing.</p>
       </div>
       <div class="card-soft">
-        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">LoRa &amp; Sub-GHz</h3>
+        <h3 style="font-family:'Montserrat',sans-serif;font-size:17px;font-weight:700;margin-bottom:8px;color:var(--ink);">Long-range, low-power telemetry</h3>
         <p style="color:var(--brand-grey);font-size:14.5px;line-height:1.7;">Long-range, low-power industrial telemetry. The co-processor's anti-replay counters survive the long backhauls these networks expose.</p>
       </div>
       <div class="card-soft">
