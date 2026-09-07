@@ -328,6 +328,13 @@
       <h2 class="section-title">The tamper boundary is the architecture.</h2>
       <span class="section-line"></span>
       <p class="section-desc" style="margin:0;">A device identity is only as strong as the boundary that holds its private key. Everything above the boundary &mdash; the host MCU, the OS, the application firmware &mdash; is reachable by an attacker with physical access. Everything inside is not. The four properties below are what move a key from "stored in flash" to "held in a hardware root of trust".</p>
+      <p class="section-desc" style="margin:16px 0 0;">This is also the line that decides whether a wireless
+      module is "hardware-rooted". Security features on a main processor &mdash; secure boot, a key store in
+      flash-protected memory, a debug lock &mdash; sit <em>above</em> the boundary and harden a device without
+      rooting it. Reaching a hardware root of trust means adding a dedicated trust anchor and the provisioning
+      lifecycle around it, as a design decision taken with
+      <a href="https://ambimat.com/design/ambi-iot/">AmbiIoT product engineering</a>, not as a property
+      inherited from the processor.</p>
     </div>
     <div class="grid-2" style="margin-top:30px;">
       <div class="card">
