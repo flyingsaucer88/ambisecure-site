@@ -53,9 +53,15 @@ RF = re.compile(
 # NOTE: "module" is deliberately ABSENT. "AmbiSEC Module" is the product's actual name, so
 # including it made every mention of the product by name trip whenever a radio term appeared
 # in the same sentence -- 7 false positives on this site, all of them correct copy.
+# V2X is included here but NOT as a bare term: it only counts when adjacent to a provisioning
+# noun. On this site V2X is overwhelmingly a DOMAIN noun -- "V2X PKI", "V2X certificate
+# management", "V2X OBU / RSU integrations" -- and treating it like BLE produced noise. But
+# "AmbiSEC provides a C-V2X radio interface" is a genuine feature claim and the owner names V2X
+# explicitly, so the adjacency requirement is what makes it safe to include. Found as a MISS
+# (not a false positive) when the v2x-site session's AmbiOBU case prompted a re-test.
 RF_AS_COMPONENT = re.compile(
     r"(?:\bBLE\b|\bBTLE\b|blue\s*-?\s*tooth|\bThread\b|\bWi-?Fi\b|\bLoRa(?:WAN)?\b|"
-    r"\bsub-?GHz\b|\bcellular\b|\bNFC\b|\bZigbee\b|\bUWB\b)"
+    r"\bsub-?GHz\b|\bcellular\b|\bNFC\b|\bZigbee\b|\bUWB\b|\bV2X\b)"
     r"[\s/&;,-]{0,20}(?:\w+[\s/&;,-]{0,3}){0,3}?"
     r"\b(?:stacks?|radios?|interfaces?|transceivers?|modems?|connectivity|link|chipsets?)\b"
     r"|\b(?:stacks?|radios?|interfaces?|transceivers?|modems?|connectivity)\b[\s/&;,-]{0,20}"
@@ -112,6 +118,41 @@ def text_of(fragment: str) -> str:
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", fragment))).strip()
 
 
+
+# How close a component claim must sit to the product name to count as ITS claim.
+OWNERSHIP_WINDOW = 80
+# Possessive / locative constructions that attach a preceding claim to the product.
+OWNED_BY_PRODUCT = re.compile(
+    r"\b(?:in|of|inside|within|on|from)\s+(?:the\s+)?Ambi\s*-?\s*SEC\b|\bAmbi\s*-?\s*SEC(?:'s|\u2019s)",
+    re.I)
+
+
+def owns_the_claim(text: str) -> bool:
+    """Does AmbiSEC own the radio claim in this surface, or is it merely named nearby?
+
+    Same-surface co-occurrence is NOT ownership. A sentence like
+
+        "AmbiOBU carries a C-V2X development radio, a 4G LTE module and the AmbiSEC
+         secure element for signed messages."
+
+    names a governed product beside radios that belong to a SIBLING product. Flagging it
+    would be the beneficiary-vs-owner error pointed the other way -- and extending the
+    provisioning-noun list can never fix it, because the list will always have a gap.
+    So the test is positional: the claim must fall in the window FOLLOWING the product
+    name, or precede it under a possessive/locative preposition ("the BLE stack in AmbiSEC").
+
+    Raised by the v2x-site session from its own guard's false positives.
+    """
+    for m in PRODUCT.finditer(text):
+        after = text[m.end():m.end() + OWNERSHIP_WINDOW]
+        if RF_AS_COMPONENT.search(after):
+            return True
+        before = text[max(0, m.start() - OWNERSHIP_WINDOW):m.end()]
+        if RF_AS_COMPONENT.search(before) and OWNED_BY_PRODUCT.search(before):
+            return True
+    return False
+
+
 def surfaces(doc: str):
     """Yield (kind, text). JSON-LD string values are surfaces in their own right."""
     for m in BLOCK.finditer(doc):
@@ -153,7 +194,7 @@ def findings(doc: str):
         if doc_names_product and distinct >= LAUNDRY_MIN:
             yield kind, f"[{distinct} RF technologies listed] " + text[:220]
             continue
-        if not (PRODUCT.search(text) and RF_AS_COMPONENT.search(text)):
+        if not owns_the_claim(text):
             continue
         if ATTRIBUTED.search(text):
             continue                      # boundary stated correctly
@@ -210,6 +251,23 @@ def selftest():
     ]
     for doc in ok:
         assert not F(doc), f"false positive on: {doc[:90]}"
+
+    # V2X: a component claim must FAIL, a domain noun must PASS. The adjacency requirement
+    # is the whole difference, and the disclaimer form is cleared by NEGATED before it.
+    assert F("<p>AmbiSEC provides a C-V2X radio interface.</p>"), "V2X component claim missed"
+    assert F("<p>AmbiSEC with an integrated V2X stack.</p>"), "V2X stack claim missed"
+    assert not F("<p>JavaCard applets for FIDO, PIV and custom V2X certificate management.</p>")
+    assert not F("<li>the secure-element platform for V2X OBU / RSU integrations.</li>")
+    assert not F("<li>AmbiSecure does not currently ship an ISO 26262 / ASPICE-certified V2X "
+                 "stack. Certification of the integrated AmbiSEC Module is a target.</li>")
+    assert F("<p>The BLE stack in AmbiSEC handles pairing.</p>"), \
+        "a claim preceding the product under a possessive preposition must FAIL"
+
+    # co-occurrence is not ownership IN EITHER DIRECTION: radios owned by a sibling product,
+    # AmbiSEC merely named alongside. Raised by the v2x-site session from its own guard.
+    assert not F("<p>AmbiOBU carries a 3GPP Release 14 C-V2X development radio, a SIMCom "
+                 "A7672-series 4G LTE module and the AmbiSEC secure element for signed "
+                 "messages.</p>"), "sibling product's radio must not be attributed to AmbiSEC"
 
     # laundry list: caught even when attributed, and even when the surface names no product
     assert F('<p>AmbiSEC secures it.</p><desc>The MCU domain runs application firmware, '
