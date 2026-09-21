@@ -42,6 +42,11 @@ _NOISE = [
     re.compile(r'<meta\b[^>]*>', re.I),
     re.compile(r'<link\b[^>]*>', re.I),
     re.compile(r'<!--.*?-->', re.S),
+    # External script REFERENCES only (src=...), never inline script bodies.
+    # A cache-busting ?v= bump on a <script src> is the same class of change
+    # as one on a <link href>, which is already stripped above: a technical
+    # asset-version change, not a re-review of the article.
+    re.compile(r'<script\b[^>]*\bsrc=[^>]*>\s*</script>', re.I),
 ]
 
 

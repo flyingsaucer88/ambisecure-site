@@ -46,7 +46,7 @@ def canonical_org():
             if n.get("@type") == "Organization":
                 return n
     raise SystemExit("gen-tag-pages: no Organization node on the homepage")
-ASSET_V = "32"
+ASSET_V = "33"
 BASE = "https://ambisecure.ambimat.com"
 
 # slug -> display name, tag names to match, intro/dek + meta description copy.
