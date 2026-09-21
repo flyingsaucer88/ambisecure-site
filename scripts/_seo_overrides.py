@@ -188,42 +188,45 @@ OVERRIDES = {
     'title': 'Understanding WebAuthn Attestation Objects | AmbiSecure',
   },
 
-  # ===== Blog archive =====
-  'blog/archive/workplace-biometrics/index.html': {
-    'title': 'Workplace Biometrics — the New Normal | AmbiSecure (Archive 2020)',
+  # ===== Earlier blog posts (migrated to clean URLs 2026-09-21) =====
+  'blog/fast-identity-online/index.html': {
+    'title': 'Fast Identity Online (FIDO) — what FIDO and U2F do | AmbiSecure',
   },
-  'blog/archive/emv-certification-in-public-transport/index.html': {
-    'title': 'EMV Certification in Public Transport | AmbiSecure (Archive 2020)',
+  'blog/workplace-biometrics/index.html': {
+    'title': 'Workplace Biometrics — the New Normal | AmbiSecure',
   },
-  'blog/archive/common-misconceptions-about-2fa/index.html': {
-    'title': 'Common Misconceptions About 2FA | AmbiSecure (Archive 2021)',
+  'blog/emv-certification-in-public-transport/index.html': {
+    'title': 'EMV Certification in Public Transport | AmbiSecure',
   },
-  'blog/archive/how-chip-based-epassports-work/index.html': {
-    'title': 'How Chip-Based ePassports Work | AmbiSecure (Archive 2021)',
+  'blog/common-misconceptions-about-2fa/index.html': {
+    'title': 'Common Misconceptions About 2FA | AmbiSecure',
   },
-  'blog/archive/sms-otp-disadvantages/index.html': {
-    'title': 'SMS-Based OTP Disadvantages | AmbiSecure (Archive 2021)',
+  'blog/how-chip-based-epassports-work/index.html': {
+    'title': 'How Chip-Based ePassports Work | AmbiSecure',
   },
-  'blog/archive/mfa-in-government/index.html': {
-    'title': 'MFA in Government Sector | AmbiSecure (Archive 2021)',
+  'blog/sms-otp-disadvantages/index.html': {
+    'title': 'SMS-Based OTP Disadvantages | AmbiSecure',
   },
-  'blog/archive/single-sign-on-vs-mfa/index.html': {
-    'title': 'Single Sign-On vs MFA | AmbiSecure (Archive 2021)',
+  'blog/mfa-in-government/index.html': {
+    'title': 'MFA in Government Sector | AmbiSecure',
   },
-  'blog/archive/consumer-biometrics-and-privacy/index.html': {
-    'title': 'Consumer Biometrics & Privacy | AmbiSecure (Archive 2020)',
+  'blog/single-sign-on-vs-mfa/index.html': {
+    'title': 'Single Sign-On vs MFA | AmbiSecure',
   },
-  'blog/archive/public-transport-ticketing-part-1/index.html': {
-    'title': 'Public Transport Ticketing (Part 1) | AmbiSecure (Archive 2020)',
+  'blog/consumer-biometrics-and-privacy/index.html': {
+    'title': 'Consumer Biometrics & Privacy | AmbiSecure',
   },
-  'blog/archive/public-transport-ticketing-part-2/index.html': {
-    'title': 'Public Transport Ticketing (Part 2) | AmbiSecure (Archive 2020)',
+  'blog/public-transport-ticketing-part-1/index.html': {
+    'title': 'Public Transport Ticketing (Part 1) | AmbiSecure',
   },
-  'blog/archive/public-transport-ticketing-part-3/index.html': {
-    'title': 'Public Transport Ticketing (Part 3) | AmbiSecure (Archive 2020)',
+  'blog/public-transport-ticketing-part-2/index.html': {
+    'title': 'Public Transport Ticketing (Part 2) | AmbiSecure',
   },
-  'blog/archive/introduction-to-java-card/index.html': {
-    'title': 'Introduction to Java Card | AmbiSecure (Archive 2020)',
+  'blog/public-transport-ticketing-part-3/index.html': {
+    'title': 'Public Transport Ticketing (Part 3) | AmbiSecure',
+  },
+  'blog/introduction-to-java-card/index.html': {
+    'title': 'Introduction to Java Card | AmbiSecure',
   },
 
   # ===== Videos =====
@@ -272,31 +275,31 @@ DESCRIPTION_ONLY = {
     'Client-side structural validator for IEEE 1609.2 V2X cert chains. Checks parse, issuer linkage by HashedId8, validity, signature schemes.',
   'products/piv-card/index.html':
     'PIV-compatible JavaCard applet on an ID-1 smart card with contact + contactless. Four cert slots, RSA + ECC, Windows/macOS logon, PKCS#11, FIPS 201 surface.',
-  'blog/archive/common-misconceptions-about-2fa/index.html':
+  'blog/common-misconceptions-about-2fa/index.html':
     'Unpacks common misconceptions about 2FA — what it actually defends against, where SMS codes fall short, why hardware-rooted second factors hold up.',
-  'blog/archive/emv-certification-in-public-transport/index.html':
+  'blog/emv-certification-in-public-transport/index.html':
     'A practical look at EMV certification in public transport — which certifications apply, roles of acquirer / scheme / vendor / authority, typical timeline.',
   'blog/javacard-applet-development-enterprise-identity/index.html':
     'Building JavaCard applets that ship: AID design, lifecycle, secure messaging, personalisation, and the mistakes to avoid in enterprise identity.',
-  'blog/archive/introduction-to-java-card/index.html':
+  'blog/introduction-to-java-card/index.html':
     'An introduction to JavaCard — how applets run securely on smart cards and small-memory secure elements, and what the runtime enables for FIDO, PIV, ePassport.',
   'technologies/passkeys/index.html':
     'Passkeys are WebAuthn credentials with BE/BS posture. The engineering page — what to require, what to accept, what to reject in device-bound vs syncable.',
-  'blog/archive/consumer-biometrics-and-privacy/index.html':
+  'blog/consumer-biometrics-and-privacy/index.html':
     'Deploying biometric auth while meeting modern privacy expectations — match-on-device vs match-on-server, template storage, and the regulatory shape.',
   'solutions/device-identity-at-scale/index.html':
     'Architecture for device identity at scale: hardware roots of trust, manufacturing-time provisioning, OTA lifecycle, V2X EA/AA, eSIM SM-DP+, fleet revocation.',
-  'blog/archive/workplace-biometrics/index.html':
+  'blog/workplace-biometrics/index.html':
     'How workplace biometrics layer onto existing auth — face / fingerprint / palm, privacy controls that keep them defensible, where they sit beside FIDO and MFA.',
   'search/index.html':
-    'Sitewide client-side search across products, services, technologies, solutions, industries, case studies, references, blog, and archive. No backend.',
+    'Sitewide client-side search across products, services, technologies, solutions, industries, case studies, references, blog, and tools. No backend.',
   'resources/tools/javacard-cap/index.html':
     'Explore JavaCard CAP file components (Header, Directory, Applet, Import, ConstantPool, Class, Method, StaticField, RefLocation, Export, Descriptor, Debug).',
-  'blog/archive/fast-identity-online/index.html':
+  'blog/fast-identity-online/index.html':
     'A primer on FIDO and the Universal Second Factor model — how FIDO replaces shared secrets with hardware-bound credentials, and why phishing resistance changes.',
-  'blog/archive/cyber-attacks-in-india-part-2/index.html':
+  'blog/cyber-attacks-in-india-part-2/index.html':
     'Part two of a three-part analysis of major cyber attacks in India — attack patterns, identity weaknesses they exploited, and the auth posture that would have helped.',
-  'blog/archive/public-transport-ticketing-part-3/index.html':
+  'blog/public-transport-ticketing-part-3/index.html':
     'Part three of the AFC series — comparative notes across countries, what was common in mature ticketing, and where hardware-rooted SAMs sit in the stack.',
   'about/certifications/index.html':
     'AmbiSecure certifications, conformance, and trust posture — FIDO, JavaCard 3.x, GlobalPlatform 2.3.1, ISO 7816, ISO 14443, NIST SP 800-73, plus disclaimers.',
@@ -304,11 +307,11 @@ DESCRIPTION_ONLY = {
     "Hardware-backed identity for V2X infrastructure — SE integration for OBUs and RSUs, V2X PKI architecture, and ITS cert lifecycle for India's connected road ecosystem.",
   'references/ieee-1609-2/index.html':
     'IEEE 1609.2 V2X cert reference — structure, COER encoding, IssuerIdentifier, ToBeSignedCertificate, validity, verification key, signatures, vs X.509.',
-  'blog/archive/cyber-attacks-in-india-part-3/index.html':
+  'blog/cyber-attacks-in-india-part-3/index.html':
     'Part three of a three-part analysis of cyber attacks in India — closing on systemic gaps in incident response, identity hygiene, hardware-rooted adoption.',
   'blog/cyber-security-threats-overview/index.html':
     'A modern, clear-eyed overview of the cyber-security threats that drive identity and hardware-credential decisions in 2026 — phishing, MFA bypass, SIM swap.',
-  'blog/archive/mfa-in-government/index.html':
+  'blog/mfa-in-government/index.html':
     'Why government identity programmes are adopting MFA, how MFA holds up against phishing and credential theft, and where hardware-rooted authenticators sit.',
   'products/piv-usb-key/index.html':
     'PIV-compatible JavaCard applet in a USB-A / USB-C key. CCID + WebAuthn dual interface, smart-card logon, PKCS#11, SSH agent forwarding, CC EAL6+ SE.',
@@ -316,7 +319,7 @@ DESCRIPTION_ONLY = {
     'Phishing-resistant MFA has a precise meaning — origin-bound, hardware-backed credentials. What WebAuthn buys, and how it maps to AAL3 / CISA / OMB M-22-09.',
   'technologies/ctap2/index.html':
     'CTAP2 is the FIDO Client-To-Authenticator Protocol — wire format browsers use to talk to USB-HID, NFC, and BLE roaming authenticators. Commands, transports.',
-  'blog/archive/enterprise-security-threats/index.html':
+  'blog/enterprise-security-threats/index.html':
     'A field overview of enterprise security threats in the cloud era — how the attack surface expands with new platforms, and where hardware identity narrows it.',
   'technologies/fido2/index.html':
     'FIDO2 is two specs working together: WebAuthn (W3C) and CTAP2 (FIDO Alliance). What each does, what is in the family, and how certification levels work.',
@@ -332,9 +335,9 @@ DESCRIPTION_ONLY = {
     'Client-side IEEE 1609.2 cert parser for V2X / ITS PKI. Decodes hex, Base64, and PEM-wrapped certificates into a field tree with standards references.',
   'technologies/webauthn/index.html':
     'WebAuthn (W3C) — registration and authentication ceremonies, clientDataJSON, authenticatorData, attestation objects, RP ID rules, BE/BS flags, with diagrams.',
-  'blog/archive/iot-security-challenges-part-1/index.html':
+  'blog/iot-security-challenges-part-1/index.html':
     'Part one of a two-part look at IoT security — how billions of devices talk to enterprise systems, the attack surface that follows, and the trust anchors that contain it.',
-  'blog/archive/security-future-for-government/index.html':
+  'blog/taking-security-future-for-government/index.html':
     'How governments move from password-only access to MFA for citizen and employee identity — and where hardware-rooted credentials reshape the threat model.',
   'blog/credential-lifecycle-management/index.html':
     "Credentials don't just get issued and used — they get re-issued, rotated, recovered, and revoked. The lifecycle every hardware-credential programme has to design.",
@@ -350,7 +353,7 @@ DESCRIPTION_ONLY = {
     'What a passwordless rollout actually looks like at workforce scale — nine load-bearing components, recovery flow, attestation policy, lifecycle, migration.',
   'resources/webauthn/index.html':
     'WebAuthn engineering reference — registration, authentication, attestation, RP ID rules, BE/BS flags, troubleshooting. Static, fast, copy-able code samples.',
-  'blog/archive/what-is-passwordless-authentication/index.html':
+  'blog/what-is-passwordless-authentication/index.html':
     'A primer on passwordless authentication — what it actually means, how FIDO and biometrics replace shared secrets, why hardware-bound credentials sit at the centre.',
   'blog/piv-vs-usb-tokens-vs-embedded/index.html':
     'Workforce identity matrix: PIV smart card vs USB token vs embedded secure element. Lifecycle, physical-logical convergence, certificate workflows.',
@@ -362,11 +365,11 @@ DESCRIPTION_ONLY = {
     'Closed-loop transit ticketing has to keep collecting fares when the backend is unreachable. The architecture that lets validators do it without phoning home.',
   'resources/tools/fido-mds-explorer/index.html':
     'Browse the AAGUID directory in metadata-style cards — vendor, model, transports, BE=0 posture. Searchable. Production should fetch the FIDO MDS BLOB.',
-  'blog/archive/securing-iiot-infrastructure/index.html':
+  'blog/securing-iiot-infrastructure/index.html':
     'Why industrial IoT remains a high-value target — markets driving adoption, trust gaps in legacy OT, and how hardware-rooted device identity tightens them.',
   'blog/why-hardware-backed-identity-matters/index.html':
     'Hardware moves the cost-per-extraction of a credential up by orders of magnitude. The threat surfaces software cannot defend, and what hardware changes.',
-  'blog/archive/iot-security-challenges-part-2/index.html':
+  'blog/iot-security-challenges-part-2/index.html':
     'Part two of a two-part look at IoT security — practical mitigations: hardware root of trust, signed firmware update, attestation, identity in a secure element.',
   'references/sgp-32/index.html':
     'GSMA SGP.32 IoT eSIM reference — eUICC architecture, IPA (IoT Profile Assistant), SM-DP+, SM-DS, IoT Profile Discovery, parallels to V2X EA / AA lifecycle.',

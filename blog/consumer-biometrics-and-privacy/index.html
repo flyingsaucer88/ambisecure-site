@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Consumer Biometrics &amp; Privacy | AmbiSecure</title>
+<meta name="description" content="Deploying biometric auth while meeting modern privacy expectations — match-on-device vs match-on-server, template storage, and the regulatory shape." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/consumer-biometrics-and-privacy/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Consumer Biometrics in the Data Privacy Age — AmbiSecure Blog" />
+<meta property="og:description" content="How organisations can deploy biometric authentication while still meeting modern privacy expectations — match-on-device versus match-on-server, template storage, and the regulatory shape of consumer biometric data." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/consumer-biometrics-and-privacy/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-blog-archive-consumer-biometrics-and-privacy-1200x630.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Two-column comparison of match-on-device against match-on-server, tracing an irreversible template to the secure element where AmbiSecure keeps the comparison." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-blog-archive-consumer-biometrics-and-privacy-1200x630.png" />
+<meta name="twitter:image:alt" content="Two-column comparison of match-on-device against match-on-server, tracing an irreversible template to the secure element where AmbiSecure keeps the comparison." />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Are my biometrics stored on the device or on a server?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "It depends on the design: match-on-device keeps the template inside a secure element and never transmits it, whereas match-on-server centralises templates and creates a breach target."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Can a leaked biometric be changed?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No — a biometric is not revocable, which is why templates should stay in tamper-resistant hardware and not be centralised unnecessarily."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is the most privacy-preserving biometric design?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Match-on-device, where the sensor and secure element compare the sample locally and only a yes/no decision leaves the chip."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What is a biometric template?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A mathematical representation derived from a biometric sample rather than the image itself. It is not reversible into the original in a well-designed system, but it is still personal data and regulated as such."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What should a consumer product do with biometric data by default?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Keep it on the device, compare it there, and never transmit it. That design removes the central database that turns a single breach into an unrecoverable disclosure."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Consumer Biometrics in the Data Privacy Age"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Consumer Biometrics in the Data Privacy Age",
+   "datePublished": "2020-06-29",
+   "articleSection": "Biometrics",
+   "keywords": "Biometrics, Privacy, Security, Smart solution, datasecurity, data, privacy, Biometric, GDPR, PIN, password",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "legalName": "Ambimat Technologies Pvt. Ltd.",
+    "foundingDate": "1982",
+    "url": "https://ambimat.com",
+    "sameAs": [
+     "https://ambimat.com",
+     "https://ambisecure.ambimat.com",
+     "https://v2x.ambimat.com",
+     "https://esim.ambimat.com",
+     "https://ambiautomation.ambimat.com",
+     "https://www.linkedin.com/company/ambimat-electronics"
+    ]
+    }
+   }
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+   "@type": "Organization",
+   "name": "Ambimat Electronics",
+   "legalName": "Ambimat Technologies Pvt. Ltd.",
+   "foundingDate": "1982",
+   "url": "https://ambimat.com",
+   "sameAs": [
+    "https://ambimat.com",
+    "https://ambisecure.ambimat.com",
+    "https://v2x.ambimat.com",
+    "https://esim.ambimat.com",
+    "https://ambiautomation.ambimat.com",
+    "https://www.linkedin.com/company/ambimat-electronics"
+   ]
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://v2x.ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://v2x.ambimat.com/" class="ext">V2X</a><a href="https://esim.ambimat.com/" class="ext">eSIM &amp; eUICC</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1982</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Consumer Biometrics in the Data Privacy Age</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px 24px;">
+  <div class="prose">
+    <p class="post-byline" style="font-size:13px;color:var(--brand-grey);margin:0 0 14px;">Originally published <time datetime="2020-06-29">June 29, 2020</time></p>
+    <span class="eyebrow">Biometrics</span>
+    <h1>Consumer Biometrics in the Data Privacy Age</h1>
+    <p class="dek">How organisations can deploy biometric authentication while still meeting modern privacy expectations — match-on-device versus match-on-server, template storage, and the regulatory shape of consumer biometric data.</p>
+    <div class="chip-row" style="margin-top:16px;"><a href="/blog/categories/biometrics/" class="chip" style="text-decoration:none;">Biometrics</a><a href="/blog/categories/privacy/" class="chip" style="text-decoration:none;">Privacy</a></div>
+    <aside class="topic-update" style="margin-top:22px;padding:16px 20px;border-left:3px solid var(--brand-red);background:#FCEEEE;border-radius:0 6px 6px 0;"><strong style="font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--brand-red);display:block;margin-bottom:6px;">Consumer biometrics in 2026</strong><span style="font-size:14.5px;color:var(--ink);line-height:1.65;">GDPR / DPDP-era privacy expectations have hardened around on-device matching. The architectural answer &mdash; never ship biometric templates off the secure element &mdash; is now the default. <a href="/blog/secure-element-vs-tpm-vs-hsm/">Secure element vs TPM vs HSM</a> goes deeper.</span></aside>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <article class="prose" style="max-width:880px;margin:0;font-size:16px;line-height:1.8;">
+<h2>Introduction</h2>
+<p>Biometric authentication is now a default option in consumer products, but the privacy posture around it is anything but settled. Organisations have to deploy face, fingerprint, or palm recognition without breaking GDPR, BIPA, or similar regimes. Data protection policies like GDPR have made personal data security increasingly important.</p>
+
+<p>Data privacy is high on the global agenda. In the wake of data protection policies such as Europe’s GDPR, ensuring the integrity of personal data is an increasingly pertinent subject. This is a governmental and corporate policy reflection of the fact that our lives are moving increasingly online and, with it, our personal data is facing new and increased threats.</p>
+<p>For all access to private data or services, we must be authenticated – this is the basis of privacy in the online world. But as PINs and passwords are increasingly viewed as insufficient to tackle this new reality, the world is looking to stronger authentication solutions, such as biometrics.</p>
+<p>When implemented in the right way, biometrics will bring multiple benefits. It already enabled consumers to add layers of authentication to personal data previously unsecured in their owned devices – from apps and e-commerce to our homes and devices. But its potential is phenomenal. Consumer-driven authentication via our phones and tablets is already today by far the largest application of biometrics in the world, with figures in the billions that dwarf government-led identification schemes such as India’s Aadhaar and the FBI database.</p>
+<p>Crucially though, it’s a privacy and security measure that consumers have the power and<i> choice</i> to implement. And as third parties, such as financial services, healthcare, and enterprise organizations, increasingly accept consumer biometrics authentication for their services, supporting the market’s continued adoption is an important and timely topic. But first, as biometrics creates its own sensitive personal data, there are a few points to clarify and discuss…</p><h2>Consumers need confidence!</h2>
+<p>Biometric authentication offers stronger security than passwords and PINs. When properly implemented, biometrics provide multiple advantages: consumers gain layers of authentication for personal data, from apps to smart devices. Smartphone fingerprint authentication represents the largest consumer biometrics application globally.</p>
+
+<p>Undeniably, the success of existing applications of consumer biometrics is based on the advantages they offer consumers. Just look at the penetration and use of fingerprint biometrics in smartphones. But the success of future adoption will be determined by how confident consumers continue to feel in new situations. We’re frequently reminded not to use the same password or PIN multiple times, so it’s only natural consumers are beginning to feel concerned about their biometrics integrity as they start to utilize their fingerprint on multiple devices and apps: their phone, tablet, card, USB dongle…</p>
+<p>In fact, consumer device authentication utilizes a ‘privacy by design’ approach that inherently protects end-user biometric data with an on-device authentication approach – where biometric data is enrolled, stored, and managed all on the same device. The following principles have been fundamental to biometrics’ privacy protection in mobile and are what will enable new benefits for consumers in other personal device-based scenarios:</p><h2>Translating images to templates</h2>
+<p>Biometric data converts to encrypted templates in binary code, not stored images. Templates cannot be reverse-engineered to reveal original fingerprints.</p>
+
+<p>It’s a common misconception that biometric data, such as fingerprints, are stored as images. And in turn, if this image is accessed, the corresponding fingerprint is permanently compromised and unable to be restored or used securely on other applications. You’ll have heard the argument about biometrics: “I can change my password any time, but I only have ten fingerprints; what happens if they’re all hacked?”</p>
+<p>In fact, data from a biometric sensor is captured and stored as a template in binary code – or encrypted 0s and 1s. This mathematical representation makes hacking basically pointless as, even if fraudsters could access the template, they can’t do anything with it. Template code cannot be reverse-engineered into the original fingerprint image, nor can it be linked to other services and, in turn, other personal data. Moreover, this template is unique to the device it is on, making it impossible to re-use between devices, even if the same fingerprint has been enrolled!</p><h2>The consumer is in control</h2>
+<p>Information remains on the user's personal device.</p>
+
+<p>This neatly leads on to my next point regarding storage. In consumer authentication use cases, information remains solely on the unique consumer device on which the template was created, remaining physically in control of the user.</p><h2>Layers of security</h2>
+<p>Multiple security layers protect templates through encryption and hardware/software mechanisms. Trusted Execution Environment (TEE) technology secures storage and matching.</p>
+
+<p>Layering defense mechanisms is standard best practice for a range of security implementations – biometrics is no different. In addition to the transformation of biometric data into an irreversible template, these templates are also later encrypted and further protected by hardware and software both at rest and during the matching process.</p>
+<p>The most successful example of a biometrics use case, the smartphone, utilizes the highly secure software isolation of Trusted Execution Environment (TEE) technology for storage and matching of biometric templates on the device. The hardware on which it runs is intrinsically secured through its high degree of integration, complexity, miniaturization, and specialization.</p><h2>Removing the weakest link</h2>
+<p>Biometrics eliminate certain vulnerabilities associated with passwords and PINs — users cannot be tricked into revealing biometric data through social engineering.</p>
+
+<p>Nothing is ‘un-hackable’, this is the reality of security. With enough time, money, and effort, it’s possible to get into anything. A safe, a bank vault. However, attackers take the path of least resistance, and often it’s the end-user that is the ‘weakest link’ in the security chain when it comes to social engineering attacks.</p>
+<p>End-users are vulnerable to attacks, such as phishing, where they can be tricked into giving away information such as a PIN or password. With consumer biometrics, the user only presents their biometrics to their personal device and can’t give anything away. This also removes the risks generated by mistakes or complacency, such as creating a password that’s easily guessed.</p><h2>More authentication = more protection</h2>
+<p>Authentication occurs in under a second, improving user experience while reducing dropout rates from complex password requirements.</p>
+
+<p>Biometric authentication can protect a whole host of other sensitive personal data, far more quickly, conveniently, and securely than was ever possible with PINs or passwords.</p>
+<p>Today, however, passwords and PINs remain the most used authentication methods outside of smartphones – something increasingly problematic. The friction created by asking users to create a new password has a significant impact on drop-out rates – especially as new ‘best practice’ guidelines recommend complex requirements such as including numbers, capitals, special characters, and length. NIST’s digital identity guidelines outline the importance of usability challenges and stress, fundamentally, “positive user authentication experiences are integral to the success of an organization achieving desired business outcomes.”</p>
+<p>Biometrics can be the authentication silver bullet as it combines security and a convenient UX, with leading fingerprint sensors authenticating in under a second. Its capacity to bring security to devices and processes previously either unsecured, poorly-secured or secured with a poor UX is phenomenal. Mobile is the perfect example of how it has been able to transform a device from being unsecured most of the time, to now only unlocked when in use. And now, just look at how your bank accepts your fingerprint authentication on your phone for access to your account.</p>
+<p>With consumer biometrics, it is quick and effortless to enroll in new services and subscriptions. Consumers are happy to authenticate more frequently because it’s so simple and the action is so intuitive. Plus, you cannot forget your fingerprint…</p><h2>Consumer biometrics</h2>
+<p>A multi-billion-user reality with strong consumer trust.</p>
+
+<p>The combination of government and industry engagement is setting the scene for so much more to be achieved with consumer authentication using biometrics. Undoubtedly, biometrics’ role in an increasingly data-conscious world has only just begun to take shape, and excitingly, it’s consumers who have the power at their fingertips – quite literally!</p><h2>Who is Ambimat Electronics?</h2>
+<p>Nearly four decades of design experience serving PSUs, private companies, and startups across smartwatches, smart homes, medical devices, robotics, retail, and security solutions.</p>
+<h2>References</h2>
+<p>Two sources cited from Fingerprints regarding consumer biometrics trust and biometric payment cards.</p>
+    </article>
+  </div>
+</section>
+
+
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Related historical reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+<a href="/blog/workplace-biometrics/" class="card"><h3>Workplace Security — How Biometrics Is the Key to the New Normal</h3><p>How workplace biometrics layer additional security onto existing authentication methods — face / fingerprint / palm, the privacy controls that keep them defensible, and where they sit alongside FIDO and MFA.</p><div class="card-meta">Read article &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>More from the engineering blog.</h2>
+        <p>Every post is grouped by subject, with newer coverage of the same topic linked wherever it exists.</p>
+      </div>
+      <div><a href="/blog/categories/" class="btn btn-outline">Browse by topic</a></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Are my biometrics stored on the device or on a server?</h3><p style="margin:0;">It depends on the design: match-on-device keeps the template inside a secure element and never transmits it, whereas match-on-server centralises templates and creates a breach target.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Can a leaked biometric be changed?</h3><p style="margin:0;">No — a biometric is not revocable, which is why templates should stay in tamper-resistant hardware and not be centralised unnecessarily.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is the most privacy-preserving biometric design?</h3><p style="margin:0;">Match-on-device, where the sensor and secure element compare the sample locally and only a yes/no decision leaves the chip.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What is a biometric template?</h3><p style="margin:0;">A mathematical representation derived from a biometric sample rather than the image itself. It is not reversible into the original in a well-designed system, but it is still personal data and regulated as such.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What should a consumer product do with biometric data by default?</h3><p style="margin:0;">Keep it on the device, compare it there, and never transmit it. That design removes the central database that turns a single breach into an unrecoverable disclosure.</p></div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div>
+        <p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p>
+        <div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://v2x.ambimat.com/">V2X</a> &middot; <a href="https://esim.ambimat.com/">eSIM &amp; eUICC</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div>
+      </div>
+      <div><h3>Products</h3><ul>
+        <li><a href="/products/onepass-card/">OnePass Card</a></li>
+        <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
+        <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="https://v2x.ambimat.com/">V2X and ITS</a></li>
+        <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
+        <li><a href="/products/">All products</a></li>
+      </ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+      <div><h3>Blog</h3><ul>
+        <li><a href="/blog/">Latest engineering</a></li>
+        <li><a href="/blog/categories/">Browse by topic</a></li>
+        <li><a href="/blog/categories/">Browse by topic</a></li>
+      </ul></div>
+      <div><h3>Company</h3><ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/about/certifications/">Certifications</a></li>
+        <li><a href="/trust/">Trust center</a></li>
+        <li><a href="/partners/">Partners</a></li>
+        <li><a href="/support/">Support</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul></div>
+      <div><h3>Contact</h3><ul>
+        <li>Ahmedabad, Gujarat 380015<br />India</li>
+        <li>India: <a href="tel:+917925501989" data-analytics-event="phone_click">+91 79255 01989</a></li><li><a href="https://wa.me/919727933488?text=Hello%20AmbiSecure%2C%20I%20would%20like%20to%20discuss%20a%20security%20project." data-analytics-event="whatsapp_click" rel="noopener" target="_blank">WhatsApp: +91 97279 33488</a></li>
+        <li>US: <a href="tel:+12153973819" data-analytics-event="phone_click">+1 215 397 3819</a></li>
+        <li><a href="mailto:support@ambimat.com" data-analytics-event="email_click">support@ambimat.com</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
+      <div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
+</body>
+</html>

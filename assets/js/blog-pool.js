@@ -423,7 +423,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Using ethical hackers to protect firm data",
-  "url": "/blog/archive/using-ethical-hackers-to-protect-firm-data-from-cybersecurity-concerns/",
+  "url": "/blog/using-ethical-hackers-to-protect-firm-data-from-cybersecurity-concerns/",
   "date": "2023-05-15",
   "summary": "Cybersecurity assaults are becoming more numerous and complicated by the day, making it increasingly difficult for enterprises to protect themselves.",
   "categories": [
@@ -433,7 +433,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "The risks of hybrid employment for security",
-  "url": "/blog/archive/the-risks-of-hybrid-employment-for-security/",
+  "url": "/blog/the-risks-of-hybrid-employment-for-security/",
   "date": "2023-05-15",
   "summary": "While the world continues to react to the pandemic, hybrid employment, which allows individuals to work both remotely and in the office, has gained in\u2026",
   "categories": [
@@ -443,7 +443,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "The importance of digital ID in cybersecurity",
-  "url": "/blog/archive/the-importance-of-digital-id-in-cybersecurity/",
+  "url": "/blog/the-importance-of-digital-id-in-cybersecurity/",
   "date": "2023-05-15",
   "summary": "Digital identities have become a critical component of cyber security in today\u2019s digital age.",
   "categories": [
@@ -453,7 +453,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Rethink your company's data security strategy",
-  "url": "/blog/archive/rethink-your-companys-data-security-strategy/",
+  "url": "/blog/rethink-your-companys-data-security-strategy/",
   "date": "2023-05-15",
   "summary": "A robust data security plan is an essential component of any company\u2019s overall IT security strategy.",
   "categories": [
@@ -463,7 +463,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Quantum computing's rising cybersecurity threat",
-  "url": "/blog/archive/quantum-computings-rising-cybersecurity-threat/",
+  "url": "/blog/quantum-computings-rising-cybersecurity-threat/",
   "date": "2023-05-15",
   "summary": "Quantum computing is the most modern and revolutionary data processing approach. But, the benefits come at a cost: increasing cybersecurity risks.",
   "categories": [
@@ -473,7 +473,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Phishing assaults are becoming more common \u2014 are you prepared?",
-  "url": "/blog/archive/phishing-assaults-are-becoming-more-common-are-you-prepared/",
+  "url": "/blog/phishing-assaults-are-becoming-more-common-are-you-prepared/",
   "date": "2023-05-15",
   "summary": "Cyber assaults have grown in popularity and complexity in recent years, with phishing being one of the most prominent ways used by hackers to get access to\u2026",
   "categories": [
@@ -483,7 +483,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Identity biometrics: what it is and how it works",
-  "url": "/blog/archive/identity-biometrics/",
+  "url": "/blog/identity-biometrics/",
   "date": "2023-05-15",
   "summary": "For good cause, biometric authentication has grown in popularity as a means of identity verification.",
   "categories": [
@@ -494,7 +494,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "How does identity verification work, and is my data secure?",
-  "url": "/blog/archive/how-does-identity-verification-work-and-is-my-data-secure/",
+  "url": "/blog/how-does-identity-verification-work-and-is-my-data-secure/",
   "date": "2023-05-15",
   "summary": "Identity verification has become a crucial tool for many companies as the world gets more digital.",
   "categories": [
@@ -505,7 +505,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "How can water utilities be protected against cybercrime?",
-  "url": "/blog/archive/how-can-water-utilities-be-protected-against-cybercrime/",
+  "url": "/blog/how-can-water-utilities-be-protected-against-cybercrime/",
   "date": "2023-05-15",
   "summary": "Water utilities are vital community services that supply safe drinking water and wastewater treatment.",
   "categories": [
@@ -516,7 +516,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Convenience, security and privacy: the three pillars of digital identity",
-  "url": "/blog/archive/convenience-security-and-privacy-are-the-three-pillars-of-digital-identity/",
+  "url": "/blog/convenience-security-and-privacy-are-the-three-pillars-of-digital-identity/",
   "date": "2023-05-15",
   "summary": "The three pillars of digital identification are convenience, security, and privacy.",
   "categories": [
@@ -527,7 +527,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Four reasons to take a security-first approach to product development",
-  "url": "/blog/archive/four-reasons-why-a-security-first-approach-to-product-development-should-be-considered/",
+  "url": "/blog/four-reasons-why-a-security-first-approach-to-product-development-should-be-considered/",
   "date": "2023-04-17",
   "summary": "Product development in today\u2019s digital world entails more than just producing a novel product or service.",
   "categories": [
@@ -537,7 +537,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Defending your company against ransomware assaults",
-  "url": "/blog/archive/defending-your-company-against-ransomware-assaults/",
+  "url": "/blog/defending-your-company-against-ransomware-assaults/",
   "date": "2023-04-17",
   "summary": "Businesses must take proactive measures to safeguard themselves against financial losses as the frequency of ransomware attacks rises.",
   "categories": [
@@ -547,7 +547,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Defending the healthcare industry from cyber threats",
-  "url": "/blog/archive/defending-the-healthcare-industry-from-cyber-threats/",
+  "url": "/blog/defending-the-healthcare-industry-from-cyber-threats/",
   "date": "2023-04-17",
   "summary": "Due to the volume of private patient data handled often, the healthcare sector is a favourite target for hackers.",
   "categories": [
@@ -557,7 +557,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Citizens' expectations of a digital identity wallet",
-  "url": "/blog/archive/citizens-expectations-of-a-digital-identity-wallet/",
+  "url": "/blog/citizens-expectations-of-a-digital-identity-wallet/",
   "date": "2023-04-17",
   "summary": "As technology evolves and becomes more intertwined into our daily lives, the notion of a digital identity wallet is gaining traction.",
   "categories": [
@@ -568,7 +568,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Biometrics: airport technology's future",
-  "url": "/blog/archive/biometrics-airport-technologys-future/",
+  "url": "/blog/biometrics-airport-technologys-future/",
   "date": "2023-04-17",
   "summary": "Airports are among the busiest places on the globe, with millions of people passing through every day.",
   "categories": [
@@ -579,7 +579,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "A close examination of the strategies hackers employ in phishing operations",
-  "url": "/blog/archive/a-close-examination-of-the-strategies-hackers-employ-to-start-effective-phishing-operations/",
+  "url": "/blog/a-close-examination-of-the-strategies-hackers-employ-to-start-effective-phishing-operations/",
   "date": "2023-04-17",
   "summary": "Phishing is a type of cyberattack where a perpetrator attempts to get sensitive information from a victim by pretending to be a reputable company.",
   "categories": [
@@ -589,7 +589,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Ten simple tips to be secure online and preserve your identity",
-  "url": "/blog/archive/10-simple-tips-to-be-secure-online-and-preserve-your-identity/",
+  "url": "/blog/10-simple-tips-to-be-secure-online-and-preserve-your-identity/",
   "date": "2023-04-17",
   "summary": "We now use the internet on a daily basis, and although it has given us many conveniences, it has also exposed us to several threats.",
   "categories": [
@@ -600,7 +600,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "The anatomy of a ransomware attack",
-  "url": "/blog/archive/ransomware-anatomy/",
+  "url": "/blog/ransomware-anatomy/",
   "date": "2021-10-20",
   "summary": "It is becoming increasingly common to hear about ransomware in the media because it has been a scourge to enterprises for years.",
   "categories": [
@@ -610,7 +610,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Protecting Intellectual Property",
-  "url": "/blog/archive/protecting-intellectual-property/",
+  "url": "/blog/protecting-intellectual-property/",
   "date": "2021-10-20",
   "summary": "Physical asset of an organization is important, and so is intellectual property (IP).",
   "categories": [
@@ -620,7 +620,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Debunking 3 Misconceptions about Cybersecurity",
-  "url": "/blog/archive/debunking-3-misconception-about-cybersecurity/",
+  "url": "/blog/debunking-3-misconception-about-cybersecurity/",
   "date": "2021-10-20",
   "summary": "Online services have become a rage now. People are using online base services more than ever.",
   "categories": [
@@ -631,7 +631,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Cyber Security best practices for remote and hybrid work",
-  "url": "/blog/archive/cyber-security-best-practices-with-the-proliferation-of-employees-working-from-home/",
+  "url": "/blog/cyber-security-best-practices-with-the-proliferation-of-employees-working-from-home/",
   "date": "2021-10-20",
   "summary": "By being agile in adopting and deploying efficient security measures like MFA, you can help your business stay agile and competitive in a tight market.",
   "categories": [
@@ -642,7 +642,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Addressing the rise of social engineering attacks against remote workers",
-  "url": "/blog/archive/addressing-the-rise-of-social-engineering-attacks-against-remote-workers/",
+  "url": "/blog/addressing-the-rise-of-social-engineering-attacks-against-remote-workers/",
   "date": "2021-10-20",
   "summary": "Cyber security threats of all kinds are on the rise. Still, as individuals and businesses become more aware of the various dangers, those with malicious\u2026",
   "categories": [
@@ -652,7 +652,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Security Tips: For Developers, By Developers",
-  "url": "/blog/archive/security-tips/",
+  "url": "/blog/security-tips/",
   "date": "2021-10-12",
   "summary": "These are some facts on what the developer community can do to keep themselves cyber smart all year long, even with the end of National Cybersecurity\u2026",
   "categories": [
@@ -662,7 +662,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Features to consider on route to digital transformation",
-  "url": "/blog/archive/features-to-consider-on-route-to-digital-transformation/",
+  "url": "/blog/features-to-consider-on-route-to-digital-transformation/",
   "date": "2021-10-12",
   "summary": "The use of multi-factor authentication is vital, as it ensures that information is only accessed by the intended person, making it harder for cybercriminals\u2026",
   "categories": [
@@ -673,7 +673,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Single Sign-On Vs. Multi-Factor Authentication",
-  "url": "/blog/archive/single-sign-on-vs-mfa/",
+  "url": "/blog/single-sign-on-vs-mfa/",
   "date": "2021-08-19",
   "summary": "Compares single sign-on with multi-factor authentication \u2014 when each model fits, where they overlap, and how SSO + MFA combine for enterprise identity.",
   "categories": [
@@ -684,7 +684,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Multi-factor Authentication in Government Sector",
-  "url": "/blog/archive/mfa-in-government/",
+  "url": "/blog/mfa-in-government/",
   "date": "2021-08-19",
   "summary": "Why government identity programmes are adopting multi-factor authentication, how MFA holds up against phishing and credential theft, and where hardware-rooted authenticators sit in the stack.",
   "categories": [
@@ -695,7 +695,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Common Misconceptions about Two-Factor Authentication",
-  "url": "/blog/archive/common-misconceptions-about-2fa/",
+  "url": "/blog/common-misconceptions-about-2fa/",
   "date": "2021-08-19",
   "summary": "Unpacks the most common misconceptions about two-factor authentication \u2014 what 2FA actually defends against, where SMS-based codes fall short, and why hardware-rooted second factors hold up under credential-theft attacks.",
   "categories": [
@@ -706,7 +706,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Cyber Attacks in India \u2013 Part 3",
-  "url": "/blog/archive/cyber-attacks-in-india-part-3/",
+  "url": "/blog/cyber-attacks-in-india-part-3/",
   "date": "2021-08-05",
   "summary": "Part three of a three-part analysis of major cyber attacks in India \u2014 closing the series with systemic gaps in incident response, identity hygiene, and hardware-rooted authentication adoption.",
   "categories": [
@@ -716,7 +716,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Cyber Attacks in India \u2013 Part 2",
-  "url": "/blog/archive/cyber-attacks-in-india-part-2/",
+  "url": "/blog/cyber-attacks-in-india-part-2/",
   "date": "2021-07-28",
   "summary": "Part two of a three-part analysis of major cyber attacks in India \u2014 the attack patterns, the identity weaknesses they exploited, and what enterprise authentication posture would have stopped them.",
   "categories": [
@@ -726,7 +726,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Cyber Attacks in India",
-  "url": "/blog/archive/cyber-attacks-in-india-part-1/",
+  "url": "/blog/cyber-attacks-in-india-part-1/",
   "date": "2021-07-28",
   "summary": "Part one of a three-part analysis of major cyber attacks in India and what they reveal about systemic gaps in online identity, authentication, and incident response.",
   "categories": [
@@ -736,7 +736,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Enterprise Security Threats",
-  "url": "/blog/archive/enterprise-security-threats/",
+  "url": "/blog/enterprise-security-threats/",
   "date": "2021-07-06",
   "summary": "A field overview of enterprise security threats in the cloud era \u2014 how the digital attack surface expands as organisations adopt new platforms, and where hardware-rooted identity narrows it.",
   "categories": [
@@ -747,7 +747,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "What is Passwordless Authentication?",
-  "url": "/blog/archive/what-is-passwordless-authentication/",
+  "url": "/blog/what-is-passwordless-authentication/",
   "date": "2021-06-01",
   "summary": "A primer on passwordless authentication \u2014 what it actually means, how FIDO and biometrics replace shared secrets, and why hardware-bound credentials sit at the centre of the model.",
   "categories": [
@@ -758,7 +758,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "SMS-based OTP Authentication and Its Disadvantages",
-  "url": "/blog/archive/sms-otp-disadvantages/",
+  "url": "/blog/sms-otp-disadvantages/",
   "date": "2021-06-01",
   "summary": "Why SMS-based one-time passwords are no longer a defensible second factor \u2014 SIM-swap attacks, SS7 weaknesses, phishing-prone OTP relay, and the hardware-rooted alternatives.",
   "categories": [
@@ -769,7 +769,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Is Passwordless the future?",
-  "url": "/blog/archive/is-passwordless-the-future/",
+  "url": "/blog/is-passwordless-the-future/",
   "date": "2021-06-01",
   "summary": "Examines whether passwordless authentication can scale beyond pilots \u2014 the standards, attack-surface trade-offs, and operational realities that decide its trajectory.",
   "categories": [
@@ -779,7 +779,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Taking security further for Government",
-  "url": "/blog/archive/taking-security-future-for-government/",
+  "url": "/blog/taking-security-future-for-government/",
   "date": "2021-03-25",
   "summary": "To put it more accurately, its governments are under attack, all the time, at every level \u2014 federal, state, and local \u2014 from opportunistic scammers,\u2026",
   "categories": [
@@ -790,7 +790,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "E-passport and How will chip-based e-Passports work",
-  "url": "/blog/archive/how-chip-based-epassports-work/",
+  "url": "/blog/how-chip-based-epassports-work/",
   "date": "2021-01-28",
   "summary": "How chip-based ePassports work in practice \u2014 the BAC / PACE access protocols, the CSCA / DSC / PKD trust chain, and the role of the secure element inside the document.",
   "categories": [
@@ -802,7 +802,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "E-passport and Its Application",
-  "url": "/blog/archive/epassport-applications/",
+  "url": "/blog/epassport-applications/",
   "date": "2021-01-28",
   "summary": "How biometric passports work in practice \u2014 chip-based identity, border-control architecture, and the standards stack that keeps the issuer chain trustworthy.",
   "categories": [
@@ -814,7 +814,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "An Introduction to Java Card Technology",
-  "url": "/blog/archive/introduction-to-java-card/",
+  "url": "/blog/introduction-to-java-card/",
   "date": "2020-12-15",
   "summary": "An introduction to JavaCard \u2014 how Java-based applets run securely on smart cards and other small-memory secure elements, why the JavaCard runtime model exists, and what it enables for FIDO, PIV, and ePassport applets.",
   "categories": [
@@ -825,7 +825,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Fast Identity Online (FIDO)",
-  "url": "/blog/archive/fast-identity-online/",
+  "url": "/blog/fast-identity-online/",
   "date": "2020-12-15",
   "summary": "A primer on FIDO (Fast Identity Online) and the Universal Second Factor model \u2014 how FIDO replaces shared secrets with hardware-bound credentials and why it changes the phishing-resistance baseline.",
   "categories": [
@@ -836,7 +836,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Understanding EMV certification In Public Transportation",
-  "url": "/blog/archive/emv-certification-in-public-transport/",
+  "url": "/blog/emv-certification-in-public-transport/",
   "date": "2020-08-28",
   "summary": "A practical look at EMV certification in public transport \u2014 which certifications apply, the roles of acquirer, scheme, terminal vendor, and transit authority, and the typical timeline from prototype to revenue service.",
   "categories": [
@@ -847,7 +847,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Workplace Security \u2014 How Biometrics Is the Key to the New Normal",
-  "url": "/blog/archive/workplace-biometrics/",
+  "url": "/blog/workplace-biometrics/",
   "date": "2020-07-30",
   "summary": "How workplace biometrics layer additional security onto existing authentication methods \u2014 face / fingerprint / palm, the privacy controls that keep them defensible, and where they sit alongside FIDO and MFA.",
   "categories": [
@@ -858,7 +858,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Consumer Biometrics in the Data Privacy Age",
-  "url": "/blog/archive/consumer-biometrics-and-privacy/",
+  "url": "/blog/consumer-biometrics-and-privacy/",
   "date": "2020-06-29",
   "summary": "How organisations can deploy biometric authentication while still meeting modern privacy expectations \u2014 match-on-device versus match-on-server, template storage, and the regulatory shape of consumer biometric data.",
   "categories": [
@@ -869,7 +869,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Securing your IIoT infrastructure",
-  "url": "/blog/archive/securing-iiot-infrastructure/",
+  "url": "/blog/securing-iiot-infrastructure/",
   "date": "2020-06-08",
   "summary": "Why industrial IoT infrastructure remains a high-value target \u2014 the markets driving adoption, the trust gaps in legacy OT, and how hardware-rooted device identity tightens them.",
   "categories": [
@@ -879,7 +879,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Public Transport Ticketing System (Part-3)",
-  "url": "/blog/archive/public-transport-ticketing-part-3/",
+  "url": "/blog/public-transport-ticketing-part-3/",
   "date": "2020-05-26",
   "summary": "Part three of a 2020 survey of public transport ticketing \u2014 how fare collection worked in Singapore, Indonesia and Hong Kong.",
   "categories": [
@@ -889,7 +889,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Public Transport Ticketing System (Part-2)",
-  "url": "/blog/archive/public-transport-ticketing-part-2/",
+  "url": "/blog/public-transport-ticketing-part-2/",
   "date": "2020-05-18",
   "summary": "Part two of a 2020 survey of public transport ticketing \u2014 how fare collection worked in the United Kingdom, Germany, Russia, Brazil and Mexico.",
   "categories": [
@@ -899,7 +899,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Public Transport Ticketing System (Part-1)",
-  "url": "/blog/archive/public-transport-ticketing-part-1/",
+  "url": "/blog/public-transport-ticketing-part-1/",
   "date": "2020-05-12",
   "summary": "First of three articles on automated fare collection \u2014 a comparative look at ticketing architectures across advanced economies and large transit networks in Asia.",
   "categories": [
@@ -909,7 +909,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Challenges to IoT Security (Part 2)",
-  "url": "/blog/archive/iot-security-challenges-part-2/",
+  "url": "/blog/iot-security-challenges-part-2/",
   "date": "2020-04-27",
   "summary": "Second of a 2020 two-part look at IoT security \u2014 further challenges: infrequent firmware updates, small-scale attacks, autonomous systems and user privacy.",
   "categories": [
@@ -919,7 +919,7 @@ window.AS_BLOG_POOL = [
  },
  {
   "title": "Challenges to IoT Security (Part 1)",
-  "url": "/blog/archive/iot-security-challenges-part-1/",
+  "url": "/blog/iot-security-challenges-part-1/",
   "date": "2020-04-20",
   "summary": "First of a two-part look at IoT security \u2014 how billions of devices communicate with enterprise systems, where the resulting attack surface sits, and the trust anchors that contain it.",
   "categories": [

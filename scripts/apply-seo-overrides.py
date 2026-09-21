@@ -35,7 +35,7 @@ META_DESC_RE = re.compile(
 def apply_to_file(rel: str, new_title: str | None, new_desc: str | None) -> dict:
     path = ROOT / rel
     if not path.is_file():
-        return {'file': rel, 'status': 'missing'}
+        return {'file': rel, 'status': 'missing', 'notes': ['file:missing']}
     text = path.read_text(encoding='utf-8')
     original = text
     notes = []

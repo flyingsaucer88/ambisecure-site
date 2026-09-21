@@ -123,7 +123,7 @@ TIMELINES = [
             ('/technologies/fido/', 'Technology: FIDO / WebAuthn'),
             ('/blog/why-use-multi-factor-authentication/', 'Blog: Why use MFA'),
             ('/blog/top-3-benefits-of-mfa/', 'Blog: Top 3 benefits of MFA'),
-            ('/blog/archive/sms-otp-disadvantages/', 'Archive: SMS-based OTP disadvantages'),
+            ('/blog/sms-otp-disadvantages/', 'Archive: SMS-based OTP disadvantages'),
         ],
     },
     {

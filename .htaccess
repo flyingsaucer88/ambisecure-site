@@ -35,22 +35,18 @@ RewriteRule ^[0-9]{6,10}\.htm$ - [G,L]
 RewriteRule ^[a-z]{5}/[a-z][0-9]{6,8}\.html$ - [G,L]
 
 # =============================================================
-# Retired content — 410 Gone.
-# /blog/archive/security-future-for-government/ was withdrawn: its
-# body copy described smart cards as "expensive and cumbersome to
-# deploy" (against our own product line) and promoted a
-# discontinued SKU. No equivalent replacement page exists, so this
-# is deliberately NOT redirected — pointing a retired URL at an
-# unrelated page is worse for users and for search than being
-# honest that the content is gone. 410 (not 404) tells Google the
-# removal is permanent.
-#
-# The second rule is the pre-migration WordPress URL, which used to
-# 301 into the archive page below. With the target gone that
-# redirect would only chain into a 410, so it serves 410 directly.
+# Previously-withdrawn government page — RESTORED 2026-09-21.
+# The two 410 rules here targeted the slug "security-future-for-government",
+# but the page on disk and in the sitemap is "taking-security-future-for-
+# government". The withdrawal therefore never took effect: the page stayed
+# live, indexable and self-canonical, and ambimat.com was actively 301-ing
+# traffic into it. Rather than belatedly 410 a page that holds real search
+# equity, the offending copy (smart cards called "expensive and cumbersome",
+# and a discontinued SKU name) has been corrected and the piece republished
+# at a clean URL. Both historical spellings now resolve to it.
 # =============================================================
-RewriteRule ^blog/archive/security-future-for-government/?$ - [G,L]
-RewriteRule ^taking-security-future-for-government/?$ - [G,L]
+RedirectMatch 301 ^/blog/archive/security-future-for-government/?$ /blog/taking-security-future-for-government/
+RedirectMatch 301 ^/taking-security-future-for-government/?$ /blog/taking-security-future-for-government/
 
 # =============================================================
 # Phase 40 — Defensive hardening
@@ -264,36 +260,36 @@ Redirect 301 /top-3-benefits-of-multi-factor-authentication /blog/top-3-benefits
 
 # ============================================================================
 # Phase 7: 47 legacy blog URLs preserved with zero information loss
-# AmbiSecure-classified blogs -> /blog/archive/<slug>/ (or modern if existed)
+# AmbiSecure-classified blogs -> /blog/<slug>/ (clean URLs since 2026-09-21)
 # Ambimat-classified blogs -> https://ambimat.com/
 # eSIM-classified blogs -> https://esim.ambimat.com/
 # Three duplicates omitted (already redirected above).
 # ============================================================================
 # AmbiSecure historical archive
-Redirect 301 /common-misconceptions-about-two-factor-authentication /blog/archive/common-misconceptions-about-2fa/
-Redirect 301 /single-sign-on-vs-multi-factor-authentication /blog/archive/single-sign-on-vs-mfa/
-Redirect 301 /multi-factor-authentication-in-government-sector /blog/archive/mfa-in-government/
-Redirect 301 /cyber-attacks-in-india-part-3 /blog/archive/cyber-attacks-in-india-part-3/
-Redirect 301 /cyber-attacks-in-india-part-2 /blog/archive/cyber-attacks-in-india-part-2/
-Redirect 301 /cyber-attacks-in-india /blog/archive/cyber-attacks-in-india-part-1/
-Redirect 301 /enterprise-security-threats /blog/archive/enterprise-security-threats/
-Redirect 301 /what-is-passwordless-authentication /blog/archive/what-is-passwordless-authentication/
-Redirect 301 /is-passwordless-the-future /blog/archive/is-passwordless-the-future/
-Redirect 301 /sms-based-otp-authentication-and-its-disadvantages /blog/archive/sms-otp-disadvantages/
-Redirect 301 /e-passport-and-how-will-chip-based-e-passports-work /blog/archive/how-chip-based-epassports-work/
-Redirect 301 /e-passport-and-its-application /blog/archive/epassport-applications/
-Redirect 301 /an-introduction-to-java-card-technology /blog/archive/introduction-to-java-card/
-Redirect 301 /fast-identity-online-fido /blog/archive/fast-identity-online/
-Redirect 301 /contactless-emv-payments-in-public-transportation /blog/archive/emv-certification-in-public-transport/
-Redirect 301 /workplace-security-how-biometrics-is-the-key-to-the-new-normal /blog/archive/workplace-biometrics/
-Redirect 301 /consumer-biometrics-in-the-data-privacy-age /blog/archive/consumer-biometrics-and-privacy/
-Redirect 301 /securing-your-iiot-infrastructure /blog/archive/securing-iiot-infrastructure/
-Redirect 301 /public-transport-ticketing-system-part-3 /blog/archive/public-transport-ticketing-part-3/
-Redirect 301 /public-transport-ticketing-2 /blog/archive/public-transport-ticketing-part-2/
-Redirect 301 /public-transport-ticketing-system-part-1 /blog/archive/public-transport-ticketing-part-1/
-Redirect 301 /challenges-to-iot-security-2 /blog/archive/iot-security-challenges-part-2/
-Redirect 301 /challenges-to-iot-security-1 /blog/archive/iot-security-challenges-part-1/
-Redirect 301 /challenges-to-iot-security /blog/archive/iot-security-challenges-part-1/
+Redirect 301 /common-misconceptions-about-two-factor-authentication /blog/common-misconceptions-about-2fa/
+Redirect 301 /single-sign-on-vs-multi-factor-authentication /blog/single-sign-on-vs-mfa/
+Redirect 301 /multi-factor-authentication-in-government-sector /blog/mfa-in-government/
+Redirect 301 /cyber-attacks-in-india-part-3 /blog/cyber-attacks-in-india-part-3/
+Redirect 301 /cyber-attacks-in-india-part-2 /blog/cyber-attacks-in-india-part-2/
+Redirect 301 /cyber-attacks-in-india /blog/cyber-attacks-in-india-part-1/
+Redirect 301 /enterprise-security-threats /blog/enterprise-security-threats/
+Redirect 301 /what-is-passwordless-authentication /blog/what-is-passwordless-authentication/
+Redirect 301 /is-passwordless-the-future /blog/is-passwordless-the-future/
+Redirect 301 /sms-based-otp-authentication-and-its-disadvantages /blog/sms-otp-disadvantages/
+Redirect 301 /e-passport-and-how-will-chip-based-e-passports-work /blog/how-chip-based-epassports-work/
+Redirect 301 /e-passport-and-its-application /blog/epassport-applications/
+Redirect 301 /an-introduction-to-java-card-technology /blog/introduction-to-java-card/
+Redirect 301 /fast-identity-online-fido /blog/fast-identity-online/
+Redirect 301 /contactless-emv-payments-in-public-transportation /blog/emv-certification-in-public-transport/
+Redirect 301 /workplace-security-how-biometrics-is-the-key-to-the-new-normal /blog/workplace-biometrics/
+Redirect 301 /consumer-biometrics-in-the-data-privacy-age /blog/consumer-biometrics-and-privacy/
+Redirect 301 /securing-your-iiot-infrastructure /blog/securing-iiot-infrastructure/
+Redirect 301 /public-transport-ticketing-system-part-3 /blog/public-transport-ticketing-part-3/
+Redirect 301 /public-transport-ticketing-2 /blog/public-transport-ticketing-part-2/
+Redirect 301 /public-transport-ticketing-system-part-1 /blog/public-transport-ticketing-part-1/
+Redirect 301 /challenges-to-iot-security-2 /blog/iot-security-challenges-part-2/
+Redirect 301 /challenges-to-iot-security-1 /blog/iot-security-challenges-part-1/
+Redirect 301 /challenges-to-iot-security /blog/iot-security-challenges-part-1/
 
 # Ambimat-classified historical blogs (corporate / electronics / general IoT)
 Redirect 301 /the-great-semiconductor-shortage https://ambimat.com/
@@ -320,6 +316,15 @@ Redirect 301 /what-is-lpwan-and-types-of-lpwan-network https://esim.ambimat.com/
 
 # Fix top-level FIDO route alias to the canonical FIDO technology page.
 RedirectMatch 301 ^/fido/?$ /technologies/fido/
+
+# ============================================================================
+# Clean migration 2026-09-21: /blog/archive/ removed from the public URL
+# architecture. All 48 archive posts moved to /blog/<slug>/ keeping the same
+# slug, so a single regex retires every archive source in one hop. The hub
+# is replaced by the existing topic index rather than a renamed archive.
+# ============================================================================
+RedirectMatch 301 ^/blog/archive/?$ /blog/categories/
+RedirectMatch 301 ^/blog/archive/([a-z0-9-]+)/?$ /blog/$1/
 
 # Phase 7: upgrade legacy /blog/category/* aliases to the new /blog/categories/ pages
 Redirect 301 /blog/category/javacard /blog/categories/javacard/

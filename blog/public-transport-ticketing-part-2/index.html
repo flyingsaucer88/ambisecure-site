@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Public Transport Ticketing (Part 2) | AmbiSecure</title>
+<meta name="description" content="Part two of a survey of public transport ticketing — how automated fare collection works in the United Kingdom and Germany." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/public-transport-ticketing-part-2/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Public Transport Ticketing in the UK & Germany (Part 2) — AmbiSecure Blog" />
+<meta property="og:description" content="Part two of a survey of public transport ticketing — how automated fare collection works in the United Kingdom and Germany." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/public-transport-ticketing-part-2/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-blog-archive-public-transport-ticketing-part-2-1200x630.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Europe and Latin America fare systems from Oyster to RioCard, showing closed-loop cards and open-loop bank cards converging on a single contactless validator." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/featured/ambisecure-blog-archive-public-transport-ticketing-part-2-1200x630.png" />
+<meta name="twitter:image:alt" content="Europe and Latin America fare systems from Oyster to RioCard, showing closed-loop cards and open-loop bank cards converging on a single contactless validator." />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Public Transport Ticketing System (Part-2)"
+    }
+   ]
+  },
+  {
+   "@type": "Article",
+   "headline": "Public Transport Ticketing System (Part-2)",
+   "datePublished": "2020-05-18",
+   "articleSection": "Transit",
+   "keywords": "Transit",
+   "author": {
+    "@type": "Organization",
+    "name": "AmbiSecure"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "AmbiSecure",
+    "parentOrganization": {
+    "@type": "Organization",
+    "name": "Ambimat Electronics",
+    "legalName": "Ambimat Technologies Pvt. Ltd.",
+    "foundingDate": "1982",
+    "url": "https://ambimat.com",
+    "sameAs": [
+     "https://ambimat.com",
+     "https://ambisecure.ambimat.com",
+     "https://v2x.ambimat.com",
+     "https://esim.ambimat.com",
+     "https://ambiautomation.ambimat.com",
+     "https://www.linkedin.com/company/ambimat-electronics"
+    ]
+    }
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Which countries does part 2 cover?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The United Kingdom, Germany, Russia, Brazil and Mexico, as fare collection stood in 2020."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What made Transport for London significant?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "TfL was the first public transport provider in the world to accept payment by contactless bank cards, and around one in ten UK contactless transactions occur on its network."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Has account-based ticketing replaced offline validation?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "No. Account-based ticketing has matured, but the offline-validator floor — SAM-backed DESFire — is still where most transaction volume sits."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What did the Berlin WelcomeCard offer?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A tourist-oriented ticket covering S-Bahn, U-Bahn, buses, trams and ferries on a single product, alongside Germany's move to online tickets and smartphone apps."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Why does the offline validator floor still matter if account-based ticketing has matured?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because the validator still has to decide in a few hundred milliseconds whether the gate opens, with no guarantee of connectivity. Account-based systems change where the balance lives, not the need for a local trust decision."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+   "@type": "Organization",
+   "name": "Ambimat Electronics",
+   "legalName": "Ambimat Technologies Pvt. Ltd.",
+   "foundingDate": "1982",
+   "url": "https://ambimat.com",
+   "sameAs": [
+    "https://ambimat.com",
+    "https://ambisecure.ambimat.com",
+    "https://v2x.ambimat.com",
+    "https://esim.ambimat.com",
+    "https://ambiautomation.ambimat.com",
+    "https://www.linkedin.com/company/ambimat-electronics"
+   ]
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://v2x.ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://v2x.ambimat.com/" class="ext">V2X</a><a href="https://esim.ambimat.com/" class="ext">eSIM &amp; eUICC</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1982</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Public Transport Ticketing System (Part-2)</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px 24px;">
+  <div class="prose">
+    <p class="post-byline" style="font-size:13px;color:var(--brand-grey);margin:0 0 14px;">Originally published <time datetime="2020-05-18">May 18, 2020</time></p>
+    <span class="eyebrow">Transit</span>
+    <h1>Public Transport Ticketing: UK & Germany (Part 2)</h1>
+    <p class="dek">Part two of a 2020 survey of public transport ticketing — how fare collection worked in the United Kingdom, Germany, Russia, Brazil and Mexico.</p>
+    <div class="chip-row" style="margin-top:16px;"><a href="/blog/categories/transit/" class="chip" style="text-decoration:none;">Transit</a></div>
+    <aside class="topic-update" style="margin-top:22px;padding:16px 20px;border-left:3px solid var(--brand-red);background:#FCEEEE;border-radius:0 6px 6px 0;"><strong style="font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--brand-red);display:block;margin-bottom:6px;">Transit ticketing in 2026</strong><span style="font-size:14.5px;color:var(--ink);line-height:1.65;">Account-based ticketing has matured but the offline-validator floor &mdash; SAM-backed DESFire &mdash; is still where most volume sits. <a href="/blog/why-sams-matter-in-closed-loop-transit/">Why SAMs matter</a> goes deeper.</span></aside>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <article class="prose" style="max-width:880px;margin:0;font-size:16px;line-height:1.8;">
+<p>Building on <a href="/blog/public-transport-ticketing-part-1/">Part 1</a>, this article continues the 2020 country-by-country survey, looking at how the United Kingdom, Germany, Russia, Brazil and Mexico ran fare collection at the time.</p>
+<h2>United Kingdom</h2>
+<p>The Oyster card enables convenient payments across London transport services. "Transport for London (TfL) was the first public transport provider in the world to accept payment by contactless bank cards," with approximately one in ten UK contactless transactions occurring on the TfL network.</p>
+<h2>Germany</h2>
+<p>Berlin offers online tickets and smartphone apps. The Berlin WelcomeCard serves tourists with access to "S-Bahn, U-Bahn, buses, trams, and ferries."</p>
+<h2>Russia</h2>
+<p>Moscow features a unified chip card system with remote top-up capabilities and mobile ticketing options including PayPass, Apple Pay, and Android Pay.</p>
+<h2>Brazil</h2>
+<p>RioCard operates as a rechargeable smart card. "Rio de Janeiro was the first city in Brazil to launch a program enabling mobile NFC-based ticketing for public transport."</p>
+<h2>Mexico</h2>
+<p>Multiple fare collection methods exist, including the Metrobus contactless smartcard and the Tarjeta DF multimodal transit card.</p>
+<h2>Who is Ambimat Electronics?</h2>
+<p>Design and manufacturing services across IoT product categories including AmbiPay, AmbiPower, AmbiCon, AmbiSecure, AmbiSense, and AmbiAutomation.</p>
+    </article>
+  </div>
+</section>
+
+
+
+<section class="alt">
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Related historical reading</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+<a href="/blog/emv-certification-in-public-transport/" class="card"><h3>Understanding EMV certification In Public Transportation</h3><p>A practical look at EMV certification in public transport — which certifications apply, the roles of acquirer, scheme, terminal vendor, and transit authority, and the typical timeline from prototype to revenue service.</p><div class="card-meta">Read article &rarr;</div></a>
+<a href="/blog/public-transport-ticketing-part-3/" class="card"><h3>Public Transport Ticketing System (Part-3)</h3><p>Part three of a 2020 survey of public transport ticketing — how fare collection worked in Singapore, Indonesia and Hong Kong.</p><div class="card-meta">Read article &rarr;</div></a>
+<a href="/blog/public-transport-ticketing-part-1/" class="card"><h3>Public Transport Ticketing System (Part-1)</h3><p>First of three articles on automated fare collection — a comparative look at ticketing architectures across advanced economies and large transit networks in Asia.</p><div class="card-meta">Read article &rarr;</div></a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container" style="max-width:880px;">
+    <h2>Frequently asked questions</h2>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Which countries does part 2 cover?</h3><p style="margin:0;">The United Kingdom, Germany, Russia, Brazil and Mexico, as fare collection stood in 2020.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What made Transport for London significant?</h3><p style="margin:0;">TfL was the first public transport provider in the world to accept payment by contactless bank cards, and around one in ten UK contactless transactions occur on its network.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Has account-based ticketing replaced offline validation?</h3><p style="margin:0;">No. Account-based ticketing has matured, but the offline-validator floor — SAM-backed DESFire — is still where most transaction volume sits.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">What did the Berlin WelcomeCard offer?</h3><p style="margin:0;">A tourist-oriented ticket covering S-Bahn, U-Bahn, buses, trams and ferries on a single product, alongside Germany's move to online tickets and smartphone apps.</p></div>
+    <div class="faq-item" style="margin-bottom:18px;"><h3 style="margin:0 0 6px;">Why does the offline validator floor still matter if account-based ticketing has matured?</h3><p style="margin:0;">Because the validator still has to decide in a few hundred milliseconds whether the gate opens, with no guarantee of connectivity. Account-based systems change where the balance lives, not the need for a local trust decision.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="callout">
+      <div>
+        <h2>More from the engineering blog.</h2>
+        <p>Every post is grouped by subject, with newer coverage of the same topic linked wherever it exists.</p>
+      </div>
+      <div><a href="/blog/categories/" class="btn btn-outline">Browse by topic</a></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div>
+        <p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p>
+        <div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://v2x.ambimat.com/">V2X</a> &middot; <a href="https://esim.ambimat.com/">eSIM &amp; eUICC</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div>
+      </div>
+      <div><h3>Products</h3><ul>
+        <li><a href="/products/onepass-card/">OnePass Card</a></li>
+        <li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li>
+        <li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li>
+        <li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="https://v2x.ambimat.com/">V2X and ITS</a></li>
+        <li><a href="/products/javacard-applets/">JavaCard Applets</a></li>
+        <li><a href="/products/">All products</a></li>
+      </ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+      <div><h3>Blog</h3><ul>
+        <li><a href="/blog/">Latest engineering</a></li>
+        <li><a href="/blog/categories/">Browse by topic</a></li>
+        <li><a href="/blog/categories/">Browse by topic</a></li>
+      </ul></div>
+      <div><h3>Company</h3><ul>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/about/certifications/">Certifications</a></li>
+        <li><a href="/trust/">Trust center</a></li>
+        <li><a href="/partners/">Partners</a></li>
+        <li><a href="/support/">Support</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul></div>
+      <div><h3>Contact</h3><ul>
+        <li>Ahmedabad, Gujarat 380015<br />India</li>
+        <li>India: <a href="tel:+917925501989" data-analytics-event="phone_click">+91 79255 01989</a></li><li><a href="https://wa.me/919727933488?text=Hello%20AmbiSecure%2C%20I%20would%20like%20to%20discuss%20a%20security%20project." data-analytics-event="whatsapp_click" rel="noopener" target="_blank">WhatsApp: +91 97279 33488</a></li>
+        <li>US: <a href="tel:+12153973819" data-analytics-event="phone_click">+1 215 397 3819</a></li>
+        <li><a href="mailto:support@ambimat.com" data-analytics-event="email_click">support@ambimat.com</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-base">
+      <span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span>
+      <div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div>
+    </div>
+  </div>
+</footer>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
+</body>
+</html>

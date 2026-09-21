@@ -54,7 +54,7 @@ EXTRA_FILES = {".htaccess", "robots.txt", "sitemap.xml", "llms.txt", "llms-full.
 # substrings legitimately. Maps relpath -> set of pattern names to ignore.
 ALLOWLIST = {
     # Editorial: 2018 ATM-skimming incident reference uses the word "hacked".
-    "blog/archive/cyber-attacks-in-india-part-1/index.html": {"hacked-by"},
+    "blog/cyber-attacks-in-india-part-1/index.html": {"hacked-by"},
     # The .htaccess INTENTIONALLY contains wp- patterns to 410-block probes.
     ".htaccess": {"wp-admin", "wp-login", "wp-content", "wp-includes", "xmlrpc",
                   "japanese-keyword-hack-comment", "eval-doc-string",

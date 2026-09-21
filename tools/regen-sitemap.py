@@ -52,7 +52,7 @@ DEFAULTS = [
     ("/resources/", "monthly", "0.85"),
     ("/references/", "monthly", "0.85"),
     ("/blog/categories/", "monthly", "0.65"),
-    ("/blog/archive/", "monthly", "0.7"),
+    ("/blog/categories/", "monthly", "0.7"),
     ("/blog/page/", "monthly", "0.7"),
     ("/blog/", "monthly", "0.9"),
     ("/tags/", "monthly", "0.55"),

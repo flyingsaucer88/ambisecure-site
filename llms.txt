@@ -120,7 +120,7 @@ V2X / ITS PKI tools:
 ## Engineering blog
 
 - 31 modern cornerstones (2026): WebAuthn attestation, passkeys, MFA, JavaCard applet development, secure element vs TPM vs HSM, DESFire EV1/2/3, transit validators, IoT identity, ePassport issuance, embedded secure-element FIDO2, PIV vs USB vs embedded SE, secure mail / PAdES, V2X PKI, pseudonymous certificates, manufacturing-scale provisioning, and more.
-- 24 earlier engineering pieces (2017–2025) at [/blog/archive/](https://ambisecure.ambimat.com/blog/archive/), kept for engineering reference and cross-linked forward to current coverage.
+- 24 earlier engineering pieces (2017–2025) at [/blog/categories/](https://ambisecure.ambimat.com/blog/categories/), kept for engineering reference and cross-linked forward to current coverage.
 
 Cryptography engineering (2026-05-28):
 - [Lava Lamps and Cryptographic Entropy](https://ambisecure.ambimat.com/blog/lava-lamps-and-cryptographic-entropy/): how Cloudflare's lava-lamp Wall of Entropy feeds randomness into the cryptographic pipeline, what entropy actually is, why predictable randomness breaks TLS / FIDO / V2X / eSIM / smart-card systems, on-chip TRNG architecture in secure-element silicon, comparison of entropy sources, the AmbiSecure perspective on hardware-rooted entropy for FIDO / V2X Butterfly Key Expansion / eSIM SM-DP+ ECDH. References Cloudflare's article as primary source. 8-question FAQ schema.

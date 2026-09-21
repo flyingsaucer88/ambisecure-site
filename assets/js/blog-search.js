@@ -207,7 +207,7 @@
 
     var meta = document.createElement("div");
     meta.className = "blog-search-hit-meta";
-    meta.textContent = e.date + " · " + (e.type === "archive" ? "archive" : "modern");
+    meta.textContent = e.date;
     li.appendChild(meta);
 
     var a = document.createElement("a");
@@ -258,10 +258,8 @@
     var cornerstoneCut = scored[0] && scored[0].s >= 8 ? 8 : null;
     var cornerstones = [];
     var modern = [];
-    var archive = [];
     scored.forEach(function (x) {
-      if (x.e.type === "archive") archive.push(x.e);
-      else if (cornerstoneCut !== null && x.s >= cornerstoneCut) cornerstones.push(x.e);
+      if (cornerstoneCut !== null && x.s >= cornerstoneCut) cornerstones.push(x.e);
       else modern.push(x.e);
     });
 
@@ -270,8 +268,7 @@
       cornerstones = [];
     }
     renderGroup(list, "Cornerstone matches", cornerstones);
-    renderGroup(list, "Modern engineering", modern);
-    renderGroup(list, "Engineering archive", archive);
+    renderGroup(list, "Engineering posts", modern);
   }
 
   function setUpSearch(input, list) {

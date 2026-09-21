@@ -38,7 +38,7 @@ TYPE_TABLE = [
     ('/solutions/',                  'Solution',    'solution'),
     ('/industries/',                 'Industry',    'industry'),
     ('/case-studies/',               'Case study',  'case'),
-    ('/blog/archive/',               'Archive',     'archive'),
+    ('/blog/categories/',               'Archive',     'archive'),
     ('/blog/categories/',            'Category',    'category'),
     ('/blog/',                       'Blog',        'blog'),
     ('/tags/',                       'Tag',         'tag'),

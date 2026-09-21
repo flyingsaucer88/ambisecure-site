@@ -167,7 +167,7 @@ def main():
                     help=f"Minimum internal links per modern blog (default {DEFAULT_THRESHOLD})")
     ap.add_argument("--json", metavar="PATH", help="Also write JSON report to PATH")
     ap.add_argument("--include-archive", action="store_true",
-                    help="Also scan historical /blog/archive/ posts")
+                    help="Also scan historical /blog/categories/ posts")
     args = ap.parse_args()
 
     blogs = load_blogs()

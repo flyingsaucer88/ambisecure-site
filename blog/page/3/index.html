@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Engineering blog &mdash; page 3 &mdash; AmbiSecure</title>
+<meta name="description" content="Page 3 of the AmbiSecure engineering blog &mdash; posts from 2020 to 2021 on FIDO, smart cards, transit ticketing, IoT security and identity." />
+<link rel="canonical" href="https://ambisecure.ambimat.com/blog/page/3/" />
+<link rel="prev" href="https://ambisecure.ambimat.com/blog/" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Engineering blog &mdash; page 3 &mdash; AmbiSecure" />
+<meta property="og:description" content="Page 3 of the AmbiSecure engineering blog &mdash; posts from 2020 to 2021 on FIDO, smart cards, transit ticketing, IoT security and identity." />
+<meta property="og:url" content="https://ambisecure.ambimat.com/blog/page/3/" />
+<meta property="og:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="AmbiSecure engineering blog title card: practical, code-first writing on hardware-rooted security." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://ambisecure.ambimat.com/assets/img/og/blog.png" />
+<meta name="twitter:image:alt" content="AmbiSecure engineering blog title card: practical, code-first writing on hardware-rooted security." />
+<link rel="preload" href="/assets/fonts/montserrat.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="/assets/fonts/source-sans-3.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="stylesheet" href="/assets/css/fonts.css?v=32" />
+<link rel="stylesheet" href="/assets/css/main.css?v=32" />
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png" />
+<link rel="icon" type="image/png" sizes="64x64" href="/assets/img/favicon-64.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/favicon-512.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#E3222A" />
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://ambisecure.ambimat.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Blog",
+     "item": "https://ambisecure.ambimat.com/blog/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Page 2",
+     "item": "https://ambisecure.ambimat.com/blog/page/3/"
+    }
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "name": "Blog — page 2",
+   "url": "https://ambisecure.ambimat.com/blog/page/3/"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://ambisecure.ambimat.com/#org",
+   "name": "AmbiSecure",
+   "alternateName": "AmbiSecure (Ambimat Electronics security business unit)",
+   "url": "https://ambisecure.ambimat.com/",
+   "logo": "https://ambisecure.ambimat.com/assets/img/ambisecure-logo.png",
+   "description": "AmbiSecure builds hardware-rooted identity systems — FIDO2 authenticators, PIV smart cards, JavaCard applets, ePassport platforms, eSIM and secure-element authentication, PKI infrastructure, and IoT trust anchors — for governments, enterprises, telecom operators, and connected-product OEMs.",
+   "foundingDate": "2017",
+   "parentOrganization": {
+   "@type": "Organization",
+   "name": "Ambimat Electronics",
+   "legalName": "Ambimat Technologies Pvt. Ltd.",
+   "foundingDate": "1982",
+   "url": "https://ambimat.com",
+   "sameAs": [
+    "https://ambimat.com",
+    "https://ambisecure.ambimat.com",
+    "https://v2x.ambimat.com",
+    "https://esim.ambimat.com",
+    "https://ambiautomation.ambimat.com",
+    "https://www.linkedin.com/company/ambimat-electronics"
+   ]
+   },
+   "knowsAbout": [
+    "FIDO2",
+    "WebAuthn",
+    "CTAP2",
+    "U2F",
+    "Passkeys",
+    "PIV",
+    "FIPS 201",
+    "Smart Card",
+    "ISO/IEC 7816",
+    "ISO/IEC 14443",
+    "NFC",
+    "JavaCard",
+    "JavaCard 3.x",
+    "GlobalPlatform",
+    "GlobalPlatform 2.3.1",
+    "SCP03",
+    "CAP file",
+    "Secure Element",
+    "CC EAL6+",
+    "Hardware Root of Trust",
+    "Attestation",
+    "PKI",
+    "X.509",
+    "PKCS#11",
+    "PKCS#15",
+    "S/MIME",
+    "Digital Signature",
+    "Certificate Authority",
+    "ePassport",
+    "ICAO 9303",
+    "BAC",
+    "PACE",
+    "Active Authentication",
+    "CSCA",
+    "PKD",
+    "LDS",
+    "eSIM",
+    "eUICC",
+    "SGP.22",
+    "SGP.32",
+    "RSP",
+    "OpenID Connect",
+    "secure-element-based Authentication",
+    "IoT Security",
+    "IoT Identity",
+    "Signed Firmware Update",
+    "Key Provisioning",
+    "DESFire",
+    "DESFire EV2",
+    "DESFire EV3",
+    "SAM",
+    "Transit Ticketing",
+    "Phishing-resistant MFA",
+    "Passwordless Authentication",
+    "Hardware-backed MFA",
+    "Multi-factor Authentication",
+    "Zero Trust",
+    "NIST SP 800-63",
+    "NIST SP 800-73",
+    "V2X",
+    "V2X PKI",
+    "C-V2X",
+    "IEEE 1609.2",
+    "ETSI TS 103 097",
+    "ETSI TS 102 941",
+    "ISO 21177",
+    "Pseudonymous Certificate",
+    "Enrolment Credential",
+    "Butterfly Key Expansion",
+    "Connected Mobility",
+    "OBU",
+    "RSU",
+    "ITS",
+    "TEC 31318"
+   ],
+   "areaServed": [
+    {
+     "@type": "Country",
+     "name": "India"
+    },
+    {
+     "@type": "Country",
+     "name": "United States"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "European Union"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "United Kingdom"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Middle East"
+    },
+    {
+     "@type": "AdministrativeArea",
+     "name": "Southeast Asia"
+    }
+   ],
+   "sameAs": [
+    "https://ambimat.com/",
+    "https://v2x.ambimat.com/",
+    "https://esim.ambimat.com/",
+    "https://ambiautomation.ambimat.com/",
+    "https://in.linkedin.com/company/ambimat-electronics",
+    "https://x.com/ambimat",
+    "https://www.facebook.com/AmbimatElec"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "1005 & 1006, 10th Floor, Shivalik Shilp-II, Keshavbaug Party Plot, Vastrapur",
+    "addressLocality": "Ahmedabad",
+    "addressRegion": "Gujarat",
+    "postalCode": "380015",
+    "addressCountry": "IN"
+   },
+   "contactPoint": [
+    {
+     "@type": "ContactPoint",
+     "telephone": "+91-79255-01989",
+     "contactType": "sales",
+     "areaServed": "IN"
+    },
+    {
+     "@type": "ContactPoint",
+     "telephone": "+1-215-397-3819",
+     "contactType": "sales",
+     "areaServed": "US"
+    }
+   ]
+  }
+ ]
+}
+</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to main content</a>
+<div class="ecosystem-bar"><div class="ecosystem-bar-inner"><span class="ecosystem-label">Ambimat Group</span><a href="https://ambimat.com/" class="ext">Ambimat</a><a href="/" class="current">AmbiSecure</a><a href="https://v2x.ambimat.com/" class="ext">V2X</a><a href="https://esim.ambimat.com/" class="ext">eSIM &amp; eUICC</a><a href="https://ambiautomation.ambimat.com/" class="ext">AmbiAutomation</a><a href="/blog/">Engineering Blog</a><span class="spacer"></span><span class="meta">Ahmedabad &middot; India &middot; Est. 1982</span></div></div>
+<header class="navbar"><a href="/" class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></a><nav aria-label="Primary"><ul class="nav-links"><li><a href="/products/">Products</a></li><li><a href="/solutions/">Solutions</a></li><li><a href="/technologies/">Technologies</a></li><li><a href="/services/">Services</a></li><li><a href="/industries/">Industries</a></li><li><a href="/resources/">Resources</a></li><li><a href="/blog/" class="active">Blog</a></li><li><a href="/about/">About</a></li></ul></nav><div class="nav-actions"><button type="button" class="nav-search as-search-trigger" aria-label="Open site search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg><span class="nav-search-label">Search</span><kbd aria-hidden="true" class="nav-kbd-hint"></kbd></button><a href="/contact/" class="nav-btn">Contact</a><button class="hamburger" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button></div></header>
+<nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span class="sep">/</span><a href="/blog/">Blog</a><span class="sep">/</span><span class="current">Page 2</span></nav>
+<main id="main">
+
+<section style="padding: 60px 80px 30px;">
+  <div class="prose">
+    <span class="eyebrow">Blog &middot; Page 2</span>
+    <h1>Older engineering posts.</h1>
+    <p class="dek">Page 3 of the engineering blog &mdash; posts from 2020 to 2021. Everything is also grouped by subject under <a href="/blog/categories/">categories</a>.</p>
+    <div class="hero-cta-row" style="margin-top:20px;">
+      <a href="/blog/" class="btn btn-outline">&larr; Page 1 (newest)</a>
+      <a href="/blog/categories/" class="btn btn-outline">Browse by topic</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="prose" style="max-width:900px;margin:0;">
+      <p>The modern engineering blog now has 26 entries (Phase 16 added five cornerstones), past the original 24-post threshold for paginating. This page is the second window in the chain, structured the same way as <code>/blog/</code> but carrying older modern posts.</p>
+      <p>How pagination works on this site:</p>
+      <ul>
+        <li><code>/blog/</code> &mdash; newest 24 modern posts.</li>
+        <li><code>/blog/page/2/</code> &mdash; older window of modern posts.</li>
+        <li><code>/blog/categories/</code> &mdash; the 24 pre-2026 historical posts, indexed separately and clearly labelled.</li>
+        <li>Canonical of <code>/blog/page/N/</code> points to itself; <code>rel="prev"</code> / <code>rel="next"</code> link the chain.</li>
+      </ul>
+      <p>The card list below is regenerated by <code>tools/regen-blog-pool.py</code> from <code>assets/data/blogs.json</code>.</p>
+
+      <h2>Why is the blog split across pages at all?</h2>
+      <p>Because a single list of every post stops being navigable long before it stops being technically possible. Page 1 holds the newest 24 modern posts, which is roughly what a reader will scan before deciding what to open. Everything older moves here rather than extending page 1 indefinitely.</p>
+      <p>The boundary is a moving one. As new posts publish, the oldest entries on page 1 cross onto this page, so a post's location changes over time even though its own URL never does. If you want to link to an article, link to the article: paginated URLs describe a window, not a document.</p>
+
+      <h2>Is older writing still maintained?</h2>
+      <p>The distinction is editorial, not chronological. Both this page and the <a href="/blog/categories/">topic index</a> hold older material, but they hold it for different reasons.</p>
+      <p>Every post on the blog sits on one list, newest first. Older pieces keep their original publication date and, where the field has moved on, carry a note pointing at current coverage of the same topic.</p>
+      <p>Pages 1 to 3 are one continuous list. For our present position on a subject, start with the newest post in that category; older pieces remain online because the background material is still sound.</p>
+
+      <h2>Where should you go next?</h2>
+      <p>If you are browsing rather than hunting for one article, topic order usually beats date order. The <a href="/blog/categories/">category pages</a> group every post by subject and list every post on a subject together, so you get the full body of writing on FIDO or transit in one place. <a href="/tags/">Tags</a> cut across categories for subjects that span several. For a specific term, standard or part number, <a href="/search/">search</a> covers the whole corpus.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-container">
+    <div class="section-head left"><h2 class="section-title">Which posts are on this page?</h2><span class="section-line"></span></div>
+    <div class="grid-3">
+      <a href="/blog/epassport-applications/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2021-01-28</div><h3>ePassport and Its Application</h3><p>How biometric passports work in practice — chip-based identity, border-control architecture, and the standards stack that keeps the issuer chain&hellip;</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">Smart Cards &middot; Government Identity &middot; ePassport</span></div></a>
+      <a href="/blog/introduction-to-java-card/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-12-15</div><h3>An Introduction to Java Card Technology</h3><p>An introduction to JavaCard — how Java-based applets run securely on smart cards and other small-memory secure elements, why the JavaCard runtime&hellip;</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">JavaCard &middot; Smart Cards</span></div></a>
+      <a href="/blog/fast-identity-online/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-12-15</div><h3>Fast Identity Online (FIDO)</h3><p>A primer on FIDO (Fast Identity Online) and the Universal Second Factor model — how FIDO replaces shared secrets with hardware-bound credentials and&hellip;</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">FIDO &middot; Passwordless</span></div></a>
+      <a href="/blog/emv-certification-in-public-transport/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-08-28</div><h3>Understanding EMV certification In Public Transportation</h3><p>A practical look at EMV certification in public transport — which certifications apply, the roles of acquirer, scheme, terminal vendor, and transit&hellip;</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">Transit &middot; Smart Cards</span></div></a>
+      <a href="/blog/workplace-biometrics/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-07-30</div><h3>Workplace Security — How Biometrics Is the Key to the New Normal</h3><p>How workplace biometrics layer additional security onto existing authentication methods — face / fingerprint / palm, the privacy controls that keep&hellip;</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">Biometrics &middot; Enterprise MFA</span></div></a>
+      <a href="/blog/consumer-biometrics-and-privacy/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-06-29</div><h3>Consumer Biometrics in the Data Privacy Age</h3><p>How organisations can deploy biometric authentication while still meeting modern privacy expectations — match-on-device versus match-on-server&hellip;</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">Biometrics &middot; Privacy</span></div></a>
+      <a href="/blog/securing-iiot-infrastructure/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-06-08</div><h3>Securing your IIoT infrastructure</h3><p>Why industrial IoT infrastructure remains a high-value target — the markets driving adoption, the trust gaps in legacy OT, and how hardware-rooted&hellip;</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">IoT Security</span></div></a>
+      <a href="/blog/public-transport-ticketing-part-3/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-05-26</div><h3>Public Transport Ticketing: Singapore & Indonesia (Part 3)</h3><p>Part three of a 2020 survey of public transport ticketing — how fare collection worked in Singapore, Indonesia and Hong Kong.</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">Transit</span></div></a>
+      <a href="/blog/public-transport-ticketing-part-2/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-05-18</div><h3>Public Transport Ticketing: UK & Germany (Part 2)</h3><p>Part two of a 2020 survey of public transport ticketing — how fare collection worked in the United Kingdom, Germany, Russia, Brazil and Mexico.</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">Transit</span></div></a>
+      <a href="/blog/public-transport-ticketing-part-1/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-05-12</div><h3>Public Transport Ticketing: Architectures Compared (Part 1)</h3><p>First of three articles on automated fare collection — a comparative look at ticketing architectures across advanced economies and large transit&hellip;</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">Transit</span></div></a>
+      <a href="/blog/iot-security-challenges-part-2/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-04-27</div><h3>IoT Security Challenges: Firmware & Scale (Part 2)</h3><p>Second of a 2020 two-part look at IoT security — further challenges: infrequent firmware updates, small-scale attacks, autonomous systems and user&hellip;</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">IoT Security</span></div></a>
+      <a href="/blog/iot-security-challenges-part-1/" class="card"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--brand-grey);margin-bottom:6px;">2020-04-20</div><h3>IoT Security Challenges: Attack Surface (Part 1)</h3><p>First of a two-part look at IoT security — how billions of devices communicate with enterprise systems, where the resulting attack surface sits, and&hellip;</p><div class="card-meta">Read article &rarr; <span style="opacity:0.55;font-size:11.5px;">IoT Security</span></div></a>
+    </div>
+    <div class="prose" style="max-width:900px;margin:32px 0 0;">
+      <p><a href="/blog/page/2/" class="btn btn-outline">&larr; Newer posts</a> </p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer"><div class="footer-inner">
+  <div class="footer-grid">
+    <div class="footer-brand"><div class="brand"><span class="brand-mark">AS</span><span class="brand-text"><span class="brand-line">Ambi<span class="accent">Secure</span></span><span class="brand-tag">Hardware-rooted security</span></span></div><p>Hardware-rooted identity, FIDO authenticators, JavaCard applets, and IoT trust systems &mdash; engineered by the Ambimat Electronics team.</p><div class="footer-ecosystem">Part of the <a href="https://ambimat.com/">Ambimat Group</a> &middot; <a href="https://v2x.ambimat.com/">V2X</a> &middot; <a href="https://esim.ambimat.com/">eSIM &amp; eUICC</a> &middot; <a href="https://ambiautomation.ambimat.com/">AmbiAutomation</a></div></div>
+    <div><h3>Products</h3><ul><li><a href="/products/onepass-platform/">OnePass Platform</a></li><li><a href="/products/onepass-card/">OnePass Card</a></li><li><a href="/products/onepass-bio-card/">OnePass Bio Card</a></li><li><a href="/products/onepass-usb-key/">OnePass USB Key</a></li><li><a href="/products/iot-security-coprocessor/">IoT Security Co-Processor</a></li><li><a href="/solutions/v2x-security/">V2X / ITS Identity</a></li><li><a href="https://v2x.ambimat.com/">V2X and ITS</a></li><li><a href="/products/javacard-applets/">JavaCard Applets</a></li><li><a href="/products/">All products</a></li></ul></div><div><h3>By Industry</h3><ul><li><a href="/industries/government-and-defence/">Government</a></li><li><a href="/industries/enterprise-access/">Enterprise</a></li><li><a href="/industries/transportation/">Transit</a></li><li><a href="/industries/smart-cities/">Smart Cities</a></li><li><a href="/industries/connected-mobility/">Connected Mobility</a></li><li><a href="/industries/">All industries</a></li></ul></div>
+    <div><h3>Engage</h3><ul><li><a href="/engagement-models/">Engagement models</a></li><li><a href="/case-studies/">Case studies</a></li><li><a href="/brochures/">Brochures</a></li><li><a href="/services/">Services</a></li><li><a href="/faqs/">FAQs</a></li><li><a href="/videos/">Videos</a></li><li><a href="/blog/">Engineering blog</a></li></ul></div>
+    <div><h3>Company</h3><ul><li><a href="/about/">About</a></li><li><a href="/about/certifications/">Certifications</a></li><li><a href="/industries/">Industries</a></li><li><a href="/support/">Support</a></li><li><a href="/partners/">Partners</a></li><li><a href="/trust/">Trust</a></li><li><a href="/contact/">Contact</a></li></ul></div>
+    <div><h3>Contact</h3><ul><li>Ahmedabad, Gujarat 380015<br />India</li><li>India: <a href="tel:+917925501989" data-analytics-event="phone_click">+91 79255 01989</a></li><li><a href="https://wa.me/919727933488?text=Hello%20AmbiSecure%2C%20I%20would%20like%20to%20discuss%20a%20security%20project." data-analytics-event="whatsapp_click" rel="noopener" target="_blank">WhatsApp: +91 97279 33488</a></li><li>US: <a href="tel:+12153973819" data-analytics-event="phone_click">+1 215 397 3819</a></li><li><a href="mailto:support@ambimat.com" data-analytics-event="email_click">support@ambimat.com</a></li></ul></div>
+  </div>
+  <div class="footer-base"><span>&copy; 2026 Ambimat Electronics. All rights reserved.</span><span class="footer-privacy"> &middot; <a href="/privacy/">Privacy</a></span><div class="footer-social"><a href="https://in.linkedin.com/company/ambimat-electronics" aria-label="LinkedIn"><span aria-hidden="true">in</span></a><a href="https://x.com/ambimat" aria-label="Twitter"><span aria-hidden="true">tw</span></a><a href="https://www.facebook.com/AmbimatElec" aria-label="Facebook"><span aria-hidden="true">f</span></a></div></div>
+</div></footer>
+<script src="/assets/js/nav.js?v=32" defer></script>
+<script src="/assets/js/web-vitals.js?v=32" defer></script>
+<script src="/assets/js/site-search.js?v=32" defer></script>
+<script src="/assets/js/analytics-config.js?v=32" defer></script>
+<script src="/assets/js/cookie-consent.js?v=32" defer></script>
+</body>
+</html>
